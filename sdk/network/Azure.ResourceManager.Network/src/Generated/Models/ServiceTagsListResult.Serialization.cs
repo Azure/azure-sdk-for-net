@@ -15,56 +15,36 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string type = default;
-            string changeNumber = default;
-            string cloud = default;
-            IReadOnlyList<ServiceTagInformation> values = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> changeNumber = default;
+            Optional<string> cloud = default;
+            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("changeNumber"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     changeNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("cloud"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     cloud = property.Value.GetString();
                     continue;
                 }
@@ -72,25 +52,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
-                        }
+                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new ServiceTagsListResult(name, id, type, changeNumber, cloud, values);
+            return new ServiceTagsListResult(name.Value, id.Value, type.Value, changeNumber.Value, cloud.Value, Optional.ToList(values));
         }
     }
 }

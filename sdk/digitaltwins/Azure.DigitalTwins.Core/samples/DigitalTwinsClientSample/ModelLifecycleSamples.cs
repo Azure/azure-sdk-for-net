@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.DigitalTwins.Core;
-using Azure.DigitalTwins.Core.Models;
 using Azure.DigitalTwins.Core.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
@@ -60,7 +59,7 @@ namespace Azure.DigitalTwins.Samples
             {
                 #region Snippet:DigitalTwinsSampleGetModel
 
-                Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+                Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
                 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 
                 #endregion Snippet:DigitalTwinsSampleGetModel
@@ -101,6 +100,26 @@ namespace Azure.DigitalTwins.Samples
             }
 
             #endregion Snippet:DigitalTwinsSampleDeleteModel
+        }
+
+        /// <summary>
+        /// Try to delete a model, but don't fail if the model does not exist. Useful in setting up or tearing down after running a sample if the
+        /// sample re-uses the same model Id each time
+        /// </summary>
+        /// <param name="client">The client to use when deleting the model</param>
+        /// <param name="modelId">The id of the model to delete</param>
+        /// <returns>An empty task once the model has been deleted.</returns>
+        public static async Task TryDeleteModelAsync(DigitalTwinsClient client, string modelId)
+        {
+            try
+            {
+                Console.WriteLine($"Deleting model Id '{modelId}' if it exists.");
+                await client.DeleteModelAsync(modelId);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                // Model did not exist yet, and that's fine
+            }
         }
     }
 }

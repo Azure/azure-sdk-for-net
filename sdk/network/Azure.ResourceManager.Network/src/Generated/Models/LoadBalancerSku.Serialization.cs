@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerSku DeserializeLoadBalancerSku(JsonElement element)
         {
-            LoadBalancerSkuName? name = default;
+            Optional<LoadBalancerSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new LoadBalancerSkuName(property.Value.GetString());
                     continue;
                 }
             }
-            return new LoadBalancerSku(name);
+            return new LoadBalancerSku(Optional.ToNullable(name));
         }
     }
 }

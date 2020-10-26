@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     public partial class GetModelsOptions
@@ -14,15 +14,7 @@ namespace Azure.DigitalTwins.Core.Models
         public GetModelsOptions()
         {
         }
-
-        /// <summary> Initializes a new instance of GetModelsOptions. </summary>
-        /// <param name="maxItemCount"> The maximum number of items to retrieve per request. The server may choose to return less than the requested max. </param>
-        internal GetModelsOptions(int? maxItemCount)
-        {
-            MaxItemCount = maxItemCount;
-        }
-
-        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested max. </summary>
-        public int? MaxItemCount { get; set; }
+        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </summary>
+        public int? MaxItemsPerPage { get; set; }
     }
 }

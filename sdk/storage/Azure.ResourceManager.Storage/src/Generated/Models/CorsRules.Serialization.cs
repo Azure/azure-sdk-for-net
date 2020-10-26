@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CorsRulesValue != null)
+            if (Optional.IsCollectionDefined(CorsRulesValue))
             {
                 writer.WritePropertyName("corsRules");
                 writer.WriteStartArray();
@@ -31,32 +31,26 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static CorsRules DeserializeCorsRules(JsonElement element)
         {
-            IList<CorsRule> corsRules = default;
+            Optional<IList<CorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("corsRules"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CorsRule> array = new List<CorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(CorsRule.DeserializeCorsRule(item));
-                        }
+                        array.Add(CorsRule.DeserializeCorsRule(item));
                     }
                     corsRules = array;
                     continue;
                 }
             }
-            return new CorsRules(corsRules);
+            return new CorsRules(Optional.ToList(corsRules));
         }
     }
 }

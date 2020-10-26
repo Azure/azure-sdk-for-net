@@ -69,12 +69,12 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1_Preview) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1) { }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
-            V7_1_Preview = 1,
+            V7_1 = 1,
         }
     }
     public partial class CertificateContact
@@ -345,6 +345,18 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.CertificateProperties Properties { get { throw null; } }
         public System.Uri SecretId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultCertificateIdentifier
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Name { get { throw null; } }
+        public System.Uri SourceId { get { throw null; } }
+        public System.Uri VaultUri { get { throw null; } }
+        public string Version { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.KeyVaultCertificateIdentifier Parse(System.Uri id) { throw null; }
+        public static bool TryParse(System.Uri id, out Azure.Security.KeyVault.Certificates.KeyVaultCertificateIdentifier certificateId) { throw null; }
     }
     public partial class KeyVaultCertificateWithPolicy : Azure.Security.KeyVault.Certificates.KeyVaultCertificate
     {

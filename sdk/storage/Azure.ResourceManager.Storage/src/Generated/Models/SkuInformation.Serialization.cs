@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Storage.Models
         internal static SkuInformation DeserializeSkuInformation(JsonElement element)
         {
             SkuName name = default;
-            SkuTier? tier = default;
-            string resourceType = default;
-            Kind? kind = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<SKUCapability> capabilities = default;
-            IReadOnlyList<Restriction> restrictions = default;
+            Optional<SkuTier> tier = default;
+            Optional<string> resourceType = default;
+            Optional<Kind> kind = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<SKUCapability>> capabilities = default;
+            Optional<IReadOnlyList<Restriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToSkuTier();
@@ -40,10 +41,6 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
@@ -51,6 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new Kind(property.Value.GetString());
@@ -60,19 +58,13 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     locations = array;
                     continue;
@@ -81,19 +73,13 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SKUCapability> array = new List<SKUCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SKUCapability.DeserializeSKUCapability(item));
-                        }
+                        array.Add(SKUCapability.DeserializeSKUCapability(item));
                     }
                     capabilities = array;
                     continue;
@@ -102,25 +88,19 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Restriction> array = new List<Restriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Restriction.DeserializeRestriction(item));
-                        }
+                        array.Add(Restriction.DeserializeRestriction(item));
                     }
                     restrictions = array;
                     continue;
                 }
             }
-            return new SkuInformation(name, tier, resourceType, kind, locations, capabilities, restrictions);
+            return new SkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToNullable(kind), Optional.ToList(locations), Optional.ToList(capabilities), Optional.ToList(restrictions));
         }
     }
 }

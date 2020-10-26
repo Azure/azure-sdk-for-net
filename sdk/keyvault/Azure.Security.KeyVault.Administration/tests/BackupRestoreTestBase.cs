@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
     {
         public KeyVaultBackupClient Client { get; set; }
         internal string SasToken { get; set; }
+        internal string BlobContainerName = "backup";
+        internal string PreviouslyBackedUpKeyName = "rsa-1";
 
         public BackupRestoreTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
@@ -25,15 +27,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
 
-        private KeyVaultBackupClient GetClient(TestRecording recording = null)
+        internal KeyVaultBackupClient GetClient(bool isInstrumented = true)
         {
-            recording ??= Recording;
-
-            return InstrumentClient
-                (new KeyVaultBackupClient(
-                    new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new KeyVaultBackupClientOptions())));
+            var client = new KeyVaultBackupClient(
+                new Uri(TestEnvironment.KeyVaultUrl),
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new KeyVaultBackupClientOptions()));
+            return isInstrumented ? InstrumentClient(client) : client;
         }
 
 
@@ -55,6 +55,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         private string GenerateSasToken()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return RecordedTestSanitizer.SanitizeValue;
+            }
             // Create a service level SAS that only allows reading from service
             // level APIs
             AccountSasBuilder sas = new AccountSasBuilder
@@ -63,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 Services = AccountSasServices.Blobs,
 
                 // Allow access to the service level APIs.
-                ResourceTypes = AccountSasResourceTypes.Service,
+                ResourceTypes = AccountSasResourceTypes.All,
 
                 // Access expires in 1 hour.
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)

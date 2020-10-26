@@ -132,16 +132,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 });
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityPath,
-                    identifier,
-                    timeout,
-                    CancellationToken.None),
+                timeout => OpenManagementLinkAsync(timeout),
                 link =>
                 {
                     link.Session?.SafeClose();
                     link.SafeClose();
                 });
+        }
+
+        private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
+            TimeSpan timeout)
+        {
+            RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
+                _entityPath,
+                _identifier,
+                timeout,
+                CancellationToken.None).ConfigureAwait(false);
+            link.Closed += OnManagementLinkClosed;
+            return link;
         }
 
         /// <summary>
@@ -261,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     if (batchMessage.SerializedMessageSize > MaxMessageSize)
                     {
-                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
                     }
 
                     // Attempt to send the message batch.
@@ -358,6 +366,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private void OnSenderLinkClosed(object sender, EventArgs e) =>
+            ServiceBusEventSource.Log.SendLinkClosed(
+                _identifier,
+                sender);
+
+        private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
+            ServiceBusEventSource.Log.ManagementLinkClosed(
+                _identifier,
+                managementLink);
+
         /// <summary>
         ///
         /// </summary>
@@ -428,9 +446,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                    if (!string.IsNullOrWhiteSpace(message.TransactionPartitionKey))
                     {
-                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.TransactionPartitionKey;
                     }
 
                     entries.Add(entry);
@@ -595,6 +613,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     MaxMessageSize = (long)link.Settings.MaxMessageSize;
                 }
                 ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                link.Closed += OnSenderLinkClosed;
                 return link;
             }
             catch (Exception ex)

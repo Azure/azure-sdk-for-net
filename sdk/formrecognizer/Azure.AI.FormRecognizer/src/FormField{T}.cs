@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.FormRecognizer.Models;
-
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
@@ -19,9 +17,9 @@ namespace Azure.AI.FormRecognizer.Models
         public FormField(FormField field, T value)
         {
             Confidence = field.Confidence;
-            LabelText = field.LabelText;
+            LabelData = field.LabelData;
             Name = field.Name;
-            ValueText = field.ValueText;
+            ValueData = field.ValueData;
             Value = value;
         }
 
@@ -33,12 +31,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
-        public FieldText LabelText { get; }
+        public FieldData LabelData { get; }
 
         /// <summary>
         /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
-        public FieldText ValueText { get; }
+        public FieldData ValueData { get; }
 
         /// <summary>
         /// The strongly-typed value of this <see cref="FormField{T}"/>.

@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
                 writer.WriteStringValue(Uri);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToSerialString());
@@ -35,26 +35,18 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ApplicationArtifact DeserializeApplicationArtifact(JsonElement element)
         {
-            string name = default;
-            string uri = default;
-            ApplicationArtifactType? type = default;
+            Optional<string> name = default;
+            Optional<string> uri = default;
+            Optional<ApplicationArtifactType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("uri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     uri = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToApplicationArtifactType();
                     continue;
                 }
             }
-            return new ApplicationArtifact(name, uri, type);
+            return new ApplicationArtifact(name.Value, uri.Value, Optional.ToNullable(type));
         }
     }
 }

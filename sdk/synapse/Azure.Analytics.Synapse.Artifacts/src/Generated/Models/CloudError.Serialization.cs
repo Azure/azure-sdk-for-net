@@ -17,12 +17,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             string code = default;
             string message = default;
-            string target = default;
-            IReadOnlyList<CloudError> details = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<CloudError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("code"))
@@ -37,10 +42,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("target"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             target = property0.Value.GetString();
                             continue;
                         }
@@ -48,19 +49,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CloudError> array = new List<CloudError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(DeserializeCloudError(item));
-                                }
+                                array.Add(DeserializeCloudError(item));
                             }
                             details = array;
                             continue;
@@ -69,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CloudError(code, message, target, details);
+            return new CloudError(code, message, target.Value, Optional.ToList(details));
         }
     }
 }

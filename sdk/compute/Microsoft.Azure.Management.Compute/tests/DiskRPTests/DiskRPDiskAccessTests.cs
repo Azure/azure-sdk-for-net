@@ -20,7 +20,7 @@ namespace Compute.Tests.DiskRPTests
             DiskAccess_CRUD_Execute("DiskAccess_CRUD", location: supportedZoneLocation);
         }
 
-        [Fact(Skip = "TODO: Wait for Microsoft.Azure.Management.Network dll upgrade")]
+        [Fact]
         public void DiskAccess_WithPrivateEndpoint_CRUD()
         {
             DiskAccess_WithPrivateEndpoint_CRUD_Execute("DiskAccess_WithPrivateEndpoint_CRUD", location: supportedZoneLocation);

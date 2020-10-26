@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static FileServiceItems DeserializeFileServiceItems(JsonElement element)
         {
-            IReadOnlyList<FileServiceProperties> value = default;
+            Optional<IReadOnlyList<FileServiceProperties>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FileServiceProperties> array = new List<FileServiceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(FileServiceProperties.DeserializeFileServiceProperties(item));
-                        }
+                        array.Add(FileServiceProperties.DeserializeFileServiceProperties(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new FileServiceItems(value);
+            return new FileServiceItems(Optional.ToList(value));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
         internal ConnectivityHop()
         {
+            NextHopIds = new ChangeTrackingList<string>();
+            Issues = new ChangeTrackingList<ConnectivityIssue>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>

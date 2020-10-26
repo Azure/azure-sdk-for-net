@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId");
             writer.WriteStringValue(ResourceId);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorSource DeserializeConnectionMonitorSource(JsonElement element)
         {
             string resourceId = default;
-            int? port = default;
+            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -40,13 +40,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ConnectionMonitorSource(resourceId, port);
+            return new ConnectionMonitorSource(resourceId, Optional.ToNullable(port));
         }
     }
 }

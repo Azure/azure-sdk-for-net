@@ -44,7 +44,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -58,7 +59,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -72,7 +74,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -88,7 +91,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -104,11 +108,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
-        public void GetTokenExtendsAnExpiredToken()
+        public void GetTokenExtendsAnExpiredTokenWhenCreatedWithTheSharedKey()
         {
             var value = "TOkEn!";
             var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(2)));
@@ -119,11 +124,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the constructor.
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
         /// </summary>
         ///
         [Test]
-        public void GetTokenExtendsATokenCloseToExpiring()
+        public void GetTokenExtendsATokenCloseToExpiringWhenCreatedWithTheSharedKey()
         {
             var value = "TOkEn!";
             var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
@@ -135,11 +141,45 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetTokenDoesNotExtendAnExpiredTokenWhenCreatedWithoutTheKey()
+        {
+            var expectedExpiration = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(2));
+            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ ToUnixTime(expectedExpiration) }&skn=fakeKey";
+            var sourceSignature = new SharedAccessSignature("fake-test", "fakeKey", "ABC123", value, expectedExpiration).Value;
+            var signature = new SharedAccessSignature(sourceSignature);
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(expectedExpiration).Within(TimeSpan.FromMinutes(1)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="SharedAccessSignatureCredential.GetToken" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetTokenDoesNotExtendATokenCloseToExpiringWhenCreatedWithoutTheKey()
+        {
+            var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
+            var value = $"SharedAccessSignature sr=https%3A%2F%2Ffake-test.servicebus.windows.net%2F&sig=nNBNavJfBiHuXUzWOLhSvI3bVgqbQUzA7Po8%2F4wQQng%3D&se={ ToUnixTime(tokenExpiration) }&skn=fakeKey";
+            var sourceSignature = new SharedAccessSignature("fake-test", "fakeKey", "ABC123", value, tokenExpiration).Value;
+            var signature = new SharedAccessSignature(sourceSignature);
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(tokenExpiration).Within(TimeSpan.FromMinutes(1)));
+        }
+
+        /// <summary>
         ///   Verifies that a signature can be rotated without refreshing its validity.
         /// </summary>
         ///
         [Test]
-        public void ShouldUpdateSharedAccessKey()
+        public void SharedAccessKeyCanBeUpdated()
         {
             var value = "TOkEn!";
             var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
@@ -154,6 +194,39 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(newSignature.SharedAccessKey, Is.EqualTo("new-key"));
             Assert.That(newSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration));
         }
+
+        /// <summary>
+        ///   Verifies that a signature can be rotated without refreshing its validity.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedAccesSignatureCanBeUpdated()
+        {
+            var tokenExpiration = TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2);
+            var signature = new SharedAccessSignature("hub-name", "keyName", "key", tokenExpiration);
+            var updatedSignature = new SharedAccessSignature("hub-name", "newKeyName", "newKey", tokenExpiration.Add(TimeSpan.FromMinutes(30)));
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            credential.UpdateSharedAccessSignature(updatedSignature.Value);
+
+            var newSignature = GetSharedAccessSignature(credential);
+
+            Assert.That(newSignature.Value, Is.EqualTo(updatedSignature.Value));
+            Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo(updatedSignature.SharedAccessKeyName));
+            Assert.That(newSignature.SharedAccessKey, Is.Null);
+            Assert.That(newSignature.SignatureExpiration, Is.EqualTo(updatedSignature.SignatureExpiration).Within(TimeSpan.FromSeconds(5)));
+        }
+
+        /// <summary>
+        ///   Converts a <see cref="DateTimeOffset" /> value to the corresponding Unix-style time stamp.
+        /// </summary>
+        ///
+        /// <param name="timestamp">The date/time to convert.</param>
+        ///
+        /// <returns>The Unix-style times tamp which corresponds to the specified date/time.</returns>
+        ///
+        private static long ToUnixTime(DateTimeOffset timestamp) =>
+            Convert.ToInt64((timestamp - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
         /// <summary>
         ///   Retrieves the shared access signature from the credential using its private accessor.

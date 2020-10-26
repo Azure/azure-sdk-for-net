@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CjkBigramTokenFilter
     {
         /// <summary> The scripts to ignore. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<CjkBigramTokenFilterScripts> IgnoreScripts { get; }
     }
 }

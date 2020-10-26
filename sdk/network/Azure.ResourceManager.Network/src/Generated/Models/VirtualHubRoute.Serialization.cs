@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AddressPrefixes != null)
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextHopIpAddress != null)
+            if (Optional.IsDefined(NextHopIpAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress");
                 writer.WriteStringValue(NextHopIpAddress);
@@ -36,42 +36,32 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRoute DeserializeVirtualHubRoute(JsonElement element)
         {
-            IList<string> addressPrefixes = default;
-            string nextHopIpAddress = default;
+            Optional<IList<string>> addressPrefixes = default;
+            Optional<string> nextHopIpAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     addressPrefixes = array;
                     continue;
                 }
                 if (property.NameEquals("nextHopIpAddress"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextHopIpAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualHubRoute(addressPrefixes, nextHopIpAddress);
+            return new VirtualHubRoute(Optional.ToList(addressPrefixes), nextHopIpAddress.Value);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
         /// <param name="baseUrl"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseUrl"/> is null. </exception>
         public AzureKeyVaultLinkedService(object baseUrl)
         {
             if (baseUrl == null)

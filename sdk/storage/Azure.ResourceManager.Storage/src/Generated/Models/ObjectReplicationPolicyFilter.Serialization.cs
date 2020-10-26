@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrefixMatch != null)
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinCreationTime != null)
+            if (Optional.IsDefined(MinCreationTime))
             {
                 writer.WritePropertyName("minCreationTime");
                 writer.WriteStringValue(MinCreationTime);
@@ -36,42 +36,32 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ObjectReplicationPolicyFilter DeserializeObjectReplicationPolicyFilter(JsonElement element)
         {
-            IList<string> prefixMatch = default;
-            string minCreationTime = default;
+            Optional<IList<string>> prefixMatch = default;
+            Optional<string> minCreationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     prefixMatch = array;
                     continue;
                 }
                 if (property.NameEquals("minCreationTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     minCreationTime = property.Value.GetString();
                     continue;
                 }
             }
-            return new ObjectReplicationPolicyFilter(prefixMatch, minCreationTime);
+            return new ObjectReplicationPolicyFilter(Optional.ToList(prefixMatch), minCreationTime.Value);
         }
     }
 }

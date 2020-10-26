@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
@@ -14,11 +15,47 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class ReceiverLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        public async Task Peek()
+        public async Task PeekUsingConnectionStringWithSharedKey()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCt = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
+
+                await sender.SendMessagesAsync(batch);
+
+                await using var receiver = client.CreateReceiver(scope.QueueName);
+                var messageEnum = sentMessages.GetEnumerator();
+
+                var ct = 0;
+                while (ct < messageCt)
+                {
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekMessagesAsync(
+                    maxMessages: messageCt))
+                    {
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
+                        ct++;
+                    }
+                }
+                Assert.AreEqual(messageCt, ct);
+            }
+        }
+
+        [Test]
+        public async Task PeekUsingConnectionStringWithSisgnature()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+
+                await using var client = new ServiceBusClient(connectionString, options);
                 var messageCt = 10;
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
@@ -135,6 +172,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task ReceiveIterator()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCount = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var messages = GetMessages(messageCount);
+                var secondSet = GetMessages(messageCount);
+                await sender.SendMessagesAsync(messages);
+                _ = Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(
+                    async _ => await sender.SendMessagesAsync(secondSet));
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromMinutes(1));
+                messages.AddRange(secondSet);
+
+                int ct = 0;
+                try
+                {
+                    await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
+                    {
+                        Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
+                        await receiver.CompleteMessageAsync(msg.LockToken);
+                        ct++;
+                    }
+                }
+                catch (TaskCanceledException) { }
+                Assert.AreEqual(messageCount * 2, ct);
+            }
+        }
+
+        [Test]
         public async Task AbandonMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -198,7 +270,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessagesAsync(messages);
 
-                var receiver = client.CreateReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    PrefetchCount = 10
+                });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
@@ -209,6 +284,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.Body.ToBytes().ToArray(), item.Body.ToBytes().ToArray());
                         await receiver.DeadLetterMessageAsync(item.LockToken);
                     }
                 }
@@ -271,20 +347,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
                 Assert.AreEqual(0, remainingMessages);
 
-                IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
+                IReadOnlyList<ServiceBusReceivedMessage> deferredMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers);
 
                 var messageList = messages.ToList();
-                Assert.AreEqual(messageList.Count, deferedMessages.Count);
+                Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].Body.ToBytes().ToArray(), deferredMessages[i].Body.ToBytes().ToArray());
                 }
 
                 // verify that looking up a non-existent sequence number will throw
                 sequenceNumbers.Add(45);
                 Assert.That(
                     async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers),
-                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageNotFound));
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageNotFound));
             }
         }
 
@@ -436,7 +513,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         RetryOptions = new ServiceBusRetryOptions
                         {
-                            TryTimeout = TimeSpan.FromSeconds(20)
+                            TryTimeout = TimeSpan.FromSeconds(20),
+                            MaxRetries = 0
                         }
                     });
 

@@ -11,60 +11,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SystemData : IUtf8JsonSerializable
+    public partial class SystemData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (CreatedBy != null)
-            {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (CreatedByType != null)
-            {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (CreatedAt != null)
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
-            }
-            if (LastModifiedBy != null)
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (LastModifiedByType != null)
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (LastModifiedAt != null)
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
-            }
-            writer.WriteEndObject();
-        }
-
         internal static SystemData DeserializeSystemData(JsonElement element)
         {
-            string createdBy = default;
-            CreatedByType? createdByType = default;
-            DateTimeOffset? createdAt = default;
-            string lastModifiedBy = default;
-            CreatedByType? lastModifiedByType = default;
-            DateTimeOffset? lastModifiedAt = default;
+            Optional<string> createdBy = default;
+            Optional<CreatedByType> createdByType = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<CreatedByType> lastModifiedByType = default;
+            Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdBy = property.Value.GetString();
                     continue;
                 }
@@ -72,6 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdByType = new CreatedByType(property.Value.GetString());
@@ -81,6 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdAt = property.Value.GetDateTimeOffset("O");
@@ -88,10 +50,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("lastModifiedBy"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModifiedBy = property.Value.GetString();
                     continue;
                 }
@@ -99,6 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedByType = new CreatedByType(property.Value.GetString());
@@ -108,13 +67,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new SystemData(createdBy, createdByType, createdAt, lastModifiedBy, lastModifiedByType, lastModifiedAt);
+            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

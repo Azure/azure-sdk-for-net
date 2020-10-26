@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Items != null)
+            if (Optional.IsCollectionDefined(Items))
             {
                 writer.WritePropertyName("items");
                 writer.WriteStartArray();
@@ -36,42 +36,37 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointFilter DeserializeConnectionMonitorEndpointFilter(JsonElement element)
         {
-            string type = default;
-            IList<ConnectionMonitorEndpointFilterItem> items = default;
+            Optional<ConnectionMonitorEndpointFilterType> type = default;
+            Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString();
+                    type = new ConnectionMonitorEndpointFilterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("items"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
-                        }
+                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
                     }
                     items = array;
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpointFilter(type, items);
+            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), Optional.ToList(items));
         }
     }
 }

@@ -13,11 +13,11 @@ namespace Azure.Identity
     {
         private Uri _authorityHost;
         /// <summary>
-        /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="KnownAuthorityHosts"/>.
+        /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
         /// </summary>
         public Uri AuthorityHost
         {
-            get { return _authorityHost ?? (EnvironmentVariables.AuthorityHost != null ? new Uri(EnvironmentVariables.AuthorityHost) : KnownAuthorityHosts.AzureCloud); }
+            get { return _authorityHost ?? AzureAuthorityHosts.GetDefault(); }
             set { _authorityHost = value; }
         }
     }

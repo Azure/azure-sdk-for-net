@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -153,8 +155,57 @@ namespace Azure.Core.Tests
             Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
         }
 
+        [Test]
+        public async Task SubClientPropertyCallsAreAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            Operations subClient = client.SubProperty;
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task TasksValidateOwnScopes()
+        {
+            TestDiagnostics = true;
+
+            TestClient client = InstrumentClient(new TestClient());
+
+            var t1 = Task.Run(async () =>
+            {
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodAAsync();
+                }
+            });
+
+            var t2 = Task.Run(async () =>
+            {
+                for (int i = 0; i < 100; ++i)
+                {
+                    await client.MethodBAsync();
+                }
+            });
+            await Task.WhenAll(t1, t2);
+        }
+
         public class TestClient
         {
+            private readonly ClientDiagnostics _diagnostics;
+
+            public TestClient() : this(null)
+            {
+            }
+
+            public TestClient(TestClientOptions options)
+            {
+                options ??= new TestClientOptions();
+                _diagnostics = new ClientDiagnostics(options);
+            }
+
             public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
             {
                 return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
@@ -213,6 +264,59 @@ namespace Azure.Core.Tests
             public virtual TestClient GetAnotherTestClient()
             {
                 return new TestClient();
+            }
+            public virtual Operations SubProperty => new Operations();
+
+
+            public virtual string MethodA()
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
+                scope.Start();
+
+                return nameof(MethodA);
+            }
+
+            public virtual async Task<string> MethodAAsync()
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
+                scope.Start();
+
+                await Task.Yield();
+                return nameof(MethodAAsync);
+            }
+
+            public virtual string MethodB()
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodB)}");
+                scope.Start();
+
+                return nameof(MethodB);
+            }
+
+            public virtual async Task<string> MethodBAsync()
+            {
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodB)}");
+                scope.Start();
+
+                await Task.Yield();
+                return nameof(MethodAAsync);
+            }
+        }
+
+        public class TestClientOptions : ClientOptions
+        {
+        }
+
+        public class Operations
+        {
+            public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
+            {
+                return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
+            }
+
+            public virtual string Method(int i, CancellationToken cancellationToken = default)
+            {
+                return "Sync " + i + " " + cancellationToken.CanBeCanceled;
             }
         }
 

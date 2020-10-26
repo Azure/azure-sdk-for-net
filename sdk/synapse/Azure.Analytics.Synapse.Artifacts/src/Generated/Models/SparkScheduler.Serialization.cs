@@ -15,17 +15,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
-            DateTimeOffset? submittedAt = default;
-            DateTimeOffset? scheduledAt = default;
-            DateTimeOffset? endedAt = default;
-            DateTimeOffset? cancellationRequestedAt = default;
-            SchedulerCurrentState? currentState = default;
+            Optional<DateTimeOffset> submittedAt = default;
+            Optional<DateTimeOffset> scheduledAt = default;
+            Optional<DateTimeOffset> endedAt = default;
+            Optional<DateTimeOffset> cancellationRequestedAt = default;
+            Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("submittedAt"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     submittedAt = property.Value.GetDateTimeOffset("O");
@@ -35,6 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledAt = property.Value.GetDateTimeOffset("O");
@@ -44,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endedAt = property.Value.GetDateTimeOffset("O");
@@ -53,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
@@ -62,13 +66,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = new SchedulerCurrentState(property.Value.GetString());
                     continue;
                 }
             }
-            return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
+            return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
         }
     }
 }

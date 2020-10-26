@@ -13,35 +13,53 @@ namespace Azure.Data.Tables.Samples
     public partial class TablesSamples : TablesTestEnvironment
     {
         [Test]
-        public void CreateTable()
+        public void CreateDeleteTable()
         {
             string storageUri = StorageUri;
-            string accountName = AccountName;
+            string accountName = StorageAccountName;
             string storageAccountKey = PrimaryStorageAccountKey;
-            string tableName = "OfficeSupplies";
+            string tableName = "OfficeSupplies1p1";
 
             #region Snippet:TablesSample1CreateClient
             // Construct a new <see cref="TableServiceClient" /> using a <see cref="TableSharedKeyCredential" />.
+
             var serviceClient = new TableServiceClient(
                 new Uri(storageUri),
                 new TableSharedKeyCredential(accountName, storageAccountKey));
             #endregion
 
-            try
-            {
-                #region Snippet:TablesSample1CreateTable
-                // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-                TableItem table = serviceClient.CreateTable(tableName);
-                Console.WriteLine($"The created table's name is {table.TableName}.");
-                #endregion
-            }
-            finally
-            {
-                #region Snippet:TablesSample1DeleteTable
-                // Deletes the table made previously.
-                serviceClient.DeleteTable(tableName);
-                #endregion
-            }
+            #region Snippet:TablesSample1CreateTable
+            // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
+
+            TableItem table = serviceClient.CreateTable(tableName);
+            Console.WriteLine($"The created table's name is {table.TableName}.");
+            #endregion
+
+            #region Snippet:TablesSample1DeleteTable
+            // Deletes the table made previously.
+
+            serviceClient.DeleteTable(tableName);
+            #endregion
+
+            #region Snippet:TablesSample1GetTableClient
+            tableName = "OfficeSupplies1p2";
+            var tableClient = serviceClient.GetTableClient(tableName);
+            #endregion
+
+            #region Snippet:TablesSample1CreateTableClient
+            tableClient = new TableClient(
+                new Uri(storageUri),
+                tableName,
+                new TableSharedKeyCredential(accountName, storageAccountKey));
+            #endregion
+
+            #region Snippet:TablesSample1TableClientCreateTable
+            tableClient.Create();
+            #endregion
+
+            #region Snippet:TablesSample1TableClientDeleteTable
+            tableClient.Delete();
+            #endregion
         }
     }
 }

@@ -40,7 +40,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="lastModified">Gets the date this project was last
         /// modified.</param>
         /// <param name="thumbnailUri">Gets the thumbnail url representing the
-        /// image.</param>
+        /// image. If VNET feature is enabled this will be a relative path to
+        /// be used with GetArtifact, otherwise this will be an absolute URI to
+        /// the resource.</param>
         /// <param name="drModeEnabled">Gets if the Disaster Recovery (DR) mode
         /// is on, indicating the project is temporarily read-only.</param>
         /// <param name="status">Gets the status of the project. Possible
@@ -101,7 +103,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the thumbnail url representing the image.
+        /// Gets the thumbnail url representing the image. If VNET feature is
+        /// enabled this will be a relative path to be used with GetArtifact,
+        /// otherwise this will be an absolute URI to the resource.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }

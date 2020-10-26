@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CopySource. </summary>
         public CopySource()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "CopySource";
         }
 
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SourceRetryCount = sourceRetryCount;
             SourceRetryWait = sourceRetryWait;
             MaxConcurrentConnections = maxConcurrentConnections;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Copy source type. </summary>

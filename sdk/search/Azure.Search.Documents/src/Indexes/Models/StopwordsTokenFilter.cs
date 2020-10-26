@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class StopwordsTokenFilter
     {
         /// <summary> The list of stopwords. This property and the stopwords list property cannot both be set. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Stopwords { get; }
     }
 }

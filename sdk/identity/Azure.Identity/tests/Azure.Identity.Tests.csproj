@@ -12,14 +12,15 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 
   
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
-    <None Update="Data\cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="Data\cert.pem" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

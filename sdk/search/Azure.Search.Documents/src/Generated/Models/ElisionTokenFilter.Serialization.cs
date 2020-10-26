@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Articles != null && Articles.Any())
+            if (Optional.IsCollectionDefined(Articles))
             {
                 writer.WritePropertyName("articles");
                 writer.WriteStartArray();
@@ -36,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ElisionTokenFilter DeserializeElisionTokenFilter(JsonElement element)
         {
-            IList<string> articles = default;
+            Optional<IList<string>> articles = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -45,19 +44,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     articles = array;
                     continue;
@@ -73,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(odataType, name, articles);
+            return new ElisionTokenFilter(odataType, name, Optional.ToList(articles));
         }
     }
 }

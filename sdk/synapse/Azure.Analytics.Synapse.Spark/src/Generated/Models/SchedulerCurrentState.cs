@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="SchedulerCurrentState"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchedulerCurrentState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

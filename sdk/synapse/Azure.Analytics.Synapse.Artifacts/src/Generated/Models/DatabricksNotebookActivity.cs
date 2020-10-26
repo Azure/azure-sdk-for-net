@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
         public DatabricksNotebookActivity(string name, object notebookPath) : base(name)
         {
             if (name == null)
@@ -28,6 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             NotebookPath = notebookPath;
+            BaseParameters = new ChangeTrackingDictionary<string, object>();
+            Libraries = new ChangeTrackingList<IDictionary<string, object>>();
             Type = "DatabricksNotebook";
         }
 
@@ -54,8 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public object NotebookPath { get; set; }
         /// <summary> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </summary>
-        public IDictionary<string, object> BaseParameters { get; set; }
+        public IDictionary<string, object> BaseParameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
-        public IList<IDictionary<string, object>> Libraries { get; set; }
+        public IList<IDictionary<string, object>> Libraries { get; }
     }
 }

@@ -15,13 +15,6 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        /// <summary> Initializes a new instance of VpnPacketCaptureStartParameters. </summary>
-        /// <param name="filterData"> Start Packet capture parameters. </param>
-        internal VpnPacketCaptureStartParameters(string filterData)
-        {
-            FilterData = filterData;
-        }
-
         /// <summary> Start Packet capture parameters. </summary>
         public string FilterData { get; set; }
     }

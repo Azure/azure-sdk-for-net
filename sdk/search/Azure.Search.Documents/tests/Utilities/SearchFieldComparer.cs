@@ -11,7 +11,7 @@ namespace Azure.Search.Documents.Tests
     {
         public static SearchFieldComparer Shared { get; } = new SearchFieldComparer();
 
-        private static CollectionComparer<SearchField> SharedFieldsCollection { get; } = new CollectionComparer<SearchField>(Shared, compareNullOrEmpty: true);
+        public static CollectionComparer<SearchField> SharedFieldsCollection { get; } = new CollectionComparer<SearchField>(Shared, compareNullOrEmpty: true);
 
         private SearchFieldComparer()
         {

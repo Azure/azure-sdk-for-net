@@ -15,20 +15,16 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableServiceError DeserializeTableServiceError(JsonElement element)
         {
-            string message = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
             }
-            return new TableServiceError(message);
+            return new TableServiceError(message.Value);
         }
 
         internal static TableServiceError DeserializeTableServiceError(XElement element)

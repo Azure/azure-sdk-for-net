@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ChecksFailedPercent != null)
+            if (Optional.IsDefined(ChecksFailedPercent))
             {
                 writer.WritePropertyName("checksFailedPercent");
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
-            if (RoundTripTimeMs != null)
+            if (Optional.IsDefined(RoundTripTimeMs))
             {
                 writer.WritePropertyName("roundTripTimeMs");
                 writer.WriteNumberValue(RoundTripTimeMs.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorSuccessThreshold DeserializeConnectionMonitorSuccessThreshold(JsonElement element)
         {
-            int? checksFailedPercent = default;
-            float? roundTripTimeMs = default;
+            Optional<int> checksFailedPercent = default;
+            Optional<float> roundTripTimeMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("checksFailedPercent"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     checksFailedPercent = property.Value.GetInt32();
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     roundTripTimeMs = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new ConnectionMonitorSuccessThreshold(checksFailedPercent, roundTripTimeMs);
+            return new ConnectionMonitorSuccessThreshold(Optional.ToNullable(checksFailedPercent), Optional.ToNullable(roundTripTimeMs));
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class KeywordMarkerTokenFilter
     {
         /// <summary> A list of words to mark as keywords. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> Keywords { get; }
     }
 }

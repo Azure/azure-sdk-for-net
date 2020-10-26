@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OnlyOnSamePosition != null)
+            if (Optional.IsDefined(OnlyOnSamePosition))
             {
                 writer.WritePropertyName("onlyOnSamePosition");
                 writer.WriteBooleanValue(OnlyOnSamePosition.Value);
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static UniqueTokenFilter DeserializeUniqueTokenFilter(JsonElement element)
         {
-            bool? onlyOnSamePosition = default;
+            Optional<bool> onlyOnSamePosition = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -38,6 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     onlyOnSamePosition = property.Value.GetBoolean();
@@ -54,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new UniqueTokenFilter(odataType, name, onlyOnSamePosition);
+            return new UniqueTokenFilter(odataType, name, Optional.ToNullable(onlyOnSamePosition));
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,36 +16,29 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (WordList.Any())
+            writer.WritePropertyName("wordList");
+            writer.WriteStartArray();
+            foreach (var item in WordList)
             {
-                writer.WritePropertyName("wordList");
-                writer.WriteStartArray();
-                foreach (var item in WordList)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
-            else
-            {
-                writer.WriteNull("wordList");
-            }
-            if (MinWordSize != null)
+            writer.WriteEndArray();
+            if (Optional.IsDefined(MinWordSize))
             {
                 writer.WritePropertyName("minWordSize");
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (MinSubwordSize != null)
+            if (Optional.IsDefined(MinSubwordSize))
             {
                 writer.WritePropertyName("minSubwordSize");
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (MaxSubwordSize != null)
+            if (Optional.IsDefined(MaxSubwordSize))
             {
                 writer.WritePropertyName("maxSubwordSize");
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (OnlyLongestMatch != null)
+            if (Optional.IsDefined(OnlyLongestMatch))
             {
                 writer.WritePropertyName("onlyLongestMatch");
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);
@@ -61,10 +53,10 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
             IList<string> wordList = default;
-            int? minWordSize = default;
-            int? minSubwordSize = default;
-            int? maxSubwordSize = default;
-            bool? onlyLongestMatch = default;
+            Optional<int> minWordSize = default;
+            Optional<int> minSubwordSize = default;
+            Optional<int> maxSubwordSize = default;
+            Optional<bool> onlyLongestMatch = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -74,14 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     wordList = array;
                     continue;
@@ -90,6 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minWordSize = property.Value.GetInt32();
@@ -99,6 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minSubwordSize = property.Value.GetInt32();
@@ -108,6 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxSubwordSize = property.Value.GetInt32();
@@ -117,6 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     onlyLongestMatch = property.Value.GetBoolean();
@@ -133,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch);
+            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, Optional.ToNullable(minWordSize), Optional.ToNullable(minSubwordSize), Optional.ToNullable(maxSubwordSize), Optional.ToNullable(onlyLongestMatch));
         }
     }
 }

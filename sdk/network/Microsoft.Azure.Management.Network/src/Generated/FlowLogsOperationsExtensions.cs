@@ -74,6 +74,58 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Update tags of the specified flow log.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='flowLogName'>
+            /// The name of the flow log.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update flow log tags.
+            /// </param>
+            public static FlowLog UpdateTags(this IFlowLogsOperations operations, string resourceGroupName, string networkWatcherName, string flowLogName, TagsObject parameters)
+            {
+                return operations.UpdateTagsAsync(resourceGroupName, networkWatcherName, flowLogName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update tags of the specified flow log.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher.
+            /// </param>
+            /// <param name='flowLogName'>
+            /// The name of the flow log.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update flow log tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FlowLog> UpdateTagsAsync(this IFlowLogsOperations operations, string resourceGroupName, string networkWatcherName, string flowLogName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, networkWatcherName, flowLogName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a flow log resource by name.
             /// </summary>
             /// <param name='operations'>

@@ -6,17 +6,16 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
   <ItemGroup>
     <None Remove="README.md" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Note: The VersionOverride is only used in beta releases and will be removed prior to GA release. -->
+    <PackageReference Include="Azure.Data.SchemaRegistry" VersionOverride="1.0.0-beta.2" />
     <PackageReference Include="Azure.Identity" />
+    <!-- Note: The VersionOverride is only used in beta releases and will be removed prior to GA release. -->
+    <PackageReference Include="Microsoft.Azure.Data.SchemaRegistry.ApacheAvro" VersionOverride="1.0.0-beta.1" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
 </Project>

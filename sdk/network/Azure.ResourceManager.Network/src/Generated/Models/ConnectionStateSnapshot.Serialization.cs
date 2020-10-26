@@ -16,22 +16,23 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element)
         {
-            ConnectionState? connectionState = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
-            EvaluationState? evaluationState = default;
-            int? avgLatencyInMs = default;
-            int? minLatencyInMs = default;
-            int? maxLatencyInMs = default;
-            int? probesSent = default;
-            int? probesFailed = default;
-            IReadOnlyList<ConnectivityHop> hops = default;
+            Optional<ConnectionState> connectionState = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<EvaluationState> evaluationState = default;
+            Optional<int> avgLatencyInMs = default;
+            Optional<int> minLatencyInMs = default;
+            Optional<int> maxLatencyInMs = default;
+            Optional<int> probesSent = default;
+            Optional<int> probesFailed = default;
+            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionState = new ConnectionState(property.Value.GetString());
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     evaluationState = new EvaluationState(property.Value.GetString());
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     avgLatencyInMs = property.Value.GetInt32();
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minLatencyInMs = property.Value.GetInt32();
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxLatencyInMs = property.Value.GetInt32();
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probesSent = property.Value.GetInt32();
@@ -104,6 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probesFailed = property.Value.GetInt32();
@@ -113,25 +122,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
-                        }
+                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
                     }
                     hops = array;
                     continue;
                 }
             }
-            return new ConnectionStateSnapshot(connectionState, startTime, endTime, evaluationState, avgLatencyInMs, minLatencyInMs, maxLatencyInMs, probesSent, probesFailed, hops);
+            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops));
         }
     }
 }

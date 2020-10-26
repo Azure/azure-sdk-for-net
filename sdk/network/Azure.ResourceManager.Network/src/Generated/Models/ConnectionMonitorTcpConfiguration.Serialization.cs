@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
                 writer.WriteNumberValue(Port.Value);
             }
-            if (DisableTraceRoute != null)
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute");
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTcpConfiguration DeserializeConnectionMonitorTcpConfiguration(JsonElement element)
         {
-            int? port = default;
-            bool? disableTraceRoute = default;
+            Optional<int> port = default;
+            Optional<bool> disableTraceRoute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableTraceRoute = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ConnectionMonitorTcpConfiguration(port, disableTraceRoute);
+            return new ConnectionMonitorTcpConfiguration(Optional.ToNullable(port), Optional.ToNullable(disableTraceRoute));
         }
     }
 }

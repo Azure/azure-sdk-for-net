@@ -1,6 +1,6 @@
 # Strongly-typing a recognized form
 
-This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The output from the `StartRecognizeReceipts` method will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields' names and types.
+This sample demonstrates how to use the fields in your recognized forms to create an object with strongly-typed fields. The output from the `StartRecognizeReceipts` method will be used to illustrate this sample, but note that a similar approach can be used for any custom form as long as you properly update the fields, names and types.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -34,7 +34,7 @@ The `Receipt` class is composed of multiple `FormField<T>` properties. `FormFiel
 public Receipt(RecognizedForm recognizedForm)
 {
     // To see the list of the supported fields returned by service and its corresponding types, consult:
-    // https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview/operations/GetAnalyzeReceiptResult
+    // https://aka.ms/formrecognizer/receiptfields
 
     ReceiptType = ConvertStringField("ReceiptType", recognizedForm.Fields);
     MerchantAddress = ConvertStringField("MerchantAddress", recognizedForm.Fields);
@@ -56,7 +56,7 @@ public Receipt(RecognizedForm recognizedForm)
 Here we illustrate how to use the `Receipt` wrapper class described above.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
-RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+RecognizedFormCollection recognizedForms = await client.StartRecognizeReceiptsFromUriAsync(receiptUri).WaitForCompletionAsync();
 
 foreach (RecognizedForm recognizedForm in recognizedForms)
 {

@@ -15,26 +15,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
-            }
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
@@ -42,46 +22,30 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultAccessPolicyParameters DeserializeVaultAccessPolicyParameters(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
             VaultAccessPolicyProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -91,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new VaultAccessPolicyParameters(id, name, type, location, properties);
+            return new VaultAccessPolicyParameters(id.Value, name.Value, type.Value, location.Value, properties);
         }
     }
 }

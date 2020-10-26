@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SqlScriptRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/sqlScripts", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -71,14 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sqlScript);
             request.Content = content;
@@ -140,6 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScript"> Sql Script resource definition. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
         public async Task<Response<SqlScriptResource>> CreateOrUpdateSqlScriptAsync(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -159,14 +148,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,6 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScript"> Sql Script resource definition. </param>
         /// <param name="ifMatch"> ETag of the SQL script entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> or <paramref name="sqlScript"/> is null. </exception>
         public Response<SqlScriptResource> CreateOrUpdateSqlScript(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -198,14 +181,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -228,6 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -235,6 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public async Task<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -250,14 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -271,6 +242,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public Response<SqlScriptResource> GetSqlScript(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -286,14 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
-                        }
+                        value = SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -314,12 +279,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(sqlScriptName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public async Task<Response> DeleteSqlScriptAsync(string sqlScriptName, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -342,6 +309,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Sql Script. </summary>
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public Response DeleteSqlScript(string sqlScriptName, CancellationToken cancellationToken = default)
         {
             if (sqlScriptName == null)
@@ -370,12 +338,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists sql scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SqlScriptsListResponse>> GetSqlScriptsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -391,14 +361,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,6 +372,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists sql scripts. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SqlScriptsListResponse> GetSqlScriptsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -424,14 +388,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SqlScriptsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
-                        }
+                        value = SqlScriptsListResponse.DeserializeSqlScriptsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -15,50 +15,34 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
-            string name = default;
-            string displayName = default;
-            string displayDescription = default;
-            string unit = default;
-            IReadOnlyList<Dimension> dimensions = default;
-            string aggregationType = default;
-            bool? fillGapWithZero = default;
-            string category = default;
-            string resourceIdDimensionNameOverride = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> displayDescription = default;
+            Optional<string> unit = default;
+            Optional<IReadOnlyList<Dimension>> dimensions = default;
+            Optional<string> aggregationType = default;
+            Optional<bool> fillGapWithZero = default;
+            Optional<string> category = default;
+            Optional<string> resourceIdDimensionNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayDescription"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     unit = property.Value.GetString();
                     continue;
                 }
@@ -66,29 +50,19 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Dimension.DeserializeDimension(item));
-                        }
+                        array.Add(Dimension.DeserializeDimension(item));
                     }
                     dimensions = array;
                     continue;
                 }
                 if (property.NameEquals("aggregationType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     aggregationType = property.Value.GetString();
                     continue;
                 }
@@ -96,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fillGapWithZero = property.Value.GetBoolean();
@@ -103,24 +78,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("category"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     category = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceIdDimensionNameOverride"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceIdDimensionNameOverride = property.Value.GetString();
                     continue;
                 }
             }
-            return new MetricSpecification(name, displayName, displayDescription, unit, dimensions, aggregationType, fillGapWithZero, category, resourceIdDimensionNameOverride);
+            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, Optional.ToList(dimensions), aggregationType.Value, Optional.ToNullable(fillGapWithZero), category.Value, resourceIdDimensionNameOverride.Value);
         }
     }
 }

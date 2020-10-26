@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Disable != null)
+            if (Optional.IsDefined(Disable))
             {
                 writer.WritePropertyName("disable");
                 writer.WriteBooleanValue(Disable.Value);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ConnectionMonitorTestGroup DeserializeConnectionMonitorTestGroup(JsonElement element)
         {
             string name = default;
-            bool? disable = default;
+            Optional<bool> disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disable = property.Value.GetBoolean();
@@ -75,14 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     testConfigurations = array;
                     continue;
@@ -92,14 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sources = array;
                     continue;
@@ -109,20 +96,13 @@ namespace Azure.ResourceManager.Network.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     destinations = array;
                     continue;
                 }
             }
-            return new ConnectionMonitorTestGroup(name, disable, testConfigurations, sources, destinations);
+            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations);
         }
     }
 }

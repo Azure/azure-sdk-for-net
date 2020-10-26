@@ -16,32 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -54,37 +39,37 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (VirtualWan != null)
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan");
                 writer.WriteObjectValue(VirtualWan);
             }
-            if (VpnGateway != null)
+            if (Optional.IsDefined(VpnGateway))
             {
                 writer.WritePropertyName("vpnGateway");
                 writer.WriteObjectValue(VpnGateway);
             }
-            if (P2SVpnGateway != null)
+            if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway");
                 writer.WriteObjectValue(P2SVpnGateway);
             }
-            if (ExpressRouteGateway != null)
+            if (Optional.IsDefined(ExpressRouteGateway))
             {
                 writer.WritePropertyName("expressRouteGateway");
                 writer.WriteObjectValue(ExpressRouteGateway);
             }
-            if (AzureFirewall != null)
+            if (Optional.IsDefined(AzureFirewall))
             {
                 writer.WritePropertyName("azureFirewall");
                 writer.WriteObjectValue(AzureFirewall);
             }
-            if (SecurityPartnerProvider != null)
+            if (Optional.IsDefined(SecurityPartnerProvider))
             {
                 writer.WritePropertyName("securityPartnerProvider");
                 writer.WriteObjectValue(SecurityPartnerProvider);
             }
-            if (VirtualNetworkConnections != null)
+            if (Optional.IsCollectionDefined(VirtualNetworkConnections))
             {
                 writer.WritePropertyName("virtualNetworkConnections");
                 writer.WriteStartArray();
@@ -94,27 +79,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix");
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable");
                 writer.WriteObjectValue(RouteTable);
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (SecurityProviderName != null)
+            if (Optional.IsDefined(SecurityProviderName))
             {
                 writer.WritePropertyName("securityProviderName");
                 writer.WriteStringValue(SecurityProviderName);
             }
-            if (VirtualHubRouteTableV2S != null)
+            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
             {
                 writer.WritePropertyName("virtualHubRouteTableV2s");
                 writer.WriteStartArray();
@@ -124,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteStringValue(Sku);
@@ -135,69 +115,49 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHub DeserializeVirtualHub(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SubResource virtualWan = default;
-            SubResource vpnGateway = default;
-            SubResource p2SVpnGateway = default;
-            SubResource expressRouteGateway = default;
-            SubResource azureFirewall = default;
-            SubResource securityPartnerProvider = default;
-            IList<HubVirtualNetworkConnection> virtualNetworkConnections = default;
-            string addressPrefix = default;
-            VirtualHubRouteTable routeTable = default;
-            ProvisioningState? provisioningState = default;
-            string securityProviderName = default;
-            IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default;
-            string sku = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubResource> virtualWan = default;
+            Optional<SubResource> vpnGateway = default;
+            Optional<SubResource> p2SVpnGateway = default;
+            Optional<SubResource> expressRouteGateway = default;
+            Optional<SubResource> azureFirewall = default;
+            Optional<SubResource> securityPartnerProvider = default;
+            Optional<IList<HubVirtualNetworkConnection>> virtualNetworkConnections = default;
+            Optional<string> addressPrefix = default;
+            Optional<VirtualHubRouteTable> routeTable = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> securityProviderName = default;
+            Optional<IList<VirtualHubRouteTableV2>> virtualHubRouteTableV2s = default;
+            Optional<string> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -205,31 +165,31 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("virtualWan"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualWan = SubResource.DeserializeSubResource(property0.Value);
@@ -239,6 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnGateway = SubResource.DeserializeSubResource(property0.Value);
@@ -248,6 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             p2SVpnGateway = SubResource.DeserializeSubResource(property0.Value);
@@ -257,6 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expressRouteGateway = SubResource.DeserializeSubResource(property0.Value);
@@ -266,6 +229,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             azureFirewall = SubResource.DeserializeSubResource(property0.Value);
@@ -275,6 +239,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityPartnerProvider = SubResource.DeserializeSubResource(property0.Value);
@@ -284,29 +249,19 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HubVirtualNetworkConnection> array = new List<HubVirtualNetworkConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(item));
-                                }
+                                array.Add(HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(item));
                             }
                             virtualNetworkConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
@@ -314,6 +269,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value);
@@ -323,6 +279,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -330,10 +287,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("securityProviderName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             securityProviderName = property0.Value.GetString();
                             continue;
                         }
@@ -341,29 +294,19 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualHubRouteTableV2> array = new List<VirtualHubRouteTableV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(item));
-                                }
+                                array.Add(VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(item));
                             }
                             virtualHubRouteTableV2s = array;
                             continue;
                         }
                         if (property0.NameEquals("sku"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             sku = property0.Value.GetString();
                             continue;
                         }
@@ -371,7 +314,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHub(id, name, type, location, tags, etag, virtualWan, vpnGateway, p2SVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, virtualNetworkConnections, addressPrefix, routeTable, provisioningState, securityProviderName, virtualHubRouteTableV2s, sku);
+            return new VirtualHub(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan.Value, vpnGateway.Value, p2SVpnGateway.Value, expressRouteGateway.Value, azureFirewall.Value, securityPartnerProvider.Value, Optional.ToList(virtualNetworkConnections), addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value);
         }
     }
 }

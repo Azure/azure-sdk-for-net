@@ -16,37 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -59,42 +44,22 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation");
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (BandwidthInGbps != null)
+            if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps");
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (ProvisionedBandwidthInGbps != null)
-            {
-                writer.WritePropertyName("provisionedBandwidthInGbps");
-                writer.WriteNumberValue(ProvisionedBandwidthInGbps.Value);
-            }
-            if (Mtu != null)
-            {
-                writer.WritePropertyName("mtu");
-                writer.WriteStringValue(Mtu);
-            }
-            if (Encapsulation != null)
+            if (Optional.IsDefined(Encapsulation))
             {
                 writer.WritePropertyName("encapsulation");
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (EtherType != null)
-            {
-                writer.WritePropertyName("etherType");
-                writer.WriteStringValue(EtherType);
-            }
-            if (AllocationDate != null)
-            {
-                writer.WritePropertyName("allocationDate");
-                writer.WriteStringValue(AllocationDate);
-            }
-            if (Links != null)
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links");
                 writer.WriteStartArray();
@@ -104,58 +69,34 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Circuits != null)
-            {
-                writer.WritePropertyName("circuits");
-                writer.WriteStartArray();
-                foreach (var item in Circuits)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (ResourceGuid != null)
-            {
-                writer.WritePropertyName("resourceGuid");
-                writer.WriteStringValue(ResourceGuid);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ExpressRoutePort DeserializeExpressRoutePort(JsonElement element)
         {
-            string etag = default;
-            ManagedServiceIdentity identity = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string peeringLocation = default;
-            int? bandwidthInGbps = default;
-            float? provisionedBandwidthInGbps = default;
-            string mtu = default;
-            ExpressRoutePortsEncapsulation? encapsulation = default;
-            string etherType = default;
-            string allocationDate = default;
-            IList<ExpressRouteLink> links = default;
-            IList<SubResource> circuits = default;
-            ProvisioningState? provisioningState = default;
-            string resourceGuid = default;
+            Optional<string> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> peeringLocation = default;
+            Optional<int> bandwidthInGbps = default;
+            Optional<float> provisionedBandwidthInGbps = default;
+            Optional<string> mtu = default;
+            Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
+            Optional<string> etherType = default;
+            Optional<string> allocationDate = default;
+            Optional<IList<ExpressRouteLink>> links = default;
+            Optional<IReadOnlyList<SubResource>> circuits = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
@@ -163,6 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
@@ -170,37 +112,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -208,33 +134,28 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("peeringLocation"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             peeringLocation = property0.Value.GetString();
                             continue;
                         }
@@ -242,6 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bandwidthInGbps = property0.Value.GetInt32();
@@ -251,6 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisionedBandwidthInGbps = property0.Value.GetSingle();
@@ -258,10 +181,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("mtu"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             mtu = property0.Value.GetString();
                             continue;
                         }
@@ -269,6 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encapsulation = new ExpressRoutePortsEncapsulation(property0.Value.GetString());
@@ -276,19 +196,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("etherType"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             etherType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("allocationDate"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             allocationDate = property0.Value.GetString();
                             continue;
                         }
@@ -296,19 +208,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ExpressRouteLink> array = new List<ExpressRouteLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ExpressRouteLink.DeserializeExpressRouteLink(item));
-                                }
+                                array.Add(ExpressRouteLink.DeserializeExpressRouteLink(item));
                             }
                             links = array;
                             continue;
@@ -317,19 +223,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             circuits = array;
                             continue;
@@ -338,6 +238,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -345,10 +246,6 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             resourceGuid = property0.Value.GetString();
                             continue;
                         }
@@ -356,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRoutePort(id, name, type, location, tags, etag, identity, peeringLocation, bandwidthInGbps, provisionedBandwidthInGbps, mtu, encapsulation, etherType, allocationDate, links, circuits, provisioningState, resourceGuid);
+            return new ExpressRoutePort(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

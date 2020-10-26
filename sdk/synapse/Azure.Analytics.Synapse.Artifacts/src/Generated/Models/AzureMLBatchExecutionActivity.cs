@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            GlobalParameters = new ChangeTrackingDictionary<string, object>();
+            WebServiceOutputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
+            WebServiceInputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
             Type = "AzureMLBatchExecution";
         }
 
@@ -46,10 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </summary>
-        public IDictionary<string, object> GlobalParameters { get; set; }
+        public IDictionary<string, object> GlobalParameters { get; }
         /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </summary>
-        public IDictionary<string, AzureMLWebServiceFile> WebServiceOutputs { get; set; }
+        public IDictionary<string, AzureMLWebServiceFile> WebServiceOutputs { get; }
         /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request. </summary>
-        public IDictionary<string, AzureMLWebServiceFile> WebServiceInputs { get; set; }
+        public IDictionary<string, AzureMLWebServiceFile> WebServiceInputs { get; }
     }
 }

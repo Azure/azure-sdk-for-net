@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
         {
-            IReadOnlyList<MetricSpecification> metricSpecifications = default;
+            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricSpecifications"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(MetricSpecification.DeserializeMetricSpecification(item));
-                        }
+                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
                     }
                     metricSpecifications = array;
                     continue;
                 }
             }
-            return new ServiceSpecification(metricSpecifications);
+            return new ServiceSpecification(Optional.ToList(metricSpecifications));
         }
     }
 }

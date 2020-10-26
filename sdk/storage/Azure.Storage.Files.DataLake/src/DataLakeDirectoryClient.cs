@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -180,8 +181,31 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create
         /// diagnostic scopes every request.
         /// </param>
-        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
-            : base(directoryUri, pipeline, version, clientDiagnostics)
+        internal DataLakeDirectoryClient(
+            Uri directoryUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  directoryUri,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
+        {
+        }
+
+        internal DataLakeDirectoryClient(
+            Uri fileSystemUri,
+            string directoryPath,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(
+                  fileSystemUri,
+                  directoryPath,
+                  pipeline,
+                  version,
+                  clientDiagnostics)
         {
         }
         #endregion ctors
@@ -195,7 +219,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeFileClient(
+                Uri,
+                $"{Path}/{fileName}",
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> object by appending
@@ -206,7 +235,12 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
+            => new DataLakeDirectoryClient(
+                Uri,
+                $"{Path}/{subdirectoryName}",
+                Pipeline,
+                Version,
+                ClientDiagnostics);
 
         #region Create
         /// <summary>
@@ -518,7 +552,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -566,7 +602,9 @@ namespace Azure.Storage.Files.DataLake
         /// deletion. The path is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -617,7 +655,9 @@ namespace Azure.Storage.Files.DataLake
         /// for deletion, if the directory exists. The directory is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -665,7 +705,9 @@ namespace Azure.Storage.Files.DataLake
         /// for deletion, if the directory exists. The directory is later deleted during
         /// garbage collection.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -852,7 +894,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetAccessControl"/> operation returns the
         /// access control data for a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
@@ -909,7 +953,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetAccessControlAsync"/> operation returns the
         /// access control data for a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
@@ -969,7 +1015,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlList"/> operation sets the
         /// Access Control on a path
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -1031,7 +1079,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetAccessControlListAsync"/> operation sets the
         /// Access Control on a path
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
@@ -1096,7 +1146,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetPermissions"/> operation sets the
         /// file permissions on a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="permissions">
         ///  The POSIX access permissions for the file owner, the file owning group, and others.
@@ -1159,7 +1211,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetPermissionsAsync"/> operation sets the
         /// file permissions on a path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
         /// </summary>
         /// <param name="permissions">
         ///  The POSIX access permissions for the file owner, the file owning group, and others.
@@ -1226,7 +1280,9 @@ namespace Azure.Storage.Files.DataLake
         /// properties for the path. It does not return the content of the
         /// path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1278,7 +1334,9 @@ namespace Azure.Storage.Files.DataLake
         /// properties for the path. It does not return the content of the
         /// path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
         /// </summary>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -1328,10 +1386,13 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetHttpHeaders"/> operation sets system
         /// properties on the path.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
-        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// Optional. The standard HTTP header system properties to set.
+        /// If not specified, existing values will be cleared.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1380,10 +1441,13 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
         /// properties on the PATH.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties">
+        /// Set Blob Properties</see>.
         /// </summary>
         /// <param name="httpHeaders">
-        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// Optional. The standard HTTP header system properties to set.
+        /// If not specified, existing values will be cleared.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
@@ -1435,7 +1499,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadata"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this path.
@@ -1487,7 +1553,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata">
+        /// Set Metadata</see>.
         /// </summary>
         /// <param name="metadata">
         /// Custom metadata to set for this path.
@@ -1721,7 +1789,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="DeleteFile"/> operation deletes a file
         /// in this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="fileName">
         /// The name of the file to delete.
@@ -1771,7 +1841,9 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="DeleteFileAsync"/> operation deletes a file
         /// in this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="fileName">
         /// The name of the file to delete.
@@ -2000,7 +2072,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteSubDirectory"/> deletes a sub directory in this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the directory to delete.
@@ -2057,7 +2131,9 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="DeleteSubDirectoryAsync"/> deletes a sub directory in this directory.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
         /// </summary>
         /// <param name="path">
         /// The path to the directory to delete.
@@ -2112,5 +2188,95 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete Sub Directory
+
+        #region Get Paths
+        /// <summary>
+        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PathItem> GetPaths(
+            bool recursive = default,
+            bool userPrincipalName = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                recursive,
+                userPrincipalName,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetPaths"/> operation returns an async sequence
+        /// of paths in this directory.  Enumerating the paths may make
+        /// multiple requests to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/path/list">
+        /// List Path(s)</see>.
+        /// </summary>
+        /// <param name="recursive">
+        /// If "true", all paths are listed; otherwise, only paths at the root of the filesystem are listed.
+        /// </param>
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account. If
+        /// "true", the user identity values returned in the owner and group fields of each list
+        /// entry will be transformed from Azure Active Directory Object IDs to User Principal
+        /// Names. If "false", the values will be returned as Azure Active Directory Object IDs.
+        /// The default value is false. Note that group and application Object IDs are not translated
+        /// because they do not have unique friendly names.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathItem}"/>
+        /// describing the paths in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PathItem> GetPathsAsync(
+            bool recursive = default,
+            bool userPrincipalName = default,
+            CancellationToken cancellationToken = default) =>
+            new GetPathsAsyncCollection(
+                FileSystemClient,
+                Path,
+                recursive,
+                userPrincipalName,
+                $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
+            .ToAsyncCollection(cancellationToken);
+        #endregion Get Paths
     }
 }

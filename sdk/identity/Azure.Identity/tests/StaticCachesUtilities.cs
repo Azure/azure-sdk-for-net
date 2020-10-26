@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
         {
             var assembly = typeof(PublicClientApplication).Assembly;
             Type authorityEndpointResolutionManagerType = assembly.GetType("Microsoft.Identity.Client.Instance.AuthorityEndpointResolutionManager", true);
-            Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Core.IServiceBundle", true);
+            Type iServiceBundleType = assembly.GetType("Microsoft.Identity.Client.Internal.IServiceBundle", true);
             Type booleanType = typeof(bool);
 
             ConstructorInfo[] constructors = authorityEndpointResolutionManagerType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);

@@ -65,12 +65,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='replicationName'>
         /// The name of the replication.
         /// </param>
-        /// <param name='location'>
-        /// The location of the resource. This cannot be changed after the
-        /// resource is created.
-        /// </param>
-        /// <param name='tags'>
-        /// The tags of the resource.
+        /// <param name='replication'>
+        /// The parameters for creating a replication.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,7 +83,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Replication replication, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a replication from a container registry.
         /// </summary>
@@ -131,6 +127,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='tags'>
         /// The tags for the replication.
         /// </param>
+        /// <param name='regionEndpointEnabled'>
+        /// Specifies whether the replication's regional endpoint is enabled.
+        /// Requests will not be routed to a replication whose regional
+        /// endpoint is disabled, however its data will continue to be synced
+        /// with other replications.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -146,7 +148,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the replications for the specified container registry.
         /// </summary>
@@ -187,12 +189,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='replicationName'>
         /// The name of the replication.
         /// </param>
-        /// <param name='location'>
-        /// The location of the resource. This cannot be changed after the
-        /// resource is created.
-        /// </param>
-        /// <param name='tags'>
-        /// The tags of the resource.
+        /// <param name='replication'>
+        /// The parameters for creating a replication.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -209,7 +207,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, Replication replication, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a replication from a container registry.
         /// </summary>
@@ -253,6 +251,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='tags'>
         /// The tags for the replication.
         /// </param>
+        /// <param name='regionEndpointEnabled'>
+        /// Specifies whether the replication's regional endpoint is enabled.
+        /// Requests will not be routed to a replication whose regional
+        /// endpoint is disabled, however its data will continue to be synced
+        /// with other replications.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -268,7 +272,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Replication>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the replications for the specified container registry.
         /// </summary>

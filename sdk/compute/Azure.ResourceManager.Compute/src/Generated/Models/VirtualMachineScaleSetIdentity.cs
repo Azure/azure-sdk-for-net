@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIdentity. </summary>
         public VirtualMachineScaleSetIdentity()
         {
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIdentity. </summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The type of identity used for the virtual machine scale set. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the virtual machine scale set. </summary>
         public ResourceIdentityType? Type { get; set; }
         /// <summary> The list of user identities associated with the virtual machine scale set. The user identity dictionary key references will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get; set; }
+        public IDictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties> UserAssignedIdentities { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            if (AccessPolicies != null)
+            if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies");
                 writer.WriteStartArray();
@@ -31,55 +31,45 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VaultUri != null)
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri");
                 writer.WriteStringValue(VaultUri);
             }
-            if (EnabledForDeployment != null)
+            if (Optional.IsDefined(EnabledForDeployment))
             {
                 writer.WritePropertyName("enabledForDeployment");
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
-            if (EnabledForDiskEncryption != null)
+            if (Optional.IsDefined(EnabledForDiskEncryption))
             {
                 writer.WritePropertyName("enabledForDiskEncryption");
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
-            if (EnabledForTemplateDeployment != null)
+            if (Optional.IsDefined(EnabledForTemplateDeployment))
             {
                 writer.WritePropertyName("enabledForTemplateDeployment");
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
-            if (EnableSoftDelete != null)
+            if (Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete");
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (CreateMode != null)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (EnablePurgeProtection != null)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls");
                 writer.WriteObjectValue(NetworkAcls);
-            }
-            if (PrivateEndpointConnections != null)
-            {
-                writer.WritePropertyName("privateEndpointConnections");
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -88,16 +78,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Guid tenantId = default;
             Sku sku = default;
-            IList<AccessPolicyEntry> accessPolicies = default;
-            string vaultUri = default;
-            bool? enabledForDeployment = default;
-            bool? enabledForDiskEncryption = default;
-            bool? enabledForTemplateDeployment = default;
-            bool? enableSoftDelete = default;
-            CreateMode? createMode = default;
-            bool? enablePurgeProtection = default;
-            NetworkRuleSet networkAcls = default;
-            IList<PrivateEndpointConnectionItem> privateEndpointConnections = default;
+            Optional<IList<AccessPolicyEntry>> accessPolicies = default;
+            Optional<string> vaultUri = default;
+            Optional<bool> enabledForDeployment = default;
+            Optional<bool> enabledForDiskEncryption = default;
+            Optional<bool> enabledForTemplateDeployment = default;
+            Optional<bool> enableSoftDelete = default;
+            Optional<CreateMode> createMode = default;
+            Optional<bool> enablePurgeProtection = default;
+            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
@@ -114,29 +104,19 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
-                        }
+                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
                     }
                     accessPolicies = array;
                     continue;
                 }
                 if (property.NameEquals("vaultUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vaultUri = property.Value.GetString();
                     continue;
                 }
@@ -144,6 +124,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledForDeployment = property.Value.GetBoolean();
@@ -153,6 +134,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledForDiskEncryption = property.Value.GetBoolean();
@@ -162,6 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledForTemplateDeployment = property.Value.GetBoolean();
@@ -171,6 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableSoftDelete = property.Value.GetBoolean();
@@ -180,6 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createMode = property.Value.GetString().ToCreateMode();
@@ -189,6 +174,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enablePurgeProtection = property.Value.GetBoolean();
@@ -198,6 +184,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
@@ -207,25 +194,19 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateEndpointConnectionItem> array = new List<PrivateEndpointConnectionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PrivateEndpointConnectionItem.DeserializePrivateEndpointConnectionItem(item));
-                        }
+                        array.Add(PrivateEndpointConnectionItem.DeserializePrivateEndpointConnectionItem(item));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
             }
-            return new VaultProperties(tenantId, sku, accessPolicies, vaultUri, enabledForDeployment, enabledForDiskEncryption, enabledForTemplateDeployment, enableSoftDelete, createMode, enablePurgeProtection, networkAcls, privateEndpointConnections);
+            return new VaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

@@ -11,62 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ImmutabilityPolicyProperties : IUtf8JsonSerializable
+    public partial class ImmutabilityPolicyProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (UpdateHistory != null)
-            {
-                writer.WritePropertyName("updateHistory");
-                writer.WriteStartArray();
-                foreach (var item in UpdateHistory)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (ImmutabilityPeriodSinceCreationInDays != null)
-            {
-                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
-                writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
-            }
-            if (State != null)
-            {
-                writer.WritePropertyName("state");
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (AllowProtectedAppendWrites != null)
-            {
-                writer.WritePropertyName("allowProtectedAppendWrites");
-                writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static ImmutabilityPolicyProperties DeserializeImmutabilityPolicyProperties(JsonElement element)
         {
-            string etag = default;
-            IList<UpdateHistoryProperty> updateHistory = default;
-            int? immutabilityPeriodSinceCreationInDays = default;
-            ImmutabilityPolicyState? state = default;
-            bool? allowProtectedAppendWrites = default;
+            Optional<string> etag = default;
+            Optional<IReadOnlyList<UpdateHistoryProperty>> updateHistory = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<ImmutabilityPolicyState> state = default;
+            Optional<bool> allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
@@ -74,31 +31,31 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UpdateHistoryProperty> array = new List<UpdateHistoryProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(UpdateHistoryProperty.DeserializeUpdateHistoryProperty(item));
-                        }
+                        array.Add(UpdateHistoryProperty.DeserializeUpdateHistoryProperty(item));
                     }
                     updateHistory = array;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
@@ -108,6 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
@@ -117,6 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
@@ -126,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ImmutabilityPolicyProperties(etag, updateHistory, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites);
+            return new ImmutabilityPolicyProperties(etag.Value, Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
         }
     }
 }

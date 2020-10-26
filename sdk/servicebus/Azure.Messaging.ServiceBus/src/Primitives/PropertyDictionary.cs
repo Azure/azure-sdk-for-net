@@ -115,5 +115,8 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
             return true;
         }
+
+        internal PropertyDictionary Clone() =>
+            new PropertyDictionary(_inner);
     }
 }

@@ -15,22 +15,22 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
                 writer.WriteStringValue(Source);
             }
-            if (Essential != null)
+            if (Optional.IsDefined(Essential))
             {
                 writer.WritePropertyName("essential");
                 writer.WriteBooleanValue(Essential.Value);
             }
-            if (AdditionalProperties != null)
+            if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties");
                 writer.WriteObjectValue(AdditionalProperties);
@@ -40,27 +40,19 @@ namespace Azure.Graph.Rbac.Models
 
         internal static OptionalClaim DeserializeOptionalClaim(JsonElement element)
         {
-            string name = default;
-            string source = default;
-            bool? essential = default;
-            object additionalProperties = default;
+            Optional<string> name = default;
+            Optional<string> source = default;
+            Optional<bool> essential = default;
+            Optional<object> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     source = property.Value.GetString();
                     continue;
                 }
@@ -68,6 +60,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     essential = property.Value.GetBoolean();
@@ -77,13 +70,14 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalProperties = property.Value.GetObject();
                     continue;
                 }
             }
-            return new OptionalClaim(name, source, essential, additionalProperties);
+            return new OptionalClaim(name.Value, source.Value, Optional.ToNullable(essential), additionalProperties.Value);
         }
     }
 }

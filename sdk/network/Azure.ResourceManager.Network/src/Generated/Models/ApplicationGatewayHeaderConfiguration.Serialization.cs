@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HeaderName != null)
+            if (Optional.IsDefined(HeaderName))
             {
                 writer.WritePropertyName("headerName");
                 writer.WriteStringValue(HeaderName);
             }
-            if (HeaderValue != null)
+            if (Optional.IsDefined(HeaderValue))
             {
                 writer.WritePropertyName("headerValue");
                 writer.WriteStringValue(HeaderValue);
@@ -30,30 +30,22 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHeaderConfiguration DeserializeApplicationGatewayHeaderConfiguration(JsonElement element)
         {
-            string headerName = default;
-            string headerValue = default;
+            Optional<string> headerName = default;
+            Optional<string> headerValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headerName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     headerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("headerValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     headerValue = property.Value.GetString();
                     continue;
                 }
             }
-            return new ApplicationGatewayHeaderConfiguration(headerName, headerValue);
+            return new ApplicationGatewayHeaderConfiguration(headerName.Value, headerValue.Value);
         }
     }
 }

@@ -15,13 +15,6 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionFilter. </summary>
-        /// <param name="roleName"> Returns role definition with the specific name. </param>
-        internal RoleDefinitionFilter(string roleName)
-        {
-            RoleName = roleName;
-        }
-
         /// <summary> Returns role definition with the specific name. </summary>
         public string RoleName { get; }
     }

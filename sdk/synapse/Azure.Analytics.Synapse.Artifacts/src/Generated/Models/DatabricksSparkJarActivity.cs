@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatabricksSparkJarActivity. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mainClassName"> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
         public DatabricksSparkJarActivity(string name, object mainClassName) : base(name)
         {
             if (name == null)
@@ -28,6 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
 
             MainClassName = mainClassName;
+            Parameters = new ChangeTrackingList<object>();
+            Libraries = new ChangeTrackingList<IDictionary<string, object>>();
             Type = "DatabricksSparkJar";
         }
 
@@ -54,8 +58,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </summary>
         public object MainClassName { get; set; }
         /// <summary> Parameters that will be passed to the main method. </summary>
-        public IList<object> Parameters { get; set; }
+        public IList<object> Parameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
-        public IList<IDictionary<string, object>> Libraries { get; set; }
+        public IList<IDictionary<string, object>> Libraries { get; }
     }
 }

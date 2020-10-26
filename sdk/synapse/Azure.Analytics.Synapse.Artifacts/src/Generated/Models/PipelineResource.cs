@@ -7,23 +7,29 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Pipeline resource type. </summary>
-    public partial class PipelineResource : SubResource, IDictionary<string, object>
+    public partial class PipelineResource : AzureEntityResource, IDictionary<string, object>
     {
         /// <summary> Initializes a new instance of PipelineResource. </summary>
         public PipelineResource()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            Activities = new ChangeTrackingList<Activity>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Variables = new ChangeTrackingDictionary<string, VariableSpecification>();
+            Annotations = new ChangeTrackingList<object>();
+            RunDimensions = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="description"> The description of the pipeline. </param>
         /// <param name="activities"> List of activities in pipeline. </param>
         /// <param name="parameters"> List of parameters for pipeline. </param>
@@ -43,23 +49,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Annotations = annotations;
             RunDimensions = runDimensions;
             Folder = folder;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The description of the pipeline. </summary>
         public string Description { get; set; }
         /// <summary> List of activities in pipeline. </summary>
-        public IList<Activity> Activities { get; set; }
+        public IList<Activity> Activities { get; }
         /// <summary> List of parameters for pipeline. </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+        public IDictionary<string, ParameterSpecification> Parameters { get; }
         /// <summary> List of variables for pipeline. </summary>
-        public IDictionary<string, VariableSpecification> Variables { get; set; }
+        public IDictionary<string, VariableSpecification> Variables { get; }
         /// <summary> The max number of concurrent runs for the pipeline. </summary>
         public int? Concurrency { get; set; }
         /// <summary> List of tags that can be used for describing the Pipeline. </summary>
-        public IList<object> Annotations { get; set; }
+        public IList<object> Annotations { get; }
         /// <summary> Dimensions emitted by Pipeline. </summary>
-        public IDictionary<string, object> RunDimensions { get; set; }
+        public IDictionary<string, object> RunDimensions { get; }
         /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
         public PipelineFolder Folder { get; set; }
         internal IDictionary<string, object> AdditionalProperties { get; }

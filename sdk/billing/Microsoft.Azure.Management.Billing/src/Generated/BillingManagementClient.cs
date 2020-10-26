@@ -48,15 +48,14 @@ namespace Microsoft.Azure.Management.Billing
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The version of the API to be used with the client request. The current
-        /// version is 2020-05-01.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The ID that uniquely identifies an Azure subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Azure Subscription ID.
+        /// </summary>
+        public string SubscriptionId1 { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -165,6 +164,16 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAgreementsOperations.
         /// </summary>
         public virtual IAgreementsOperations Agreements { get; private set; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsOperations.
+        /// </summary>
+        public virtual IEnrollmentAccountsOperations EnrollmentAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingPeriodsOperations.
+        /// </summary>
+        public virtual IBillingPeriodsOperations BillingPeriods { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -425,8 +434,9 @@ namespace Microsoft.Azure.Management.Billing
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
+            EnrollmentAccounts = new EnrollmentAccountsOperations(this);
+            BillingPeriods = new BillingPeriodsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             writer.WriteObjectValue(Value);
-            if (IsSensitive != null)
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive");
                 writer.WriteBooleanValue(IsSensitive.Value);
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SsisPropertyOverride DeserializeSsisPropertyOverride(JsonElement element)
         {
             object value = default;
-            bool? isSensitive = default;
+            Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -40,13 +40,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSensitive = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new SsisPropertyOverride(value, isSensitive);
+            return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive));
         }
     }
 }

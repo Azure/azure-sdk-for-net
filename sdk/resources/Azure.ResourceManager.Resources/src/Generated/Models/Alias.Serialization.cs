@@ -15,19 +15,15 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Alias DeserializeAlias(JsonElement element)
         {
-            string name = default;
-            IReadOnlyList<AliasPath> paths = default;
-            AliasType? type = default;
-            string defaultPath = default;
-            AliasPattern defaultPattern = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<AliasPath>> paths = default;
+            Optional<AliasType> type = default;
+            Optional<string> defaultPath = default;
+            Optional<AliasPattern> defaultPattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -35,19 +31,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AliasPath> array = new List<AliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AliasPath.DeserializeAliasPath(item));
-                        }
+                        array.Add(AliasPath.DeserializeAliasPath(item));
                     }
                     paths = array;
                     continue;
@@ -56,6 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToAliasType();
@@ -63,10 +54,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("defaultPath"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     defaultPath = property.Value.GetString();
                     continue;
                 }
@@ -74,13 +61,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultPattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }
             }
-            return new Alias(name, paths, type, defaultPath, defaultPattern);
+            return new Alias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value);
         }
     }
 }

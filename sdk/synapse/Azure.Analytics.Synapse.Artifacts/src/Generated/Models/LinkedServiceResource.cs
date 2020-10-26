@@ -10,10 +10,11 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service resource type. </summary>
-    public partial class LinkedServiceResource : SubResource
+    public partial class LinkedServiceResource : AzureEntityResource
     {
         /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
         /// <param name="properties"> Properties of linked service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LinkedServiceResource(LinkedService properties)
         {
             if (properties == null)
@@ -25,10 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of linked service. </param>
         internal LinkedServiceResource(string id, string name, string type, string etag, LinkedService properties) : base(id, name, type, etag)
         {

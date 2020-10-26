@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -13,8 +14,12 @@ namespace Azure.Security.KeyVault.Administration.Models
     public partial class KeyVaultPermission
     {
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        internal KeyVaultPermission()
+        public KeyVaultPermission()
         {
+            Actions = new ChangeTrackingList<string>();
+            NotActions = new ChangeTrackingList<string>();
+            DataActions = new ChangeTrackingList<string>();
+            NotDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
@@ -22,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="notActions"> Denied actions. </param>
         /// <param name="dataActions"> Allowed Data actions. </param>
         /// <param name="notDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IReadOnlyList<string> actions, IReadOnlyList<string> notActions, IReadOnlyList<string> dataActions, IReadOnlyList<string> notDataActions)
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
         {
             Actions = actions;
             NotActions = notActions;
@@ -31,12 +36,12 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Allowed actions. </summary>
-        public IReadOnlyList<string> Actions { get; }
+        public IList<string> Actions { get; }
         /// <summary> Denied actions. </summary>
-        public IReadOnlyList<string> NotActions { get; }
+        public IList<string> NotActions { get; }
         /// <summary> Allowed Data actions. </summary>
-        public IReadOnlyList<string> DataActions { get; }
+        public IList<string> DataActions { get; }
         /// <summary> Denied Data actions. </summary>
-        public IReadOnlyList<string> NotDataActions { get; }
+        public IList<string> NotDataActions { get; }
     }
 }

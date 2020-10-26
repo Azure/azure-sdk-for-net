@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public DisksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(disk);
             request.Content = content;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -102,6 +104,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string diskName, Disk disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -145,6 +148,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(disk);
             request.Content = content;
@@ -156,6 +160,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string diskName, DiskUpdate disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -188,6 +193,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="disk"/> is null. </exception>
         public Response Update(string resourceGroupName, string diskName, DiskUpdate disk, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -230,6 +236,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(diskName, true);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -237,6 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public async Task<Response<Disk>> GetAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -256,14 +264,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         Disk value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Disk.DeserializeDisk(document.RootElement);
-                        }
+                        value = Disk.DeserializeDisk(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,6 +276,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public Response<Disk> Get(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -294,14 +296,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         Disk value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = Disk.DeserializeDisk(document.RootElement);
-                        }
+                        value = Disk.DeserializeDisk(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,6 +326,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -359,6 +355,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -397,12 +394,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/disks", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all the disks under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DiskList>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -418,14 +417,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,6 +428,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all the disks under a resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DiskList> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -451,14 +444,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,6 +464,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/disks", false);
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -493,14 +480,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -520,14 +500,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -552,6 +525,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(grantAccessData);
             request.Content = content;
@@ -563,6 +537,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="grantAccessData"/> is null. </exception>
         public async Task<Response> GrantAccessAsync(string resourceGroupName, string diskName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -595,6 +570,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="diskName"/>, or <paramref name="grantAccessData"/> is null. </exception>
         public Response GrantAccess(string resourceGroupName, string diskName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -645,6 +621,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public async Task<Response> RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -672,6 +649,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="diskName"/> is null. </exception>
         public Response RevokeAccess(string resourceGroupName, string diskName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -704,6 +682,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -711,6 +690,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<DiskList>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -730,14 +710,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -749,6 +722,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<DiskList> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -768,14 +742,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -792,12 +759,14 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists all the disks under a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<DiskList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -813,14 +782,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -831,6 +793,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all the disks under a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<DiskList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -846,14 +809,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         DiskList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = DiskList.DeserializeDiskList(document.RootElement);
-                        }
+                        value = DiskList.DeserializeDiskList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

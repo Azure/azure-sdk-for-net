@@ -9,8 +9,9 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3.1.101 SDK** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- Install **.NET Core 3.1.301 SDK** for your specific platform. (or a higher version within the 3.1.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
+- Install [NodeJS](https://nodejs.org/en/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -99,6 +100,20 @@ See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/te
 2. Navigate to repository root directory
 3. Invoke `dotnet build eng\service.proj`
 
+### Support for Visual Studio Code & Dev Containers
+
+This repository has been configured with support for Visual Studio Code's dev container extension to make it easier to get started working on code without needing to know about how to setup all the pre-requisites. Configuration for dev containers is contained within the ```.devcontainer``` folder off the root directory.
+
+To get started:
+
+1. Install and configure Docker for your platform.
+2. Install the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) into Visual Studio Code.
+3. Clone the repository to your local workstation.
+4. Open Visual Studio Code at the root of the reposiory.
+5. Select "Reopen in Container" when prompted.
+
+After a few moments of initial configuration Visual Studio Code will launch the container with all dependencies (.NET SDK etc) pre-installed.
+
 ## TO TEST:
 
 ### Single Service from Command Line
@@ -115,7 +130,7 @@ See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/te
 
 ### All Client Services from Command Line
 
-1. Open VS 2019 Command Propmpt
+1. Open VS 2019 Command Prompt
 2. Navigate to repository root directory
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
@@ -123,10 +138,7 @@ See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/te
 ### Live testing
 
 Before running or recording live tests you need to create
-[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
-If recording tests, secrets will be sanitized from saved recordings.
-If you will be working on contributions over time, you should consider
-persisting these variables.
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).  Many of the client libraries make use of the Azure Core Test Framework to provide the basis for the live test infrastructure, including the ability to record Live tests so that they can be run without access to Azure resources.  The [Test Framework documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework/README.md) provides more context around test recordings and other features.
 
 To run live tests after creating live resources:
 
@@ -150,38 +162,137 @@ Running the script for a project in `sdk\tables` would look like this:
 eng\scripts\Export-API.ps1 tables
 ```
 
+## Updating Sample Snippets
+If the specific client library has sample snippets in markdown format, they were most likely created with help of the `eng\scripts\Update-Snippets.ps1` script.
+Any changes made to the snippet markdown should be done via updating the corresponding C# snippet code and subsequently running the script.
+
+Running the script for a project, for example in `sdk\keyvault`, would look like this: 
+```
+eng\scripts\Update-Snippets.ps1 keyvault
+```
+
+When run, the code regions in the format below (where `<snippetName>` is the name of the snippet):
+```c#
+#region Snippet:<snippetName>
+//some sample code
+string snippet = "some snippet code";
+
+// Lines prefixed with the below comment format will be ignored by the snippet updater.
+/*@@*/ string ignored = "this code will not appear in the snippet markdown";
+
+// Lines prefixed with the below comment format will appear in the snippet markdown, but will remain comments in the C#` code.
+// Note: these comments should only be used for non-critical code as it will not be compiled or refactored as the code changes.
+//@@ snippet = "value that would never pass a test but looks good in a sample!";
+
+#endregion
+```
+ will be mapped to any markdown file with a corresponding code region in the format below where the snippet names match: 
+
+**\`\`\`C# Snippet:\<snippetName>**
+
+**\`\`\`**
+
+See the following example of a [snippet C# file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/tests/Samples/Sample01_HelloWorld.cs) and a [snippet markdown file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/search/Azure.Search.Documents/samples/Sample01a_HelloWorld.md). 
+Note that snippet names need to be globally unique under a given service directory.
+
+Snippets also can be integrated into XML doc comments. For example:
+```c#
+/// <summary>
+/// Some Property.
+/// </summary>
+/// <example>
+/// This is an example of using a snippet in XML docs.
+/// <code snippet="Snippet:<snippetName>">
+/// // some sample code.
+/// string snippet = "some snippet code";
+/// </code>
+public string SomeProperty { get; set; }
+```
+
+For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples)
+
+## Updating Source on Build
+You can run `eng\scripts\Export-API.ps1` and `eng\scripts\Update-Snippets.ps1` simultaneously as part of the build by setting as true either:
+1. The property `UpdateSourceOnBuild` 
+2. The Environment variable `AZURE_DEV_UPDATESOURCESONBUILD=true`
+
+e.g.
+```
+dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuild=true
+```
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
 
 ### How it works
-We use a dummy project called [ApiCompat](https://github.com/Azure/azure-sdk-for-net/tree/master/eng/ApiCompat/ApiCompat.csproj) to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. This project includes package references to the GA'ed library and to Microsoft.DotNet.ApiCompat.
-Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library which is used to compare APIs with the current to ensure no breaks
-have been introduced. 
-The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `ApiCompatVersion` property set. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for api checks. 
+Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
 
 ### Releasing a new version of a GA'ed libary
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
 
 ## Dev Feed
-We publish nightly built packages to a dev feed which can be consumed by adding the dev feed as a package source in Visual Studio. 
+We publish daily built packages to a [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) which can be consumed by adding the dev feed as a package source in Visual Studio. 
 
-Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
+Follow instructions provided [here](https://docs.microsoft.com/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json` as the source.
 
 You can also achieve this from the command line.
 
 ```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"```
 
-You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
+Open your NuGet.config file to ensure that the dev feed source comes before the public repository source:
 
-# On-boarding New Libraries
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="Azure SDK for Net Dev Feed" value="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" protocolVersion="3" />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+  </packageSources>
+</configuration>
+```
+
+You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages. 
+
+To see the list of packages you can browse the [dev feed](https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net) and search for the package you are interested in. Or you can do it from the command line via `nuget.exe list -Prelease -Source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"`
+
+To consume the a dev package set the exact version in your project or to consume the latest dev package set the version to `x.y.z-dev.*` for example:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
+  </ItemGroup>
+</Project>
+```
+
+## Preparing to a release of the new library
+
+To update the CHANGELOG, version and release tracking information use the `.\eng\scripts\Prepare-Release.ps1` script.
+
+The syntax is `.\eng\scripts\Prepare-Release.ps1 <package_name>`. The script would ask you for a new version or `NA` if you are not releasing in this cycle.
+
+If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
+
+Example invocations:
+
+```powershell
+.\eng\scripts\Prepare-Release.ps1 Azure.Core
+.\eng\scripts\Prepare-Release.ps1 Azure.Core -ReleaseDate 2020-10-01
+```
+
+## On-boarding New Libraries
 
 ### Project Structure
 
 In `sdk\< Service Name >`, you will find projects for services that have already been implemented
 
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/repo-structure.md)
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md)
    - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
    - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
@@ -193,7 +304,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 
 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
+3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
 6. **MANDATORY**: Add or update tests for the newly generated code.
@@ -242,12 +353,12 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
    | PackageReleaseNotes |
    |                     |
 
-> PackageReleaseNotes are important because this information is displayed on www.nuget.org when your nuget package is published
+> PackageReleaseNotes are important because this information is displayed on https://www.nuget.org when your nuget package is published
 
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
 
-# On-boarding New generated code library
+## On-boarding New generated code library
 
 1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
 2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
@@ -263,7 +374,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
@@ -359,7 +470,7 @@ Much of the management plane SDK code is generated from metadata specs about the
 
 ## Versioning
 
-For more information on how we version see [Versioning](doc/dev/Versioning.md)
+For more information on how we version see [Versioning](https://github.com/Azure/azure-sdk-for-net/blob/master/doc/dev/Versioning.md)
 
 ## Breaking Changes
 

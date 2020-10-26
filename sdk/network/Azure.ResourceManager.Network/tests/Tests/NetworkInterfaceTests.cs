@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var publicIp = new PublicIPAddress()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>()
+                Tags =
                     {
                        {"key","value"}
                     },
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -99,9 +99,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -196,14 +195,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>()
-                {
+                Subnets = {
                     new Subnet()
                     {
                         Name = subnetName,
@@ -224,10 +222,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 EnableAcceleratedNetworking = true,
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Primary = true,
@@ -278,7 +275,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             PublicIPAddress publicIp = new PublicIPAddress()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
@@ -303,13 +300,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Location = location,
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -324,9 +321,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -419,10 +415,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
-                Subnets = new List<Subnet>()
-                {
+                Subnets = {
                     new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", },
                     new Subnet() { Name = subnetName2, AddressPrefix = "10.0.1.0/24" }
                 }
@@ -440,9 +435,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -494,9 +488,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -510,9 +504,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -525,7 +518,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 },
                 DnsSettings = new NetworkInterfaceDnsSettings()
                 {
-                    DnsServers = new List<string> { "1.0.0.1", "1.0.0.2" },
+                    DnsServers = { "1.0.0.1", "1.0.0.2" },
                     InternalDnsNameLabel = "idnstest",
                 }
             };
@@ -576,7 +569,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             PublicIPAddress publicIp = new PublicIPAddress()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
+                Tags = { { "key", "value" } },
                 PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
@@ -602,13 +595,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -624,9 +617,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Primary = true,
@@ -721,9 +713,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24" } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -738,9 +730,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -753,7 +744,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 },
                 DnsSettings = new NetworkInterfaceDnsSettings()
                 {
-                    DnsServers = new List<string> { "1.0.0.1", "1.0.0.2" },
+                    DnsServers = { "1.0.0.1", "1.0.0.2" },
                     InternalDnsNameLabel = "idnstest",
                 }
             };
@@ -805,9 +796,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -821,9 +812,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -884,9 +874,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -896,8 +886,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup()
             {
                 Location = location,
-                SecurityRules = new List<SecurityRule>()
-                {
+                SecurityRules = {
                     new SecurityRule()
                     {
                         Name = securityRule1,
@@ -926,9 +915,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -987,9 +975,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -999,8 +987,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkSecurityGroup networkSecurityGroup = new NetworkSecurityGroup()
             {
                 Location = location,
-                SecurityRules = new List<SecurityRule>()
-                {
+                SecurityRules = {
                     new SecurityRule()
                     {
                         Name = securityRule1,
@@ -1029,9 +1016,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,
@@ -1093,7 +1079,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string route1Name = Recording.GenerateAssetName("azsmnet");
 
             RouteTable routeTable = new RouteTable() { Location = location, };
-            routeTable.Routes = new List<Route>();
 
             Route route1 = new Route()
             {
@@ -1113,9 +1098,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetwork vnet = new VirtualNetwork()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16", } },
-                DhcpOptions = new DhcpOptions() { DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" } },
-                Subnets = new List<Subnet>() { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse } }
+                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
+                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", RouteTable = putRouteTableResponse } }
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
@@ -1127,9 +1112,8 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             NetworkInterface nicParameters = new NetworkInterface()
             {
                 Location = location,
-                Tags = new Dictionary<string, string>() { { "key", "value" } },
-                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
-                {
+                Tags = { { "key", "value" } },
+                IpConfigurations = {
                     new NetworkInterfaceIPConfiguration()
                     {
                         Name = ipConfigName,

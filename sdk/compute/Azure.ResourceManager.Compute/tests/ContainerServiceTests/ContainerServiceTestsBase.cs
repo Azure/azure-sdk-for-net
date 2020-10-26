@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -38,13 +38,14 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var publicKeys = new ContainerServiceSshPublicKey(DefaultSshPublicKey);
 
-            var agentPoolProfiles = new ContainerServiceAgentPoolProfile(DefaultAgentPoolProfileName,1, DefaultVmSize, agentPoolDnsPrefix){
+            var agentPoolProfiles = new ContainerServiceAgentPoolProfile(DefaultAgentPoolProfileName, 1, DefaultVmSize, agentPoolDnsPrefix)
+            {
             };
 
             return new ContainerService(m_location)
             {
-                Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                AgentPoolProfiles = new[] { agentPoolProfiles },
+                Tags = { { "RG", "rg" }, { "testTag", "1" } },
+                AgentPoolProfiles = { agentPoolProfiles },
                 // Todo: DiagnosticsProfile will be available in GA
                 //DiagnosticsProfile = new ContainerServiceDiagnosticsProfile
                 //{
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 //    }
                 //},
 
-                LinuxProfile = new ContainerServiceLinuxProfile(DefaultLinuxAdminUsername, new ContainerServiceSshConfiguration( new[] { publicKeys })
+                LinuxProfile = new ContainerServiceLinuxProfile(DefaultLinuxAdminUsername, new ContainerServiceSshConfiguration(new[] { publicKeys })
                 {
                 }),
                 MasterProfile = new ContainerServiceMasterProfile(masterDnsPrefix)
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             try
             {
-                var getTwoServiceOpera =await CreateContainerServiceAndGetOperationResponse(
+                var getTwoServiceOpera = await CreateContainerServiceAndGetOperationResponse(
                     rgName,
                     csName,
                     masterDnsPrefix,
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ValidateContainerService(inputContainerService, createOrUpdateResponse.Value);
 
-            return (createOrUpdateResponse,inputContainerService);
+            return (createOrUpdateResponse, inputContainerService);
             ;
         }
 

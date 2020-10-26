@@ -131,6 +131,9 @@ namespace Azure.Storage.Queues.Test
 
         [TestCase("")]
         [TestCase("\"aa\"")] // real world example
+        [TestCase("{\"key1\":\"value1\",\"key2\":\"value2\"}")] // more typical json object, but not the actual schema we're looking for
+        [TestCase("{\"EncryptedMessageContents\":\"value1\",\"key2\":\"value2\"}")] // one required piece but not the other
+        [TestCase("{\"EncryptionData\":{},\"key2\":\"value2\"}")] // one required piece but not the other
         [TestCase("this is not even valid json")]
         [TestCase("ᛁᚳ᛫ᛗᚨᚷ᛫ᚷᛚᚨᛋ᛫ᛖᚩᛏᚪᚾ᛫ᚩᚾᛞ᛫ᚻᛁᛏ᛫ᚾᛖ᛫ᚻᛖᚪᚱᛗᛁᚪᚧ᛫ᛗᛖ")]
         public void TryDeserializeGracefulOnBadInput(string input)
@@ -138,7 +141,9 @@ namespace Azure.Storage.Queues.Test
             bool tryResult = EncryptedMessageSerializer.TryDeserialize(input, out var parsedEncryptedMessage);
 
             Assert.AreEqual(false, tryResult);
-            Assert.AreEqual(default, parsedEncryptedMessage);
+            Assert.IsNull(parsedEncryptedMessage?.EncryptedMessageText);
+            Assert.IsNull(parsedEncryptedMessage?.EncryptionData);
+            Assert.IsNull(parsedEncryptedMessage);
         }
 
         #region ModelComparison

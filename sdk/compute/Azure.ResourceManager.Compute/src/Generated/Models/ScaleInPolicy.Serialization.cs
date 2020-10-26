@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Rules != null)
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules");
                 writer.WriteStartArray();
@@ -31,13 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ScaleInPolicy DeserializeScaleInPolicy(JsonElement element)
         {
-            IList<VirtualMachineScaleSetScaleInRules> rules = default;
+            Optional<IList<VirtualMachineScaleSetScaleInRules>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetScaleInRules> array = new List<VirtualMachineScaleSetScaleInRules>();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ScaleInPolicy(rules);
+            return new ScaleInPolicy(Optional.ToList(rules));
         }
     }
 }

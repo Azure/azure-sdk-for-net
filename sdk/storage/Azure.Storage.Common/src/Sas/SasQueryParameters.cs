@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -16,7 +17,9 @@ namespace Azure.Storage.Sas
     /// parameters.  It includes components used by all Azure Storage resources
     /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
-    /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+    /// For more information,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-service-sas">
+    /// Create a service SAS</see>.
     /// </summary>
     public partial class SasQueryParameters
     {
@@ -57,6 +60,18 @@ namespace Azure.Storage.Sas
 
         // sig
         private string _signature;
+
+        // saoid
+        private string _preauthorizedAgentObjectId;
+
+        /// suoid
+        private string _agentObjectId;
+
+        /// scid
+        private string _correlationId;
+
+        // sdd
+        private int? _directoryDepth;
 
         // rscc
         private string _cacheControl;
@@ -167,6 +182,46 @@ namespace Azure.Storage.Sas
         /// </summary>
         public string ContentType => _contentType ?? string.Empty;
 
+
+        /// <summary>
+        /// Gets the Authorized AAD Object Id associated with the shared access signature.
+        /// The AAD Object ID of a user authorized by the owner of the User Delegation Key
+        /// to perform the action granted by the SAS. The Azure Storage service will
+        /// ensure that the owner of the user delegation key has the required permissions
+        /// before granting access but no additional permission check for the user specified
+        /// in this value will be performed. This cannot be used in conjuction with
+        /// <see cref="AgentObjectId"/>.
+        /// Only valid in an HNS enabled account. If this value is set in an non-HNS enabled
+        /// account, an authorization failure will be thrown.
+        /// </summary>
+        public string PreauthorizedAgentObjectId => _preauthorizedAgentObjectId ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Unauthorized AAD Object Id associated with the shared access signature.
+        /// The AAD Object Id of a user that is assumed to be unauthorized by the owner of the
+        /// User Delegation Key. The Azure Storage Service will perform an additional POSIX ACL
+        /// check to determine if the user is authorized to perform the requested operation.
+        /// This cannot be used in conjuction with <see cref="PreauthorizedAgentObjectId"/>.
+        /// Only valid in an HNS enabled account. If this value is set in an non-HNS enabled
+        /// account, an authorization failure will be thrown.
+        /// </summary>
+        public string AgentObjectId => _agentObjectId ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Correlation Id associated with the shared access signature. This is used to
+        /// correlate the storage audit logs with the audit logs used by the principal generating
+        /// and distributing SAS.
+        /// </summary>
+        public string CorrelationId => _correlationId ?? string.Empty;
+
+        /// <summary>
+        /// Gets the Directory Depth specificed in the canonicalizedresource field of the
+        /// string-to-sign. The depth of the directory is the number of directories beneath the
+        /// root folder. Required when resource (sr) = d to indicate the depth of the directory.
+        /// The value must be a non-negative integer.
+        /// </summary>
+        public int? DirectoryDepth => _directoryDepth ?? null;
+
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
         /// fields that must be verified in order to authenticate the request.
@@ -250,6 +305,18 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.ContentTypeUpper:
                         _contentType = kv.Value;
                         break;
+                    case Constants.Sas.Parameters.PreauthorizedAgentObjectIdUpper:
+                        _preauthorizedAgentObjectId = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.AgentObjectIdUpper:
+                        _agentObjectId = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.CorrelationIdUpper:
+                        _correlationId = kv.Value;
+                        break;
+                    case Constants.Sas.Parameters.DirectoryDepthUpper:
+                        _directoryDepth = Convert.ToInt32(kv.Value, Constants.Base16);
+                        break;
 
                     // We didn't recognize the query parameter
                     default:
@@ -302,6 +369,57 @@ namespace Azure.Storage.Sas
             _contentEncoding = contentEncoding;
             _contentLanguage = contentLanguage;
             _contentType = contentType;
+            _preauthorizedAgentObjectId = default;
+            _agentObjectId = default;
+            _correlationId = default;
+            _directoryDepth = default;
+        }
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        protected SasQueryParameters(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default)
+        {
+            _version = version;
+            _services = services;
+            _resourceTypes = resourceTypes;
+            _protocol = protocol;
+            _startTime = startsOn;
+            _expiryTime = expiresOn;
+            _ipRange = ipRange;
+            _identifier = identifier;
+            _resource = resource;
+            _permissions = permissions;
+            _signature = signature;
+            _cacheControl = cacheControl;
+            _contentDisposition = contentDisposition;
+            _contentEncoding = contentEncoding;
+            _contentLanguage = contentLanguage;
+            _contentType = contentType;
+            _preauthorizedAgentObjectId = authorizedAadObjectId;
+            _agentObjectId = unauthorizedAadObjectId;
+            _correlationId = correlationId;
+            _directoryDepth = directoryDepth;
         }
 
         /// <summary>
@@ -313,6 +431,45 @@ namespace Azure.Storage.Sas
         /// <param name="values">URI query parameters</param>
         protected static SasQueryParameters Create(IDictionary<string, string> values) =>
             new SasQueryParameters(values);
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static SasQueryParameters Create(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default) =>
+            new SasQueryParameters(
+                version: version,
+                services: services,
+                resourceTypes: resourceTypes,
+                protocol: protocol,
+                startsOn: startsOn,
+                expiresOn: expiresOn,
+                ipRange: ipRange,
+                identifier: identifier,
+                resource: resource,
+                permissions: permissions,
+                signature: signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType);
 
         /// <summary>
         /// Creates a new SasQueryParameters instance.
@@ -333,24 +490,32 @@ namespace Azure.Storage.Sas
             string contentDisposition = default,
             string contentEncoding = default,
             string contentLanguage = default,
-            string contentType = default) =>
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default) =>
             new SasQueryParameters(
-                version,
-                services,
-                resourceTypes,
-                protocol,
-                startsOn,
-                expiresOn,
-                ipRange,
-                identifier,
-                resource,
-                permissions,
-                signature,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType);
+                version: version,
+                services: services,
+                resourceTypes: resourceTypes,
+                protocol: protocol,
+                startsOn: startsOn,
+                expiresOn: expiresOn,
+                ipRange: ipRange,
+                identifier: identifier,
+                resource: resource,
+                permissions: permissions,
+                signature: signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType,
+                authorizedAadObjectId: authorizedAadObjectId,
+                unauthorizedAadObjectId: unauthorizedAadObjectId,
+                correlationId: correlationId,
+                directoryDepth: directoryDepth);
 
         /// <summary>
         /// Convert the SAS query parameters into a URL encoded query string.

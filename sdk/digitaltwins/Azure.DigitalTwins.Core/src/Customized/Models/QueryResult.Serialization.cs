@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     internal partial class QueryResult
     {
@@ -18,7 +18,7 @@ namespace Azure.DigitalTwins.Core.Models
             string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("items"))
+                if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

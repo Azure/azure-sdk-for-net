@@ -10,51 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class BootDiagnosticsInstanceView : IUtf8JsonSerializable
+    public partial class BootDiagnosticsInstanceView
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (ConsoleScreenshotBlobUri != null)
-            {
-                writer.WritePropertyName("consoleScreenshotBlobUri");
-                writer.WriteStringValue(ConsoleScreenshotBlobUri);
-            }
-            if (SerialConsoleLogBlobUri != null)
-            {
-                writer.WritePropertyName("serialConsoleLogBlobUri");
-                writer.WriteStringValue(SerialConsoleLogBlobUri);
-            }
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteObjectValue(Status);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static BootDiagnosticsInstanceView DeserializeBootDiagnosticsInstanceView(JsonElement element)
         {
-            string consoleScreenshotBlobUri = default;
-            string serialConsoleLogBlobUri = default;
-            InstanceViewStatus status = default;
+            Optional<string> consoleScreenshotBlobUri = default;
+            Optional<string> serialConsoleLogBlobUri = default;
+            Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consoleScreenshotBlobUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     consoleScreenshotBlobUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serialConsoleLogBlobUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serialConsoleLogBlobUri = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +33,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
             }
-            return new BootDiagnosticsInstanceView(consoleScreenshotBlobUri, serialConsoleLogBlobUri, status);
+            return new BootDiagnosticsInstanceView(consoleScreenshotBlobUri.Value, serialConsoleLogBlobUri.Value, status.Value);
         }
     }
 }

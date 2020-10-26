@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core.Tests
             actual.Name.Should().Be(expectedRelationship);
             actual.SourceId.Should().Be(expectedSourceId);
             actual.TargetId.Should().Be(expectedTargetId);
-            actual.CustomProperties[expectedCustomPropKey].ToString().Should().Be(expectedCustomPropVal);
+            actual.Properties[expectedCustomPropKey].ToString().Should().Be(expectedCustomPropVal);
         }
     }
 }

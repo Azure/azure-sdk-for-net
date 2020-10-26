@@ -4,14 +4,13 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
     /// <summary>
-    /// Tests for DigitalTwinServiceClient methods dealing with Digital Twin operations
+    /// Tests for DigitalTwinServiceClient methods dealing with Digital Twin operations.
     /// </summary>
     public class EventRouteTests : E2eTestBase
     {
@@ -20,39 +19,36 @@ namespace Azure.DigitalTwins.Core.Tests
         {
         }
 
-        // Infrastructure setup script uses this hardcoded value when linking the test eventhub to the test digital twins instance
+        // Infrastructure setup script uses this hard-coded value when linking the test eventhub to the test digital twins instance
         private const string EndpointName = "someEventHubEndpoint";
 
         [Test]
         public async Task EventRoutes_Lifecycle()
         {
             // arrange
-
             DigitalTwinsClient client = GetClient();
 
-            // Ensure unique eventRouteId and endpointName
+            // Ensure unique eventRouteId
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
+
             string filter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-            var eventRoute = new EventRoute(EndpointName)
-            {
-                Filter = filter
-            };
+            var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
             Response createEventRouteResponse = await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
             createEventRouteResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
 
             // Test GetEventRoute
-            EventRoute getEventRouteResult = await client.GetEventRouteAsync(eventRouteId);
+            DigitalTwinsEventRoute getEventRouteResult = await client.GetEventRouteAsync(eventRouteId);
             eventRoute.EndpointName.Should().Be(getEventRouteResult.EndpointName);
             eventRoute.Filter.Should().Be(getEventRouteResult.Filter);
             eventRouteId.Should().Be(getEventRouteResult.Id);
 
             // Test GetEventRoutes
-            var eventRoutesListOptions = new EventRoutesListOptions();
-            AsyncPageable<EventRoute> eventRouteList = client.GetEventRoutesAsync(eventRoutesListOptions);
+            var eventRoutesListOptions = new GetDigitalTwinsEventRoutesOptions();
+            AsyncPageable<DigitalTwinsEventRoute> eventRouteList = client.GetEventRoutesAsync(eventRoutesListOptions);
             bool eventRouteFoundInList = false;
-            await foreach (EventRoute eventRouteListEntry in eventRouteList)
+            await foreach (DigitalTwinsEventRoute eventRouteListEntry in eventRouteList)
             {
                 if (StringComparer.Ordinal.Equals(eventRouteListEntry.Id, eventRouteId))
                 {
@@ -103,10 +99,7 @@ namespace Azure.DigitalTwins.Core.Tests
             // Ensure unique eventRouteId and endpointName
             string eventRouteId = $"someEventRouteId-{GetRandom()}";
             string filter = "this is not a valid filter string";
-            var eventRoute = new EventRoute(EndpointName)
-            {
-                Filter = filter
-            };
+            var eventRoute = new DigitalTwinsEventRoute(EndpointName, filter);
 
             // Test CreateEventRoute
             Func<Task> act = async () => await client.CreateEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);

@@ -10,36 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorAdditionalInfo : IUtf8JsonSerializable
+    public partial class ErrorAdditionalInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Info != null)
-            {
-                writer.WritePropertyName("info");
-                writer.WriteObjectValue(Info);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            string type = default;
-            object info = default;
+            Optional<string> type = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -47,13 +27,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     info = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type, info);
+            return new ErrorAdditionalInfo(type.Value, info.Value);
         }
     }
 }

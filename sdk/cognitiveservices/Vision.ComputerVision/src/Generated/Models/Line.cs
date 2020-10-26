@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -35,8 +36,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// line.</param>
         /// <param name="text">The text content of the line.</param>
         /// <param name="words">List of words in the text line.</param>
-        public Line(IList<double> boundingBox = default(IList<double>), string text = default(string), IList<Word> words = default(IList<Word>))
+        /// <param name="language">The BCP-47 language code of the recognized
+        /// text line. Only provided where the language of the line differs
+        /// from the page's.</param>
+        public Line(IList<double?> boundingBox, string text, IList<Word> words, string language = default(string))
         {
+            Language = language;
             BoundingBox = boundingBox;
             Text = text;
             Words = words;
@@ -49,10 +54,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the BCP-47 language code of the recognized text line.
+        /// Only provided where the language of the line differs from the
+        /// page's.
+        /// </summary>
+        [JsonProperty(PropertyName = "language")]
+        public string Language { get; set; }
+
+        /// <summary>
         /// Gets or sets bounding box of a recognized line.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
-        public IList<double> BoundingBox { get; set; }
+        public IList<double?> BoundingBox { get; set; }
 
         /// <summary>
         /// Gets or sets the text content of the line.
@@ -66,5 +79,36 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         [JsonProperty(PropertyName = "words")]
         public IList<Word> Words { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BoundingBox == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "BoundingBox");
+            }
+            if (Text == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Text");
+            }
+            if (Words == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Words");
+            }
+            if (Words != null)
+            {
+                foreach (var element in Words)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -16,24 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -46,32 +31,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (OrchestratorProfile != null)
+            if (Optional.IsDefined(OrchestratorProfile))
             {
                 writer.WritePropertyName("orchestratorProfile");
                 writer.WriteObjectValue(OrchestratorProfile);
             }
-            if (CustomProfile != null)
+            if (Optional.IsDefined(CustomProfile))
             {
                 writer.WritePropertyName("customProfile");
                 writer.WriteObjectValue(CustomProfile);
             }
-            if (ServicePrincipalProfile != null)
+            if (Optional.IsDefined(ServicePrincipalProfile))
             {
                 writer.WritePropertyName("servicePrincipalProfile");
                 writer.WriteObjectValue(ServicePrincipalProfile);
             }
-            if (MasterProfile != null)
+            if (Optional.IsDefined(MasterProfile))
             {
                 writer.WritePropertyName("masterProfile");
                 writer.WriteObjectValue(MasterProfile);
             }
-            if (AgentPoolProfiles != null)
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
                 writer.WritePropertyName("agentPoolProfiles");
                 writer.WriteStartArray();
@@ -81,17 +61,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (WindowsProfile != null)
+            if (Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile");
                 writer.WriteObjectValue(WindowsProfile);
             }
-            if (LinuxProfile != null)
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile");
                 writer.WriteObjectValue(LinuxProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
@@ -102,46 +82,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ContainerService DeserializeContainerService(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             string location = default;
-            IDictionary<string, string> tags = default;
-            string provisioningState = default;
-            ContainerServiceOrchestratorProfile orchestratorProfile = default;
-            ContainerServiceCustomProfile customProfile = default;
-            ContainerServicePrincipalProfile servicePrincipalProfile = default;
-            ContainerServiceMasterProfile masterProfile = default;
-            IList<ContainerServiceAgentPoolProfile> agentPoolProfiles = default;
-            ContainerServiceWindowsProfile windowsProfile = default;
-            ContainerServiceLinuxProfile linuxProfile = default;
-            ContainerServiceDiagnosticsProfile diagnosticsProfile = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> provisioningState = default;
+            Optional<ContainerServiceOrchestratorProfile> orchestratorProfile = default;
+            Optional<ContainerServiceCustomProfile> customProfile = default;
+            Optional<ContainerServicePrincipalProfile> servicePrincipalProfile = default;
+            Optional<ContainerServiceMasterProfile> masterProfile = default;
+            Optional<IList<ContainerServiceAgentPoolProfile>> agentPoolProfiles = default;
+            Optional<ContainerServiceWindowsProfile> windowsProfile = default;
+            Optional<ContainerServiceLinuxProfile> linuxProfile = default;
+            Optional<ContainerServiceDiagnosticsProfile> diagnosticsProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
@@ -154,33 +122,28 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
@@ -188,6 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             orchestratorProfile = ContainerServiceOrchestratorProfile.DeserializeContainerServiceOrchestratorProfile(property0.Value);
@@ -197,6 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customProfile = ContainerServiceCustomProfile.DeserializeContainerServiceCustomProfile(property0.Value);
@@ -206,6 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             servicePrincipalProfile = ContainerServicePrincipalProfile.DeserializeContainerServicePrincipalProfile(property0.Value);
@@ -215,6 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             masterProfile = ContainerServiceMasterProfile.DeserializeContainerServiceMasterProfile(property0.Value);
@@ -224,19 +191,13 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerServiceAgentPoolProfile> array = new List<ContainerServiceAgentPoolProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ContainerServiceAgentPoolProfile.DeserializeContainerServiceAgentPoolProfile(item));
-                                }
+                                array.Add(ContainerServiceAgentPoolProfile.DeserializeContainerServiceAgentPoolProfile(item));
                             }
                             agentPoolProfiles = array;
                             continue;
@@ -245,6 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             windowsProfile = ContainerServiceWindowsProfile.DeserializeContainerServiceWindowsProfile(property0.Value);
@@ -254,6 +216,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linuxProfile = ContainerServiceLinuxProfile.DeserializeContainerServiceLinuxProfile(property0.Value);
@@ -263,6 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticsProfile = ContainerServiceDiagnosticsProfile.DeserializeContainerServiceDiagnosticsProfile(property0.Value);
@@ -272,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ContainerService(id, name, type, location, tags, provisioningState, orchestratorProfile, customProfile, servicePrincipalProfile, masterProfile, agentPoolProfiles, windowsProfile, linuxProfile, diagnosticsProfile);
+            return new ContainerService(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), provisioningState.Value, orchestratorProfile.Value, customProfile.Value, servicePrincipalProfile.Value, masterProfile.Value, Optional.ToList(agentPoolProfiles), windowsProfile.Value, linuxProfile.Value, diagnosticsProfile.Value);
         }
     }
 }

@@ -11,46 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RollingUpgradeRunningStatus : IUtf8JsonSerializable
+    public partial class RollingUpgradeRunningStatus
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Code != null)
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code.Value.ToSerialString());
-            }
-            if (StartTime != null)
-            {
-                writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
-            }
-            if (LastAction != null)
-            {
-                writer.WritePropertyName("lastAction");
-                writer.WriteStringValue(LastAction.Value.ToSerialString());
-            }
-            if (LastActionTime != null)
-            {
-                writer.WritePropertyName("lastActionTime");
-                writer.WriteStringValue(LastActionTime.Value, "O");
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RollingUpgradeRunningStatus DeserializeRollingUpgradeRunningStatus(JsonElement element)
         {
-            RollingUpgradeStatusCode? code = default;
-            DateTimeOffset? startTime = default;
-            RollingUpgradeActionType? lastAction = default;
-            DateTimeOffset? lastActionTime = default;
+            Optional<RollingUpgradeStatusCode> code = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<RollingUpgradeActionType> lastAction = default;
+            Optional<DateTimeOffset> lastActionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     code = property.Value.GetString().ToRollingUpgradeStatusCode();
@@ -60,6 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -69,6 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastAction = property.Value.GetString().ToRollingUpgradeActionType();
@@ -78,13 +55,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastActionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new RollingUpgradeRunningStatus(code, startTime, lastAction, lastActionTime);
+            return new RollingUpgradeRunningStatus(Optional.ToNullable(code), Optional.ToNullable(startTime), Optional.ToNullable(lastAction), Optional.ToNullable(lastActionTime));
         }
     }
 }

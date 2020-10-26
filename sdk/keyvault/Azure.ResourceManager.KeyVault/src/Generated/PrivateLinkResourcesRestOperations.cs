@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2019-09-01")
         {
             if (subscriptionId == null)
@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public async Task<Response<PrivateLinkResourceListResult>> ListByVaultAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -92,14 +94,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,6 +106,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         public Response<PrivateLinkResourceListResult> ListByVault(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -130,14 +126,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         PrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
-                        }
+                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

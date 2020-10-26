@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Services != null)
+            if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services");
                 writer.WriteObjectValue(Services);
             }
             writer.WritePropertyName("keySource");
             writer.WriteStringValue(KeySource.ToString());
-            if (RequireInfrastructureEncryption != null)
+            if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption");
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties");
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -37,16 +37,17 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static Encryption DeserializeEncryption(JsonElement element)
         {
-            EncryptionServices services = default;
+            Optional<EncryptionServices> services = default;
             KeySource keySource = default;
-            bool? requireInfrastructureEncryption = default;
-            KeyVaultProperties keyvaultproperties = default;
+            Optional<bool> requireInfrastructureEncryption = default;
+            Optional<KeyVaultProperties> keyvaultproperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("services"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     services = EncryptionServices.DeserializeEncryptionServices(property.Value);
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireInfrastructureEncryption = property.Value.GetBoolean();
@@ -70,13 +72,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyvaultproperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new Encryption(services, keySource, requireInfrastructureEncryption, keyvaultproperties);
+            return new Encryption(services.Value, keySource, Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value);
         }
     }
 }

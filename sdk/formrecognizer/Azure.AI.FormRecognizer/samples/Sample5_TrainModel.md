@@ -23,18 +23,22 @@ var client = new FormTrainingClient(new Uri(endpoint), credential);
 
 Train custom models to recognize all fields and values found in your custom forms. A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract from each form type.
 
-```C# Snippet:FormRecognizerSample4TrainModelWithForms
+```C# Snippet:FormRecognizerSampleTrainModelWithForms
+// For this sample, you can use the training forms found in the `trainingFiles` folder.
+// Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
+Console.WriteLine($"    Model name: {model.ModelName}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Requested on: {model.RequestedOn}");
-Console.WriteLine($"    Completed on: {model.CompletedOn}");
+Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
+Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {
@@ -55,21 +59,25 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 
 Train custom models to recognize specific fields and values you specify by labeling your custom forms. A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
 
-```C# Snippet:FormRecognizerSample5TrainModelWithFormsAndLabels
+```C# Snippet:FormRecognizerSampleTrainModelWithFormsAndLabels
+// For this sample, you can use the training forms found in the `trainingFiles` folder.
+// Upload the forms to your storage container and then generate a container SAS URL.
 // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-// https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 // For instructions to create a label file for your training forms, please see:
-// https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true).WaitForCompletionAsync();
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "My Model with labels" }).WaitForCompletionAsync();
 
 Console.WriteLine($"Custom Model Info:");
 Console.WriteLine($"    Model Id: {model.ModelId}");
+Console.WriteLine($"    Model name: {model.ModelName}");
 Console.WriteLine($"    Model Status: {model.Status}");
-Console.WriteLine($"    Requested on: {model.RequestedOn}");
-Console.WriteLine($"    Completed on: {model.CompletedOn}");
+Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
+Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
 foreach (CustomFormSubmodel submodel in model.Submodels)
 {

@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Encoder != null)
+            if (Optional.IsDefined(Encoder))
             {
                 writer.WritePropertyName("encoder");
                 writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
-            if (ReplaceOriginalTokens != null)
+            if (Optional.IsDefined(ReplaceOriginalTokens))
             {
                 writer.WritePropertyName("replace");
                 writer.WriteBooleanValue(ReplaceOriginalTokens.Value);
@@ -34,8 +34,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PhoneticTokenFilter DeserializePhoneticTokenFilter(JsonElement element)
         {
-            PhoneticEncoder? encoder = default;
-            bool? replace = default;
+            Optional<PhoneticEncoder> encoder = default;
+            Optional<bool> replace = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -44,6 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encoder = property.Value.GetString().ToPhoneticEncoder();
@@ -53,6 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replace = property.Value.GetBoolean();
@@ -69,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PhoneticTokenFilter(odataType, name, encoder, replace);
+            return new PhoneticTokenFilter(odataType, name, Optional.ToNullable(encoder), Optional.ToNullable(replace));
         }
     }
 }

@@ -15,62 +15,44 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Dependency DeserializeDependency(JsonElement element)
         {
-            IReadOnlyList<BasicDependency> dependsOn = default;
-            string id = default;
-            string resourceType = default;
-            string resourceName = default;
+            Optional<IReadOnlyList<BasicDependency>> dependsOn = default;
+            Optional<string> id = default;
+            Optional<string> resourceType = default;
+            Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dependsOn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BasicDependency> array = new List<BasicDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BasicDependency.DeserializeBasicDependency(item));
-                        }
+                        array.Add(BasicDependency.DeserializeBasicDependency(item));
                     }
                     dependsOn = array;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceName = property.Value.GetString();
                     continue;
                 }
             }
-            return new Dependency(dependsOn, id, resourceType, resourceName);
+            return new Dependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
         }
     }
 }

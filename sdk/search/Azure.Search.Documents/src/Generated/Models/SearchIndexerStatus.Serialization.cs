@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element)
         {
             IndexerStatus status = default;
-            IndexerExecutionResult lastResult = default;
+            Optional<IndexerExecutionResult> lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
@@ -30,6 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        lastResult = null;
                         continue;
                     }
                     lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
@@ -40,14 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
-                        }
+                        array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
                     }
                     executionHistory = array;
                     continue;
@@ -58,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+            return new SearchIndexerStatus(status, lastResult.Value, executionHistory, limits);
         }
     }
 }

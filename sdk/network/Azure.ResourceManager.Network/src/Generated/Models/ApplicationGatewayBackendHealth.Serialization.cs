@@ -15,32 +15,26 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealth DeserializeApplicationGatewayBackendHealth(JsonElement element)
         {
-            IReadOnlyList<ApplicationGatewayBackendHealthPool> backendAddressPools = default;
+            Optional<IReadOnlyList<ApplicationGatewayBackendHealthPool>> backendAddressPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendAddressPools"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayBackendHealthPool> array = new List<ApplicationGatewayBackendHealthPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item));
-                        }
+                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item));
                     }
                     backendAddressPools = array;
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealth(backendAddressPools);
+            return new ApplicationGatewayBackendHealth(Optional.ToList(backendAddressPools));
         }
     }
 }

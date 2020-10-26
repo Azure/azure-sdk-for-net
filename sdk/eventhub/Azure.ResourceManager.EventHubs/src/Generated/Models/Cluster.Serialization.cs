@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -37,65 +37,31 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Created != null)
-            {
-                writer.WritePropertyName("created");
-                writer.WriteStringValue(Created);
-            }
-            if (Updated != null)
-            {
-                writer.WritePropertyName("updated");
-                writer.WriteStringValue(Updated);
-            }
-            if (MetricId != null)
-            {
-                writer.WritePropertyName("metricId");
-                writer.WriteStringValue(MetricId);
-            }
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static Cluster DeserializeCluster(JsonElement element)
         {
-            ClusterSku sku = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string created = default;
-            string updated = default;
-            string metricId = default;
-            string status = default;
+            Optional<ClusterSku> sku = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> created = default;
+            Optional<string> updated = default;
+            Optional<string> metricId = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ClusterSku.DeserializeClusterSku(property.Value);
@@ -103,10 +69,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -114,87 +76,58 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("created"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             created = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("updated"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             updated = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("metricId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             metricId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("status"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             status = property0.Value.GetString();
                             continue;
                         }
@@ -202,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new Cluster(id, name, type, location, tags, sku, created, updated, metricId, status);
+            return new Cluster(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, created.Value, updated.Value, metricId.Value, status.Value);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CosmosDbSqlApiCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
         public CosmosDbSqlApiCollectionDataset(LinkedServiceReference linkedServiceName, object collectionName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)

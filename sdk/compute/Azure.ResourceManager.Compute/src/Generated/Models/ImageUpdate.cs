@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
@@ -15,20 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageUpdate. </summary>
         public ImageUpdate()
         {
-        }
-
-        /// <summary> Initializes a new instance of ImageUpdate. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="hyperVGeneration"> Gets the HyperVGenerationType of the VirtualMachine created from the image. </param>
-        internal ImageUpdate(IDictionary<string, string> tags, SubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGenerationTypes? hyperVGeneration) : base(tags)
-        {
-            SourceVirtualMachine = sourceVirtualMachine;
-            StorageProfile = storageProfile;
-            ProvisioningState = provisioningState;
-            HyperVGeneration = hyperVGeneration;
         }
 
         /// <summary> The source virtual machine from which Image is created. </summary>

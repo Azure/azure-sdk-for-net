@@ -3,8 +3,8 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public string ResourceGroupPrefix { get; set; }
         public NetworkManagementClient NetworkManagementClient { get; set; }
         public VirtualNetworksOperations VirtualNetworksOperations { get; set; }
-        public SubnetsOperations SubnetsOperations {get;set; }
+        public SubnetsOperations SubnetsOperations { get; set; }
         public PrivateEndpointsOperations PrivateEndpointsOperations { get; set; }
         protected AppConfigurationClientBase(bool isAsync)
             : base(isAsync)
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Label = "test_label1_" + LabelUuId;
             TestContentType = "test content type";
             TestValue = "test value";
-            ResourceGroupPrefix = "Default-EventHub-";
+            ResourceGroupPrefix = "Default-AppConfiguration-";
             AppConfigurationManagementClient = GetAppConfigurationManagementClient();
             ConfigurationStoresOperations = AppConfigurationManagementClient.ConfigurationStores;
             PrivateEndpointConnectionsOperations = AppConfigurationManagementClient.PrivateEndpointConnections;
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             return CreateClient<AppConfigurationManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
+                InstrumentClientOptions(new AppConfigurationManagementClientOptions()));
         }
         internal NetworkManagementClient GetNetworkManagementClient()
         {
             return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
     }
 }

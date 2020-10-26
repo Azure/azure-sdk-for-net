@@ -15,30 +15,31 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static FirewallPolicyNatRuleAction DeserializeFirewallPolicyNatRuleAction(JsonElement element)
         {
-            string type = default;
+            Optional<FirewallPolicyNatRuleActionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString();
+                    type = new FirewallPolicyNatRuleActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new FirewallPolicyNatRuleAction(type);
+            return new FirewallPolicyNatRuleAction(Optional.ToNullable(type));
         }
     }
 }

@@ -27,9 +27,12 @@ namespace Microsoft.Azure.Management.Marketplace
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<PrivateStore> List(this IPrivateStoreOperations operations)
+            /// <param name='useCache'>
+            /// Determines if to use cache or DB for serving this request
+            /// </param>
+            public static IPage<PrivateStore> List(this IPrivateStoreOperations operations, string useCache = default(string))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(useCache).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -38,12 +41,15 @@ namespace Microsoft.Azure.Management.Marketplace
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='useCache'>
+            /// Determines if to use cache or DB for serving this request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PrivateStore>> ListAsync(this IPrivateStoreOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PrivateStore>> ListAsync(this IPrivateStoreOperations operations, string useCache = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(useCache, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

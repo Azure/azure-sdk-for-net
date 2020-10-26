@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -17,6 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         internal SparkStatementOutput(int executionCount)
         {
             ExecutionCount = executionCount;
+            Traceback = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SparkStatementOutput. </summary>

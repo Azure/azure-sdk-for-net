@@ -15,42 +15,32 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceAssociationLinksListResult DeserializeServiceAssociationLinksListResult(JsonElement element)
         {
-            IReadOnlyList<ServiceAssociationLink> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<ServiceAssociationLink>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
-                        }
+                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceAssociationLinksListResult(value, nextLink);
+            return new ServiceAssociationLinksListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

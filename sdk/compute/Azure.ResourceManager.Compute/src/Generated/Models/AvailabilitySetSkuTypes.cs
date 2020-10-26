@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the sku of an Availability Set. Use &apos;Aligned&apos; for virtual machines with managed disks and &apos;Classic&apos; for virtual machines with unmanaged disks. Default value is &apos;Classic&apos;. </summary>
-    public readonly partial struct AvailabilitySetSkuTypes : IEquatable<AvailabilitySetSkuTypes>
+    internal readonly partial struct AvailabilitySetSkuTypes : IEquatable<AvailabilitySetSkuTypes>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="AvailabilitySetSkuTypes"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailabilitySetSkuTypes(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

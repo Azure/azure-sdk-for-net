@@ -29,6 +29,60 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareProperties ShareProperties(
             DateTimeOffset? lastModified,
             ETag? eTag,
+            int? provisionedIops,
+            int? provisionedIngressMBps,
+            int? provisionedEgressMBps,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            int? quotaInGB,
+            IDictionary<string, string> metadata)
+            => new ShareProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+            };
+
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareProperties ShareProperties(
+            DateTimeOffset? lastModified,
+            ETag? eTag,
+            int? provisionedIops,
+            int? provisionedIngressMBps,
+            int? provisionedEgressMBps,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime,
+            int? quotaInGB,
+            IDictionary<string, string> metadata)
+            => new ShareProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+            };
+
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareProperties ShareProperties(
+            DateTimeOffset? lastModified,
+            ETag? eTag,
             int? quotaInGB,
             IDictionary<string, string> metadata)
             => ShareProperties(
@@ -36,5 +90,22 @@ namespace Azure.Storage.Files.Shares.Models
                 eTag: eTag,
                 quotaInGB: quotaInGB,
                 metadata: metadata);
+
+        /// <summary>
+        /// Creates a new ShareItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareItem ShareItem(
+            string name,
+            ShareProperties properties,
+            string snapshot)
+        {
+            return new ShareItem()
+            {
+                Name = name,
+                Properties = properties,
+                Snapshot = snapshot,
+            };
+        }
     }
 }

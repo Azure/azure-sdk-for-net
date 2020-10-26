@@ -19,25 +19,28 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 ## Recognize custom forms from a URI
 
-To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
+To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each form identified in the submitted document.
 
-```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
+    if (form.FormTypeConfidence.HasValue)
+        Console.WriteLine($"Form type confidence: {form.FormTypeConfidence.Value}");
+    Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
         Console.WriteLine($"Field '{field.Name}: ");
 
-        if (field.LabelText != null)
+        if (field.LabelData != null)
         {
-            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+            Console.WriteLine($"    Label: '{field.LabelData.Text}");
         }
 
-        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+        Console.WriteLine($"    Value: '{field.ValueData.Text}");
         Console.WriteLine($"    Confidence: '{field.Confidence}");
     }
 }
@@ -45,7 +48,7 @@ foreach (RecognizedForm form in forms)
 
 ## Recognize custom forms from a file stream
 
-To recognize form fields and other content from your custom forms from a file stream, use the `StartRecognizeCustomForms` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
+To recognize form fields and other content from your custom forms from a file stream, use the `StartRecognizeCustomForms` method. The returned value is a collection of `RecognizedForm` objects -- one for each form identified in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeCustomFormsFromFile
 using (FileStream stream = new FileStream(formFilePath, FileMode.Open))

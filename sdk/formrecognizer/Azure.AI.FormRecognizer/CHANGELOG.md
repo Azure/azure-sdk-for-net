@@ -1,11 +1,91 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 3.1.0-beta.1 (Unreleased)
+
+### Breaking changes
+- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+
+### New Features
+- Added support for pre-built business card recognition.
+- Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
+- Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
+- Added property `ModelName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
+- Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
+- Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
+- Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
+
+## 3.0.0 (2020-08-20)
+
+- First stable release of the Azure.AI.FormRecognizer package.
 
 ### Breaking changes
 
+- Renamed the model `BoundingBox` to `FieldBoundingBox`.
+
+### New Features
+
+- Added `FormRecognizerModelFactory` static class to support mocking model types.
+
+## 3.0.0-preview.2 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 3.0.0-preview.1 (2020-08-11)
+
+### Breaking changes
+
+- The library now targets the service's v2.0 API, instead of the v2.0-preview.1 API.
+- Updated version number from `1.0.0-preview.5` to `3.0.0-preview.1`.
+- Added models `RecognizeCustomFormsOptions`, `RecognizeReceiptsOptions`, and `RecognizeContentOptions` instead of a generic `RecognizeOptions` to support passing configurable options to recognize APIs.
+- Added model `TrainingOptions` to support passing configurable options to training APIs. This type now includes `TrainingFileFilter`.
+- Renamed the `FieldValue` property `Type` to `ValueType`.
+- Renamed the `TrainingDocumentInfo` property `DocumentName` to `Name`.
+- Renamed the `TrainingFileFilter` property `IncludeSubFolders` to `IncludeSubfolders`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomForms` parameter `formFileStream` to `form`.
+- Renamed the `FormRecognizerClient.StartRecognizeCustomFormsFromUri` parameter `formFileUri` to `formUri`.
+- Renamed `CustomFormModelStatus.Training` to `CustomFormModelStatus.Creating`.
+- Renamed `FormValueType.Integer` to `FormValueType.Int64`.
+- `FormField` property `ValueData` is now set to null if there is no text, bounding box or page number associated with it.
+
+### Fixes
+
+- Made the `TrainingFileFilter` constructor public.
+- Fixed a bug in which `FormTrainingClient.GetCustomModel` threw an exception if the model was still being created ([#13813](https://github.com/Azure/azure-sdk-for-net/issues/13813)).
+- Fixed a bug in which the `BoundingBox` indexer and `ToString` method threw a `NullReferenceException` if it had no points ([#13971](https://github.com/Azure/azure-sdk-for-net/issues/13971)).
+- Fixed a bug in which a default `FieldValue` threw a `NullReferenceException` if `AsString` was called. The method now returns `null`.
+
+### New Features
+
+- Added diagnostics functionality to the `FormRecognizerClient`, to the `FormTrainingClient` and to long-running operation types.
+
+## 1.0.0-preview.4 (2020-07-07)
+
+### Renames
+
+- Property `RequestedOn` renamed to `TrainingStartedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `CompletedOn` renamed to `TrainingCompletedOn` on `CustomFormModel` and `CustomFormModelInfo`.
+- Property `LabelText` renamed to `LabelData` on `FormField`.
+- Property `ValueText` renamed to `ValueData` on `FormField`.
+- Property `TextContent` renamed to `FieldElements` on `FieldData` and `FormTableCell`.
+- Parameter `formUrl` in `StartRecognizeContent` has been renamed to `formUri`.
+- Parameter `receiptUrl` in `StartRecognizeReceipts` has been renamed to `receiptUri`.
+- Parameter `accessToken` in `CopyAuthorization.FromJson` has been renamed to `copyAuthorization`.
+- Parameter `IncludeTextContent` in `RecognizeOptions` has been renamed to `IncludeFieldElements`.
+- Model `FieldText` renamed to `FieldData`.
+- Model `FormContent` renamed to `FormElement`.
+
+### Other breaking changes
+
 - Property `CopyAuthorization.ExpiresOn` type is now `DateTimeOffset`.
 - `RecognizedReceipt` and `RecognizedReceiptsCollection` classes removed. Receipt field values must now be obtained from a `RecognizedForm`.
+
+### Fixes
+
+- Fixed a bug in which the `FormPage.TextAngle` property sometimes fell out of the (-180, 180] range ([#13082](https://github.com/Azure/azure-sdk-for-net/issues/13082)).
 
 ## 1.0.0-preview.3 (06-10-2020)
 

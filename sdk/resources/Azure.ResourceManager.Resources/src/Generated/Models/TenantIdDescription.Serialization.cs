@@ -15,30 +15,22 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TenantIdDescription DeserializeTenantIdDescription(JsonElement element)
         {
-            string id = default;
-            string tenantId = default;
-            TenantCategory? tenantCategory = default;
-            string country = default;
-            string countryCode = default;
-            string displayName = default;
-            IReadOnlyList<string> domains = default;
+            Optional<string> id = default;
+            Optional<string> tenantId = default;
+            Optional<TenantCategory> tenantCategory = default;
+            Optional<string> country = default;
+            Optional<string> countryCode = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> domains = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     tenantId = property.Value.GetString();
                     continue;
                 }
@@ -46,6 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantCategory = property.Value.GetString().ToTenantCategory();
@@ -53,28 +46,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("country"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     country = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("countryCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     countryCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
@@ -82,25 +63,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     domains = array;
                     continue;
                 }
             }
-            return new TenantIdDescription(id, tenantId, tenantCategory, country, countryCode, displayName, domains);
+            return new TenantIdDescription(id.Value, tenantId.Value, Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains));
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.HybridCompute
             /// The expand expression to apply on the operation. Possible values include:
             /// 'instanceView'
             /// </param>
-            public static Machine Get(this IMachinesOperations operations, string resourceGroupName, string name, InstanceViewTypes? expand = default(InstanceViewTypes?))
+            public static Machine Get(this IMachinesOperations operations, string resourceGroupName, string name, string expand = default(string))
             {
                 return operations.GetAsync(resourceGroupName, name, expand).GetAwaiter().GetResult();
             }
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.HybridCompute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Machine> GetAsync(this IMachinesOperations operations, string resourceGroupName, string name, InstanceViewTypes? expand = default(InstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Machine> GetAsync(this IMachinesOperations operations, string resourceGroupName, string name, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, expand, null, cancellationToken).ConfigureAwait(false))
                 {

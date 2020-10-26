@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of NGramTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NGramTokenizer(string name) : base(name)
         {
             if (name == null)
@@ -22,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            TokenChars = new List<TokenCharacterKind>();
+            TokenChars = new ChangeTrackingList<TokenCharacterKind>();
             ODataType = "#Microsoft.Azure.Search.NGramTokenizer";
         }
 
@@ -36,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            TokenChars = tokenChars ?? new List<TokenCharacterKind>();
+            TokenChars = tokenChars;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenizer";
         }
 

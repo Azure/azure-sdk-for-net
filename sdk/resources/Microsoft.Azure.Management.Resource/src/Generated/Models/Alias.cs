@@ -38,13 +38,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="defaultPath">The default path for an alias.</param>
         /// <param name="defaultPattern">The default pattern for an
         /// alias.</param>
-        public Alias(string name = default(string), IList<AliasPath> paths = default(IList<AliasPath>), AliasType? type = default(AliasType?), string defaultPath = default(string), AliasPattern defaultPattern = default(AliasPattern))
+        /// <param name="defaultMetadata">The default alias path metadata.
+        /// Applies to the default path and to any alias path that doesn't have
+        /// metadata</param>
+        public Alias(string name = default(string), IList<AliasPath> paths = default(IList<AliasPath>), AliasType? type = default(AliasType?), string defaultPath = default(string), AliasPattern defaultPattern = default(AliasPattern), AliasPathMetadata defaultMetadata = default(AliasPathMetadata))
         {
             Name = name;
             Paths = paths;
             Type = type;
             DefaultPath = defaultPath;
             DefaultPattern = defaultPattern;
+            DefaultMetadata = defaultMetadata;
             CustomInit();
         }
 
@@ -83,6 +87,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "defaultPattern")]
         public AliasPattern DefaultPattern { get; set; }
+
+        /// <summary>
+        /// Gets the default alias path metadata. Applies to the default path
+        /// and to any alias path that doesn't have metadata
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultMetadata")]
+        public AliasPathMetadata DefaultMetadata { get; private set; }
 
     }
 }

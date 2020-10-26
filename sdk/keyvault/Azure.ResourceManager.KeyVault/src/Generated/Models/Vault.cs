@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of Vault. </summary>
         /// <param name="properties"> Properties of the vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal Vault(VaultProperties properties)
         {
             if (properties == null)
@@ -22,6 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new ArgumentNullException(nameof(properties));
             }
 
+            Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
         }
 

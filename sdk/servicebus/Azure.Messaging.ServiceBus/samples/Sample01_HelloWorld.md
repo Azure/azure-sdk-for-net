@@ -4,8 +4,7 @@ This sample demonstrates how to send and receive messages from a Service Bus que
 
 ### Send and receive a message
 
-Message sending is performed using the `ServiceBusSender`. Receiving is performed using the 
-`ServiceBusReceiver`.
+Message sending is performed using the `ServiceBusSender`. Receiving is performed using the `ServiceBusReceiver`.
 
 ```C# Snippet:ServiceBusSendAndReceive
 string connectionString = "<connection_string>";
@@ -35,10 +34,7 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync`
-overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of
-the supplied messages in a single message batch that we will send to the service. If the messages are too large
-to fit in a single batch, the operation will throw an exception.
+There are two ways of sending several messages at once. The first way uses the `SendMessagesAsync` overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of the supplied messages in a single message batch that we will send to the service. If the messages are too large to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
@@ -47,9 +43,8 @@ messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the messages
 await sender.SendMessagesAsync(messages);
 ```
-The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object,
-which will allow you to attempt to messages one at a time to the batch using TryAdd. If the message cannot fit in the batch,
-TryAdd will return false.
+
+The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to messages one at a time to the batch using TryAdd. If the message cannot fit in the batch, TryAdd will return false.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
@@ -70,9 +65,7 @@ ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
 
 ### Schedule a message
 
-We can schedule a message to be enqueued at a later time. The message won't be able to be received
-until that time, though it can still be peeked before that. We get back the message sequence number
-which can be used to cancel the scheduled message.
+We can schedule a message to be enqueued at a later time. The message won't be able to be received until that time, though it can still be peeked before that. We get back the message sequence number which can be used to cancel the scheduled message.
 
 ```C# Snippet:ServiceBusSchedule
 long seq = await sender.ScheduleMessageAsync(
@@ -92,4 +85,4 @@ await sender.CancelScheduledMessageAsync(seq);
 
 To see the full example source, see:
 
-* [Sample1_HelloWorld.cs](../tests/Samples/Sample01_HelloWorld.cs)
+* [Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs)

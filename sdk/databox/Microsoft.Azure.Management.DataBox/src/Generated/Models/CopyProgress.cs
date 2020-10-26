@@ -29,20 +29,20 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the CopyProgress class.
         /// </summary>
-        /// <param name="storageAccountName">Name of the storage account where
-        /// the data needs to be uploaded.</param>
-        /// <param name="dataDestinationType">Data Destination Type. Possible
-        /// values include: 'StorageAccount', 'ManagedDisk'</param>
+        /// <param name="storageAccountName">Name of the storage account. This
+        /// will be empty for data account types other than storage
+        /// account.</param>
+        /// <param name="transferType">Transfer type of data. Possible values
+        /// include: 'ImportToAzure', 'ExportFromAzure'</param>
+        /// <param name="dataAccountType">Data Account Type. Possible values
+        /// include: 'StorageAccount', 'ManagedDisk'</param>
         /// <param name="accountId">Id of the account where the data needs to
         /// be uploaded.</param>
-        /// <param name="bytesSentToCloud">Amount of data uploaded by the job
-        /// as of now.</param>
+        /// <param name="bytesProcessed">To indicate bytes transferred.</param>
         /// <param name="totalBytesToProcess">Total amount of data to be
         /// processed by the job.</param>
-        /// <param name="filesProcessed">Number of files processed by the job
-        /// as of now.</param>
-        /// <param name="totalFilesToProcess">Total number of files to be
-        /// processed by the job.</param>
+        /// <param name="filesProcessed">Number of files processed</param>
+        /// <param name="totalFilesToProcess">Total files to process</param>
         /// <param name="invalidFilesProcessed">Number of files not adhering to
         /// azure naming conventions which were processed by automatic
         /// renaming</param>
@@ -54,12 +54,21 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// renaming</param>
         /// <param name="filesErroredOut">Number of files which could not be
         /// copied</param>
-        public CopyProgress(string storageAccountName = default(string), DataDestinationType? dataDestinationType = default(DataDestinationType?), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?))
+        /// <param name="directoriesErroredOut">To indicate directories errored
+        /// out in the job.</param>
+        /// <param name="invalidDirectoriesProcessed">To indicate directories
+        /// renamed</param>
+        /// <param name="isEnumerationInProgress">To indicate if enumeration of
+        /// data is in progress.
+        /// Until this is true, the TotalBytesToProcess may not be
+        /// valid.</param>
+        public CopyProgress(string storageAccountName = default(string), TransferType? transferType = default(TransferType?), DataAccountType? dataAccountType = default(DataAccountType?), string accountId = default(string), long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?))
         {
             StorageAccountName = storageAccountName;
-            DataDestinationType = dataDestinationType;
+            TransferType = transferType;
+            DataAccountType = dataAccountType;
             AccountId = accountId;
-            BytesSentToCloud = bytesSentToCloud;
+            BytesProcessed = bytesProcessed;
             TotalBytesToProcess = totalBytesToProcess;
             FilesProcessed = filesProcessed;
             TotalFilesToProcess = totalFilesToProcess;
@@ -67,6 +76,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
             InvalidFileBytesUploaded = invalidFileBytesUploaded;
             RenamedContainerCount = renamedContainerCount;
             FilesErroredOut = filesErroredOut;
+            DirectoriesErroredOut = directoriesErroredOut;
+            InvalidDirectoriesProcessed = invalidDirectoriesProcessed;
+            IsEnumerationInProgress = isEnumerationInProgress;
             CustomInit();
         }
 
@@ -76,18 +88,25 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the storage account where the data needs to be
-        /// uploaded.
+        /// Gets name of the storage account. This will be empty for data
+        /// account types other than storage account.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountName")]
         public string StorageAccountName { get; private set; }
 
         /// <summary>
-        /// Gets data Destination Type. Possible values include:
-        /// 'StorageAccount', 'ManagedDisk'
+        /// Gets transfer type of data. Possible values include:
+        /// 'ImportToAzure', 'ExportFromAzure'
         /// </summary>
-        [JsonProperty(PropertyName = "dataDestinationType")]
-        public DataDestinationType? DataDestinationType { get; private set; }
+        [JsonProperty(PropertyName = "transferType")]
+        public TransferType? TransferType { get; private set; }
+
+        /// <summary>
+        /// Gets data Account Type. Possible values include: 'StorageAccount',
+        /// 'ManagedDisk'
+        /// </summary>
+        [JsonProperty(PropertyName = "dataAccountType")]
+        public DataAccountType? DataAccountType { get; private set; }
 
         /// <summary>
         /// Gets id of the account where the data needs to be uploaded.
@@ -96,10 +115,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string AccountId { get; private set; }
 
         /// <summary>
-        /// Gets amount of data uploaded by the job as of now.
+        /// Gets to indicate bytes transferred.
         /// </summary>
-        [JsonProperty(PropertyName = "bytesSentToCloud")]
-        public long? BytesSentToCloud { get; private set; }
+        [JsonProperty(PropertyName = "bytesProcessed")]
+        public long? BytesProcessed { get; private set; }
 
         /// <summary>
         /// Gets total amount of data to be processed by the job.
@@ -108,13 +127,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public long? TotalBytesToProcess { get; private set; }
 
         /// <summary>
-        /// Gets number of files processed by the job as of now.
+        /// Gets number of files processed
         /// </summary>
         [JsonProperty(PropertyName = "filesProcessed")]
         public long? FilesProcessed { get; private set; }
 
         /// <summary>
-        /// Gets total number of files to be processed by the job.
+        /// Gets total files to process
         /// </summary>
         [JsonProperty(PropertyName = "totalFilesToProcess")]
         public long? TotalFilesToProcess { get; private set; }
@@ -145,6 +164,25 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "filesErroredOut")]
         public long? FilesErroredOut { get; private set; }
+
+        /// <summary>
+        /// Gets to indicate directories errored out in the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "directoriesErroredOut")]
+        public long? DirectoriesErroredOut { get; private set; }
+
+        /// <summary>
+        /// Gets to indicate directories renamed
+        /// </summary>
+        [JsonProperty(PropertyName = "invalidDirectoriesProcessed")]
+        public long? InvalidDirectoriesProcessed { get; private set; }
+
+        /// <summary>
+        /// Gets to indicate if enumeration of data is in progress.
+        /// Until this is true, the TotalBytesToProcess may not be valid.
+        /// </summary>
+        [JsonProperty(PropertyName = "isEnumerationInProgress")]
+        public bool? IsEnumerationInProgress { get; private set; }
 
     }
 }

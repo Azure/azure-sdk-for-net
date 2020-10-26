@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,8 +24,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal CustomAnalyzer(string oDataType, string name, LexicalTokenizerName tokenizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters) : base(oDataType, name)
         {
             TokenizerName = tokenizerName;
-            TokenFilters = tokenFilters ?? new List<TokenFilterName>();
-            CharFilters = charFilters ?? new List<string>();
+            TokenFilters = tokenFilters;
+            CharFilters = charFilters;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CustomAnalyzer";
         }
     }

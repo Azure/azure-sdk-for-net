@@ -42,12 +42,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="duration">The duration of the operation.</param>
         /// <param name="serviceRequestId">Deployment operation service request
         /// id.</param>
-        /// <param name="statusCode">Operation status code.</param>
-        /// <param name="statusMessage">Operation status message.</param>
+        /// <param name="statusCode">Operation status code from the resource
+        /// provider. This property may not be set if a response has not yet
+        /// been received.</param>
+        /// <param name="statusMessage">Operation status message from the
+        /// resource provider. This property is optional.  It will only be
+        /// provided if an error was received from the resource
+        /// provider.</param>
         /// <param name="targetResource">The target resource.</param>
         /// <param name="request">The HTTP request message.</param>
         /// <param name="response">The HTTP response message.</param>
-        public DeploymentOperationProperties(ProvisioningOperation? provisioningOperation = default(ProvisioningOperation?), string provisioningState = default(string), System.DateTime? timestamp = default(System.DateTime?), string duration = default(string), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
+        public DeploymentOperationProperties(ProvisioningOperation? provisioningOperation = default(ProvisioningOperation?), string provisioningState = default(string), System.DateTime? timestamp = default(System.DateTime?), string duration = default(string), string serviceRequestId = default(string), string statusCode = default(string), StatusMessage statusMessage = default(StatusMessage), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
@@ -101,16 +106,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string ServiceRequestId { get; private set; }
 
         /// <summary>
-        /// Gets operation status code.
+        /// Gets operation status code from the resource provider. This
+        /// property may not be set if a response has not yet been received.
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; private set; }
 
         /// <summary>
-        /// Gets operation status message.
+        /// Gets operation status message from the resource provider. This
+        /// property is optional.  It will only be provided if an error was
+        /// received from the resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "statusMessage")]
-        public object StatusMessage { get; private set; }
+        public StatusMessage StatusMessage { get; private set; }
 
         /// <summary>
         /// Gets the target resource.

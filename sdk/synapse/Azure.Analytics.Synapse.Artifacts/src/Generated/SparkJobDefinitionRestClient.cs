@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SparkJobDefinitionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/sparkJobDefinitions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -71,14 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkJobDefinition);
             request.Content = content;
@@ -140,6 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
         /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
         public async Task<Response<SparkJobDefinitionResource>> CreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -159,14 +148,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,6 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkJobDefinition"> Spark Job Definition resource definition. </param>
         /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
         public Response<SparkJobDefinitionResource> CreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -198,14 +181,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -228,6 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -235,6 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public async Task<Response<SparkJobDefinitionResource>> GetSparkJobDefinitionAsync(string sparkJobDefinitionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -250,14 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -271,6 +242,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="ifNoneMatch"> ETag of the Spark Job Definition entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public Response<SparkJobDefinitionResource> GetSparkJobDefinition(string sparkJobDefinitionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -286,14 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        }
+                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -314,12 +279,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a Spark Job Definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public async Task<Response> DeleteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -342,6 +309,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a Spark Job Definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public Response DeleteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -373,12 +341,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/execute", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Executes the spark job definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public async Task<Response> ExecuteSparkJobDefinitionAsync(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -401,6 +371,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Executes the spark job definition. </summary>
         /// <param name="sparkJobDefinitionName"> The spark job definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> is null. </exception>
         public Response ExecuteSparkJobDefinition(string sparkJobDefinitionName, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
@@ -431,6 +402,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkJobDefinitionAzureResource);
             request.Content = content;
@@ -440,6 +412,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Debug the spark job definition. </summary>
         /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
         public async Task<Response> DebugSparkJobDefinitionAsync(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionAzureResource == null)
@@ -462,6 +435,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Debug the spark job definition. </summary>
         /// <param name="sparkJobDefinitionAzureResource"> Spark Job Definition resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionAzureResource"/> is null. </exception>
         public Response DebugSparkJobDefinition(SparkJobDefinitionResource sparkJobDefinitionAzureResource, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionAzureResource == null)
@@ -490,12 +464,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists spark job definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<SparkJobDefinitionsListResponse>> GetSparkJobDefinitionsByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -511,14 +487,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -529,6 +498,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists spark job definitions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<SparkJobDefinitionsListResponse> GetSparkJobDefinitionsByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -544,14 +514,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         SparkJobDefinitionsListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
-                        }
+                        value = SparkJobDefinitionsListResponse.DeserializeSparkJobDefinitionsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

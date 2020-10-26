@@ -11,40 +11,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class GeoReplicationStats : IUtf8JsonSerializable
+    public partial class GeoReplicationStats
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (LastSyncTime != null)
-            {
-                writer.WritePropertyName("lastSyncTime");
-                writer.WriteStringValue(LastSyncTime.Value, "O");
-            }
-            if (CanFailover != null)
-            {
-                writer.WritePropertyName("canFailover");
-                writer.WriteBooleanValue(CanFailover.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static GeoReplicationStats DeserializeGeoReplicationStats(JsonElement element)
         {
-            GeoReplicationStatus? status = default;
-            DateTimeOffset? lastSyncTime = default;
-            bool? canFailover = default;
+            Optional<GeoReplicationStatus> status = default;
+            Optional<DateTimeOffset> lastSyncTime = default;
+            Optional<bool> canFailover = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new GeoReplicationStatus(property.Value.GetString());
@@ -54,6 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSyncTime = property.Value.GetDateTimeOffset("O");
@@ -63,13 +44,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canFailover = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new GeoReplicationStats(status, lastSyncTime, canFailover);
+            return new GeoReplicationStats(Optional.ToNullable(status), Optional.ToNullable(lastSyncTime), Optional.ToNullable(canFailover));
         }
     }
 }

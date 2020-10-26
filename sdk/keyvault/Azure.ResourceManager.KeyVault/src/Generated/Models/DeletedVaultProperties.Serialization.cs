@@ -16,28 +16,20 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedVaultProperties DeserializeDeletedVaultProperties(JsonElement element)
         {
-            string vaultId = default;
-            string location = default;
-            DateTimeOffset? deletionDate = default;
-            DateTimeOffset? scheduledPurgeDate = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            Optional<string> vaultId = default;
+            Optional<string> location = default;
+            Optional<DateTimeOffset> deletionDate = default;
+            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vaultId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -45,6 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionDate = property.Value.GetDateTimeOffset("O");
@@ -54,6 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("O");
@@ -63,25 +57,19 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new DeletedVaultProperties(vaultId, location, deletionDate, scheduledPurgeDate, tags);
+            return new DeletedVaultProperties(vaultId.Value, location.Value, Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags));
         }
     }
 }

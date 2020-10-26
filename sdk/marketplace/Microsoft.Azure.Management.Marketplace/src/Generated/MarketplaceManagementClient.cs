@@ -75,9 +75,19 @@ namespace Microsoft.Azure.Management.Marketplace
         public virtual IPrivateStoreOffersOperations PrivateStoreOffers { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateStorePrivateOffersOperations.
+        /// </summary>
+        public virtual IPrivateStorePrivateOffersOperations PrivateStorePrivateOffers { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateStoreOfferOperations.
         /// </summary>
         public virtual IPrivateStoreOfferOperations PrivateStoreOffer { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateStorePrivateOfferOperations.
+        /// </summary>
+        public virtual IPrivateStorePrivateOfferOperations PrivateStorePrivateOffer { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateStoreOperations.
@@ -331,7 +341,9 @@ namespace Microsoft.Azure.Management.Marketplace
         private void Initialize()
         {
             PrivateStoreOffers = new PrivateStoreOffersOperations(this);
+            PrivateStorePrivateOffers = new PrivateStorePrivateOffersOperations(this);
             PrivateStoreOffer = new PrivateStoreOfferOperations(this);
+            PrivateStorePrivateOffer = new PrivateStorePrivateOfferOperations(this);
             PrivateStore = new PrivateStoreOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");

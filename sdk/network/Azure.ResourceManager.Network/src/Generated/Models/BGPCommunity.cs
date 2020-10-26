@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BGPCommunity. </summary>
         public BGPCommunity()
         {
+            CommunityPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BGPCommunity. </summary>
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </summary>
         public string CommunityValue { get; set; }
         /// <summary> The prefixes that the bgp community contains. </summary>
-        public IList<string> CommunityPrefixes { get; set; }
+        public IList<string> CommunityPrefixes { get; }
         /// <summary> Customer is authorized to use bgp community or not. </summary>
         public bool? IsAuthorizedToUse { get; set; }
         /// <summary> The service group of the bgp community contains. </summary>

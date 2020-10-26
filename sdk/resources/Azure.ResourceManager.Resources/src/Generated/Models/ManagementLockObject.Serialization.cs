@@ -16,31 +16,16 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("level");
             writer.WriteStringValue(Level.ToString());
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
                 writer.WriteStringValue(Notes);
             }
-            if (Owners != null)
+            if (Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners");
                 writer.WriteStartArray();
@@ -56,43 +41,36 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagementLockObject DeserializeManagementLockObject(JsonElement element)
         {
-            string id = default;
-            string type = default;
-            string name = default;
+            Optional<string> id = default;
+            Optional<string> type = default;
+            Optional<string> name = default;
             LockLevel level = default;
-            string notes = default;
-            IList<ManagementLockOwner> owners = default;
+            Optional<string> notes = default;
+            Optional<IList<ManagementLockOwner>> owners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("level"))
@@ -102,10 +80,6 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("notes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             notes = property0.Value.GetString();
                             continue;
                         }
@@ -113,19 +87,13 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
-                                }
+                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
                             }
                             owners = array;
                             continue;
@@ -134,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ManagementLockObject(id, type, name, level, notes, owners);
+            return new ManagementLockObject(id.Value, type.Value, name.Value, level, notes.Value, Optional.ToList(owners));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
                 writer.WriteObjectValue(DefaultValue);
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static ParameterSpecification DeserializeParameterSpecification(JsonElement element)
         {
             ParameterType type = default;
-            object defaultValue = default;
+            Optional<object> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -40,13 +40,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultValue = property.Value.GetObject();
                     continue;
                 }
             }
-            return new ParameterSpecification(type, defaultValue);
+            return new ParameterSpecification(type, defaultValue.Value);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 Azure Digital Twins is a developer platform for next-generation IoT solutions that lets you create, run, and manage digital representations of your business environment, securely and efficiently in the cloud. With Azure Digital Twins, creating live operational state representations is quick and cost-effective, and digital representations stay current with real-time data from IoT and other data sources. If you are new to Azure Digital Twins and would like to learn more about the platform, please make sure you check out the Azure Digital Twins [official documentation page](https://docs.microsoft.com/azure/digital-twins/overview). 
 
-For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/en-us/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
+For an introduction on how to program against the Azure Digital Twins service, visit the [coding tutorial page](https://docs.microsoft.com/azure/digital-twins/tutorial-code) for an easy step-by-step guide. Visit [this tutorial](https://docs.microsoft.com/azure/digital-twins/tutorial-command-line-app) to learn how to interact with an Azure Digital Twin instance using a command-line client application. Finally, for a quick guide on how to build an end-to-end Azure Digital Twins solution that is driven by live data from your environment, make sure you check out [this helpful guide](https://docs.microsoft.com/azure/digital-twins/tutorial-end-to-end).
 
 The guides mentioned above can help you get started with key elements of Azure Digital Twins, such as creating Azure Digital Twins instances, models, twin graphs, etc. Use this samples guide below to familiarize yourself with the various APIs that help you program against Azure Digital Twins.
 
@@ -24,7 +24,7 @@ The samples project demonstrates the following:
 
 To create a new digital twins client, you need the endpoint to an Azure Digital Twin instance and credentials.
 In the sample below, you can set `AdtEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
-The client requires an instance of [TokenCredential](https://docs.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
+The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
 In this samples, we illustrate how to use one derived class: ClientSecretCredential.
 
 > Note: In order to access the data plane for the Digital Twins service, the entity must be given permissions.
@@ -62,15 +62,15 @@ Console.WriteLine($"Created models '{componentModelId}' and '{sampleModelId}'.")
 
 ### List models
 
-Using `GetModelsAsync`, all created models are returned as `AsyncPageable<ModelData>`.
+Using `GetModelsAsync`, all created models are returned as `AsyncPageable<DigitalTwinsModelData>`.
 
 ```C# Snippet:DigitalTwinsSampleGetModels
-AsyncPageable<ModelData> allModels = client.GetModelsAsync();
-await foreach (ModelData model in allModels)
+AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
+await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
-        $"upload time '{model.UploadTime}', " +
+        $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }
 ```
@@ -78,7 +78,7 @@ await foreach (ModelData model in allModels)
 Use `GetModelAsync` with model's unique identifier to get a specific model.
 
 ```C# Snippet:DigitalTwinsSampleGetModel
-Response<ModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
+Response<DigitalTwinsModelData> sampleModelResponse = await client.GetModelAsync(sampleModelId);
 Console.WriteLine($"Retrieved model '{sampleModelResponse.Value.Id}'.");
 ```
 
@@ -131,7 +131,7 @@ var basicTwin = new BasicDigitalTwin
     Id = basicDtId,
     // model Id of digital twin
     Metadata = { ModelId = modelId },
-    CustomProperties =
+    Properties =
     {
         // digital twin properties
         { "Prop1", "Value1" },
@@ -152,10 +152,8 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-string basicDtPayload = JsonSerializer.Serialize(basicTwin);
-
-await client.CreateDigitalTwinAsync(basicDtId, basicDtPayload);
-Console.WriteLine($"Created digital twin '{basicDtId}'.");
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your digital twins.
@@ -169,16 +167,14 @@ var customTwin = new CustomDigitalTwin
     Metadata = { ModelId = modelId },
     Prop1 = "Prop1 val",
     Prop2 = 987,
-    Component1 = new Component1
+    Component1 = new MyCustomComponent
     {
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
     }
 };
-string dt2Payload = JsonSerializer.Serialize(customTwin);
-
-await client.CreateDigitalTwinAsync(customDtId, dt2Payload);
-Console.WriteLine($"Created digital twin '{customDtId}'.");
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
 ### Get and deserialize a digital twin
@@ -188,19 +184,19 @@ You can get a digital twin and deserialize it into a BasicDigitalTwin.
 It works well for basic stuff, but as you can see it gets more difficult when delving into more complex properties, like components.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
-Response<string> getBasicDtResponse = await client.GetDigitalTwinAsync(basicDtId);
+Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
 if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
-    BasicDigitalTwin basicDt = JsonSerializer.Deserialize<BasicDigitalTwin>(getBasicDtResponse.Value);
+    BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+    string component1RawText = ((JsonElement)basicDt.Properties["Component1"]).GetRawText();
     IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
+        $"Prop1: {basicDt.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.Properties["Prop2"]}\n\t" +
         $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
@@ -210,8 +206,8 @@ Getting and deserializing a digital twin into a custom data type is extremely ea
 Custom types provide the best possible experience.
 
 ```C# Snippet:DigitalTwinsSampleGetCustomDigitalTwin
-Response<string> getCustomDtResponse = await client.GetDigitalTwinAsync(customDtId);
-CustomDigitalTwin customDt = JsonSerializer.Deserialize<CustomDigitalTwin>(getCustomDtResponse.Value);
+Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsync<CustomDigitalTwin>(customDtId);
+CustomDigitalTwin customDt = getCustomDtResponse.Value;
 Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
     $"ETag: {customDt.ETag}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
@@ -222,7 +218,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
 
 ### Query digital twins
 
-Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/en-us/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
+Query the Azure Digital Twins instance for digital twins using the [Azure Digital Twins Query Store lanaguage](https://review.docs.microsoft.com/azure/digital-twins-v2/concepts-query-language?branch=pr-en-us-114648). Query calls support paging. Here's an example of how to query for digital twins and how to iterate over the results.
 
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
@@ -288,10 +284,9 @@ To update a component or in other words to replace, remove and/or add a componen
 ```C# Snippet:DigitalTwinsSampleUpdateComponent
 // Update Component1 by replacing the property ComponentProp1 value,
 // using an optional utility to build the payload.
-var componentUpdateUtility = new UpdateOperationsUtility();
-componentUpdateUtility.AppendReplaceOp("/ComponentProp1", "Some new value");
-string updatePayload = componentUpdateUtility.Serialize();
-await client.UpdateComponentAsync(basicDtId, "Component1", updatePayload);
+var componentJsonPatchDocument = new JsonPatchDocument();
+componentJsonPatchDocument.AppendReplace("/ComponentProp1", "Some new value");
+await client.UpdateComponentAsync(basicDtId, "Component1", componentJsonPatchDocument);
 Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 ```
 
@@ -300,7 +295,7 @@ Console.WriteLine($"Updated component for digital twin '{basicDtId}'.");
 Get a component by providing name of a component and Id of digital twin to which it belongs.
 
 ```C# Snippet:DigitalTwinsSampleGetComponent
-await client.GetComponentAsync(basicDtId, SamplesConstants.ComponentPath);
+await client.GetComponentAsync<MyCustomComponent>(basicDtId, SamplesConstants.ComponentName);
 Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 ```
 
@@ -320,16 +315,17 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     SourceId = "buildingTwinId",
     TargetId = "floorTwinId",
     Name = "contains",
-    CustomProperties =
+    Properties =
     {
         { "Prop1", "Prop1 value" },
         { "Prop2", 6 }
     }
 };
 
-string serializedRelationship = JsonSerializer.Serialize(buildingFloorRelationshipPayload);
-await client.CreateRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId", serializedRelationship);
-Console.WriteLine($"Created a digital twin relationship 'buildingFloorRelationshipId' from twin 'buildingTwinId' to twin 'floorTwinId'.");
+Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
+    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
+    $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
 
 Alternatively, you can create your own custom data types to serialize and deserialize your relationships.
@@ -346,30 +342,35 @@ var floorBuildingRelationshipPayload = new CustomRelationship
     Prop1 = "Prop1 val",
     Prop2 = 4
 };
-string serializedCustomRelationship = JsonSerializer.Serialize(floorBuildingRelationshipPayload);
 
-Response<string> createCustomRelationshipResponse = await client.CreateRelationshipAsync("floorTwinId", "floorBuildingRelationshipId", serializedCustomRelationship);
-Console.WriteLine($"Created a digital twin relationship 'floorBuildingRelationshipId' from twin 'floorTwinId' to twin 'buildingTwinId'.");
+Response<CustomRelationship> createCustomRelationshipResponse = await client
+    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
+    $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
 
 ### Get and deserialize a digital twin relationship
 You can get a digital twin relationship and deserialize it into a BasicRelationship.
 
 ```C# Snippet:DigitalTwinsSampleGetBasicRelationship
-Response<string> getBasicRelationshipResponse = await client.GetRelationshipAsync("buildingTwinId", "buildingFloorRelationshipId");
+Response<BasicRelationship> getBasicRelationshipResponse = await client.GetRelationshipAsync<BasicRelationship>(
+    "buildingTwinId",
+    "buildingFloorRelationshipId");
 if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 {
-    BasicRelationship basicRelationship = JsonSerializer.Deserialize<BasicRelationship>(getBasicRelationshipResponse.Value);
+    BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-        $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+        $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicRelationship.Properties["Prop2"]}");
 }
 ```
 
 Getting and deserializing a digital twin relationship into a custom data type is as easy.
 ```C# Snippet:DigitalTwinsSampleGetCustomRelationship
-Response<string> getCustomRelationshipResponse = await client.GetRelationshipAsync("floorTwinId", "floorBuildingRelationshipId");
-CustomRelationship getCustomRelationship = JsonSerializer.Deserialize<CustomRelationship>(getCustomRelationshipResponse.Value);
+Response<CustomRelationship> getCustomRelationshipResponse = await client.GetRelationshipAsync<CustomRelationship>(
+    "floorTwinId",
+    "floorBuildingRelationshipId");
+CustomRelationship getCustomRelationship = getCustomRelationshipResponse.Value;
 Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelationship.Id}' from twin '{getCustomRelationship.SourceId}'.\n\t" +
     $"Prop1: {getCustomRelationship.Prop1}\n\t" +
     $"Prop2: {getCustomRelationship.Prop2}");
@@ -386,8 +387,8 @@ await foreach (var relationshipJson in relationships)
     BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
-        $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {relationship.CustomProperties["Prop2"]}");
+        $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {relationship.Properties["Prop2"]}");
 }
 ```
 
@@ -419,10 +420,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(eventhubEndpointName)
-{
-    Filter = eventFilter
-};
+var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
 await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
@@ -435,8 +433,8 @@ For more information on the event route filter language, see the "how to manage 
 List a specific event route given event route Id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetEventRoutes
-AsyncPageable<EventRoute> response = client.GetEventRoutesAsync();
-await foreach (EventRoute er in response)
+AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
+await foreach (DigitalTwinsEventRoute er in response)
 {
     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
 }
@@ -457,7 +455,7 @@ To publish a telemetry message for a digital twin, you need to provide the digit
 
 ```C# Snippet:DigitalTwinsSamplePublishTelemetry
 // construct your json telemetry payload by hand.
-await client.PublishTelemetryAsync(twinId, "{\"Telemetry1\": 5}");
+await client.PublishTelemetryAsync(twinId, Guid.NewGuid().ToString(), "{\"Telemetry1\": 5}");
 Console.WriteLine($"Published telemetry message to twin '{twinId}'.");
 ```
 
@@ -472,6 +470,7 @@ var telemetryPayload = new Dictionary<string, int>
 await client.PublishComponentTelemetryAsync(
     twinId,
     "Component1",
+    Guid.NewGuid().ToString(),
     JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
 ```

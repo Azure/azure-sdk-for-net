@@ -413,5 +413,23 @@ namespace Azure.Storage.Files.DataLake.Models
                 Value = value
             };
         #endregion UserDelegationKey
+
+        #region DataLakeQueryError
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static DataLakeQueryError DataLakeQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new DataLakeQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
+            };
+        #endregion DataLakeQueryError
     }
 }

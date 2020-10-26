@@ -14,14 +14,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealthOnDemand DeserializeApplicationGatewayBackendHealthOnDemand(JsonElement element)
         {
-            ApplicationGatewayBackendAddressPool backendAddressPool = default;
-            ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = default;
+            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
+            Optional<ApplicationGatewayBackendHealthHttpSettings> backendHealthHttpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendAddressPool"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value);
@@ -31,13 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendHealthHttpSettings = ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(property.Value);
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings);
+            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool.Value, backendHealthHttpSettings.Value);
         }
     }
 }

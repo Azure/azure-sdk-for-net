@@ -31,7 +31,7 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.97);
+                    Assert.True(celebrity.Confidence > 0.96);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
@@ -60,7 +60,7 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.97);
+                    Assert.True(celebrity.Confidence > 0.96);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }

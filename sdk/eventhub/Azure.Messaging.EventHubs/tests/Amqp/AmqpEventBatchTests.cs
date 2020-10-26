@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Amqp;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+
+using FramingData = Microsoft.Azure.Amqp.Framing.Data;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -18,6 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   The suite of tests for the <see cref="AmqpEventBatch" />
     ///   class.
     /// </summary>
+    ///
     [TestFixture]
     public class AmqpEventBatchTests
     {
@@ -28,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheMessageConverter()
         {
-            Assert.That(() => new AmqpEventBatch(null, new CreateBatchOptions { MaximumSizeInBytes = 31 }), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(null, new CreateBatchOptions { MaximumSizeInBytes = 31 }, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            Assert.That(() => new AmqpEventBatch(mockConverter, null), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(mockConverter, null, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -58,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            Assert.That(() => new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = null }), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = null }, default), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -76,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(maximumSize));
         }
 
@@ -98,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(batchEnvelopeSize);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 27 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 27 }, default);
             Assert.That(batch.SizeInBytes, Is.EqualTo(batchEnvelopeSize));
         }
 
@@ -115,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
             Assert.That(() => batch.TryAdd(null), Throws.ArgumentNullException);
         }
 
@@ -132,10 +136,106 @@ namespace Azure.Messaging.EventHubs.Tests
                 CreateBatchFromEventsHandler = (_e, _p) => Mock.Of<AmqpMessage>()
             };
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 25 }, default);
             batch.Dispose();
 
             Assert.That(() => batch.TryAdd(new EventData(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(TransportProducerFeatures.None)]
+        [TestCase(TransportProducerFeatures.IdempotentPublishing)]
+        public void TryAddHonorStatefulFeatures(byte activeFeatures)
+        {
+            var maximumSize = 50;
+            var batchEnvelopeSize = 0;
+            var capturedSequence = default(int?);
+            var capturedGroupId = default(long?);
+            var capturedOwnerLevel = default(short?);
+            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockEvent = new Mock<AmqpMessage>();
+
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+
+                CreateMessageFromEventHandler = (_e, _p) =>
+                {
+                    capturedSequence = _e.PendingPublishSequenceNumber;
+                    capturedGroupId = _e.PendingProducerGroupId;
+                    capturedOwnerLevel = _e.PendingProducerOwnerLevel;
+                    return mockEvent.Object;
+                }
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(batchEnvelopeSize);
+
+            mockEvent
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(maximumSize);
+
+            var batch = new AmqpEventBatch(mockConverter, options, (TransportProducerFeatures)activeFeatures);
+            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
+
+            NullConstraint generateConstraint() =>
+                ((TransportProducerFeatures)activeFeatures == TransportProducerFeatures.None)
+                    ? Is.Null
+                    : Is.Not.Null;
+
+            Assert.That(capturedSequence, generateConstraint(), "The sequence was not set as expected.");
+            Assert.That(capturedGroupId, generateConstraint(), "The group identifier was not set as expected.");
+            Assert.That(capturedOwnerLevel, generateConstraint(), "The owner level was not set as expected.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddResetsPublishingState()
+        {
+            var maximumSize = 50;
+            var batchEnvelopeSize = 0;
+            var capturedEvent = default(EventData);
+            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockEvent = new Mock<AmqpMessage>();
+
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+
+                CreateMessageFromEventHandler = (_e, _p) =>
+                {
+                    capturedEvent = _e;
+                    return mockEvent.Object;
+                }
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(batchEnvelopeSize);
+
+            mockEvent
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(maximumSize);
+
+            var batch = new AmqpEventBatch(mockConverter, options, TransportProducerFeatures.IdempotentPublishing);
+            batch.TryAdd(EventGenerator.CreateEvents(1).Single());
+
+            Assert.That(capturedEvent.PublishedSequenceNumber, Is.Null, "The final sequence should not have been set.");
+            Assert.That(capturedEvent.PendingPublishSequenceNumber, Is.Null, "The pending sequence was not cleared.");
+            Assert.That(capturedEvent.PendingProducerGroupId, Is.Null, "The group identifier was not cleared.");
+            Assert.That(capturedEvent.PendingProducerOwnerLevel, Is.Null, "The owner level was not cleared.");
         }
 
         /// <summary>
@@ -165,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(maximumSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.False, "An event of the maximum size is too large due to the reserved overhead.");
         }
@@ -197,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(eventMessageSize);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True);
         }
@@ -239,7 +339,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventMessages[index] = message.Object;
             }
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -278,12 +378,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -312,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(0);
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
             Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
@@ -347,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 eventMessages[index] = message.Object;
             }
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -391,12 +491,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -437,12 +537,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -473,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(9959);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 }, default);
             batch.Clear();
 
             Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));
@@ -503,12 +603,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                eventMessages[index] = AmqpMessage.Create(new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
             }
 
             // Add the messages to the batch; all should be accepted.
 
-            var batch = new AmqpEventBatch(mockConverter, options);
+            var batch = new AmqpEventBatch(mockConverter, options, default);
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
@@ -539,7 +639,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(message => message.SerializedMessageSize)
                 .Returns(9959);
 
-            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 }, default);
             batch.Dispose();
 
             Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));

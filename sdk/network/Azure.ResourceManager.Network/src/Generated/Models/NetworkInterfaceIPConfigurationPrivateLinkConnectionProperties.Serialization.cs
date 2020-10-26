@@ -11,56 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties : IUtf8JsonSerializable
+    public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (GroupId != null)
-            {
-                writer.WritePropertyName("groupId");
-                writer.WriteStringValue(GroupId);
-            }
-            if (RequiredMemberName != null)
-            {
-                writer.WritePropertyName("requiredMemberName");
-                writer.WriteStringValue(RequiredMemberName);
-            }
-            if (Fqdns != null)
-            {
-                writer.WritePropertyName("fqdns");
-                writer.WriteStartArray();
-                foreach (var item in Fqdns)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(JsonElement element)
         {
-            string groupId = default;
-            string requiredMemberName = default;
-            IList<string> fqdns = default;
+            Optional<string> groupId = default;
+            Optional<string> requiredMemberName = default;
+            Optional<IReadOnlyList<string>> fqdns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     groupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("requiredMemberName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     requiredMemberName = property.Value.GetString();
                     continue;
                 }
@@ -68,25 +34,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     fqdns = array;
                     continue;
                 }
             }
-            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId, requiredMemberName, fqdns);
+            return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId.Value, requiredMemberName.Value, Optional.ToList(fqdns));
         }
     }
 }

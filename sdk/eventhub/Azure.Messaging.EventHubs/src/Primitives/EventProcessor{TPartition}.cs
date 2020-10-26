@@ -30,6 +30,13 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
+    /// <remarks>
+    ///   The <see cref="EventProcessor{TPartition}" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///   processes events regularly or semi-regularly.  The processor holds responsibility for efficient resource management, working to keep resource usage low during
+    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="StopProcessingAsync" /> or <see cref="StopProcessing" />
+    ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    /// </remarks>
+    ///
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -236,10 +243,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
-
-#pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
-#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>
@@ -299,7 +303,8 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             options = options?.Clone() ?? new EventProcessorOptions();
 
-            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            var connectionStringProperties = EventHubsConnectionStringProperties.Parse(connectionString);
+            connectionStringProperties.Validate(eventHubName, nameof(connectionString));
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
@@ -309,10 +314,44 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancer = new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+        }
 
-#pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
-            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
-#pragma warning restore CA2214 // Do not call overridable methods in constructors
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        ///
+        protected EventProcessor(int eventBatchMaximumCount,
+                                 string consumerGroup,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 EventHubsSharedAccessKeyCredential credential,
+                                 EventProcessorOptions options = default)
+        {
+            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancer = new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>
@@ -370,6 +409,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
         ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
+        ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
             await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -379,6 +426,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessor{TPartition}" /> will keep running.</param>
+        ///
+        /// <remarks>
+        ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
+        ///   the Event Hubs service.  As a result, this method will perform network I/O and may need to wait for partition reads that were active to complete.
+        ///
+        ///   <para>Due to service calls and network latency, an invocation of this method may take slightly longer than the specified <see cref="EventProcessorOptions.MaximumWaitTime" /> or
+        ///   if the wait time was not configured, the duration of the <see cref="EventHubsRetryOptions.TryTimeout" /> of the configured retry policy.</para>
+        /// </remarks>
         ///
         public virtual void StopProcessing(CancellationToken cancellationToken = default) =>
             StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
@@ -429,36 +484,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, ownerLevel: 0);
-
-        /// <summary>
-        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
-        /// </summary>
-        ///
-        /// <param name="instance">The <see cref="EventProcessor{TPartition}" /> instance to associate with the storage manager.</param>
-        ///
-        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
-        ///
-        internal virtual StorageManager CreateStorageManager(EventProcessor<TPartition> instance) => new DelegatingStorageManager(instance);
-
-        /// <summary>
-        ///   Creates a <see cref="PartitionLoadBalancer"/> for managing partition ownership for the event processor.
-        /// </summary>
-        ///
-        /// <param name="storageManager">Responsible for managing persistence of the partition ownership data.</param>
-        /// <param name="identifier">The identifier of the event processor associated with the load balancer.</param>
-        /// <param name="consumerGroup">The name of the consumer group this load balancer is associated with.</param>
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace that the processor is associated with.</param>
-        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
-        /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
-        ///
-        internal virtual PartitionLoadBalancer CreatePartitionLoadBalancer(StorageManager storageManager,
-                                                                           string identifier,
-                                                                           string consumerGroup,
-                                                                           string fullyQualifiedNamespace,
-                                                                           string eventHubName,
-                                                                           TimeSpan ownershipExpiration) =>
-            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
@@ -1160,7 +1186,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
 
                     var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
-                    await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+
+                    if (remainingTimeUntilNextCycle != TimeSpan.Zero)
+                    {
+                        await Task.Delay(remainingTimeUntilNextCycle, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 // Cancellation has been requested; throw the corresponding exception to maintain consistent behavior.
@@ -1195,7 +1225,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionIds">The valid set of partition identifiers for the Event Hub to which the processor is associated.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The interval that callers should delay before invoking the next load balancing cycle.</returns>
+        /// <returns>The interval that callers should delay before invoking the next load balancing cycle; <see cref="TimeSpan.Zero"/> if callers should invoke the next cycle immediately.</returns>
         ///
         private async Task<TimeSpan> PerformLoadBalancingAsync(ValueStopwatch cycleDuration,
                                                                string[] partitionIds,
@@ -1210,10 +1240,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             // a fire-and-forget manner.  The processor does not assume responsibility for observing or surfacing exceptions
             // that may occur in the handler, so the associated task is intentionally unobserved.
 
+            var claimedOwnership = default(EventProcessorPartitionOwnership);
+
             if ((partitionIds != default) && (partitionIds.Length > 0))
             {
-                var claimedOwnership = default(EventProcessorPartitionOwnership);
-
                 try
                 {
                     claimedOwnership = await LoadBalancer.RunLoadBalancingAsync(partitionIds, cancellationToken).ConfigureAwait(false);
@@ -1275,6 +1305,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                 }))
                 .ConfigureAwait(false);
+
+            // If load balancing is greedy and there was a partition claimed, then signal that there should be no delay before
+            // invoking the next load balancing cycle.
+
+            if ((Options.LoadBalancingStrategy == LoadBalancingStrategy.Greedy) && (!LoadBalancer.IsBalanced))
+            {
+                return TimeSpan.Zero;
+            }
 
             // Wait the remaining time, if any, to start the next cycle.
 
@@ -1478,6 +1516,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   TPartition partition,
                                                   string operationDescription,
                                                   CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken));
+
+        /// <summary>
+        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
+        /// </summary>
+        ///
+        /// <param name="instance">The <see cref="EventProcessor{TPartition}" /> instance to associate with the storage manager.</param>
+        ///
+        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
+        ///
+        internal static StorageManager CreateStorageManager(EventProcessor<TPartition> instance) => new DelegatingStorageManager(instance);
 
         /// <summary>
         ///   A virtual <see cref="StorageManager" /> instance that delegates calls to the

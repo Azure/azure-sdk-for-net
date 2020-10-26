@@ -15,35 +15,31 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
                 writer.WriteStringValue(Tier.Value.ToString());
-            }
-            if (Capacity != null)
-            {
-                writer.WritePropertyName("capacity");
-                writer.WriteNumberValue(Capacity.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static VirtualNetworkGatewaySku DeserializeVirtualNetworkGatewaySku(JsonElement element)
         {
-            VirtualNetworkGatewaySkuName? name = default;
-            VirtualNetworkGatewaySkuTier? tier = default;
-            int? capacity = default;
+            Optional<VirtualNetworkGatewaySkuName> name = default;
+            Optional<VirtualNetworkGatewaySkuTier> tier = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new VirtualNetworkGatewaySkuName(property.Value.GetString());
@@ -53,6 +49,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new VirtualNetworkGatewaySkuTier(property.Value.GetString());
@@ -62,13 +59,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new VirtualNetworkGatewaySku(name, tier, capacity);
+            return new VirtualNetworkGatewaySku(Optional.ToNullable(name), Optional.ToNullable(tier), Optional.ToNullable(capacity));
         }
     }
 }

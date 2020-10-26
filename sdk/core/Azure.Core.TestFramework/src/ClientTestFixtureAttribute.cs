@@ -14,13 +14,28 @@ namespace Azure.Core.TestFramework
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
         public static readonly string SyncOnlyKey = "SyncOnly";
+        public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
 
+        private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
         private readonly int? _maxServiceVersion;
 
-        public ClientTestFixtureAttribute(params object[] serviceVersions)
+        /// <summary>
+        /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+        /// </summary>
+        /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
+        public ClientTestFixtureAttribute(params object[] serviceVersions) : this(serviceVersions: serviceVersions, default)
+        { }
+
+        /// <summary>
+        /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+        /// </summary>
+        /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
+        /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
+        public ClientTestFixtureAttribute(object[] serviceVersions, object[] additionalParameters)
         {
-            _serviceVersions = serviceVersions;
+            _additionalParameters = additionalParameters ?? new object[] { };
+            _serviceVersions = serviceVersions ?? new object[] { };
 
             _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
         }
@@ -32,47 +47,65 @@ namespace Azure.Core.TestFramework
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
         {
-            if (_serviceVersions.Any())
+
+            var suitePermutations = GeneratePermutations();
+
+            foreach (var (fixture, isAsync, serviceVersion, parameter) in suitePermutations)
             {
-                foreach (object serviceVersion in _serviceVersions)
+                foreach (TestSuite testSuite in fixture.BuildFrom(typeInfo, filter))
                 {
-                    var syncFixture = new TestFixtureAttribute(false, serviceVersion);
-                    var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
-
-                    foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
-                    {
-                        Process(testSuite, serviceVersion, true);
-                        yield return testSuite;
-                    }
-
-                    foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
-                    {
-                        Process(testSuite, serviceVersion, false);
-                        yield return testSuite;
-                    }
-                }
-            }
-            else
-            {
-                // No service versions defined
-                var syncFixture = new TestFixtureAttribute(false);
-                var asyncFixture = new TestFixtureAttribute(true);
-
-                foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
-                {
-                    Process(testSuite, null, true);
-                    yield return testSuite;
-                }
-
-                foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
-                {
-                    Process(testSuite, null, false);
+                    Process(testSuite, serviceVersion, isAsync, parameter);
                     yield return testSuite;
                 }
             }
         }
 
-        private void Process(TestSuite testSuite, object serviceVersion, bool isAsync)
+        private List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)> GeneratePermutations()
+        {
+            var result = new List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)>();
+
+            if (_serviceVersions.Any())
+            {
+                foreach (object serviceVersion in _serviceVersions)
+                {
+                    if (_additionalParameters.Any())
+                    {
+                        foreach (var parameter in _additionalParameters)
+                        {
+                            result.Add((new TestFixtureAttribute(false, serviceVersion, parameter), false, serviceVersion, parameter));
+                            result.Add((new TestFixtureAttribute(true, serviceVersion, parameter), true, serviceVersion, parameter));
+                        }
+                    }
+                    else
+                    {
+                        // No additional parameters defined
+                        result.Add((new TestFixtureAttribute(false, serviceVersion), false, serviceVersion, null));
+                        result.Add((new TestFixtureAttribute(true, serviceVersion), true, serviceVersion, null));
+                    }
+                }
+            }
+            else
+            {
+                if (_additionalParameters.Any())
+                {
+                    foreach (var parameter in _additionalParameters)
+                    {
+                        result.Add((new TestFixtureAttribute(false, parameter), false, null, parameter));
+                        result.Add((new TestFixtureAttribute(true, parameter), true, null, parameter));
+                    }
+                }
+                else
+                {
+                    // No additional parameters defined
+                    result.Add((new TestFixtureAttribute(false), false, null, null));
+                    result.Add((new TestFixtureAttribute(true), true, null, null));
+                }
+            }
+
+            return result;
+        }
+
+        private void Process(TestSuite testSuite, object serviceVersion, bool isAsync, object parameter)
         {
             var serviceVersionNumber = Convert.ToInt32(serviceVersion);
             foreach (Test test in testSuite.Tests)
@@ -81,18 +114,22 @@ namespace Azure.Core.TestFramework
                 {
                     foreach (Test parameterizedTest in parameterizedMethodSuite.Tests)
                     {
-                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameterizedTest);
+                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameter, parameterizedTest);
                     }
                 }
                 else
                 {
-                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, test);
+                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameter, test);
                 }
             }
         }
 
-        private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, Test test)
+        private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, object parameter, Test test)
         {
+            if (parameter != null)
+            {
+                test.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
+            }
             if (test.GetCustomAttributes<SyncOnlyAttribute>(true).Any())
             {
                 test.Properties.Set(SyncOnlyKey, true);

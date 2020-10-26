@@ -15,46 +15,30 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element)
         {
-            string id = default;
-            string reasonType = default;
-            string summary = default;
-            string detail = default;
-            IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
+            Optional<string> id = default;
+            Optional<string> reasonType = default;
+            Optional<string> summary = default;
+            Optional<string> detail = default;
+            Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("reasonType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     reasonType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("summary"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     summary = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("detail"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     detail = property.Value.GetString();
                     continue;
                 }
@@ -62,25 +46,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
-                        }
+                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
                     }
                     recommendedActions = array;
                     continue;
                 }
             }
-            return new TroubleshootingDetails(id, reasonType, summary, detail, recommendedActions);
+            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions));
         }
     }
 }

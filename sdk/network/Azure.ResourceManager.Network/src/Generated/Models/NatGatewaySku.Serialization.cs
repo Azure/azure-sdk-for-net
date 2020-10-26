@@ -15,30 +15,31 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(Name.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static NatGatewaySku DeserializeNatGatewaySku(JsonElement element)
         {
-            string name = default;
+            Optional<NatGatewaySkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = property.Value.GetString();
+                    name = new NatGatewaySkuName(property.Value.GetString());
                     continue;
                 }
             }
-            return new NatGatewaySku(name);
+            return new NatGatewaySku(Optional.ToNullable(name));
         }
     }
 }

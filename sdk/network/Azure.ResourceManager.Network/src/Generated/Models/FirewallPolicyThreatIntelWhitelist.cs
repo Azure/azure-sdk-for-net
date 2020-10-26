@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
         public FirewallPolicyThreatIntelWhitelist()
         {
+            IpAddresses = new ChangeTrackingList<string>();
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
@@ -27,8 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of IP addresses for the ThreatIntel Whitelist. </summary>
-        public IList<string> IpAddresses { get; set; }
+        public IList<string> IpAddresses { get; }
         /// <summary> List of FQDNs for the ThreatIntel Whitelist. </summary>
-        public IList<string> Fqdns { get; set; }
+        public IList<string> Fqdns { get; }
     }
 }

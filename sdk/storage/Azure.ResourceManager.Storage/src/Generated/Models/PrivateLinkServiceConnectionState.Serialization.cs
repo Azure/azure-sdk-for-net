@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (ActionRequired != null)
+            if (Optional.IsDefined(ActionRequired))
             {
                 writer.WritePropertyName("actionRequired");
                 writer.WriteStringValue(ActionRequired);
@@ -35,15 +35,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateEndpointServiceConnectionStatus? status = default;
-            string description = default;
-            string actionRequired = default;
+            Optional<PrivateEndpointServiceConnectionStatus> status = default;
+            Optional<string> description = default;
+            Optional<string> actionRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PrivateEndpointServiceConnectionStatus(property.Value.GetString());
@@ -51,24 +52,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("description"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actionRequired"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     actionRequired = property.Value.GetString();
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(status, description, actionRequired);
+            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionRequired.Value);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenCount != null)
+            if (Optional.IsDefined(MaxTokenCount))
             {
                 writer.WritePropertyName("maxTokenCount");
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
-            if (ConsumeAllTokens != null)
+            if (Optional.IsDefined(ConsumeAllTokens))
             {
                 writer.WritePropertyName("consumeAllTokens");
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);
@@ -34,8 +34,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LimitTokenFilter DeserializeLimitTokenFilter(JsonElement element)
         {
-            int? maxTokenCount = default;
-            bool? consumeAllTokens = default;
+            Optional<int> maxTokenCount = default;
+            Optional<bool> consumeAllTokens = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -44,6 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenCount = property.Value.GetInt32();
@@ -53,6 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     consumeAllTokens = property.Value.GetBoolean();
@@ -69,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LimitTokenFilter(odataType, name, maxTokenCount, consumeAllTokens);
+            return new LimitTokenFilter(odataType, name, Optional.ToNullable(maxTokenCount), Optional.ToNullable(consumeAllTokens));
         }
     }
 }

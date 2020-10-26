@@ -15,52 +15,52 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OsProfile != null)
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile");
                 writer.WriteObjectValue(OsProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (ExtensionProfile != null)
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile");
                 writer.WriteObjectValue(ExtensionProfile);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType);
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (EvictionPolicy != null)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy");
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile");
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (ScheduledEventsProfile != null)
+            if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile");
                 writer.WriteObjectValue(ScheduledEventsProfile);
@@ -70,22 +70,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVMProfile DeserializeVirtualMachineScaleSetVMProfile(JsonElement element)
         {
-            VirtualMachineScaleSetOSProfile osProfile = default;
-            VirtualMachineScaleSetStorageProfile storageProfile = default;
-            VirtualMachineScaleSetNetworkProfile networkProfile = default;
-            DiagnosticsProfile diagnosticsProfile = default;
-            VirtualMachineScaleSetExtensionProfile extensionProfile = default;
-            string licenseType = default;
-            VirtualMachinePriorityTypes? priority = default;
-            VirtualMachineEvictionPolicyTypes? evictionPolicy = default;
-            BillingProfile billingProfile = default;
-            ScheduledEventsProfile scheduledEventsProfile = default;
+            Optional<VirtualMachineScaleSetOSProfile> osProfile = default;
+            Optional<VirtualMachineScaleSetStorageProfile> storageProfile = default;
+            Optional<VirtualMachineScaleSetNetworkProfile> networkProfile = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
+            Optional<string> licenseType = default;
+            Optional<VirtualMachinePriorityTypes> priority = default;
+            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<BillingProfile> billingProfile = default;
+            Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osProfile = VirtualMachineScaleSetOSProfile.DeserializeVirtualMachineScaleSetOSProfile(property.Value);
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageProfile = VirtualMachineScaleSetStorageProfile.DeserializeVirtualMachineScaleSetStorageProfile(property.Value);
@@ -104,6 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkProfile = VirtualMachineScaleSetNetworkProfile.DeserializeVirtualMachineScaleSetNetworkProfile(property.Value);
@@ -113,6 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
@@ -122,6 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value);
@@ -129,10 +134,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("licenseType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     licenseType = property.Value.GetString();
                     continue;
                 }
@@ -140,6 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = new VirtualMachinePriorityTypes(property.Value.GetString());
@@ -149,6 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     evictionPolicy = new VirtualMachineEvictionPolicyTypes(property.Value.GetString());
@@ -158,6 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingProfile = BillingProfile.DeserializeBillingProfile(property.Value);
@@ -167,13 +171,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVMProfile(osProfile, storageProfile, networkProfile, diagnosticsProfile, extensionProfile, licenseType, priority, evictionPolicy, billingProfile, scheduledEventsProfile);
+            return new VirtualMachineScaleSetVMProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value);
         }
     }
 }

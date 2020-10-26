@@ -15,23 +15,24 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSessionState DeserializeSparkSessionState(JsonElement element)
         {
-            DateTimeOffset? notStartedAt = default;
-            DateTimeOffset? startingAt = default;
-            DateTimeOffset? idleAt = default;
-            DateTimeOffset? deadAt = default;
-            DateTimeOffset? shuttingDownAt = default;
-            DateTimeOffset? killedAt = default;
-            DateTimeOffset? recoveringAt = default;
-            DateTimeOffset? busyAt = default;
-            DateTimeOffset? errorAt = default;
-            string currentState = default;
-            SparkRequest jobCreationRequest = default;
+            Optional<DateTimeOffset> notStartedAt = default;
+            Optional<DateTimeOffset> startingAt = default;
+            Optional<DateTimeOffset> idleAt = default;
+            Optional<DateTimeOffset> deadAt = default;
+            Optional<DateTimeOffset> shuttingDownAt = default;
+            Optional<DateTimeOffset> killedAt = default;
+            Optional<DateTimeOffset> recoveringAt = default;
+            Optional<DateTimeOffset> busyAt = default;
+            Optional<DateTimeOffset> errorAt = default;
+            Optional<string> currentState = default;
+            Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notStartedAt = property.Value.GetDateTimeOffset("O");
@@ -41,6 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startingAt = property.Value.GetDateTimeOffset("O");
@@ -50,6 +52,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     idleAt = property.Value.GetDateTimeOffset("O");
@@ -59,6 +62,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deadAt = property.Value.GetDateTimeOffset("O");
@@ -68,6 +72,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shuttingDownAt = property.Value.GetDateTimeOffset("O");
@@ -77,6 +82,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     killedAt = property.Value.GetDateTimeOffset("O");
@@ -86,6 +92,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveringAt = property.Value.GetDateTimeOffset("O");
@@ -95,6 +102,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     busyAt = property.Value.GetDateTimeOffset("O");
@@ -104,6 +112,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorAt = property.Value.GetDateTimeOffset("O");
@@ -111,10 +120,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("currentState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentState = property.Value.GetString();
                     continue;
                 }
@@ -122,13 +127,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobCreationRequest = SparkRequest.DeserializeSparkRequest(property.Value);
                     continue;
                 }
             }
-            return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, killedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest);
+            return new SparkSessionState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(idleAt), Optional.ToNullable(deadAt), Optional.ToNullable(shuttingDownAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), Optional.ToNullable(busyAt), Optional.ToNullable(errorAt), currentState.Value, jobCreationRequest.Value);
         }
     }
 }

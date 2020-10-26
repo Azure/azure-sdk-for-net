@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealthHttpSettings DeserializeApplicationGatewayBackendHealthHttpSettings(JsonElement element)
         {
-            ApplicationGatewayBackendHttpSettings backendHttpSettings = default;
-            IReadOnlyList<ApplicationGatewayBackendHealthServer> servers = default;
+            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
+            Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendHttpSettings"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
@@ -32,25 +33,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item));
-                        }
+                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item));
                     }
                     servers = array;
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers);
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers));
         }
     }
 }

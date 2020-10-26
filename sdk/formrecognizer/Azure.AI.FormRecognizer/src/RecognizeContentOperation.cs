@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class RecognizeContentOperation : Operation<FormPageCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeContentOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal RecognizeContentOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -168,37 +168,48 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                Response<AnalyzeOperationResult_internal> update = async
-                    ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeContentOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                _response = update.GetRawResponse();
-
-                if (update.Value.Status == OperationStatus.Succeeded)
+                try
                 {
-                    // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
-                    _hasCompleted = true;
+                    Response<AnalyzeOperationResult> update = async
+                        ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.Status == OperationStatus.Succeeded)
+                    {
+                        // we need to first assign a value and then mark the operation as completed to avoid race conditions
+                        _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == OperationStatus.Failed)
+                    {
+                        _requestFailedException = await ClientCommon
+                            .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
+                            .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.Status == OperationStatus.Failed)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon
-                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors)
-                        .ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 
             return GetRawResponse();
         }
 
-        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
             List<FormPage> pages = new List<FormPage>();
-            List<ReadResult_internal> rawPages = readResults.ToList();
+            List<ReadResult> rawPages = readResults.ToList();
 
             for (var pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
             {

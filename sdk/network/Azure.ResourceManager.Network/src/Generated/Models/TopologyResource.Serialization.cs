@@ -15,36 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TopologyResource DeserializeTopologyResource(JsonElement element)
         {
-            string name = default;
-            string id = default;
-            string location = default;
-            IReadOnlyList<TopologyAssociation> associations = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<string> location = default;
+            Optional<IReadOnlyList<TopologyAssociation>> associations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -52,25 +40,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TopologyAssociation> array = new List<TopologyAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(TopologyAssociation.DeserializeTopologyAssociation(item));
-                        }
+                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item));
                     }
                     associations = array;
                     continue;
                 }
             }
-            return new TopologyResource(name, id, location, associations);
+            return new TopologyResource(name.Value, id.Value, location.Value, Optional.ToList(associations));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IpAllocation. </summary>
         public IpAllocation()
         {
+            AllocationTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of IpAllocation. </summary>
@@ -62,6 +64,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The IPAM allocation ID. </summary>
         public string IpamAllocationId { get; set; }
         /// <summary> IpAllocation tags. </summary>
-        public IDictionary<string, string> AllocationTags { get; set; }
+        public IDictionary<string, string> AllocationTags { get; }
     }
 }

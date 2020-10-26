@@ -40,9 +40,10 @@ namespace Azure.AI.FormRecognizer.Models
         Float,
 
         /// <summary>
-        /// Used for <see cref="int"/> type.
+        /// Used for <see cref="long"/> type.
         /// </summary>
-        Integer,
+        [CodeGenMember("Integer")]
+        Int64,
 
         /// <summary>
         /// Used for <see cref="List{T}"/> type.
@@ -54,6 +55,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// Used for <see cref="Dictionary{TKey, TValue}"/> type.
         /// </summary>
         [CodeGenMember("Object")]
-        Dictionary
+        Dictionary,
+
+        /// <summary>
+        /// Used for <see cref="FieldValueSelectionMark"/> type.
+        /// </summary>
+        SelectionMark
     }
 }

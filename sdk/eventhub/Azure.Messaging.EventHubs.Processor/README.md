@@ -10,7 +10,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - Managing checkpoints and state for processing in a durable manner using Azure Storage blobs as the underlying data store.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-processor-docs) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-processor-docs) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
 
 ## Getting started
 
@@ -70,13 +70,13 @@ For more concepts and deeper discussion, see: [Event Hubs Features](https://docs
 
 Since the `EventProcessorClient` has a dependency on Azure Storage blobs for persistence of its state, you'll need to provide a `BlobContainerClient` for the processor, which has been configured for the storage account and container that should be used.
 
-```csharp
-string storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-string blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+```C# Snippet:EventHubs_Processor_ReadMe_Create
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
 
-string eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-string eventHubName = "<< NAME OF THE EVENT HUB >>";
-string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
 
@@ -93,9 +93,10 @@ EventProcessorClient processor = new EventProcessorClient
 
 In order to use the `EventProcessorClient`, handlers for event processing and errors must be provided.  These handlers are considered self-contained and developers are responsible for ensuring that exceptions within the handler code are accounted for.
 
-```csharp
+```C# Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
@@ -104,7 +105,8 @@ async Task processEventHandler(ProcessEventArgs eventArgs)
 {
     try
     {
-        // Perform the application-specific processing for an event
+        // Perform the application-specific processing for an event.  This method
+        // is intended for illustration and is not defined in this snippet.
         await DoSomethingWithTheEvent(eventArgs.Partition, eventArgs.Data);
     }
     catch
@@ -117,13 +119,14 @@ async Task processErrorHandler(ProcessErrorEventArgs eventArgs)
 {
     try
     {
-        // Perform the application-specific processing for an error
+        // Perform the application-specific processing for an error.  This method
+        // is intended for illustration and is not defined in this snippet.
         await DoSomethingWithTheError(eventArgs.Exception);
     }
     catch
     {
         // Handle the exception from handler code
-    }   
+    }
 }
 
 var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
@@ -137,41 +140,48 @@ processor.ProcessErrorAsync += processErrorHandler;
 
 The `EventProcessorClient` will perform its processing in the background once it has been explicitly started and continue doing so until it has been explicitly stopped.  While this allows the application code to perform other tasks, it also places the responsibility of ensuring that the process does not terminate during processing if there are no other tasks being performed.
 
-```csharp
-private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
+```C# Snippet:EventHubs_Processor_ReadMe_ProcessUntilCanceled
+var cancellationSource = new CancellationTokenSource();
+cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
+Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
+
+var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+
+processor.ProcessEventAsync += processEventHandler;
+processor.ProcessErrorAsync += processErrorHandler;
+
+await processor.StartProcessingAsync();
+
+try
 {
-    var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-    var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
-    var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-    var eventHubName = "<< NAME OF THE EVENT HUB >>";
-    var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+    // The processor performs its work in the background; block until cancellation
+    // to allow processing to take place.
+    await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+}
+catch (TaskCanceledException)
+{
+    // This is expected when the delay is canceled.
+}
 
-    Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
-    Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
-
-    var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-    var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
-
-    processor.ProcessEventAsync += processEventHandler;
-    processor.ProcessErrorAsync += processErrorHandler;
-    
-    await processor.StartProcessingAsync();
-    
-    try
-    {
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(1));
-        }
-        
-        await processor.StopProcessingAsync();
-    }
-    finally
-    {
-        // To prevent leaks, the handlers should be removed when processing is complete
-        processor.ProcessEventAsync -= processEventHandler;
-        processor.ProcessErrorAsync -= processErrorHandler;
-    }
+try
+{
+    await processor.StopProcessingAsync();
+}
+finally
+{
+    // To prevent leaks, the handlers should be removed when processing is complete.
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= processErrorHandler;
 }
 ```
 
@@ -183,15 +193,15 @@ To make use of an Active Directory principal, one of the available identity toke
 
 To make use of an Active Directory principal with Azure Storage blob containers, the fully qualified URL to the container must be provided when creating the storage client.  Details about the valid URI formats for accessing Blob storage may be found in [Naming and Referencing Containers, Blobs, and Metadata](https://docs.microsoft.com/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata#resource-uri-syntax).  
 
-```csharp
-Uri blobStorageUrl = new Uri("<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>");
-
-string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
-string eventHubName = "<< NAME OF THE EVENT HUB >>";
-string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-
+```C# Snippet:EventHubs_Processor_ReadMe_CreateWithIdentity
 TokenCredential credential = new DefaultAzureCredential();
-BlobContainerClient storageClient = new BlobContainerClient(blobStorageUrl, credential);
+
+string blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
+BlobContainerClient storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 EventProcessorClient processor = new EventProcessorClient
 (
@@ -209,27 +219,37 @@ When using Azure Active Directory with Azure Storage, your principal must be ass
 
 ## Troubleshooting
 
-### Event Processor client exceptions
+### Exception handling
+
+#### Event Processor client exceptions
 
 The Event Processor client makes every attempt to be resilient in the face of exceptions and will take the necessary actions to continue processing unless it is impossible to do so.  No action from developers is needed for this to take place; it is natively part of the processor's behavior.
 
 In order to allow developers the opportunity to inspect and react to exceptions that occur within the Event Processor client operations, they are surfaced via the `ProcessError` event.  The arguments for this event offer details about the exception and the context in which it was observed.  Developers may perform normal operations on the Event Processor client from within this event handler, such as stopping and/or restarting it in response to errors, but may not otherwise influence the processor's exception behavior.  
 
-For a basic example of implementing the error handler, please see the sample: [Manage the Event Processor when an error is encountered](./samples/Sample07_RestartProcessingOnError.cs).
+For a basic example of implementing the error handler, please see the sample: [Manage the Event Processor when an error is encountered](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_RestartProcessingOnError.cs).
 
-### Exceptions in event handlers
+#### Exceptions in event handlers
 
 Because the Event Processor client lacks the appropriate context to understand the severity of exceptions within the event handlers that developers provide, it cannot assume what actions would be a reasonable response to them.  As a result, developers are considered responsible for exceptions that occur within the event handlers they provide using `try/catch` blocks and other standard language constructs.  
 
 The Event Processor client will not attempt to detect exceptions in developer code nor surface them explicitly.  The resulting behavior will depend on the processor's hosting environment and the context in which the event handler was called.  Because this may vary between different scenarios, it is strongly recommended that developers code their event handlers defensively and account for potential exceptions.
 
-### Exception details
+#### Exception details
 
 For detailed information about exceptions that may occur, please refer to the Event Hubs client library [README]( https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md#event-hubs-exception) and the service documentation for [Event Hubs messaging exceptions](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions). 
 
+### Logging and diagnostics
+
+The Event Processor client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation, it's completion, and any exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
+
+The Event Processor client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-EventHubs-Processor-EventProcessorClient" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Event Hubs offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
+
+The Event Processor library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
+
 ## Next steps
 
-Beyond the scenarios discussed, the Azure Event Hubs Processor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the Event Hubs Processor client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](./samples/README.md) for details.
+Beyond the scenarios discussed, the Azure Event Hubs Processor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the Event Hubs Processor client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/README.md) for details.
 
 ## Contributing  
 
@@ -239,6 +259,6 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-Please see our [contributing guide](./../Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs.Processor%2FREADME.png)

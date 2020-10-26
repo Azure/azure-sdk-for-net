@@ -1,7 +1,58 @@
 # Release History
 
-## 12.5.0-preview.5 (Unreleased)
+## 12.7.0-preview.2 (Unreleased)
+- Fixed bug where BobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
+- Added seekability to BaseBlobClient.OpenRead().
+- Added additional info to exception messages.
 
+## 12.7.0-preview.1 (2020-09-30)
+- Added support for service version 2020-02-10.
+- Added support for Blob Query Arrow output format.
+- Added support for Blob Last Access Time tracking.
+- Added support for Container Soft Delete.
+- Fixed bug where Stream returned from AppendBlobClient.OpenWrite(), BlockBlobClient.OpenWrite() and PageBlobClient.OpenWrite() did not flush while disposing preventing compatibility with using keyword.
+- Fixed bug where Listing Blobs with BlobTraits.Metadata would return BlobItems with null metadata instead of an empty dictionary if no metadata was present.
+- Fixed bug where BlobAccessPolicy.StartsOn and .ExpiresOn would cause the process to crash.
+- Added seekability to BlobBaseClient.OpenRead().
+
+## 12.6.0 (2020-08-31)
+- Fixed bug where BlobClient.Upload(), BlockBlobClient.Upload(), AppendBlobClient.AppendBlock(), and PageBlobClient.UploadPages() would deadlock if the content stream's position was not 0.
+- Fixed bug in BlobBaseClient.OpenRead() causing us to do more download called than necessary.
+- Fixed bug where PageBlobWriteStream would advance Position 2x the number of written bytes.
+
+## 12.5.1 (2020-08-18)
+- Fixed bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 12.5.0 (2020-08-13)
+- Includes all features from 12.5.0-preview.1 through 12.5.0-preview.6.
+- Added support for custom local emulator hostname for blob storage endpoints.
+- Fixed bug where BlobContainerClient.SetAccessPolicy() sends DateTimeOffset.MinValue when StartsOn and ExpiresOn when not set in BlobAccessPolicy
+- Added nullable properties, PolicyStartsOn and PolicyExpiresOn to BlobAccessPolicy
+- Added BlockBlobClient.OpenWrite(), AppendBlobClient.OpenWrite(), and PageBlobClient.OpenWrite()
+
+## 12.5.0-preview.6 (2020-07-27)
+- Fixed bug where BlockBlobClient and PageBlobClient would throw NullReferenceExceptions when using Uri constructor.
+- Fixed bug where .WithSnapshot() and .WithVersion() would URL-encode the name of the new clients.
+- Updated BlobSasBuilder to correctly order raw string permissions and make the permissions lowercase.
+- Fixed bug where BlockBlobClient.Query() failed when query response was > ~200 MB.
+- Added BlobBaseClient.OpenRead().
+- Fixed bug where BlockBlobClient.Query() would buffer the query response before parsing the Avro contents.
+
+## 12.5.0-preview.5 (2020-07-03)
+- Added support for service version 2019-12-12.
+- Added support for Blob Tags.
+- Added support for Blob Version.
+- Added support for Object Replication Service.
+- Added support for Append Seal.
+- Added support for Jumbo Blobs.
+- Added support for setting Access Tier on Blob Snapshots and Versions.
+- Added support for BlobServiceProperties.StaticWebsite.DefaultIndexDocumentPath.
+- Added RehydratePriority to BlobProperties and BlobItemProperties.
+- Fixed bug where BlobBaseClient.DownloadTo() was throwing an exception when downloading blobs of size 0.
+- Fixed bug where BlobBaseClient.DownloadTo() was not disposing the network stream.
+- Fixed bug where all BlobModelFactory.BlobProperties() parameters were required.
+- Fixed bug where BlobBaseClient.BlobName was encoded, affecting SAS generation.
+- Fixed bug where AccountType enum was missing BlockBlobStorage and FileStorage
 
 ## 12.5.0-preview.4 (2020-06)
 - This preview contains bug fixes to improve quality.

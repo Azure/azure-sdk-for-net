@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="scope"></param>
         /// <returns></returns>
         private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string resource, string authority,
-            CancellationToken cancellationToken = default)
+            bool forceRefresh = false, CancellationToken cancellationToken = default)
         {
             // Check if the auth result is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             Tuple<AppAuthenticationResult, Principal> cachedAuthResult = AppAuthResultCache.Get(cacheKey);
 
-            if (cachedAuthResult != null)
+            if (!forceRefresh && cachedAuthResult != null)
             {
                 _principalUsed = cachedAuthResult.Item2;
 
@@ -170,13 +170,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
             try
             {
                 // Check again if the auth result is in the cache now, the first thread may have gotten it.
-                cachedAuthResult = AppAuthResultCache.Get(cacheKey);
+                Tuple<AppAuthenticationResult, Principal> cachedAuthResult2 = AppAuthResultCache.Get(cacheKey);
 
-                if (cachedAuthResult != null)
+                // If the cache has a hit and we are not forcing a refresh, or we are forcing a refresh but it
+                // was already refreshed while waiting on the semaphore.
+                if (cachedAuthResult2 != null
+                    && (!forceRefresh || !object.ReferenceEquals(cachedAuthResult?.Item1, cachedAuthResult2.Item1)))
                 {
-                    _principalUsed = cachedAuthResult.Item2;
+                    _principalUsed = cachedAuthResult2.Item2;
 
-                    return cachedAuthResult.Item1;
+                    return cachedAuthResult2.Item1;
                 }
 
                 // If the auth result was not in cache, try to get it
@@ -243,6 +246,49 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 : _potentialAccessTokenProviders;
         }
 
+        // <summary>
+        /// Gets an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="tenantId">If not specified, default tenant is used. Managed Service Identity REST protocols do not accept tenantId, so this can only be used with certificate and client secret based authentication.</param>
+        /// <param name="forceRefresh">True to force refresh this token. False to used a cache value if available.</param> 
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
+        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId, bool forceRefresh,
+            CancellationToken cancellationToken = default)
+        {
+            var authResult = await GetAuthenticationResultAsync(resource, tenantId, forceRefresh, cancellationToken).ConfigureAwait(false);
+            return authResult.AccessToken;
+        }
+
+        // <summary>
+        /// Gets an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="forceRefresh">True to force refresh this token. False to used a cache value if available.</param> 
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
+        public virtual Task<string> GetAccessTokenAsync(string resource, bool forceRefresh,
+            CancellationToken cancellationToken = default)
+        {
+            return GetAccessTokenAsync(resource, tenantId: null, forceRefresh, cancellationToken);
+        }
+
+
         /// <summary>
         /// Gets an access token to access the given Azure resource. 
         /// </summary>
@@ -257,17 +303,77 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId = default,
+        public virtual Task<string> GetAccessTokenAsync(string resource, string tenantId = default,
             CancellationToken cancellationToken = default)
         {
-            var authResult = await GetAuthenticationResultAsync(resource, tenantId, cancellationToken).ConfigureAwait(false);
-
-            return authResult.AccessToken;
+            return GetAccessTokenAsync(resource, tenantId, forceRefresh: false, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="tenantId">If not specified, default tenant is used. Managed Service Identity REST protocols do not accept tenantId, so this can only be used with certificate and client secret based authentication.</param>
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
         public virtual Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
             return GetAccessTokenAsync(resource, tenantId, default);
+        }
+
+        /// <summary>
+        /// Gets an authentication result which contains an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// var authResult = await azureServiceTokenProvider.GetAuthResultAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="tenantId">If not specified, default tenant is used. Managed Service Identity REST protocols do not accept tenantId, so this can only be used with certificate and client secret based authentication.</param>
+        /// <param name="forceRefresh">True to force refresh this token. False to used a cache value if available.</param> 
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId,
+            bool forceRefresh, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(resource))
+            {
+                throw new ArgumentNullException(nameof(resource));
+            }
+
+            string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
+
+            return GetAuthResultAsyncImpl(resource, authority, forceRefresh, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an authentication result which contains an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// var authResult = await azureServiceTokenProvider.GetAuthResultAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="forceRefresh">True to force refresh this token. False to used a cache value if available.</param> 
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, bool forceRefresh,
+            CancellationToken cancellationToken = default)
+        {
+            return GetAuthenticationResultAsync(resource, tenantId: null, forceRefresh, cancellationToken);
         }
 
         /// <summary>
@@ -287,16 +393,23 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default,
             CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(resource))
-            {
-                throw new ArgumentNullException(nameof(resource));
-            }
-
-            string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
-
-            return GetAuthResultAsyncImpl(resource, authority, cancellationToken);
+            return GetAuthenticationResultAsync(resource, tenantId, forceRefresh: false, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets an authentication result which contains an access token to access the given Azure resource. 
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// var azureServiceTokenProvider = new AzureServiceTokenProvider();
+        /// var authResult = await azureServiceTokenProvider.GetAuthResultAsync("https://management.azure.com/").ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// <param name="resource">Resource to access. e.g. https://management.azure.com/.</param>
+        /// <param name="tenantId">If not specified, default tenant is used. Managed Service Identity REST protocols do not accept tenantId, so this can only be used with certificate and client secret based authentication.</param>
+        /// <returns>Access token</returns>
+        /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
+        /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
         public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
             return GetAuthenticationResultAsync(resource, tenantId, default);

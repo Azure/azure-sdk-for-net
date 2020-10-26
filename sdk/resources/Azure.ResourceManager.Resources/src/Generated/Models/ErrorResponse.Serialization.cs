@@ -11,82 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorResponse : IUtf8JsonSerializable
+    public partial class ErrorResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Code != null)
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            if (Message != null)
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            if (Target != null)
-            {
-                writer.WritePropertyName("target");
-                writer.WriteStringValue(Target);
-            }
-            if (Details != null)
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStartArray();
-                foreach (var item in Details)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (AdditionalInfo != null)
-            {
-                writer.WritePropertyName("additionalInfo");
-                writer.WriteStartArray();
-                foreach (var item in AdditionalInfo)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            string code = default;
-            string message = default;
-            string target = default;
-            IList<ErrorResponse> details = default;
-            IList<ErrorAdditionalInfo> additionalInfo = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ErrorResponse>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     target = property.Value.GetString();
                     continue;
                 }
@@ -94,19 +41,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeErrorResponse(item));
-                        }
+                        array.Add(DeserializeErrorResponse(item));
                     }
                     details = array;
                     continue;
@@ -115,25 +56,19 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
-                        }
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
                     }
                     additionalInfo = array;
                     continue;
                 }
             }
-            return new ErrorResponse(code, message, target, details, additionalInfo);
+            return new ErrorResponse(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

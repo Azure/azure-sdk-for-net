@@ -17,34 +17,9 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (LastModifiedTime != null)
-            {
-                writer.WritePropertyName("lastModifiedTime");
-                writer.WriteStringValue(LastModifiedTime.Value, "O");
-            }
-            if (Metadata != null)
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteStartObject();
@@ -55,60 +30,25 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ShareQuota != null)
+            if (Optional.IsDefined(ShareQuota))
             {
                 writer.WritePropertyName("shareQuota");
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols");
                 writer.WriteStringValue(EnabledProtocols.Value.ToString());
             }
-            if (RootSquash != null)
+            if (Optional.IsDefined(RootSquash))
             {
                 writer.WritePropertyName("rootSquash");
                 writer.WriteStringValue(RootSquash.Value.ToString());
             }
-            if (Version != null)
-            {
-                writer.WritePropertyName("version");
-                writer.WriteStringValue(Version);
-            }
-            if (Deleted != null)
-            {
-                writer.WritePropertyName("deleted");
-                writer.WriteBooleanValue(Deleted.Value);
-            }
-            if (DeletedTime != null)
-            {
-                writer.WritePropertyName("deletedTime");
-                writer.WriteStringValue(DeletedTime.Value, "O");
-            }
-            if (RemainingRetentionDays != null)
-            {
-                writer.WritePropertyName("remainingRetentionDays");
-                writer.WriteNumberValue(RemainingRetentionDays.Value);
-            }
-            if (AccessTier != null)
+            if (Optional.IsDefined(AccessTier))
             {
                 writer.WritePropertyName("accessTier");
                 writer.WriteStringValue(AccessTier.Value.ToString());
-            }
-            if (AccessTierChangeTime != null)
-            {
-                writer.WritePropertyName("accessTierChangeTime");
-                writer.WriteStringValue(AccessTierChangeTime.Value, "O");
-            }
-            if (AccessTierStatus != null)
-            {
-                writer.WritePropertyName("accessTierStatus");
-                writer.WriteStringValue(AccessTierStatus);
-            }
-            if (ShareUsageBytes != null)
-            {
-                writer.WritePropertyName("shareUsageBytes");
-                writer.WriteNumberValue(ShareUsageBytes.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -116,69 +56,59 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static FileShareItem DeserializeFileShareItem(JsonElement element)
         {
-            string etag = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            DateTimeOffset? lastModifiedTime = default;
-            IDictionary<string, string> metadata = default;
-            int? shareQuota = default;
-            EnabledProtocols? enabledProtocols = default;
-            RootSquashType? rootSquash = default;
-            string version = default;
-            bool? deleted = default;
-            DateTimeOffset? deletedTime = default;
-            int? remainingRetentionDays = default;
-            ShareAccessTier? accessTier = default;
-            DateTimeOffset? accessTierChangeTime = default;
-            string accessTierStatus = default;
-            long? shareUsageBytes = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<int> shareQuota = default;
+            Optional<EnabledProtocols> enabledProtocols = default;
+            Optional<RootSquashType> rootSquash = default;
+            Optional<string> version = default;
+            Optional<bool> deleted = default;
+            Optional<DateTimeOffset> deletedTime = default;
+            Optional<int> remainingRetentionDays = default;
+            Optional<ShareAccessTier> accessTier = default;
+            Optional<DateTimeOffset> accessTierChangeTime = default;
+            Optional<string> accessTierStatus = default;
+            Optional<long> shareUsageBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("lastModifiedTime"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -188,19 +118,13 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
                             metadata = dictionary;
                             continue;
@@ -209,6 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shareQuota = property0.Value.GetInt32();
@@ -218,6 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledProtocols = new EnabledProtocols(property0.Value.GetString());
@@ -227,6 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rootSquash = new RootSquashType(property0.Value.GetString());
@@ -234,10 +161,6 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("version"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             version = property0.Value.GetString();
                             continue;
                         }
@@ -245,6 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleted = property0.Value.GetBoolean();
@@ -254,6 +178,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletedTime = property0.Value.GetDateTimeOffset("O");
@@ -263,6 +188,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remainingRetentionDays = property0.Value.GetInt32();
@@ -272,6 +198,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessTier = new ShareAccessTier(property0.Value.GetString());
@@ -281,6 +208,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessTierChangeTime = property0.Value.GetDateTimeOffset("O");
@@ -288,10 +216,6 @@ namespace Azure.ResourceManager.Storage.Models
                         }
                         if (property0.NameEquals("accessTierStatus"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             accessTierStatus = property0.Value.GetString();
                             continue;
                         }
@@ -299,6 +223,7 @@ namespace Azure.ResourceManager.Storage.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shareUsageBytes = property0.Value.GetInt64();
@@ -308,7 +233,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new FileShareItem(id, name, type, etag, lastModifiedTime, metadata, shareQuota, enabledProtocols, rootSquash, version, deleted, deletedTime, remainingRetentionDays, accessTier, accessTierChangeTime, accessTierStatus, shareUsageBytes);
+            return new FileShareItem(id.Value, name.Value, type.Value, etag.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes));
         }
     }
 }

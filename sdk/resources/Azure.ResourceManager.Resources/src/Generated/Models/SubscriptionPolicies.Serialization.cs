@@ -14,26 +14,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element)
         {
-            string locationPlacementId = default;
-            string quotaId = default;
-            SpendingLimit? spendingLimit = default;
+            Optional<string> locationPlacementId = default;
+            Optional<string> quotaId = default;
+            Optional<SpendingLimit> spendingLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     locationPlacementId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("quotaId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     quotaId = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spendingLimit = property.Value.GetString().ToSpendingLimit();
                     continue;
                 }
             }
-            return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit);
+            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit));
         }
     }
 }

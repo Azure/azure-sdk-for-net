@@ -4,31 +4,27 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The message object used to communicate and transfer data with Service Bus.
+    /// The <see cref="ServiceBusMessage"/> is used to send data to Service Bus Queues and Topics.
+    /// When receiving messages, the <see cref="ServiceBusReceivedMessage"/> is used.
     /// </summary>
     /// <remarks>
-    /// The message structure is discussed in detail in the <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation.</a>
+    /// The message structure is discussed in detail in the
+    /// <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads">product documentation</see>.
     /// </remarks>
     public class ServiceBusMessage
     {
-        private string _messageId;
-        private string _sessionId;
-        private string _replyToSessionId;
-        private string _partitionKey;
-        private string _viaPartitionKey;
-        private TimeSpan _timeToLive;
-
         /// <summary>
         /// Creates a new message.
         /// </summary>
-        public ServiceBusMessage()
-            : this(default(ReadOnlyMemory<byte>))
+        public ServiceBusMessage() :
+            this(default(ReadOnlyMemory<byte>))
         {
         }
 
@@ -37,30 +33,17 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
         public ServiceBusMessage(string body) :
-            this(body, Encoding.UTF8)
+            this(new BinaryData(body))
         {
-        }
-
-        /// <summary>
-        /// Creates a new message from the specified string, using the specified encoding.
-        /// </summary>
-        /// <param name="body">The payload of the message as a string.</param>
-        /// <param name="encoding">The encoding to use for the body.</param>
-        public ServiceBusMessage(string body, Encoding encoding)
-        {
-            Argument.AssertNotNull(encoding, nameof(encoding));
-            Body = new BinaryData(body, encoding);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
+            this(BinaryData.FromBytes(body))
         {
-            Body = new BinaryData(body);
-            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -69,8 +52,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message.</param>
         public ServiceBusMessage(BinaryData body)
         {
-            Body = body;
-            Properties = new Dictionary<string, object>();
+            AmqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
         }
 
         /// <summary>
@@ -80,33 +62,38 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-
-            Body = receivedMessage.Body;
-            ContentType = receivedMessage.ContentType;
-            CorrelationId = receivedMessage.CorrelationId;
-            Label = receivedMessage.Label;
-            MessageId = receivedMessage.MessageId;
-            PartitionKey = receivedMessage.PartitionKey;
-            Properties = new Dictionary<string, object>(receivedMessage.SentMessage.Properties);
-            ReplyTo = receivedMessage.ReplyTo;
-            ReplyToSessionId = receivedMessage.ReplyToSessionId;
-            SessionId = receivedMessage.SessionId;
-            ScheduledEnqueueTime = receivedMessage.ScheduledEnqueueTime;
-            TimeToLive = receivedMessage.TimeToLive;
-            To = receivedMessage.To;
-            ViaPartitionKey = receivedMessage.ViaPartitionKey;
+            AmqpMessage = new AmqpAnnotatedMessage(receivedMessage.AmqpMessage);
+            AmqpMessage.Header.DeliveryCount = null;
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.LockedUntilName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.SequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.DeadLetterSourceName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueueSequenceNumberName);
+            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueuedTimeUtcName);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterReasonHeader);
+            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
         }
 
         /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
-        /// <remarks>
-        /// The easiest way to create a new message from a string is the following:
-        /// <code>
-        /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
-        /// </code>
-        /// </remarks>
-        public BinaryData Body { get; set; }
+        public BinaryData Body
+        {
+            get
+            {
+                if (AmqpMessage.Body is AmqpDataBody dataBody)
+                {
+                    return dataBody.Data.ConvertAndFlattenData();
+                }
+                else
+                {
+                    return default;
+                }
+            }
+            set
+            {
+                AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { value });
+            }
+        }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -115,37 +102,39 @@ namespace Azure.Messaging.ServiceBus
         ///    The message identifier is an application-defined value that uniquely identifies the
         ///    message and its payload. The identifier is a free-form string and can reflect a GUID
         ///    or an identifier derived from the application context. If enabled, the
-        ///    <a href="https://docs.microsoft.com/azure/service-bus-messaging/duplicate-detection">duplicate detection</a>
+        ///    <see href="https://docs.microsoft.com/azure/service-bus-messaging/duplicate-detection">duplicate detection</see>
         ///    feature identifies and removes second and further submissions of messages with the
         ///    same MessageId.
         /// </remarks>
         public string MessageId
         {
-            get => _messageId;
+            get => AmqpMessage.Properties.MessageId;
 
             set
             {
                 ValidateMessageId(value);
-                _messageId = value;
+                AmqpMessage.Properties.MessageId = value;
             }
         }
 
         /// <summary>Gets or sets a partition key for sending a message to a partitioned entity.</summary>
         /// <value>The partition key. Maximum length is 128 characters.</value>
         /// <remarks>
-        ///    For <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-partitioning">partitioned entities</a>,
+        ///    For <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-partitioning">partitioned entities</see>,
         ///    setting this value enables assigning related messages to the same internal partition, so that submission sequence
         ///    order is correctly recorded. The partition is chosen by a hash function over this value and cannot be chosen
         ///    directly. For session-aware entities, the <see cref="SessionId"/> property overrides this value.
         /// </remarks>
         public string PartitionKey
         {
-            get => _partitionKey;
-
+            get
+            {
+                return AmqpMessage.GetPartitionKey();
+            }
             set
             {
                 ValidatePartitionKey(value);
-                _partitionKey = value;
+                AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = value;
             }
         }
 
@@ -155,16 +144,18 @@ namespace Azure.Messaging.ServiceBus
         ///    If a message is sent via a transfer queue in the scope of a transaction, this value selects the
         ///    transfer queue partition: This is functionally equivalent to <see cref="PartitionKey"/> and ensures that
         ///    messages are kept together and in order as they are transferred.
-        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
+        ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        public string ViaPartitionKey
+        public string TransactionPartitionKey
         {
-            get => _viaPartitionKey;
-
+            get
+            {
+                return AmqpMessage.GetViaPartitionKey();
+            }
             set
             {
                 ValidatePartitionKey(value);
-                _viaPartitionKey = value;
+                AmqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = value;
             }
         }
 
@@ -175,16 +166,16 @@ namespace Azure.Messaging.ServiceBus
         ///    affiliation of the message. Messages with the same session identifier are subject
         ///    to summary locking and enable exact in-order processing and demultiplexing.
         ///    For session-unaware entities, this value is ignored.
-        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-sessions">Message Sessions</a>.
+        ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/message-sessions">Message Sessions</see>.
         /// </remarks>
         public string SessionId
         {
-            get => _sessionId;
+            get => AmqpMessage.Properties.GroupId;
 
             set
             {
                 ValidateSessionId(value);
-                _sessionId = value;
+                AmqpMessage.Properties.GroupId = value;
             }
         }
 
@@ -192,16 +183,17 @@ namespace Azure.Messaging.ServiceBus
         /// <value>Session identifier. Maximum length is 128 characters.</value>
         /// <remarks>
         ///    This value augments the ReplyTo information and specifies which SessionId should be set
-        ///    for the reply when sent to the reply entity. See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>
+        ///    for the reply when sent to the reply entity.
+        ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</see>
         /// </remarks>
         public string ReplyToSessionId
         {
-            get => _replyToSessionId;
+            get => AmqpMessage.Properties.ReplyToGroupId;
 
             set
             {
                 ValidateSessionId(value);
-                _replyToSessionId = value;
+                AmqpMessage.Properties.ReplyToGroupId = value;
             }
         }
 
@@ -210,28 +202,22 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <value>The message’s time to live value.</value>
         /// <remarks>
-        ///     This value is the relative duration after which the message expires, starting from the instant
-        ///      the message has been accepted and stored by the broker, as captured in "SystemPropertiesCollection.EnqueuedTimeUtc"/>.
+        ///     This value is the relative duration after which the message expires.
         ///      When not set explicitly, the assumed value is the DefaultTimeToLive for the respective queue or topic.
         ///      A message-level <see cref="TimeToLive"/> value cannot be longer than the entity's DefaultTimeToLive
         ///      setting and it is silently adjusted if it does.
-        ///      See <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-expiration">Expiration</a>
+        ///      See <see href="https://docs.microsoft.com/azure/service-bus-messaging/message-expiration">Expiration</see>.
         /// </remarks>
         public TimeSpan TimeToLive
         {
             get
             {
-                if (_timeToLive == TimeSpan.Zero)
-                {
-                    return TimeSpan.MaxValue;
-                }
-                return _timeToLive;
+                return AmqpMessage.GetTimeToLive();
             }
-
             set
             {
                 Argument.AssertPositive(value, nameof(TimeToLive));
-                _timeToLive = value;
+                AmqpMessage.Header.TimeToLive = value;
             }
         }
 
@@ -240,27 +226,57 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         ///    Allows an application to specify a context for the message for the purposes of correlation,
         ///    for example reflecting the MessageId of a message that is being replied to.
-        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</see>.
         /// </remarks>
-        public string CorrelationId { get; set; }
+        public string CorrelationId
+        {
+            get
+            {
+                return AmqpMessage.Properties.CorrelationId;
+            }
+            set
+            {
+                AmqpMessage.Properties.CorrelationId = value;
+            }
+        }
 
-        /// <summary>Gets or sets an application specific label.</summary>
-        /// <value>The application specific label</value>
+        /// <summary>Gets or sets an application specific subject.</summary>
+        /// <value>The application specific subject.</value>
         /// <remarks>
         ///   This property enables the application to indicate the purpose of the message to the receiver in a standardized
         ///   fashion, similar to an email subject line. The mapped AMQP property is "subject".
         /// </remarks>
-        public string Label { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return AmqpMessage.Properties.Subject;
+            }
+            set
+            {
+                AmqpMessage.Properties.Subject = value;
+            }
+        }
 
         /// <summary>Gets or sets the "to" address.</summary>
         /// <value>The "to" address.</value>
         /// <remarks>
         ///    This property is reserved for future use in routing scenarios and presently ignored by the broker itself.
         ///     Applications can use this value in rule-driven
-        ///     <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</a> scenarios to indicate the
+        ///     <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</see> scenarios to indicate the
         ///     intended logical destination of the message.
         /// </remarks>
-        public string To { get; set; }
+        public string To
+        {
+            get
+            {
+                return AmqpMessage.Properties.To;
+            }
+            set
+            {
+                AmqpMessage.Properties.To = value;
+            }
+        }
 
         /// <summary>Gets or sets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -268,7 +284,17 @@ namespace Azure.Messaging.ServiceBus
         ///   Optionally describes the payload of the message, with a descriptor following the format of
         ///   RFC2045, Section 5, for example "application/json".
         /// </remarks>
-        public string ContentType { get; set; }
+        public string ContentType
+        {
+            get
+            {
+                return AmqpMessage.Properties.ContentType;
+            }
+            set
+            {
+                AmqpMessage.Properties.ContentType = value;
+            }
+        }
 
         /// <summary>Gets or sets the address of an entity to send replies to.</summary>
         /// <value>The reply entity address.</value>
@@ -276,9 +302,19 @@ namespace Azure.Messaging.ServiceBus
         ///    This optional and application-defined value is a standard way to express a reply path
         ///    to the receiver of the message. When a sender expects a reply, it sets the value to the
         ///    absolute or relative path of the queue or topic it expects the reply to be sent to.
-        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</see>.
         /// </remarks>
-        public string ReplyTo { get; set; }
+        public string ReplyTo
+        {
+            get
+            {
+                return AmqpMessage.Properties.ReplyTo;
+            }
+            set
+            {
+                AmqpMessage.Properties.ReplyTo = value;
+            }
+        }
 
         /// <summary>Gets or sets the date and time in UTC at which the message will be enqueued. This
         /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
@@ -286,22 +322,44 @@ namespace Azure.Messaging.ServiceBus
         /// It is utilized to delay messages sending to a specific time in the future.</value>
         /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
-        public DateTimeOffset ScheduledEnqueueTime { get; set; }
+        public DateTimeOffset ScheduledEnqueueTime
+        {
+            get
+            {
+                return AmqpMessage.GetScheduledEnqueueTime();
+            }
+            set
+            {
+                AmqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = value.UtcDateTime;
+            }
+        }
 
         /// <summary>
-        /// Gets the "user properties" bag, which can be used for custom message metadata.
+        /// Gets or sets the raw Amqp message data that will be transmitted over the wire.
+        /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// </summary>
+        public AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the application properties bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
         /// Only following value types are supported:
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
-        public IDictionary<string, object> Properties { get; internal set; }
-
-        /////// <summary>
-        ///// Gets the <see cref="SystemPropertiesCollection"/>, which is used to store properties that are set by the system.
-        ///// </summary>
-        //public SystemPropertiesCollection SystemProperties { get; internal set; }
+        public IDictionary<string, object> ApplicationProperties
+        {
+            get
+            {
+                return AmqpMessage.ApplicationProperties;
+            }
+            internal set
+            {
+                AmqpMessage.ApplicationProperties = value;
+            }
+        }
 
         /// <summary>Returns a string that represents the current message.</summary>
         /// <returns>The string representation of the current message.</returns>

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Min != null)
+            if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min");
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Max != null)
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max");
                 writer.WriteNumberValue(Max.Value);
@@ -30,14 +30,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(JsonElement element)
         {
-            int? min = default;
-            int? max = default;
+            Optional<int> min = default;
+            Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     min = property.Value.GetInt32();
@@ -47,13 +48,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     max = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(min, max);
+            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Optional.ToNullable(min), Optional.ToNullable(max));
         }
     }
 }

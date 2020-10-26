@@ -7,6 +7,7 @@ namespace Azure.Messaging.EventHubs
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
+        public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Messaging.EventHubs.EventHubsSharedAccessKeyCredential credential, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions = null) { }
         public EventProcessorClient(Azure.Storage.Blobs.BlobContainerClient checkpointStore, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.EventProcessorClientOptions clientOptions) { }
         public new string ConsumerGroup { get { throw null; } }
         public new string EventHubName { get { throw null; } }
@@ -39,9 +40,15 @@ namespace Azure.Messaging.EventHubs
     public partial class EventProcessorClientOptions
     {
         public EventProcessorClientOptions() { }
+        public int CacheEventCount { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.Processor.LoadBalancingStrategy LoadBalancingStrategy { get { throw null; } set { } }
+        public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
+        public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
+        public int PrefetchCount { get { throw null; } set { } }
+        public long? PrefetchSizeInBytes { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

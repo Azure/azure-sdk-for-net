@@ -17,6 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="host"> IP address or host name of the Spark server. </param>
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
         public SparkLinkedService(object host, object port, SparkAuthenticationType authenticationType)
         {
             if (host == null)

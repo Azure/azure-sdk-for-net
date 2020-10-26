@@ -27,26 +27,26 @@ is a member of multiple subscriptions.
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-$sp = New-AzADServicePrincipal -Role Owner
-eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
-  -ServiceDirectory 'search' `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
+eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
 ```
+
+The `OutFile` switch would be set if you are running this for a .NET project on Windows. This will save test environment settings
+into a test-resources.json.env file next to test-resources.json. The file is protected via DPAPI.
+The environment file would be scoped to the current repository directory and avoids the need to
+set environment variables or restart your IDE to recognize them.
 
 Along with some log messages, this will output environment variables based on
 your current shell like in the following example:
 
 ```powershell
-$env:AZURE_TENANT_ID = '<<secret>>'
-$env:AZURE_CLIENT_ID = '<<secret>>'
-$env:AZURE_CLIENT_SECRET = '<<secret>>'
-$env:AZURE_SUBSCRIPTION_ID = 'YOUR SUBSCRIPTION ID'
-$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
-$env:AZURE_LOCATION = 'westus2'
-$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
-$env:AZURE_SEARCH_STORAGE_KEY = '<<secret>>'
+${env:AZURE_TENANT_ID} = '<<secret>>'
+${env:AZURE_CLIENT_ID} = '<<secret>>'
+${env:AZURE_CLIENT_SECRET} = '<<secret>>'
+${env:AZURE_SUBSCRIPTION_ID} = 'YOUR SUBSCRIPTION ID'
+${env:AZURE_RESOURCE_GROUP} = 'rg-myusername'
+${env:AZURE_LOCATION} = 'westus2'
+${env:AZURE_SEARCH_STORAGE_NAME} = 'myusernamestg'
+${env:AZURE_SEARCH_STORAGE_KEY} = '<<secret>>'
 ```
 
 For security reasons we do not set these environment variables automatically
@@ -62,14 +62,14 @@ applications started outside the terminal, you could copy and paste the
 following commands:
 
 ```powershell
-setx AZURE_TENANT_ID $env:AZURE_TENANT_ID
-setx AZURE_CLIENT_ID $env:AZURE_CLIENT_ID
-setx AZURE_CLIENT_SECRET $env:AZURE_CLIENT_SECRET
-setx AZURE_SUBSCRIPTION_ID $env:AZURE_SUBSCRIPTION_ID
-setx AZURE_RESOURCE_GROUP $env:AZURE_RESOURCE_GROUP
-setx AZURE_LOCATION $env:AZURE_LOCATION
-setx AZURE_SEARCH_STORAGE_NAME $env:AZURE_SEARCH_STORAGE_NAME
-setx AZURE_SEARCH_STORAGE_KEY $env:AZURE_SEARCH_STORAGE_KEY
+setx AZURE_TENANT_ID ${env:AZURE_TENANT_ID}
+setx AZURE_CLIENT_ID ${env:AZURE_CLIENT_ID}
+setx AZURE_CLIENT_SECRET ${env:AZURE_CLIENT_SECRET}
+setx AZURE_SUBSCRIPTION_ID ${env:AZURE_SUBSCRIPTION_ID}
+setx AZURE_RESOURCE_GROUP ${env:AZURE_RESOURCE_GROUP}
+setx AZURE_LOCATION ${env:AZURE_LOCATION}
+setx AZURE_SEARCH_STORAGE_NAME ${env:AZURE_SEARCH_STORAGE_NAME}
+setx AZURE_SEARCH_STORAGE_KEY ${env:AZURE_SEARCH_STORAGE_KEY}
 ```
 
 After running or recording live tests, if you do not plan on further testing
@@ -119,8 +119,8 @@ New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
 
 PowerShell markdown documentation created with [platyPS][].
 
-  [New-TestResources.ps1]: ./New-TestResources.ps1.md
-  [Remove-TestResources.ps1]: ./Remove-TestResources.ps1.md
+  [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md
+  [Remove-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Remove-TestResources.ps1.md
   [PowerShell]: https://github.com/PowerShell/PowerShell
   [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
   [platyPS]: https://github.com/PowerShell/platyPS

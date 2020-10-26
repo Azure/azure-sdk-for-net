@@ -4,13 +4,13 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
+#if EXPERIMENTAL_SPATIAL
+using Azure.Core.GeoJson;
+#endif
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#else
 using Microsoft.Spatial;
-#endif
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -324,10 +324,11 @@ namespace Azure.Search.Documents.Tests
 
 #if EXPERIMENTAL_SPATIAL
         [JsonPropertyName("location")]
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
-        [JsonIgnore]
-        public GeographyPoint Location { get; set; } = null;
+        [JsonPropertyName("location")]
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
+        public GeographyPoint Location { get; set; }
 #endif
 
         [JsonPropertyName("address")]
@@ -388,7 +389,11 @@ namespace Azure.Search.Documents.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
+#if EXPERIMENTAL_SPATIAL
                 ["location"] = Location,
+#else
+                ["location"] = Location.AsDocument(),
+#endif
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
@@ -410,8 +415,9 @@ namespace Azure.Search.Documents.Tests
         public DateTimeOffset? LastRenovationDate { get; set; }
         public int? Rating { get; set; }
 #if EXPERIMENTAL_SPATIAL
-        public PointGeometry Location { get; set; }
+        public GeoPoint Location { get; set; }
 #else
+        [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; } = null;
 #endif
         public HotelAddress Address { get; set; }

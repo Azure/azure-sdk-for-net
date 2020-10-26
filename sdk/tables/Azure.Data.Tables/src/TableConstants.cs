@@ -14,6 +14,14 @@ namespace Azure.Data.Tables
             public const string SharedKey = "SharedKeyLite";
             public const string Authorization = "Authorization";
             public const string IfMatch = "If-Match";
+            public const string Accept = "Accept";
+            public const string Content = "Content-Type";
+        }
+
+        internal static class MimeType
+        {
+            internal const string ApplicationJson = "application/json";
+            internal const string ApplicationXml = "application/xml";
         }
 
         internal static class QueryParameterNames
@@ -28,7 +36,8 @@ namespace Azure.Data.Tables
             public const string TimeStamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
-            public const string Etag = "odata.etag";
+            public const string EtagOdata = "odata.etag";
+            public const string ETag = nameof(ITableEntity.ETag);
         }
 
         internal static class Odata
@@ -42,6 +51,12 @@ namespace Azure.Data.Tables
             internal const string EdmInt32 = "Edm.Int32";
             internal const string EdmInt64 = "Edm.Int64";
             internal const string EdmString = "Edm.String";
+        }
+
+        internal static class ExceptionMessages
+        {
+            internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
+            internal const string MissingRowKey = "The entity must contain a RowKey value";
         }
 
         /// <summary>
@@ -80,6 +95,10 @@ namespace Azure.Data.Tables
                 public const string EndRowKey = "endrk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
+                public const string Services = "ss";
+                public const string ServicesUpper = "SS";
+                public const string ResourceTypes = "srt";
+                public const string ResourceTypesUpper = "SRT";
                 public const string Protocol = "spr";
                 public const string ProtocolUpper = "SPR";
                 public const string StartTime = "st";
@@ -97,6 +116,43 @@ namespace Azure.Data.Tables
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
             }
+
+            internal static class TableAccountResources
+            {
+                public const char Service = 's';
+                public const char Container = 'c';
+                public const char Object = 'o';
+            }
+
+            internal static class TableAccountServices
+            {
+                public const string Table = "t";
+            }
+
+        }
+        /// <summary>
+        /// Table Connection String constant values.
+        /// </summary>
+        internal static class ConnectionStrings
+        {
+            internal const int TableEndpointPortNumber = 10002;
+            internal const string UseDevelopmentSetting = "UseDevelopmentStorage";
+            internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
+            internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
+            internal const string AccountNameSetting = "AccountName";
+            internal const string AccountKeyNameSetting = "AccountKeyName";
+            internal const string AccountKeySetting = "AccountKey";
+            internal const string TableEndpointSetting = "TableEndpoint";
+            internal const string TableSecondaryEndpointSetting = "TableSecondaryEndpoint";
+            internal const string EndpointSuffixSetting = "EndpointSuffix";
+            internal const string SharedAccessSignatureSetting = "SharedAccessSignature";
+            internal const string DevStoreAccountName = "devstoreaccount1";
+            internal const string DevStoreAccountKey =
+                "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+            internal const string SecondaryLocationAccountSuffix = "-secondary";
+            internal const string DefaultEndpointSuffix = "core.windows.net";
+            internal const string DefaultTableHostnamePrefix = "table";
+            internal const string Localhost = "127.0.0.1";
         }
     }
 }

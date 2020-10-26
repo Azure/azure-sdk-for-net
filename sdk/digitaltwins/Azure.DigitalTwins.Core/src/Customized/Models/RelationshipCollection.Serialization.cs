@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     internal partial class RelationshipCollection
     {

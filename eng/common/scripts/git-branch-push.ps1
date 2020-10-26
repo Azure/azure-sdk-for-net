@@ -25,10 +25,11 @@ param(
     [string] $GitUrl,
 
     [Parameter(Mandatory = $false)]
-    [string] $PushArgs = ""
-)
+    [string] $PushArgs = "",
 
-Write-Host "> $PSCommandPath $args"
+    [Parameter(Mandatory = $false)]
+    [boolean] $SkipCommit = $false
+)
 
 # This is necessay because of the janky git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
@@ -59,12 +60,17 @@ if ($LASTEXITCODE -ne 0)
     exit $LASTEXITCODE
 }
 
-Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+if (!$SkipCommit) {
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
+}
+else {
+    Write-Host "Skipped applying commit"
 }
 
 # The number of retries can be increased if necessary. In theory, the number of retries
@@ -118,11 +124,11 @@ do
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to apply diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
-                continue
+                exit $LASTEXITCODE
             }
 
             Write-Host "git add -A"
-            git add -A 
+            git add -A
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to git add LASTEXITCODE=$($LASTEXITCODE), see command output above."

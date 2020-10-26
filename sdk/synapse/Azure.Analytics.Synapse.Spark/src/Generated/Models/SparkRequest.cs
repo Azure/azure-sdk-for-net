@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <summary> Initializes a new instance of SparkRequest. </summary>
         internal SparkRequest()
         {
+            Arguments = new ChangeTrackingList<string>();
+            Jars = new ChangeTrackingList<string>();
+            PythonFiles = new ChangeTrackingList<string>();
+            Files = new ChangeTrackingList<string>();
+            Archives = new ChangeTrackingList<string>();
+            Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SparkRequest. </summary>

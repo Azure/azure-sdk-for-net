@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Compute.Tests
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string asName = Recording.GenerateAssetName("as");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            VirtualMachine inputVM;
+
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.Compute.Tests
 
             string asetId = await CreateAvailabilitySet(rgName, asName);
 
-            inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
+            var (inputVMName, inputVM) = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
 
-            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
 
             var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(
-                 rgName, inputVM.Name, inputVM));
+                 rgName, inputVMName, inputVM));
 
             Assert.NotNull(createOrUpdateResponse);
 
-            var getVMResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name);
+            var getVMResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
 
             //Assert.True(
             //    getVMResponse.Value.AvailabilitySet.Id
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [Ignore ("This case need to be tested by compute team")]
+        [Ignore("This case need to be tested by compute team")]
         public async Task TestEffectiveRouteAndAcls()
         {
             EnsureClientsInitialized(DefaultLocation);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Compute.Tests
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string asName = Recording.GenerateAssetName("as");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            VirtualMachine inputVM;
+
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Compute.Tests
 
             string asetId = await CreateAvailabilitySet(rgName, asName);
 
-            inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
+            var (inputVMName, inputVM) = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id);
 
-            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
 
             var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(
-                 rgName, inputVM.Name, inputVM));
+                 rgName, inputVMName, inputVM));
 
             Assert.NotNull(createOrUpdateResponse);
 
-            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name)).Value;
+            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVMName)).Value;
 
             //Assert.True(
             //    getVMResponse.AvailabilitySet.Id
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.Compute.Tests
             string rgName = (TestPrefix);
             string asName = Recording.GenerateAssetName("as");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            VirtualMachine inputVM;
+
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Tests
             NetworkInterface nicResponse2 = await CreateNIC(rgName, subnetResponse, null, nicname2);
             string asetId = await CreateAvailabilitySet(rgName, asName);
 
-            inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
+            var (inputVMName, inputVM) = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
 
             inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
             inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Compute.Tests
                 Primary = true
             });
 
-            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
 
-            var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVM.Name, inputVM));
+            var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVMName, inputVM));
 
-            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name)).Value;
+            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVMName)).Value;
 
             //Assert.True(
             //    getVMResponse.AvailabilitySet.Id
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.Compute.Tests
             string rgName = Recording.GenerateAssetName(TestPrefix);
             string asName = Recording.GenerateAssetName("as");
             string storageAccountName = Recording.GenerateAssetName(TestPrefix);
-            VirtualMachine inputVM;
+
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
                 new ResourceGroup(m_location)
                 {
-                    Tags = new Dictionary<string, string>() { { rgName, Recording.UtcNow.ToString("u") } }
+                    Tags = { { rgName, Recording.UtcNow.ToString("u") } }
                 });
 
             // Create Storage Account, so that both the VMs can share it
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute.Tests
             NetworkInterface nicResponse2 = await CreateMultiIpConfigNIC(rgName, subnetResponse, nicname2);
             string asetId = await CreateAvailabilitySet(rgName, asName);
 
-            inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
+            var (inputVMName, inputVM) = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse1.Id);
 
             inputVM.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
             inputVM.NetworkProfile.NetworkInterfaces[0].Primary = false;
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.Compute.Tests
                 Primary = true
             });
 
-            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
+            string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVMName);
 
-            var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVM.Name, inputVM));
+            var createOrUpdateResponse = await WaitForCompletionAsync(await VirtualMachinesOperations.StartCreateOrUpdateAsync(rgName, inputVMName, inputVM));
 
-            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVM.Name)).Value;
+            var getVMResponse = (await VirtualMachinesOperations.GetAsync(rgName, inputVMName)).Value;
 
             //Assert.True(
             //    getVMResponse.AvailabilitySet.Id

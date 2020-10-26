@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
 {
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     /// <summary>
     /// The suite of tests for the <see cref="TableServiceClient"/> class.
     /// </summary>
@@ -20,18 +21,21 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
 
-        public TableServiceLiveTestsBase(bool isAsync, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
         {
+            _endpointType = endpointType;
             Sanitizer = new TablesRecordedTestSanitizer();
         }
 
-        public TableServiceLiveTestsBase(bool isAsync) : base(isAsync)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType) : base(isAsync)
         {
+            _endpointType = endpointType;
             Sanitizer = new TablesRecordedTestSanitizer();
         }
 
         protected TableServiceClient service { get; private set; }
         protected TableClient client { get; private set; }
+
         protected string tableName { get; private set; }
         protected const string PartitionKeyValue = "somPartition";
         protected const string PartitionKeyValue2 = "somPartition2";
@@ -43,6 +47,11 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleTypePropertyName = "SomeDoubleProperty0";
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
+        protected readonly TableEndpointType _endpointType;
+        protected string ServiceUri;
+        protected string AccountName;
+        protected string AccountKey;
+        protected string ConnectionString;
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -51,13 +60,40 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-            service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
-                                                              new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
-                                                              Recording.InstrumentClientOptions(new TableClientOptions())));
+
+            ServiceUri = _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.StorageUri,
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
+            AccountName = _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.StorageAccountName,
+                TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
+            AccountKey = _endpointType switch
+            {
+                TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
+                TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
+                _ => throw new NotSupportedException("Unknown endpoint type")
+            };
+
+            service = InstrumentClient(new TableServiceClient(
+                new Uri(ServiceUri),
+                new TableSharedKeyCredential(AccountName, AccountKey),
+                InstrumentClientOptions(new TableClientOptions())));
+
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            await service.CreateTableAsync(tableName).ConfigureAwait(false);
+
+            await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
+
             client = service.GetTableClient(tableName);
         }
+
 
         [TearDown]
         public async Task TablesTeardown()
@@ -75,14 +111,43 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<Dictionary<string, object>> CreateTableEntities(string partitionKeyValue, int count)
+        protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
 
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
                 string number = n.ToString();
-                return new Dictionary<string, object>
+                return new TableEntity
+                    {
+                        {"PartitionKey", partitionKeyValue},
+                        {"RowKey", n.ToString("D2")},
+                        {StringTypePropertyName, $"This is table entity number {n:D2}"},
+                        {DateTypePropertyName, new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc).AddMinutes(n) },
+                        {GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
+                        {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
+                        {Int64TypePropertyName, long.Parse(number)},
+                        {DoubleTypePropertyName, double.Parse($"{number}.0")},
+                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {IntTypePropertyName, n},
+                    };
+            }).ToList();
+        }
+
+        /// <summary>
+        /// Creates a list of Dictionary table entities.
+        /// </summary>
+        /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
+        /// <param name="count">The number of entities to create</param>
+        /// <returns></returns>
+        protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        {
+
+            // Create some entities.
+            return Enumerable.Range(1, count).Select(n =>
+            {
+                string number = n.ToString();
+                return new TableEntity(new TableEntity
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
@@ -94,7 +159,7 @@ namespace Azure.Data.Tables.Tests
                         {DoubleTypePropertyName, (double)n},
                         {DoubleDecimalTypePropertyName, n + 0.1},
                         {IntTypePropertyName, n},
-                    };
+                    });
             }).ToList();
         }
 
@@ -121,7 +186,7 @@ namespace Azure.Data.Tables.Tests
                     GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                     Int64TypeProperty = long.Parse(number),
-                    DoubleTypeProperty = (double)n,
+                    DoubleTypeProperty = double.Parse($"{number}.0"),
                     IntTypeProperty = n,
                 };
             }).ToList();
@@ -152,7 +217,7 @@ namespace Azure.Data.Tables.Tests
                     DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     Double = n + ((double)n / 100),
-                    DoubleInteger = (double)n,
+                    DoubleInteger = double.Parse($"{n.ToString()}.0"),
                     DoubleN = n + ((double)n / 100),
                     DoublePrimitive = n + ((double)n / 100),
                     DoublePrimitiveN = n + ((double)n / 100),
@@ -169,23 +234,80 @@ namespace Azure.Data.Tables.Tests
             }).ToList();
         }
 
-        protected async Task InsertTestEntities<T>(List<T> entitiesToInsert) where T : TableEntity, new()
+        // This is needed to prevent Live nightly test runs from failing due to 429 response failures.
+        // TODO: Remove after addressing https://github.com/Azure/azure-sdk-for-net/issues/13554
+        protected async Task<TResult> CosmosThrottleWrapper<TResult>(Func<Task<TResult>> action)
         {
-            foreach (var entity in entitiesToInsert)
+            int retryCount = 0;
+            int delay = 1500;
+            while (true)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                try
+                {
+                    return await action().ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 429)
+                {
+                    if (++retryCount > 6)
+                    {
+                        throw;
+                    }
+                    // Disable retry throttling in Playback mode.
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        await Task.Delay(delay);
+                        delay *= 2;
+                    }
+                }
             }
         }
 
-        protected async Task InsertTestEntities(List<Dictionary<string,object>> entitiesToInsert)
+        protected async Task<TResult> RetryUntilExpectedResponse<TResult>(Func<Task<TResult>> action, Func<TResult, bool> equalityAction, int initialDelay)
         {
-            foreach (var entity in entitiesToInsert)
+            int retryCount = 0;
+            int delay = initialDelay;
+            while (true)
             {
-                await client.InsertAsync(entity).ConfigureAwait(false);
+                var actual = await action().ConfigureAwait(false);
+
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(delay);
+                    delay *= 2;
+                }
             }
         }
 
-        public class TestEntity : TableEntity
+        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity, new()
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync<T>(entity).ConfigureAwait(false));
+            }
+        }
+
+        protected async Task CreateTestEntities(List<TableEntity> entitiesToCreate)
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.AddEntityAsync(entity).ConfigureAwait(false));
+            }
+        }
+
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity, new()
+        {
+            foreach (var entity in entitiesToCreate)
+            {
+                await CosmosThrottleWrapper(async () => await client.UpsertEntityAsync(entity, updateMode).ConfigureAwait(false));
+            }
+        }
+
+        public class TestEntity : ITableEntity
         {
             public string StringTypeProperty { get; set; }
 
@@ -202,25 +324,33 @@ namespace Azure.Data.Tables.Tests
             public double DoubleTypeProperty { get; set; }
 
             public int IntTypeProperty { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
-        public class SimpleTestEntity : TableEntity
+        public class SimpleTestEntity : ITableEntity
         {
             public string StringTypeProperty { get; set; }
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
-        public class ComplexEntity : TableEntity
+        public class ComplexEntity : ITableEntity
         {
             public const int NumberOfNonNullProperties = 28;
 
             public ComplexEntity()
-                : base()
             {
             }
 
             public ComplexEntity(string pk, string rk)
-                : base(pk, rk)
             {
+                PartitionKey = pk;
+                RowKey = rk;
             }
 
             private DateTimeOffset? dateTimeOffsetNull = null;
@@ -330,6 +460,12 @@ namespace Azure.Data.Tables.Tests
             public Int64 Int64 { get; set; } = 123456789012;
 
             public string String { get; set; } = "test";
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+
+            public DateTimeOffset? Timestamp { get; set; }
+
+            public ETag ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {
@@ -374,6 +510,21 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeN, b.DateTimeN);
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
+        }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+        }
+
+        public enum Foo
+        {
+            One,
+            Two
         }
     }
 }

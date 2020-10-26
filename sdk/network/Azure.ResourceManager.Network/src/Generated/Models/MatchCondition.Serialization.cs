@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
-            if (NegationConditon != null)
+            if (Optional.IsDefined(NegationConditon))
             {
                 writer.WritePropertyName("negationConditon");
                 writer.WriteBooleanValue(NegationConditon.Value);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Transforms != null)
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms");
                 writer.WriteStartArray();
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network.Models
         {
             IList<MatchVariable> matchVariables = default;
             WebApplicationFirewallOperator @operator = default;
-            bool? negationConditon = default;
+            Optional<bool> negationConditon = default;
             IList<string> matchValues = default;
-            IList<WebApplicationFirewallTransform> transforms = default;
+            Optional<IList<WebApplicationFirewallTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariables"))
@@ -64,14 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(MatchVariable.DeserializeMatchVariable(item));
-                        }
+                        array.Add(MatchVariable.DeserializeMatchVariable(item));
                     }
                     matchVariables = array;
                     continue;
@@ -85,6 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negationConditon = property.Value.GetBoolean();
@@ -95,14 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     matchValues = array;
                     continue;
@@ -111,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebApplicationFirewallTransform> array = new List<WebApplicationFirewallTransform>();
@@ -122,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new MatchCondition(matchVariables, @operator, negationConditon, matchValues, transforms);
+            return new MatchCondition(matchVariables, @operator, Optional.ToNullable(negationConditon), matchValues, Optional.ToList(transforms));
         }
     }
 }

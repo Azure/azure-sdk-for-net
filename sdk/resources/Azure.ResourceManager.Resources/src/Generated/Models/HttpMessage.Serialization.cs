@@ -14,20 +14,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static HttpMessage DeserializeHttpMessage(JsonElement element)
         {
-            object content = default;
+            Optional<object> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = property.Value.GetObject();
                     continue;
                 }
             }
-            return new HttpMessage(content);
+            return new HttpMessage(content.Value);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId");
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
@@ -30,16 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static Encryption DeserializeEncryption(JsonElement element)
         {
-            string diskEncryptionSetId = default;
-            EncryptionType? type = default;
+            Optional<string> diskEncryptionSetId = default;
+            Optional<EncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionSetId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     diskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
@@ -47,13 +43,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new EncryptionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new Encryption(diskEncryptionSetId, type);
+            return new Encryption(diskEncryptionSetId.Value, Optional.ToNullable(type));
         }
     }
 }

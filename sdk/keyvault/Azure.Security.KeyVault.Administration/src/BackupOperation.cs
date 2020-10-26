@@ -21,22 +21,23 @@ namespace Azure.Security.KeyVault.Administration
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
+        private readonly string _id;
 
         /// <summary>
         /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public BackupOperation(string id, KeyVaultBackupClient client)
+        public BackupOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
-            _value = new FullBackupDetailsInternal(string.Empty, string.Empty, null, null, null, id, string.Empty);
+            _id = id;
         }
 
         /// <summary>
@@ -44,12 +45,12 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders> response)
+        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
         {
             _client = client;
             _response = response;
             _retryAfterSeconds = response.Headers.RetryAfter;
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
+            _id = response.Headers.JobId() ?? throw new InvalidOperationException("The response does not contain an Id");
         }
 
         /// <summary>
@@ -66,21 +67,22 @@ namespace Azure.Security.KeyVault.Administration
 
             _response = response;
             _value = value;
+            _id = value.JobId;
             _client = client;
         }
 
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value.StartTime;
+        public DateTimeOffset? StartTime => _value?.StartTime;
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value.EndTime;
+        public DateTimeOffset? EndTime => _value?.EndTime;
 
         /// <inheritdoc/>
-        public override string Id => _value.JobId;
+        public override string Id => _id;
 
         /// <summary>
         /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
@@ -91,6 +93,10 @@ namespace Azure.Security.KeyVault.Administration
             get
             {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not complete.");
+                }
                 if (EndTime.HasValue && _value.Error != null)
                 {
                     throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
@@ -101,10 +107,10 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _value.EndTime.HasValue;
+        public override bool HasCompleted => EndTime.HasValue;
 
         /// <inheritdoc/>
-        public override bool HasValue => _response != null && _value.Error == null && HasCompleted;
+        public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;

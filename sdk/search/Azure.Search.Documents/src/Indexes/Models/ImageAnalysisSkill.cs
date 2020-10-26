@@ -9,11 +9,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ImageAnalysisSkill
     {
         /// <summary> A list of visual features. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<VisualFeature> VisualFeatures { get; }
 
         /// <summary> A string indicating which domain-specific details to return. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<ImageDetail> Details { get; }
     }
 }

@@ -3,15 +3,19 @@
 
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -20,7 +24,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
@@ -74,7 +78,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>
@@ -158,11 +162,15 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 #if EXPERIMENTAL_SPATIAL
-            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
             }
 #endif
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
+            {
+                AssertEqual(eGpt, aGpt, path);
+            }
             else
             {
                 AssertEqual(expected, actual, path);
@@ -173,6 +181,113 @@ namespace Azure.Search.Documents.Tests
                 string location = path != null ? " at path " + path : "";
                 Assert.AreEqual(e, a, $"Expected value `{e}`{location}, not `{a}`.");
             }
+        }
+
+        /// <summary>
+        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="SearchIndexerClient"/> to use for requests.</param>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 10 minutes.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForIndexingAsync(
+            SearchIndexerClient client,
+            string indexerName,
+            TimeSpan? timeout = null)
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            TimeSpan maxDelay = TimeSpan.FromMinutes(1);
+
+            timeout ??= TimeSpan.FromMinutes(10);
+
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
+
+            while (true)
+            {
+                SearchIndexerStatus status = null;
+                try
+                {
+                    await DelayAsync(delay, cancellationToken: cts.Token);
+
+                    status = await client.GetIndexerStatusAsync(
+                        indexerName,
+                        cancellationToken: cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
+
+                if (status.Status == IndexerStatus.Running)
+                {
+                    if (status.LastResult?.Status == IndexerExecutionStatus.Success)
+                    {
+                        return;
+                    }
+                    else if (status.LastResult?.Status == IndexerExecutionStatus.TransientFailure &&
+                        status.LastResult is IndexerExecutionResult lastResult)
+                    {
+                        TestContext.WriteLine($"Transient error: {lastResult.ErrorMessage}");
+                    }
+                }
+                else if (status.Status == IndexerStatus.Error &&
+                    status.LastResult is IndexerExecutionResult lastResult)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Error: {lastResult.ErrorMessage}");
+
+                    if (lastResult.Errors?.Count > 0)
+                    {
+                        foreach (SearchIndexerError error in lastResult.Errors)
+                        {
+                            sb.AppendLine($" ---> {error.ErrorMessage}");
+                        }
+                    }
+
+                    Assert.Fail(sb.ToString());
+                }
+
+                // Exponentially increase the delay to mitigate server throttling.
+                delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
+            }
+        }
+
+        /// <summary>
+        /// Wait until the document count for a given search index has crossed
+        /// a minimum value.  This only does simple linear retries for a fixed
+        /// number of attempts.
+        /// </summary>
+        /// <param name="searchClient">Client for the index.</param>
+        /// <param name="minimumCount">Minimum document count to verify indexing.</param>
+        /// <param name="attempts">Maximum number of attempts to retry.</param>
+        /// <param name="delay">Delay between attempts.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForDocumentCountAsync(
+            SearchClient searchClient,
+            int minimumCount,
+            int attempts = 3,
+            TimeSpan? delay = null)
+        {
+            delay ??= TimeSpan.FromSeconds(1);
+            int count = 0;
+            for (int i = 0; i < attempts; i++)
+            {
+                count = (int)await searchClient.GetDocumentCountAsync();
+                if (count >= minimumCount)
+                {
+                    // When using the free SKU, there may be enough load to prevent
+                    // immediately replication to all replicas and we get back the
+                    // wrong count. Wait a bit longer before checking again. We may
+                    // also upgrade to a basic SKU, but that will take longer to
+                    // provision.
+                    await DelayAsync(delay);
+
+                    return;
+                }
+                await DelayAsync(delay);
+            }
+            Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
         }
     }
 }

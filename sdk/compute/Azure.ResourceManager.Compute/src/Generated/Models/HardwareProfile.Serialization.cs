@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize");
                 writer.WriteStringValue(VmSize.Value.ToString());
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
-            VirtualMachineSizeTypes? vmSize = default;
+            Optional<VirtualMachineSizeTypes> vmSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmSize = new VirtualMachineSizeTypes(property.Value.GetString());
                     continue;
                 }
             }
-            return new HardwareProfile(vmSize);
+            return new HardwareProfile(Optional.ToNullable(vmSize));
         }
     }
 }

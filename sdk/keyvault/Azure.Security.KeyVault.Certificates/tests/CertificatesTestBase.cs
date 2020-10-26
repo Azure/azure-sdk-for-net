@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -15,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
         CertificateClientOptions.ServiceVersion.V7_0,
-        CertificateClientOptions.ServiceVersion.V7_1_Preview)]
+        CertificateClientOptions.ServiceVersion.V7_1)]
     [NonParallelizable]
     public class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -29,7 +30,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
-
         private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentQueue<IEnumerable<CertificateContact>> _contactsToDelete = new ConcurrentQueue<IEnumerable<CertificateContact>>();
 
@@ -40,15 +40,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             _serviceVersion = serviceVersion;
         }
 
-        internal CertificateClient GetClient(TestRecording recording = null)
+        internal CertificateClient GetClient()
         {
-            recording ??= Recording;
+            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached,
+                }
+            };
 
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new CertificateClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -99,6 +105,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             while (_certificatesToPurge.TryPop(out string name))
             {
                 await PurgeCertificate(name).ConfigureAwait(false);
+            }
+
+            while (_issuerToDelete.TryDequeue(out string name))
+            {
+                await DeleteIssuer(name);
             }
         }
 

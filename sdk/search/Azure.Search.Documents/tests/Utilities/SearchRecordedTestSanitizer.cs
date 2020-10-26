@@ -102,6 +102,13 @@ namespace Azure.Search.Documents.Tests
                 return SanitizeValue;
             }
 
+            if (SearchTestEnvironment.CognitiveKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                secrets.Add(value);
+
+                return SanitizeValue;
+            }
+
             if (SearchTestEnvironment.SearchAdminKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase) ||
                 SearchTestEnvironment.SearchQueryKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
             {

@@ -43,14 +43,20 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        /// <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
-        public bool IsDisposed { get; private set; } = false;
+        public bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed = false;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -59,9 +65,11 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
+        /// If <see cref="ServiceBusSenderOptions.TransactionQueueOrTopicName"/> is set,
+        /// the message is sent to <see cref="EntityPath"/> via <see cref="TransactionEntityPath"/>;
+        /// null otherwise.
         /// </summary>
-        public string ViaEntityPath { get; }
+        public string TransactionEntityPath { get; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -116,13 +124,13 @@ namespace Azure.Messaging.ServiceBus
 
                 options = options?.Clone() ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
-                ViaEntityPath = options.ViaQueueOrTopicName;
+                TransactionEntityPath = options.TransactionQueueOrTopicName;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
-                    ViaEntityPath,
+                    TransactionEntityPath,
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
@@ -180,7 +188,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             IList<ServiceBusMessage> messageList = messages.ToList();
             if (messageList.Count == 0)
             {
@@ -254,7 +262,7 @@ namespace Azure.Messaging.ServiceBus
         {
             foreach (ServiceBusMessage message in messages)
             {
-                if (!message.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+                if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
                 {
                     using DiagnosticScope messageScope = _scopeFactory.CreateScope(
                         DiagnosticProperty.MessageActivityName,
@@ -264,7 +272,7 @@ namespace Azure.Messaging.ServiceBus
                     Activity activity = Activity.Current;
                     if (activity != null)
                     {
-                        message.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                        message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
                     }
                 }
             }
@@ -308,7 +316,7 @@ namespace Azure.Messaging.ServiceBus
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
@@ -343,7 +351,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
@@ -425,7 +433,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(messages, nameof(messages));
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
             await ApplyPlugins(messageList).ConfigureAwait(false);
@@ -483,7 +491,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumberList = sequenceNumbers.ToArray();
             Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);
@@ -510,15 +518,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
         /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
+        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        public virtual async Task CloseAsync(
+            LinkCloseMode closeMode = LinkCloseMode.Detach,
+            CancellationToken cancellationToken = default)
         {
-            IsDisposed = true;
+            IsClosed = true;
 
-            Logger.ClientDisposeStart(typeof(ServiceBusSender), Identifier);
+            Logger.ClientCloseStart(typeof(ServiceBusSender), Identifier);
 
             try
             {
@@ -526,12 +535,22 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.ClientDisposeException(typeof(ServiceBusSender), Identifier, ex);
+                Logger.ClientCloseException(typeof(ServiceBusSender), Identifier, ex);
                 throw;
             }
 
-            Logger.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+            Logger.ClientCloseComplete(typeof(ServiceBusSender), Identifier);
         }
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
+        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync() =>
+            await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

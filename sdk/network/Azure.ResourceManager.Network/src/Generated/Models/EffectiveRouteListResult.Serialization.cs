@@ -15,42 +15,32 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveRouteListResult DeserializeEffectiveRouteListResult(JsonElement element)
         {
-            IReadOnlyList<EffectiveRoute> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<EffectiveRoute>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EffectiveRoute> array = new List<EffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
-                        }
+                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new EffectiveRouteListResult(value, nextLink);
+            return new EffectiveRouteListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

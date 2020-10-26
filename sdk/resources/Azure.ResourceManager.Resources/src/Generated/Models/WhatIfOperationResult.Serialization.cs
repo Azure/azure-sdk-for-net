@@ -15,17 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element)
         {
-            string status = default;
-            ErrorResponse error = default;
-            IReadOnlyList<WhatIfChange> changes = default;
+            Optional<string> status = default;
+            Optional<ErrorResponse> error = default;
+            Optional<IReadOnlyList<WhatIfChange>> changes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = property.Value.GetString();
                     continue;
                 }
@@ -33,6 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
@@ -40,25 +37,24 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("changes"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(WhatIfChange.DeserializeWhatIfChange(item));
-                                }
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
                             }
                             changes = array;
                             continue;
@@ -67,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfOperationResult(status, error, changes);
+            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes));
         }
     }
 }

@@ -16,29 +16,19 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (PrivateDnsZoneConfigs != null)
+            if (Optional.IsCollectionDefined(PrivateDnsZoneConfigs))
             {
                 writer.WritePropertyName("privateDnsZoneConfigs");
                 writer.WriteStartArray();
@@ -54,48 +44,42 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateDnsZoneGroup DeserializePrivateDnsZoneGroup(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string id = default;
-            ProvisioningState? provisioningState = default;
-            IList<PrivateDnsZoneConfig> privateDnsZoneConfigs = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> id = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<PrivateDnsZoneConfig>> privateDnsZoneConfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -105,19 +89,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsZoneConfig> array = new List<PrivateDnsZoneConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PrivateDnsZoneConfig.DeserializePrivateDnsZoneConfig(item));
-                                }
+                                array.Add(PrivateDnsZoneConfig.DeserializePrivateDnsZoneConfig(item));
                             }
                             privateDnsZoneConfigs = array;
                             continue;
@@ -126,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateDnsZoneGroup(id, name, etag, provisioningState, privateDnsZoneConfigs);
+            return new PrivateDnsZoneGroup(id.Value, name.Value, etag.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateDnsZoneConfigs));
         }
     }
 }

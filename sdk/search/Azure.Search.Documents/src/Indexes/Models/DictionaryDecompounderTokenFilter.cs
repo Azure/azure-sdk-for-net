@@ -9,7 +9,6 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DictionaryDecompounderTokenFilter
     {
         /// <summary> The list of words to match against. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> WordList { get; }
     }
 }

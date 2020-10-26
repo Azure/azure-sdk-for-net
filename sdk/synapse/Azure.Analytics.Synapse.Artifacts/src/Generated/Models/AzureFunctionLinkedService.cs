@@ -15,6 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of AzureFunctionLinkedService. </summary>
         /// <param name="functionAppUrl"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
         public AzureFunctionLinkedService(object functionAppUrl)
         {
             if (functionAppUrl == null)

@@ -1,6 +1,53 @@
 # Release History
 
-## 1.3.0-preview.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
+
+### Added
+- The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `JsonPatchDocument` type.
+
+### Fixed
+- The race condition in `AzureEventSourceListener` class that sometimes resulted in a `NullReferenceException` in the `EventSource`.
+- The overflow exception when content length is larger than `int.MaxValue`.
+
+## 1.5.1 (2020-10-01)
+
+### Changed
+- `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints. 
+
+
+## 1.5.0 (2020-09-03)
+
+### Changed
+- `ETag` now supports weak ETags and implements an overload for `ToString` that accepts a format string.
+
+### Added
+- HttpWebRequest-based transport implementation. Enabled by-default on .NET Framework. Can be disabled using `AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT` environment variable or `Azure.Core.Pipeline.DisableHttpWebRequestTransport` AppContext switch. To use the app context switch add the following snippet to your `.csproj`:
+
+```xml
+ <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
+  </ItemGroup> 
+```
+
+When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
+
+## 1.4.1 (2020-08-18)
+
+### Fixed
+- Bug in TaskExtensions.EnsureCompleted method that causes it to unconditionally throw an exception in the environments with synchronization context
+
+## 1.4.0 (2020-08-06)
+
+### Added
+- Added `ObjectSerializer` base class for serialization.
+- Added `IMemberNameConverter` for converting member names to serialized property names.
+- Added `JsonObjectSerializer` that implements `ObjectSerializer` for `System.Text.Json`.
+
+### Fixed
+- Connection leak for retried non-buffered requests on .NET Framework.
+
+## 1.3.0 (2020-07-02)
 
 ### Added
 - `HttpPipeline.CreateClientRequestIdScope` method to allow setting client request id on outgoing requests.

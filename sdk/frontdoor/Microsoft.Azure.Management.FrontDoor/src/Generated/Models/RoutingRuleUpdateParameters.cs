@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// configuration.</param>
         /// <param name="rulesEngine">A reference to a specific Rules Engine
         /// Configuration to apply to this route.</param>
-        public RoutingRuleUpdateParameters(IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration), SubResource rulesEngine = default(SubResource))
+        /// <param name="webApplicationFirewallPolicyLink">Defines the Web
+        /// Application Firewall policy for each routing rule (if
+        /// applicable)</param>
+        public RoutingRuleUpdateParameters(IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration), SubResource rulesEngine = default(SubResource), RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default(RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink))
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
@@ -54,6 +57,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             EnabledState = enabledState;
             RouteConfiguration = routeConfiguration;
             RulesEngine = rulesEngine;
+            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             CustomInit();
         }
 
@@ -100,6 +104,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "rulesEngine")]
         public SubResource RulesEngine { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines the Web Application Firewall policy for each
+        /// routing rule (if applicable)
+        /// </summary>
+        [JsonProperty(PropertyName = "webApplicationFirewallPolicyLink")]
+        public RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
 
     }
 }

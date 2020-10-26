@@ -16,17 +16,12 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (LastEnabledTime != null)
-            {
-                writer.WritePropertyName("lastEnabledTime");
-                writer.WriteStringValue(LastEnabledTime.Value, "O");
-            }
-            if (KeyType != null)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType");
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -36,15 +31,16 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static EncryptionService DeserializeEncryptionService(JsonElement element)
         {
-            bool? enabled = default;
-            DateTimeOffset? lastEnabledTime = default;
-            KeyType? keyType = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> lastEnabledTime = default;
+            Optional<KeyType> keyType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -54,6 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
@@ -63,13 +60,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyType = new KeyType(property.Value.GetString());
                     continue;
                 }
             }
-            return new EncryptionService(enabled, lastEnabledTime, keyType);
+            return new EncryptionService(Optional.ToNullable(enabled), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(keyType));
         }
     }
 }

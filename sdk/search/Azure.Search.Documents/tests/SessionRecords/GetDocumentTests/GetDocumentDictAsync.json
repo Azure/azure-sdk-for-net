@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsearch2.search.windows.net/indexes(\u0027yrehvsfy\u0027)/docs(\u00273\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/indexes(\u0027josgoidr\u0027)/docs(\u00273\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-95add1c5459e7448a047d445c87aaa90-477b7121c1f1cb43-00",
+        "traceparent": "00-06b26d3ad68dd142ae94c1a683d2636e-c8613827a0601944-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200507.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
+          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "b12bf8433d0f2619d56f5cefa1b09e5f",
         "x-ms-return-client-request-id": "true"
@@ -18,41 +18,26 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "326",
+        "client-request-id": "b12bf843-3d0f-2619-d56f-5cefa1b09e5f",
+        "Content-Length": "432",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 08 May 2020 06:48:20 GMT",
-        "elapsed-time": "117",
+        "Date": "Fri, 26 Jun 2020 06:03:50 GMT",
+        "elapsed-time": "65",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "b12bf843-3d0f-2619-d56f-5cefa1b09e5f",
-        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "b12bf843-3d0f-2619-d56f-5cefa1b09e5f"
       },
-      "ResponseBody": {
-        "hotelId": "3",
-        "hotelName": "EconoStay",
-        "description": "Very popular hotel in town",
-        "descriptionFr": "H\u00F4tel le plus populaire en ville",
-        "category": "Budget",
-        "tags": [
-          "wifi",
-          "budget"
-        ],
-        "parkingIncluded": true,
-        "smokingAllowed": false,
-        "lastRenovationDate": "1995-07-01T00:00:00Z",
-        "rating": 4,
-        "location": null,
-        "address": null,
-        "rooms": []
-      }
+      "ResponseBody": "{\u0022hotelId\u0022:\u00223\u0022,\u0022hotelName\u0022:\u0022EconoStay\u0022,\u0022description\u0022:\u0022Very popular hotel in town\u0022,\u0022descriptionFr\u0022:\u0022H\\u00f4tel le plus populaire en ville\u0022,\u0022category\u0022:\u0022Budget\u0022,\u0022tags\u0022:[\u0022wifi\u0022,\u0022budget\u0022],\u0022parkingIncluded\u0022:true,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00221995-07-01T00:00:00Z\u0022,\u0022rating\u0022:4,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,46.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     }
   ],
   "Variables": {
     "RandomSeed": "554905365",
-    "SearchIndexName": "yrehvsfy",
+    "SearchIndexName": "josgoidr",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsearch2"
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
   }
 }

@@ -14,20 +14,21 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentScriptsError DeserializeDeploymentScriptsError(JsonElement element)
         {
-            ErrorResponse error = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new DeploymentScriptsError(error);
+            return new DeploymentScriptsError(error.Value);
         }
     }
 }

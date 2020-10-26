@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyFilterRuleAction DeserializeFirewallPolicyFilterRuleAction(JsonElement element)
         {
-            FirewallPolicyFilterRuleActionType? type = default;
+            Optional<FirewallPolicyFilterRuleActionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new FirewallPolicyFilterRuleActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new FirewallPolicyFilterRuleAction(type);
+            return new FirewallPolicyFilterRuleAction(Optional.ToNullable(type));
         }
     }
 }

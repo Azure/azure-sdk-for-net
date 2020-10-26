@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
@@ -56,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/triggers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -71,14 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -98,14 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 request.Headers.Add("If-Match", ifMatch);
             }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(trigger);
             request.Content = content;
@@ -140,7 +128,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="trigger"> Trigger resource definition. </param>
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<TriggerResource>> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateTriggerAsync(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -156,19 +145,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        TriggerResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -179,7 +157,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="trigger"> Trigger resource definition. </param>
         /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<TriggerResource> CreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="trigger"/> is null. </exception>
+        public Response CreateOrUpdateTrigger(string triggerName, TriggerResource trigger, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
             {
@@ -195,19 +174,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        TriggerResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -228,6 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 request.Headers.Add("If-None-Match", ifNoneMatch);
             }
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -235,6 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -250,14 +220,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -271,6 +234,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response<TriggerResource> GetTrigger(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -286,14 +250,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerResource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerResource.DeserializeTriggerResource(document.RootElement);
-                        }
+                        value = TriggerResource.DeserializeTriggerResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
@@ -314,12 +271,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response> DeleteTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -332,6 +291,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -342,6 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response DeleteTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -354,6 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -373,12 +335,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/subscribeToEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response> SubscribeTriggerToEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -401,6 +365,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Subscribe event trigger to events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response SubscribeTriggerToEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -432,12 +397,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/getEventSubscriptionStatus", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get a trigger&apos;s event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -453,14 +420,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerSubscriptionOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
-                        }
+                        value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -471,6 +431,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a trigger&apos;s event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -486,14 +447,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerSubscriptionOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
-                        }
+                        value = TriggerSubscriptionOperationStatus.DeserializeTriggerSubscriptionOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,12 +467,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/unsubscribeFromEvents", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response> UnsubscribeTriggerFromEventsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -541,6 +497,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Unsubscribe event trigger from events. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response UnsubscribeTriggerFromEvents(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -572,12 +529,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response> StartTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -599,6 +558,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Starts a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response StartTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -629,12 +589,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public async Task<Response> StopTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -656,6 +618,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stops a trigger. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public Response StopTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             if (triggerName == null)
@@ -683,12 +646,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             uri.AppendRaw(endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Lists triggers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<TriggerListResponse>> GetTriggersByWorkspaceNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -704,14 +669,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -722,6 +680,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Lists triggers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<TriggerListResponse> GetTriggersByWorkspaceNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -737,14 +696,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                     {
                         TriggerListResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
-                        }
+                        value = TriggerListResponse.DeserializeTriggerListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

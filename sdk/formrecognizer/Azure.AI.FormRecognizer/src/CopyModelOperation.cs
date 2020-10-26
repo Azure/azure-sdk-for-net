@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class CopyModelOperation : Operation<CustomFormModelInfo>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -32,10 +31,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The id of the model to use for copy.</summary>
+        /// <summary>The ID of the model to use for copy.</summary>
         private readonly string _modelId;
 
-        /// <summary>The id of the copied model.</summary>
+        /// <summary>The ID of the copied model.</summary>
         private readonly string _targetModelId;
 
         /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
@@ -82,8 +81,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
             _serviceClient = client.ServiceClient;
@@ -100,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationId}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationId);
+                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/copyresults/{{resultId}}'.", nameof(operationId));
             }
 
             _resultId = substrs.Last();
@@ -115,8 +114,8 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="targetModelId">Model id in the target Form Recognizer Resource.</param>
-        internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
+        /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
+        internal CopyModelOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -132,7 +131,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid {operationLocation}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationLocation);
+                throw new ArgumentException($"Invalid '{nameof(operationLocation)}'. It should be formatted as: '{{prefix}}/{{modelId}}/copyresults/{{resultId}}'.", nameof(operationLocation));
             }
 
             _resultId = substrs[substrs.Length - 1];
@@ -210,25 +209,36 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
-                Response<CopyOperationResult> update = async
-                    ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CopyModelOperation)}.{nameof(UpdateStatus)}");
+                scope.Start();
 
-                _response = update.GetRawResponse();
-
-                if (update.Value.Status == OperationStatus.Succeeded)
+                try
                 {
-                    // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                    _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Ready);
-                    _hasCompleted = true;
+                    Response<CopyOperationResult> update = async
+                        ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+
+                    _response = update.GetRawResponse();
+
+                    if (update.Value.Status == OperationStatus.Succeeded)
+                    {
+                        // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
+                        _value = ConvertValue(update.Value, _targetModelId, CustomFormModelStatus.Ready);
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == OperationStatus.Failed)
+                    {
+                        _requestFailedException = await ClientCommon
+                            .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.CopyResult.Errors)
+                            .ConfigureAwait(false);
+                        _hasCompleted = true;
+                        throw _requestFailedException;
+                    }
                 }
-                else if (update.Value.Status == OperationStatus.Failed)
+                catch (Exception e)
                 {
-                    _requestFailedException = await ClientCommon
-                        .CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.CopyResult.Errors)
-                        .ConfigureAwait(false);
-                    _hasCompleted = true;
-                    throw _requestFailedException;
+                    scope.Failed(e);
+                    throw;
                 }
             }
 
@@ -239,9 +249,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             return new CustomFormModelInfo(
                 modelId,
+                status,
                 result.CreatedDateTime,
-                result.LastUpdatedDateTime,
-                status);
+                result.LastUpdatedDateTime);
         }
     }
 }

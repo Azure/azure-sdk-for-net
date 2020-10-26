@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             else if (Mode == RecordedTestMode.Record)
             {
                 var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'");
-                await foreach (var servicePrincipal in servicePrincipalList)
+                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
+                foreach (var servicePrincipal in servicePrincipalList)
                 {
                     this.ObjectId = servicePrincipal.ObjectId;
                     Recording.GetVariable(ObjectIdKey, this.ObjectId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ).First().Locations.FirstOrDefault();
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new Management.Resources.Models.ResourceGroup(Location));
+            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new ResourceManager.Resources.Models.ResourceGroup(Location));
             VaultName = Recording.GenerateAssetName("sdktestvault");
 
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
@@ -87,34 +87,37 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             var permissions = new Permissions
             {
-                Keys = new KeyPermissions[] { new KeyPermissions("all") },
-                Secrets = new SecretPermissions[] { new SecretPermissions("all") },
-                Certificates = new CertificatePermissions[] { new CertificatePermissions("all") },
-                Storage = new StoragePermissions[] { new StoragePermissions("all") },
+                Keys = { new KeyPermissions("all") },
+                Secrets = { new SecretPermissions("all") },
+                Certificates = { new CertificatePermissions("all") },
+                Storage = { new StoragePermissions("all") },
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            IList<IPRule> ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule("1.2.3.4/32"));
-            ipRules.Add(new IPRule("1.0.0.0/25"));
-
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard));
-
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.VaultUri = "";
-            VaultProperties.NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null };
-            VaultProperties.AccessPolicies = new[] { AccessPolicy };
+            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+                Bypass = "AzureServices",
+                DefaultAction = "Allow",
+                IpRules =
+                {
+                    new IPRule("1.2.3.4/32"),
+                    new IPRule("1.0.0.0/25")
+                }
+            };
+            VaultProperties.AccessPolicies.Add(AccessPolicy);
         }
 
         internal KeyVaultManagementClient GetKeyVaultManagementClient()
         {
             return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new KeyVaultManagementClientOptions())));
+                InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
     }
 }

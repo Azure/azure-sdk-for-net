@@ -30,8 +30,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 await sender.SendMessageAsync(sendMessage);
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
-                var firstSendPluginUserProperty = (bool)receivedMessage.Properties["FirstSendPlugin"];
-                var secondSendPluginUserProperty = (bool)receivedMessage.Properties["SecondSendPlugin"];
+                var firstSendPluginUserProperty = (bool)receivedMessage.ApplicationProperties["FirstSendPlugin"];
+                var secondSendPluginUserProperty = (bool)receivedMessage.ApplicationProperties["SecondSendPlugin"];
 
                 Assert.True(firstSendPluginUserProperty);
                 Assert.True(secondSendPluginUserProperty);
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
-                var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
 
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 Assert.True(plugin.WasCalled);
-                var receiver = await client.CreateSessionReceiverAsync(scope.TopicName, scope.SubscriptionNames.First());
+                var receiver = await client.AcceptNextSessionAsync(scope.TopicName, scope.SubscriptionNames.First());
                 var receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.AreEqual("received", receivedMessage.Body.ToString());
@@ -203,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
                 Assert.True(plugin.WasCalled);
                 var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    MaxConcurrentCalls = 1
+                    MaxConcurrentSessions = 1
                 });
                 processor.ProcessErrorAsync += ExceptionHandler;
                 var tcs = new TaskCompletionSource<bool>();
@@ -252,7 +252,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
         {
             public override ValueTask BeforeMessageSendAsync(ServiceBusMessage message)
             {
-                message.Properties.Add("FirstSendPlugin", true);
+                message.ApplicationProperties.Add("FirstSendPlugin", true);
                 return default;
             }
         }
@@ -264,8 +264,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Plugins
             public override ValueTask BeforeMessageSendAsync(ServiceBusMessage message)
             {
                 // Ensure that the first plugin actually ran first
-                Assert.True((bool)message.Properties["FirstSendPlugin"]);
-                message.Properties.Add("SecondSendPlugin", true);
+                Assert.True((bool)message.ApplicationProperties["FirstSendPlugin"]);
+                message.ApplicationProperties.Add("SecondSendPlugin", true);
                 return default;
             }
         }

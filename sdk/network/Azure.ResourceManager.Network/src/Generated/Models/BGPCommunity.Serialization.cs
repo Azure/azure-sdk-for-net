@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ServiceSupportedRegion != null)
+            if (Optional.IsDefined(ServiceSupportedRegion))
             {
                 writer.WritePropertyName("serviceSupportedRegion");
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
-            if (CommunityName != null)
+            if (Optional.IsDefined(CommunityName))
             {
                 writer.WritePropertyName("communityName");
                 writer.WriteStringValue(CommunityName);
             }
-            if (CommunityValue != null)
+            if (Optional.IsDefined(CommunityValue))
             {
                 writer.WritePropertyName("communityValue");
                 writer.WriteStringValue(CommunityValue);
             }
-            if (CommunityPrefixes != null)
+            if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
                 writer.WritePropertyName("communityPrefixes");
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsAuthorizedToUse != null)
+            if (Optional.IsDefined(IsAuthorizedToUse))
             {
                 writer.WritePropertyName("isAuthorizedToUse");
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
-            if (ServiceGroup != null)
+            if (Optional.IsDefined(ServiceGroup))
             {
                 writer.WritePropertyName("serviceGroup");
                 writer.WriteStringValue(ServiceGroup);
@@ -56,38 +56,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BGPCommunity DeserializeBGPCommunity(JsonElement element)
         {
-            string serviceSupportedRegion = default;
-            string communityName = default;
-            string communityValue = default;
-            IList<string> communityPrefixes = default;
-            bool? isAuthorizedToUse = default;
-            string serviceGroup = default;
+            Optional<string> serviceSupportedRegion = default;
+            Optional<string> communityName = default;
+            Optional<string> communityValue = default;
+            Optional<IList<string>> communityPrefixes = default;
+            Optional<bool> isAuthorizedToUse = default;
+            Optional<string> serviceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceSupportedRegion"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceSupportedRegion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("communityName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     communityName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("communityValue"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     communityValue = property.Value.GetString();
                     continue;
                 }
@@ -95,19 +83,13 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     communityPrefixes = array;
                     continue;
@@ -116,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAuthorizedToUse = property.Value.GetBoolean();
@@ -123,15 +106,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("serviceGroup"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceGroup = property.Value.GetString();
                     continue;
                 }
             }
-            return new BGPCommunity(serviceSupportedRegion, communityName, communityValue, communityPrefixes, isAuthorizedToUse, serviceGroup);
+            return new BGPCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
         }
     }
 }

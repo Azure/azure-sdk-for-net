@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -43,13 +43,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
                 // create room digital twin
-                string roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
-
-                await client.CreateDigitalTwinAsync(roomWithWifiTwinId, roomWithWifiTwin);
+                BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);
+                await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId, roomWithWifiTwin);
 
                 // Get the component
-                Response<string> getComponentResponse = await client
-                    .GetComponentAsync(
+                Response<object> getComponentResponse = await client
+                    .GetComponentAsync<object>(
                         roomWithWifiTwinId,
                         wifiComponentName)
                     .ConfigureAwait(false);
@@ -58,15 +57,18 @@ namespace Azure.DigitalTwins.Core.Tests
                 getComponentResponse.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
 
                 // Patch component
-                Response<string> updateComponentResponse = await client
+                JsonPatchDocument componentUpdatePatchDocument = new JsonPatchDocument();
+                componentUpdatePatchDocument.AppendReplace("/Network", "New Network");
+
+                Response updateComponentResponse = await client
                     .UpdateComponentAsync(
                         roomWithWifiTwinId,
                         wifiComponentName,
-                        TestAssetsHelper.GetWifiComponentUpdatePayload())
+                        componentUpdatePatchDocument)
                     .ConfigureAwait(false);
 
                 // The response to the Patch request should be 204 (No content)
-                updateComponentResponse.GetRawResponse().Status.Should().Be((int)HttpStatusCode.NoContent);
+                updateComponentResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
             }
             finally
             {

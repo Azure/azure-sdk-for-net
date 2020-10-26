@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceVendor != null)
+            if (Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor");
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (DeviceModel != null)
+            if (Optional.IsDefined(DeviceModel))
             {
                 writer.WritePropertyName("deviceModel");
                 writer.WriteStringValue(DeviceModel);
             }
-            if (LinkSpeedInMbps != null)
+            if (Optional.IsDefined(LinkSpeedInMbps))
             {
                 writer.WritePropertyName("linkSpeedInMbps");
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
@@ -35,26 +35,18 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DeviceProperties DeserializeDeviceProperties(JsonElement element)
         {
-            string deviceVendor = default;
-            string deviceModel = default;
-            int? linkSpeedInMbps = default;
+            Optional<string> deviceVendor = default;
+            Optional<string> deviceModel = default;
+            Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceVendor"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceVendor = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deviceModel"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceModel = property.Value.GetString();
                     continue;
                 }
@@ -62,13 +54,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkSpeedInMbps = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new DeviceProperties(deviceVendor, deviceModel, linkSpeedInMbps);
+            return new DeviceProperties(deviceVendor.Value, deviceModel.Value, Optional.ToNullable(linkSpeedInMbps));
         }
     }
 }

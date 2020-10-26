@@ -14,26 +14,18 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentOperation DeserializeDeploymentOperation(JsonElement element)
         {
-            string id = default;
-            string operationId = default;
-            DeploymentOperationProperties properties = default;
+            Optional<string> id = default;
+            Optional<string> operationId = default;
+            Optional<DeploymentOperationProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operationId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     operationId = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DeploymentOperationProperties.DeserializeDeploymentOperationProperties(property.Value);
                     continue;
                 }
             }
-            return new DeploymentOperation(id, operationId, properties);
+            return new DeploymentOperation(id.Value, operationId.Value, properties.Value);
         }
     }
 }

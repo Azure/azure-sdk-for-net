@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Network.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 using NUnit.Framework;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             var conListResult = await configListResponse.ToEnumerableAsync();
             Assert.True(conListResult.Count >= 1);
             //# ConfigurationStoresListKeys[post]
-            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters(conListResult.First().Id));
+            var configRegenerateResponse = await ConfigurationStoresOperations.RegenerateKeyAsync(resourceGroup, configurationStoreName, new RegenerateKeyParameters() { Id = conListResult.First().Id });
             Assert.IsNotNull(configRegenerateResponse.Value);
             //TODO need to use data sdk to create key value
             //create Key-Value
@@ -85,22 +85,28 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 Location = "eastus",
                 AddressSpace = new AddressSpace()
                 {
-                    AddressPrefixes = new List<string>() { "10.0.0.0/16", }
+                    AddressPrefixes = { "10.0.0.0/16", }
                 },
                 DhcpOptions = new DhcpOptions()
                 {
-                    DnsServers = new List<string>() { "10.1.1.1", "10.1.2.4" }
+                    DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = new List<Subnet>() { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24",PrivateEndpointNetworkPolicies = "Disabled"} }
+                Subnets = { new Subnet() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
             };
-            var putVnetResponseOperation = await WaitForCompletionAsync (await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
+            var putVnetResponseOperation = await WaitForCompletionAsync(await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, VnetName, vnet));
             Assert.IsNotNull(putVnetResponseOperation.Value);
             var setPrivateEndpointResponse = await WaitForCompletionAsync(await PrivateEndpointsOperations.StartCreateOrUpdateAsync(resourceGroupName, EndpointName,
-                new Management.Network.Models.PrivateEndpoint()
+                new ResourceManager.Network.Models.PrivateEndpoint()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection> { new PrivateLinkServiceConnection(null,",myconnection" ,null,null,null,
-                                                                       configurationCreateResult.Value.Id,new List<string>{"configurationStores"},"Please approve my connection",null)},
+                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
+                        {
+                            Name ="myconnection",
+                            PrivateLinkServiceId = configurationCreateResult.Value.Id,
+                            GroupIds = {"configurationStores"},
+                            RequestMessage = "Please approve my connection",
+                        }
+                    },
                     Subnet = new Subnet() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 }));
             //get Configuration
@@ -128,36 +134,36 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsNotNull(privatelinkresourcegetResult.Value);
             var listByConfigurationStoreResult = PrivateEndpointConnectionsOperations.ListByConfigurationStoreAsync(resourceGroupName, configurationStoreName);
             var listByConfigurationStoreResponse = await listByConfigurationStoreResult.ToEnumerableAsync();
-            Assert.IsTrue(listByConfigurationStoreResponse.Count()>=1);
+            Assert.IsTrue(listByConfigurationStoreResponse.Count() >= 1);
             // get PrivateEndpointConnectionList
-            var ConfigurationStoreListResponse = await PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName,configurationStoreName).ToEnumerableAsync();
+            var ConfigurationStoreListResponse = await PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName, configurationStoreName).ToEnumerableAsync();
             privateLinkResourceName = ConfigurationStoreListResponse.First().Name;
 
             //get privatelinkResource
-            var GetPrivatelinkResponse = await PrivateLinkResourcesOperations.GetAsync(resourceGroupName,configurationStoreName,privateLinkResourceName);
+            var GetPrivatelinkResponse = await PrivateLinkResourcesOperations.GetAsync(resourceGroupName, configurationStoreName, privateLinkResourceName);
             Assert.IsNotNull(GetPrivatelinkResponse.Value);
 
             //get privatelinkResource list
-            var GetPrivatelinkListResponse = await PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName,configurationStoreName).ToEnumerableAsync();
-            Assert.IsTrue(GetPrivatelinkListResponse.Count>=1);
+            var GetPrivatelinkListResponse = await PrivateLinkResourcesOperations.ListByConfigurationStoreAsync(resourceGroupName, configurationStoreName).ToEnumerableAsync();
+            Assert.IsTrue(GetPrivatelinkListResponse.Count >= 1);
 
             // operation list test
             var operationListResult = await Operations.ListAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(operationListResult.Count>=1);
+            Assert.IsTrue(operationListResult.Count >= 1);
             // ConfigurationStoresOperations list by resourcegroup test
 
-            var configurationStoreListByResourceGroupResult =await ConfigurationStoresOperations.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
-            Assert.IsTrue(operationListResult.Count >= 1);
+            var configurationStoreListByResourceGroupResult = await ConfigurationStoresOperations.ListByResourceGroupAsync(resourceGroupName).ToEnumerableAsync();
+            Assert.IsTrue(configurationStoreListByResourceGroupResult.Count >= 1);
 
-            //ConfigurationStoresOperations list by test
-            var configurationStoresListResult = await ConfigurationStoresOperations.ListAsync(resourceGroupName).ToEnumerableAsync();
+            //ConfigurationStoresOperations list by subscription test
+            var configurationStoresListResult = await ConfigurationStoresOperations.ListAsync().ToEnumerableAsync();
             Assert.IsTrue(configurationStoresListResult.Count >= 1);
 
             //update ConfigurationStores_Update
             var configurationStoresBeginUpdateResult = await WaitForCompletionAsync(await ConfigurationStoresOperations.StartUpdateAsync(resourceGroupName, configurationStoreName, new ConfigurationStoreUpdateParameters()
             {
-                Tags = new Dictionary<string, string> { { "category", "Marketing" } },
+                Tags = { { "category", "Marketing" } },
                 Sku = new Sku("Standard")
             }));
             Assert.AreEqual(configurationStoresBeginUpdateResult.Value.ProvisioningState.ToString(), "Succeeded");
@@ -168,7 +174,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             var deletePrivateEndpointConnectionResponse = await WaitForCompletionAsync(await PrivateEndpointConnectionsOperations.StartDeleteAsync(resourceGroupName, configurationStoreName, privateEndpointConnectionName));
             Assert.IsNotNull(deletePrivateEndpointConnectionResponse.Value);
             //ConfigurationStores Delete
-            var deleteConfigurationStores = await WaitForCompletionAsync(await ConfigurationStoresOperations.StartDeleteAsync(resourceGroupName,configurationStoreName));
+            var deleteConfigurationStores = await WaitForCompletionAsync(await ConfigurationStoresOperations.StartDeleteAsync(resourceGroupName, configurationStoreName));
             Assert.IsNotNull(deleteConfigurationStores.Value);
         }
     }

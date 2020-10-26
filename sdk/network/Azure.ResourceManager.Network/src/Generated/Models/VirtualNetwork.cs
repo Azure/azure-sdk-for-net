@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetwork. </summary>
         public VirtualNetwork()
         {
+            Subnets = new ChangeTrackingList<Subnet>();
+            VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeering>();
+            IpAllocations = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetwork. </summary>
@@ -58,9 +62,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </summary>
         public DhcpOptions DhcpOptions { get; set; }
         /// <summary> A list of subnets in a Virtual Network. </summary>
-        public IList<Subnet> Subnets { get; set; }
+        public IList<Subnet> Subnets { get; }
         /// <summary> A list of peerings in a Virtual Network. </summary>
-        public IList<VirtualNetworkPeering> VirtualNetworkPeerings { get; set; }
+        public IList<VirtualNetworkPeering> VirtualNetworkPeerings { get; }
         /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
         public string ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network resource. </summary>
@@ -74,6 +78,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
         public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
-        public IList<SubResource> IpAllocations { get; set; }
+        public IList<SubResource> IpAllocations { get; }
     }
 }

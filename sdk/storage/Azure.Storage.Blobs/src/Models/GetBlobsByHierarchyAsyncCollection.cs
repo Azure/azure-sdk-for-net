@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Models
 
             var items = new List<BlobHierarchyItem>();
             items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
-            items.AddRange(response.Value.BlobItems.Select(b => new BlobHierarchyItem(null, b)));
+            items.AddRange(response.Value.BlobItems.Select(b => new BlobHierarchyItem(null, b.ToBlobItem())));
             return Page<BlobHierarchyItem>.FromValues(
                 items.ToArray(),
                 response.Value.NextMarker,

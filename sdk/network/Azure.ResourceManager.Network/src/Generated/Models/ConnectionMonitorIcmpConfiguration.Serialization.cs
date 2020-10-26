@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DisableTraceRoute != null)
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute");
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
@@ -25,20 +25,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorIcmpConfiguration DeserializeConnectionMonitorIcmpConfiguration(JsonElement element)
         {
-            bool? disableTraceRoute = default;
+            Optional<bool> disableTraceRoute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableTraceRoute"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableTraceRoute = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new ConnectionMonitorIcmpConfiguration(disableTraceRoute);
+            return new ConnectionMonitorIcmpConfiguration(Optional.ToNullable(disableTraceRoute));
         }
     }
 }

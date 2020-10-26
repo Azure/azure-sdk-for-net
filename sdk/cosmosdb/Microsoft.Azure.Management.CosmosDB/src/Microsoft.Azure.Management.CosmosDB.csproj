@@ -6,17 +6,13 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>1.2.0</Version>
+    <Version>1.3.1-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the apiVersion 2020-04-01 azure-rest-api-specs,
-        Includes: 
-        Updating the CreateUpdateOptions by removing additionalProperties, changing the type of Throughput from string to int, adding AutoscaleSettings. 
-        ProvisionedThroughputSettings is renamed to AutoscaleSettings in ThroughputSettingsResource.
-        Replacing IpRangeFilter by IpRules, which is a list of IpAddressOrRange objects.
-        Introducing EnableFreeTier and ApiProperties in DatabaseAccount properties. 
+        Updating with the apiVersion 2020-06-01-preview azure-rest-api-specs.
+        This is for the private preview of Point in Time Restore and Role Based Access Control.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

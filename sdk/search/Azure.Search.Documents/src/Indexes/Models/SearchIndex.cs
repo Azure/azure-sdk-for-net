@@ -3,12 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex
     {
+        // Force the constructor to set the field;
+        // otherwise, when getting only names, the setter will throw.
+        [CodeGenMember("fields")]
+        private IList<SearchField> _fields;
+
         [CodeGenMember("etag")]
         private string _etag;
 
@@ -24,13 +30,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            Analyzers = new List<LexicalAnalyzer>();
-            CharFilters = new List<CharFilter>();
+            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
+            CharFilters = new ChangeTrackingList<CharFilter>();
             Fields = new List<SearchField>();
-            ScoringProfiles = new List<ScoringProfile>();
-            Suggesters = new List<SearchSuggester>();
-            TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<LexicalTokenizer>();
+            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
+            Suggesters = new ChangeTrackingList<SearchSuggester>();
+            TokenFilters = new ChangeTrackingList<TokenFilter>();
+            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -47,13 +53,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
 
-            Analyzers = new List<LexicalAnalyzer>();
-            CharFilters = new List<CharFilter>();
-            Fields = new List<SearchField>(fields);
-            ScoringProfiles = new List<ScoringProfile>();
-            Suggesters = new List<SearchSuggester>();
-            TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<LexicalTokenizer>();
+            Analyzers = new ChangeTrackingList<LexicalAnalyzer>();
+            CharFilters = new ChangeTrackingList<CharFilter>();
+            Fields = fields.ToList();
+            ScoringProfiles = new ChangeTrackingList<ScoringProfile>();
+            Suggesters = new ChangeTrackingList<SearchSuggester>();
+            TokenFilters = new ChangeTrackingList<TokenFilter>();
+            Tokenizers = new ChangeTrackingList<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -65,45 +71,90 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets the analyzers for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<LexicalAnalyzer> Analyzers { get; }
 
         /// <summary>
         /// Gets the character filters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<CharFilter> CharFilters { get; }
 
         /// <summary>
-        /// Gets the fields in the index.
-        /// Use <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> for help defining valid indexes.
+        /// Gets or sets the fields in the index.
+        /// Use <see cref="FieldBuilder"/> to define fields based on a model class,
+        /// or <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> to manually define fields.
         /// Index fields have many constraints that are not validated with <see cref="SearchField"/> until the index is created on the server.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
-        public IList<SearchField> Fields { get; }
+        /// <example>
+        /// You can create fields from a model class using <see cref="FieldBuilder"/>:
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex_New_SearchIndex">
+        /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
+        /// {
+        ///     Fields = new FieldBuilder().Build(typeof(Hotel)),
+        ///     Suggesters =
+        ///     {
+        ///         // Suggest query terms from the hotelName field.
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///     }
+        /// };
+        /// </code>
+        /// For this reason, <see cref="Fields"/> is settable. In scenarios when the model is not known or cannot be modified, you can
+        /// also create fields manually using helper classes:
+        /// <code snippet="Snippet:Azure_Search_Tests_Samples_Readme_CreateManualIndex_New_SearchIndex">
+        /// SearchIndex index = new SearchIndex(&quot;hotels&quot;)
+        /// {
+        ///     Fields =
+        ///     {
+        ///         new SimpleField(&quot;hotelId&quot;, SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;hotelName&quot;) { IsFilterable = true, IsSortable = true },
+        ///         new SearchableField(&quot;description&quot;) { AnalyzerName = LexicalAnalyzerName.EnLucene },
+        ///         new SearchableField(&quot;tags&quot;, collection: true) { IsFilterable = true, IsFacetable = true },
+        ///         new ComplexField(&quot;address&quot;)
+        ///         {
+        ///             Fields =
+        ///             {
+        ///                 new SearchableField(&quot;streetAddress&quot;),
+        ///                 new SearchableField(&quot;city&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;stateProvince&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;country&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        ///                 new SearchableField(&quot;postalCode&quot;) { IsFilterable = true, IsSortable = true, IsFacetable = true }
+        ///             }
+        ///         }
+        ///     },
+        ///     Suggesters =
+        ///     {
+        ///         // Suggest query terms from the hotelName field.
+        ///         new SearchSuggester(&quot;sg&quot;, &quot;hotelName&quot;)
+        ///     }
+        /// };
+        /// </code>
+        /// </example>
+        public IList<SearchField> Fields
+        {
+            get => _fields;
+            set
+            {
+                _fields = value ?? throw new ArgumentNullException(nameof(value), $"{nameof(Fields)} cannot be null. To clear values, call {nameof(Fields.Clear)}.");
+            }
+        }
 
         /// <summary>
         /// Gets the scoring profiles for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<ScoringProfile> ScoringProfiles { get; }
 
         /// <summary>
         /// Gets the suggesters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<SearchSuggester> Suggesters { get; }
 
         /// <summary>
         /// Gets the token filters for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<TokenFilter> TokenFilters { get; }
 
         /// <summary>
         /// Gets the tokenizers for the index.
         /// </summary>
-        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<LexicalTokenizer> Tokenizers { get; }
 
         /// <summary>

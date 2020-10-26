@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static DatasetListResponse DeserializeDatasetListResponse(JsonElement element)
         {
             IReadOnlyList<DatasetResource> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,29 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DatasetResource> array = new List<DatasetResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DatasetResource.DeserializeDatasetResource(item));
-                        }
+                        array.Add(DatasetResource.DeserializeDatasetResource(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DatasetListResponse(value, nextLink);
+            return new DatasetListResponse(value, nextLink.Value);
         }
     }
 }

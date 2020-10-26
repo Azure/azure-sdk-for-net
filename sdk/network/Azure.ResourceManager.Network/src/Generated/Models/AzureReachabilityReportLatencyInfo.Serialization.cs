@@ -15,14 +15,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureReachabilityReportLatencyInfo DeserializeAzureReachabilityReportLatencyInfo(JsonElement element)
         {
-            DateTimeOffset? timeStamp = default;
-            int? score = default;
+            Optional<DateTimeOffset> timeStamp = default;
+            Optional<int> score = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeStamp = property.Value.GetDateTimeOffset("O");
@@ -32,13 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     score = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new AzureReachabilityReportLatencyInfo(timeStamp, score);
+            return new AzureReachabilityReportLatencyInfo(Optional.ToNullable(timeStamp), Optional.ToNullable(score));
         }
     }
 }

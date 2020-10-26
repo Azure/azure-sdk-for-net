@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SourceIPAddress);
             writer.WritePropertyName("destinationIPAddress");
             writer.WriteStringValue(DestinationIPAddress);
-            if (TargetNicResourceId != null)
+            if (Optional.IsDefined(TargetNicResourceId))
             {
                 writer.WritePropertyName("targetNicResourceId");
                 writer.WriteStringValue(TargetNicResourceId);

@@ -204,7 +204,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Verify we created one file
                 Assert.AreEqual(1, filesystem.GetPaths().Count());
 
-                // Append data to an existing DataLake File.  Append is currently limited to 100MB per call.
+                // Append data to an existing DataLake File.  Append is currently limited to 4000 MB per call.
                 // To upload a large file all at once, consider using Upload() instead.
                 file.Append(File.OpenRead(sampleFileContentPart1), 0);
                 file.Append(File.OpenRead(sampleFileContentPart2), contentLength);
@@ -259,7 +259,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Upload content to the file.  When using the Upload API, you don't need to create the file first.
                 // If the file already exists, it will be overwritten.
                 // For larger files, Upload() will upload the file in multiple sequential requests.
-                file.Upload(File.OpenRead(sampleFileContent));
+                file.Upload(File.OpenRead(sampleFileContent),true);
 
                 // Verify the contents of the file
                 PathProperties properties = file.GetProperties();

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -10,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizedForm
     {
-        internal RecognizedForm(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal RecognizedForm(PageResult pageResult, IReadOnlyList<ReadResult> readResults, int pageIndex, string modelId)
         {
             // Recognized form from a model trained without labels.
             FormType = $"form-{pageResult.ClusterId}";
@@ -21,9 +22,15 @@ namespace Azure.AI.FormRecognizer.Models
             // we end up with a single page per form.
 
             Pages = new List<FormPage> { new FormPage(pageResult, readResults, pageIndex) };
+            ModelId = modelId;
+            // Form type confidence doesn't apply for a model trained without labels.
+            FormTypeConfidence = null;
         }
 
-        internal RecognizedForm(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        internal RecognizedForm(DocumentResult documentResult, IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults, string modelId)
+            : this(documentResult, pageResults, readResults, modelId, false) { }
+
+        internal RecognizedForm(DocumentResult documentResult, IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults, string modelId, bool isBusinessCards)
         {
             // Recognized form from a model trained with labels.
             FormType = documentResult.DocType;
@@ -38,8 +45,29 @@ namespace Azure.AI.FormRecognizer.Models
 
             Fields = documentResult.Fields == null
                 ? new Dictionary<string, FormField>()
-                : ConvertSupervisedFields(documentResult.Fields, readResults);
+                : ConvertSupervisedFields(documentResult.Fields, readResults, isBusinessCards);
             Pages = ConvertSupervisedPages(pageResults, readResults);
+            ModelId = documentResult.ModelId.HasValue ? documentResult.ModelId.Value.ToString() : modelId;
+            FormTypeConfidence = documentResult.DocTypeConfidence ?? Constants.DefaultConfidenceValue;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizedForm"/> class.
+        /// </summary>
+        /// <param name="formType">The type of form the model identified the submitted form to be.</param>
+        /// <param name="pageRange">The range of pages this form spans.</param>
+        /// <param name="fields">A dictionary of the fields recognized from the input document.</param>
+        /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
+        /// <param name="modelId">Model identifier of model used to analyze form if not using a prebuilt model.</param>
+        /// <param name="confidence">Confidence on the type of form the model identified the submitted form to be.</param>
+        internal RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages, string modelId, float? confidence)
+        {
+            FormType = formType;
+            PageRange = pageRange;
+            Fields = fields;
+            Pages = pages;
+            ModelId = modelId;
+            FormTypeConfidence = confidence;
         }
 
         /// <summary>
@@ -47,6 +75,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         // Convert clusterId to a string (ex. "FormType1").
         public string FormType { get; }
+
+        /// <summary>
+        /// Model identifier of model used to analyze form if not using a prebuilt model.
+        /// </summary>
+        public string ModelId { get; }
+
+        /// <summary>
+        /// Confidence on the type of form the model identified the submitted form to be.
+        /// Value is 1.0 when recognition is done against a single labeled model.
+        /// If recognition is based on a composed model, value is between [0.0, 1.0].
+        /// </summary>
+        public float? FormTypeConfidence { get; }
 
         /// <summary>
         /// The range of pages this form spans.
@@ -62,12 +102,12 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
-        /// A list of pages describing the recognized form content elements present in the input
+        /// A list of pages describing the recognized form elements present in the input
         /// document.
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
 
-        private static IReadOnlyDictionary<string, FormField> ConvertUnsupervisedFields(int pageNumber, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyDictionary<string, FormField> ConvertUnsupervisedFields(int pageNumber, IReadOnlyList<KeyValuePair> keyValuePairs, IReadOnlyList<ReadResult> readResults)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
 
@@ -81,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult> readResults, bool isBusinessCards)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
 
@@ -89,13 +129,13 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 fieldDictionary[field.Key] = field.Value == null
                     ? null
-                    : new FormField(field.Key, field.Value, readResults);
+                    : new FormField(field.Key, field.Value, readResults, isBusinessCards);
             }
 
             return fieldDictionary;
         }
 
-        private IReadOnlyList<FormPage> ConvertSupervisedPages(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
+        private IReadOnlyList<FormPage> ConvertSupervisedPages(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             List<FormPage> pages = new List<FormPage>();
 
@@ -108,7 +148,7 @@ namespace Azure.AI.FormRecognizer.Models
 
                 if (pageNumber >= PageRange.FirstPageNumber && pageNumber <= PageRange.LastPageNumber)
                 {
-                    pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults, i));
+                    pages.Add(new FormPage(pageResults.Any() ? pageResults[i] : null, readResults, i));
                 }
             }
 

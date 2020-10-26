@@ -15,12 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value");
                 writer.WriteObjectValue(Value);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(Type.Value.ToString());
@@ -30,14 +30,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
         {
-            object value = default;
-            StoredProcedureParameterType? type = default;
+            Optional<object> value = default;
+            Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetObject();
@@ -47,13 +48,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new StoredProcedureParameterType(property.Value.GetString());
                     continue;
                 }
             }
-            return new StoredProcedureParameter(value, type);
+            return new StoredProcedureParameter(value.Value, Optional.ToNullable(type));
         }
     }
 }

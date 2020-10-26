@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 
@@ -47,8 +47,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                        {
+                Extensions = {
                             GetTestVMSSVMExtension(),
                         }
             };
@@ -324,8 +323,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var extension = GetTestVMSSVMExtension();
             VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
             {
-                Extensions = new List<VirtualMachineScaleSetExtension>()
-                {
+                Extensions = {
                     extension,
                 }
             };

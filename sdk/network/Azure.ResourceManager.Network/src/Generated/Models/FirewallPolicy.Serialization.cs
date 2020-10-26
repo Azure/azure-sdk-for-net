@@ -16,37 +16,22 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location);
             }
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -59,62 +44,27 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (RuleGroups != null)
-            {
-                writer.WritePropertyName("ruleGroups");
-                writer.WriteStartArray();
-                foreach (var item in RuleGroups)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (BasePolicy != null)
+            if (Optional.IsDefined(BasePolicy))
             {
                 writer.WritePropertyName("basePolicy");
                 writer.WriteObjectValue(BasePolicy);
             }
-            if (Firewalls != null)
-            {
-                writer.WritePropertyName("firewalls");
-                writer.WriteStartArray();
-                foreach (var item in Firewalls)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ChildPolicies != null)
-            {
-                writer.WritePropertyName("childPolicies");
-                writer.WriteStartArray();
-                foreach (var item in ChildPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ThreatIntelMode != null)
+            if (Optional.IsDefined(ThreatIntelMode))
             {
                 writer.WritePropertyName("threatIntelMode");
                 writer.WriteStringValue(ThreatIntelMode.Value.ToString());
             }
-            if (ThreatIntelWhitelist != null)
+            if (Optional.IsDefined(ThreatIntelWhitelist))
             {
                 writer.WritePropertyName("threatIntelWhitelist");
                 writer.WriteObjectValue(ThreatIntelWhitelist);
             }
-            if (IntrusionSystemMode != null)
+            if (Optional.IsDefined(IntrusionSystemMode))
             {
                 writer.WritePropertyName("intrusionSystemMode");
                 writer.WriteStringValue(IntrusionSystemMode.Value.ToString());
             }
-            if (TransportSecurity != null)
+            if (Optional.IsDefined(TransportSecurity))
             {
                 writer.WritePropertyName("transportSecurity");
                 writer.WriteObjectValue(TransportSecurity);
@@ -125,30 +75,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicy DeserializeFirewallPolicy(JsonElement element)
         {
-            string etag = default;
-            ManagedServiceIdentity identity = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            IList<SubResource> ruleGroups = default;
-            ProvisioningState? provisioningState = default;
-            SubResource basePolicy = default;
-            IList<SubResource> firewalls = default;
-            IList<SubResource> childPolicies = default;
-            AzureFirewallThreatIntelMode? threatIntelMode = default;
-            FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default;
-            FirewallPolicyIntrusionSystemMode? intrusionSystemMode = default;
-            FirewallPolicyTransportSecurity transportSecurity = default;
+            Optional<string> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IReadOnlyList<SubResource>> ruleGroups = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<SubResource> basePolicy = default;
+            Optional<IReadOnlyList<SubResource>> firewalls = default;
+            Optional<IReadOnlyList<SubResource>> childPolicies = default;
+            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
+            Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
+            Optional<FirewallPolicyIntrusionSystemMode> intrusionSystemMode = default;
+            Optional<FirewallPolicyTransportSecurity> transportSecurity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
@@ -156,6 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
@@ -163,37 +110,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = property.Value.GetString();
                     continue;
                 }
@@ -201,44 +132,37 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("ruleGroups"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             ruleGroups = array;
                             continue;
@@ -247,6 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -256,6 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             basePolicy = SubResource.DeserializeSubResource(property0.Value);
@@ -265,19 +191,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             firewalls = array;
                             continue;
@@ -286,19 +206,13 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(SubResource.DeserializeSubResource(item));
-                                }
+                                array.Add(SubResource.DeserializeSubResource(item));
                             }
                             childPolicies = array;
                             continue;
@@ -307,6 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             threatIntelMode = new AzureFirewallThreatIntelMode(property0.Value.GetString());
@@ -316,6 +231,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             threatIntelWhitelist = FirewallPolicyThreatIntelWhitelist.DeserializeFirewallPolicyThreatIntelWhitelist(property0.Value);
@@ -325,6 +241,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             intrusionSystemMode = new FirewallPolicyIntrusionSystemMode(property0.Value.GetString());
@@ -334,6 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             transportSecurity = FirewallPolicyTransportSecurity.DeserializeFirewallPolicyTransportSecurity(property0.Value);
@@ -343,7 +261,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicy(id, name, type, location, tags, etag, identity, ruleGroups, provisioningState, basePolicy, firewalls, childPolicies, threatIntelMode, threatIntelWhitelist, intrusionSystemMode, transportSecurity);
+            return new FirewallPolicy(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity.Value, Optional.ToList(ruleGroups), Optional.ToNullable(provisioningState), basePolicy.Value, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, Optional.ToNullable(intrusionSystemMode), transportSecurity.Value);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Text = text ?? throw new ArgumentNullException(nameof(text));
             AnalyzerName = analyzerName;
 
-            TokenFilters = new List<TokenFilterName>();
-            CharFilters = new List<string>();
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Text = text ?? throw new ArgumentNullException(nameof(text));
             TokenizerName = tokenizerName;
 
-            TokenFilters = new List<TokenFilterName>();
-            CharFilters = new List<string>();
+            TokenFilters = new ChangeTrackingList<TokenFilterName>();
+            CharFilters = new ChangeTrackingList<string>();
         }
 
         /// <summary> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
@@ -49,11 +49,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public LexicalTokenizerName? TokenizerName { get; }
 
         /// <summary> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<TokenFilterName> TokenFilters { get; }
 
         /// <summary> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </summary>
-        [CodeGenMember(EmptyAsUndefined = true, Initialize = true)]
         public IList<string> CharFilters { get; }
     }
 }

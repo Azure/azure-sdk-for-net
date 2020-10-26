@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
         /// <param name="name"> Activity name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightPigActivity(string name) : base(name)
         {
             if (name == null)
@@ -22,6 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            Defines = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightPig";
         }
 
@@ -52,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; set; }
+        public IList<LinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
         public object Arguments { get; set; }
         /// <summary> Debug info option. </summary>
@@ -62,6 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Script linked service reference. </summary>
         public LinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary> Allows user to specify defines for Pig job request. </summary>
-        public IDictionary<string, object> Defines { get; set; }
+        public IDictionary<string, object> Defines { get; }
     }
 }

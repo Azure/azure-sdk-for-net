@@ -6,5 +6,4 @@ extends:
     MaxParallel: 4
     ServiceDirectory: servicebus
     TimeoutInMinutes: 120
-    EnvVars:
-      SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)
+    TestCanary: true

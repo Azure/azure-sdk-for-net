@@ -17,15 +17,15 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static IndexerExecutionResult DeserializeIndexerExecutionResult(JsonElement element)
         {
             IndexerExecutionStatus status = default;
-            string errorMessage = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            Optional<string> errorMessage = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             IReadOnlyList<SearchIndexerError> errors = default;
             IReadOnlyList<SearchIndexerWarning> warnings = default;
             int itemsProcessed = default;
             int itemsFailed = default;
-            string initialTrackingState = default;
-            string finalTrackingState = default;
+            Optional<string> initialTrackingState = default;
+            Optional<string> finalTrackingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -35,10 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("errorMessage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorMessage = property.Value.GetString();
                     continue;
                 }
@@ -46,6 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -55,6 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -65,14 +63,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerError> array = new List<SearchIndexerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchIndexerError.DeserializeSearchIndexerError(item));
-                        }
+                        array.Add(SearchIndexerError.DeserializeSearchIndexerError(item));
                     }
                     errors = array;
                     continue;
@@ -82,14 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerWarning> array = new List<SearchIndexerWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(SearchIndexerWarning.DeserializeSearchIndexerWarning(item));
-                        }
+                        array.Add(SearchIndexerWarning.DeserializeSearchIndexerWarning(item));
                     }
                     warnings = array;
                     continue;
@@ -106,24 +90,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("initialTrackingState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     initialTrackingState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("finalTrackingState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     finalTrackingState = property.Value.GetString();
                     continue;
                 }
             }
-            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemsProcessed, itemsFailed, initialTrackingState, finalTrackingState);
+            return new IndexerExecutionResult(status, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
         }
     }
 }

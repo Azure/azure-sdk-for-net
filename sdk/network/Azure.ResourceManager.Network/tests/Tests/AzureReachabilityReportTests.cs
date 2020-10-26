@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             AzureReachabilityReportParameters parameters = new AzureReachabilityReportParameters(
                 new AzureReachabilityReportLocation("United States"), Recording.UtcNow.AddDays(-10), Recording.UtcNow.AddDays(-5))
             {
-                AzureLocations = new List<string> { "West US" }
+                AzureLocations = { "West US" }
             };
             Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             AzureReachabilityReportParameters parameters = new AzureReachabilityReportParameters(
                 new AzureReachabilityReportLocation("United States") { State = "washington" }, Recording.UtcNow.AddDays(-10), Recording.UtcNow.AddDays(-5))
             {
-                AzureLocations = new List<string> { "West US" }
+                AzureLocations = { "West US" }
             };
             Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             AzureReachabilityReportParameters parameters = new AzureReachabilityReportParameters(
                 new AzureReachabilityReportLocation("United States") { State = "washington", City = "seattle" }, Recording.UtcNow.AddDays(-10), Recording.UtcNow.AddDays(-5))
             {
-                AzureLocations = new List<string> { "West US" }
+                AzureLocations = { "West US" }
             };
             Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);

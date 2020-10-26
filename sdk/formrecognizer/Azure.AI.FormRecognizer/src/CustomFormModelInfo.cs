@@ -2,28 +2,31 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Describes a model trained in a Cognitive Services Account and its status.
     /// </summary>
-    public class CustomFormModelInfo
+    [CodeGenModel("ModelInfo")]
+    public partial class CustomFormModelInfo
     {
-        internal CustomFormModelInfo(ModelInfo_internal modelInfo)
-        {
-            ModelId = modelInfo.ModelId.ToString();
-            RequestedOn = modelInfo.CreatedDateTime;
-            CompletedOn = modelInfo.LastUpdatedDateTime;
-            Status = modelInfo.Status;
-        }
-
-        internal CustomFormModelInfo(string modelId, DateTimeOffset requestedOn, DateTimeOffset completedOn, CustomFormModelStatus status)
+        /// <summary> Initializes a new instance of CustomFormModelInfo. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="status"> Status of the model. </param>
+        /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="modelName"> An optional, user-defined name to associate with your model. </param>
+        /// <param name="properties">Model properties, like for example, if a model is composed.</param>
+        internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, string modelName, CustomFormModelProperties properties)
         {
             ModelId = modelId;
-            RequestedOn = requestedOn;
-            CompletedOn = completedOn;
             Status = status;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
+            ModelName = modelName;
+            Properties = properties ?? new CustomFormModelProperties();
         }
 
         /// <summary>
@@ -32,18 +35,32 @@ namespace Azure.AI.FormRecognizer.Training
         public string ModelId { get; }
 
         /// <summary>
+        /// An optional, user-defined name to associate with your model.
+        /// </summary>
+        public string ModelName { get; }
+
+        /// <summary>
+        /// Model properties, like for example, if a model is composed.
+        /// </summary>
+        [CodeGenMember("Attributes")]
+        public CustomFormModelProperties Properties { get; }
+
+        /// <summary>
         /// The status of the model.
         /// </summary>
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the training model request started.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
-        public DateTimeOffset RequestedOn { get; }
+        [CodeGenMember("CreatedDateTime")]
+        public DateTimeOffset TrainingStartedOn { get; }
 
         /// <summary>
         /// The date and time (UTC) when model training completed.
         /// </summary>
-        public DateTimeOffset CompletedOn { get; }
+        [CodeGenMember("LastUpdatedDateTime")]
+        public DateTimeOffset TrainingCompletedOn { get; }
+
     }
 }

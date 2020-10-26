@@ -5,14 +5,18 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.KeyVault</PackageId>
-		<Description>Provides key vault management capabilities for Microsoft Azure.</Description>
+		<Description>
+			Provides key vault management capabilities for Microsoft Azure.
+			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.KeyVault" (https://www.nuget.org/packages/Azure.ResourceManager.KeyVault/). Please see the package changelog for more information.
+		</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-		<Version>3.0.0</Version>
+		<Version>3.1.0-preview.2</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
-		<PackageReleaseNotes>      
+		<PackageReleaseNotes>
 			<![CDATA[
-				- Enabled soft delete and purge protection by default during key vault creation
+				- Support CRUD operations to managed HSM
+				- Fixed hsmUri property name and removed regex pattern for name validation
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

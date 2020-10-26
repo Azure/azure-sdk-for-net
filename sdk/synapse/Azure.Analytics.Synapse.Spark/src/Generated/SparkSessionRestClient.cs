@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
         public SparkSessionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
             if (endpoint == null)
@@ -78,6 +78,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -100,14 +101,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSessionCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
-                        }
+                        value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,14 +128,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSessionCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
-                        }
+                        value = SparkSessionCollection.DeserializeSparkSessionCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,6 +154,7 @@ namespace Azure.Analytics.Synapse.Spark
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkSessionOptions);
             request.Content = content;
@@ -177,6 +165,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkSessionOptions"/> is null. </exception>
         public async Task<Response<SparkSession>> CreateSparkSessionAsync(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkSessionOptions == null)
@@ -192,14 +181,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSession value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSession.DeserializeSparkSession(document.RootElement);
-                        }
+                        value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -211,6 +193,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sparkSessionOptions"> Livy compatible batch job request payload. </param>
         /// <param name="detailed"> Optional query param specifying whether detailed response is returned beyond plain livy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkSessionOptions"/> is null. </exception>
         public Response<SparkSession> CreateSparkSession(SparkSessionOptions sparkSessionOptions, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             if (sparkSessionOptions == null)
@@ -226,14 +209,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSession value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSession.DeserializeSparkSession(document.RootElement);
-                        }
+                        value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,6 +235,7 @@ namespace Azure.Analytics.Synapse.Spark
                 uri.AppendQuery("detailed", detailed.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -276,14 +253,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSession value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSession.DeserializeSparkSession(document.RootElement);
-                        }
+                        value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,14 +275,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkSession value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkSession.DeserializeSparkSession(document.RootElement);
-                        }
+                        value = SparkSession.DeserializeSparkSession(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,6 +397,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath(sessionId, true);
             uri.AppendPath("/statements", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -450,14 +414,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatementCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
-                        }
+                        value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,14 +435,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatementCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
-                        }
+                        value = SparkStatementCollection.DeserializeSparkStatementCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -509,6 +459,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath("/statements", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sparkStatementOptions);
             request.Content = content;
@@ -519,6 +470,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkStatementOptions"/> is null. </exception>
         public async Task<Response<SparkStatement>> CreateSparkStatementAsync(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
         {
             if (sparkStatementOptions == null)
@@ -534,14 +486,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatement value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatement.DeserializeSparkStatement(document.RootElement);
-                        }
+                        value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -553,6 +498,7 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="sessionId"> Identifier for the session. </param>
         /// <param name="sparkStatementOptions"> Livy compatible batch job request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkStatementOptions"/> is null. </exception>
         public Response<SparkStatement> CreateSparkStatement(int sessionId, SparkStatementOptions sparkStatementOptions, CancellationToken cancellationToken = default)
         {
             if (sparkStatementOptions == null)
@@ -568,14 +514,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatement value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatement.DeserializeSparkStatement(document.RootElement);
-                        }
+                        value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -599,6 +538,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath("/statements/", false);
             uri.AppendPath(statementId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -616,14 +556,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatement value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatement.DeserializeSparkStatement(document.RootElement);
-                        }
+                        value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -645,14 +578,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatement value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatement.DeserializeSparkStatement(document.RootElement);
-                        }
+                        value = SparkStatement.DeserializeSparkStatement(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -677,6 +603,7 @@ namespace Azure.Analytics.Synapse.Spark
             uri.AppendPath(statementId, true);
             uri.AppendPath("/cancel", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -694,14 +621,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatementCancellationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
-                        }
+                        value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -723,14 +643,7 @@ namespace Azure.Analytics.Synapse.Spark
                     {
                         SparkStatementCancellationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
-                        }
+                        value = SparkStatementCancellationResult.DeserializeSparkStatementCancellationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

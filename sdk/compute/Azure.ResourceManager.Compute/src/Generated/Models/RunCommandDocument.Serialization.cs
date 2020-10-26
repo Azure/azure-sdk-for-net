@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
         {
             IReadOnlyList<string> script = default;
-            IReadOnlyList<RunCommandParameterDefinition> parameters = default;
+            Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
             string schema = default;
             string id = default;
             OperatingSystemTypes osType = default;
@@ -29,14 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     script = array;
                     continue;
@@ -45,19 +38,13 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RunCommandParameterDefinition> array = new List<RunCommandParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(RunCommandParameterDefinition.DeserializeRunCommandParameterDefinition(item));
-                        }
+                        array.Add(RunCommandParameterDefinition.DeserializeRunCommandParameterDefinition(item));
                     }
                     parameters = array;
                     continue;
@@ -88,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RunCommandDocument(schema, id, osType, label, description, script, parameters);
+            return new RunCommandDocument(schema, id, osType, label, description, script, Optional.ToList(parameters));
         }
     }
 }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (RegionalReplicaCount != null)
+            if (Optional.IsDefined(RegionalReplicaCount))
             {
                 writer.WritePropertyName("regionalReplicaCount");
                 writer.WriteNumberValue(RegionalReplicaCount.Value);
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
                 writer.WriteObjectValue(Encryption);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         internal static TargetRegion DeserializeTargetRegion(JsonElement element)
         {
             string name = default;
-            int? regionalReplicaCount = default;
-            StorageAccountType? storageAccountType = default;
-            EncryptionImages encryption = default;
+            Optional<int> regionalReplicaCount = default;
+            Optional<StorageAccountType> storageAccountType = default;
+            Optional<EncryptionImages> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     regionalReplicaCount = property.Value.GetInt32();
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
@@ -70,13 +72,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
                     continue;
                 }
             }
-            return new TargetRegion(name, regionalReplicaCount, storageAccountType, encryption);
+            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value);
         }
     }
 }

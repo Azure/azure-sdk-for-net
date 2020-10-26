@@ -14,26 +14,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkServiceError DeserializeSparkServiceError(JsonElement element)
         {
-            string message = default;
-            string errorCode = default;
-            SparkErrorSource? source = default;
+            Optional<string> message = default;
+            Optional<string> errorCode = default;
+            Optional<SparkErrorSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorCode = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = new SparkErrorSource(property.Value.GetString());
                     continue;
                 }
             }
-            return new SparkServiceError(message, errorCode, source);
+            return new SparkServiceError(message.Value, errorCode.Value, Optional.ToNullable(source));
         }
     }
 }

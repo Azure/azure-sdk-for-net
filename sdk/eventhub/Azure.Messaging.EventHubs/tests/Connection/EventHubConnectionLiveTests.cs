@@ -75,11 +75,32 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ConnectionCanConnectToEventHubsUsingSharedAccessSignatureConnectionString()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var options = new EventHubConnectionOptions();
+                var audience = EventHubConnection.BuildConnectionAudience(options.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringWithSharedAccessSignature(scope.EventHubName, audience);
+
+                await using (var connection = new TestConnectionWithTransport(connectionString, options))
+                {
+                    Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
         public async Task ConnectionCanConnectToEventHubsUsingSharedKeyCredential()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new EventHubSharedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+                var credential = new EventHubsSharedAccessKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 
                 await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
@@ -344,6 +365,13 @@ namespace Azure.Messaging.EventHubs.Tests
             public TestConnectionWithTransport(string fullyQualifiedNamespace,
                                                string eventHubName,
                                                TokenCredential credential,
+                                               EventHubConnectionOptions connectionOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, connectionOptions)
+            {
+            }
+
+            public TestConnectionWithTransport(string fullyQualifiedNamespace,
+                                               string eventHubName,
+                                               EventHubsSharedAccessKeyCredential credential,
                                                EventHubConnectionOptions connectionOptions = default) : base(fullyQualifiedNamespace, eventHubName, credential, connectionOptions)
             {
             }

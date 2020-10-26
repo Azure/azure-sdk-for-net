@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix");
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
-            if (SecondaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("secondaryPeerAddressPrefix");
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
-            if (MicrosoftPeeringConfig != null)
+            if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig");
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (RouteFilter != null)
+            if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter");
                 writer.WriteObjectValue(RouteFilter);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state");
                 writer.WriteStringValue(State.Value.ToString());
@@ -45,28 +45,20 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static Ipv6ExpressRouteCircuitPeeringConfig DeserializeIpv6ExpressRouteCircuitPeeringConfig(JsonElement element)
         {
-            string primaryPeerAddressPrefix = default;
-            string secondaryPeerAddressPrefix = default;
-            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
-            SubResource routeFilter = default;
-            ExpressRouteCircuitPeeringState? state = default;
+            Optional<string> primaryPeerAddressPrefix = default;
+            Optional<string> secondaryPeerAddressPrefix = default;
+            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
+            Optional<SubResource> routeFilter = default;
+            Optional<ExpressRouteCircuitPeeringState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryPeerAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     primaryPeerAddressPrefix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secondaryPeerAddressPrefix"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     secondaryPeerAddressPrefix = property.Value.GetString();
                     continue;
                 }
@@ -74,6 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
@@ -83,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routeFilter = SubResource.DeserializeSubResource(property.Value);
@@ -92,13 +86,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());
                     continue;
                 }
             }
-            return new Ipv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix, secondaryPeerAddressPrefix, microsoftPeeringConfig, routeFilter, state);
+            return new Ipv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter.Value, Optional.ToNullable(state));
         }
     }
 }

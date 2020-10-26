@@ -16,44 +16,29 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (PolicyType != null)
+            if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType");
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteObjectValue(Metadata);
             }
-            if (Parameters != null)
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
                 writer.WriteStartObject();
@@ -64,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PolicyDefinitions != null)
+            if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
                 writer.WritePropertyName("policyDefinitions");
                 writer.WriteStartArray();
@@ -74,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyDefinitionGroups != null)
+            if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
             {
                 writer.WritePropertyName("policyDefinitionGroups");
                 writer.WriteStartArray();
@@ -90,53 +75,47 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PolicySetDefinition DeserializePolicySetDefinition(JsonElement element)
         {
-            string id = default;
-            string name = default;
-            string type = default;
-            PolicyType? policyType = default;
-            string displayName = default;
-            string description = default;
-            object metadata = default;
-            IDictionary<string, ParameterDefinitionsValue> parameters = default;
-            IList<PolicyDefinitionReference> policyDefinitions = default;
-            IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<PolicyType> policyType = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<object> metadata = default;
+            Optional<IDictionary<string, ParameterDefinitionsValue>> parameters = default;
+            Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
+            Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("policyType"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyType = new PolicyType(property0.Value.GetString());
@@ -144,19 +123,11 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("displayName"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             displayName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("description"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             description = property0.Value.GetString();
                             continue;
                         }
@@ -164,6 +135,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = property0.Value.GetObject();
@@ -173,19 +145,13 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ParameterDefinitionsValue> dictionary = new Dictionary<string, ParameterDefinitionsValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(property1.Value));
-                                }
+                                dictionary.Add(property1.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -194,19 +160,13 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PolicyDefinitionReference> array = new List<PolicyDefinitionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
-                                }
+                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
                             }
                             policyDefinitions = array;
                             continue;
@@ -215,19 +175,13 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PolicyDefinitionGroup> array = new List<PolicyDefinitionGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
-                                }
+                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
                             }
                             policyDefinitionGroups = array;
                             continue;
@@ -236,7 +190,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PolicySetDefinition(id, name, type, policyType, displayName, description, metadata, parameters, policyDefinitions, policyDefinitionGroups);
+            return new PolicySetDefinition(id.Value, name.Value, type.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
         }
     }
 }

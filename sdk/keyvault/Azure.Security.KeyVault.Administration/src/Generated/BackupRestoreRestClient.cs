@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public BackupRestoreRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
         {
             if (apiVersion == null)
@@ -50,6 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (azureStorageBlobContainerUri != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -63,7 +64,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders>> FullBackupAsync(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders>> FullBackupAsync(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -72,23 +74,11 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateFullBackupRequest(vaultBaseUrl, azureStorageBlobContainerUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceFullBackupHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        FullBackupDetailsInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -98,7 +88,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FullBackupDetailsInternal, ServiceFullBackupHeaders> FullBackup(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> FullBackup(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -107,23 +98,11 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateFullBackupRequest(vaultBaseUrl, azureStorageBlobContainerUri);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceFullBackupHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        FullBackupDetailsInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -141,6 +120,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -148,6 +128,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -167,14 +148,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         FullBackupDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
+                        value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -186,6 +160,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
         public Response<FullBackupDetailsInternal> FullBackupStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
@@ -205,14 +180,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         FullBackupDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
-                        }
+                        value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -231,6 +199,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -244,7 +213,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FullRestoreDetailsInternal, ServiceFullRestoreOperationHeaders>> FullRestoreOperationAsync(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders>> FullRestoreOperationAsync(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -253,23 +223,11 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateFullRestoreOperationRequest(vaultBaseUrl, restoreBlobDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceFullRestoreOperationHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        FullRestoreDetailsInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -279,7 +237,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FullRestoreDetailsInternal, ServiceFullRestoreOperationHeaders> FullRestoreOperation(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> FullRestoreOperation(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -288,29 +247,17 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateFullRestoreOperationRequest(vaultBaseUrl, restoreBlobDetails);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceFullRestoreOperationHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        FullRestoreDetailsInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateFullRestoreStatusRequest(string vaultBaseUrl, string jobId)
+        internal HttpMessage CreateRestoreStatusRequest(string vaultBaseUrl, string jobId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,14 +269,16 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendPath("/pending", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns the status of full restore operation. </summary>
+        /// <summary> Returns the status of restore operation. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<FullRestoreDetailsInternal>> FullRestoreStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
+        public async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -340,22 +289,15 @@ namespace Azure.Security.KeyVault.Administration
                 throw new ArgumentNullException(nameof(jobId));
             }
 
-            using var message = CreateFullRestoreStatusRequest(vaultBaseUrl, jobId);
+            using var message = CreateRestoreStatusRequest(vaultBaseUrl, jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FullRestoreDetailsInternal value = default;
+                        RestoreDetailsInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
-                        }
+                        value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,11 +305,12 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Returns the status of full restore operation. </summary>
+        /// <summary> Returns the status of restore operation. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FullRestoreDetailsInternal> FullRestoreStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="jobId"/> is null. </exception>
+        public Response<RestoreDetailsInternal> RestoreStatus(string vaultBaseUrl, string jobId, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -378,22 +321,15 @@ namespace Azure.Security.KeyVault.Administration
                 throw new ArgumentNullException(nameof(jobId));
             }
 
-            using var message = CreateFullRestoreStatusRequest(vaultBaseUrl, jobId);
+            using var message = CreateRestoreStatusRequest(vaultBaseUrl, jobId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FullRestoreDetailsInternal value = default;
+                        RestoreDetailsInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = FullRestoreDetailsInternal.DeserializeFullRestoreDetailsInternal(document.RootElement);
-                        }
+                        value = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -414,6 +350,7 @@ namespace Azure.Security.KeyVault.Administration
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             if (restoreBlobDetails != null)
             {
                 var content = new Utf8JsonRequestContent();
@@ -428,7 +365,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<SelectiveKeyRestoreDetails, ServiceSelectiveKeyRestoreOperationHeaders>> SelectiveKeyRestoreOperationAsync(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="keyName"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders>> SelectiveKeyRestoreOperationAsync(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -441,23 +379,11 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateSelectiveKeyRestoreOperationRequest(vaultBaseUrl, keyName, restoreBlobDetails);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceSelectiveKeyRestoreOperationHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        SelectiveKeyRestoreDetails value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SelectiveKeyRestoreDetails.DeserializeSelectiveKeyRestoreDetails(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -468,7 +394,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<SelectiveKeyRestoreDetails, ServiceSelectiveKeyRestoreOperationHeaders> SelectiveKeyRestoreOperation(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="keyName"/> is null. </exception>
+        public ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> SelectiveKeyRestoreOperation(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails = null, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -481,23 +408,11 @@ namespace Azure.Security.KeyVault.Administration
 
             using var message = CreateSelectiveKeyRestoreOperationRequest(vaultBaseUrl, keyName, restoreBlobDetails);
             _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceSelectiveKeyRestoreOperationHeaders(message.Response);
+            var headers = new AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        SelectiveKeyRestoreDetails value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = SelectiveKeyRestoreDetails.DeserializeSelectiveKeyRestoreDetails(document.RootElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

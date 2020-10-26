@@ -17,7 +17,7 @@ and share a number of core features such as HTTP retries, logging, transport
 protocols, authentication protocols, etc., so that once you learn how to use
 these features in one client library, you will know how to use them in other
 client libraries.  You can learn about these shared features in the
-[Azure.Core README](/sdk/core/Azure.Core/README.md).
+[Azure.Core README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md).
 
 ## Code Generation
 
@@ -50,12 +50,12 @@ exercise any new features that you've added.
 
 We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](../core/Azure.Core/tests/TestFramework) is
+[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
 copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in `../../core/Azure.Core/Azure.Core.All.sln`
+sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
 if you make any changes here.)_
 
-We also have [common test code](./Azure.Storage.Common/tests/Shared) in our
+We also have [common test code](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/tests/Shared) in our
 projects' `/Shared` folders that provides helpful Storage specific
 infrastructure.
 
@@ -74,7 +74,7 @@ different service features.  We specify all of them via a
    and configured to authenticate with Azure Active Directory (OAuth access)
 
 If you want to run live tests against your own account, you can edit the
-[`TestConfigurationsTemplate.xml`](.\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml)
+[`TestConfigurationsTemplate.xml`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/tests/Shared/TestConfigurationsTemplate.xml)
 file and rename it to `TestConfigurations.xml` in the same folder.  The build
 will automatically copy it to each test project.  If you're working with
 multiple enlistments or want to change between multiple configuration files,
@@ -105,7 +105,7 @@ All random values should be obtained via `this.Recording.Random` since we use
 the same seed on test playback to ensure our client code generates the same
 "random" values each time.  You can't share any state between tests or rely on
 ordering because you don't know the order they'll be recorded or replayed.  Any
-sensitive values are redacted via the [`StorageRecordedTestSanitizer`](.\Azure.Storage.Common\tests\Shared\StorageRecordedTestSanitizer.cs).
+sensitive values are redacted via the [`StorageRecordedTestSanitizer`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/tests/Shared/StorageRecordedTestSanitizer.cs).
 
 ### Running tests
 

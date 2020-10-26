@@ -28,10 +28,10 @@ namespace Azure.DigitalTwins.Core.Samples
         public int Prop2 { get; set; }
 
         [JsonPropertyName("Component1")]
-        public Component1 Component1 { get; set; }
+        public MyCustomComponent Component1 { get; set; }
     }
 
-    internal class Component1
+    internal class MyCustomComponent
     {
         [JsonPropertyName("$metadata")]
         public Component1Metadata Metadata { get; set; } = new Component1Metadata();

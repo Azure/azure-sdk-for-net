@@ -19,18 +19,22 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            #region Snippet:FormRecognizerSample4TrainModelWithForms
+            #region Snippet:FormRecognizerSampleTrainModelWithForms
+            // For this sample, you can use the training forms found in the `trainingFiles` folder.
+            // Upload the forms to your storage container and then generate a container SAS URL.
             // For instructions on setting up forms for training in an Azure Storage Blob Container, see
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
 
             Console.WriteLine($"Custom Model Info:");
             Console.WriteLine($"    Model Id: {model.ModelId}");
+            Console.WriteLine($"    Model name: {model.ModelName}");
             Console.WriteLine($"    Model Status: {model.Status}");
-            Console.WriteLine($"    Requested on: {model.RequestedOn}");
-            Console.WriteLine($"    Completed on: {model.CompletedOn}");
+            Console.WriteLine($"    Is composed model: {model.Properties.IsComposedModel}");
+            Console.WriteLine($"    Training model started on: {model.TrainingStartedOn}");
+            Console.WriteLine($"    Training model completed on: {model.TrainingCompletedOn}");
 
             foreach (CustomFormSubmodel submodel in model.Submodels)
             {
@@ -48,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
 
             // Delete the model on completion to clean environment.
-            client.DeleteModel(model.ModelId);
+            await client.DeleteModelAsync(model.ModelId);
         }
     }
 }

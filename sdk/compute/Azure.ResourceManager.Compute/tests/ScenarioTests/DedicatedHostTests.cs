@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Compute.Tests
             // Update existing dedicated host group
             DedicatedHostGroupUpdate updateDHGInput = new DedicatedHostGroupUpdate()
             {
-                Tags = new Dictionary<string, string>() { { "testKey", "testValue" } }
+                Tags = { { "testKey", "testValue" } }
             };
-            createdDHG.Tags = updateDHGInput.Tags;
+            createdDHG.Tags.InitializeFrom(updateDHGInput.Tags);
             updateDHGInput.PlatformFaultDomainCount = returnedDHG.PlatformFaultDomainCount; // There is a bug in PATCH.  PlatformFaultDomainCount is a required property now.
             returnedDHG = await DedicatedHostGroupsOperations.UpdateAsync(rgName, dhgName, updateDHGInput);
             ValidateDedicatedHostGroup(createdDHG, returnedDHG);

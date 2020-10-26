@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName");
             writer.WriteStringValue(RuleGroupName);
-            if (Rules != null)
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules");
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element)
         {
             string ruleGroupName = default;
-            IList<ManagedRuleOverride> rules = default;
+            Optional<IList<ManagedRuleOverride>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"))
@@ -46,25 +46,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ManagedRuleOverride.DeserializeManagedRuleOverride(item));
-                        }
+                        array.Add(ManagedRuleOverride.DeserializeManagedRuleOverride(item));
                     }
                     rules = array;
                     continue;
                 }
             }
-            return new ManagedRuleGroupOverride(ruleGroupName, rules);
+            return new ManagedRuleGroupOverride(ruleGroupName, Optional.ToList(rules));
         }
     }
 }

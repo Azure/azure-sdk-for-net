@@ -15,72 +15,57 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Etag != null)
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (RuleType != null)
+            if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("ruleType");
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (Priority != null)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority");
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool");
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (BackendHttpSettings != null)
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings");
                 writer.WriteObjectValue(BackendHttpSettings);
             }
-            if (HttpListener != null)
+            if (Optional.IsDefined(HttpListener))
             {
                 writer.WritePropertyName("httpListener");
                 writer.WriteObjectValue(HttpListener);
             }
-            if (UrlPathMap != null)
+            if (Optional.IsDefined(UrlPathMap))
             {
                 writer.WritePropertyName("urlPathMap");
                 writer.WriteObjectValue(UrlPathMap);
             }
-            if (RewriteRuleSet != null)
+            if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet");
                 writer.WriteObjectValue(RewriteRuleSet);
             }
-            if (RedirectConfiguration != null)
+            if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration");
                 writer.WriteObjectValue(RedirectConfiguration);
-            }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -88,65 +73,55 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRequestRoutingRule DeserializeApplicationGatewayRequestRoutingRule(JsonElement element)
         {
-            string name = default;
-            string etag = default;
-            string type = default;
-            string id = default;
-            ApplicationGatewayRequestRoutingRuleType? ruleType = default;
-            int? priority = default;
-            SubResource backendAddressPool = default;
-            SubResource backendHttpSettings = default;
-            SubResource httpListener = default;
-            SubResource urlPathMap = default;
-            SubResource rewriteRuleSet = default;
-            SubResource redirectConfiguration = default;
-            ProvisioningState? provisioningState = default;
+            Optional<string> name = default;
+            Optional<string> etag = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
+            Optional<int> priority = default;
+            Optional<SubResource> backendAddressPool = default;
+            Optional<SubResource> backendHttpSettings = default;
+            Optional<SubResource> httpListener = default;
+            Optional<SubResource> urlPathMap = default;
+            Optional<SubResource> rewriteRuleSet = default;
+            Optional<SubResource> redirectConfiguration = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("ruleType"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ruleType = new ApplicationGatewayRequestRoutingRuleType(property0.Value.GetString());
@@ -156,6 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             priority = property0.Value.GetInt32();
@@ -165,6 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendAddressPool = DeserializeSubResource(property0.Value);
@@ -174,6 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendHttpSettings = DeserializeSubResource(property0.Value);
@@ -183,6 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             httpListener = DeserializeSubResource(property0.Value);
@@ -192,6 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             urlPathMap = DeserializeSubResource(property0.Value);
@@ -201,6 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rewriteRuleSet = DeserializeSubResource(property0.Value);
@@ -210,6 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redirectConfiguration = DeserializeSubResource(property0.Value);
@@ -219,6 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -228,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRequestRoutingRule(id, name, etag, type, ruleType, priority, backendAddressPool, backendHttpSettings, httpListener, urlPathMap, rewriteRuleSet, redirectConfiguration, provisioningState);
+            return new ApplicationGatewayRequestRoutingRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(ruleType), Optional.ToNullable(priority), backendAddressPool.Value, backendHttpSettings.Value, httpListener.Value, urlPathMap.Value, rewriteRuleSet.Value, redirectConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

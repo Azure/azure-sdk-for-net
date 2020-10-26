@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Management;
+using Azure.Messaging.ServiceBus.Administration;
 using Moq;
 using NUnit.Framework;
 
@@ -22,8 +22,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:CreateQueue
                 //@@ string connectionString = "<connection_string>";
                 //@@ string queueName = "<queue_name>";
-                var client = new ServiceBusManagementClient(connectionString);
-                var queueDescription = new QueueDescription(queueName)
+                var client = new ServiceBusAdministrationClient(connectionString);
+                var options = new CreateQueueOptions(queueName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
                     DefaultMessageTimeToLive = TimeSpan.FromDays(2),
@@ -41,21 +41,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     UserMetadata = "some metadata"
                 };
 
-                queueDescription.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+                options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
                     "allClaims",
                     new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-                // The CreateQueueAsync method will return the created queue
-                // which would include values for all of the
-                // QueueDescription properties (the service will supply
-                // default values for properties not included in the creation).
-                QueueDescription createdQueue = await client.CreateQueueAsync(queueDescription);
+                QueueProperties createdQueue = await client.CreateQueueAsync(options);
                 #endregion
-                Assert.AreEqual(queueDescription, createdQueue);
+                Assert.AreEqual(options, new CreateQueueOptions(createdQueue));
             }
             finally
             {
-                await new ServiceBusManagementClient(connectionString).DeleteQueueAsync(queueName);
+                await new ServiceBusAdministrationClient(connectionString).DeleteQueueAsync(queueName);
             }
         }
 
@@ -64,16 +60,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             string queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
-            var qd = new QueueDescription(queueName);
+            var client = new ServiceBusAdministrationClient(connectionString);
+            var qd = new CreateQueueOptions(queueName);
             await client.CreateQueueAsync(qd);
 
             #region Snippet:GetQueue
-            QueueDescription queueDescription = await client.GetQueueAsync(queueName);
+            QueueProperties queue = await client.GetQueueAsync(queueName);
             #endregion
             #region Snippet:UpdateQueue
-            queueDescription.LockDuration = TimeSpan.FromSeconds(60);
-            QueueDescription updatedQueue = await client.UpdateQueueAsync(queueDescription);
+            queue.LockDuration = TimeSpan.FromSeconds(60);
+            QueueProperties updatedQueue = await client.UpdateQueueAsync(queue);
             #endregion
             Assert.AreEqual(TimeSpan.FromSeconds(60), updatedQueue.LockDuration);
             #region Snippet:DeleteQueue
@@ -82,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetQueueAsync(queueName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
 
 
@@ -92,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
+            var client = new ServiceBusAdministrationClient(connectionString);
 
             try
             {
@@ -100,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ string connectionString = "<connection_string>";
                 //@@ string topicName = "<topic_name>";
                 //@@ var client = new ServiceBusManagementClient(connectionString);
-                var topicDescription = new TopicDescription(topicName)
+                var topicOptions = new CreateTopicOptions(topicName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
                     DefaultMessageTimeToLive = TimeSpan.FromDays(2),
@@ -112,24 +108,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     UserMetadata = "some metadata"
                 };
 
-                topicDescription.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+                topicOptions.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
                     "allClaims",
                     new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-                TopicDescription createdTopic = await client.CreateTopicAsync(topicDescription);
+                TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
 
                 //@@ string subscriptionName = "<subscription_name>";
-                var subscriptionDescription = new SubscriptionDescription(topicName, subscriptionName)
+                var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
                     DefaultMessageTimeToLive = TimeSpan.FromDays(2),
                     EnableBatchedOperations = true,
                     UserMetadata = "some metadata"
                 };
-                SubscriptionDescription createdSubscription = await client.CreateSubscriptionAsync(subscriptionDescription);
+                SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
                 #endregion
-                Assert.AreEqual(topicDescription, createdTopic);
-                Assert.AreEqual(subscriptionDescription, createdSubscription);
+                Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+                Assert.AreEqual(subscriptionOptions, new CreateSubscriptionOptions(createdSubscription));
             }
             finally
             {
@@ -143,26 +139,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
             string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusManagementClient(connectionString);
-            var td = new TopicDescription(topicName);
-            var sd = new SubscriptionDescription(topicName, subscriptionName);
-            await client.CreateTopicAsync(td);
-            await client.CreateSubscriptionAsync(sd);
+            var client = new ServiceBusAdministrationClient(connectionString);
+            var topicOptions = new CreateTopicOptions(topicName);
+            var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName);
+            await client.CreateTopicAsync(topicOptions);
+            await client.CreateSubscriptionAsync(subscriptionOptions);
             #region Snippet:GetTopic
-            TopicDescription topicDescription = await client.GetTopicAsync(topicName);
+            TopicProperties topic = await client.GetTopicAsync(topicName);
             #endregion
             #region Snippet:GetSubscription
-            SubscriptionDescription subscriptionDescription = await client.GetSubscriptionAsync(topicName, subscriptionName);
+            SubscriptionProperties subscription = await client.GetSubscriptionAsync(topicName, subscriptionName);
             #endregion
             #region Snippet:UpdateTopic
-            topicDescription.UserMetadata = "some metadata";
-            TopicDescription updatedTopic = await client.UpdateTopicAsync(topicDescription);
+            topic.UserMetadata = "some metadata";
+            TopicProperties updatedTopic = await client.UpdateTopicAsync(topic);
             #endregion
             Assert.AreEqual("some metadata", updatedTopic.UserMetadata);
 
             #region Snippet:UpdateSubscription
-            subscriptionDescription.UserMetadata = "some metadata";
-            SubscriptionDescription updatedSubscription = await client.UpdateSubscriptionAsync(subscriptionDescription);
+            subscription.UserMetadata = "some metadata";
+            SubscriptionProperties updatedSubscription = await client.UpdateSubscriptionAsync(subscription);
             #endregion
             Assert.AreEqual("some metadata", updatedSubscription.UserMetadata);
 
@@ -174,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetSubscriptionAsync(topicName, subscriptionName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
             #region Snippet:DeleteTopic
             await client.DeleteTopicAsync(topicName);
@@ -182,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             Assert.That(
                   async () =>
                   await client.GetTopicAsync(topicName),
-                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
+                  Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
     }
 }

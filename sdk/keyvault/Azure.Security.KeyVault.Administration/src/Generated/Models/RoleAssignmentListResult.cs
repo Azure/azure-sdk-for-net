@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -15,19 +16,20 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         internal RoleAssignmentListResult()
         {
+            Value = new ChangeTrackingList<KeyVaultRoleAssignment>();
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         /// <param name="value"> Role assignment list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleAssignmentListResult(IReadOnlyList<RoleAssignment> value, string nextLink)
+        internal RoleAssignmentListResult(IReadOnlyList<KeyVaultRoleAssignment> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Role assignment list. </summary>
-        public IReadOnlyList<RoleAssignment> Value { get; }
+        public IReadOnlyList<KeyVaultRoleAssignment> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -17,57 +17,47 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("lun");
             writer.WriteNumberValue(Lun);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Vhd != null)
+            if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd");
                 writer.WriteObjectValue(Vhd);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image");
                 writer.WriteObjectValue(Image);
             }
-            if (Caching != null)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching");
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (WriteAcceleratorEnabled != null)
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled");
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             writer.WritePropertyName("createOption");
             writer.WriteStringValue(CreateOption.ToString());
-            if (DiskSizeGB != null)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (ToBeDetached != null)
+            if (Optional.IsDefined(ToBeDetached))
             {
                 writer.WritePropertyName("toBeDetached");
                 writer.WriteBooleanValue(ToBeDetached.Value);
-            }
-            if (DiskIopsReadWrite != null)
-            {
-                writer.WritePropertyName("diskIOPSReadWrite");
-                writer.WriteNumberValue(DiskIopsReadWrite.Value);
-            }
-            if (DiskMBpsReadWrite != null)
-            {
-                writer.WritePropertyName("diskMBpsReadWrite");
-                writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
             writer.WriteEndObject();
         }
@@ -75,17 +65,17 @@ namespace Azure.ResourceManager.Compute.Models
         internal static DataDisk DeserializeDataDisk(JsonElement element)
         {
             int lun = default;
-            string name = default;
-            VirtualHardDisk vhd = default;
-            VirtualHardDisk image = default;
-            CachingTypes? caching = default;
-            bool? writeAcceleratorEnabled = default;
+            Optional<string> name = default;
+            Optional<VirtualHardDisk> vhd = default;
+            Optional<VirtualHardDisk> image = default;
+            Optional<CachingTypes> caching = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionTypes createOption = default;
-            int? diskSizeGB = default;
-            ManagedDiskParameters managedDisk = default;
-            bool? toBeDetached = default;
-            long? diskIOPSReadWrite = default;
-            long? diskMBpsReadWrite = default;
+            Optional<int> diskSizeGB = default;
+            Optional<ManagedDiskParameters> managedDisk = default;
+            Optional<bool> toBeDetached = default;
+            Optional<long> diskIOPSReadWrite = default;
+            Optional<long> diskMBpsReadWrite = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -95,10 +85,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -106,6 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vhd = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
@@ -115,6 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
@@ -124,6 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     caching = property.Value.GetString().ToCachingTypes();
@@ -133,6 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
@@ -147,6 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -156,6 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(property.Value);
@@ -165,6 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     toBeDetached = property.Value.GetBoolean();
@@ -174,6 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskIOPSReadWrite = property.Value.GetInt64();
@@ -183,13 +177,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskMBpsReadWrite = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new DataDisk(lun, name, vhd, image, caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, toBeDetached, diskIOPSReadWrite, diskMBpsReadWrite);
+            return new DataDisk(lun, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(toBeDetached), Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite));
         }
     }
 }

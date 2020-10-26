@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.FrontDoor
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// FrontDoor Client
@@ -91,6 +87,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         IReportsOperations Reports { get; }
 
         /// <summary>
+        /// Gets the IFrontDoorNameAvailabilityOperations.
+        /// </summary>
+        IFrontDoorNameAvailabilityOperations FrontDoorNameAvailability { get; }
+
+        /// <summary>
+        /// Gets the IFrontDoorNameAvailabilityWithSubscriptionOperations.
+        /// </summary>
+        IFrontDoorNameAvailabilityWithSubscriptionOperations FrontDoorNameAvailabilityWithSubscription { get; }
+
+        /// <summary>
         /// Gets the IFrontDoorsOperations.
         /// </summary>
         IFrontDoorsOperations FrontDoors { get; }
@@ -119,34 +125,6 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Gets the IManagedRuleSetsOperations.
         /// </summary>
         IManagedRuleSetsOperations ManagedRuleSets { get; }
-
-        /// <summary>
-        /// Check the availability of a Front Door resource name.
-        /// </summary>
-        /// <param name='checkFrontDoorNameAvailabilityInput'>
-        /// Input to check.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckFrontDoorNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityInput checkFrontDoorNameAvailabilityInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Check the availability of a Front Door subdomain.
-        /// </summary>
-        /// <param name='checkFrontDoorNameAvailabilityInput'>
-        /// Input to check.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckFrontDoorNameAvailabilityWithSubscriptionWithHttpMessagesAsync(CheckNameAvailabilityInput checkFrontDoorNameAvailabilityInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

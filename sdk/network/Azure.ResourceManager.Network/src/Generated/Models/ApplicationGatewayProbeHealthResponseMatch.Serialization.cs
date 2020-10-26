@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");
                 writer.WriteStringValue(Body);
             }
-            if (StatusCodes != null)
+            if (Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes");
                 writer.WriteStartArray();
@@ -36,16 +36,12 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
         {
-            string body = default;
-            IList<string> statusCodes = default;
+            Optional<string> body = default;
+            Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     body = property.Value.GetString();
                     continue;
                 }
@@ -53,25 +49,19 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     statusCodes = array;
                     continue;
                 }
             }
-            return new ApplicationGatewayProbeHealthResponseMatch(body, statusCodes);
+            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes));
         }
     }
 }

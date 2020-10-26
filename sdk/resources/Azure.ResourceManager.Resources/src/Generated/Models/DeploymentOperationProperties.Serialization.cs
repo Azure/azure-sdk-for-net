@@ -15,22 +15,23 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentOperationProperties DeserializeDeploymentOperationProperties(JsonElement element)
         {
-            ProvisioningOperation? provisioningOperation = default;
-            string provisioningState = default;
-            DateTimeOffset? timestamp = default;
-            string duration = default;
-            string serviceRequestId = default;
-            string statusCode = default;
-            object statusMessage = default;
-            TargetResource targetResource = default;
-            HttpMessage request = default;
-            HttpMessage response = default;
+            Optional<ProvisioningOperation> provisioningOperation = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> duration = default;
+            Optional<string> serviceRequestId = default;
+            Optional<string> statusCode = default;
+            Optional<object> statusMessage = default;
+            Optional<TargetResource> targetResource = default;
+            Optional<HttpMessage> request = default;
+            Optional<HttpMessage> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningOperation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningOperation = property.Value.GetString().ToProvisioningOperation();
@@ -38,10 +39,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("provisioningState"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     provisioningState = property.Value.GetString();
                     continue;
                 }
@@ -49,6 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
@@ -56,28 +54,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     duration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceRequestId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     serviceRequestId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     statusCode = property.Value.GetString();
                     continue;
                 }
@@ -85,6 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        statusMessage = null;
                         continue;
                     }
                     statusMessage = property.Value.GetObject();
@@ -94,6 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetResource = TargetResource.DeserializeTargetResource(property.Value);
@@ -103,6 +91,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     request = HttpMessage.DeserializeHttpMessage(property.Value);
@@ -112,13 +101,14 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     response = HttpMessage.DeserializeHttpMessage(property.Value);
                     continue;
                 }
             }
-            return new DeploymentOperationProperties(provisioningOperation, provisioningState, timestamp, duration, serviceRequestId, statusCode, statusMessage, targetResource, request, response);
+            return new DeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), duration.Value, serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value);
         }
     }
 }

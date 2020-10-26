@@ -170,7 +170,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 finally
                 {
                     await Task.WhenAll(
-                        messageSession.CloseAsync(),
+                        messageSession?.CloseAsync(),
                         messageSender.CloseAsync(),
                         sessionClient.CloseAsync());
                 }

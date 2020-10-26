@@ -11,14 +11,17 @@
 [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
     # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming.
-    [Parameter(Mandatory = $true, Position = 0)]
+    [Parameter()]
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
-    [Parameter(Mandatory = $true)]
+    [ValidatePattern('^[-\w\._\(\)]+$')]
+    [string] $ResourceGroupName,
+
+    [Parameter(Mandatory = $true, Position = 0)]
     [string] $ServiceDirectory,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
@@ -52,7 +55,7 @@ param (
     [string] $Location = '',
 
     [Parameter()]
-    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
+    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud', 'Dogfood')]
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
@@ -115,6 +118,9 @@ $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
 $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
+$environmentVariables = @{}
+# Azure SDK Developer Playground
+$defaultSubscription = "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
 
 Write-Verbose "Checking for '$templateFileName' files under '$root'"
 Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
@@ -129,6 +135,26 @@ if (!$templateFiles) {
     exit
 }
 
+$UserName =  if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+
+# If no base name is specified use current user name
+if (!$BaseName) {
+    $BaseName = "$UserName$ServiceDirectory"
+
+    Log "BaseName was not set. Using default base name: '$BaseName'"
+}
+
+# Try detecting repos that support OutFile and defaulting to it
+if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows)
+{
+    # TODO: find a better way to detect the language
+    if (Test-Path "$repositoryRoot/eng/service.proj")
+    {
+        $OutFile = $true
+        Log "Detected .NET repository. Defaulting OutFile to true. Test environment settings would be stored into the file so you don't need to set environment variables manually."
+    }
+}
+
 # If no location is specified use safe default locations for the given
 # environment. If no matching environment is found $Location remains an empty
 # string.
@@ -137,12 +163,13 @@ if (!$Location) {
         'AzureCloud' = 'westus2';
         'AzureUSGovernment' = 'usgovvirginia';
         'AzureChinaCloud' = 'chinaeast2';
+        'Dogfood' = 'westus'
     }[$Environment]
 
     Write-Verbose "Location was not set. Using default location for environment: '$Location'"
 }
 
-# Log in if requested; otherwise, the user is expected to already be authenticated via Connect-AzAccount.
+# Log in if requested; otherwise, try to login into playground subscription.
 if ($ProvisionerApplicationId) {
     $null = Disable-AzContextAutosave -Scope Process
 
@@ -154,6 +181,9 @@ if ($ProvisionerApplicationId) {
     $subscriptionArgs = if ($SubscriptionId) {
         @{SubscriptionId = $SubscriptionId}
     }
+    else {
+        @{}
+    }
 
     $provisionerAccount = Retry {
         Connect-AzAccount -Force:$Force -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment @subscriptionArgs
@@ -161,7 +191,30 @@ if ($ProvisionerApplicationId) {
 
     $exitActions += {
         Write-Verbose "Logging out of service principal '$($provisionerAccount.Context.Account)'"
-        $null = Disconnect-AzAccount -AzureContext $provisionerAccount.Context
+
+        # Only attempt to disconnect if the -WhatIf flag was not set.  Otherwise, this call is not necessary and will fail.
+        if ($PSCmdlet.ShouldProcess($ProvisionerApplicationId)) {
+            $null = Disconnect-AzAccount -AzureContext $provisionerAccount.Context
+        }
+    }
+}
+elseif (!$CI)
+{
+    # check if user is logged in and login into
+    $context = Get-AzContext;
+    if (!$context)
+    {
+        Log "You are not logged in, connecting to 'Azure SDK Developer Playground'"
+        Connect-AzAccount -Subscription $defaultSubscription
+    }
+    
+    # If no test application id is specified create a new service principal
+    if (!$TestApplicationId) {        
+        Log "TestApplicationId was not specified, creating a new service principal."
+        $servicePrincipal = New-AzADServicePrincipal -Role Owner
+
+        $TestApplicationId = $servicePrincipal.ApplicationId
+        $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
     }
 }
 
@@ -176,6 +229,8 @@ if ($TestApplicationId -and !$TestApplicationOid) {
     }
 }
 
+# Determine the Azure context that the script is running in.
+$context = Get-AzContext;
 
 # If the ServiceDirectory is an absolute path use the last directory name
 # (e.g. D:\foo\bar\ -> bar)
@@ -185,19 +240,23 @@ $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
     $ServiceDirectory
 }
 
-# Format the resource group name based on resource group naming recommendations and limitations.
-$resourceGroupName = if ($CI) {
-    $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
-    Write-Verbose "Generated base name '$BaseName' for CI build"
+if ($CI) { 
+  $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
+  Write-Verbose "Generated base name '$BaseName' for CI build"
+}
 
-    "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
+$ResourceGroupName = if ($ResourceGroupName) {
+  $ResourceGroupName
+} elseif ($CI) {
+  # Format the resource group name based on resource group naming recommendations and limitations.
+  "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
 } else {
-    "rg-$BaseName"
+  "rg-$BaseName"
 }
 
 # Tag the resource group to be deleted after a certain number of hours if specified.
 $tags = @{
-    Creator = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+    Creator = $UserName
     ServiceDirectory = $ServiceDirectory
 }
 
@@ -216,18 +275,26 @@ if ($CI) {
     }
 
     # Set the resource group name variable.
-    Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $resourceGroupName"
-    Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$resourceGroupName"
+    Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
+    Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
+    $environmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
 }
 
-Log "Creating resource group '$resourceGroupName' in location '$Location'"
+Log "Creating resource group '$ResourceGroupName' in location '$Location'"
 $resourceGroup = Retry {
-    New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
+    New-AzResourceGroup -Name "$ResourceGroupName" -Location $Location -Tag $tags -Force:$Force
 }
 
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
     # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
     Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
+}
+elseif (($resourceGroup -eq $null) -and (-not $PSCmdlet.ShouldProcess($resourceGroupName))) {
+    # If the -WhatIf flag was passed, there will be no resource group created.  Fake it.
+    $resourceGroup = [PSCustomObject]@{
+        ResourceGroupName = $resourceGroupName
+        Location = $Location
+    }
 }
 
 # Populate the template parameters and merge any additional specified.
@@ -247,15 +314,21 @@ if ($AdditionalParameters) {
     $templateParameters += $AdditionalParameters
 }
 
+# Include environment-specific parameters only if not already provided as part of the "AdditionalParameters"
+if (($context.Environment.StorageEndpointSuffix) -and (-not ($templateParameters.ContainsKey('storageEndpointSuffix')))) {
+    $templateParameters.Add('storageEndpointSuffix', $context.Environment.StorageEndpointSuffix)
+}
+
 # Try to detect the shell based on the parent process name (e.g. launch via shebang).
 $shell, $shellExportFormat = if (($parentProcessName = (Get-Process -Id $PID).Parent.ProcessName) -and $parentProcessName -eq 'cmd') {
     'cmd', 'set {0}={1}'
 } elseif (@('bash', 'csh', 'tcsh', 'zsh') -contains $parentProcessName) {
     'shell', 'export {0}={1}'
 } else {
-    'PowerShell', '$env:{0} = ''{1}'''
+    'PowerShell', '${{env:{0}}} = ''{1}'''
 }
 
+# Deploy the templates
 foreach ($templateFile in $templateFiles) {
     # Deployment fails if we pass in more parameters than are defined.
     Write-Verbose "Removing unnecessary parameters from template '$templateFile'"
@@ -273,7 +346,7 @@ foreach ($templateFile in $templateFiles) {
     $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
     if (Test-Path $preDeploymentScript) {
         Log "Invoking pre-deployment script '$preDeploymentScript'"
-        &$preDeploymentScript -ResourceGroupName $resourceGroupName @PSBoundParameters
+        &$preDeploymentScript -ResourceGroupName $ResourceGroupName @PSBoundParameters
     }
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
@@ -288,8 +361,6 @@ foreach ($templateFile in $templateFiles) {
 
     $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
 
-    $context = Get-AzContext;
-
     # Add default values
     $deploymentOutputs = @{
         "$($serviceDirectoryPrefix)CLIENT_ID" = $TestApplicationId;
@@ -299,6 +370,10 @@ foreach ($templateFile in $templateFiles) {
         "$($serviceDirectoryPrefix)RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
         "$($serviceDirectoryPrefix)LOCATION" = $resourceGroup.Location;
         "$($serviceDirectoryPrefix)ENVIRONMENT" = $context.Environment.Name;
+        "$($serviceDirectoryPrefix)AZURE_AUTHORITY_HOST" = $context.Environment.ActiveDirectoryAuthority;
+        "$($serviceDirectoryPrefix)RESOURCE_MANAGER_URL" = $context.Environment.ResourceManagerUrl;
+        "$($serviceDirectoryPrefix)SERVICE_MANAGEMENT_URL" = $context.Environment.ServiceManagementUrl;
+        "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
     }
 
     foreach ($key in $deployment.Outputs.Keys) {
@@ -331,7 +406,7 @@ foreach ($templateFile in $templateFiles) {
     }
     else
     {
-        
+
         if (!$CI) {
             # Write an extra new line to isolate the environment variables for easy reading.
             Log "Persist the following environment variables based on your detected shell ($shell):`n"
@@ -340,7 +415,8 @@ foreach ($templateFile in $templateFiles) {
         foreach ($key in $deploymentOutputs.Keys)
         {
             $value = $deploymentOutputs[$key]
-            
+            $environmentVariables[$key] = $value
+
             if ($CI) {
                 # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
                 # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
@@ -362,11 +438,17 @@ foreach ($templateFile in $templateFiles) {
     $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
     if (Test-Path $postDeploymentScript) {
         Log "Invoking post-deployment script '$postDeploymentScript'"
-        &$postDeploymentScript -ResourceGroupName $resourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+        &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
     }
 }
 
 $exitActions.Invoke()
+
+# Suppress output locally
+if ($CI)
+{
+    return $environmentVariables
+}
 
 <#
 .SYNOPSIS
@@ -398,6 +480,10 @@ the ARM template. See also https://docs.microsoft.com/azure/architecture/best-pr
 Note: The value specified for this parameter will be overriden and generated
 by New-TestResources.ps1 if $CI is specified.
 
+.PARAMETER ResourceGroupName
+Set this value to deploy directly to a Resource Group that has already been
+created.
+
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json'.
@@ -425,7 +511,7 @@ test resources (e.g. Role Assignments on resources). It is passed as to the ARM
 template as 'testApplicationOid'
 
 For more information on the relationship between AAD Applications and Service
-Principals see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals
+Principals see: https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals
 
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified. The same
@@ -472,10 +558,11 @@ is based on the cloud to which the template is being deployed:
 * AzureCloud -> 'westus2'
 * AzureUSGovernment -> 'usgovvirginia'
 * AzureChinaCloud -> 'chinaeast2'
+* Dogfood -> 'westus'
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).

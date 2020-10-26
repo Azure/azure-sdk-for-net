@@ -14,16 +14,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerSubscriptionOperationStatus DeserializeTriggerSubscriptionOperationStatus(JsonElement element)
         {
-            string triggerName = default;
-            EventSubscriptionStatus? status = default;
+            Optional<string> triggerName = default;
+            Optional<EventSubscriptionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     triggerName = property.Value.GetString();
                     continue;
                 }
@@ -31,13 +27,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new EventSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new TriggerSubscriptionOperationStatus(triggerName, status);
+            return new TriggerSubscriptionOperationStatus(triggerName.Value, Optional.ToNullable(status));
         }
     }
 }

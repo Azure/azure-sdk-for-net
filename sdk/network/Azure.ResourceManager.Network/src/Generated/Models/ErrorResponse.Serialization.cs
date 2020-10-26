@@ -14,20 +14,21 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            ErrorDetails error = default;
+            Optional<ErrorDetails> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(error);
+            return new ErrorResponse(error.Value);
         }
     }
 }

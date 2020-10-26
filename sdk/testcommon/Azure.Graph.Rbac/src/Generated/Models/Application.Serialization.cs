@@ -16,51 +16,47 @@ namespace Azure.Graph.Rbac.Models
     {
         internal static Application DeserializeApplication(JsonElement element)
         {
-            string appId = default;
-            bool? allowGuestsSignIn = default;
-            bool? allowPassthroughUsers = default;
-            string appLogoUrl = default;
-            IReadOnlyList<AppRole> appRoles = default;
-            IReadOnlyList<string> appPermissions = default;
-            bool? availableToOtherTenants = default;
-            string displayName = default;
-            string errorUrl = default;
-            GroupMembershipClaimTypes? groupMembershipClaims = default;
-            string homepage = default;
-            IReadOnlyList<string> identifierUris = default;
-            InformationalUrl informationalUrls = default;
-            bool? isDeviceOnlyAuthSupported = default;
-            IReadOnlyList<KeyCredential> keyCredentials = default;
-            IReadOnlyList<string> knownClientApplications = default;
-            string logoutUrl = default;
-            bool? oauth2AllowImplicitFlow = default;
-            bool? oauth2AllowUrlPathMatching = default;
-            IReadOnlyList<OAuth2Permission> oauth2Permissions = default;
-            bool? oauth2RequirePostResponse = default;
-            IReadOnlyList<string> orgRestrictions = default;
-            OptionalClaims optionalClaims = default;
-            IReadOnlyList<PasswordCredential> passwordCredentials = default;
-            IReadOnlyList<PreAuthorizedApplication> preAuthorizedApplications = default;
-            bool? publicClient = default;
-            string publisherDomain = default;
-            IReadOnlyList<string> replyUrls = default;
-            IReadOnlyList<RequiredResourceAccess> requiredResourceAccess = default;
-            string samlMetadataUrl = default;
-            string signInAudience = default;
-            string wwwHomepage = default;
-            string objectId = default;
-            string objectType = default;
-            DateTimeOffset? deletionTimestamp = default;
+            Optional<string> appId = default;
+            Optional<bool> allowGuestsSignIn = default;
+            Optional<bool> allowPassthroughUsers = default;
+            Optional<string> appLogoUrl = default;
+            Optional<IReadOnlyList<AppRole>> appRoles = default;
+            Optional<IReadOnlyList<string>> appPermissions = default;
+            Optional<bool> availableToOtherTenants = default;
+            Optional<string> displayName = default;
+            Optional<string> errorUrl = default;
+            Optional<GroupMembershipClaimTypes> groupMembershipClaims = default;
+            Optional<string> homepage = default;
+            Optional<IReadOnlyList<string>> identifierUris = default;
+            Optional<InformationalUrl> informationalUrls = default;
+            Optional<bool> isDeviceOnlyAuthSupported = default;
+            Optional<IReadOnlyList<KeyCredential>> keyCredentials = default;
+            Optional<IReadOnlyList<string>> knownClientApplications = default;
+            Optional<string> logoutUrl = default;
+            Optional<bool> oauth2AllowImplicitFlow = default;
+            Optional<bool> oauth2AllowUrlPathMatching = default;
+            Optional<IReadOnlyList<OAuth2Permission>> oauth2Permissions = default;
+            Optional<bool> oauth2RequirePostResponse = default;
+            Optional<IReadOnlyList<string>> orgRestrictions = default;
+            Optional<OptionalClaims> optionalClaims = default;
+            Optional<IReadOnlyList<PasswordCredential>> passwordCredentials = default;
+            Optional<IReadOnlyList<PreAuthorizedApplication>> preAuthorizedApplications = default;
+            Optional<bool> publicClient = default;
+            Optional<string> publisherDomain = default;
+            Optional<IReadOnlyList<string>> replyUrls = default;
+            Optional<IReadOnlyList<RequiredResourceAccess>> requiredResourceAccess = default;
+            Optional<string> samlMetadataUrl = default;
+            Optional<string> signInAudience = default;
+            Optional<string> wwwHomepage = default;
+            Optional<string> objectId = default;
+            Optional<string> objectType = default;
+            Optional<DateTimeOffset> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appId = property.Value.GetString();
                     continue;
                 }
@@ -68,6 +64,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowGuestsSignIn = property.Value.GetBoolean();
@@ -77,6 +74,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowPassthroughUsers = property.Value.GetBoolean();
@@ -84,10 +82,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("appLogoUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     appLogoUrl = property.Value.GetString();
                     continue;
                 }
@@ -95,19 +89,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppRole> array = new List<AppRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(AppRole.DeserializeAppRole(item));
-                        }
+                        array.Add(AppRole.DeserializeAppRole(item));
                     }
                     appRoles = array;
                     continue;
@@ -116,19 +104,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     appPermissions = array;
                     continue;
@@ -137,6 +119,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availableToOtherTenants = property.Value.GetBoolean();
@@ -144,19 +127,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("displayName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     errorUrl = property.Value.GetString();
                     continue;
                 }
@@ -164,6 +139,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     groupMembershipClaims = new GroupMembershipClaimTypes(property.Value.GetString());
@@ -171,10 +147,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("homepage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     homepage = property.Value.GetString();
                     continue;
                 }
@@ -182,19 +154,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     identifierUris = array;
                     continue;
@@ -203,6 +169,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     informationalUrls = InformationalUrl.DeserializeInformationalUrl(property.Value);
@@ -212,6 +179,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeviceOnlyAuthSupported = property.Value.GetBoolean();
@@ -221,19 +189,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyCredential> array = new List<KeyCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(KeyCredential.DeserializeKeyCredential(item));
-                        }
+                        array.Add(KeyCredential.DeserializeKeyCredential(item));
                     }
                     keyCredentials = array;
                     continue;
@@ -242,29 +204,19 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     knownClientApplications = array;
                     continue;
                 }
                 if (property.NameEquals("logoutUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     logoutUrl = property.Value.GetString();
                     continue;
                 }
@@ -272,6 +224,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oauth2AllowImplicitFlow = property.Value.GetBoolean();
@@ -281,6 +234,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oauth2AllowUrlPathMatching = property.Value.GetBoolean();
@@ -290,19 +244,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OAuth2Permission> array = new List<OAuth2Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(OAuth2Permission.DeserializeOAuth2Permission(item));
-                        }
+                        array.Add(OAuth2Permission.DeserializeOAuth2Permission(item));
                     }
                     oauth2Permissions = array;
                     continue;
@@ -311,6 +259,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     oauth2RequirePostResponse = property.Value.GetBoolean();
@@ -320,19 +269,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     orgRestrictions = array;
                     continue;
@@ -341,6 +284,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optionalClaims = OptionalClaims.DeserializeOptionalClaims(property.Value);
@@ -350,19 +294,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PasswordCredential> array = new List<PasswordCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PasswordCredential.DeserializePasswordCredential(item));
-                        }
+                        array.Add(PasswordCredential.DeserializePasswordCredential(item));
                     }
                     passwordCredentials = array;
                     continue;
@@ -371,19 +309,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PreAuthorizedApplication> array = new List<PreAuthorizedApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(PreAuthorizedApplication.DeserializePreAuthorizedApplication(item));
-                        }
+                        array.Add(PreAuthorizedApplication.DeserializePreAuthorizedApplication(item));
                     }
                     preAuthorizedApplications = array;
                     continue;
@@ -392,6 +324,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicClient = property.Value.GetBoolean();
@@ -399,10 +332,6 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("publisherDomain"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     publisherDomain = property.Value.GetString();
                     continue;
                 }
@@ -410,19 +339,13 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     replyUrls = array;
                     continue;
@@ -431,65 +354,39 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RequiredResourceAccess> array = new List<RequiredResourceAccess>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(Models.RequiredResourceAccess.DeserializeRequiredResourceAccess(item));
-                        }
+                        array.Add(Models.RequiredResourceAccess.DeserializeRequiredResourceAccess(item));
                     }
                     requiredResourceAccess = array;
                     continue;
                 }
                 if (property.NameEquals("samlMetadataUrl"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     samlMetadataUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("signInAudience"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     signInAudience = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("wwwHomepage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     wwwHomepage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectType = property.Value.GetString();
                     continue;
                 }
@@ -497,23 +394,16 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary ??= new Dictionary<string, object>();
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    additionalPropertiesDictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Application(objectId, objectType, deletionTimestamp, additionalProperties, appId, allowGuestsSignIn, allowPassthroughUsers, appLogoUrl, appRoles, appPermissions, availableToOtherTenants, displayName, errorUrl, groupMembershipClaims, homepage, identifierUris, informationalUrls, isDeviceOnlyAuthSupported, keyCredentials, knownClientApplications, logoutUrl, oauth2AllowImplicitFlow, oauth2AllowUrlPathMatching, oauth2Permissions, oauth2RequirePostResponse, orgRestrictions, optionalClaims, passwordCredentials, preAuthorizedApplications, publicClient, publisherDomain, replyUrls, requiredResourceAccess, samlMetadataUrl, signInAudience, wwwHomepage);
+            return new Application(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, appId.Value, Optional.ToNullable(allowGuestsSignIn), Optional.ToNullable(allowPassthroughUsers), appLogoUrl.Value, Optional.ToList(appRoles), Optional.ToList(appPermissions), Optional.ToNullable(availableToOtherTenants), displayName.Value, errorUrl.Value, Optional.ToNullable(groupMembershipClaims), homepage.Value, Optional.ToList(identifierUris), informationalUrls.Value, Optional.ToNullable(isDeviceOnlyAuthSupported), Optional.ToList(keyCredentials), Optional.ToList(knownClientApplications), logoutUrl.Value, Optional.ToNullable(oauth2AllowImplicitFlow), Optional.ToNullable(oauth2AllowUrlPathMatching), Optional.ToList(oauth2Permissions), Optional.ToNullable(oauth2RequirePostResponse), Optional.ToList(orgRestrictions), optionalClaims.Value, Optional.ToList(passwordCredentials), Optional.ToList(preAuthorizedApplications), Optional.ToNullable(publicClient), publisherDomain.Value, Optional.ToList(replyUrls), Optional.ToList(requiredResourceAccess), samlMetadataUrl.Value, signInAudience.Value, wwwHomepage.Value);
         }
     }
 }

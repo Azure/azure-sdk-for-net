@@ -37,7 +37,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorsValidateTheConsumerGroup(string consumerGroup)
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             Assert.That(() => new EventProcessorClient(null, "consumerGroup", fakeConnection, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The connection string constructor should validate the blob container client.");
-            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The namespace constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The token credential constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The shared key credential constructor should validate the blob container client.");
         }
 
         /// <summary>
@@ -77,7 +79,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("http://namspace.servciebus.windows.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
         }
 
         /// <summary>
@@ -89,7 +92,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
         }
 
         /// <summary>
@@ -99,7 +103,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException);
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(EventHubsSharedAccessKeyCredential)), Throws.ArgumentNullException, "The shared key credential should validate.");
         }
 
         /// <summary>
@@ -123,6 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(actual.LoadBalancingUpdateInterval, Is.EqualTo(expected.LoadBalancingUpdateInterval),  $"The load balancing interval is incorrect for the { constructorDescription } constructor.");
                 Assert.That(actual.PartitionOwnershipExpirationInterval, Is.EqualTo(expected.PartitionOwnershipExpirationInterval),  $"The ownership expiration interval incorrect for the { constructorDescription } constructor.");
                 Assert.That(actual.PrefetchCount, Is.EqualTo(expected.PrefetchCount),  $"The prefetch count is incorrect for the { constructorDescription } constructor.");
+                Assert.That(actual.PrefetchSizeInBytes, Is.EqualTo(expected.PrefetchSizeInBytes),  $"The prefetch byte size is incorrect for the { constructorDescription } constructor.");
             }
 
             var clientOptions = new EventProcessorClientOptions
@@ -131,7 +137,11 @@ namespace Azure.Messaging.EventHubs.Tests
                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
                Identifier = "OMG, HAI!",
                MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true
+               TrackLastEnqueuedEventProperties = true,
+               PrefetchCount = 5,
+               PrefetchSizeInBytes = 500,
+               LoadBalancingUpdateInterval = TimeSpan.FromDays(65),
+               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(65)
             };
 
             var expectedOptions = InvokeCreateOptions(clientOptions);
@@ -165,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             description = "{{ internal testing constructor }}";
             expectedOptions = new EventProcessorOptions();
-            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), expectedOptions);
+            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
         }
@@ -1406,7 +1416,12 @@ namespace Azure.Messaging.EventHubs.Tests
                RetryOptions = new EventHubsRetryOptions { MaximumRetries = 99 },
                Identifier = "OMG, HAI!",
                MaximumWaitTime = TimeSpan.FromDays(54),
-               TrackLastEnqueuedEventProperties = true
+               TrackLastEnqueuedEventProperties = true,
+               LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
+               PrefetchCount = 9990,
+               PrefetchSizeInBytes = 400,
+               LoadBalancingUpdateInterval = TimeSpan.FromSeconds(45),
+               PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(44)
             };
 
             var defaultOptions = new EventProcessorOptions();
@@ -1419,23 +1434,15 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(processorOptions.RetryOptions.MaximumRetries, Is.EqualTo(clientOptions.RetryOptions.MaximumRetries), "The retry options should have been set.");
             Assert.That(processorOptions.Identifier, Is.EqualTo(clientOptions.Identifier), "The identifier should have been set.");
             Assert.That(processorOptions.MaximumWaitTime, Is.EqualTo(clientOptions.MaximumWaitTime), "The maximum wait time should have been set.");
-            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flack for last event tracking should have been set.");
+            Assert.That(processorOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(clientOptions.TrackLastEnqueuedEventProperties), "The flag for last event tracking should have been set.");
+            Assert.That(processorOptions.LoadBalancingStrategy, Is.EqualTo(clientOptions.LoadBalancingStrategy), "The load balancing strategy should have been set.");
+            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(clientOptions.PrefetchCount), "The prefetch count should have been set.");
+            Assert.That(processorOptions.PrefetchSizeInBytes, Is.EqualTo(clientOptions.PrefetchSizeInBytes), "The prefetch byte size should have been set.");
+            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(clientOptions.LoadBalancingUpdateInterval), "The load balancing interval should have been set.");
+            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(clientOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should have been set.");
 
             Assert.That(processorOptions.DefaultStartingPosition, Is.EqualTo(defaultOptions.DefaultStartingPosition), "The default starting position should not have been set.");
-            Assert.That(processorOptions.LoadBalancingUpdateInterval, Is.EqualTo(defaultOptions.LoadBalancingUpdateInterval), "The load balancing interval should not have been set.");
-            Assert.That(processorOptions.PartitionOwnershipExpirationInterval, Is.EqualTo(defaultOptions.PartitionOwnershipExpirationInterval), "The partition ownership interval should not have been set.");
-            Assert.That(processorOptions.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The prefetch count should not have been set.");
         }
-
-        /// <summary>
-        ///   Converts an Event Hubs connection into a factory function, returning the <paramref name="connection"/>.
-        /// </summary>
-        ///
-        /// <param name="connection">The connection to return from the factory.</param>
-        ///
-        /// <returns>A factory function, returning the <paramref name="connection" />.</returns>
-        ///
-        private static Func<EventHubConnection> ToConnectionFactory(EventHubConnection connection) => () => connection;
 
         /// <summary>
         ///   Retrieves the StorageManager for the processor client using its private accessor.
@@ -1500,7 +1507,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                               string eventHubName,
                                               TokenCredential credential,
                                               EventHubConnection connection,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnection = connection;
             }

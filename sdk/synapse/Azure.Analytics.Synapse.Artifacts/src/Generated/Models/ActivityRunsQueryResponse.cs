@@ -16,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
         /// <param name="value"> List of activity runs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActivityRunsQueryResponse(IEnumerable<ActivityRun> value)
         {
             if (value == null)
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Value = value.ToArray();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
@@ -31,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal ActivityRunsQueryResponse(IReadOnlyList<ActivityRun> value, string continuationToken)
         {
-            Value = value ?? new List<ActivityRun>();
+            Value = value;
             ContinuationToken = continuationToken;
         }
 

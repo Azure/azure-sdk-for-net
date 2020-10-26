@@ -26,19 +26,21 @@
   <!-- Validates that there is a release note entry for the current package version -->
   <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingDataPlaneLibrary)' == 'true'" >
     <PropertyGroup>
-      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
-      <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
-      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)/common/Extract-ReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec Condition="Exists('$(ChangeLogPath)')" ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(_VersionInProject)">
-      <Output TaskParameter="ConsoleOutput" ItemName="ExtractedReleaseNotesTemp" />
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
-    <Error Condition="Exists('$(ChangeLogPath)') and '$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. @(ExtractedReleaseNotesTemp)" />
-    <ItemGroup Condition="Exists('$(ChangeLogPath)')">
-      <ExtractedReleaseNotes Condition="'$(SetReleaseNotesErrorCode)'=='0'" Include="@(ExtractedReleaseNotesTemp)" />
-    </ItemGroup>
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
+  </Target>
+
+  <!--Run Aggregate Updates to Source -->
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+    <PropertyGroup>
+      <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
+    </PropertyGroup>
+    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
@@ -48,8 +50,10 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <!-- Add Client SDK Analyzers -->
+  <!-- Add Client SDK Tools -->
   <ItemGroup>
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="AutoRest.CSharp.V3" PrivateAssets="All" />
+
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
@@ -66,6 +70,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
+
+  <!-- Collect Code Coverage -->
+  <Import Condition="'$(CollectCoverage)' == 'true'"  Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
 
   <!-- Add StyleCop Analyzers -->
   <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
@@ -98,7 +105,7 @@
 
   <Import Project="ApiListing.targets" />
 
-  <Import Project="CodeGeneration.targets" />
+  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
   <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
 
@@ -111,18 +118,14 @@
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
-  <!--Generate Assembly Attributes file in IntermediateOutputPath -->
-  <PropertyGroup>
-    <TargetFrameworkMonikerAssemblyAttributesPath>$(IntermediateOutputPath)$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)</TargetFrameworkMonikerAssemblyAttributesPath>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-    <!-- Find all Azure projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
     <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
     <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
 
     <!-- Remove PackageReferences -->
@@ -135,7 +138,7 @@
   <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
     <PackageReference Include="System.Text.Json" />
- 
+
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -173,15 +176,25 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
-  <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(ApiCompatVersion)' != '' and '$(DesignTimeBuild)' != 'true'">
-    <MSBuild
-      Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
-      Properties="TargetPackageName=$(PackageId);
-                  TargetPackageVersion=$(ApiCompatVersion);
-                  TargetOutputPath=$(IntermediateOutputPath);
-                  BaseIntermediateOutputPath=$(BaseIntermediateOutputPath)\ApiCompat\"
-      Targets="ApiCompatVerification"
-     />
+  <PropertyGroup>
+    <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
+    <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
+  </ItemGroup>
+ 
+  <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+    <ItemGroup>
+      <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
+      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$(TargetFramework)\$(TargetFileName)">
+        <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
+      </ResolvedMatchingContract>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+     <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />

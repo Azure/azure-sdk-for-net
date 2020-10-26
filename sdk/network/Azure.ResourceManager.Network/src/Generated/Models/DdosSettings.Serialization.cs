@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DdosCustomPolicy != null)
+            if (Optional.IsDefined(DdosCustomPolicy))
             {
                 writer.WritePropertyName("ddosCustomPolicy");
                 writer.WriteObjectValue(DdosCustomPolicy);
             }
-            if (ProtectionCoverage != null)
+            if (Optional.IsDefined(ProtectionCoverage))
             {
                 writer.WritePropertyName("protectionCoverage");
                 writer.WriteStringValue(ProtectionCoverage.Value.ToString());
             }
-            if (ProtectedIP != null)
+            if (Optional.IsDefined(ProtectedIP))
             {
                 writer.WritePropertyName("protectedIP");
                 writer.WriteBooleanValue(ProtectedIP.Value);
@@ -35,15 +35,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static DdosSettings DeserializeDdosSettings(JsonElement element)
         {
-            SubResource ddosCustomPolicy = default;
-            DdosSettingsProtectionCoverage? protectionCoverage = default;
-            bool? protectedIP = default;
+            Optional<SubResource> ddosCustomPolicy = default;
+            Optional<DdosSettingsProtectionCoverage> protectionCoverage = default;
+            Optional<bool> protectedIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ddosCustomPolicy"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ddosCustomPolicy = SubResource.DeserializeSubResource(property.Value);
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectionCoverage = new DdosSettingsProtectionCoverage(property.Value.GetString());
@@ -62,13 +64,14 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedIP = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new DdosSettings(ddosCustomPolicy, protectionCoverage, protectedIP);
+            return new DdosSettings(ddosCustomPolicy.Value, Optional.ToNullable(protectionCoverage), Optional.ToNullable(protectedIP));
         }
     }
 }

@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.DigitalTwins.Core.Models;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -27,8 +26,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
             if (apiVersion == null)
@@ -42,7 +41,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification)
+        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,7 +51,20 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/query", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            if (queryTwinsOptions?.TraceParent != null)
+            {
+                request.Headers.Add("traceparent", queryTwinsOptions.TraceParent);
+            }
+            if (queryTwinsOptions?.TraceState != null)
+            {
+                request.Headers.Add("tracestate", queryTwinsOptions.TraceState);
+            }
+            if (queryTwinsOptions?.MaxItemsPerPage != null)
+            {
+                request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage.Value);
+            }
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
@@ -62,19 +74,25 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Executes a query that allows traversing relationships and filtering by property values.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * BadRequest - The continuation token is invalid.
+        ///   * SqlQueryError - The query contains some errors.
+        /// * 429 Too Many Requests
+        ///   * QuotaReachedError - The maximum query rate limit has been reached.
         /// </summary>
         /// <param name="querySpecification"> The query specification to execute. </param>
+        /// <param name="queryTwinsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
+        public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, QueryOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {
                 throw new ArgumentNullException(nameof(querySpecification));
             }
 
-            using var message = CreateQueryTwinsRequest(querySpecification);
+            using var message = CreateQueryTwinsRequest(querySpecification, queryTwinsOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new QueryQueryTwinsHeaders(message.Response);
             switch (message.Response.Status)
@@ -83,14 +101,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         QueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        }
+                        value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -101,19 +112,25 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Executes a query that allows traversing relationships and filtering by property values.
         /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * BadRequest - The continuation token is invalid.
+        ///   * SqlQueryError - The query contains some errors.
+        /// * 429 Too Many Requests
+        ///   * QuotaReachedError - The maximum query rate limit has been reached.
         /// </summary>
         /// <param name="querySpecification"> The query specification to execute. </param>
+        /// <param name="queryTwinsOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
+        public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, QueryOptions queryTwinsOptions = null, CancellationToken cancellationToken = default)
         {
             if (querySpecification == null)
             {
                 throw new ArgumentNullException(nameof(querySpecification));
             }
 
-            using var message = CreateQueryTwinsRequest(querySpecification);
+            using var message = CreateQueryTwinsRequest(querySpecification, queryTwinsOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new QueryQueryTwinsHeaders(message.Response);
             switch (message.Response.Status)
@@ -122,14 +139,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         QueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        }
+                        value = QueryResult.DeserializeQueryResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

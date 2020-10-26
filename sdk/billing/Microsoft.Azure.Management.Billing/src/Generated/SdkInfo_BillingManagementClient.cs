@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "Agreements", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "AvailableBalances", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "BillingAccounts", "2020-05-01"),
+                new Tuple<string, string, string>("Billing", "BillingPeriods", "2018-03-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingPermissions", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "BillingProfiles", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "BillingProperty", "2020-05-01"),
@@ -30,6 +31,7 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "BillingRoleDefinitions", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "BillingSubscriptions", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "Customers", "2020-05-01"),
+                new Tuple<string, string, string>("Billing", "EnrollmentAccounts", "2018-03-01-preview"),
                 new Tuple<string, string, string>("Billing", "Instructions", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "InvoiceSections", "2020-05-01"),
                 new Tuple<string, string, string>("Billing", "Invoices", "2020-05-01"),
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.Management.Billing
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/billing/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\ansar\\Documents\\GitHub\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e83bb3392a13e1bb0b2c2cbdf4597d0a0edde49d";
+      public static readonly String GithubCommidId = "bfd326ea58084517f8e9cb2e6bdbcb0c400f6370";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

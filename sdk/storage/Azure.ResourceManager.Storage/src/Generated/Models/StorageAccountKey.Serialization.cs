@@ -14,26 +14,18 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountKey DeserializeStorageAccountKey(JsonElement element)
         {
-            string keyName = default;
-            string value = default;
-            KeyPermission? permissions = default;
+            Optional<string> keyName = default;
+            Optional<string> value = default;
+            Optional<KeyPermission> permissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     keyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     value = property.Value.GetString();
                     continue;
                 }
@@ -41,13 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     permissions = property.Value.GetString().ToKeyPermission();
                     continue;
                 }
             }
-            return new StorageAccountKey(keyName, value, permissions);
+            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions));
         }
     }
 }

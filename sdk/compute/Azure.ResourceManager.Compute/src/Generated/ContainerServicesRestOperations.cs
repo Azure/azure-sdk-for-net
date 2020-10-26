@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public ContainerServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             if (subscriptionId == null)
@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.ContainerService/containerServices", false);
             uri.AppendQuery("api-version", "2017-01-31", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -70,14 +71,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,14 +91,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,6 +115,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", "2017-01-31", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -139,6 +127,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="parameters"> Parameters supplied to the Create or Update a Container Service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="containerServiceName"/>, or <paramref name="parameters"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string containerServiceName, ContainerService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -172,6 +161,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="parameters"> Parameters supplied to the Create or Update a Container Service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="containerServiceName"/>, or <paramref name="parameters"/> is null. </exception>
         public Response CreateOrUpdate(string resourceGroupName, string containerServiceName, ContainerService parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -215,6 +205,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(containerServiceName, true);
             uri.AppendQuery("api-version", "2017-01-31", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -222,6 +213,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="containerServiceName"/> is null. </exception>
         public async Task<Response<ContainerService>> GetAsync(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -241,14 +233,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerService.DeserializeContainerService(document.RootElement);
-                        }
+                        value = ContainerService.DeserializeContainerService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,6 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="containerServiceName"/> is null. </exception>
         public Response<ContainerService> Get(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -279,14 +265,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerService.DeserializeContainerService(document.RootElement);
-                        }
+                        value = ContainerService.DeserializeContainerService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -316,6 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="containerServiceName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -343,6 +323,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="containerServiceName"> The name of the container service in the specified subscription and resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="containerServiceName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string containerServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -380,12 +361,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.ContainerService/containerServices", false);
             uri.AppendQuery("api-version", "2017-01-31", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ContainerServiceListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -401,14 +384,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,6 +395,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of container services in the specified subscription and resource group. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ContainerServiceListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
@@ -434,14 +411,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -458,12 +428,14 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ContainerServiceListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -479,14 +451,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -497,6 +462,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of container services in the specified subscription. The operation returns properties of each container service including state, orchestrator, number of masters and agents, and FQDNs of masters and agents. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ContainerServiceListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -512,14 +478,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -536,6 +495,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -543,6 +503,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public async Task<Response<ContainerServiceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -562,14 +523,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -581,6 +535,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
         public Response<ContainerServiceListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -600,14 +555,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         ContainerServiceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        if (document.RootElement.ValueKind == JsonValueKind.Null)
-                        {
-                            value = null;
-                        }
-                        else
-                        {
-                            value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
-                        }
+                        value = ContainerServiceListResult.DeserializeContainerServiceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

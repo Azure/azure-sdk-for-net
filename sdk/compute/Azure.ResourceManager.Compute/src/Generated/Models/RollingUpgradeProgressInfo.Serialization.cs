@@ -10,46 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RollingUpgradeProgressInfo : IUtf8JsonSerializable
+    public partial class RollingUpgradeProgressInfo
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (SuccessfulInstanceCount != null)
-            {
-                writer.WritePropertyName("successfulInstanceCount");
-                writer.WriteNumberValue(SuccessfulInstanceCount.Value);
-            }
-            if (FailedInstanceCount != null)
-            {
-                writer.WritePropertyName("failedInstanceCount");
-                writer.WriteNumberValue(FailedInstanceCount.Value);
-            }
-            if (InProgressInstanceCount != null)
-            {
-                writer.WritePropertyName("inProgressInstanceCount");
-                writer.WriteNumberValue(InProgressInstanceCount.Value);
-            }
-            if (PendingInstanceCount != null)
-            {
-                writer.WritePropertyName("pendingInstanceCount");
-                writer.WriteNumberValue(PendingInstanceCount.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static RollingUpgradeProgressInfo DeserializeRollingUpgradeProgressInfo(JsonElement element)
         {
-            int? successfulInstanceCount = default;
-            int? failedInstanceCount = default;
-            int? inProgressInstanceCount = default;
-            int? pendingInstanceCount = default;
+            Optional<int> successfulInstanceCount = default;
+            Optional<int> failedInstanceCount = default;
+            Optional<int> inProgressInstanceCount = default;
+            Optional<int> pendingInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulInstanceCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     successfulInstanceCount = property.Value.GetInt32();
@@ -59,6 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedInstanceCount = property.Value.GetInt32();
@@ -68,6 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inProgressInstanceCount = property.Value.GetInt32();
@@ -77,13 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingInstanceCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new RollingUpgradeProgressInfo(successfulInstanceCount, failedInstanceCount, inProgressInstanceCount, pendingInstanceCount);
+            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount));
         }
     }
 }

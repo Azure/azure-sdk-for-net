@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -16,26 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
         public DataFlowDebugPackage()
         {
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="dataFlow"> Data flow instance. </param>
-        /// <param name="datasets"> List of datasets. </param>
-        /// <param name="linkedServices"> List of linked services. </param>
-        /// <param name="staging"> Staging info for debug session. </param>
-        /// <param name="debugSettings"> Data flow debug settings. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal DataFlowDebugPackage(string sessionId, DataFlowDebugResource dataFlow, IList<DatasetDebugResource> datasets, IList<LinkedServiceDebugResource> linkedServices, DataFlowStagingInfo staging, DataFlowDebugPackageDebugSettings debugSettings, IDictionary<string, object> additionalProperties)
-        {
-            SessionId = sessionId;
-            DataFlow = dataFlow;
-            Datasets = datasets;
-            LinkedServices = linkedServices;
-            Staging = staging;
-            DebugSettings = debugSettings;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            Datasets = new ChangeTrackingList<DatasetDebugResource>();
+            LinkedServices = new ChangeTrackingList<LinkedServiceDebugResource>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The ID of data flow debug session. </summary>
@@ -43,9 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Data flow instance. </summary>
         public DataFlowDebugResource DataFlow { get; set; }
         /// <summary> List of datasets. </summary>
-        public IList<DatasetDebugResource> Datasets { get; set; }
+        public IList<DatasetDebugResource> Datasets { get; }
         /// <summary> List of linked services. </summary>
-        public IList<LinkedServiceDebugResource> LinkedServices { get; set; }
+        public IList<LinkedServiceDebugResource> LinkedServices { get; }
         /// <summary> Staging info for debug session. </summary>
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>

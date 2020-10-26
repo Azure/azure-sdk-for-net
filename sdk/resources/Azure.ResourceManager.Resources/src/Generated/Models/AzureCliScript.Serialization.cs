@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteObjectValue(Identity);
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
-            if (Tags != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
@@ -34,70 +34,29 @@ namespace Azure.ResourceManager.Resources.Models
             }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
-            if (SystemData != null)
-            {
-                writer.WritePropertyName("systemData");
-                writer.WriteObjectValue(SystemData);
-            }
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (ContainerSettings != null)
+            if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings");
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (StorageAccountSettings != null)
+            if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings");
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (CleanupPreference != null)
+            if (Optional.IsDefined(CleanupPreference))
             {
                 writer.WritePropertyName("cleanupPreference");
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (ProvisioningState != null)
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Status != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteObjectValue(Status);
-            }
-            if (Outputs != null)
-            {
-                writer.WritePropertyName("outputs");
-                writer.WriteStartObject();
-                foreach (var item in Outputs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (PrimaryScriptUri != null)
+            if (Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri");
                 writer.WriteStringValue(PrimaryScriptUri);
             }
-            if (SupportingScriptUris != null)
+            if (Optional.IsCollectionDefined(SupportingScriptUris))
             {
                 writer.WritePropertyName("supportingScriptUris");
                 writer.WriteStartArray();
@@ -107,17 +66,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ScriptContent != null)
+            if (Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent");
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments");
                 writer.WriteStringValue(Arguments);
             }
-            if (EnvironmentVariables != null)
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables");
                 writer.WriteStartArray();
@@ -127,14 +86,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag");
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WritePropertyName("retentionInterval");
             writer.WriteStringValue(RetentionInterval, "P");
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout");
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -149,26 +108,26 @@ namespace Azure.ResourceManager.Resources.Models
         {
             ManagedServiceIdentity identity = default;
             string location = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
-            SystemData systemData = default;
-            string id = default;
-            string name = default;
-            string type = default;
-            ContainerConfiguration containerSettings = default;
-            StorageAccountConfiguration storageAccountSettings = default;
-            CleanupOptions? cleanupPreference = default;
-            ScriptProvisioningState? provisioningState = default;
-            ScriptStatus status = default;
-            IDictionary<string, object> outputs = default;
-            string primaryScriptUri = default;
-            IList<string> supportingScriptUris = default;
-            string scriptContent = default;
-            string arguments = default;
-            IList<EnvironmentVariable> environmentVariables = default;
-            string forceUpdateTag = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<ContainerConfiguration> containerSettings = default;
+            Optional<StorageAccountConfiguration> storageAccountSettings = default;
+            Optional<CleanupOptions> cleanupPreference = default;
+            Optional<ScriptProvisioningState> provisioningState = default;
+            Optional<ScriptStatus> status = default;
+            Optional<IReadOnlyDictionary<string, object>> outputs = default;
+            Optional<string> primaryScriptUri = default;
+            Optional<IList<string>> supportingScriptUris = default;
+            Optional<string> scriptContent = default;
+            Optional<string> arguments = default;
+            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
-            TimeSpan? timeout = default;
+            Optional<TimeSpan> timeout = default;
             string azCliVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -186,19 +145,13 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
@@ -212,6 +165,7 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);
@@ -219,39 +173,33 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("containerSettings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
@@ -261,6 +209,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property0.Value);
@@ -270,6 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cleanupPreference = new CleanupOptions(property0.Value.GetString());
@@ -279,6 +229,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ScriptProvisioningState(property0.Value.GetString());
@@ -288,6 +239,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = ScriptStatus.DeserializeScriptStatus(property0.Value);
@@ -297,29 +249,19 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
-                                }
+                                dictionary.Add(property1.Name, property1.Value.GetObject());
                             }
                             outputs = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("primaryScriptUri"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             primaryScriptUri = property0.Value.GetString();
                             continue;
                         }
@@ -327,38 +269,24 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(item.GetString());
-                                }
+                                array.Add(item.GetString());
                             }
                             supportingScriptUris = array;
                             continue;
                         }
                         if (property0.NameEquals("scriptContent"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             scriptContent = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("arguments"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             arguments = property0.Value.GetString();
                             continue;
                         }
@@ -366,29 +294,19 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EnvironmentVariable> array = new List<EnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
-                                }
+                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             forceUpdateTag = property0.Value.GetString();
                             continue;
                         }
@@ -401,6 +319,7 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeout = property0.Value.GetTimeSpan("P");
@@ -415,7 +334,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureCliScript(id, name, type, identity, location, tags, kind, systemData, containerSettings, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris, scriptContent, arguments, environmentVariables, forceUpdateTag, retentionInterval, timeout, azCliVersion);
+            return new AzureCliScript(id.Value, name.Value, type.Value, identity, location, Optional.ToDictionary(tags), kind, systemData.Value, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
     }
 }
