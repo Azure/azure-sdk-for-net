@@ -226,11 +226,11 @@ Get started with our [samples][admin_client_samples].
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
-details, visit [cla.microsoft.com][cla].
+details, visit https://cla.microsoft.com.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact [opencode@microsoft.com][coc_contact] with any
+or contact opencode@microsoft.com with any
 additional questions or comments.
 
 <!-- LINKS -->
@@ -250,6 +250,6 @@ additional questions or comments.
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/CONTRIBUTING.md
-
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftables%2FAzure.Data.Tables%2FREADME.png)

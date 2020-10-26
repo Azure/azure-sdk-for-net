@@ -1,6 +1,6 @@
 # Recognize receipts
 
-This sample demonstrates how to recognize and extract common fields from US receipts, using a pre-trained receipt model. For a suggested approach to extracting information from receipts, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
+This sample demonstrates how to recognize and extract common fields from receipts, using a pre-trained receipt model. For a suggested approach to extracting information from receipts, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 

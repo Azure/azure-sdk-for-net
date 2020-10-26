@@ -22,6 +22,12 @@ Run `generate.ps1` in this directory to generate the code.
 #when generating from official source - The raw link must have a commit hash for C# generator
 input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/14fb40342c19f8b483e132038f8424ee62b745d9/specification/digitaltwins/data-plane/Microsoft.DigitalTwins/stable/2020-10-31/digitaltwins.json
 
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='DigitalTwins_GetComponent' || @.operationId=='DigitalTwins_GetRelationshipById' || @.operationId=='DigitalTwins_Add' || @.operationId=='DigitalTwins_GetById' || @.operationId=='DigitalTwins_AddRelationship')].responses.200.schema
+  transform: $.format = "binary";
+
+
 #if you want to generate using local swagger copy:
 #input-file: $(this-folder)/swagger/2020-`0-31/digitaltwins.json
 

@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("bandwidthInMbps"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     bandwidthInMbps = property.Value.GetInt32();
                     continue;
                 }

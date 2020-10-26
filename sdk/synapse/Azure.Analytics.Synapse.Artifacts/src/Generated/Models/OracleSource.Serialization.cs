@@ -77,21 +77,41 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("oracleReaderQuery"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     oracleReaderQuery = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     queryTimeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionOption"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionOption = new OraclePartitionOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionSettings = OraclePartitionSettings.DeserializeOraclePartitionSettings(property.Value);
                     continue;
                 }
@@ -102,16 +122,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("sourceRetryCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }

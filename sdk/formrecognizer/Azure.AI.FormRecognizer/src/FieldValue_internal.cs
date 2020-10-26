@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
         public long? ValueInteger { get; }
 
         /// <summary> Selection mark value. </summary>
-        public FormSelectionMarkState? ValueSelectionMark { get; }
+        public SelectionMarkState? ValueSelectionMark { get; }
 
         internal FieldValue_internal(string value)
         {
@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence score. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </param>
         /// <param name="page"> The 1-based page number in the input document. </param>
-        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, long? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, FormSelectionMarkState? valueSelectionMark, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
+        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, long? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, SelectionMarkState? valueSelectionMark, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
         {
             Type = type;
             ValueString = valueString;
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (Type == FieldValueType.SelectionMark)
             {
-                ValueSelectionMark = FormSelectionMarkStateExtensions.ToFormSelectionMarkState(text);
+                ValueSelectionMark = SelectionMarkStateExtensions.ToSelectionMarkState(text);
                 Text = ValueSelectionMark.ToString();
             }
             else

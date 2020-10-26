@@ -55,11 +55,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = property.Value.GetString().ToResourceIdentityType();
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties> dictionary = new Dictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {

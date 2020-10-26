@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                                                              CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
 
         /// <summary>
-        ///   It creates a new shared signature using the key name and the key value passed as
+        ///   Creates a new shared signature using the key name and the key value passed as
         ///   input allowing credentials rotation. A call will not extend the signature duration.
         /// </summary>
         ///
@@ -106,6 +106,20 @@ namespace Azure.Messaging.EventHubs.Authorization
                                                                   keyValue,
                                                                   SharedAccessSignature.Value,
                                                                   SharedAccessSignature.SignatureExpiration);
+            }
+        }
+
+        /// <summary>
+        ///   Creates a new shared signature allowing credentials rotation.
+        /// </summary>
+        ///
+        /// <param name="signature">The shared access signature that forms the basis of this security token.</param>
+        ///
+        internal void UpdateSharedAccessSignature(string signature)
+        {
+            lock (SignatureSyncRoot)
+            {
+                SharedAccessSignature = new SharedAccessSignature(signature);
             }
         }
     }

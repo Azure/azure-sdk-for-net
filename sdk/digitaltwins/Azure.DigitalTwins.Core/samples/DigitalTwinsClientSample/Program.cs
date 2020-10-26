@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.DigitalTwins.Samples;
 using Azure.Identity;
 using CommandLine;
-using CommandLine.Text;
 
 namespace Azure.DigitalTwins.Core.Samples
 {

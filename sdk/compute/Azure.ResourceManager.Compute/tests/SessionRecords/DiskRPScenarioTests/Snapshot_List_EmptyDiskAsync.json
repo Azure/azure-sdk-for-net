@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar4030?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/crptestar4150?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-1c5386ed84df464ab90bbcd4b1fe427f-b037d51399d5634f-00",
+        "traceparent": "00-7d93986e33b9ee41bfa61f51e9754663-4298364f30c22f43-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute.Tests/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "78fbe59c9d4a9af1795fb5b5901d6ec4",
+        "x-ms-client-request-id": "60423a7a7f58b81258a47bb47cebc087",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,21 +22,22 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "180",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:16 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "97e3af0b-e9b0-445a-80f3-85d50a745170",
-        "x-ms-ratelimit-remaining-subscription-writes": "1037",
-        "x-ms-request-id": "97e3af0b-e9b0-445a-80f3-85d50a745170",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022617Z:97e3af0b-e9b0-445a-80f3-85d50a745170"
+        "x-ms-correlation-request-id": "d448971c-647e-4799-a91f-b45e2860f742",
+        "x-ms-ratelimit-remaining-subscription-writes": "1007",
+        "x-ms-request-id": "d448971c-647e-4799-a91f-b45e2860f742",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073504Z:d448971c-647e-4799-a91f-b45e2860f742"
       },
       "ResponseBody": {
-        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030",
-        "name": "crptestar4030",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150",
+        "name": "crptestar4150",
+        "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "properties": {
           "provisioningState": "Succeeded"
@@ -44,19 +45,19 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/crptestar7429?api-version=2017-05-10",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/crptestar2340?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-18d547dcb2307948bb563c08e67e0fcd-32c68a2088c43245-00",
+        "traceparent": "00-e53634a1beffbe4e90cb193a0eb08456-af0e600f1e02214d-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute.Tests/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "f0902e1a66640b0978d3a76b527a8731",
+        "x-ms-client-request-id": "5dd721b0ad55acef9a634f8412c250c8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -65,21 +66,22 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "180",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:17 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:05 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8af0942b-a8c9-47d0-812e-1dab8ad8a5ae",
-        "x-ms-ratelimit-remaining-subscription-writes": "1036",
-        "x-ms-request-id": "8af0942b-a8c9-47d0-812e-1dab8ad8a5ae",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022618Z:8af0942b-a8c9-47d0-812e-1dab8ad8a5ae"
+        "x-ms-correlation-request-id": "5420606d-f9e0-4c6e-b77d-05803978283a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1006",
+        "x-ms-request-id": "5420606d-f9e0-4c6e-b77d-05803978283a",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073505Z:5420606d-f9e0-4c6e-b77d-05803978283a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429",
-        "name": "crptestar7429",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340",
+        "name": "crptestar2340",
+        "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "properties": {
           "provisioningState": "Succeeded"
@@ -87,19 +89,19 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-b322fa0edbc3e345a4c9dc09422bff2c-c16a2ff7b42feb44-00",
+        "traceparent": "00-9fcad79a2715354f8acbb53cde470d66-0f45e7baa823084f-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "14a8081006543b4c2a9004cb974221a2",
+        "x-ms-client-request-id": "1a0e035d92ee184a5ad2ef2d56eb9eaa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -117,13 +119,13 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/6d217e3e-b7f2-431f-8573-dccad16ac7fd?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e6115361-fc6f-4d9e-b12a-b71ab60570ab?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "298",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:20 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:06 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/6d217e3e-b7f2-431f-8573-dccad16ac7fd?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e6115361-fc6f-4d9e-b12a-b71ab60570ab?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -132,17 +134,17 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "14a8081006543b4c2a9004cb974221a2",
-        "x-ms-correlation-request-id": "ecdd213f-a8f9-414e-966d-7ce1aa8e3ba1",
+        "x-ms-client-request-id": "1a0e035d92ee184a5ad2ef2d56eb9eaa",
+        "x-ms-correlation-request-id": "b0ca50bb-4ac0-4627-b4ee-bfcbcd151069",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;993,Microsoft.Compute/CreateUpdateDisks30Min;7976",
-        "x-ms-ratelimit-remaining-subscription-writes": "1035",
-        "x-ms-request-id": "6d217e3e-b7f2-431f-8573-dccad16ac7fd",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022620Z:ecdd213f-a8f9-414e-966d-7ce1aa8e3ba1",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "1005",
+        "x-ms-request-id": "e6115361-fc6f-4d9e-b12a-b71ab60570ab",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073506Z:b0ca50bb-4ac0-4627-b4ee-bfcbcd151069",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
         "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
@@ -160,15 +162,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/6d217e3e-b7f2-431f-8573-dccad16ac7fd?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e6115361-fc6f-4d9e-b12a-b71ab60570ab?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "87a484d85a741370e154c5d3613e7436",
+        "x-ms-client-request-id": "7857b253a6dd1d99d7be0383bec255af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -177,7 +179,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1016",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:20 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -186,23 +188,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "87a484d85a741370e154c5d3613e7436",
-        "x-ms-correlation-request-id": "9e00e89d-fdb6-4c2d-8102-2887d907dc7f",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49974,Microsoft.Compute/GetOperation30Min;399857",
-        "x-ms-ratelimit-remaining-subscription-reads": "9516",
-        "x-ms-request-id": "361f0d39-94fc-4baa-80f0-c0aa26129f20",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022621Z:9e00e89d-fdb6-4c2d-8102-2887d907dc7f",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "7857b253a6dd1d99d7be0383bec255af",
+        "x-ms-correlation-request-id": "32b11946-4129-46aa-832d-c3b75229f41c",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49965,Microsoft.Compute/GetOperation30Min;399784",
+        "x-ms-ratelimit-remaining-subscription-reads": "8904",
+        "x-ms-request-id": "330a7495-4683-4318-aa60-9843df55b342",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073506Z:32b11946-4129-46aa-832d-c3b75229f41c",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:20.6688597\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:20.8094877\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:06.1365568\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:06.2615432\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -220,28 +222,28 @@
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:20.6688597\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:06.1521786\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u00226d217e3e-b7f2-431f-8573-dccad16ac7fd\u0022\r\n",
+        "  \u0022name\u0022: \u0022e6115361-fc6f-4d9e-b12a-b71ab60570ab\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "3b9a04b29f8ace5ccf72386506d545a4",
+        "x-ms-client-request-id": "44f5a5c42782b2d3f741cf57cc55e8cc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -250,7 +252,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "791",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:20 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -259,18 +261,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3b9a04b29f8ace5ccf72386506d545a4",
-        "x-ms-correlation-request-id": "33514b68-4ef0-4b18-913c-f6b65dfbc8fe",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4963,Microsoft.Compute/LowCostGet30Min;39826",
-        "x-ms-ratelimit-remaining-subscription-reads": "9515",
-        "x-ms-request-id": "e607a875-8fc9-4538-85c6-b9d6501001f0",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022621Z:33514b68-4ef0-4b18-913c-f6b65dfbc8fe",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "44f5a5c42782b2d3f741cf57cc55e8cc",
+        "x-ms-correlation-request-id": "4de5bcfd-712f-481a-8640-fc5c300ad6ce",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4971,Microsoft.Compute/LowCostGet30Min;39797",
+        "x-ms-ratelimit-remaining-subscription-reads": "8903",
+        "x-ms-request-id": "75c087c4-51c3-4e9e-9755-fea565f9dfd7",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073506Z:4de5bcfd-712f-481a-8640-fc5c300ad6ce",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -288,29 +290,29 @@
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:20.6688597\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:06.1521786\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-585540521f5be644a0cba5ae575919c7-894b21f3e5128346-00",
+        "traceparent": "00-854e53f0036fc74eaac923a6327b7cbe-01ec5a1c21c2f84b-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "13f30549999e762da7dd057f7c65d39d",
+        "x-ms-client-request-id": "a4d95a2c2593e7cc35225135a8880e87",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -328,13 +330,13 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7354b4a5-13d2-4df6-8dbf-ae7c6d30d8a6?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/276e0faa-efe1-4e8e-9ca2-620e3b661513?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "298",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:23 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:07 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7354b4a5-13d2-4df6-8dbf-ae7c6d30d8a6?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/276e0faa-efe1-4e8e-9ca2-620e3b661513?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -343,17 +345,17 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "13f30549999e762da7dd057f7c65d39d",
-        "x-ms-correlation-request-id": "14e224d7-04f2-42da-826e-de6dd18485b0",
+        "x-ms-client-request-id": "a4d95a2c2593e7cc35225135a8880e87",
+        "x-ms-correlation-request-id": "ee97a3f2-b364-4322-858d-880ba02ec154",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;992,Microsoft.Compute/CreateUpdateDisks30Min;7975",
-        "x-ms-ratelimit-remaining-subscription-writes": "1034",
-        "x-ms-request-id": "7354b4a5-13d2-4df6-8dbf-ae7c6d30d8a6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022623Z:14e224d7-04f2-42da-826e-de6dd18485b0",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "1004",
+        "x-ms-request-id": "276e0faa-efe1-4e8e-9ca2-620e3b661513",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073507Z:ee97a3f2-b364-4322-858d-880ba02ec154",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
         "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
@@ -371,437 +373,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7354b4a5-13d2-4df6-8dbf-ae7c6d30d8a6?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/276e0faa-efe1-4e8e-9ca2-620e3b661513?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "5c8a200e604b1897d62393ad9add516a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1016",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:23 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5c8a200e604b1897d62393ad9add516a",
-        "x-ms-correlation-request-id": "ea943fc4-6e99-4c14-8041-0a6dd9ac93ea",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49973,Microsoft.Compute/GetOperation30Min;399856",
-        "x-ms-ratelimit-remaining-subscription-reads": "9514",
-        "x-ms-request-id": "2590ff84-ed01-47f1-9bbe-ddbd7818463b",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022624Z:ea943fc4-6e99-4c14-8041-0a6dd9ac93ea",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:23.6689978\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:23.8096287\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:23.6689978\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u00227354b4a5-13d2-4df6-8dbf-ae7c6d30d8a6\u0022\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155?api-version=2019-11-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "3ce99b9f54123cb991baecc8e22c549c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "791",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:23 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3ce99b9f54123cb991baecc8e22c549c",
-        "x-ms-correlation-request-id": "a4dee249-e8bb-4b74-b9cd-ad3caf21be9c",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4962,Microsoft.Compute/LowCostGet30Min;39825",
-        "x-ms-ratelimit-remaining-subscription-reads": "9513",
-        "x-ms-request-id": "b5698c14-9fb0-4fa0-90f9-5bdd27ed0257",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022624Z:a4dee249-e8bb-4b74-b9cd-ad3caf21be9c",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:23.6689978\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516?api-version=2019-11-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "139",
-        "Content-Type": "application/json",
-        "traceparent": "00-50b00e7bd326f84ea5553c585020a90e-e834e9cc96c21f4d-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "5c71f9d077da1a5232ab1ac879c79e4a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "sku": {
-          "name": "Standard_LRS"
-        },
-        "location": "eastus2",
-        "properties": {
-          "osType": "Linux",
-          "creationData": {
-            "createOption": "Empty"
-          },
-          "diskSizeGB": 5
-        }
-      },
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1d46c79b-ca30-4f0a-9b2a-887a70f979a8?api-version=2019-11-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "298",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:25 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1d46c79b-ca30-4f0a-9b2a-887a70f979a8?monitor=true\u0026api-version=2019-11-01",
-        "Pragma": "no-cache",
-        "Retry-After": "2",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5c71f9d077da1a5232ab1ac879c79e4a",
-        "x-ms-correlation-request-id": "263eb1ca-5bd0-4f5c-91ae-9593b9b0e9f2",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;991,Microsoft.Compute/CreateUpdateDisks30Min;7974",
-        "x-ms-ratelimit-remaining-subscription-writes": "1033",
-        "x-ms-request-id": "1d46c79b-ca30-4f0a-9b2a-887a70f979a8",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022626Z:263eb1ca-5bd0-4f5c-91ae-9593b9b0e9f2",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022isArmResource\u0022: true\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1d46c79b-ca30-4f0a-9b2a-887a70f979a8?api-version=2019-11-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "a0dcf6cef56b278f49cf0a6739f1c3ca",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1016",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:26 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a0dcf6cef56b278f49cf0a6739f1c3ca",
-        "x-ms-correlation-request-id": "5f6fdc4d-b9ba-41e2-838c-89e2126a4c32",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49970,Microsoft.Compute/GetOperation30Min;399853",
-        "x-ms-ratelimit-remaining-subscription-reads": "9512",
-        "x-ms-request-id": "44f19edf-234c-41b9-91c3-56e5c609c192",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022627Z:5f6fdc4d-b9ba-41e2-838c-89e2126a4c32",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:26.4972706\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:26.6535154\u002B00:00\u0022,\r\n",
-        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:26.5128829\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
-        "  }\r\n",
-        "}\r\n",
-        "  },\r\n",
-        "  \u0022name\u0022: \u00221d46c79b-ca30-4f0a-9b2a-887a70f979a8\u0022\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516?api-version=2019-11-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "9444a21ccec9017bffb6f48cadc1a562",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "791",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:26 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "9444a21ccec9017bffb6f48cadc1a562",
-        "x-ms-correlation-request-id": "c8ecfb00-e70a-4037-bad0-76ae6727daa7",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4960,Microsoft.Compute/LowCostGet30Min;39823",
-        "x-ms-ratelimit-remaining-subscription-reads": "9511",
-        "x-ms-request-id": "b9fe9188-36f8-4ad5-aca0-2419951bb7b3",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022627Z:c8ecfb00-e70a-4037-bad0-76ae6727daa7",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7516\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
-        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
-        "    \u0022encryption\u0022: {\r\n",
-        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:26.5128829\u002B00:00\u0022,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155?api-version=2019-11-01",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "139",
-        "Content-Type": "application/json",
-        "traceparent": "00-d4366073a9faa24885bb95c5cdecc850-0c22442a9833c847-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "82f97074fdeb8fdebe3b3d51c4928176",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "sku": {
-          "name": "Standard_LRS"
-        },
-        "location": "eastus2",
-        "properties": {
-          "osType": "Linux",
-          "creationData": {
-            "createOption": "Empty"
-          },
-          "diskSizeGB": 5
-        }
-      },
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/65b66dd2-63b1-4c14-ab6c-07acc6d823b6?api-version=2019-11-01",
-        "Cache-Control": "no-cache",
-        "Content-Length": "298",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:28 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/65b66dd2-63b1-4c14-ab6c-07acc6d823b6?monitor=true\u0026api-version=2019-11-01",
-        "Pragma": "no-cache",
-        "Retry-After": "2",
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "82f97074fdeb8fdebe3b3d51c4928176",
-        "x-ms-correlation-request-id": "11b7e2b2-04ee-4f84-8f36-b7b301756ad2",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;990,Microsoft.Compute/CreateUpdateDisks30Min;7973",
-        "x-ms-ratelimit-remaining-subscription-writes": "1032",
-        "x-ms-request-id": "65b66dd2-63b1-4c14-ab6c-07acc6d823b6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022629Z:11b7e2b2-04ee-4f84-8f36-b7b301756ad2",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
-      },
-      "ResponseBody": [
-        "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
-        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "  \u0022sku\u0022: {\r\n",
-        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
-        "  },\r\n",
-        "  \u0022properties\u0022: {\r\n",
-        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "    \u0022creationData\u0022: {\r\n",
-        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
-        "    },\r\n",
-        "    \u0022diskSizeGB\u0022: 5,\r\n",
-        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
-        "    \u0022isArmResource\u0022: true\r\n",
-        "  }\r\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/65b66dd2-63b1-4c14-ab6c-07acc6d823b6?api-version=2019-11-01",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "c8f2a82941f71fdec4b5d68d90293c6d",
+        "x-ms-client-request-id": "635636d6b1e99f1bd80e0f5fd59d0a6e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -810,7 +390,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1015",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:29 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -819,23 +399,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c8f2a82941f71fdec4b5d68d90293c6d",
-        "x-ms-correlation-request-id": "a06004be-e52b-4ade-b0a9-1cd8949d1abb",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49969,Microsoft.Compute/GetOperation30Min;399852",
-        "x-ms-ratelimit-remaining-subscription-reads": "9510",
-        "x-ms-request-id": "bc63a309-210d-4d9f-9c0e-8f8b044f3d1c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022630Z:a06004be-e52b-4ade-b0a9-1cd8949d1abb",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "635636d6b1e99f1bd80e0f5fd59d0a6e",
+        "x-ms-correlation-request-id": "3f55536a-2ff8-4a73-9229-2d11dcdde732",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49963,Microsoft.Compute/GetOperation30Min;399782",
+        "x-ms-ratelimit-remaining-subscription-reads": "8902",
+        "x-ms-request-id": "6bc492a4-7c1c-4297-960e-e82841eb17fe",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073507Z:3f55536a-2ff8-4a73-9229-2d11dcdde732",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:29.4349017\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:29.575531\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:07.2303541\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:07.324059\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -853,28 +433,28 @@
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:29.4349017\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:07.2303541\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u002265b66dd2-63b1-4c14-ab6c-07acc6d823b6\u0022\r\n",
+        "  \u0022name\u0022: \u0022276e0faa-efe1-4e8e-9ca2-620e3b661513\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "ad027d35d34ed3d78ef907105c288ebb",
+        "x-ms-client-request-id": "b61648335e25cb3447acc4eea43010f3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -883,7 +463,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "791",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:29 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -892,18 +472,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ad027d35d34ed3d78ef907105c288ebb",
-        "x-ms-correlation-request-id": "95db6284-084a-4c13-a4d7-b179e76e9a8d",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4958,Microsoft.Compute/LowCostGet30Min;39820",
-        "x-ms-ratelimit-remaining-subscription-reads": "9509",
-        "x-ms-request-id": "1d769836-0b4b-4073-8629-8fc647c6f954",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022630Z:95db6284-084a-4c13-a4d7-b179e76e9a8d",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "b61648335e25cb3447acc4eea43010f3",
+        "x-ms-correlation-request-id": "cd42ba11-c4e1-492a-87a3-edfeb88986c3",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4969,Microsoft.Compute/LowCostGet30Min;39795",
+        "x-ms-ratelimit-remaining-subscription-reads": "8901",
+        "x-ms-request-id": "0b674381-77b2-42f7-9bda-70b1dae11ee3",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073507Z:cd42ba11-c4e1-492a-87a3-edfeb88986c3",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp8155\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -921,29 +501,451 @@
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:29.4349017\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:07.2303541\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp7850?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025?api-version=2019-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "139",
+        "Content-Type": "application/json",
+        "traceparent": "00-1144874324577b41bd89ab816c839ef2-d53d6c48f297914d-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "715fcfd2aa328f9efb90b28a51b25641",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "location": "eastus2",
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 5
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/cc9d4f6a-5049-4414-8d52-b4cabc88c97d?api-version=2019-11-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "298",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:08 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/cc9d4f6a-5049-4414-8d52-b4cabc88c97d?monitor=true\u0026api-version=2019-11-01",
+        "Pragma": "no-cache",
+        "Retry-After": "2",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "715fcfd2aa328f9efb90b28a51b25641",
+        "x-ms-correlation-request-id": "13987b40-470b-41d6-b47d-72bcc425ad5b",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;991,Microsoft.Compute/CreateUpdateDisks30Min;7974",
+        "x-ms-ratelimit-remaining-subscription-writes": "1003",
+        "x-ms-request-id": "cc9d4f6a-5049-4414-8d52-b4cabc88c97d",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073508Z:13987b40-470b-41d6-b47d-72bcc425ad5b",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
+        "    \u0022isArmResource\u0022: true\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/cc9d4f6a-5049-4414-8d52-b4cabc88c97d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "068d1bfd983d883caa87ba94aca97a94",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1016",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "068d1bfd983d883caa87ba94aca97a94",
+        "x-ms-correlation-request-id": "2a167d10-6de6-43f8-bfc3-5811bd40f798",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49961,Microsoft.Compute/GetOperation30Min;399780",
+        "x-ms-ratelimit-remaining-subscription-reads": "8900",
+        "x-ms-request-id": "a77d5c86-642f-45d0-9f9a-0770b22db66f",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073508Z:2a167d10-6de6-43f8-bfc3-5811bd40f798",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:08.3397402\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:08.4491425\u002B00:00\u0022,\r\n",
+        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022output\u0022: {\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
+        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
+        "    \u0022encryption\u0022: {\r\n",
+        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "    },\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:08.3397402\u002B00:00\u0022,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "    \u0022uniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
+        "  }\r\n",
+        "}\r\n",
+        "  },\r\n",
+        "  \u0022name\u0022: \u0022cc9d4f6a-5049-4414-8d52-b4cabc88c97d\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9253835581c738c972e86ea78e60a2cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "791",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9253835581c738c972e86ea78e60a2cf",
+        "x-ms-correlation-request-id": "f149c3bd-7bc8-414b-8905-a2d23037b8c3",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4967,Microsoft.Compute/LowCostGet30Min;39793",
+        "x-ms-ratelimit-remaining-subscription-reads": "8899",
+        "x-ms-request-id": "3ab23496-80db-4658-87a7-6acc7921775e",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073508Z:f149c3bd-7bc8-414b-8905-a2d23037b8c3",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022name\u0022: \u0022diskrp1025\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
+        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
+        "    \u0022encryption\u0022: {\r\n",
+        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "    },\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:08.3397402\u002B00:00\u0022,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "    \u0022uniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852?api-version=2019-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "139",
+        "Content-Type": "application/json",
+        "traceparent": "00-6bf9b08e046f0b4bac174f9cf878cafa-08133016df01f843-00",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "358c099550250203d5e0e4a2dfc8cb58",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "location": "eastus2",
+        "properties": {
+          "osType": "Linux",
+          "creationData": {
+            "createOption": "Empty"
+          },
+          "diskSizeGB": 5
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1a783830-f7f4-4c64-97c7-39edbbc81b1d?api-version=2019-11-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "298",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:09 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1a783830-f7f4-4c64-97c7-39edbbc81b1d?monitor=true\u0026api-version=2019-11-01",
+        "Pragma": "no-cache",
+        "Retry-After": "2",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "358c099550250203d5e0e4a2dfc8cb58",
+        "x-ms-correlation-request-id": "c5599e51-1ab2-429f-8c0c-f1e689eed116",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/CreateUpdateDisks3Min;990,Microsoft.Compute/CreateUpdateDisks30Min;7973",
+        "x-ms-ratelimit-remaining-subscription-writes": "1002",
+        "x-ms-request-id": "1a783830-f7f4-4c64-97c7-39edbbc81b1d",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073509Z:c5599e51-1ab2-429f-8c0c-f1e689eed116",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
+        "    \u0022isArmResource\u0022: true\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/1a783830-f7f4-4c64-97c7-39edbbc81b1d?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a2feebe5441d056f7f51bce79d2658aa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1016",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a2feebe5441d056f7f51bce79d2658aa",
+        "x-ms-correlation-request-id": "14cbf4b9-3616-46d7-ac29-50512ff6bbeb",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49959,Microsoft.Compute/GetOperation30Min;399778",
+        "x-ms-ratelimit-remaining-subscription-reads": "8898",
+        "x-ms-request-id": "bb1a6a94-78ce-4b86-87be-607e256b8d95",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073509Z:14cbf4b9-3616-46d7-ac29-50512ff6bbeb",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:09.4804191\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:09.5897999\u002B00:00\u0022,\r\n",
+        "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022output\u0022: {\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
+        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
+        "    \u0022encryption\u0022: {\r\n",
+        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "    },\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:09.4804191\u002B00:00\u0022,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "    \u0022uniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
+        "  }\r\n",
+        "}\r\n",
+        "  },\r\n",
+        "  \u0022name\u0022: \u00221a783830-f7f4-4c64-97c7-39edbbc81b1d\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "0796161c39792cf62911e3cfbcaed83f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "791",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0796161c39792cf62911e3cfbcaed83f",
+        "x-ms-correlation-request-id": "42bccd2e-2788-461b-b207-443447435ddb",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4965,Microsoft.Compute/LowCostGet30Min;39791",
+        "x-ms-ratelimit-remaining-subscription-reads": "8897",
+        "x-ms-request-id": "7937774b-2007-4954-8246-6e8a33cd68fb",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073509Z:42bccd2e-2788-461b-b207-443447435ddb",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022name\u0022: \u0022diskrp2852\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "  \u0022type\u0022: \u0022Microsoft.Compute/disks\u0022,\r\n",
+        "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "  \u0022sku\u0022: {\r\n",
+        "    \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "    \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "  },\r\n",
+        "  \u0022properties\u0022: {\r\n",
+        "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "    \u0022creationData\u0022: {\r\n",
+        "      \u0022createOption\u0022: \u0022Empty\u0022\r\n",
+        "    },\r\n",
+        "    \u0022diskSizeGB\u0022: 5,\r\n",
+        "    \u0022diskIOPSReadWrite\u0022: 500,\r\n",
+        "    \u0022diskMBpsReadWrite\u0022: 60,\r\n",
+        "    \u0022encryption\u0022: {\r\n",
+        "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "    },\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:09.4804191\u002B00:00\u0022,\r\n",
+        "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "    \u0022uniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
+        "  }\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp9066?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "273",
         "Content-Type": "application/json",
-        "traceparent": "00-5d35f444e274e549a9924ae3df9ee4d8-b5dee6e042b25f42-00",
+        "traceparent": "00-bce674f63b58b547a3b959359a566264-8a25cc267d9e5549-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "1c28b6c1b8a0487f21540ed6ca536f51",
+        "x-ms-client-request-id": "f4bd9be629c9cb3b17e1e987acf9de2b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -954,20 +956,20 @@
         "properties": {
           "creationData": {
             "createOption": "Copy",
-            "sourceResourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516"
+            "sourceResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025"
           },
           "incremental": false
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e599c3ee-3604-45ab-9384-7b6ec84df454?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/98a56feb-93cd-4def-8998-f4afb2dd78a1?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "498",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:31 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:10 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e599c3ee-3604-45ab-9384-7b6ec84df454?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/98a56feb-93cd-4def-8998-f4afb2dd78a1?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -976,13 +978,13 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1c28b6c1b8a0487f21540ed6ca536f51",
-        "x-ms-correlation-request-id": "1af89acf-0afa-47e3-af00-84a74848f2a4",
+        "x-ms-client-request-id": "f4bd9be629c9cb3b17e1e987acf9de2b",
+        "x-ms-correlation-request-id": "99afc3b8-b36a-4db4-81f3-382812ba8143",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostSnapshotCreateHydrate3Min;996,Microsoft.Compute/HighCostSnapshotCreateHydrate30Min;7989",
-        "x-ms-ratelimit-remaining-subscription-writes": "1031",
-        "x-ms-request-id": "e599c3ee-3604-45ab-9384-7b6ec84df454",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022632Z:1af89acf-0afa-47e3-af00-84a74848f2a4",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "1001",
+        "x-ms-request-id": "98a56feb-93cd-4def-8998-f4afb2dd78a1",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073510Z:99afc3b8-b36a-4db4-81f3-382812ba8143",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
@@ -994,8 +996,8 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
         "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -1005,15 +1007,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e599c3ee-3604-45ab-9384-7b6ec84df454?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/98a56feb-93cd-4def-8998-f4afb2dd78a1?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "d9cc1b2620017cccfeb98bf9c500083b",
+        "x-ms-client-request-id": "01007c786368f2e0dbcaef98506e802f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1022,7 +1024,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "134",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:31 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
@@ -1032,32 +1034,32 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d9cc1b2620017cccfeb98bf9c500083b",
-        "x-ms-correlation-request-id": "1484cc8b-d276-4e59-bb73-d8c152feccec",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49965,Microsoft.Compute/GetOperation30Min;399848",
-        "x-ms-ratelimit-remaining-subscription-reads": "9508",
-        "x-ms-request-id": "5248cb5d-58c0-41a6-b11e-9b14a9f93500",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022632Z:1484cc8b-d276-4e59-bb73-d8c152feccec",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "01007c786368f2e0dbcaef98506e802f",
+        "x-ms-correlation-request-id": "78f24d01-2d99-43aa-8c3c-5cd376fced33",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49957,Microsoft.Compute/GetOperation30Min;399776",
+        "x-ms-ratelimit-remaining-subscription-reads": "8896",
+        "x-ms-request-id": "a23fa745-52a3-4966-afc1-54d32f51f180",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073510Z:78f24d01-2d99-43aa-8c3c-5cd376fced33",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:10.5742387\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022e599c3ee-3604-45ab-9384-7b6ec84df454\u0022\r\n",
+        "  \u0022name\u0022: \u002298a56feb-93cd-4def-8998-f4afb2dd78a1\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/e599c3ee-3604-45ab-9384-7b6ec84df454?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/98a56feb-93cd-4def-8998-f4afb2dd78a1?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "2873b58a0aa8f4bb7dd24a807e820e53",
+        "x-ms-client-request-id": "d2d2b732c575f340cc12fff7b02f6a77",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1066,7 +1068,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1210",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:33 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1075,23 +1077,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "2873b58a0aa8f4bb7dd24a807e820e53",
-        "x-ms-correlation-request-id": "53f90c05-927e-4d04-b4aa-1dd16bc86beb",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49963,Microsoft.Compute/GetOperation30Min;399846",
-        "x-ms-ratelimit-remaining-subscription-reads": "9507",
-        "x-ms-request-id": "f23801af-27bd-44ac-be6b-823ff087645c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022634Z:53f90c05-927e-4d04-b4aa-1dd16bc86beb",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "d2d2b732c575f340cc12fff7b02f6a77",
+        "x-ms-correlation-request-id": "1244e497-000f-4c9b-840b-5e30395f08d2",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49955,Microsoft.Compute/GetOperation30Min;399774",
+        "x-ms-ratelimit-remaining-subscription-reads": "8895",
+        "x-ms-request-id": "51ad5621-0dd3-49f9-8bb5-44b5f2524d32",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073511Z:1244e497-000f-4c9b-840b-5e30395f08d2",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:32.7319244\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:10.5742387\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:10.9492738\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1102,36 +1104,36 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:10.5898597\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u00223291256e-49bd-4f43-ab4f-19050a294659\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u00226b39d8da-fa7c-41dc-a501-9eac028a5ec4\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u0022e599c3ee-3604-45ab-9384-7b6ec84df454\u0022\r\n",
+        "  \u0022name\u0022: \u002298a56feb-93cd-4def-8998-f4afb2dd78a1\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp7850?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp9066?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "afaf739195867d4f66048446413e90d0",
+        "x-ms-client-request-id": "2f0f1798ddf899c20946373402365b86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1140,7 +1142,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "985",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:33 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1149,18 +1151,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "afaf739195867d4f66048446413e90d0",
-        "x-ms-correlation-request-id": "d22651ed-9b60-436c-be36-950b1303baa6",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4954,Microsoft.Compute/LowCostGet30Min;39816",
-        "x-ms-ratelimit-remaining-subscription-reads": "9506",
-        "x-ms-request-id": "f89c91c4-8bf7-4937-8a8b-e092ed33be70",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022634Z:d22651ed-9b60-436c-be36-950b1303baa6",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "2f0f1798ddf899c20946373402365b86",
+        "x-ms-correlation-request-id": "a1fd3c92-3cbe-421b-b29f-760be00c6277",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4962,Microsoft.Compute/LowCostGet30Min;39788",
+        "x-ms-ratelimit-remaining-subscription-reads": "8894",
+        "x-ms-request-id": "8163267a-3a9b-43e4-adc7-b7fff5563844",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073512Z:a1fd3c92-3cbe-421b-b29f-760be00c6277",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1171,37 +1173,37 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:10.5898597\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u00223291256e-49bd-4f43-ab4f-19050a294659\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u00226b39d8da-fa7c-41dc-a501-9eac028a5ec4\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp1699?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp2753?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "273",
         "Content-Type": "application/json",
-        "traceparent": "00-e6d2fba241e0b24694acb9966dee585e-4b7f13e533a63f48-00",
+        "traceparent": "00-7454a44459fc1c4290804e3e4e9ecac6-96370cfc6c1fab43-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "8473fe17995b1cf25fd85c2fd54bfd7c",
+        "x-ms-client-request-id": "a9d9485176ceb25c3b0c345664e842ab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1212,20 +1214,20 @@
         "properties": {
           "creationData": {
             "createOption": "Copy",
-            "sourceResourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155"
+            "sourceResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852"
           },
           "incremental": false
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/b04e33ab-980c-4042-87bf-76519eda4b49?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "498",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:35 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:12 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/b04e33ab-980c-4042-87bf-76519eda4b49?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -1234,13 +1236,13 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "8473fe17995b1cf25fd85c2fd54bfd7c",
-        "x-ms-correlation-request-id": "a96eb2af-615d-44ad-bd0a-365fc8a0d77f",
+        "x-ms-client-request-id": "a9d9485176ceb25c3b0c345664e842ab",
+        "x-ms-correlation-request-id": "7f66878b-a07b-425d-a8e1-757bd0eff0da",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostSnapshotCreateHydrate3Min;995,Microsoft.Compute/HighCostSnapshotCreateHydrate30Min;7988",
-        "x-ms-ratelimit-remaining-subscription-writes": "1030",
-        "x-ms-request-id": "b04e33ab-980c-4042-87bf-76519eda4b49",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022636Z:a96eb2af-615d-44ad-bd0a-365fc8a0d77f",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "1000",
+        "x-ms-request-id": "32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073512Z:7f66878b-a07b-425d-a8e1-757bd0eff0da",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
@@ -1252,8 +1254,8 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
         "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -1263,15 +1265,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/b04e33ab-980c-4042-87bf-76519eda4b49?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "80697a41890ef8f8809350ae3920a71b",
+        "x-ms-client-request-id": "67a679b7c05621a8bb5cf3eba86c3521",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1280,7 +1282,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "134",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:36 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
@@ -1290,32 +1292,75 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "80697a41890ef8f8809350ae3920a71b",
-        "x-ms-correlation-request-id": "58f521a6-951b-434f-bbac-255a2134bdc4",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49961,Microsoft.Compute/GetOperation30Min;399844",
-        "x-ms-ratelimit-remaining-subscription-reads": "9505",
-        "x-ms-request-id": "5dbeb329-3712-4a69-9966-6053cd8c3548",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022637Z:58f521a6-951b-434f-bbac-255a2134bdc4",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "67a679b7c05621a8bb5cf3eba86c3521",
+        "x-ms-correlation-request-id": "e5ee8158-75cd-4580-8ed1-bb313983d636",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49953,Microsoft.Compute/GetOperation30Min;399772",
+        "x-ms-ratelimit-remaining-subscription-reads": "8893",
+        "x-ms-request-id": "82b920e6-2d3d-4780-9d4a-f398bbe3b040",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073513Z:e5ee8158-75cd-4580-8ed1-bb313983d636",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:36.4196037\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022b04e33ab-980c-4042-87bf-76519eda4b49\u0022\r\n",
+        "  \u0022name\u0022: \u002232e8e9ba-bce5-4f18-8e9f-8e4f35a029ba\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/b04e33ab-980c-4042-87bf-76519eda4b49?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "089a08063ed6be7f497f1e65d74e96ea",
+        "x-ms-client-request-id": "8ad38c03223600261183b495ad2c242f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "134",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 06 Oct 2020 07:35:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8ad38c03223600261183b495ad2c242f",
+        "x-ms-correlation-request-id": "2f612601-acb3-4da5-b2ff-2302b4fc1a08",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49950,Microsoft.Compute/GetOperation30Min;399769",
+        "x-ms-ratelimit-remaining-subscription-reads": "8892",
+        "x-ms-request-id": "0dcabbf8-66ed-49b2-9bfd-2ae4518f746b",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073514Z:2f612601-acb3-4da5-b2ff-2302b4fc1a08",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
+      },
+      "ResponseBody": [
+        "{\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
+        "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
+        "  \u0022name\u0022: \u002232e8e9ba-bce5-4f18-8e9f-8e4f35a029ba\u0022\r\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/32e8e9ba-bce5-4f18-8e9f-8e4f35a029ba?api-version=2019-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ea9f9e1bda41a055cfdf7d025d4bad88",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1324,7 +1369,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1210",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:37 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1333,23 +1378,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "089a08063ed6be7f497f1e65d74e96ea",
-        "x-ms-correlation-request-id": "031397d4-ae35-4916-a854-4e744ce0f381",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49960,Microsoft.Compute/GetOperation30Min;399843",
-        "x-ms-ratelimit-remaining-subscription-reads": "9504",
-        "x-ms-request-id": "748a43dc-3553-4fff-b768-16e6d107871a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022638Z:031397d4-ae35-4916-a854-4e744ce0f381",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "ea9f9e1bda41a055cfdf7d025d4bad88",
+        "x-ms-correlation-request-id": "ec8cf659-21db-4261-bde1-cb7d4b21af63",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49949,Microsoft.Compute/GetOperation30Min;399768",
+        "x-ms-ratelimit-remaining-subscription-reads": "8891",
+        "x-ms-request-id": "a64b59cf-cc17-4eb6-825d-794a5240f65c",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073515Z:ec8cf659-21db-4261-bde1-cb7d4b21af63",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:36.4196037\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:37.2633845\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:14.3399733\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1360,36 +1405,36 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:36.4352193\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002291987f4d-2c63-489f-bcc0-39d87b13c1dc\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u002244de97a5-ed1b-48b4-9eba-68aa491ad191\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u0022b04e33ab-980c-4042-87bf-76519eda4b49\u0022\r\n",
+        "  \u0022name\u0022: \u002232e8e9ba-bce5-4f18-8e9f-8e4f35a029ba\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp1699?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp2753?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "5bed1d257ce2216d406fd1bd0806ba45",
+        "x-ms-client-request-id": "012ba7036738945f53a656d20b13738e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1398,7 +1443,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "985",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:37 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1407,18 +1452,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5bed1d257ce2216d406fd1bd0806ba45",
-        "x-ms-correlation-request-id": "d3b9bdd3-dd1c-484a-b2ad-7b55c4de4e16",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4949,Microsoft.Compute/LowCostGet30Min;39811",
-        "x-ms-ratelimit-remaining-subscription-reads": "9503",
-        "x-ms-request-id": "7a56856f-fc69-43fd-8643-152cd89dea55",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022638Z:d3b9bdd3-dd1c-484a-b2ad-7b55c4de4e16",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "012ba7036738945f53a656d20b13738e",
+        "x-ms-correlation-request-id": "d5ca64d1-effa-4db6-a7a6-67b4beafc317",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4958,Microsoft.Compute/LowCostGet30Min;39784",
+        "x-ms-ratelimit-remaining-subscription-reads": "8890",
+        "x-ms-request-id": "b0f572be-6593-48b6-89c3-e740b9503699",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073515Z:d5ca64d1-effa-4db6-a7a6-67b4beafc317",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1429,37 +1474,37 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:36.4352193\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u002291987f4d-2c63-489f-bcc0-39d87b13c1dc\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u002244de97a5-ed1b-48b4-9eba-68aa491ad191\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp7850?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp9066?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "273",
         "Content-Type": "application/json",
-        "traceparent": "00-524480e8e4a1924e849f702bc3a8f34e-e22ed484d30cdf49-00",
+        "traceparent": "00-4727d460f0afe940b6da74a6fea194ee-e23b0b4699bb3343-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "7d9da64ea9da0267faab378f6b932132",
+        "x-ms-client-request-id": "09cfc4384acd29df3633ba57a523a3c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1470,20 +1515,20 @@
         "properties": {
           "creationData": {
             "createOption": "Copy",
-            "sourceResourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516"
+            "sourceResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025"
           },
           "incremental": false
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/655e480a-0da8-4bd0-b85d-45578b47863d?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7ede23d2-3992-47ba-8520-45a23a87dd93?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "498",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:39 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:16 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/655e480a-0da8-4bd0-b85d-45578b47863d?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7ede23d2-3992-47ba-8520-45a23a87dd93?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -1492,13 +1537,13 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7d9da64ea9da0267faab378f6b932132",
-        "x-ms-correlation-request-id": "68a9d836-6cef-45d3-9ad5-f4a48ca74939",
+        "x-ms-client-request-id": "09cfc4384acd29df3633ba57a523a3c6",
+        "x-ms-correlation-request-id": "9b83773f-d7ce-4f54-9118-754a22694317",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostSnapshotCreateHydrate3Min;994,Microsoft.Compute/HighCostSnapshotCreateHydrate30Min;7987",
-        "x-ms-ratelimit-remaining-subscription-writes": "1029",
-        "x-ms-request-id": "655e480a-0da8-4bd0-b85d-45578b47863d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022640Z:68a9d836-6cef-45d3-9ad5-f4a48ca74939",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "999",
+        "x-ms-request-id": "7ede23d2-3992-47ba-8520-45a23a87dd93",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073516Z:9b83773f-d7ce-4f54-9118-754a22694317",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
@@ -1510,8 +1555,8 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
         "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -1521,15 +1566,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/655e480a-0da8-4bd0-b85d-45578b47863d?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7ede23d2-3992-47ba-8520-45a23a87dd93?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "3016d9c418b07b0fb6ea613645ddb6ad",
+        "x-ms-client-request-id": "98caee6ba37bb8bbc802cb05ac08ef2f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1538,7 +1583,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "134",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:40 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
@@ -1548,41 +1593,41 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3016d9c418b07b0fb6ea613645ddb6ad",
-        "x-ms-correlation-request-id": "425b0d4b-fb01-4f3a-8c14-f5eb5274983b",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49959,Microsoft.Compute/GetOperation30Min;399842",
-        "x-ms-ratelimit-remaining-subscription-reads": "9502",
-        "x-ms-request-id": "553ee05d-6fdd-4f2e-bda1-c8c4acb770d4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022641Z:425b0d4b-fb01-4f3a-8c14-f5eb5274983b",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "98caee6ba37bb8bbc802cb05ac08ef2f",
+        "x-ms-correlation-request-id": "d82eceb4-b6ad-4028-97f2-8b3b503ab39f",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49946,Microsoft.Compute/GetOperation30Min;399765",
+        "x-ms-ratelimit-remaining-subscription-reads": "8889",
+        "x-ms-request-id": "ab37390b-82fb-4c53-9bfb-a7e03d9751bf",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073516Z:d82eceb4-b6ad-4028-97f2-8b3b503ab39f",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:40.5760361\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:16.1994357\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u0022655e480a-0da8-4bd0-b85d-45578b47863d\u0022\r\n",
+        "  \u0022name\u0022: \u00227ede23d2-3992-47ba-8520-45a23a87dd93\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/655e480a-0da8-4bd0-b85d-45578b47863d?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7ede23d2-3992-47ba-8520-45a23a87dd93?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "a2c09f4e9f7d02126e13e161e1009538",
+        "x-ms-client-request-id": "dffc8f036d80158dcd1acac2b244a4b3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1209",
+        "Content-Length": "1210",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:41 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1591,23 +1636,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a2c09f4e9f7d02126e13e161e1009538",
-        "x-ms-correlation-request-id": "1b09740d-e2bd-463a-9a87-f190b2221f9c",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49956,Microsoft.Compute/GetOperation30Min;399839",
-        "x-ms-ratelimit-remaining-subscription-reads": "9501",
-        "x-ms-request-id": "04c633c0-f798-4e6f-ba53-9ad5dc517644",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022642Z:1b09740d-e2bd-463a-9a87-f190b2221f9c",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "dffc8f036d80158dcd1acac2b244a4b3",
+        "x-ms-correlation-request-id": "f6b4ac06-b4fd-42bd-aa17-5323d65bd04c",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49945,Microsoft.Compute/GetOperation30Min;399764",
+        "x-ms-ratelimit-remaining-subscription-reads": "8888",
+        "x-ms-request-id": "e9a69102-3f18-438d-b338-269d99240318",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073517Z:f6b4ac06-b4fd-42bd-aa17-5323d65bd04c",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:40.5760361\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:41.029188\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:16.1994357\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:16.6213836\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1618,36 +1663,36 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:40.5916647\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:16.2150619\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022754d4c2e-cae3-4958-afea-8875773e55be\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u0022d0ce3ca6-db0c-4757-98b6-d304837e2aec\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u0022655e480a-0da8-4bd0-b85d-45578b47863d\u0022\r\n",
+        "  \u0022name\u0022: \u00227ede23d2-3992-47ba-8520-45a23a87dd93\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp7850?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp9066?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "91cbf4f5f07ce481560d6547ea0144be",
+        "x-ms-client-request-id": "b7ebfd9e0a59324a70da3dfe57f10837",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1656,7 +1701,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "985",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:41 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1665,18 +1710,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "91cbf4f5f07ce481560d6547ea0144be",
-        "x-ms-correlation-request-id": "ab184eeb-e6c9-4e78-9aff-5f8d516e2d8b",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4943,Microsoft.Compute/LowCostGet30Min;39805",
-        "x-ms-ratelimit-remaining-subscription-reads": "9500",
-        "x-ms-request-id": "431a3179-c4d8-44e0-b81a-564777d85e79",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022642Z:ab184eeb-e6c9-4e78-9aff-5f8d516e2d8b",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "b7ebfd9e0a59324a70da3dfe57f10837",
+        "x-ms-correlation-request-id": "1af3334a-2e36-41fe-8fea-c38e99eaa054",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4952,Microsoft.Compute/LowCostGet30Min;39778",
+        "x-ms-ratelimit-remaining-subscription-reads": "8887",
+        "x-ms-request-id": "73f51880-8bdc-404d-92f6-85d458d36d3c",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073517Z:1af3334a-2e36-41fe-8fea-c38e99eaa054",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1687,37 +1732,37 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:40.5916647\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:16.2150619\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022754d4c2e-cae3-4958-afea-8875773e55be\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u0022d0ce3ca6-db0c-4757-98b6-d304837e2aec\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp1699?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp2753?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "273",
         "Content-Type": "application/json",
-        "traceparent": "00-8c7567fa8ebf4f49a9058a06f3089f1a-63030e0d3a6e9d46-00",
+        "traceparent": "00-39846d262f4f7e4ca1e49af0140ca068-0e4022342a57eb45-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "cd191bc2130225c4c613c29c37ae9ab5",
+        "x-ms-client-request-id": "f498681bb686fe3c60b4cb60d9f90583",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1728,20 +1773,20 @@
         "properties": {
           "creationData": {
             "createOption": "Copy",
-            "sourceResourceId": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155"
+            "sourceResourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852"
           },
           "incremental": false
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/29aaef23-4870-49c1-babf-56b81ee867c1?api-version=2019-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7de4ad28-dd64-49b9-87d3-7f5913f54cba?api-version=2019-11-01",
         "Cache-Control": "no-cache",
         "Content-Length": "498",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:43 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:18 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/29aaef23-4870-49c1-babf-56b81ee867c1?monitor=true\u0026api-version=2019-11-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7de4ad28-dd64-49b9-87d3-7f5913f54cba?monitor=true\u0026api-version=2019-11-01",
         "Pragma": "no-cache",
         "Retry-After": "2",
         "Server": [
@@ -1750,13 +1795,13 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "cd191bc2130225c4c613c29c37ae9ab5",
-        "x-ms-correlation-request-id": "7c63026d-873f-4ca5-a8ca-3fbc993df693",
+        "x-ms-client-request-id": "f498681bb686fe3c60b4cb60d9f90583",
+        "x-ms-correlation-request-id": "7e738442-909a-4582-9a92-d7d87ebf2c4b",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostSnapshotCreateHydrate3Min;993,Microsoft.Compute/HighCostSnapshotCreateHydrate30Min;7986",
-        "x-ms-ratelimit-remaining-subscription-writes": "1028",
-        "x-ms-request-id": "29aaef23-4870-49c1-babf-56b81ee867c1",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022644Z:7c63026d-873f-4ca5-a8ca-3fbc993df693",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-writes": "998",
+        "x-ms-request-id": "7de4ad28-dd64-49b9-87d3-7f5913f54cba",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073518Z:7e738442-909a-4582-9a92-d7d87ebf2c4b",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
@@ -1768,8 +1813,8 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
         "    \u0022provisioningState\u0022: \u0022Updating\u0022,\r\n",
@@ -1779,15 +1824,15 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/29aaef23-4870-49c1-babf-56b81ee867c1?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7de4ad28-dd64-49b9-87d3-7f5913f54cba?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "c69e23cec8e7e1362fa6cb692ee5aca7",
+        "x-ms-client-request-id": "4aa79212aface72dc1ec56a53fe95977",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1796,7 +1841,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "134",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:45 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
@@ -1806,32 +1851,32 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c69e23cec8e7e1362fa6cb692ee5aca7",
-        "x-ms-correlation-request-id": "764b0da6-c0fc-48b4-8749-4f2e434d3110",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49955,Microsoft.Compute/GetOperation30Min;399838",
-        "x-ms-ratelimit-remaining-subscription-reads": "9499",
-        "x-ms-request-id": "beb859d2-45dd-4832-b9e9-a9532fee46b5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022645Z:764b0da6-c0fc-48b4-8749-4f2e434d3110",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "4aa79212aface72dc1ec56a53fe95977",
+        "x-ms-correlation-request-id": "1994d114-7cd6-41c7-96d6-1c2b5ccb20cf",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49941,Microsoft.Compute/GetOperation30Min;399760",
+        "x-ms-ratelimit-remaining-subscription-reads": "8886",
+        "x-ms-request-id": "f0806773-d65b-47c5-8c9a-ac903faf07c0",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073518Z:1994d114-7cd6-41c7-96d6-1c2b5ccb20cf",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022InProgress\u0022,\r\n",
-        "  \u0022name\u0022: \u002229aaef23-4870-49c1-babf-56b81ee867c1\u0022\r\n",
+        "  \u0022name\u0022: \u00227de4ad28-dd64-49b9-87d3-7f5913f54cba\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/eastus2/DiskOperations/29aaef23-4870-49c1-babf-56b81ee867c1?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus2/DiskOperations/7de4ad28-dd64-49b9-87d3-7f5913f54cba?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "c1f3af72f4bf9eaceabbb026c754ebfb",
+        "x-ms-client-request-id": "3fa0bad4588ae21a929fafbc4795cfd1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1840,7 +1885,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1210",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:46 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1849,23 +1894,23 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c1f3af72f4bf9eaceabbb026c754ebfb",
-        "x-ms-correlation-request-id": "1c46c502-3617-471d-bce5-f4ff606fd217",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49953,Microsoft.Compute/GetOperation30Min;399836",
-        "x-ms-ratelimit-remaining-subscription-reads": "9498",
-        "x-ms-request-id": "31433009-3eba-4773-a1d6-737287a85e29",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022646Z:1c46c502-3617-471d-bce5-f4ff606fd217",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "3fa0bad4588ae21a929fafbc4795cfd1",
+        "x-ms-correlation-request-id": "75919a9a-f825-4aff-90be-f55fd6074029",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/GetOperation3Min;49938,Microsoft.Compute/GetOperation30Min;399757",
+        "x-ms-ratelimit-remaining-subscription-reads": "8885",
+        "x-ms-request-id": "e6ff7ae6-6f86-47b6-bc01-f7e01532605c",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073519Z:75919a9a-f825-4aff-90be-f55fd6074029",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022startTime\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
-        "  \u0022endTime\u0022: \u00222020-09-11T02:26:45.2012634\u002B00:00\u0022,\r\n",
+        "  \u0022startTime\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
+        "  \u0022endTime\u0022: \u00222020-10-06T07:35:18.7621032\u002B00:00\u0022,\r\n",
         "  \u0022status\u0022: \u0022Succeeded\u0022,\r\n",
         "  \u0022properties\u0022: {\r\n",
         "    \u0022output\u0022: {\r\n",
-        "  \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1876,36 +1921,36 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022f77f41d5-9b36-4b3d-8c85-dae31557bcee\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u002281eb3168-2420-4c9d-9419-0c85e2bf0923\u0022\r\n",
         "  }\r\n",
         "}\r\n",
         "  },\r\n",
-        "  \u0022name\u0022: \u002229aaef23-4870-49c1-babf-56b81ee867c1\u0022\r\n",
+        "  \u0022name\u0022: \u00227de4ad28-dd64-49b9-87d3-7f5913f54cba\u0022\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp1699?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp2753?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "14ce56fbd3108ccef260216b59c72f38",
+        "x-ms-client-request-id": "464deff6bb51aed7e97fed2fe130b95b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1914,7 +1959,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "985",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:46 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1923,18 +1968,18 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "14ce56fbd3108ccef260216b59c72f38",
-        "x-ms-correlation-request-id": "36061d89-fb6b-4aef-8174-bad8cab3f2b1",
-        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4940,Microsoft.Compute/LowCostGet30Min;39802",
-        "x-ms-ratelimit-remaining-subscription-reads": "9497",
-        "x-ms-request-id": "b0700920-eaed-45fb-9385-b02a0012dd9d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022646Z:36061d89-fb6b-4aef-8174-bad8cab3f2b1",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-client-request-id": "464deff6bb51aed7e97fed2fe130b95b",
+        "x-ms-correlation-request-id": "7d8409ee-c973-4489-9469-ac0c11f1a4fd",
+        "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/LowCostGet3Min;4947,Microsoft.Compute/LowCostGet30Min;39773",
+        "x-ms-ratelimit-remaining-subscription-reads": "8884",
+        "x-ms-request-id": "5023916a-4cfe-490b-9f19-0ea68a321dbd",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073519Z:7d8409ee-c973-4489-9469-ac0c11f1a4fd",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "  \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "  \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "  \u0022sku\u0022: {\r\n",
@@ -1945,34 +1990,34 @@
         "    \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "    \u0022creationData\u0022: {\r\n",
         "      \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "      \u0022sourceUniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "      \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "      \u0022sourceUniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
         "    },\r\n",
         "    \u0022diskSizeGB\u0022: 5,\r\n",
         "    \u0022encryption\u0022: {\r\n",
         "      \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "    },\r\n",
         "    \u0022incremental\u0022: false,\r\n",
-        "    \u0022timeCreated\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
+        "    \u0022timeCreated\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
         "    \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "    \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "    \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "    \u0022uniqueId\u0022: \u0022f77f41d5-9b36-4b3d-8c85-dae31557bcee\u0022\r\n",
+        "    \u0022uniqueId\u0022: \u002281eb3168-2420-4c9d-9419-0c85e2bf0923\u0022\r\n",
         "  }\r\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "89fda42e56d7daac7600db2b170f1adb",
+        "x-ms-client-request-id": "74d2f7707eeeba5277c4b70d0071a02c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1981,7 +2026,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "2222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:47 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -1990,20 +2035,20 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "89fda42e56d7daac7600db2b170f1adb",
-        "x-ms-correlation-request-id": "d1bbbef1-493a-475d-a17a-a6b155d03941",
+        "x-ms-client-request-id": "74d2f7707eeeba5277c4b70d0071a02c",
+        "x-ms-correlation-request-id": "fc97e33f-6c13-4bff-856a-8cd69e9d5ff8",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostGet3Min;236,Microsoft.Compute/HighCostGet30Min;1907",
-        "x-ms-ratelimit-remaining-subscription-reads": "9496",
-        "x-ms-request-id": "baf9ca5d-ed9d-4918-9e2b-7bde9ceaf582",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022647Z:d1bbbef1-493a-475d-a17a-a6b155d03941",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-reads": "8883",
+        "x-ms-request-id": "98e4e93b-6353-4eba-9365-037b9482150d",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073520Z:fc97e33f-6c13-4bff-856a-8cd69e9d5ff8",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022value\u0022: [\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2014,24 +2059,24 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:36.4352193\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u002291987f4d-2c63-489f-bcc0-39d87b13c1dc\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u002244de97a5-ed1b-48b4-9eba-68aa491ad191\u0022\r\n",
         "      }\r\n",
         "    },\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2042,19 +2087,19 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:10.5898597\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u00223291256e-49bd-4f43-ab4f-19050a294659\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u00226b39d8da-fa7c-41dc-a501-9eac028a5ec4\u0022\r\n",
         "      }\r\n",
         "    }\r\n",
         "  ]\r\n",
@@ -2062,16 +2107,16 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "d76ecfba98169e97e166ce5fd3404423",
+        "x-ms-client-request-id": "4faf841d129b1825e3f1560a6aeb0162",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -2080,7 +2125,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "2222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:47 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -2089,20 +2134,20 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d76ecfba98169e97e166ce5fd3404423",
-        "x-ms-correlation-request-id": "bfce08e7-21ab-4ecd-9e35-d2a343ffa3de",
+        "x-ms-client-request-id": "4faf841d129b1825e3f1560a6aeb0162",
+        "x-ms-correlation-request-id": "07cf6541-2266-48d3-b9bb-d0312a509154",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostGet3Min;235,Microsoft.Compute/HighCostGet30Min;1906",
-        "x-ms-ratelimit-remaining-subscription-reads": "9495",
-        "x-ms-request-id": "75dc4285-7ffc-466c-a506-f96a76632b9a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022647Z:bfce08e7-21ab-4ecd-9e35-d2a343ffa3de",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-reads": "8882",
+        "x-ms-request-id": "55506e16-171c-4576-b6a6-dc2a91f95ff1",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073520Z:07cf6541-2266-48d3-b9bb-d0312a509154",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022value\u0022: [\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2113,24 +2158,24 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u0022f77f41d5-9b36-4b3d-8c85-dae31557bcee\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u002281eb3168-2420-4c9d-9419-0c85e2bf0923\u0022\r\n",
         "      }\r\n",
         "    },\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2141,19 +2186,19 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:40.5916647\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:16.2150619\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u0022754d4c2e-cae3-4958-afea-8875773e55be\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u0022d0ce3ca6-db0c-4757-98b6-d304837e2aec\u0022\r\n",
         "      }\r\n",
         "    }\r\n",
         "  ]\r\n",
@@ -2161,16 +2206,16 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/snapshots?api-version=2019-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20200910.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Compute/1.0.0-alpha.20201005.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "22f7788b6156a424aaf39d10f8a275e3",
+        "x-ms-client-request-id": "504c53e55ac277e29d93cf8c04c9ae78",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -2179,7 +2224,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4422",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 11 Sep 2020 02:26:47 GMT",
+        "Date": "Tue, 06 Oct 2020 07:35:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -2188,20 +2233,76 @@
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "22f7788b6156a424aaf39d10f8a275e3",
-        "x-ms-correlation-request-id": "619e9480-4661-4592-9efb-958d5c598b99",
+        "x-ms-client-request-id": "504c53e55ac277e29d93cf8c04c9ae78",
+        "x-ms-correlation-request-id": "8fe363e0-f9b5-416b-a5c6-b69bc2dfa24b",
         "x-ms-ratelimit-remaining-resource": "Microsoft.Compute/HighCostGet3Min;234,Microsoft.Compute/HighCostGet30Min;1905",
-        "x-ms-ratelimit-remaining-subscription-reads": "9494",
-        "x-ms-request-id": "72d19cb7-d142-4df4-ba9c-916edba1f5c5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20200911T022647Z:619e9480-4661-4592-9efb-958d5c598b99",
-        "x-ms-served-by": "050fbb3e-0d5d-4de3-994b-700908574f84_132422492084457793"
+        "x-ms-ratelimit-remaining-subscription-reads": "8881",
+        "x-ms-request-id": "cb22ecf3-d85d-4a79-8dee-03e3e5b229aa",
+        "x-ms-routing-request-id": "WESTUS2:20201006T073520Z:8fe363e0-f9b5-416b-a5c6-b69bc2dfa24b",
+        "x-ms-served-by": "1063d3e2-cc41-4535-a0cf-9d95f72e299d_132321759119482073"
       },
       "ResponseBody": [
         "{\r\n",
         "  \u0022value\u0022: [\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR4030/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CRPTESTAR2340/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
+        "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
+        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "      \u0022sku\u0022: {\r\n",
+        "        \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "        \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "      },\r\n",
+        "      \u0022properties\u0022: {\r\n",
+        "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "        \u0022creationData\u0022: {\r\n",
+        "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u0022754d5cc9-c478-4eb5-87f7-359f82077128\u0022\r\n",
+        "        },\r\n",
+        "        \u0022diskSizeGB\u0022: 5,\r\n",
+        "        \u0022encryption\u0022: {\r\n",
+        "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "        },\r\n",
+        "        \u0022incremental\u0022: false,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:18.3870687\u002B00:00\u0022,\r\n",
+        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "        \u0022uniqueId\u0022: \u002281eb3168-2420-4c9d-9419-0c85e2bf0923\u0022\r\n",
+        "      }\r\n",
+        "    },\r\n",
+        "    {\r\n",
+        "      \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CRPTESTAR2340/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
+        "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
+        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
+        "      \u0022sku\u0022: {\r\n",
+        "        \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
+        "        \u0022tier\u0022: \u0022Standard\u0022\r\n",
+        "      },\r\n",
+        "      \u0022properties\u0022: {\r\n",
+        "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
+        "        \u0022creationData\u0022: {\r\n",
+        "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar2340/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u00223a57dfa9-2c5b-4100-8857-545f9a9a0ce7\u0022\r\n",
+        "        },\r\n",
+        "        \u0022diskSizeGB\u0022: 5,\r\n",
+        "        \u0022encryption\u0022: {\r\n",
+        "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
+        "        },\r\n",
+        "        \u0022incremental\u0022: false,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:16.2150619\u002B00:00\u0022,\r\n",
+        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
+        "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
+        "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
+        "        \u0022uniqueId\u0022: \u0022d0ce3ca6-db0c-4757-98b6-d304837e2aec\u0022\r\n",
+        "      }\r\n",
+        "    },\r\n",
+        "    {\r\n",
+        "      \u0022name\u0022: \u0022diskrp2753\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CRPTESTAR4150/providers/Microsoft.Compute/snapshots/diskrp2753\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2212,24 +2313,24 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u0022bdbf6811-3d13-4ade-8c43-ad00bd24a40b\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp2852\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u00223cebd033-e05f-432d-af81-67fa6127ad9d\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:36.4352193\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:12.7930339\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u002291987f4d-2c63-489f-bcc0-39d87b13c1dc\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u002244de97a5-ed1b-48b4-9eba-68aa491ad191\u0022\r\n",
         "      }\r\n",
         "    },\r\n",
         "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR4030/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
+        "      \u0022name\u0022: \u0022diskrp9066\u0022,\r\n",
+        "      \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/CRPTESTAR4150/providers/Microsoft.Compute/snapshots/diskrp9066\u0022,\r\n",
         "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
         "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
         "      \u0022sku\u0022: {\r\n",
@@ -2240,75 +2341,19 @@
         "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
         "        \u0022creationData\u0022: {\r\n",
         "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar4030/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u002270b0f16f-054c-40f9-8bdf-747af5464bce\u0022\r\n",
+        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/crptestar4150/providers/Microsoft.Compute/disks/diskrp1025\u0022,\r\n",
+        "          \u0022sourceUniqueId\u0022: \u0022c2881bda-8adb-48e4-888f-618153bb5f8b\u0022\r\n",
         "        },\r\n",
         "        \u0022diskSizeGB\u0022: 5,\r\n",
         "        \u0022encryption\u0022: {\r\n",
         "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
         "        },\r\n",
         "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:32.2944068\u002B00:00\u0022,\r\n",
+        "        \u0022timeCreated\u0022: \u00222020-10-06T07:35:10.5898597\u002B00:00\u0022,\r\n",
         "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
         "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
         "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u00223291256e-49bd-4f43-ab4f-19050a294659\u0022\r\n",
-        "      }\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp1699\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR7429/providers/Microsoft.Compute/snapshots/diskrp1699\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "      \u0022sku\u0022: {\r\n",
-        "        \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "        \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "        \u0022creationData\u0022: {\r\n",
-        "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp8155\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u002281f3ad62-5f88-447d-b1db-523b88cdd605\u0022\r\n",
-        "        },\r\n",
-        "        \u0022diskSizeGB\u0022: 5,\r\n",
-        "        \u0022encryption\u0022: {\r\n",
-        "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "        },\r\n",
-        "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:44.7324924\u002B00:00\u0022,\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u0022f77f41d5-9b36-4b3d-8c85-dae31557bcee\u0022\r\n",
-        "      }\r\n",
-        "    },\r\n",
-        "    {\r\n",
-        "      \u0022name\u0022: \u0022diskrp7850\u0022,\r\n",
-        "      \u0022id\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/CRPTESTAR7429/providers/Microsoft.Compute/snapshots/diskrp7850\u0022,\r\n",
-        "      \u0022type\u0022: \u0022Microsoft.Compute/snapshots\u0022,\r\n",
-        "      \u0022location\u0022: \u0022eastus2\u0022,\r\n",
-        "      \u0022sku\u0022: {\r\n",
-        "        \u0022name\u0022: \u0022Standard_LRS\u0022,\r\n",
-        "        \u0022tier\u0022: \u0022Standard\u0022\r\n",
-        "      },\r\n",
-        "      \u0022properties\u0022: {\r\n",
-        "        \u0022osType\u0022: \u0022Linux\u0022,\r\n",
-        "        \u0022creationData\u0022: {\r\n",
-        "          \u0022createOption\u0022: \u0022Copy\u0022,\r\n",
-        "          \u0022sourceResourceId\u0022: \u0022/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/crptestar7429/providers/Microsoft.Compute/disks/diskrp7516\u0022,\r\n",
-        "          \u0022sourceUniqueId\u0022: \u00225c7eac05-16f6-4fe5-9372-0886076222f4\u0022\r\n",
-        "        },\r\n",
-        "        \u0022diskSizeGB\u0022: 5,\r\n",
-        "        \u0022encryption\u0022: {\r\n",
-        "          \u0022type\u0022: \u0022EncryptionAtRestWithPlatformKey\u0022\r\n",
-        "        },\r\n",
-        "        \u0022incremental\u0022: false,\r\n",
-        "        \u0022timeCreated\u0022: \u00222020-09-11T02:26:40.5916647\u002B00:00\u0022,\r\n",
-        "        \u0022provisioningState\u0022: \u0022Succeeded\u0022,\r\n",
-        "        \u0022diskState\u0022: \u0022Unattached\u0022,\r\n",
-        "        \u0022diskSizeBytes\u0022: 5368709120,\r\n",
-        "        \u0022uniqueId\u0022: \u0022754d4c2e-cae3-4958-afea-8875773e55be\u0022\r\n",
+        "        \u0022uniqueId\u0022: \u00226b39d8da-fa7c-41dc-a501-9eac028a5ec4\u0022\r\n",
         "      }\r\n",
         "    }\r\n",
         "  ]\r\n",
@@ -2317,7 +2362,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "590185273",
-    "SUBSCRIPTION_ID": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+    "RandomSeed": "2120381694",
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

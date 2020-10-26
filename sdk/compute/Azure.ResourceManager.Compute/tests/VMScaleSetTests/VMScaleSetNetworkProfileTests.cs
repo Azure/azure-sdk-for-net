@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests

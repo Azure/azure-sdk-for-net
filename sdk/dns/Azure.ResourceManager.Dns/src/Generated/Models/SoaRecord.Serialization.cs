@@ -76,26 +76,51 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (property.NameEquals("serialNumber"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serialNumber = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("refreshTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     refreshTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("retryTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retryTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("expireTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     expireTime = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("minimumTTL"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimumTTL = property.Value.GetInt64();
                     continue;
                 }

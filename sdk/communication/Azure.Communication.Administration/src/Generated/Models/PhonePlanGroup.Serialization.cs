@@ -29,6 +29,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("phoneNumberType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
@@ -44,11 +49,21 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("carrierDetails"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     carrierDetails = CarrierDetails.DeserializeCarrierDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rateInformation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rateInformation = RateInformation.DeserializeRateInformation(property.Value);
                     continue;
                 }

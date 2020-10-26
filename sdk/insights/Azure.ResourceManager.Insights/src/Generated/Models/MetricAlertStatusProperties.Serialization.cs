@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("dimensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -38,6 +43,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

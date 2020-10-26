@@ -70,6 +70,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.Messaging.ServiceBus.ServiceBusSharedAccessKeyCredential credential) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.Messaging.ServiceBus.ServiceBusSharedAccessKeyCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public string FullyQualifiedNamespace { get { throw null; } }
         public bool IsClosed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
@@ -198,7 +200,6 @@ namespace Azure.Messaging.ServiceBus
         public bool IsProcessing { get { throw null; } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
         public int MaxConcurrentCalls { get { throw null; } }
-        public System.TimeSpan? MaxReceiveWaitTime { get { throw null; } }
         public int PrefetchCount { get { throw null; } }
         public Azure.Messaging.ServiceBus.ReceiveMode ReceiveMode { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
@@ -376,7 +377,6 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
         public int MaxConcurrentCallsPerSession { get { throw null; } }
         public int MaxConcurrentSessions { get { throw null; } }
-        public System.TimeSpan? MaxReceiveWaitTime { get { throw null; } }
         public int PrefetchCount { get { throw null; } }
         public Azure.Messaging.ServiceBus.ReceiveMode ReceiveMode { get { throw null; } }
         public event System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ProcessErrorAsync { add { } remove { } }
@@ -431,6 +431,22 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public sealed partial class ServiceBusSharedAccessKeyCredential
+    {
+        public ServiceBusSharedAccessKeyCredential(string sharedAccessSignature) { }
+        public ServiceBusSharedAccessKeyCredential(string sharedAccessKeyName, string sharedAccessKey) { }
+        public string SharedAccessKey { get { throw null; } }
+        public string SharedAccessKeyName { get { throw null; } }
+        public string SharedAccessSignature { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+        public void UpdateSharedAccessKey(string keyName, string keyValue) { }
+        public void UpdateSharedAccessSignature(string sharedAccessSignature) { }
     }
     public enum ServiceBusTransportType
     {
@@ -716,6 +732,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }
         public ServiceBusAdministrationClient(string connectionString, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Messaging.ServiceBus.ServiceBusSharedAccessKeyCredential credential) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Messaging.ServiceBus.ServiceBusSharedAccessKeyCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Administration.QueueProperties>> CreateQueueAsync(Azure.Messaging.ServiceBus.Administration.CreateQueueOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Administration.QueueProperties>> CreateQueueAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.ServiceBus.Administration.RuleProperties>> CreateRuleAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.Administration.CreateRuleOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

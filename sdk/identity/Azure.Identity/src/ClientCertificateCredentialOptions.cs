@@ -22,7 +22,7 @@ namespace Azure.Identity
         /// <summary>
         /// Will include x5c header to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        public bool IncludeX5CCliamHeader { get; set; }
+        public bool IncludeX5CClaimHeader { get; set; }
 
         bool ITokenCacheOptions.EnablePersistentCache => EnablePersistentCache;
 

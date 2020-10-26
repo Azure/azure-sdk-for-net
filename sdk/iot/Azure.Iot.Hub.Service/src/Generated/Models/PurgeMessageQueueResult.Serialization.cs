@@ -21,6 +21,11 @@ namespace Azure.Iot.Hub.Service.Models
             {
                 if (property.NameEquals("totalMessagesPurged"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     totalMessagesPurged = property.Value.GetInt32();
                     continue;
                 }

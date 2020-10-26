@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateAddRequest(IEnumerable<object> models, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions)
+        internal HttpMessage CreateAddRequest(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,13 +53,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsAddOptions?.Traceparent != null)
+            if (digitalTwinModelsAddOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsAddOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsAddOptions.TraceParent);
             }
-            if (digitalTwinModelsAddOptions?.Tracestate != null)
+            if (digitalTwinModelsAddOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsAddOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsAddOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -92,7 +92,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models = null, DigitalTwinModelsAddOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             _pipeline.Send(message, cancellationToken);
@@ -171,13 +171,13 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.Traceparent != null)
+            if (digitalTwinModelsListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsListOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsListOptions.TraceParent);
             }
-            if (digitalTwinModelsListOptions?.Tracestate != null)
+            if (digitalTwinModelsListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsListOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsListOptions.TraceState);
             }
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {
@@ -251,7 +251,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateGetByIdRequest(string id, bool? includeModelDefinition, DigitalTwinModelsGetByIdOptions digitalTwinModelsGetByIdOptions)
+        internal HttpMessage CreateGetByIdRequest(string id, bool? includeModelDefinition, GetModelOptions digitalTwinModelsGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,13 +266,13 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsGetByIdOptions?.Traceparent != null)
+            if (digitalTwinModelsGetByIdOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsGetByIdOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsGetByIdOptions.TraceParent);
             }
-            if (digitalTwinModelsGetByIdOptions?.Tracestate != null)
+            if (digitalTwinModelsGetByIdOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsGetByIdOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsGetByIdOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -293,7 +293,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<DigitalTwinsModelData>> GetByIdAsync(string id, bool? includeModelDefinition = null, DigitalTwinModelsGetByIdOptions digitalTwinModelsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DigitalTwinsModelData>> GetByIdAsync(string id, bool? includeModelDefinition = null, GetModelOptions digitalTwinModelsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -331,7 +331,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsGetByIdOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<DigitalTwinsModelData> GetById(string id, bool? includeModelDefinition = null, DigitalTwinModelsGetByIdOptions digitalTwinModelsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        public Response<DigitalTwinsModelData> GetById(string id, bool? includeModelDefinition = null, GetModelOptions digitalTwinModelsGetByIdOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -354,7 +354,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> updateModel, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions)
+        internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -365,13 +365,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsUpdateOptions?.Traceparent != null)
+            if (digitalTwinModelsUpdateOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsUpdateOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsUpdateOptions.TraceParent);
             }
-            if (digitalTwinModelsUpdateOptions?.Tracestate != null)
+            if (digitalTwinModelsUpdateOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsUpdateOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsUpdateOptions.TraceState);
             }
             request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
@@ -404,7 +404,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsUpdateOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateModel"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string id, IEnumerable<object> updateModel, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -444,7 +444,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsUpdateOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateModel"/> is null. </exception>
-        public Response Update(string id, IEnumerable<object> updateModel, DigitalTwinModelsUpdateOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
+        public Response Update(string id, IEnumerable<object> updateModel, DecomissionModelOptions digitalTwinModelsUpdateOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -466,7 +466,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string id, DigitalTwinModelsDeleteOptions digitalTwinModelsDeleteOptions)
+        internal HttpMessage CreateDeleteRequest(string id, DeleteModelOptions digitalTwinModelsDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -477,13 +477,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsDeleteOptions?.Traceparent != null)
+            if (digitalTwinModelsDeleteOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsDeleteOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsDeleteOptions.TraceParent);
             }
-            if (digitalTwinModelsDeleteOptions?.Tracestate != null)
+            if (digitalTwinModelsDeleteOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsDeleteOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsDeleteOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -505,7 +505,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, DigitalTwinModelsDeleteOptions digitalTwinModelsDeleteOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string id, DeleteModelOptions digitalTwinModelsDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -539,7 +539,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinModelsDeleteOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Delete(string id, DigitalTwinModelsDeleteOptions digitalTwinModelsDeleteOptions = null, CancellationToken cancellationToken = default)
+        public Response Delete(string id, DeleteModelOptions digitalTwinModelsDeleteOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -566,13 +566,13 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.Traceparent != null)
+            if (digitalTwinModelsListOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinModelsListOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinModelsListOptions.TraceParent);
             }
-            if (digitalTwinModelsListOptions?.Tracestate != null)
+            if (digitalTwinModelsListOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinModelsListOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinModelsListOptions.TraceState);
             }
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {

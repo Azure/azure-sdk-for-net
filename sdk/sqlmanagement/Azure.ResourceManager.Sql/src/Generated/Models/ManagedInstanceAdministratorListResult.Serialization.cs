@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceAdministrator> array = new List<ManagedInstanceAdministrator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("actionGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ActivityLogAlertActionGroup> array = new List<ActivityLogAlertActionGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
