@@ -36,3 +36,10 @@ directive:
 #payload-flattening-threshold: 1
 #namespace: Azure.DigitalTwins.Core
 ```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.name=='If-None-Match')]
+  transform: delete $.enum;
+```
