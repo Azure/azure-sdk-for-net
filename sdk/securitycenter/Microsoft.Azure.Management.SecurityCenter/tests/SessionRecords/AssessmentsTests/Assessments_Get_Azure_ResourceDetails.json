@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm/providers/Microsoft.Security/assessments/f9f0eed0-f143-47bf-b856-671ea2eeed62?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL215U2VydmljZTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9zeXNsb2dteXNlcnZpY2Uxdm0vcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9hc3Nlc3NtZW50cy9mOWYwZWVkMC1mMTQzLTQ3YmYtYjg1Ni02NzFlYTJlZWVkNjI/YXBpLXZlcnNpb249MjAyMC0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "19ff31dc-a67c-4db0-b6e1-f9b55e6c7fa7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "612d76e3-bfad-4da7-b309-4ccc72614265"
+        ],
+        "x-ms-correlation-request-id": [
+          "612d76e3-bfad-4da7-b309-4ccc72614265"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201026T140754Z:612d76e3-bfad-4da7-b309-4ccc72614265"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2020 14:07:54 GMT"
+        ],
+        "Content-Length": [
+          "779"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Security/assessments\",\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm/providers/Microsoft.Security/assessments/f9f0eed0-f143-47bf-b856-671ea2eeed62\",\r\n  \"name\": \"f9f0eed0-f143-47bf-b856-671ea2eeed62\",\r\n  \"properties\": {\r\n    \"resourceDetails\": {\r\n      \"Source\": \"Azure\",\r\n      \"Id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm\"\r\n    },\r\n    \"displayName\": \"Adaptive Network Hardening recommendations should be applied on internet facing virtual machines\",\r\n    \"status\": {\r\n      \"code\": \"NotApplicable\",\r\n      \"cause\": \"NoNsgOnVm\",\r\n      \"description\": \"This recommendation is relevant only for VMs protected by a network security group\"\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

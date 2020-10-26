@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm/providers/Microsoft.Security/assessments/f9f0eed0-f143-47bf-b856-671ea2eeed62?api-version=2020-01-01&$expand=metadata",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL215U2VydmljZTEvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9zeXNsb2dteXNlcnZpY2Uxdm0vcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9hc3Nlc3NtZW50cy9mOWYwZWVkMC1mMTQzLTQ3YmYtYjg1Ni02NzFlYTJlZWVkNjI/YXBpLXZlcnNpb249MjAyMC0wMS0wMSYkZXhwYW5kPW1ldGFkYXRh",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9ac013c1-8544-4595-b2cf-b7bb42073163"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "209fdc42-9e37-4fd6-9e0f-c6ac85ed7938"
+        ],
+        "x-ms-correlation-request-id": [
+          "209fdc42-9e37-4fd6-9e0f-c6ac85ed7938"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201026T135933Z:209fdc42-9e37-4fd6-9e0f-c6ac85ed7938"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 26 Oct 2020 13:59:32 GMT"
+        ],
+        "Content-Length": [
+          "2813"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Security/assessments\",\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm/providers/Microsoft.Security/assessments/f9f0eed0-f143-47bf-b856-671ea2eeed62\",\r\n  \"name\": \"f9f0eed0-f143-47bf-b856-671ea2eeed62\",\r\n  \"properties\": {\r\n    \"resourceDetails\": {\r\n      \"Source\": \"Azure\",\r\n      \"Id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/myService1/providers/Microsoft.Compute/virtualMachines/syslogmyservice1vm\"\r\n    },\r\n    \"displayName\": \"Adaptive Network Hardening recommendations should be applied on internet facing virtual machines\",\r\n    \"status\": {\r\n      \"code\": \"NotApplicable\",\r\n      \"cause\": \"NoNsgOnVm\",\r\n      \"description\": \"This recommendation is relevant only for VMs protected by a network security group\"\r\n    },\r\n    \"metadata\": {\r\n      \"displayName\": \"Adaptive Network Hardening recommendations should be applied on internet facing virtual machines\",\r\n      \"assessmentType\": \"BuiltIn\",\r\n      \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/08e6af2d-db70-460a-bfe9-d5bd474ba9d6\",\r\n      \"description\": \"Azure Security Center has analyzed the internet traffic communication patterns of the virtual machines listed below, and determined that the existing rules in the NSGs associated to them are overly permissive, resulting in an increased potential attack surface.<br>This typically occurs when this IP address doesn't communicate regularly with this resource. Alternatively, the IP address has been flagged as malicious by Security Center's threat intelligence sources. <a href=\\\"https://docs.microsoft.com/en-us/azure/security-center/security-center-adaptive-network-hardening\\\">learn more</a>\",\r\n      \"remediationDescription\": \"To harden the Network Security Group traffic rules, enforce the recommended rules by following the steps below or manually edit the rules directly on the Network Security Group:<br><ol><li>Select a VM from the list below, or click \\\"Take action\\\" if you've arrived from a specific VM's recommendation blade.<li>Click the \\\"Rules\\\" tab.<li>If you want to modify a recommended rule's parameters:<ul><li>In the rule that you want to change, select the three dots and select \\\"Edit rule\\\". The \\\"Edit rule\\\" blade opens.<li>Modify the parameters that you want to change and click \\\"Save\\\". The blade closes.</ul><li>If you want to create a new rule:<ul><li>Click \\\"Add rule\\\" (in the top left corner). The \\\"Edit rule\\\" blade opens.<li>Fill in the parameters and click \\\"Add rule\\\". The pane closes and the new rule is listed in the Rules tab.</ul><li>Select the rules that you want to apply (including any rules that you edited or added) and click \\\"Enforce\\\".</ol>\",\r\n      \"categories\": [\r\n        \"Networking\"\r\n      ],\r\n      \"severity\": \"High\",\r\n      \"userImpact\": \"Moderate\",\r\n      \"implementationEffort\": \"Moderate\",\r\n      \"threats\": [\r\n        \"MaliciousInsider\",\r\n        \"DataSpillage\",\r\n        \"DataExfiltration\"\r\n      ]\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

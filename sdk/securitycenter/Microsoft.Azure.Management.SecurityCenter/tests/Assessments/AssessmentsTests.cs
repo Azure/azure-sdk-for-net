@@ -69,7 +69,23 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var ret = securityCenterClient.Assessments.Get(scope, AssessmentName);
+                
                 Assert.NotNull(ret);
+            }
+        }
+
+        [Fact]
+        public void Assessments_Get_Azure_ResourceDetails()
+        {
+            string scope = $"subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/virtualMachines/{VirtualMachineName}";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var securityCenterClient = GetSecurityCenterClient(context);
+                var ret = securityCenterClient.Assessments.Get(scope, AssessmentName);
+                var idFromResourceDetails = (ret.ResourceDetails as AssessmentAzureResourceDetails)?.Id;
+
+                Assert.NotNull(idFromResourceDetails);
             }
         }
 
