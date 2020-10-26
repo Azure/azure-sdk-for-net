@@ -7,7 +7,9 @@ To create a new `TextAnalyticsClient` to run analyze operation for a document, y
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-```C# Snippet:TextAnalyticsSample4CreateClient
+```C# Snippet:CreateTextAnalyticsClient
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
 var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
