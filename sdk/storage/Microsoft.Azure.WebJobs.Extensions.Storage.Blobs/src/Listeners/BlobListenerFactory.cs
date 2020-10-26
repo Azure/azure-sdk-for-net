@@ -22,7 +22,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
     {
         private const string SingletonBlobListenerScopeId = "WebJobs.Internal.Blobs";
         private readonly IHostIdProvider _hostIdProvider;
-        private readonly QueuesOptions _queueOptions;
         private readonly BlobsOptions _blobsOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IContextSetter<IBlobWrittenWatcher> _blobWrittenWatcherSetter;
@@ -40,7 +39,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
         private readonly IHostSingletonManager _singletonManager;
 
         public BlobListenerFactory(IHostIdProvider hostIdProvider,
-            QueuesOptions queueOptions,
             BlobsOptions blobsOptions,
             IWebJobsExceptionHandler exceptionHandler,
             IContextSetter<IBlobWrittenWatcher> blobWrittenWatcherSetter,
@@ -58,7 +56,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             IHostSingletonManager singletonManager)
         {
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
-            _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
             _blobsOptions = blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _blobWrittenWatcherSetter = blobWrittenWatcherSetter ?? throw new ArgumentNullException(nameof(blobWrittenWatcherSetter));
@@ -106,21 +103,13 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             // notification queue and dispatch to the target job function.
             SharedBlobQueueListener sharedBlobQueueListener = _sharedContextProvider.GetOrCreateInstance<SharedBlobQueueListener>(
                 new SharedBlobQueueListenerFactory(_hostQueueServiceClient, sharedQueueWatcher, hostBlobTriggerQueue,
-                    _queueOptions, _exceptionHandler, _loggerFactory, sharedBlobListener.BlobWritterWatcher, _functionDescriptor));
+                    _blobsOptions, _exceptionHandler, _loggerFactory, sharedBlobListener.BlobWritterWatcher, _functionDescriptor));
             var queueListener = new BlobListener(sharedBlobQueueListener);
 
-            // determine which client to use for the poison queue
+            // the client to use for the poison queue
             // by default this should target the same storage account
             // as the blob container we're monitoring
             var poisonQueueClient = targetQueueClient;
-            if (
-                // _dataAccount.Type != StorageAccountType.GeneralPurpose || $$$
-                _blobsOptions.CentralizedPoisonQueue)
-            {
-                // use the primary storage account if the centralize flag is true,
-                // or if the target storage account doesn't support queues
-                poisonQueueClient = primaryQueueClient;
-            }
 
             // Register our function with the shared blob queue listener
             RegisterWithSharedBlobQueueListenerAsync(sharedBlobQueueListener, targetBlobClient, poisonQueueClient);

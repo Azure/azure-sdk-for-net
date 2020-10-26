@@ -25,7 +25,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
         private readonly BlobServiceClientProvider _blobServiceClientProvider;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly IHostIdProvider _hostIdProvider;
-        private readonly QueuesOptions _queueOptions;
         private readonly BlobsOptions _blobsOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IContextSetter<IBlobWrittenWatcher> _blobWrittenWatcherSetter;
@@ -39,7 +38,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             BlobServiceClientProvider blobServiceClientProvider,
             QueueServiceClientProvider queueServiceClientProvider,
             IHostIdProvider hostIdProvider,
-            IOptions<QueuesOptions> queueOptions,
             IOptions<BlobsOptions> blobsOptions,
             IWebJobsExceptionHandler exceptionHandler,
             IContextSetter<IBlobWrittenWatcher> blobWrittenWatcherSetter,
@@ -51,7 +49,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
             _blobServiceClientProvider = blobServiceClientProvider ?? throw new ArgumentNullException(nameof(blobServiceClientProvider));
             _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
             _hostIdProvider = hostIdProvider ?? throw new ArgumentNullException(nameof(hostIdProvider));
-            _queueOptions = (queueOptions ?? throw new ArgumentNullException(nameof(queueOptions))).Value;
             _blobsOptions = (blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions))).Value;
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _blobWrittenWatcherSetter = blobWrittenWatcherSetter ?? throw new ArgumentNullException(nameof(blobWrittenWatcherSetter));
@@ -87,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers
 
             ITriggerBinding binding = new BlobTriggerBinding(parameter, hostBlobServiceClient, hostQueueServiceClient,
                 dataBlobServiceClient, dataQueueServiceClient, path,
-                _hostIdProvider, _queueOptions, _blobsOptions, _exceptionHandler, _blobWrittenWatcherSetter,
+                _hostIdProvider, _blobsOptions, _exceptionHandler, _blobWrittenWatcherSetter,
                 _messageEnqueuedWatcherSetter, _sharedContextProvider, _singletonManager, _loggerFactory);
 
             return Task.FromResult(binding);
