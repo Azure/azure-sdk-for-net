@@ -81,6 +81,6 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// Additional properties defined in the model. This field will contain any properties of the relationship that are not already defined by the other strong types of this class.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> CustomProperties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
     }
 }

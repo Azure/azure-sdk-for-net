@@ -93,6 +93,6 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// Additional properties of the digital twin. This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> CustomProperties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
     }
 }
