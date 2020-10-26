@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Serialization
     ///     },
     /// };
     ///
-    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId, basicTwin);
+    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId, basicTwin);
     /// Console.WriteLine($&quot;Created digital twin &apos;{createDigitalTwinResponse.Value.Id}&apos;.&quot;);
     /// </code>
     ///
