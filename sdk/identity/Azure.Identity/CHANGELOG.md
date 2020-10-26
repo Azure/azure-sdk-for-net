@@ -2,6 +2,7 @@
 ## 1.3.0-beta.3 (Unreleased)
 
 ### Breaking Changes
+- Rename property `IncludeX5CClaimHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.4.0-beta.1.
   - Removed class `AuthenticationRecord`
   - Removed class `AuthenticationRequiredException`
