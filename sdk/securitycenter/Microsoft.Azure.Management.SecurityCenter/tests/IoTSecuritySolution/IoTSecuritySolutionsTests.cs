@@ -69,9 +69,13 @@ namespace SecurityCenter.Tests
 
             var udrp = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"v2\"", new[] { SubscriptionId });
 
-            IoTSecuritySolutionModel iotSecuritySolutionData = new IoTSecuritySolutionModel(
-                WorkspaceResourceId, $"{SolutionName}-{WorkspaceName}", new[] { IotHubResourceId },
-                location: AscLocation, userDefinedResources: udrp);
+            var iotSecuritySolutionData = new IoTSecuritySolutionModel() {
+                Workspace = WorkspaceResourceId,
+                DisplayName = $"{SolutionName}-{WorkspaceName}",
+                IotHubs = new[] { IotHubResourceId },
+                Location = AscLocation,
+                UserDefinedResources = udrp,
+            };
 
             using (var context = MockContext.Start(this.GetType()))
             {
