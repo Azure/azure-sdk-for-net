@@ -12,8 +12,4 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>
