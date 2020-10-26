@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -74,7 +74,7 @@
       "ResponseHeaders": {
         "Content-Length": "278",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -106,7 +106,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -131,10 +131,10 @@
       "ResponseHeaders": {
         "Content-Length": "317",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11451\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.1027947\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;120658425\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.1029473\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:wifiroom;11451\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022RoomWithWifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:51.4174915\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:wifi;120658425\u0022,\u0022description\u0022:{},\u0022displayName\u0022:{\u0022en\u0022:\u0022Wifi\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:51.4176955\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomWithWifiTwin145661990?api-version=2020-10-31",
@@ -144,7 +144,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "229",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -172,13 +171,13 @@
       "ResponseHeaders": {
         "Content-Length": "665",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u00223cdb6f41-9097-4eaa-b858-251bd64db569\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022f1ab5d0c-90a7-45af-8e59-16a21f1da415\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomWithWifiTwin145661990",
-        "$etag": "W/\u00223cdb6f41-9097-4eaa-b858-251bd64db569\u0022",
+        "$etag": "W/\u0022f1ab5d0c-90a7-45af-8e59-16a21f1da415\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -188,26 +187,26 @@
           "Network": "Room1",
           "$metadata": {
             "RouterName": {
-              "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+              "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
             },
             "Network": {
-              "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+              "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
             }
           }
         },
         "$metadata": {
           "$model": "dtmi:example:wifiroom;11451",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.1448419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.4767689Z"
           }
         }
       }
@@ -233,7 +232,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -261,7 +260,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -283,7 +282,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -305,7 +304,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -327,7 +326,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -349,7 +348,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []

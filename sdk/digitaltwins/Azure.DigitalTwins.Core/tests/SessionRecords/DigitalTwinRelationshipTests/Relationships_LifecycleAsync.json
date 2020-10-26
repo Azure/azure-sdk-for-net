@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -74,7 +74,7 @@
       "ResponseHeaders": {
         "Content-Length": "280",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -102,7 +102,7 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -130,7 +130,7 @@
       "ResponseHeaders": {
         "Content-Length": "270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -158,7 +158,7 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -186,12 +186,12 @@
       "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:floor;19932306\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022,    \u0022displayName\u0022: \u0022Floor\u0022,    \u0022description\u0022: \u0022A building story.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022contains\u0022,            \u0022target\u0022: \u0022dtmi:example:room;137155543\u0022,            \u0022properties\u0022: [                {                    \u0022@type\u0022: \u0022Property\u0022,                    \u0022name\u0022: \u0022isAccessRestricted\u0022,                    \u0022schema\u0022: \u0022boolean\u0022                }            ]        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022cooledBy\u0022,            \u0022target\u0022: \u0022dtmi:example:hvac;111092475\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022AverageTemperature\u0022,            \u0022schema\u0022: \u0022double\u0022        }    ]},{    \u0022@id\u0022: \u0022dtmi:example:room;137155543\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Room\u0022,    \u0022description\u0022: \u0022An enclosure inside a building.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022containedIn\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;19932306\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022},{    \u0022@id\u0022: \u0022dtmi:example:hvac;111092475\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022HVAC\u0022,    \u0022description\u0022: \u0022A heating, ventilation, and air conditioning unit.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Efficiency\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022TargetTemperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022TargetHumidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022cools\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;19932306\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "581",
+        "Content-Length": "583",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:floor;19932306\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A building story.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Floor\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.8034132\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:room;137155543\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.803554\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:hvac;111092475\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.803719\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:floor;19932306\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A building story.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Floor\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:50.6764853\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:room;137155543\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:50.6766414\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:hvac;111092475\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:50.6768058\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/floorTwin292023397?api-version=2020-10-31",
@@ -201,7 +201,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "104",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -221,18 +220,18 @@
       "ResponseHeaders": {
         "Content-Length": "231",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u00225825a683-c7a4-49f7-9d52-a12d02467114\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022c48ddf23-bbc3-4c60-9408-33db3e77f649\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "floorTwin292023397",
-        "$etag": "W/\u00225825a683-c7a4-49f7-9d52-a12d02467114\u0022",
+        "$etag": "W/\u0022c48ddf23-bbc3-4c60-9408-33db3e77f649\u0022",
         "AverageTemperature": 75,
         "$metadata": {
           "$model": "dtmi:example:floor;19932306",
           "AverageTemperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.8555447Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.7240212Z"
           }
         }
       }
@@ -245,7 +244,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -268,13 +266,13 @@
       "ResponseHeaders": {
         "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u0022c49160fa-5304-4a42-8bdb-3223531fddba\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u002216d0cf55-f522-4809-95b2-70821b576c64\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomTwin501107922",
-        "$etag": "W/\u0022c49160fa-5304-4a42-8bdb-3223531fddba\u0022",
+        "$etag": "W/\u002216d0cf55-f522-4809-95b2-70821b576c64\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -282,16 +280,16 @@
         "$metadata": {
           "$model": "dtmi:example:room;137155543",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9130363Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.7733600Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9130363Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.7733600Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9130363Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.7733600Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9130363Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.7733600Z"
           }
         }
       }
@@ -304,7 +302,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "123",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -325,22 +322,22 @@
       "ResponseHeaders": {
         "Content-Length": "316",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u00220cc6ae92-b6d4-419c-87ea-2224772d19e0\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u002280036407-54e0-4afc-892e-a40ccca08cbc\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "hvacTwin2100586634",
-        "$etag": "W/\u00220cc6ae92-b6d4-419c-87ea-2224772d19e0\u0022",
+        "$etag": "W/\u002280036407-54e0-4afc-892e-a40ccca08cbc\u0022",
         "TargetTemperature": 80,
         "TargetHumidity": 25,
         "$metadata": {
           "$model": "dtmi:example:hvac;111092475",
           "TargetTemperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9647205Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.8312941Z"
           },
           "TargetHumidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9647205Z"
+            "lastUpdateTime": "2020-10-26T17:04:50.8312941Z"
           }
         }
       }
@@ -353,7 +350,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "130",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -372,13 +368,13 @@
       "ResponseHeaders": {
         "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u0022267931d4-f6bb-471b-889f-3598fa451d84\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022ced67294-0091-415e-9301-36e20a7162c1\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$relationshipId": "FloorToRoomRelationship",
-        "$etag": "W/\u0022267931d4-f6bb-471b-889f-3598fa451d84\u0022",
+        "$etag": "W/\u0022ced67294-0091-415e-9301-36e20a7162c1\u0022",
         "$sourceId": "floorTwin292023397",
         "$relationshipName": "contains",
         "$targetId": "roomTwin501107922",
@@ -393,7 +389,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "105",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -411,13 +406,13 @@
       "ResponseHeaders": {
         "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u0022f1595e15-de8b-43a7-902c-dffd04f93e67\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022033e70f7-feda-4d28-a9c5-86f64721d6e9\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$relationshipId": "FloorToHvacRelationship",
-        "$etag": "W/\u0022f1595e15-de8b-43a7-902c-dffd04f93e67\u0022",
+        "$etag": "W/\u0022033e70f7-feda-4d28-a9c5-86f64721d6e9\u0022",
         "$sourceId": "floorTwin292023397",
         "$relationshipName": "cooledBy",
         "$targetId": "hvacTwin2100586634"
@@ -431,7 +426,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "102",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -449,13 +443,13 @@
       "ResponseHeaders": {
         "Content-Length": "192",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u0022edada992-ba26-4daf-be79-fa1d1768d196\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u00225e5f053f-f3ac-4ba8-9e96-cbd1a993d32e\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$relationshipId": "HvacToFloorRelationship",
-        "$etag": "W/\u0022edada992-ba26-4daf-be79-fa1d1768d196\u0022",
+        "$etag": "W/\u00225e5f053f-f3ac-4ba8-9e96-cbd1a993d32e\u0022",
         "$sourceId": "hvacTwin2100586634",
         "$relationshipName": "cools",
         "$targetId": "floorTwin292023397"
@@ -469,7 +463,6 @@
         "Authorization": "Sanitized",
         "Content-Length": "108",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
@@ -487,13 +480,13 @@
       "ResponseHeaders": {
         "Content-Length": "197",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u002239cc6389-b2f2-4d4c-b24a-47394e81ac8d\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022cd4a1827-411b-4157-bea5-df275d72d998\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$relationshipId": "RoomToFloorRelationship",
-        "$etag": "W/\u002239cc6389-b2f2-4d4c-b24a-47394e81ac8d\u0022",
+        "$etag": "W/\u0022cd4a1827-411b-4157-bea5-df275d72d998\u0022",
         "$sourceId": "roomTwin501107922",
         "$relationshipName": "containedIn",
         "$targetId": "floorTwin292023397"
@@ -518,8 +511,8 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u0022ac3c823a-e2f2-4a94-b3ca-11611ef25b65\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "ETag": "W/\u0022c0affa53-1e99-4040-9bd3-5cc357eedb66\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -542,13 +535,13 @@
       "ResponseHeaders": {
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "ETag": "W/\u0022ac3c823a-e2f2-4a94-b3ca-11611ef25b65\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "ETag": "W/\u0022c0affa53-1e99-4040-9bd3-5cc357eedb66\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$relationshipId": "FloorToRoomRelationship",
-        "$etag": "W/\u0022ac3c823a-e2f2-4a94-b3ca-11611ef25b65\u0022",
+        "$etag": "W/\u0022c0affa53-1e99-4040-9bd3-5cc357eedb66\u0022",
         "$sourceId": "floorTwin292023397",
         "$relationshipName": "contains",
         "$targetId": "roomTwin501107922",
@@ -573,7 +566,7 @@
       "ResponseHeaders": {
         "Content-Length": "581",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -612,7 +605,7 @@
       "ResponseHeaders": {
         "Content-Length": "445",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -620,14 +613,14 @@
         "value": [
           {
             "$relationshipId": "FloorToHvacRelationship",
-            "$etag": "W/\u0022f1595e15-de8b-43a7-902c-dffd04f93e67\u0022",
+            "$etag": "W/\u0022033e70f7-feda-4d28-a9c5-86f64721d6e9\u0022",
             "$sourceId": "floorTwin292023397",
             "$relationshipName": "cooledBy",
             "$targetId": "hvacTwin2100586634"
           },
           {
             "$relationshipId": "FloorToRoomRelationship",
-            "$etag": "W/\u0022ac3c823a-e2f2-4a94-b3ca-11611ef25b65\u0022",
+            "$etag": "W/\u0022c0affa53-1e99-4040-9bd3-5cc357eedb66\u0022",
             "$sourceId": "floorTwin292023397",
             "$relationshipName": "contains",
             "$targetId": "roomTwin501107922",
@@ -654,7 +647,7 @@
       "ResponseHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -662,7 +655,7 @@
         "value": [
           {
             "$relationshipId": "RoomToFloorRelationship",
-            "$etag": "W/\u002239cc6389-b2f2-4d4c-b24a-47394e81ac8d\u0022",
+            "$etag": "W/\u0022cd4a1827-411b-4157-bea5-df275d72d998\u0022",
             "$sourceId": "roomTwin501107922",
             "$relationshipName": "containedIn",
             "$targetId": "floorTwin292023397"
@@ -687,7 +680,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -709,7 +702,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -731,7 +724,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -753,7 +746,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -776,7 +769,7 @@
       "ResponseHeaders": {
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -804,7 +797,7 @@
       "ResponseHeaders": {
         "Content-Length": "308",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -832,7 +825,7 @@
       "ResponseHeaders": {
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -860,7 +853,7 @@
       "ResponseHeaders": {
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -884,13 +877,14 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 204,
+      "StatusCode": 429,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Retry-After": "5"
       },
-      "ResponseBody": []
+      "ResponseBody": "{ \u0022error\u0022: { \u0022statusCode\u0022: 429, \u0022message\u0022: \u0022Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits.\u0022 } }"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin501107922?api-version=2020-10-31",
@@ -906,13 +900,14 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 204,
+      "StatusCode": 429,
       "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Retry-After": "5"
       },
-      "ResponseBody": []
+      "ResponseBody": "{ \u0022error\u0022: { \u0022statusCode\u0022: 429, \u0022message\u0022: \u0022Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits.\u0022 } }"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Ahvac%3B111092475?api-version=2020-10-31",
@@ -931,51 +926,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B19932306?api-version=2020-10-31",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "5086777c3d470366834d25fff9b068d6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/hvacTwin2100586634?api-version=2020-10-31",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "c71a38f38beb7d63e02c136ff27c2fc3",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 204,
-      "ResponseHeaders": {
-        "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -997,7 +948,95 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B19932306?api-version=2020-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5086777c3d470366834d25fff9b068d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/hvacTwin2100586634?api-version=2020-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c71a38f38beb7d63e02c136ff27c2fc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/floorTwin292023397?api-version=2020-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f39935f57fa9b75a067da87a88620451",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 26 Oct 2020 17:04:56 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin501107922?api-version=2020-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "06cae68e0d2b5a20535cd24eee530130",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 26 Oct 2020 17:04:56 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []

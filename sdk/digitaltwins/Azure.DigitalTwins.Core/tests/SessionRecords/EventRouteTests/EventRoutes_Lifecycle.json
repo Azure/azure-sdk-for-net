@@ -22,7 +22,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -45,7 +45,7 @@
       "ResponseHeaders": {
         "Content-Length": "179",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -70,18 +70,13 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "537",
+        "Content-Length": "372",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "value": [
-          {
-            "id": "someEventRouteId-962622312",
-            "endpointName": "someEventHubEndpoint",
-            "filter": "type = \u0027Microsoft.DigitalTwins.Twin.Create\u0027 OR type = \u0027microsoft.iot.telemetry\u0027"
-          },
           {
             "id": "someEventRouteId-567112595",
             "endpointName": "someEventHubEndpoint",
@@ -113,7 +108,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -136,7 +131,7 @@
       "ResponseHeaders": {
         "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {

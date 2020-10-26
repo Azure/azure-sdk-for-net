@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -74,12 +74,12 @@
       "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:room;120254295\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Room\u0022,    \u0022description\u0022: \u0022An enclosure inside a building.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022containedIn\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;13983924\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "192",
+        "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;120254295\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:46.051617\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;120254295\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:50.5405338\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin537968733?api-version=2020-10-31",
@@ -99,7 +99,7 @@
       "ResponseHeaders": {
         "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "ETag": "W/\u00229bfbe99a-3784-425e-ba96-fe46e0de2602\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -145,7 +145,7 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "ETag": "W/\u0022682c6854-eb59-4b7a-b0b2-23f4fb357f78\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -191,7 +191,7 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:49 GMT",
         "ETag": "W/\u00225175f719-342b-4532-9f0a-f74a7a348a89\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -233,52 +233,11 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "271",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin2146208947. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin2146208947?api-version=2020-10-31",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json",
-        "If-None-Match": "*",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "76b5b502a3641b21417484294d7137a3",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "$dtId": null,
-        "$etag": null,
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295"
-        },
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1"
-      },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "ETag": "W/\u00225835d863-4ea6-4ad7-a831-985a7c81ced7\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -307,7 +266,7 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin324722902?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1067365890?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -316,7 +275,397 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "3b3fa99c641a5a43dc9dc578bc7d9173",
+        "x-ms-client-request-id": "6476b5b521a3411b7484294d7137a3d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "461",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u002249dafe72-a4f4-4986-9a66-94b82f4fdd32\u0022",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin1067365890",
+        "$etag": "W/\u002249dafe72-a4f4-4986-9a66-94b82f4fdd32\u0022",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295",
+          "Temperature": {
+            "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin8891804?api-version=2020-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "1a3b3fa94364dc5a9dc578bc7d9173b1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "268",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DigitalTwinNotFound",
+          "message": "There is no digital twin instance that exists with the ID roomTwin8891804. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin8891804?api-version=2020-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3dc5dc5d7b4f06efab462dadc9e1a6ce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$dtId": null,
+        "$etag": null,
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295"
+        },
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "458",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u00220afa1fb6-32ae-4e19-a6d3-ca5d571c2a1d\u0022",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin8891804",
+        "$etag": "W/\u00220afa1fb6-32ae-4e19-a6d3-ca5d571c2a1d\u0022",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295",
+          "Temperature": {
+            "lastUpdateTime": "2020-10-26T17:04:50.8946544Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2020-10-26T17:04:50.8946544Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2020-10-26T17:04:50.8946544Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2020-10-26T17:04:50.8946544Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin68441501?api-version=2020-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "00c8ae7b50e71c7287065ba285f7f2b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "269",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DigitalTwinNotFound",
+          "message": "There is no digital twin instance that exists with the ID roomTwin68441501. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin68441501?api-version=2020-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "de5a139b4c98502d356f1d16ac13bb1f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$dtId": null,
+        "$etag": null,
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295"
+        },
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022258f1d07-bd94-43d6-83c6-60d07c610932\u0022",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin68441501",
+        "$etag": "W/\u0022258f1d07-bd94-43d6-83c6-60d07c610932\u0022",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295",
+          "Temperature": {
+            "lastUpdateTime": "2020-10-26T17:04:50.9848644Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2020-10-26T17:04:50.9848644Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2020-10-26T17:04:50.9848644Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2020-10-26T17:04:50.9848644Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1677201065?api-version=2020-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "abe2011f76b0538b21c8759363264f3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "271",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DigitalTwinNotFound",
+          "message": "There is no digital twin instance that exists with the ID roomTwin1677201065. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1677201065?api-version=2020-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4bce2df804f0802f77cb78335b6f744a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$dtId": null,
+        "$etag": null,
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295"
+        },
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "461",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022a496e2b3-f4ba-41c4-9ae5-084d9c1eb45a\u0022",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin1677201065",
+        "$etag": "W/\u0022a496e2b3-f4ba-41c4-9ae5-084d9c1eb45a\u0022",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295",
+          "Temperature": {
+            "lastUpdateTime": "2020-10-26T17:04:51.0912295Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2020-10-26T17:04:51.0912295Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2020-10-26T17:04:51.0912295Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2020-10-26T17:04:51.0912295Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin28709180?api-version=2020-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "0ff566f9ea09cf9c8a7683b8bdd148cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "269",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DigitalTwinNotFound",
+          "message": "There is no digital twin instance that exists with the ID roomTwin28709180. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin28709180?api-version=2020-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "ede5b4dbb9d3d21a6234e5fd57f7b253",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$dtId": null,
+        "$etag": null,
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295"
+        },
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022b02dc860-5771-4226-bca6-7be2191b9b79\u0022",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin28709180",
+        "$etag": "W/\u0022b02dc860-5771-4226-bca6-7be2191b9b79\u0022",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;120254295",
+          "Temperature": {
+            "lastUpdateTime": "2020-10-26T17:04:51.1697284Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2020-10-26T17:04:51.1697284Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2020-10-26T17:04:51.1697284Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2020-10-26T17:04:51.1697284Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin316240427?api-version=2020-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5ac06a57ee2a31427b658eabc8baf930",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -324,30 +673,29 @@
       "ResponseHeaders": {
         "Content-Length": "270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin324722902. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin316240427. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin324722902?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin316240427?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "c5dc5db14f3def7b06ab462dadc9e1a6",
+        "x-ms-client-request-id": "8fba7f65685c4b3f22add5059f7792c4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -365,13 +713,13 @@
       "ResponseHeaders": {
         "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u002214c5c5ce-59b5-4a4c-a6aa-1e41ab2171c7\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u00223ddccb5e-b665-4291-bc0a-e7d0231100ba\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin324722902",
-        "$etag": "W/\u002214c5c5ce-59b5-4a4c-a6aa-1e41ab2171c7\u0022",
+        "$dtId": "roomTwin316240427",
+        "$etag": "W/\u00223ddccb5e-b665-4291-bc0a-e7d0231100ba\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -379,22 +727,22 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.2518251Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.2518251Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.2518251Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.2518251Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1012472014?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin2096689967?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -403,7 +751,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "c8ae7b9de70072501c87065ba285f7f2",
+        "x-ms-client-request-id": "8766658db073a2c6bc57548c279979eb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -411,30 +759,29 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin1012472014. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin2096689967. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1012472014?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin2096689967?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "5a139bb598de2d4c50356f1d16ac13bb",
+        "x-ms-client-request-id": "f777f1cdcec42bef74377d193d9204d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -452,13 +799,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u00222ff06d59-f560-40d9-bf73-d2957887b818\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022ed16466f-bc4a-4af6-a106-1d8a75d1fc74\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin1012472014",
-        "$etag": "W/\u00222ff06d59-f560-40d9-bf73-d2957887b818\u0022",
+        "$dtId": "roomTwin2096689967",
+        "$etag": "W/\u0022ed16466f-bc4a-4af6-a106-1d8a75d1fc74\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -466,22 +813,22 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.3325161Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.3325161Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.3325161Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.3325161Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin955385887?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1850161353?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -490,181 +837,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "e2011fa9b0ab8b765321c8759363264f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "270",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin955385887. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin955385887?api-version=2020-10-31",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json",
-        "If-None-Match": "*",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "ce2df83af04b2f048077cb78335b6f74",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "$dtId": null,
-        "$etag": null,
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295"
-        },
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "460",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u00223128b366-23a9-4a19-ab7e-b2fcbef9af3e\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin955385887",
-        "$etag": "W/\u00223128b366-23a9-4a19-ab7e-b2fcbef9af3e\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin672739146?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "f566f93c090f9ceacf8a7683b8bdd148",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "270",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin672739146. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin672739146?api-version=2020-10-31",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json",
-        "If-None-Match": "*",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "e5b4dbcdd3ed1ab9d26234e5fd57f7b2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "$dtId": null,
-        "$etag": null,
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295"
-        },
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "460",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u0022dd179afe-3a30-4f55-bcfc-b529538ed18b\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin672739146",
-        "$etag": "W/\u0022dd179afe-3a30-4f55-bcfc-b529538ed18b\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1661689683?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "c06a572b2a5a42ee317b658eabc8baf9",
+        "x-ms-client-request-id": "93543b7bf2a8f4ceeca010ebbffb145b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -672,30 +845,29 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin1661689683. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1850161353. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1661689683?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1850161353?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "ba7f65305c8f3f684b22add5059f7792",
+        "x-ms-client-request-id": "1b86d2196bcc75be3b123b33ad652953",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -713,13 +885,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "ETag": "W/\u0022fcd235a2-c5fe-46ee-9cbd-4f70b90a0d2d\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u0022d0de9025-1b2b-463e-92d0-71953e416da6\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin1661689683",
-        "$etag": "W/\u0022fcd235a2-c5fe-46ee-9cbd-4f70b90a0d2d\u0022",
+        "$dtId": "roomTwin1850161353",
+        "$etag": "W/\u0022d0de9025-1b2b-463e-92d0-71953e416da6\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -727,22 +899,22 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.5230271Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.5230271Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.5230271Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.5230271Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin528003268?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1230073985?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -751,94 +923,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "66658d2f7387c6b0a2bc57548c279979",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "270",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:45 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "error": {
-          "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin528003268. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin528003268?api-version=2020-10-31",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json",
-        "If-None-Match": "*",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "77f1cdebc4f7efce2b74377d193d9204",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "$dtId": null,
-        "$etag": null,
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295"
-        },
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "460",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
-        "ETag": "W/\u00222af11057-a459-4406-84dc-82a12ad38106\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin528003268",
-        "$etag": "W/\u00222af11057-a459-4406-84dc-82a12ad38106\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;120254295",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1251286994?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "543b7bc9a893cef2f4eca010ebbffb14",
+        "x-ms-client-request-id": "255eabc22458a8ff03d82ddf40b53c69",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -846,30 +931,29 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin1251286994. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1230073985. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1251286994?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1230073985?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "86d2195bcc1bbe6b753b123b33ad6529",
+        "x-ms-client-request-id": "7ebf23bdfdb77c10df5795b69b468676",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -887,13 +971,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
-        "ETag": "W/\u002204f4c379-5934-4788-8c96-0de3beba29b6\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
+        "ETag": "W/\u00226c28c18b-9001-4bcd-9f54-611935d7a536\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin1251286994",
-        "$etag": "W/\u002204f4c379-5934-4788-8c96-0de3beba29b6\u0022",
+        "$dtId": "roomTwin1230073985",
+        "$etag": "W/\u00226c28c18b-9001-4bcd-9f54-611935d7a536\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -901,22 +985,22 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.6239247Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.6239247Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.6239247Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.6239247Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1738906707?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1160429756?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -925,7 +1009,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "5eabc2815825ff24a803d82ddf40b53c",
+        "x-ms-client-request-id": "b54ffd69c13686ad72c8929196fb5dff",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -933,30 +1017,29 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin1738906707. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1160429756. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1738906707?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1160429756?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "bf23bd69b77e10fd7cdf5795b69b4686",
+        "x-ms-client-request-id": "6a42efcacad59bc4e246008f490dbc52",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -974,13 +1057,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
-        "ETag": "W/\u00226e952007-ad31-492e-a7c2-62ad7d4b54e9\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "ETag": "W/\u002225b9fa4a-1952-49d4-b477-7fbe87badecc\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin1738906707",
-        "$etag": "W/\u00226e952007-ad31-492e-a7c2-62ad7d4b54e9\u0022",
+        "$dtId": "roomTwin1160429756",
+        "$etag": "W/\u002225b9fa4a-1952-49d4-b477-7fbe87badecc\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -988,22 +1071,22 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.7279422Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.7279422Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.7279422Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.7279422Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1776075638?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1531137718?api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1012,7 +1095,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "4ffd69bc36b5adc18672c8929196fb5d",
+        "x-ms-client-request-id": "ecb7d62287b31261f745347dea485c37",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1020,30 +1103,29 @@
       "ResponseHeaders": {
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin1776075638. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1531137718. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1776075638?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1531137718?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "154",
         "Content-Type": "application/json",
-        "If-None-Match": "*",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "42efcaffd56ac4ca9be246008f490dbc",
+        "x-ms-client-request-id": "4356d0b6e60c389fb4d3f0c11e3d640b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1061,13 +1143,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
-        "ETag": "W/\u002258d54f8d-5e34-4060-b955-8a486d30f447\u0022",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "ETag": "W/\u00227a9d2014-8513-44cb-863d-0ba5e9210a6d\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin1776075638",
-        "$etag": "W/\u002258d54f8d-5e34-4060-b955-8a486d30f447\u0022",
+        "$dtId": "roomTwin1531137718",
+        "$etag": "W/\u00227a9d2014-8513-44cb-863d-0ba5e9210a6d\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -1075,16 +1157,16 @@
         "$metadata": {
           "$model": "dtmi:example:room;120254295",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.8093302Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.8093302Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.8093302Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+            "lastUpdateTime": "2020-10-26T17:04:51.8093302Z"
           }
         }
       }
@@ -1101,7 +1183,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d622b652ecb787b36112f745347dea48",
+        "x-ms-client-request-id": "2474da4013a66817e157de848f1df7fd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1109,10 +1191,10 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "33956",
+        "Content-Length": "46198",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
-        "query-charge": "15.100000000000001",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "query-charge": "20.23",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -2806,6 +2888,1073 @@
                 "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
               }
             }
+          },
+          {
+            "$dtId": "roomTwin363377363",
+            "$etag": "W/\u0022ad77294f-1d23-44ad-af85-a7e1a58d868c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin2146208947",
+            "$etag": "W/\u00225835d863-4ea6-4ad7-a831-985a7c81ced7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1062677703",
+            "$etag": "W/\u00225e977d72-2d41-456b-8ea5-ae401b39bf0a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin324722902",
+            "$etag": "W/\u002214c5c5ce-59b5-4a4c-a6aa-1e41ab2171c7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1462038290",
+            "$etag": "W/\u0022297e8e3d-fa21-48d2-8ad0-5140dad410aa\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin462997606",
+            "$etag": "W/\u0022520d9d8f-26a0-49eb-bf4a-97089ee3b215\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1012472014",
+            "$etag": "W/\u00222ff06d59-f560-40d9-bf73-d2957887b818\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1543128019",
+            "$etag": "W/\u0022e3395b82-f93a-41fb-8903-89de4b68a5bf\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin955385887",
+            "$etag": "W/\u00223128b366-23a9-4a19-ab7e-b2fcbef9af3e\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin672739146",
+            "$etag": "W/\u0022dd179afe-3a30-4f55-bcfc-b529538ed18b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1750846709",
+            "$etag": "W/\u002251a2b553-2d6d-427e-8779-d27e3d15bfd2\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin422308472",
+            "$etag": "W/\u00228ea17c08-4542-4f10-8e98-f4a044b3a616\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1661689683",
+            "$etag": "W/\u0022fcd235a2-c5fe-46ee-9cbd-4f70b90a0d2d\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1648554203",
+            "$etag": "W/\u0022fe961330-5592-47a0-8433-11baa6cafa72\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin528003268",
+            "$etag": "W/\u00222af11057-a459-4406-84dc-82a12ad38106\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin817870353",
+            "$etag": "W/\u0022781ecf84-02fb-4a64-9959-6c1286246ee6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1251286994",
+            "$etag": "W/\u002204f4c379-5934-4788-8c96-0de3beba29b6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1240738903",
+            "$etag": "W/\u0022f210ec66-b4c9-488d-bcdc-bf8948f84bd9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1738906707",
+            "$etag": "W/\u00226e952007-ad31-492e-a7c2-62ad7d4b54e9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1491061385",
+            "$etag": "W/\u00224c895d19-e817-4c79-8aaf-8e4769287e97\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1776075638",
+            "$etag": "W/\u002258d54f8d-5e34-4060-b955-8a486d30f447\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin619913832",
+            "$etag": "W/\u00220f62adc9-a00b-423a-bc62-54588da70511\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1410570626",
+            "$etag": "W/\u0022daced9e9-5fad-4328-ba39-6e7d6e195d58\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;123439021",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1067365890",
+            "$etag": "W/\u002249dafe72-a4f4-4986-9a66-94b82f4fdd32\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin757295793",
+            "$etag": "W/\u00220b31dafa-a92e-4139-91c2-cea3a0de96e7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin633630133",
+            "$etag": "W/\u0022a194cd57-9a12-40a8-8641-eef149c38829\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaMAAAAAAAAAA==#RT:4#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAAFAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "376",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3d9257a30e663baa367f37df969ff3ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaMAAAAAAAAAA==#RT:4#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAAFAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "8803",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
+        "query-charge": "4.48",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin1052658490",
+            "$etag": "W/\u00225ddb7fae-81be-4b0b-920f-26947783a711\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1626036685",
+            "$etag": "W/\u002288043f16-cc41-41fa-a4c2-89b79dc679b6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin687114800",
+            "$etag": "W/\u0022e40bc758-5024-403f-be36-b991984dd165\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1274856786",
+            "$etag": "W/\u00225799d61b-4453-46c0-81c4-fcf3f4570f4a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1098941419",
+            "$etag": "W/\u002233a4b889-0aba-4d63-b65d-a42a40e4c456\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin125346931",
+            "$etag": "W/\u0022af62467a-acb1-4395-8c26-eb38dfc9874b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin345229702",
+            "$etag": "W/\u002255c487c4-984f-465f-bc95-125288661377\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin904769627",
+            "$etag": "W/\u0022f0e97abe-4660-4e4e-8ae7-ce9a7cc4eabc\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin840530319",
+            "$etag": "W/\u00227b0aed29-4924-4edb-a4f6-57b379179e7a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin19991913",
+            "$etag": "W/\u00227b4544bb-5313-421d-821b-0b47810f6ed1\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1846282992",
+            "$etag": "W/\u0022e96b7675-5265-486e-a565-51c09f86292e\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1501230847",
+            "$etag": "W/\u00226802e3a6-b98a-4da6-b472-4b02220454d2\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin2112889309",
+            "$etag": "W/\u0022a8b818f4-cac5-4152-af3b-6501b11b2a20\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1261829064",
+            "$etag": "W/\u0022d227561c-e41d-4503-b9b9-e6c04d18d682\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin20831578",
+            "$etag": "W/\u002228e89f63-cbd8-432d-8408-cbe836c136a9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin2061740721",
+            "$etag": "W/\u0022809c12e1-14b3-49ab-8d2a-f138e6e9f5bb\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin59174272",
+            "$etag": "W/\u0022dc826323-ef03-4ecd-8712-8941cfcb5412\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;123439021",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1511973902",
+            "$etag": "W/\u0022e512e115-b43b-493d-b71e-8e7d617e48de\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1357107878",
+            "$etag": "W/\u00227ce2ee84-70b9-4669-881b-b191b7816f06\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              }
+            }
           }
         ],
         "continuationToken": null
@@ -2824,7 +3973,7 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d0b6375c4356e60c9f38b4d3f0c11e3d",
+        "x-ms-client-request-id": "103d29e037d4a391b8ee62b4081ba896",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -2832,9 +3981,9 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2593",
+        "Content-Length": "2601",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.26",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -2956,7 +4105,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYFAAAAAAAAAA==#RT:1#TRC:5#ISV:2#IEO:65551#FPC:AgEAAAAQAAfA4PedBOCB//8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYFAAAAAAAAAA==#RT:1#TRC:5#ISV:2#IEO:65551#FPC:AgEAAAAWAAbA4PedBOCB//8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -2965,24 +4114,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "386",
+        "Content-Length": "394",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "da400b64247413a61768e157de848f1d",
+        "x-ms-client-request-id": "c71df2dc26ab31a53038ee26db38d141",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYFAAAAAAAAAA==#RT:1#TRC:5#ISV:2#IEO:65551#FPC:AgEAAAAQAAfA4PedBOCB//8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYFAAAAAAAAAA==#RT:1#TRC:5#ISV:2#IEO:65551#FPC:AgEAAAAWAAbA4PedBOCB//8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2367",
+        "Content-Length": "2375",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.13",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3092,7 +4241,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYKAAAAAAAAAA==#RT:2#TRC:10#ISV:2#IEO:65551#FPC:AgEAAAAQAAfAAPSdBOCB//8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYKAAAAAAAAAA==#RT:2#TRC:10#ISV:2#IEO:65551#FPC:AgEAAAAWAAbAAPSdBOCB//8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3101,24 +4250,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "387",
+        "Content-Length": "395",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "57a3fdf73d920e66aa3b367f37df969f",
+        "x-ms-client-request-id": "66a32464e7e06c29c5ee8477acf5331b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYKAAAAAAAAAA==#RT:2#TRC:10#ISV:2#IEO:65551#FPC:AgEAAAAQAAfAAPSdBOCB//8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYKAAAAAAAAAA==#RT:2#TRC:10#ISV:2#IEO:65551#FPC:AgEAAAAWAAbAAPSdBOCB//8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2591",
+        "Content-Length": "2599",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3240,7 +4389,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYQAAAAAAAAAA==#RT:3#TRC:15#ISV:2#IEO:65551#FPC:AgEAAAAOABIAnQTggRNAAw/M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYQAAAAAAAAAA==#RT:3#TRC:15#ISV:2#IEO:65551#FPC:AgEAAAAUABIAnQTggRJAAw/M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3249,24 +4398,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "383",
+        "Content-Length": "391",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "29e0baf3103d37d491a3b8ee62b4081b",
+        "x-ms-client-request-id": "a402a0d62c82ba0e830bdf9c496ac780",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYQAAAAAAAAAA==#RT:3#TRC:15#ISV:2#IEO:65551#FPC:AgEAAAAOABIAnQTggRNAAw/M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYQAAAAAAAAAA==#RT:3#TRC:15#ISV:2#IEO:65551#FPC:AgEAAAAUABIAnQTggRJAAw/M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2591",
+        "Content-Length": "2599",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3388,7 +4537,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYaAAAAAAAAAA==#RT:4#TRC:20#ISV:2#IEO:65551#FPC:AgEAAAAOABqABcDggf//Aw/M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYaAAAAAAAAAA==#RT:4#TRC:20#ISV:2#IEO:65551#FPC:AgEAAAAUABqABMDggf//Aw/M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3397,24 +4546,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "383",
+        "Content-Length": "391",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "f2dc96a8c71d26aba5313038ee26db38",
+        "x-ms-client-request-id": "e450201c4177f5b6c9b101bca22d853b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYaAAAAAAAAAA==#RT:4#TRC:20#ISV:2#IEO:65551#FPC:AgEAAAAOABqABcDggf//Aw/M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYaAAAAAAAAAA==#RT:4#TRC:20#ISV:2#IEO:65551#FPC:AgEAAAAUABqABMDggf//Aw/M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2589",
+        "Content-Length": "2597",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3536,7 +4685,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYvAAAAAAAAAA==#RT:5#TRC:25#ISV:2#IEO:65551#FPC:AgEAAAAKAC\u002BAE0ADD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYvAAAAAAAAAA==#RT:5#TRC:25#ISV:2#IEO:65551#FPC:AgEAAAAQAC\u002BAEkADD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3545,24 +4694,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "384",
+        "Content-Length": "392",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "246441d166a3e7e0296cc5ee8477acf5",
+        "x-ms-client-request-id": "3a50d2042d3537bf15e9e3d4078d225a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYvAAAAAAAAAA==#RT:5#TRC:25#ISV:2#IEO:65551#FPC:AgEAAAAKAC\u002BAE0ADD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjYvAAAAAAAAAA==#RT:5#TRC:25#ISV:2#IEO:65551#FPC:AgEAAAAQAC\u002BAEkADD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2586",
+        "Content-Length": "2594",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.16",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3684,7 +4833,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY0AAAAAAAAAA==#RT:6#TRC:30#ISV:2#IEO:65551#FPC:AgEAAAAKADQA8P8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY0AAAAAAAAAA==#RT:6#TRC:30#ISV:2#IEO:65551#FPC:AgEAAAAQADMA8P8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3693,24 +4842,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "379",
+        "Content-Length": "387",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "a0d61b33a4022c820eba830bdf9c496a",
+        "x-ms-client-request-id": "8b5a04274fa494a4ea0ddad02a521755",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY0AAAAAAAAAA==#RT:6#TRC:30#ISV:2#IEO:65551#FPC:AgEAAAAKADQA8P8DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY0AAAAAAAAAA==#RT:6#TRC:30#ISV:2#IEO:65551#FPC:AgEAAAAQADMA8P8DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2588",
+        "Content-Length": "2596",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3832,7 +4981,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY5AAAAAAAAAA==#RT:7#TRC:35#ISV:2#IEO:65551#FPC:AgEAAAAKADQAAP4DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY5AAAAAAAAAA==#RT:7#TRC:35#ISV:2#IEO:65551#FPC:AgEAAAAQADMAAP4DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3841,24 +4990,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "379",
+        "Content-Length": "387",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "201c80c7e4504177b6f5c9b101bca22d",
+        "x-ms-client-request-id": "7697a4868c1aef4b6118ce8d5ee1ed3b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY5AAAAAAAAAA==#RT:7#TRC:35#ISV:2#IEO:65551#FPC:AgEAAAAKADQAAP4DD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY5AAAAAAAAAA==#RT:7#TRC:35#ISV:2#IEO:65551#FPC:AgEAAAAQADMAAP4DD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2587",
+        "Content-Length": "2595",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -3980,7 +5129,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY\u002BAAAAAAAAAA==#RT:8#TRC:40#ISV:2#IEO:65551#FPC:AgEAAAAKADQAAMADD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY\u002BAAAAAAAAAA==#RT:8#TRC:40#ISV:2#IEO:65551#FPC:AgEAAAAQADMAAMADD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -3989,24 +5138,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "384",
+        "Content-Length": "392",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d2043b853a502d35bf3715e9e3d4078d",
+        "x-ms-client-request-id": "9d95a68ff9d2b5962ebb502752ee0cc3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY\u002BAAAAAAAAAA==#RT:8#TRC:40#ISV:2#IEO:65551#FPC:AgEAAAAKADQAAMADD8z//38=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjY\u002BAAAAAAAAAA==#RT:8#TRC:40#ISV:2#IEO:65551#FPC:AgEAAAAQADMAAMADD8z/I0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2585",
+        "Content-Length": "2593",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4128,7 +5277,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZJAAAAAAAAAA==#RT:9#TRC:45#ISV:2#IEO:65551#FPC:AgEAAAAIAEMAAA7M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZJAAAAAAAAAA==#RT:9#TRC:45#ISV:2#IEO:65551#FPC:AgEAAAAOAEIAAA7M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4137,24 +5286,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "375",
+        "Content-Length": "383",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "04275a228b5a4fa4a494ea0ddad02a52",
+        "x-ms-client-request-id": "634e8dd1abf69a3fb96b2a8b80163608",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZJAAAAAAAAAA==#RT:9#TRC:45#ISV:2#IEO:65551#FPC:AgEAAAAIAEMAAA7M//9/\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZJAAAAAAAAAA==#RT:9#TRC:45#ISV:2#IEO:65551#FPC:AgEAAAAOAEIAAA7M/yNAf1Ek8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2587",
+        "Content-Length": "2591",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.16",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4276,7 +5425,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZWAAAAAAAAAA==#RT:10#TRC:50#ISV:2#IEO:65551#FPC:AVYAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZWAAAAAAAAAA==#RT:10#TRC:50#ISV:2#IEO:65551#FPC:AgEAAAAMAFEAwP8jQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4285,24 +5434,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "380",
+        "Content-Length": "384",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "a486551776978c1a4bef6118ce8d5ee1",
+        "x-ms-client-request-id": "83419f1f7abc8c820de1485f3b239c72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZWAAAAAAAAAA==#RT:10#TRC:50#ISV:2#IEO:65551#FPC:AVYAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZWAAAAAAAAAA==#RT:10#TRC:50#ISV:2#IEO:65551#FPC:AgEAAAAMAFEAwP8jQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2589",
+        "Content-Length": "2593",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4424,7 +5573,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZbAAAAAAAAAA==#RT:11#TRC:55#ISV:2#IEO:65551#FPC:AVsAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZbAAAAAAAAAA==#RT:11#TRC:55#ISV:2#IEO:65551#FPC:AgEAAAAMAFEAAPgjQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4433,24 +5582,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "380",
+        "Content-Length": "384",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "a68f3bed9d95f9d296b52ebb502752ee",
+        "x-ms-client-request-id": "d1bc0b0c8a93e34566fae467cf0b3518",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZbAAAAAAAAAA==#RT:11#TRC:55#ISV:2#IEO:65551#FPC:AVsAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZbAAAAAAAAAA==#RT:11#TRC:55#ISV:2#IEO:65551#FPC:AgEAAAAMAFEAAPgjQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "2589",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4572,7 +5721,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZgAAAAAAAAAA==#RT:12#TRC:60#ISV:2#IEO:65551#FPC:AWAAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZgAAAAAAAAAA==#RT:12#TRC:60#ISV:2#IEO:65551#FPC:AgEAAAAKAGAAI0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4588,17 +5737,17 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "8dd1c30c634eabf63f9ab96b2a8b8016",
+        "x-ms-client-request-id": "b307488488ad57060ac1561463e05e95",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZgAAAAAAAAAA==#RT:12#TRC:60#ISV:2#IEO:65551#FPC:AWAAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZgAAAAAAAAAA==#RT:12#TRC:60#ISV:2#IEO:65551#FPC:AgEAAAAKAGAAI0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2588",
+        "Content-Length": "2592",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:51 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4720,7 +5869,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZlAAAAAAAAAA==#RT:13#TRC:65#ISV:2#IEO:65551#FPC:AWUAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZlAAAAAAAAAA==#RT:13#TRC:65#ISV:2#IEO:65551#FPC:AgEAAAAMAGEA4P8TQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4729,24 +5878,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "380",
+        "Content-Length": "384",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "9f1f083683417abc828c0de1485f3b23",
+        "x-ms-client-request-id": "757fb7cf65599574595d1dc2951bbd02",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZlAAAAAAAAAA==#RT:13#TRC:65#ISV:2#IEO:65551#FPC:AWUAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZlAAAAAAAAAA==#RT:13#TRC:65#ISV:2#IEO:65551#FPC:AgEAAAAMAGEA4P8TQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "2588",
+        "Content-Length": "2592",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
         "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
@@ -4868,7 +6017,7 @@
             }
           }
         ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZqAAAAAAAAAA==#RT:14#TRC:70#ISV:2#IEO:65551#FPC:AWoAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZqAAAAAAAAAA==#RT:14#TRC:70#ISV:2#IEO:65551#FPC:AgEAAAAMAGEAAPwTQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       }
     },
     {
@@ -4877,25 +6026,25 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "380",
+        "Content-Length": "384",
         "Content-Type": "application/json",
         "max-items-per-page": "5",
         "User-Agent": [
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "0b0c729cd1bc8a9345e366fae467cf0b",
+        "x-ms-client-request-id": "f3da30ace91b83c50564c6d233308086",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZqAAAAAAAAAA==#RT:14#TRC:70#ISV:2#IEO:65551#FPC:AWoAAAAAAAAAbgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZqAAAAAAAAAA==#RT:14#TRC:70#ISV:2#IEO:65551#FPC:AgEAAAAMAGEAAPwTQH9RJPL/Bw==\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1882",
+        "Content-Length": "2588",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
-        "query-charge": "3.07",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -4991,6 +6140,1338 @@
                 "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
               }
             }
+          },
+          {
+            "$dtId": "roomTwin363377363",
+            "$etag": "W/\u0022ad77294f-1d23-44ad-af85-a7e1a58d868c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZvAAAAAAAAAA==#RT:15#TRC:75#ISV:2#IEO:65551#FPC:AgEAAAAKAG\u002BAE0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "385",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "17974f9cbf8b1fbed371594f6b44c2ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZvAAAAAAAAAA==#RT:15#TRC:75#ISV:2#IEO:65551#FPC:AgEAAAAKAG\u002BAE0B/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2589",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin2146208947",
+            "$etag": "W/\u00225835d863-4ea6-4ad7-a831-985a7c81ced7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1062677703",
+            "$etag": "W/\u00225e977d72-2d41-456b-8ea5-ae401b39bf0a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin324722902",
+            "$etag": "W/\u002214c5c5ce-59b5-4a4c-a6aa-1e41ab2171c7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1462038290",
+            "$etag": "W/\u0022297e8e3d-fa21-48d2-8ad0-5140dad410aa\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin462997606",
+            "$etag": "W/\u0022520d9d8f-26a0-49eb-bf4a-97089ee3b215\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ0AAAAAAAAAA==#RT:16#TRC:80#ISV:2#IEO:65551#FPC:AgEAAAAKAHQA8P9/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "380",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "336754036b05e579f2fc6ff59fa26228",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ0AAAAAAAAAA==#RT:16#TRC:80#ISV:2#IEO:65551#FPC:AgEAAAAKAHQA8P9/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2589",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin1012472014",
+            "$etag": "W/\u00222ff06d59-f560-40d9-bf73-d2957887b818\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1543128019",
+            "$etag": "W/\u0022e3395b82-f93a-41fb-8903-89de4b68a5bf\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin955385887",
+            "$etag": "W/\u00223128b366-23a9-4a19-ab7e-b2fcbef9af3e\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin672739146",
+            "$etag": "W/\u0022dd179afe-3a30-4f55-bcfc-b529538ed18b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1750846709",
+            "$etag": "W/\u002251a2b553-2d6d-427e-8779-d27e3d15bfd2\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ5AAAAAAAAAA==#RT:17#TRC:85#ISV:2#IEO:65551#FPC:AgEAAAAKAHQAAP5/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "380",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "462696dda583ec7671bb1fa98f7517c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ5AAAAAAAAAA==#RT:17#TRC:85#ISV:2#IEO:65551#FPC:AgEAAAAKAHQAAP5/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2588",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin422308472",
+            "$etag": "W/\u00228ea17c08-4542-4f10-8e98-f4a044b3a616\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1661689683",
+            "$etag": "W/\u0022fcd235a2-c5fe-46ee-9cbd-4f70b90a0d2d\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1648554203",
+            "$etag": "W/\u0022fe961330-5592-47a0-8433-11baa6cafa72\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin528003268",
+            "$etag": "W/\u00222af11057-a459-4406-84dc-82a12ad38106\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin817870353",
+            "$etag": "W/\u0022781ecf84-02fb-4a64-9959-6c1286246ee6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ\u002BAAAAAAAAAA==#RT:18#TRC:90#ISV:2#IEO:65551#FPC:AgEAAAAKAHQAAMB/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "385",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "dfcfd6a24dc93180d5b2258e50c88031",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjZ\u002BAAAAAAAAAA==#RT:18#TRC:90#ISV:2#IEO:65551#FPC:AgEAAAAKAHQAAMB/USTy/wc=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2587",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin1251286994",
+            "$etag": "W/\u002204f4c379-5934-4788-8c96-0de3beba29b6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1240738903",
+            "$etag": "W/\u0022f210ec66-b4c9-488d-bcdc-bf8948f84bd9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1738906707",
+            "$etag": "W/\u00226e952007-ad31-492e-a7c2-62ad7d4b54e9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1491061385",
+            "$etag": "W/\u00224c895d19-e817-4c79-8aaf-8e4769287e97\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1776075638",
+            "$etag": "W/\u002258d54f8d-5e34-4060-b955-8a486d30f447\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaDAAAAAAAAAA==#RT:19#TRC:95#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAeFEk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "376",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d571310f7b1d5d6bdd7bc14a4bcf567c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaDAAAAAAAAAA==#RT:19#TRC:95#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAeFEk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin619913832",
+            "$etag": "W/\u00220f62adc9-a00b-423a-bc62-54588da70511\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1410570626",
+            "$etag": "W/\u0022daced9e9-5fad-4328-ba39-6e7d6e195d58\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;123439021",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1067365890",
+            "$etag": "W/\u002249dafe72-a4f4-4986-9a66-94b82f4fdd32\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin757295793",
+            "$etag": "W/\u00220b31dafa-a92e-4139-91c2-cea3a0de96e7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin633630133",
+            "$etag": "W/\u0022a194cd57-9a12-40a8-8641-eef149c38829\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaMAAAAAAAAAA==#RT:20#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAAFAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "377",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c852aee583d2905f15f571d180e79ca9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaMAAAAAAAAAA==#RT:20#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAIMAAFAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin1052658490",
+            "$etag": "W/\u00225ddb7fae-81be-4b0b-920f-26947783a711\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1626036685",
+            "$etag": "W/\u002288043f16-cc41-41fa-a4c2-89b79dc679b6\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin687114800",
+            "$etag": "W/\u0022e40bc758-5024-403f-be36-b991984dd165\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1274856786",
+            "$etag": "W/\u00225799d61b-4453-46c0-81c4-fcf3f4570f4a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1098941419",
+            "$etag": "W/\u002233a4b889-0aba-4d63-b65d-a42a40e4c456\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjacAAAAAAAAAA==#RT:21#TRC:105#ISV:2#IEO:65551#FPC:AZwAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "381",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5e9aee3b420327a36b71014d8c36e505",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjacAAAAAAAAAA==#RT:21#TRC:105#ISV:2#IEO:65551#FPC:AZwAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2586",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.16",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin125346931",
+            "$etag": "W/\u0022af62467a-acb1-4395-8c26-eb38dfc9874b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin345229702",
+            "$etag": "W/\u002255c487c4-984f-465f-bc95-125288661377\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin904769627",
+            "$etag": "W/\u0022f0e97abe-4660-4e4e-8ae7-ce9a7cc4eabc\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin840530319",
+            "$etag": "W/\u00227b0aed29-4924-4edb-a4f6-57b379179e7a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin19991913",
+            "$etag": "W/\u00227b4544bb-5313-421d-821b-0b47810f6ed1\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjahAAAAAAAAAA==#RT:22#TRC:110#ISV:2#IEO:65551#FPC:AaEAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "381",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "a1a9a85bb7768c5ed1e1bf280a9adcf5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjahAAAAAAAAAA==#RT:22#TRC:110#ISV:2#IEO:65551#FPC:AaEAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2590",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.17",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin1846282992",
+            "$etag": "W/\u0022e96b7675-5265-486e-a565-51c09f86292e\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1501230847",
+            "$etag": "W/\u00226802e3a6-b98a-4da6-b472-4b02220454d2\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin2112889309",
+            "$etag": "W/\u0022a8b818f4-cac5-4152-af3b-6501b11b2a20\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1261829064",
+            "$etag": "W/\u0022d227561c-e41d-4503-b9b9-e6c04d18d682\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin20831578",
+            "$etag": "W/\u002228e89f63-cbd8-432d-8408-cbe836c136a9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
+              }
+            }
+          }
+        ],
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjamAAAAAAAAAA==#RT:23#TRC:115#ISV:2#IEO:65551#FPC:AaYAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "381",
+        "Content-Type": "application/json",
+        "max-items-per-page": "5",
+        "User-Agent": [
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5c0e18def735a3790b2b5d61811104de",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjamAAAAAAAAAA==#RT:23#TRC:115#ISV:2#IEO:65551#FPC:AaYAAAAAAAAAqgAAAAAAAAA=\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins\u0022}"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1882",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "query-charge": "3.07",
+        "Strict-Transport-Security": "max-age=2592000"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "$dtId": "roomTwin2061740721",
+            "$etag": "W/\u0022809c12e1-14b3-49ab-8d2a-f138e6e9f5bb\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin59174272",
+            "$etag": "W/\u0022dc826323-ef03-4ecd-8712-8941cfcb5412\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;123439021",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1511973902",
+            "$etag": "W/\u0022e512e115-b43b-493d-b71e-8e7d617e48de\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;113863769",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1357107878",
+            "$etag": "W/\u00227ce2ee84-70b9-4669-881b-b191b7816f06\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;180130729",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+              }
+            }
           }
         ],
         "continuationToken": null
@@ -5006,14 +7487,14 @@
           "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "48841835b30788ad06570ac1561463e0",
+        "x-ms-client-request-id": "d7756b0ffb3e83328f0d8c22827a1cd0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []

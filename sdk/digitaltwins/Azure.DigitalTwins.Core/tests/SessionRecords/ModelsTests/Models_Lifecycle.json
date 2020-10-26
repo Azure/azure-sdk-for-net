@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -74,7 +74,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -102,7 +102,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -132,10 +132,10 @@
       "ResponseHeaders": {
         "Content-Length": "627",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Building;11357\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:47.1775918\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;124597763\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:47.1776866\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;110485359\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T16:57:47.1777649\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Building;11357\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A free-standing structure.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Building\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:51.1650144\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Hvac;124597763\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A heating, ventilation, and air conditioning unit.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022HVAC\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:51.1651374\u002B00:00\u0022},{\u0022id\u0022:\u0022dtmi:example:Ward;110485359\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:51.1652426\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3ABuilding%3B11357?includeModelDefinition=true\u0026api-version=2020-10-31",
@@ -155,7 +155,7 @@
       "ResponseHeaders": {
         "Content-Length": "604",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:46 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -167,7 +167,7 @@
           "en": "Building"
         },
         "decommissioned": false,
-        "uploadTime": "2020-10-26T16:57:47.1775918\u002B00:00",
+        "uploadTime": "2020-10-26T17:04:51.1650144\u002B00:00",
         "model": {
           "@id": "dtmi:example:Building;11357",
           "@type": "Interface",
@@ -212,9 +212,9 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "9016",
+        "Content-Length": "11824",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -583,39 +583,6 @@
             "uploadTime": "2020-10-26T16:57:42.608936\u002B00:00"
           },
           {
-            "id": "dtmi:example:room;113863769",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:45.9755616\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;120254295",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:46.051617\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;114513986",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:46.0718279\u002B00:00"
-          },
-          {
             "id": "dtmi:example:Ward;110855032",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
@@ -625,39 +592,6 @@
             },
             "decommissioned": false,
             "uploadTime": "2020-10-26T16:57:46.1602423\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:floor;19932306",
-            "description": {
-              "en": "A building story."
-            },
-            "displayName": {
-              "en": "Floor"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:46.8034132\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;137155543",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:46.803554\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:hvac;111092475",
-            "description": {
-              "en": "A heating, ventilation, and air conditioning unit."
-            },
-            "displayName": {
-              "en": "HVAC"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:46.803719\u002B00:00"
           },
           {
             "id": "dtmi:example:Ward;144568920",
@@ -671,6 +605,215 @@
             "uploadTime": "2020-10-26T16:57:46.8220488\u002B00:00"
           },
           {
+            "id": "dtmi:example:Ward;181743108",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T16:57:47.2857459\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;168945250",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T16:57:48.1108424\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;114216032",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:44.3679245\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;194770428",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:44.6628594\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;117942929",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:46.099361\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;113886965",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:46.2547833\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;120254295",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.5405338\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;113863769",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.5727642\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:floor;12904852",
+            "description": {
+              "en": "A building story."
+            },
+            "displayName": {
+              "en": "Floor"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6708214\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;117640165",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6730782\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;114513986",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6709975\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:hvac;113394842",
+            "description": {
+              "en": "A heating, ventilation, and air conditioning unit."
+            },
+            "displayName": {
+              "en": "HVAC"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6711672\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:floor;19932306",
+            "description": {
+              "en": "A building story."
+            },
+            "displayName": {
+              "en": "Floor"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6764853\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;137155543",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6766414\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:hvac;111092475",
+            "description": {
+              "en": "A heating, ventilation, and air conditioning unit."
+            },
+            "displayName": {
+              "en": "HVAC"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.6768058\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;120630867",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:50.7069343\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Building;16685",
+            "description": {
+              "en": "A free-standing structure."
+            },
+            "displayName": {
+              "en": "Building"
+            },
+            "decommissioned": true,
+            "uploadTime": "2020-10-26T17:04:51.093357\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Hvac;119998209",
+            "description": {
+              "en": "A heating, ventilation, and air conditioning unit."
+            },
+            "displayName": {
+              "en": "HVAC"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:51.0934887\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;116791127",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-10-26T17:04:51.0935792\u002B00:00"
+          },
+          {
             "id": "dtmi:example:Building;11357",
             "description": {
               "en": "A free-standing structure."
@@ -679,7 +822,7 @@
               "en": "Building"
             },
             "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:47.1775918\u002B00:00"
+            "uploadTime": "2020-10-26T17:04:51.1650144\u002B00:00"
           },
           {
             "id": "dtmi:example:Hvac;124597763",
@@ -690,7 +833,7 @@
               "en": "HVAC"
             },
             "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:47.1776866\u002B00:00"
+            "uploadTime": "2020-10-26T17:04:51.1651374\u002B00:00"
           },
           {
             "id": "dtmi:example:Ward;110485359",
@@ -701,7 +844,7 @@
               "en": "Ward"
             },
             "decommissioned": false,
-            "uploadTime": "2020-10-26T16:57:47.1777649\u002B00:00"
+            "uploadTime": "2020-10-26T17:04:51.1652426\u002B00:00"
           }
         ],
         "nextLink": null
@@ -726,7 +869,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -748,7 +891,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -770,7 +913,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -792,7 +935,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 16:57:47 GMT",
+        "Date": "Mon, 26 Oct 2020 17:04:50 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
