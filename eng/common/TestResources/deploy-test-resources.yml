@@ -21,6 +21,8 @@ steps:
   - template: /eng/common/TestResources/setup-az-modules.yml
 
   - pwsh: |
+      eng/common/TestResources/Import-AzModules.ps1
+
       $subscriptionConfiguration = @"
         ${{ parameters.SubscriptionConfiguration }}
       "@ | ConvertFrom-Json -AsHashtable;
