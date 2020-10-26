@@ -136,6 +136,40 @@ string blobName; // name of the desired blob
 BlobClient blob = new BlobClient(connectionString, containerName, blobName);
 ```
 
+Note that in v11, you could access the shared key storage credential on `CloudBlobClient` after creating the instance with a connection string. This would allow you to rotate the shared key on an existing instance. v12 does NOT provide that access. If your code rotates a shared key within a client, you must used shared key authentication directly, as described in the following section.
+
+#### Shared Key
+
+Shared key authentication requires the URI to the storage endpoint, the storage account name, and the shared key as a base64 string. The following code assumes you have acquired your shared key (you can do so from the Access Keys tab under Settings in your Portal Storage Account blade). It is recommended to store it in an environment variable.
+
+Note that the URI to your storage account can generally be derived from the account name (though some exceptions exist), and so you can track only the account name and key. These examples will assume that is the case, though you can substitute your specific account URI if you do not follow this pattern.
+
+Legacy (v11)
+```csharp
+string accountName; // your storage account name.
+Uri blobServiceUri = new Uri(accountName + ".blob.core.windows.net");
+string accountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SHARED_KEY");
+
+StorageCredentials credentials = new StorageCredentials(accountName, accountKey);
+CloudBlobClient blobClient = new CloudBlobClient(blobServiceUri)
+// Make a service request to verify we've successfully authenticated
+await blobClient.GetServicePropertiesAsync();
+```
+
+v12
+```csharp
+string accountName; // your storage account name.
+Uri blobServiceUri = new Uri(accountName + ".blob.core.windows.net");
+string accountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SHARED_KEY");
+
+StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+BlobServiceClient service = new BlobServiceClient(blobServiceUri, credential);
+// Make a service request to verify we've successfully authenticated
+await service.GetPropertiesAsync();
+```
+
+If you wish to rotate the key within your `BlobServiceClient` (and any derived clients), you must retain a reference to the `StorageSharedKeyCredential`, which has the instance method `SetAccountKey(string accountKey)`.
+
 ### Shared Access Policies
 
 To learn more, visit our article [Create a Stored Access Policy with .NET](https://docs.microsoft.com/azure/storage/common/storage-stored-access-policy-define-dotnet) or take a look at the code comparison below.
