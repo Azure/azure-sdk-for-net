@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Host
     public partial class BlobsOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public BlobsOptions() { }
-        public bool CentralizedPoisonQueue { get { throw null; } set { } }
+        public int MaxDegreeOfParallelism { get { throw null; } set { } }
         public string Format() { throw null; }
     }
 }
