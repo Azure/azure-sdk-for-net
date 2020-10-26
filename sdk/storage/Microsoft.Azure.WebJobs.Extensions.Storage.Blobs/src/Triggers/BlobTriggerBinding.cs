@@ -167,7 +167,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Triggers
 
             if (!conversionResult.Succeeded)
             {
-                throw new InvalidOperationException("Unable to convert trigger to IStorageBlob.");
+                throw new InvalidOperationException("Unable to convert trigger to BlobBaseClient.");
             }
 
             BlobBaseClient blobClient = conversionResult.Result;
