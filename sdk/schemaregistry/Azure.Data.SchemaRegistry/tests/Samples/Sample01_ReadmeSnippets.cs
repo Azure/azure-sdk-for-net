@@ -29,7 +29,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public void RegisterSchema()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
 
             #region Snippet:SchemaRegistryRegisterSchema
             string schemaName = "<schema_name>";
@@ -55,7 +55,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public void RetrieveSchemaId()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
 
             #region Snippet:SchemaRegistryRetrieveSchemaId
             string schemaName = "<schema_name>";
@@ -82,7 +82,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         [Test]
         public void RetrieveSchema()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
 
             #region Snippet:SchemaRegistryRetrieveSchema
             string schemaId = "<schema_id>";
