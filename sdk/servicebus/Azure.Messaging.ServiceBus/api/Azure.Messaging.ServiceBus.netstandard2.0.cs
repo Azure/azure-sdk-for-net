@@ -150,7 +150,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }
         public ServiceBusMessage(string body) { }
-        public Azure.Core.Amqp.AmqpAnnotatedMessage AmqpMessage { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.BinaryData Body { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
@@ -165,6 +164,7 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan TimeToLive { get { throw null; } set { } }
         public string To { get { throw null; } set { } }
         public string TransactionPartitionKey { get { throw null; } set { } }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawMessage() { throw null; }
         public override string ToString() { throw null; }
     }
     public sealed partial class ServiceBusMessageBatch : System.IDisposable
@@ -233,7 +233,6 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusReceivedMessage
     {
         internal ServiceBusReceivedMessage() { }
-        public Azure.Core.Amqp.AmqpAnnotatedMessage AmqpMessage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.BinaryData Body { get { throw null; } }
         public string ContentType { get { throw null; } }
@@ -258,6 +257,7 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
         public string ViaPartitionKey { get { throw null; } }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawMessage() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ServiceBusReceiver : System.IAsyncDisposable

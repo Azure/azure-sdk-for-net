@@ -21,11 +21,11 @@ namespace Azure.Core.Amqp
 
             var data = messageToCopy.Body as AmqpDataMessageBody;
             Body = new AmqpDataMessageBody(data!.Data);
-            ApplicationProperties = new Dictionary<string, object>(messageToCopy.ApplicationProperties);
+            _applicationProperties = new Dictionary<string, object>(messageToCopy.ApplicationProperties);
             Properties = new AmqpMessageProperties(messageToCopy.Properties);
-            MessageAnnotations = new Dictionary<string, object>(messageToCopy.MessageAnnotations);
-            DeliveryAnnotations = new Dictionary<string, object>(messageToCopy.DeliveryAnnotations);
-            Footer = new Dictionary<string, object>(messageToCopy.Footer);
+            _messageAnnotations = new Dictionary<string, object>(messageToCopy.MessageAnnotations);
+            _deliveryAnnotations = new Dictionary<string, object>(messageToCopy.DeliveryAnnotations);
+            _footer = new Dictionary<string, object>(messageToCopy.Footer);
             Header = new AmqpMessageHeader(messageToCopy.Header);
         }
 
@@ -35,7 +35,9 @@ namespace Azure.Core.Amqp
         /// <param name="dataBody">The data sections comprising the message body.
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
         /// </param>
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public AmqpAnnotatedMessage(IEnumerable<BinaryData> dataBody)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             Body = new AmqpDataMessageBody(dataBody);
         }
@@ -48,17 +50,53 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The footer of the AMQP message.
         /// </summary>
-        public IDictionary<string, object> Footer { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Footer
+        {
+            get
+            {
+                if (_footer == null)
+                {
+                    _footer = new Dictionary<string, object>();
+                }
+                return _footer;
+            }
+        }
+
+        private Dictionary<string, object> _footer;
 
         /// <summary>
         /// The delivery annotations of the AMQP message.
         /// </summary>
-        public IDictionary<string, object> DeliveryAnnotations { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> DeliveryAnnotations
+        {
+            get
+            {
+                if (_deliveryAnnotations == null)
+                {
+                    _deliveryAnnotations = new Dictionary<string, object>();
+                }
+                return _deliveryAnnotations;
+            }
+        }
+
+        private Dictionary<string, object> _deliveryAnnotations;
 
         /// <summary>
         /// The message annotations of the AMQP message.
         /// </summary>
-        public IDictionary<string, object> MessageAnnotations { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> MessageAnnotations
+        {
+            get
+            {
+                if (_messageAnnotations == null)
+                {
+                    _messageAnnotations = new Dictionary<string, object>();
+                }
+                return _messageAnnotations;
+            }
+        }
+
+        private Dictionary<string, object> _messageAnnotations;
 
         /// <summary>
         /// The properties of the AMQP message.
@@ -68,7 +106,19 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The application properties of the AMQP message.
         /// </summary>
-        public IDictionary<string, object> ApplicationProperties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> ApplicationProperties
+        {
+            get
+            {
+                if (_applicationProperties == null)
+                {
+                    _applicationProperties = new Dictionary<string, object>();
+                }
+                return _applicationProperties;
+            }
+        }
+
+        private Dictionary<string, object> _applicationProperties;
 
         /// <summary>
         /// The body of the AMQP message.

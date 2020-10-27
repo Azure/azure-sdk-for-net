@@ -4,12 +4,12 @@ namespace Azure.Core.Amqp
     {
         public AmqpAnnotatedMessage(Azure.Core.Amqp.AmqpAnnotatedMessage messageToCopy) { }
         public AmqpAnnotatedMessage(System.Collections.Generic.IEnumerable<Azure.BinaryData> dataBody) { }
-        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageBody Body { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Footer { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Footer { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageHeader Header { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } set { } }
     }
     public partial class AmqpDataMessageBody : Azure.Core.Amqp.AmqpMessageBody

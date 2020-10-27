@@ -44,11 +44,19 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSettled { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that was transmitted over the wire.
         /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; internal set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that was transmitted over the wire.
+        /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.
