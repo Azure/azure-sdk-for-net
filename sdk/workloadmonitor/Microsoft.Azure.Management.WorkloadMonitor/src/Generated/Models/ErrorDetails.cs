@@ -14,11 +14,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using System.Linq;
 
     /// <summary>
-    /// Error Details
+    /// Error details
     /// </summary>
-    /// <remarks>
-    /// Error details of the error body contract.
-    /// </remarks>
     public partial class ErrorDetails
     {
         /// <summary>
@@ -32,9 +29,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
-        /// <param name="code">Property level error code.</param>
-        /// <param name="message">Human-readable representation of
-        /// property-level error.</param>
+        /// <param name="code">Error code identifying the specific
+        /// error.</param>
+        /// <param name="message">A human-readable error message.</param>
         public ErrorDetails(string code = default(string), string message = default(string))
         {
             Code = code;
@@ -48,13 +45,13 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets property level error code.
+        /// Gets or sets error code identifying the specific error.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets human-readable representation of property-level error.
+        /// Gets or sets a human-readable error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
