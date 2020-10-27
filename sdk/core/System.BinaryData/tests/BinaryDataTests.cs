@@ -106,6 +106,28 @@ namespace System.Tests
         }
 
         [Fact]
+        public async Task CanCreateBinaryDataFromLongStream()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            using MemoryStream stream = new OverFlowStream(offset: int.MaxValue - 10000, buffer);
+            BinaryData data = BinaryData.FromStream(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            byte[] output = new byte[buffer.Length];
+            var outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+
+            stream.Position = 0;
+            data = await BinaryData.FromStreamAsync(stream);
+            Assert.Equal(buffer, data.ToBytes().ToArray());
+
+            outputStream = data.ToStream();
+            outputStream.Read(output, 0, (int)outputStream.Length);
+            Assert.Equal(buffer, output);
+        }
+
+        [Fact]
         public async Task CanCreateBinaryDataFromStreamUsingBackingBuffer()
         {
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
@@ -226,7 +248,11 @@ namespace System.Tests
         [Fact]
         public void MaxStreamLengthRespected()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => BinaryData.FromStream(new OverFlowStream()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => BinaryData.FromStream(new OverFlowStream(offset: 0)));
+
+            // should not throw
+            var data = BinaryData.FromStream(new OverFlowStream(offset: 1));
+
         }
 
         [Fact]
@@ -439,7 +465,16 @@ namespace System.Tests
 
         private class OverFlowStream : MemoryStream
         {
+            private readonly long _offset;
+
+            public OverFlowStream(long offset, byte[] buffer = default): base(buffer)
+            {
+                _offset = offset;
+            }
+
             public override long Length => (long)int.MaxValue + 1;
+
+            public override long Position => _offset;
         }
 
         private class NonSeekableStream : MemoryStream

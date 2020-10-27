@@ -150,7 +150,7 @@ namespace System
                 return new BinaryData(new ReadOnlyMemory<byte>(buffer.Array, buffer.Offset, buffer.Count).Slice((int)stream.Position, streamLength));
             }
 
-            using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream((int)stream.Length) : new MemoryStream();
+            using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream(streamLength) : new MemoryStream();
             if (async)
             {
                 await stream.CopyToAsync(memoryStream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
