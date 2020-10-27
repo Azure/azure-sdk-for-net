@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Service Bus is a fully managed enterprise integration message broker. Service Bus can decouple applications and services. Service Bus offers a reliable and secure platform for asynchronous transfer of data and state. This client library allows for both sending and receiving messages using Azure Service Bus. For more information about Service Bus, see https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview</Description>
     <Version>7.0.0-preview.9</Version>
@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
   </ItemGroup>
@@ -31,6 +30,9 @@
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" Link="SharedSource\Azure.Core\ValueStopwatch.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="SharedSource\Azure.Core\PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="SharedSource\Azure.Core\AzureResourceProviderNamespaceAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">

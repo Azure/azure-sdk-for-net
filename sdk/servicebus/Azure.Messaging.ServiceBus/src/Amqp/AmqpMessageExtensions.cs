@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
+            return AmqpMessage.Create(((AmqpDataMessageBody)message.AmqpMessage.Body).Data.AsAmqpData());
         }
 
         private static IEnumerable<Data> AsAmqpData(this IEnumerable<BinaryData> binaryData)
