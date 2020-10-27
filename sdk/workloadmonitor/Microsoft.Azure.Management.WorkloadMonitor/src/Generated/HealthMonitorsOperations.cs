@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// MonitorsOperations operations.
+    /// HealthMonitorsOperations operations.
     /// </summary>
-    internal partial class MonitorsOperations : IServiceOperations<WorkloadMonitorAPIClient>, IMonitorsOperations
+    internal partial class HealthMonitorsOperations : IServiceOperations<WorkloadMonitorAPIClient>, IHealthMonitorsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the MonitorsOperations class.
+        /// Initializes a new instance of the HealthMonitorsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal MonitorsOperations(WorkloadMonitorAPIClient client)
+        internal HealthMonitorsOperations(WorkloadMonitorAPIClient client)
         {
             if (client == null)
             {
@@ -51,29 +51,32 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         public WorkloadMonitorAPIClient Client { get; private set; }
 
         /// <summary>
-        /// Get list of a monitors of a resource (with optional filter).
+        /// Get the current health status of all monitors of a virtual machine.
+        /// Optional parameters: $expand (retrieve the monitor's evidence and
+        /// configuration) and $filter (filter by monitor name).
         /// </summary>
         /// <param name='subscriptionId'>
-        /// The subscriptionId of the resource
+        /// The subscription Id of the virtual machine.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resourceGroupName of the resource
+        /// The resource group of the virtual machine.
         /// </param>
-        /// <param name='resourceNamespace'>
-        /// The resourceNamespace of the resource
+        /// <param name='providerName'>
+        /// The provider name (ex: Microsoft.Compute for virtual machines).
         /// </param>
-        /// <param name='resourceType'>
-        /// The resourceType of the resource
+        /// <param name='resourceCollectionName'>
+        /// The resource collection name (ex: virtualMachines for virtual machines).
         /// </param>
         /// <param name='resourceName'>
-        /// The resourceType of the resource
+        /// The name of the virtual machine.
         /// </param>
         /// <param name='filter'>
-        /// list example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb';
-        /// history example: $filter=isHeartbeat eq false
+        /// Optionally filter by monitor name. Example: $filter=monitorName eq
+        /// 'logical-disks|C:|disk-free-space-mb.'
         /// </param>
         /// <param name='expand'>
-        /// ex: $expand=evidence,configuration
+        /// Optionally expand the monitor’s evidence and/or configuration. Example:
+        /// $expand=evidence,configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,7 +84,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -96,7 +99,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Models.Monitor>>> ListWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HealthMonitor>>> ListWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -106,13 +109,13 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (resourceNamespace == null)
+            if (providerName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
             }
-            if (resourceType == null)
+            if (resourceCollectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceCollectionName");
             }
             if (resourceName == null)
             {
@@ -127,8 +130,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceNamespace", resourceNamespace);
-                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("providerName", providerName);
+                tracingParameters.Add("resourceCollectionName", resourceCollectionName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("expand", expand);
@@ -137,11 +140,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
-            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
+            _url = _url.Replace("{resourceCollectionName}", System.Uri.EscapeDataString(resourceCollectionName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -216,11 +219,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -244,7 +247,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Models.Monitor>>();
+            var _result = new AzureOperationResponse<IPage<HealthMonitor>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -257,7 +260,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Models.Monitor>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthMonitor>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -277,28 +280,30 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the current status of a monitor of a resource.
+        /// Get the current health status of a monitor of a virtual machine. Optional
+        /// parameter: $expand (retrieve the monitor's evidence and configuration).
         /// </summary>
         /// <param name='subscriptionId'>
-        /// The subscriptionId of the resource
+        /// The subscription Id of the virtual machine.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resourceGroupName of the resource
+        /// The resource group of the virtual machine.
         /// </param>
-        /// <param name='resourceNamespace'>
-        /// The resourceNamespace of the resource
+        /// <param name='providerName'>
+        /// The provider name (ex: Microsoft.Compute for virtual machines).
         /// </param>
-        /// <param name='resourceType'>
-        /// The resourceType of the resource
+        /// <param name='resourceCollectionName'>
+        /// The resource collection name (ex: virtualMachines for virtual machines).
         /// </param>
         /// <param name='resourceName'>
-        /// The resourceType of the resource
+        /// The name of the virtual machine.
         /// </param>
         /// <param name='monitorId'>
-        /// The monitorId of the resource (url encoded)
+        /// The monitor Id of the virtual machine.
         /// </param>
         /// <param name='expand'>
-        /// ex: $expand=evidence,configuration
+        /// Optionally expand the monitor’s evidence and/or configuration. Example:
+        /// $expand=evidence,configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -306,7 +311,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -321,7 +326,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Models.Monitor>> GetWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HealthMonitor>> GetWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -331,13 +336,13 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (resourceNamespace == null)
+            if (providerName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
             }
-            if (resourceType == null)
+            if (resourceCollectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceCollectionName");
             }
             if (resourceName == null)
             {
@@ -356,8 +361,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceNamespace", resourceNamespace);
-                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("providerName", providerName);
+                tracingParameters.Add("resourceCollectionName", resourceCollectionName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("monitorId", monitorId);
                 tracingParameters.Add("expand", expand);
@@ -366,11 +371,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
-            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
+            _url = _url.Replace("{resourceCollectionName}", System.Uri.EscapeDataString(resourceCollectionName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{monitorId}", System.Uri.EscapeDataString(monitorId));
             List<string> _queryParameters = new List<string>();
@@ -442,11 +447,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -470,7 +475,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Models.Monitor>();
+            var _result = new AzureOperationResponse<HealthMonitor>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -483,7 +488,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Models.Monitor>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthMonitor>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -503,38 +508,42 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get history of a monitor of a resource (with optional filter).
+        /// Get the health state changes of a monitor of a virtual machine within the
+        /// provided time window (default is the last 24 hours). Optional parameters:
+        /// $expand (retrieve the monitor's evidence and configuration) and $filter
+        /// (filter by heartbeat condition).
         /// </summary>
         /// <param name='subscriptionId'>
-        /// The subscriptionId of the resource
+        /// The subscription Id of the virtual machine.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resourceGroupName of the resource
+        /// The resource group of the virtual machine.
         /// </param>
-        /// <param name='resourceNamespace'>
-        /// The resourceNamespace of the resource
+        /// <param name='providerName'>
+        /// The provider name (ex: Microsoft.Compute for virtual machines).
         /// </param>
-        /// <param name='resourceType'>
-        /// The resourceType of the resource
+        /// <param name='resourceCollectionName'>
+        /// The resource collection name (ex: virtualMachines for virtual machines).
         /// </param>
         /// <param name='resourceName'>
-        /// The resourceType of the resource
+        /// The name of the virtual machine.
         /// </param>
         /// <param name='monitorId'>
-        /// The monitorId of the resource (url encoded)
+        /// The monitor Id of the virtual machine.
         /// </param>
         /// <param name='filter'>
-        /// list example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb';
-        /// history example: $filter=isHeartbeat eq false
+        /// Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq
+        /// false.
         /// </param>
         /// <param name='expand'>
-        /// ex: $expand=evidence,configuration
+        /// Optionally expand the monitor’s evidence and/or configuration. Example:
+        /// $expand=evidence,configuration.
         /// </param>
         /// <param name='startTimestampUtc'>
-        /// The start Timestamp for the desired history
+        /// The start of the time window.
         /// </param>
         /// <param name='endTimestampUtc'>
-        /// The end Timestamp for the desired history
+        /// The end of the time window.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -542,7 +551,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -557,7 +566,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<MonitorStateChange>>> ListStateChangesWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string filter = default(string), string expand = default(string), System.DateTime? startTimestampUtc = default(System.DateTime?), System.DateTime? endTimestampUtc = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HealthMonitorStateChange>>> ListStateChangesWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter = default(string), string expand = default(string), System.DateTime? startTimestampUtc = default(System.DateTime?), System.DateTime? endTimestampUtc = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -567,13 +576,13 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (resourceNamespace == null)
+            if (providerName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
             }
-            if (resourceType == null)
+            if (resourceCollectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceCollectionName");
             }
             if (resourceName == null)
             {
@@ -592,8 +601,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceNamespace", resourceNamespace);
-                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("providerName", providerName);
+                tracingParameters.Add("resourceCollectionName", resourceCollectionName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("monitorId", monitorId);
                 tracingParameters.Add("filter", filter);
@@ -605,11 +614,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
-            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
+            _url = _url.Replace("{resourceCollectionName}", System.Uri.EscapeDataString(resourceCollectionName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{monitorId}", System.Uri.EscapeDataString(monitorId));
             List<string> _queryParameters = new List<string>();
@@ -693,11 +702,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -721,7 +730,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<MonitorStateChange>>();
+            var _result = new AzureOperationResponse<IPage<HealthMonitorStateChange>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -734,7 +743,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<MonitorStateChange>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthMonitorStateChange>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -754,31 +763,34 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the status of a monitor at a specific timestamp in history.
+        /// Get the health state change of a monitor of a virtual machine at the
+        /// provided timestamp. Optional parameter: $expand (retrieve the monitor's
+        /// evidence and configuration).
         /// </summary>
         /// <param name='subscriptionId'>
-        /// The subscriptionId of the resource
+        /// The subscription Id of the virtual machine.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resourceGroupName of the resource
+        /// The resource group of the virtual machine.
         /// </param>
-        /// <param name='resourceNamespace'>
-        /// The resourceNamespace of the resource
+        /// <param name='providerName'>
+        /// The provider name (ex: Microsoft.Compute for virtual machines).
         /// </param>
-        /// <param name='resourceType'>
-        /// The resourceType of the resource
+        /// <param name='resourceCollectionName'>
+        /// The resource collection name (ex: virtualMachines for virtual machines).
         /// </param>
         /// <param name='resourceName'>
-        /// The resourceType of the resource
+        /// The name of the virtual machine.
         /// </param>
         /// <param name='monitorId'>
-        /// The monitorId of the resource (url encoded)
+        /// The monitor Id of the virtual machine.
         /// </param>
         /// <param name='timestampUnix'>
-        /// The timestamp of the state change (Unix format)
+        /// The timestamp of the state change (unix format).
         /// </param>
         /// <param name='expand'>
-        /// ex: $expand=evidence,configuration
+        /// Optionally expand the monitor’s evidence and/or configuration. Example:
+        /// $expand=evidence,configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -786,7 +798,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -801,7 +813,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<MonitorStateChange>> GetStateChangeWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string monitorId, string timestampUnix, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HealthMonitorStateChange>> GetStateChangeWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -811,13 +823,13 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (resourceNamespace == null)
+            if (providerName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
             }
-            if (resourceType == null)
+            if (resourceCollectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceCollectionName");
             }
             if (resourceName == null)
             {
@@ -840,8 +852,8 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("resourceNamespace", resourceNamespace);
-                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("providerName", providerName);
+                tracingParameters.Add("resourceCollectionName", resourceCollectionName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("monitorId", monitorId);
                 tracingParameters.Add("timestampUnix", timestampUnix);
@@ -851,11 +863,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
-            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
+            _url = _url.Replace("{resourceCollectionName}", System.Uri.EscapeDataString(resourceCollectionName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{monitorId}", System.Uri.EscapeDataString(monitorId));
             _url = _url.Replace("{timestampUnix}", System.Uri.EscapeDataString(timestampUnix));
@@ -928,11 +940,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -956,7 +968,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<MonitorStateChange>();
+            var _result = new AzureOperationResponse<HealthMonitorStateChange>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -969,7 +981,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MonitorStateChange>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HealthMonitorStateChange>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -989,7 +1001,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get list of a monitors of a resource (with optional filter).
+        /// Get the current health status of all monitors of a virtual machine.
+        /// Optional parameters: $expand (retrieve the monitor's evidence and
+        /// configuration) and $filter (filter by monitor name).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1000,7 +1014,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1015,7 +1029,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Models.Monitor>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HealthMonitor>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1096,11 +1110,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1124,7 +1138,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Models.Monitor>>();
+            var _result = new AzureOperationResponse<IPage<HealthMonitor>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1137,7 +1151,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Models.Monitor>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthMonitor>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1157,7 +1171,10 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get history of a monitor of a resource (with optional filter).
+        /// Get the health state changes of a monitor of a virtual machine within the
+        /// provided time window (default is the last 24 hours). Optional parameters:
+        /// $expand (retrieve the monitor's evidence and configuration) and $filter
+        /// (filter by heartbeat condition).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1168,7 +1185,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1183,7 +1200,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<MonitorStateChange>>> ListStateChangesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HealthMonitorStateChange>>> ListStateChangesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1264,11 +1281,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1292,7 +1309,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<MonitorStateChange>>();
+            var _result = new AzureOperationResponse<IPage<HealthMonitorStateChange>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1305,7 +1322,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<MonitorStateChange>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HealthMonitorStateChange>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

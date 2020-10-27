@@ -16,31 +16,28 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
     using System.Linq;
 
     /// <summary>
-    /// error details
+    /// Error info.
     /// </summary>
-    /// <remarks>
-    /// Details about the error
-    /// </remarks>
-    public partial class DefaultErrorError
+    public partial class ErrorResponseError
     {
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorError class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
-        public DefaultErrorError()
+        public ErrorResponseError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorError class.
+        /// Initializes a new instance of the ErrorResponseError class.
         /// </summary>
         /// <param name="code">Service-defined error code. This code serves as
         /// a sub-status for the HTTP error code specified in the
         /// response.</param>
         /// <param name="message">Human-readable representation of the
         /// error.</param>
-        /// <param name="details">Details of the error.</param>
-        public DefaultErrorError(string code = default(string), string message = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>))
+        /// <param name="details">Error details.</param>
+        public ErrorResponseError(string code = default(string), string message = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>))
         {
             Code = code;
             Message = message;
@@ -67,7 +64,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets details of the error.
+        /// Gets or sets error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public IList<ErrorDetails> Details { get; set; }

@@ -20,5 +20,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor.Models
         public const string Critical = "Critical";
         public const string Warning = "Warning";
         public const string Unknown = "Unknown";
+        public const string Disabled = "Disabled";
+        public const string None = "None";
     }
 }
