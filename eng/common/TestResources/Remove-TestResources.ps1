@@ -138,8 +138,8 @@ if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
 }
 
 Log "Deleting resource group '$ResourceGroupName'"
-if (Retry { Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force }) {
-    Write-Verbose "Successfully deleted resource group '$ResourceGroupName'"
+if (Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob) {
+    Write-Verbose "Requested async deletion of resource group '$ResourceGroupName'"
 }
 
 $exitActions.Invoke()
