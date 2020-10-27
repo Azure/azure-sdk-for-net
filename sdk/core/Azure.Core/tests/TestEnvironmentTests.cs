@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.Json;
+using System.Threading;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -10,16 +16,45 @@ namespace Azure.Core.Tests
 {
     public class TestEnvironmentTests
     {
-        [SetUp]
+        private string _envFilePath;
+
+        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+        [OneTimeSetUp]
         public void SetUp()
         {
             Environment.SetEnvironmentVariable("CORE_RECORDED", "1");
             Environment.SetEnvironmentVariable("CORE_NOTRECORDED", "2");
+            Environment.SetEnvironmentVariable("TENANT_ID", "4");
+            Environment.SetEnvironmentVariable("ENVIRONMENT", "5");
 
             Environment.SetEnvironmentVariable("CORE_Base64Secret", "1");
             Environment.SetEnvironmentVariable("CORE_CustomSecret", "1");
             Environment.SetEnvironmentVariable("CORE_DefaultSecret", "1");
             Environment.SetEnvironmentVariable("CORE_ConnectionStringWithSecret", "endpoint=1;key=2");
+
+            // Env file is only supported on Windows.
+            if (s_isWindows)
+            {
+                _envFilePath = Path.Combine(TestEnvironment.RepositoryRoot, "sdk", "core", "test-resources.json.env");
+                using FileStream stream = File.Create(_envFilePath);
+                Dictionary<string, string> envFile = new Dictionary<string, string>
+                {
+                    { "CORE_TENANT_ID", "7" }
+                };
+                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(envFile, typeof(Dictionary<string, string>));
+                bytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+                stream.Write(bytes, 0, bytes.Length);
+            }
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            if (_envFilePath != null)
+            {
+                File.Delete(_envFilePath);
+            }
         }
 
         [Theory]
@@ -118,6 +153,22 @@ namespace Azure.Core.Tests
             Assert.IsNull(testRecording.GetVariable(nameof(env.MissingOptionalSecret), null));
         }
 
+        [Test]
+        public void RecordedOptionalVariablePrefersPrefix()
+        {
+            var env = new MockTestEnvironment();
+            Assert.AreEqual("1", env.RecordedValue);
+            if (_envFilePath != null)
+            {
+                Assert.AreEqual("7", env.TenantId);
+            }
+            else
+            {
+                Assert.AreEqual("4", env.TenantId);
+            }
+            Assert.AreEqual("5", env.AzureEnvironment);
+        }
+
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
         {
             // To make NUnit happy
@@ -140,7 +191,7 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class LiveTestClass: LiveTestBase<MockTestEnvironment>
+        private class LiveTestClass : LiveTestBase<MockTestEnvironment>
         {
             public LiveTestClass()
             {
@@ -150,7 +201,7 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class SampleTestClass: SamplesBase<MockTestEnvironment>
+        private class SampleTestClass : SamplesBase<MockTestEnvironment>
         {
             public SampleTestClass()
             {
@@ -160,9 +211,9 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class MockTestEnvironment: TestEnvironment
+        private class MockTestEnvironment : TestEnvironment
         {
-            public MockTestEnvironment(): base("core")
+            public MockTestEnvironment() : base("core")
             {
             }
 
