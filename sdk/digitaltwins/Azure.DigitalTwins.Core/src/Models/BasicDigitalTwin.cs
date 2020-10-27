@@ -10,6 +10,10 @@ namespace Azure.DigitalTwins.Core
     /// An optional, helper class for deserializing a digital twin.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// This helper class will only work with <see cref="System.Text.Json"/>. When used with the <see cref="Azure.Core.Serialization.ObjectSerializer"/>,
+    /// parameter to <see cref="DigitalTwinsClientOptions" /> it will only work with the default (<see cref="Azure.Core.Serialization.JsonObjectSerializer"/>).
+    /// </para>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
     /// <example>
@@ -36,7 +40,6 @@ namespace Azure.DigitalTwins.Core
     ///                 // component properties
     ///                 Properties =
     ///                 {
-    ///                     { DigitalTwinsJsonPropertyNames.MetadataModel, componentModelId },
     ///                     { &quot;ComponentProp1&quot;, &quot;Component value 1&quot; },
     ///                     { &quot;ComponentProp2&quot;, 123 },
     ///                 },
@@ -45,7 +48,7 @@ namespace Azure.DigitalTwins.Core
     ///     },
     /// };
     ///
-    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId, basicTwin);
+    /// Response&lt;BasicDigitalTwin&gt; createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
     /// Console.WriteLine($&quot;Created digital twin &apos;{createDigitalTwinResponse.Value.Id}&apos;.&quot;);
     /// </code>
     ///

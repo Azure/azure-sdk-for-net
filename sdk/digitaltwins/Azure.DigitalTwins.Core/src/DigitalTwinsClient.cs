@@ -223,7 +223,7 @@ namespace Azure.DigitalTwins.Core
         ///         ComponentProp2 = 123,
         ///     },
         /// };
-        /// Response&lt;CustomDigitalTwin&gt; createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId, customTwin);
+        /// Response&lt;CustomDigitalTwin&gt; createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
         /// Console.WriteLine($&quot;Created digital twin &apos;{createCustomDigitalTwinResponse.Value.Id}&apos;.&quot;);
         /// </code>
         /// </example>
@@ -812,7 +812,6 @@ namespace Azure.DigitalTwins.Core
             string relationshipId,
             GetRelationshipOptions options = null,
             CancellationToken cancellationToken = default)
-            where T : IDigitalTwinRelationship
         {
             // Get the relationship as a stream object
             Response<Stream> relationshipStream = await _dtRestClient.GetRelationshipByIdAsync(digitalTwinId, relationshipId, options, cancellationToken).ConfigureAwait(false);
@@ -849,7 +848,6 @@ namespace Azure.DigitalTwins.Core
             string relationshipId,
             GetRelationshipOptions options = null,
             CancellationToken cancellationToken = default)
-            where T : IDigitalTwinRelationship
         {
             // Get the relationship as a stream object
             Response<Stream> relationshipStream = _dtRestClient.GetRelationshipById(digitalTwinId, relationshipId, options, cancellationToken);
@@ -1002,7 +1000,6 @@ namespace Azure.DigitalTwins.Core
             T relationship,
             CreateRelationshipOptions options = null,
             CancellationToken cancellationToken = default)
-             where T : IDigitalTwinRelationship
         {
             // Serialize the relationship and write it to a stream
             using MemoryStream memoryStream = WriteToStream<T>(relationship, _objectSerializer, cancellationToken);

@@ -9,7 +9,7 @@ namespace Azure.DigitalTwins.Core.Samples
     /// Custom type for a sample illustrating how someone can create their own class to match a relationship type
     /// for serialization, instead of using <see cref="BasicRelationship"/>.
     /// </summary>
-    internal class CustomRelationship : IDigitalTwinRelationship
+    internal class CustomRelationship
     {
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipId)]
         public string Id { get; set; }

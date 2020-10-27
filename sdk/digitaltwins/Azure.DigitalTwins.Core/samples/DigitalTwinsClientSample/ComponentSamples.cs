@@ -65,7 +65,6 @@ namespace Azure.DigitalTwins.Core.Samples
                             // component properties
                             Properties =
                             {
-                                { DigitalTwinsJsonPropertyNames.MetadataModel, componentModelId },
                                 { "ComponentProp1", "Component value 1" },
                                 { "ComponentProp2", 123 },
                             },
@@ -74,7 +73,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 },
             };
 
-            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
             Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
@@ -124,7 +123,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     ComponentProp2 = 123,
                 },
             };
-            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
             Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
