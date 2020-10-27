@@ -48,17 +48,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// description.</param>
         /// <param name="template">The Azure Resource Manager template
         /// content.</param>
-        /// <param name="uiDefinition">The Azure Resource Manager template UI
-        /// definition content</param>
         /// <param name="tags">Resource tags.</param>
-        public TemplateSpecVersion(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<TemplateSpecArtifact> artifacts = default(IList<TemplateSpecArtifact>), string description = default(string), object template = default(object), object uiDefinition = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TemplateSpecVersion(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<TemplateSpecArtifact> artifacts = default(IList<TemplateSpecArtifact>), string description = default(string), object template = default(object), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             Location = location;
             Artifacts = artifacts;
             Description = description;
             Template = template;
-            UiDefinition = uiDefinition;
             Tags = tags;
             CustomInit();
         }
@@ -92,13 +89,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.template")]
         public object Template { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Azure Resource Manager template UI definition
-        /// content
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.uiDefinition")]
-        public object UiDefinition { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
