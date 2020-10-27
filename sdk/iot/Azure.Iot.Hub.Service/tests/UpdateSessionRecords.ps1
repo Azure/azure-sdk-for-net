@@ -1,1 +1,1 @@
-﻿dotnet msbuild /t:UpdateSessionRecords
+﻿dotnet msbuild

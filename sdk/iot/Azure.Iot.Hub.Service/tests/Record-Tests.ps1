@@ -27,7 +27,7 @@ else
     dotnet test --filter FullyQualifiedName~$TestName
 }
 
-dotnet msbuild /t:UpdateSessionRecords
+dotnet msbuild
 
 $newConfig = @"
 {
