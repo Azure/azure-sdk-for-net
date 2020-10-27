@@ -77,7 +77,10 @@ namespace Azure.Messaging.ServiceBus
             }
             if (properties != default)
             {
-                amqpMessage.ApplicationProperties = properties;
+                foreach (KeyValuePair<string, object> kvp in properties)
+                {
+                    amqpMessage.ApplicationProperties.Add(kvp);
+                }
             }
             amqpMessage.Header.DeliveryCount = (uint)deliveryCount;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;

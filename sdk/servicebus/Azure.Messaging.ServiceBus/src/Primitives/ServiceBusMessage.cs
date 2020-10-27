@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
+                if (AmqpMessage.Body is AmqpDataMessageBody dataBody)
                 {
                     return dataBody.Data.ConvertAndFlattenData();
                 }
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { value });
+                AmqpMessage.Body = new AmqpDataMessageBody(new BinaryData[] { value });
             }
         }
 
@@ -335,11 +335,19 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the application properties bag, which can be used for custom message metadata.
@@ -354,10 +362,6 @@ namespace Azure.Messaging.ServiceBus
             get
             {
                 return AmqpMessage.ApplicationProperties;
-            }
-            internal set
-            {
-                AmqpMessage.ApplicationProperties = value;
             }
         }
 

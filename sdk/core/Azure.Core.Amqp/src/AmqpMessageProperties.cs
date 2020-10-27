@@ -80,12 +80,12 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The absolute-expiry-time value from the AMQP properties.
         /// </summary>
-        public DateTime? AbsoluteExpiryTime { get; set; }
+        public DateTimeOffset? AbsoluteExpiryTime { get; set; }
 
         /// <summary>
         /// The creation-time value from the AMQP properties.
         /// </summary>
-        public DateTime? CreationTime { get; set; }
+        public DateTimeOffset? CreationTime { get; set; }
 
         /// <summary>
         /// The group-id value from the AMQP properties.
