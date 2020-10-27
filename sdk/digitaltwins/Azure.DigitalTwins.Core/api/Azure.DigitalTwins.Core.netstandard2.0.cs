@@ -3,14 +3,28 @@ namespace Azure.DigitalTwins.Core
     public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }
+        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
+        public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
         public string ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
+        public Azure.DigitalTwins.Core.BasicDigitalTwinMetadata Metadata { get { throw null; } set { } }
+    }
+    public partial class BasicDigitalTwinComponent
+    {
+        public BasicDigitalTwinComponent() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
+        public object Metadata { get { throw null; } set { } }
+    }
+    public partial class BasicDigitalTwinMetadata
+    {
+        public BasicDigitalTwinMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
+        public string ModelId { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -83,20 +97,6 @@ namespace Azure.DigitalTwins.Core
         public string IfMatch { get { throw null; } set { } }
         public string TraceParent { get { throw null; } set { } }
         public string TraceState { get { throw null; } set { } }
-    }
-    public partial class DigitalTwinComponent
-    {
-        public DigitalTwinComponent() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public object Metadata { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
-    }
-    public partial class DigitalTwinMetadata
-    {
-        public DigitalTwinMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
-        public string ModelId { get { throw null; } set { } }
     }
     public partial class DigitalTwinsClient
     {
