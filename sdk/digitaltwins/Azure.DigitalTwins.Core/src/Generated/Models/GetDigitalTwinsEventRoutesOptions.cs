@@ -8,13 +8,11 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class GetDigitalTwinsEventRoutesOptions
+    internal partial class GetDigitalTwinsEventRoutesOptions
     {
         /// <summary> Initializes a new instance of GetDigitalTwinsEventRoutesOptions. </summary>
         public GetDigitalTwinsEventRoutesOptions()
         {
         }
-        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </summary>
-        public int? MaxItemsPerPage { get; set; }
     }
 }

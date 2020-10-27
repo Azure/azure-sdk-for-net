@@ -1618,7 +1618,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary>.
         /// Lists the event routes in a digital twins instance by iterating through a collection asynchronously.
         /// </summary>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json event routes and the http response.</returns>
         /// <remarks>
@@ -1636,7 +1635,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<DigitalTwinsEventRoute> GetEventRoutesAsync(GetDigitalTwinsEventRoutesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DigitalTwinsEventRoute> GetEventRoutesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DigitalTwinsEventRoute>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1644,10 +1643,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    if (options == null)
-                    {
-                        options = new GetDigitalTwinsEventRoutesOptions();
-                    }
+                    var options = new GetDigitalTwinsEventRoutesOptions();
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
                     options.MaxItemsPerPage = pageSizeHint;
@@ -1668,10 +1664,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    if (options == null)
-                    {
-                        options = new GetDigitalTwinsEventRoutesOptions();
-                    }
+                    var options = new GetDigitalTwinsEventRoutesOptions();
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
                     options.MaxItemsPerPage = pageSizeHint;
@@ -1692,7 +1685,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary>.
         /// Lists the event routes in a digital twins instance by iterating through a collection synchronously.
         /// </summary>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json event routes and the http response.</returns>
         /// <remarks>
@@ -1701,10 +1693,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="GetEventRoutesAsync(GetDigitalTwinsEventRoutesOptions, CancellationToken)">
+        /// <seealso cref="GetEventRoutesAsync(CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<DigitalTwinsEventRoute> GetEventRoutes(GetDigitalTwinsEventRoutesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DigitalTwinsEventRoute> GetEventRoutes(CancellationToken cancellationToken = default)
         {
             Page<DigitalTwinsEventRoute> FirstPageFunc(int? pageSizeHint)
             {
@@ -1712,10 +1704,7 @@ namespace Azure.DigitalTwins.Core
                 scope.Start();
                 try
                 {
-                    if (options == null)
-                    {
-                        options = new GetDigitalTwinsEventRoutesOptions();
-                    }
+                    var options = new GetDigitalTwinsEventRoutesOptions();
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
                     options.MaxItemsPerPage = pageSizeHint;
@@ -1735,10 +1724,7 @@ namespace Azure.DigitalTwins.Core
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope("EventRoutesClient.List");
                 scope.Start();
 
-                if (options == null)
-                {
-                    options = new GetDigitalTwinsEventRoutesOptions();
-                }
+                var options = new GetDigitalTwinsEventRoutesOptions();
 
                 // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
                 options.MaxItemsPerPage = pageSizeHint;
