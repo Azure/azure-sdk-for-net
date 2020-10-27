@@ -1263,7 +1263,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// catch (RequestFailedException ex)
         /// {
-        ///     FatalError($&quot;Failed to decommision model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to decommission model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
@@ -1488,7 +1488,7 @@ namespace Azure.DigitalTwins.Core
                     };
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
-                    QueryOptions options = new QueryOptions
+                    var options = new QueryOptions
                     {
                         MaxItemsPerPage = pageSizeHint
                     };
@@ -1515,7 +1515,7 @@ namespace Azure.DigitalTwins.Core
                     };
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
-                    QueryOptions options = new QueryOptions
+                    var options = new QueryOptions
                     {
                         MaxItemsPerPage = pageSizeHint
                     };
@@ -1570,7 +1570,7 @@ namespace Azure.DigitalTwins.Core
                     };
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
-                    QueryOptions options = new QueryOptions
+                    var options = new QueryOptions
                     {
                         MaxItemsPerPage = pageSizeHint
                     };
@@ -1597,7 +1597,7 @@ namespace Azure.DigitalTwins.Core
                     };
 
                     // Page size hint is only specified by AsPages() methods, so we add it here manually since the user can't set it on the options object directly
-                    QueryOptions options = new QueryOptions
+                    var options = new QueryOptions
                     {
                         MaxItemsPerPage = pageSizeHint
                     };
