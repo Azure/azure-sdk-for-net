@@ -10,6 +10,10 @@ namespace Azure.DigitalTwins.Core
     /// Properties on a component that adhere to a specific model.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// This helper class will only work with <see cref="System.Text.Json"/>. When used with the <see cref="Azure.Core.Serialization.ObjectSerializer"/>,
+    /// parameter to <see cref="DigitalTwinsClientOptions" /> it will only work with the default (<see cref="Azure.Core.Serialization.JsonObjectSerializer"/>).
+    /// </para>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
     public class DigitalTwinComponent

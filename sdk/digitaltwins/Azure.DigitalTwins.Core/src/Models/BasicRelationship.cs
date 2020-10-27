@@ -57,7 +57,7 @@ namespace Azure.DigitalTwins.Core
     /// }
     /// </code>
     /// </example>
-    public class BasicRelationship : IDigitalTwinRelationship
+    public class BasicRelationship
     {
         /// <inheritdoc />
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipId)]
