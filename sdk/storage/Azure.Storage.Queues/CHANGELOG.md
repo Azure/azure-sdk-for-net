@@ -2,6 +2,7 @@
 
 ## 12.5.0-preview.2 (Unreleased)
 - Fixed a bug where QueueServiceClient.SetProperties and QueueService.GetProperties where the creating/parsing XML Service Queue Properties CorsRules incorrectly causing Invalid XML Errors
+- Fixed bug where Queues SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - This preview contains bug fixes to improve quality.

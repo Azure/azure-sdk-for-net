@@ -140,7 +140,7 @@ namespace Azure.Storage.Sas
         {
             StringBuilder sb = new StringBuilder();
             KeyProperties.AppendProperties(sb);
-            this.AppendProperties(sb);
+            AppendProperties(sb);
             return sb.ToString();
         }
     }

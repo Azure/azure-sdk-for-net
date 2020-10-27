@@ -6,6 +6,7 @@ using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Test
@@ -234,6 +235,45 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(
                 new Uri("https://account.file.core.windows.net/share/%2521%2527%2528%2529%253B/%255B%255D%2540%2526%2525%253D%252B%2524/%252C%2523äÄö/ÖüÜß%253B"),
                 uri);
+        }
+
+        [Test]
+        [TestCase("2020-10-27", "2020-10-28")]
+        [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
+        [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
+        [TestCase("2020-10-27T12:10:11.1234567Z", "2020-10-28T13:20:14.7654321Z")]
+        public void FileUriBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
+        {
+            // Arrange
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(initialUri);
+
+            // Act
+            Uri resultUri = shareUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual(initialUri, resultUri);
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+        }
+
+        [Test]
+        public void FileUriBuilder_SasInvalidStartExpiryTimeFormat()
+        {
+            // Arrange
+            string startTime = "2020-10-27T12Z";
+            string expiryTime = "2020-10-28T13Z";
+            Uri initialUri = new Uri($"https://account.file.core.windows.net/share/directory/file?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+
+            // Act
+            try
+            {
+                new ShareUriBuilder(initialUri);
+            }
+            catch (FormatException e)
+            {
+                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+            }
         }
     }
 }

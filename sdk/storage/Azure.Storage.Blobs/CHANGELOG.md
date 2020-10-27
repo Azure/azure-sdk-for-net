@@ -4,6 +4,7 @@
 - Fixed bug where BobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added seekability to BaseBlobClient.OpenRead().
 - Added additional info to exception messages.
+- Fixed bug where Blobs SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 
 ## 12.7.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.
