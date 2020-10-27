@@ -175,23 +175,27 @@ namespace System.Tests
             Assert.Equal(buffer, output);
         }
 
-        [Fact]
-        public async Task StartPositionOfStreamRespected()
+        [Theory]
+        [InlineData(1, 4)]
+        [InlineData(0, 4)]
+        [InlineData(4, 1)]
+        [InlineData(4, 0)]
+        public async Task StartPositionOfStreamRespected(int bufferOffset, long streamStart)
         {
-            byte[] buffer = Encoding.UTF8.GetBytes("some data");
-            MemoryStream stream = new MemoryStream(buffer);
-            long start = 4;
-            var payload = new ReadOnlyMemory<byte>(buffer, (int)start, buffer.Length - (int)start);
+            var input = "some data";
+            ArraySegment<byte> buffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes("some data"), bufferOffset, input.Length - bufferOffset);
+            MemoryStream stream = new MemoryStream(buffer.Array, buffer.Offset, buffer.Count);
+            var payload = new ReadOnlyMemory<byte>(buffer.Array, buffer.Offset, buffer.Count).Slice((int)streamStart);
 
-            stream.Position = start;
+            stream.Position = streamStart;
             BinaryData data = BinaryData.FromStream(stream);
             Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
-            Assert.Equal(5, data.ToStream().Length);
+            Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
 
-            stream.Position = start;
+            stream.Position = streamStart;
             data = await BinaryData.FromStreamAsync(stream);
             Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
-            Assert.Equal(5, data.ToStream().Length);
+            Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
         }
 
         [Theory]
