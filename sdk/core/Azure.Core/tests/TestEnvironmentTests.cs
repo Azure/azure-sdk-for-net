@@ -158,7 +158,14 @@ namespace Azure.Core.Tests
         {
             var env = new MockTestEnvironment();
             Assert.AreEqual("1", env.RecordedValue);
-            Assert.AreEqual("7", env.TenantId);
+            if (_envFilePath != null)
+            {
+                Assert.AreEqual("7", env.TenantId);
+            }
+            else
+            {
+                Assert.AreEqual("4", env.TenantId);
+            }
             Assert.AreEqual("5", env.AzureEnvironment);
         }
 
