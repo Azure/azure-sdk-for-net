@@ -39,9 +39,9 @@ namespace Azure.Core.Tests
                 _envFilePath = Path.Combine(TestEnvironment.RepositoryRoot, "sdk", "core", "test-resources.json.env");
                 using FileStream stream = File.Create(_envFilePath);
                 Dictionary<string, string> envFile = new Dictionary<string, string>
-            {
-                { "CORE_TENANT_ID", "7" }
-            };
+                {
+                    { "CORE_TENANT_ID", "7" }
+                };
                 byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(envFile, typeof(Dictionary<string, string>));
                 bytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
                 stream.Write(bytes, 0, bytes.Length);
@@ -191,7 +191,7 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class LiveTestClass: LiveTestBase<MockTestEnvironment>
+        private class LiveTestClass : LiveTestBase<MockTestEnvironment>
         {
             public LiveTestClass()
             {
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class SampleTestClass: SamplesBase<MockTestEnvironment>
+        private class SampleTestClass : SamplesBase<MockTestEnvironment>
         {
             public SampleTestClass()
             {
@@ -211,9 +211,9 @@ namespace Azure.Core.Tests
             public string Value { get; }
         }
 
-        private class MockTestEnvironment: TestEnvironment
+        private class MockTestEnvironment : TestEnvironment
         {
-            public MockTestEnvironment(): base("core")
+            public MockTestEnvironment() : base("core")
             {
             }
 
