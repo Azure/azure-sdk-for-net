@@ -68,7 +68,8 @@ namespace Azure.DigitalTwins.Core
     ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
     ///         $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}\n\t&quot; +
     ///         $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}\n\t&quot; +
-    ///         $&quot;ComponentProp1: {component1[&quot;ComponentProp1&quot;]}\n\t&quot; +
+    ///         $&quot;Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t&quot; +
+    ///         $&quot;Component1.Prop1: {component1[&quot;ComponentProp1&quot;]}\n\t&quot; +
     ///         $&quot;ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
     /// }
     /// </code>
