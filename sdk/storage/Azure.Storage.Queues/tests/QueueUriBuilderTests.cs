@@ -424,9 +424,14 @@ namespace Azure.Storage.Queues.Test
             Uri initialUri = new Uri($"https://account.queue.core.windows.net/queue?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
 
             // Act
-            TestHelper.AssertExpectedException<FormatException>(
-                 () => new QueueUriBuilder(initialUri),
-                 new FormatException($"String '{startTime}' was not recognized as a valid DateTime."));
+            try
+            {
+                new QueueUriBuilder(initialUri);
+            }
+            catch (FormatException e)
+            {
+                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+            }
         }
     }
 }

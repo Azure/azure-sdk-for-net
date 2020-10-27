@@ -507,9 +507,14 @@ namespace Azure.Storage.Blobs.Test
             Uri initialUri = new Uri($"https://account.blob.core.windows.net/container/blob?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
 
             // Act
-            TestHelper.AssertExpectedException<FormatException>(
-                 () => new BlobUriBuilder(initialUri),
-                 new FormatException($"String '{startTime}' was not recognized as a valid DateTime."));
+            try
+            {
+                new BlobUriBuilder(initialUri);
+            }
+            catch (FormatException e)
+            {
+                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+            }
         }
     }
 }
