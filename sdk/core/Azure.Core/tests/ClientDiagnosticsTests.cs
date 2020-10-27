@@ -245,9 +245,10 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(1, activityListener.Activities.Count);
             var activity = activityListener.Activities.Dequeue();
-
             Assert.AreEqual(1, activity.TagObjects.Single(o=> o.Key == "otel.status_code").Value);
+            Assert.AreEqual("Exception of type 'System.Exception' was thrown.", activity.TagObjects.Single(o=> o.Key == "otel.status_description").Value);
         }
+
         [Test]
         public void NoopsWhenDisabled()
         {

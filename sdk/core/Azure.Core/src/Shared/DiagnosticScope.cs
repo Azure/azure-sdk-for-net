@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,7 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
-        private static readonly ConcurrentDictionary<string, ActivitySource> ActivitySources = new ConcurrentDictionary<string, ActivitySource>();
+        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new ConcurrentDictionary<string, object?>();
 
         private readonly DiagnosticActivity? _oldStyleActivity;
 
@@ -37,7 +38,7 @@ namespace Azure.Core.Pipeline
             string clientName = ns + "." + name.Substring(0, indexOfDot);
             string methodName = name.Substring(indexOfDot + 1);
 
-            var currentSource = ActivitySources.GetOrAdd(clientName, n => new ActivitySource(n));
+            var currentSource = ActivitySources.GetOrAdd(clientName, n => ActivityExtensions.CreateActivitySource(n));
             if (currentSource != null)
             {
                 _activityAdapter = new ActivitySourceAdapter(currentSource, methodName);
@@ -126,14 +127,14 @@ namespace Azure.Core.Pipeline
                 _source?.Write(_oldStyleActivity.OperationName + ".Exception", e);
             }
 
-            _activityAdapter?.MarkFailed();
+            _activityAdapter?.MarkFailed(e);
         }
 
         private class DiagnosticActivity : Activity
         {
             private List<Activity>? _links;
 
-            public new IEnumerable<Activity> Links => (IEnumerable<Activity>?) _links ?? Array.Empty<Activity>();
+            public IEnumerable<Activity> Links => (IEnumerable<Activity>?) _links ?? Array.Empty<Activity>();
 
             public DiagnosticActivity(string operationName) : base(operationName)
             {
@@ -148,14 +149,14 @@ namespace Azure.Core.Pipeline
 
         private class ActivitySourceAdapter
         {
-            private readonly ActivitySource _activitySource;
+            private readonly object _activitySource;
             private readonly string _activityName;
             private Activity? _currentActivity;
             private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset? _startTime;
-            private List<ActivityLink>? _linkCollection;
+            private IList? _linkCollection;
 
-            public ActivitySourceAdapter(ActivitySource activitySource, string activityName)
+            public ActivitySourceAdapter(object activitySource, string activityName)
             {
                 _activitySource = activitySource;
                 _activityName = activityName;
@@ -163,35 +164,54 @@ namespace Azure.Core.Pipeline
 
             public void AddTag<T>(string name, T value)
             {
-                _tagCollection ??= new ActivityTagsCollection();
-                _tagCollection.Add(new KeyValuePair<string, object>(name, value!));
+                _tagCollection ??= ActivityExtensions.CreateTagsCollection();
+                if (_tagCollection != null)
+                {
+                    _tagCollection.Add(new KeyValuePair<string, object>(name, value!));
+                }
             }
 
             public void AddLink(string id, IDictionary<string, string>? attributes)
             {
-                _linkCollection ??= new List<ActivityLink>();
+                _linkCollection ??= ActivityExtensions.CreateLinkCollection();
 
-                ActivityTagsCollection? linkTagsCollection = null;
-                if (attributes != null)
+                if (_linkCollection == null)
                 {
-                    linkTagsCollection ??= new ActivityTagsCollection();
+                    return;
                 }
 
-                _linkCollection.Add(new ActivityLink(ActivityContext.Parse(id, null), linkTagsCollection));
+                ICollection<KeyValuePair<string,object>>? linkTagsCollection = null;
+                if (attributes != null)
+                {
+                    linkTagsCollection ??= ActivityExtensions.CreateTagsCollection();
+
+                    if (linkTagsCollection != null)
+                    {
+                        foreach (var attribute in attributes)
+                        {
+                            linkTagsCollection.Add(new KeyValuePair<string, object>(attribute.Key, attribute.Value));
+                        }
+                    }
+                }
+
+                var link = ActivityExtensions.CreateActivityLink(id, linkTagsCollection);
+                if (link != null)
+                {
+                    _linkCollection.Add(link);
+                }
             }
 
-            public bool HasListeners() => _activitySource.HasListeners();
+            public bool HasListeners() => ActivityExtensions.ActivitySourceHasListeners(_activitySource);
 
             public void Start()
             {
-                if (_startTime.HasValue)
-                {
-                    _currentActivity = _activitySource.StartActivity(_activityName, ActivityKind.Internal, default(ActivityContext), startTime: _startTime.Value, tags: _tagCollection, links: _linkCollection);
-                }
-                else
-                {
-                    _currentActivity = _activitySource.StartActivity(_activityName, ActivityKind.Internal, default(ActivityContext), tags: _tagCollection, links: _linkCollection);
-                }
+                _currentActivity = ActivityExtensions.ActivitySourceStartActivity(
+                    _activitySource,
+                    _activityName,
+                    ActivityExtensions.ActivityKindInternal,
+                    startTime: _startTime,
+                    tags: _tagCollection,
+                    links: _linkCollection);
             }
 
             public void SetStartTime(DateTime startTime)
@@ -199,14 +219,15 @@ namespace Azure.Core.Pipeline
                 _startTime = startTime;
             }
 
-            public void MarkFailed()
+            public void MarkFailed(Exception exception)
             {
                 // See https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/StatusCode.cs
                 // and https://github.com/open-telemetry/opentelemetry-dotnet/blob/master/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L45
                 // Unset = 0,
                 // Error = 1
                 // Ok = 2
-                _currentActivity?.AddTag("otel.status_code", "1");
+                _currentActivity?.AddObjectTag("otel.status_code", 1);
+                _currentActivity?.AddTag("otel.status_description", exception.Message);
             }
 
             public void Dispose()
@@ -221,13 +242,35 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal static class ActivityExtensions
     {
-        private static Type? s_activitySourceType = Type.GetType("System.Diagnostics.ActivitySource, System.Diagnostics.DiagnosticSource");
-        private static Type? s_activityTagsCollectionType = Type.GetType("System.Diagnostics.ActivityTagsCollection, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? s_activitySourceType = Type.GetType("System.Diagnostics.ActivitySource, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? s_activityKindType = Type.GetType("System.Diagnostics.ActivityKind, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? s_activityTagsCollectionType = Type.GetType("System.Diagnostics.ActivityTagsCollection, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? s_activityLinkType = Type.GetType("System.Diagnostics.ActivityLink, System.Diagnostics.DiagnosticSource");
+        private static readonly Type? s_activityContextType = Type.GetType("System.Diagnostics.ActivityContext, System.Diagnostics.DiagnosticSource");
+        private static readonly MethodInfo? s_activityAddTagMethod = typeof(Activity).GetMethod("AddTag", BindingFlags.Instance | BindingFlags.Public, null, new Type[]
+        {
+            typeof(string),
+            typeof(object)
+        }, null);
+
+        private static readonly MethodInfo? s_activityContextParseMethod = s_activityContextType?.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+        private static readonly MethodInfo? s_activitySourceHasListenersMethod = s_activitySourceType?.GetMethod("HasListeners", BindingFlags.Instance | BindingFlags.Public);
+        private static readonly MethodInfo? s_activitySourceStartActivityMethod = s_activitySourceType?.GetMethod("StartActivity", BindingFlags.Instance | BindingFlags.Public, null, new[]
+        {
+            typeof(string),
+            s_activityKindType,
+            s_activityContextType!,
+            typeof(IEnumerable<KeyValuePair<string, object>>),
+            typeof(IEnumerable<>).MakeGenericType(s_activityLinkType),
+            typeof(DateTimeOffset)
+        }, null);
+
 
         private static Action<Activity, int>? s_setIdFormatMethod;
         private static Func<Activity, string?>? s_getTraceStateStringMethod;
         private static Func<Activity, int>? s_getIdFormatMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+        public const int ActivityKindInternal = 0;
 
         public static void SetW3CFormat(this Activity activity)
         {
@@ -287,12 +330,22 @@ namespace Azure.Core.Pipeline
                 else
                 {
                     s_getTraceStateStringMethod = Expression.Lambda<Func<Activity, string?>>(
-                            Expression.Call(ActivityParameter, method),
-                            ActivityParameter).Compile();
+                        Expression.Call(ActivityParameter, method),
+                        ActivityParameter).Compile();
                 }
             }
 
             return s_getTraceStateStringMethod(activity);
+        }
+
+        public static void AddObjectTag(this Activity activity, string name, object value)
+        {
+            if (s_activityAddTagMethod == null)
+            {
+                return;
+            }
+
+            s_activityAddTagMethod.Invoke(activity, new[]{name, value});
         }
 
         public static bool SupportsActivitySource()
@@ -300,14 +353,68 @@ namespace Azure.Core.Pipeline
             return s_activitySourceType != null && s_activityTagsCollectionType != null;
         }
 
-        public static object? CreateActivitySource()
+        public static object? CreateActivitySource(string name)
         {
-            return Activator.CreateInstance(s_activitySourceType);
+            if (s_activitySourceType == null)
+            {
+                return null;
+            }
+            return Activator.CreateInstance(s_activitySourceType,
+                name, // name
+                null // version
+                );
         }
 
-        public static object? CreateTagsCollection()
+        public static ICollection<KeyValuePair<string,object>>? CreateTagsCollection()
         {
+            if (s_activityTagsCollectionType == null)
+            {
+                return null;
+            }
 
+            return Activator.CreateInstance(s_activityTagsCollectionType) as ICollection<KeyValuePair<string,object>>;
+        }
+
+        public static object? CreateActivityLink(string id, ICollection<KeyValuePair<string,object>>? tags)
+        {
+            if (s_activityLinkType == null ||
+                s_activityContextParseMethod == null)
+            {
+                return null;
+            }
+
+            Debug.Assert(tags == null || tags.GetType() == s_activityTagsCollectionType);
+
+            var context = s_activityContextParseMethod.Invoke(null, new object?[] {id, null});
+            return Activator.CreateInstance(s_activityLinkType, new object?[]
+            {
+                context, tags
+            });
+        }
+
+        public static bool ActivitySourceHasListeners(object? activitySource)
+        {
+            if (activitySource == null || s_activitySourceHasListenersMethod == null)
+            {
+                return false;
+            }
+
+            return (bool)s_activitySourceHasListenersMethod.Invoke(activitySource, Array.Empty<object?>());
+        }
+
+        public static Activity? ActivitySourceStartActivity(object? activitySource, string activityName, int kind, DateTimeOffset? startTime, ICollection<KeyValuePair<string, object>>? tags, IList? links)
+        {
+            if (activitySource == null || s_activitySourceStartActivityMethod == null)
+            {
+                return null;
+            }
+
+            return (Activity?) s_activitySourceStartActivityMethod.Invoke(activitySource, new object?[] {activityName, kind, null, tags, links, startTime ?? default});
+        }
+
+        public static IList? CreateLinkCollection()
+        {
+            return Activator.CreateInstance(typeof(List<>).MakeGenericType(s_activityLinkType)) as IList;
         }
     }
 }
