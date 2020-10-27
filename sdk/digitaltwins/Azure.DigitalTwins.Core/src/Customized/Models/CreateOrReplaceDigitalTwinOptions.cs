@@ -23,7 +23,6 @@ namespace Azure.DigitalTwins.Core
 
         // This class contains two properties (TraceParent ,TraceState) that are not intended to be used by the Track 2 SDKs.
         // Marking these properties as internal.
-        #region internalProperties
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>
         [CodeGenMember("Traceparent")]
@@ -32,7 +31,5 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
         internal string TraceState { get; set; }
-
-        #endregion internalProperties
     }
 }
