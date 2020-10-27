@@ -185,6 +185,26 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; }
 
         /// <summary>
+        /// Gets the IExtendedSqlPoolBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedSqlPoolBlobAuditingPoliciesOperations ExtendedSqlPoolBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDataMaskingPoliciesOperations.
+        /// </summary>
+        IDataMaskingPoliciesOperations DataMaskingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDataMaskingRulesOperations.
+        /// </summary>
+        IDataMaskingRulesOperations DataMaskingRules { get; }
+
+        /// <summary>
+        /// Gets the ISqlPoolColumnsOperations.
+        /// </summary>
+        ISqlPoolColumnsOperations SqlPoolColumns { get; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         IWorkspacesOperations Workspaces { get; }
