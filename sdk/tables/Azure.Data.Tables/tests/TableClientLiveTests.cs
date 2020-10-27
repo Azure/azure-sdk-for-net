@@ -563,11 +563,11 @@ namespace Azure.Data.Tables.Tests
             // Create an entity.
 
             await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
-            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.PartitionKey) }).ConfigureAwait(false);
+            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.Timestamp) }).ConfigureAwait(false);
 
-            Assert.That(entity.PartitionKey, Is.EqualTo(entityToCreate.PartitionKey), "The entity property should be equal");
+            Assert.That(entity.PartitionKey, Is.Null, "The entity property should be null");
             Assert.That(entity.RowKey, Is.Null, "The entity property should be null");
-            Assert.That(entity.Timestamp, Is.Null, "The entity property should be null");
+            Assert.That(entity.Timestamp, Is.Not.Null, "The entity property should not be null");
             Assert.That(entity.TryGetValue(StringTypePropertyName, out _), Is.False, "The entity property should not exist");
             Assert.That(entity.TryGetValue(DateTypePropertyName, out _), Is.False, "The entity property should not exist");
             Assert.That(entity.TryGetValue(GuidTypePropertyName, out _), Is.False, "The entity property should not exist");
