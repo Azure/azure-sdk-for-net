@@ -93,9 +93,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
 
             // Blob type is a property of an existing blob.
             context.AddConverter(new StorageBlobConverter<AppendBlobClient>());
-            context.AddConverter(new StorageBlobConverter<BlobClient>());
             context.AddConverter(new StorageBlobConverter<BlockBlobClient>());
             context.AddConverter(new StorageBlobConverter<PageBlobClient>());
+            context.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
         }
 
         #region Container rules
@@ -258,6 +258,27 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             var blob = await container.GetBlobReferenceFromServerAsync(path.BlobName).ConfigureAwait(false);
 
             return blob.Item1;
+        }
+
+        // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
+        private BlobClient ConvertBlobBaseClientToBlobClient(BlobBaseClient input, Attribute attr)
+        {
+            if (input is BlobClient)
+            {
+                return (BlobClient)input;
+            }
+            if (input is BlockBlobClient)
+            {
+                var connectionProvider = (IConnectionProvider)attr;
+                var client = _blobServiceClientProvider.Get(connectionProvider.Connection);
+                var blob = client.GetBlobContainerClient(input.BlobContainerName).GetBlobClient(input.Name);
+
+                return blob;
+            }
+            else
+            {
+                throw new InvalidOperationException($"The blob is not an {typeof(BlockBlobClient).Name}.");
+            }
         }
 
         private async Task<Stream> CreateStreamAsync(
