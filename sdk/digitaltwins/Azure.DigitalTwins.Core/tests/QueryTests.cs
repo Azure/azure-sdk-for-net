@@ -105,7 +105,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
                     }
 
-                    AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, null, queryTimeoutCancellationToken.Token);
+                    AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, queryTimeoutCancellationToken.Token);
                     int count = 0;
                     await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
                     {

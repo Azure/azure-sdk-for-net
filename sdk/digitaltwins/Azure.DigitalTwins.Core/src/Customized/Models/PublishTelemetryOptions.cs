@@ -17,12 +17,15 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         public DateTimeOffset TimeStamp { get; set; } = DateTimeOffset.UtcNow;
 
+        // This class contains two properties (TraceParent ,TraceState) that are not intended to be used by the Track 2 SDKs.
+        // Marking these properties as internal.
+
         /// <summary> Identifies the request in a distributed tracing system. </summary>
         [CodeGenMember("Traceparent")]
-        public string TraceParent { get; set; }
+        internal string TraceParent { get; set; }
 
         /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
-        public string TraceState { get; set; }
+        internal string TraceState { get; set; }
     }
 }

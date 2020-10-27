@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class GetComponentOptions
+    internal partial class GetComponentOptions
     {
         /// <summary> Initializes a new instance of GetComponentOptions. </summary>
         public GetComponentOptions()

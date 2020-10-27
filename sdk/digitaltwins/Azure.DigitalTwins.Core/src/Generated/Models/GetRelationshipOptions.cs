@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class GetRelationshipOptions
+    internal partial class GetRelationshipOptions
     {
         /// <summary> Initializes a new instance of GetRelationshipOptions. </summary>
         public GetRelationshipOptions()
