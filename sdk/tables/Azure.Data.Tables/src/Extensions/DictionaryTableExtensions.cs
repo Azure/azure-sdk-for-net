@@ -25,13 +25,16 @@ namespace Azure.Data.Tables
         /// </summary>
         internal static Dictionary<string, object> ToOdataAnnotatedDictionary(this IDictionary<string, object> tableEntityProperties)
         {
-            // Remove the ETag property, as it does not need to be serialized
-            tableEntityProperties.Remove(TableConstants.PropertyNames.ETag);
-
             var annotatedDictionary = new Dictionary<string, object>(tableEntityProperties.Keys.Count * 2);
 
             foreach (var item in tableEntityProperties)
             {
+                // Remove the ETag property, as it does not need to be serialized
+                if (item.Key == TableConstants.PropertyNames.ETag)
+                {
+                    continue;
+                }
+
                 annotatedDictionary[item.Key] = item.Value;
 
                 switch (item.Value)
@@ -120,6 +123,16 @@ namespace Azure.Data.Tables
             {
                 entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
+
+            // Remove odata metadata.
+            entity.Remove(TableConstants.PropertyNames.OdataMetadata);
+
+            // Set odata.etag as the proper ETag property
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
+            {
+                entity[TableConstants.PropertyNames.ETag] = etag;
+                entity.Remove(TableConstants.PropertyNames.EtagOdata);
+            }
         }
 
         /// <summary>
@@ -192,7 +205,7 @@ namespace Azure.Data.Tables
             }
 
             // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
+            if (entity.TryGetValue(TableConstants.PropertyNames.ETag, out var etag))
             {
                 result.ETag = new ETag((etag as string)!);
             }

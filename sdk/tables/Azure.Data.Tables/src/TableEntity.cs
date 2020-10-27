@@ -58,8 +58,8 @@ namespace Azure.Data.Tables
         /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
         public ETag ETag
         {
-            get { return new ETag(GetString(TableConstants.PropertyNames.EtagOdata)); }
-            set { _properties[TableConstants.PropertyNames.EtagOdata] = value.ToString(); }
+            get { return new ETag(GetString(TableConstants.PropertyNames.ETag)); }
+            set { _properties[TableConstants.PropertyNames.ETag] = value.ToString(); }
         }
 
         /// <summary>
