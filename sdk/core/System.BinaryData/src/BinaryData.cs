@@ -171,10 +171,11 @@ namespace System
         /// <param name="options">The options to use when serializing to JSON.</param>
         ///
         /// <returns>A value representing the UTF-8 encoding of the JSON representation of <paramref name="jsonSerializable" />.</returns>
-        [Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0014:Avoid using banned types in public API", Justification = "This will be part of BCL.")]
         public static BinaryData FromObjectAsJson<T>(
             T jsonSerializable,
+#pragma warning disable AZC0014 // Avoid using banned types in public API
             JsonSerializerOptions? options = default)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, typeof(T), options);
             return new BinaryData(buffer);
