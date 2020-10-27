@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
+                if (AmqpMessage.Body is AmqpDataMessageBody dataBody)
                 {
                     return dataBody.Data.ConvertAndFlattenData();
                 }
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { value });
+                AmqpMessage.Body = new AmqpDataMessageBody(new BinaryData[] { value });
             }
         }
 

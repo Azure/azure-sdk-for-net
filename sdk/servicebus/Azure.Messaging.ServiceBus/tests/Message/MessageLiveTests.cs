@@ -208,9 +208,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var bodyEnum = ((AmqpDataBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                var bodyEnum = ((AmqpDataMessageBody)received.AmqpMessage.Body).Data.GetEnumerator();
                 int ct = 0;
-                foreach (BinaryData data in ((AmqpDataBody)msg.AmqpMessage.Body).Data)
+                foreach (BinaryData data in ((AmqpDataMessageBody)msg.AmqpMessage.Body).Data)
                 {
                     bodyEnum.MoveNext();
                     var bytes = data.ToBytes().ToArray();

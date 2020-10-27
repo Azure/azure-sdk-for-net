@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
+                if (AmqpMessage.Body is AmqpDataMessageBody dataBody)
                 {
                     return dataBody.Data.ConvertAndFlattenData();
                 }

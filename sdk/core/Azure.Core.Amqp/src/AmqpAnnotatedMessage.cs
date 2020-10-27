@@ -14,17 +14,19 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Initializes a new <see cref="AmqpAnnotatedMessage"/> instance by copying the passed in message.
         /// </summary>
-        /// <param name="message">The message to copy.</param>
-        public AmqpAnnotatedMessage(AmqpAnnotatedMessage message)
+        /// <param name="messageToCopy">The message to copy.</param>
+        public AmqpAnnotatedMessage(AmqpAnnotatedMessage messageToCopy)
         {
-            var data = message.Body as AmqpDataBody;
-            Body = new AmqpDataBody(data!.Data);
-            ApplicationProperties = new Dictionary<string, object>(message.ApplicationProperties);
-            Properties = new AmqpMessageProperties(message.Properties);
-            MessageAnnotations = new Dictionary<string, object>(message.MessageAnnotations);
-            DeliveryAnnotations = new Dictionary<string, object>(message.DeliveryAnnotations);
-            Footer = new Dictionary<string, object>(message.Footer);
-            Header = new AmqpMessageHeader(message.Header);
+            Argument.AssertNotNull(messageToCopy, nameof(messageToCopy));
+
+            var data = messageToCopy.Body as AmqpDataMessageBody;
+            Body = new AmqpDataMessageBody(data!.Data);
+            ApplicationProperties = new Dictionary<string, object>(messageToCopy.ApplicationProperties);
+            Properties = new AmqpMessageProperties(messageToCopy.Properties);
+            MessageAnnotations = new Dictionary<string, object>(messageToCopy.MessageAnnotations);
+            DeliveryAnnotations = new Dictionary<string, object>(messageToCopy.DeliveryAnnotations);
+            Footer = new Dictionary<string, object>(messageToCopy.Footer);
+            Header = new AmqpMessageHeader(messageToCopy.Header);
         }
 
         /// <summary>
@@ -35,7 +37,7 @@ namespace Azure.Core.Amqp
         /// </param>
         public AmqpAnnotatedMessage(IEnumerable<BinaryData> dataBody)
         {
-            Body = new AmqpDataBody(dataBody);
+            Body = new AmqpDataMessageBody(dataBody);
         }
 
         /// <summary>
