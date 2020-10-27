@@ -138,7 +138,7 @@ namespace Azure.DigitalTwins.Core
         ///     $&quot;ETag: {customDt.ETag}\n\t&quot; +
         ///     $&quot;Prop1: {customDt.Prop1}\n\t&quot; +
         ///     $&quot;Prop2: {customDt.Prop2}\n\t&quot; +
-        ///     $&quot;ComponentProp1: {customDt.Component1.ComponentProp1}\n\t&quot; +
+        ///     $&quot;ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
         ///     $&quot;ComponentProp2: {customDt.Component1.ComponentProp2}&quot;);
         /// </code>
         /// </example>

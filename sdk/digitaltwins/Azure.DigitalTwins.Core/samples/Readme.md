@@ -197,7 +197,8 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
         $"ETag: {basicDt.ETag}\n\t" +
         $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
         $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
-        $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+        $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
+        $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
 ```
@@ -212,7 +213,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
     $"ETag: {customDt.ETag}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
     $"Prop2: {customDt.Prop2}\n\t" +
-    $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
+    $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
     $"ComponentProp2: {customDt.Component1.ComponentProp2}");
 ```
 

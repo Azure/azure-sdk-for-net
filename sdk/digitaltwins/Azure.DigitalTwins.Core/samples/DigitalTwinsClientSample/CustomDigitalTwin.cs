@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -36,7 +37,7 @@ namespace Azure.DigitalTwins.Core.Samples
         /// A component must have a property named $metadata with no properties to be distinguished from other properties as a component.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public object Metadata { get; set; } = new object();
+        public Dictionary<string, BasicDigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, BasicDigitalTwinPropertyMetadata>();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
