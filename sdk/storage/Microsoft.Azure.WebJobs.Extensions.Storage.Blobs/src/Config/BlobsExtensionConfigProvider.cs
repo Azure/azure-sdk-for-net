@@ -67,12 +67,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             // Normal blob
             // These are not converters because Blob/Page/Append affects how we *create* the blob.
             rule.BindToInput<BlockBlobClient>((attr, cts) => CreateBlobReference<BlockBlobClient>(attr, cts));
-
             rule.BindToInput<PageBlobClient>((attr, cts) => CreateBlobReference<PageBlobClient>(attr, cts));
-
             rule.BindToInput<AppendBlobClient>((attr, cts) => CreateBlobReference<AppendBlobClient>(attr, cts));
-
-                // TODO (kasobol-msft) figure out how to add binding to BlobClient.
+            rule.BindToInput<BlobClient>((attr, cts) => CreateBlobReference<BlobClient>(attr, cts));
             rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
 
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
@@ -95,8 +92,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             context.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
 
             // Blob type is a property of an existing blob.
-            // $$$ did we lose CloudBlob. That's a base class for Cloud*Blob, but does not implement ICloudBlob?
             context.AddConverter(new StorageBlobConverter<AppendBlobClient>());
+            context.AddConverter(new StorageBlobConverter<BlobClient>());
             context.AddConverter(new StorageBlobConverter<BlockBlobClient>());
             context.AddConverter(new StorageBlobConverter<PageBlobClient>());
         }
@@ -134,8 +131,8 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         {
             private static readonly Type[] _types = new Type[]
             {
-                // TODO (kasobol-msft) figure out how to introduce BlobClient binding
                 typeof(BlobBaseClient),
+                typeof(BlobClient),
                 typeof(BlockBlobClient),
                 typeof(PageBlobClient),
                 typeof(AppendBlobClient),
@@ -160,6 +157,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             public BlobCollectionConverter(BlobsExtensionConfigProvider parent)
             {
                 IConverterManager cm = parent._converterManager;
+                var type = typeof(T);
                 _converter = cm.GetConverter<BlobBaseClient, T, BlobAttribute>();
                 if (_converter == null)
                 {
@@ -191,7 +189,15 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
                     switch (blobItem.Properties.BlobType)
                     {
                         case BlobType.Block:
-                            src = blobContainerClient.GetBlockBlobClient(blobItem.Name);
+                            if (typeof(T) == typeof(BlobClient))
+                            {
+                                // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
+                                src = blobContainerClient.GetBlobClient(blobItem.Name);
+                            }
+                            else
+                            {
+                                src = blobContainerClient.GetBlockBlobClient(blobItem.Name);
+                            }
                             break;
                         case BlobType.Append:
                             src = blobContainerClient.GetAppendBlobClient(blobItem.Name);

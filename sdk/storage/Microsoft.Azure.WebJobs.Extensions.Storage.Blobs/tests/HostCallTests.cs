@@ -123,6 +123,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
+        public async Task Blob_IfBoundToBlobClient_CanCall()
+        {
+            // Arrange
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
+            var inputBlob = container.GetBlockBlobClient(BlobName);
+            await container.CreateIfNotExistsAsync();
+            await inputBlob.UploadTextAsync("ignore");
+
+            // Act
+            await CallAsync(typeof(BlobProgram), "BindToBlobClient");
+        }
+
+        [Test]
         public async Task Blob_IfBoundToString_CanCall()
         {
             // Arrange
@@ -601,6 +614,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
 
             public static void BindToCloudBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
+            {
+                Assert.NotNull(blob);
+                Assert.AreEqual(BlobName, blob.Name);
+            }
+
+            public static void BindToBlobClient([Blob(BlobPath)] BlobClient blob)
             {
                 Assert.NotNull(blob);
                 Assert.AreEqual(BlobName, blob.Name);
