@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class GetDigitalTwinsEventRoutesOptions
+    internal partial class GetDigitalTwinsEventRoutesOptions
     {
         /// <summary> Initializes a new instance of GetDigitalTwinsEventRoutesOptions. </summary>
         public GetDigitalTwinsEventRoutesOptions()

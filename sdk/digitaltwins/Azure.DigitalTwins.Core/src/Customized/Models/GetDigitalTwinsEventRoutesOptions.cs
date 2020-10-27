@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("EventRoutesListOptions")]
-    public partial class GetDigitalTwinsEventRoutesOptions
+    internal partial class GetDigitalTwinsEventRoutesOptions
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
 
