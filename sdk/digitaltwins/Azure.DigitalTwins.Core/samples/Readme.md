@@ -131,7 +131,7 @@ var basicTwin = new BasicDigitalTwin
     Id = basicDtId,
     // model Id of digital twin
     Metadata = { ModelId = modelId },
-    Properties =
+    Contents =
     {
         // digital twin properties
         { "Prop1", "Value1" },
@@ -139,10 +139,10 @@ var basicTwin = new BasicDigitalTwin
         // component
         {
             "Component1",
-            new DigitalTwinComponent
+            new BasicDigitalTwinComponent
             {
                 // component properties
-                Properties =
+                Contents =
                 {
                     { "ComponentProp1", "Component value 1" },
                     { "ComponentProp2", 123 },
@@ -190,13 +190,13 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.Properties["Component1"]).GetRawText();
+    string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
     IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.Properties["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.Properties["Prop2"]}\n\t" +
+        $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
         $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }

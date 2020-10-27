@@ -59,19 +59,27 @@ namespace Azure.DigitalTwins.Core
     /// </example>
     public class BasicRelationship
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// The unique Id of the relationship. This field is present on every relationship.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipId)]
         public string Id { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// The unique Id of the target digital twin. This field is present on every relationship.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipTargetId)]
         public string TargetId { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// The unique Id of the source digital twin. This field is present on every relationship.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipSourceId)]
         public string SourceId { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// The name of the relationship, which defines the type of link (e.g. Contains). This field is present on every relationship.
+        /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipName)]
         public string Name { get; set; }
 
