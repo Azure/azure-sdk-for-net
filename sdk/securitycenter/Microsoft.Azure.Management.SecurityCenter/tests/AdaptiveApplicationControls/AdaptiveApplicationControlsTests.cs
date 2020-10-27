@@ -49,32 +49,6 @@ namespace SecurityCenter.Tests
         }
 
         [Fact]
-        public async Task AdaptiveApplicationControls_Put()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-                var appWhitelistingGroup = new AdaptiveApplicationControlGroup(
-                    name: "TestGroup",
-                    protectionMode: new ProtectionMode("Audit", "None", "None"),
-                    configurationStatus: "NoStatus",
-                    sourceSystem: "Azure_AppLocker"
-                    );
-
-                // TODO - Arik R. to fix the code bellow
-                try
-                {
-                    var createdGroup = await securityCenterClient.AdaptiveApplicationControls.PutAsync("TestGroup", appWhitelistingGroup);
-                    ValidateCreatedApplicationWhitelistingGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
-                }
-                catch (CloudException ce)
-                {
-                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
-                }
-            }
-        }
-
-        [Fact]
         public void AdaptiveApplicationControls_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
