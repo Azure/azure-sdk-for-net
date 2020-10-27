@@ -19,13 +19,13 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        private static readonly string RepositoryRoot;
+        public static string RepositoryRoot { get; }
         private readonly string _prefix;
 
         private TokenCredential _credential;
         private TestRecording _recording;
 
-        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        internal readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         protected TestEnvironment(string serviceName)
         {
@@ -239,7 +239,7 @@ namespace Azure.Core.TestFramework
 
             if (value == null)
             {
-                Environment.GetEnvironmentVariable(name);
+                value = Environment.GetEnvironmentVariable(name);
             }
 
             if (value == null)
