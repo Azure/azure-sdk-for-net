@@ -20,52 +20,7 @@ namespace Azure.Communication.Administration.Models
         private PhoneNumberReservation? _value;
         private Response _rawResponse;
         private Response _finalRawResponse;
-        private readonly IReadOnlyList<ReservationStatus> _terminateStatuses = new ReservationStatus[]
-        {
-            ReservationStatus.Reserved,
-            ReservationStatus.Expired,
-            ReservationStatus.Cancelled,
-            ReservationStatus.Error
-        };
-
-        /// <summary>
-        /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
-        /// </summary>
-        /// <param name="client">The client used to check for completion.</param>
-        /// <param name="id">The reservation operation ID.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        internal InternalPhoneNumberReservationOperation(
-            PhoneNumberAdministrationClient client,
-            string id,
-            CancellationToken cancellationToken = default)
-        {
-            Id = id;
-            _rawResponse = null!;
-            _finalRawResponse = null!;
-            _client = client;
-            _cancellationToken = cancellationToken;
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
-        /// </summary>
-        /// <param name="client">The client used to check for completion.</param>
-        /// <param name="id">The reservation operation ID.</param>
-        /// <param name="initialResponse">The original server response on start operation request.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        internal InternalPhoneNumberReservationOperation(
-            PhoneNumberAdministrationClient client,
-            string id,
-            Response initialResponse,
-            CancellationToken cancellationToken = default)
-        {
-            Id = id;
-            _value = null;
-            _rawResponse = initialResponse;
-            _finalRawResponse = null!;
-            _client = client;
-            _cancellationToken = cancellationToken;
-        }
+        private readonly IReadOnlyList<ReservationStatus> _terminateStatuses;
 
         /// <summary>
         /// Initializes a new <see cref="PhoneNumberReservationOperation"/> instance
@@ -80,9 +35,14 @@ namespace Azure.Communication.Administration.Models
             string phoneNumberReservationId,
             Response initialResponse,
             IReadOnlyList<ReservationStatus> terminateStatuses,
-            CancellationToken cancellationToken = default) :
-            this(client, phoneNumberReservationId, initialResponse, cancellationToken)
+            CancellationToken cancellationToken)
         {
+            Id = phoneNumberReservationId;
+            _value = null;
+            _rawResponse = initialResponse;
+            _finalRawResponse = null!;
+            _client = client;
+            _cancellationToken = cancellationToken;
             _terminateStatuses = terminateStatuses;
         }
 
