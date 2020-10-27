@@ -371,7 +371,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
+        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinsAddRelationshipOptions")]
-    public partial class CreateRelationshipOptions
+    public partial class CreateOrReplaceRelationshipOptions
     {
         // This class declaration changes the namespace; do not remove.
 

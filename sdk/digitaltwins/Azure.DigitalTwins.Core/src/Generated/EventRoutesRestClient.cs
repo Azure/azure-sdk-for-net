@@ -209,7 +209,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions eventRoutesAddOptions)
+        internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {

@@ -230,7 +230,7 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<T>> CreateOrReplaceDigitalTwinAsync<T>(
             string digitalTwinId,
             T digitalTwin,
-            CreateDigitalTwinOptions options = null,
+            CreateOrReplaceDigitalTwinOptions options = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a stream
@@ -267,7 +267,7 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<T> CreateOrReplaceDigitalTwin<T>(
             string digitalTwinId,
             T digitalTwin,
-            CreateDigitalTwinOptions options = null,
+            CreateOrReplaceDigitalTwinOptions options = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a stream
@@ -951,7 +951,7 @@ namespace Azure.DigitalTwins.Core
             string digitalTwinId,
             string relationshipId,
             T relationship,
-            CreateRelationshipOptions options = null,
+            CreateOrReplaceRelationshipOptions options = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the relationship and write it to a stream
@@ -991,14 +991,14 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, CreateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, CreateOrReplaceRelationshipOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Response<T> CreateOrReplaceRelationship<T>(
             string digitalTwinId,
             string relationshipId,
             T relationship,
-            CreateRelationshipOptions options = null,
+            CreateOrReplaceRelationshipOptions options = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the relationship and write it to a stream
@@ -1860,7 +1860,7 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Created event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> CreateOrReplaceEventRouteAsync(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.AddAsync(eventRouteId, eventRoute, options, cancellationToken);
         }
@@ -1883,10 +1883,10 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateOrReplaceEventRouteAsync(string, DigitalTwinsEventRoute, CreateEventRouteOptions, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceEventRouteAsync(string, DigitalTwinsEventRoute, CreateOrReplaceEventRouteOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response CreateOrReplaceEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrReplaceEventRoute(string eventRouteId, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             return _eventRoutesRestClient.Add(eventRouteId, eventRoute, options, cancellationToken);
         }
