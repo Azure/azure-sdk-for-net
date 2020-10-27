@@ -111,5 +111,19 @@ namespace Azure.Messaging.ServiceBus.Authorization
                                                                   SharedAccessSignature.SignatureExpiration);
             }
         }
+
+        /// <summary>
+        ///   Creates a new shared signature allowing credentials rotation.
+        /// </summary>
+        ///
+        /// <param name="signature">The shared access signature that forms the basis of this security token.</param>
+        ///
+        internal void UpdateSharedAccessSignature(string signature)
+        {
+            lock (SignatureSyncRoot)
+            {
+                SharedAccessSignature = new SharedAccessSignature(signature);
+            }
+        }
     }
 }

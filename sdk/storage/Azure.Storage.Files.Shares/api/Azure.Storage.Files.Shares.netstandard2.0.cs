@@ -903,7 +903,6 @@ namespace Azure.Storage.Files.Shares.Specialized
     {
         public static readonly System.TimeSpan InfiniteLeaseDuration;
         protected ShareLeaseClient() { }
-        public ShareLeaseClient(Azure.Storage.Files.Shares.ShareClient client, string leaseId = null) { }
         public ShareLeaseClient(Azure.Storage.Files.Shares.ShareFileClient client, string leaseId = null) { }
         protected virtual Azure.Storage.Files.Shares.ShareFileClient FileClient { get { throw null; } }
         public virtual string LeaseId { get { throw null; } }

@@ -5,13 +5,14 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - task: PowerShell@2
-        displayName: Prep template pipeline for release
-        condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
-        inputs:
-          pwsh: true
-          workingDirectory: $(Build.SourcesDirectory)
-          filePath: eng/scripts/SetTestPipelineVersion.ps1
+      - ${{if eq(parameters.TestPipeline, 'true')}}:
+        - task: PowerShell@2
+          displayName: Prep template pipeline for release
+          condition: succeeded()
+          inputs:
+            pwsh: true
+            workingDirectory: $(Build.SourcesDirectory)
+            filePath: eng/scripts/SetTestPipelineVersion.ps1
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -66,12 +67,14 @@ jobs:
         displayName: "Use Python 3.6"
         inputs:
           versionSpec: "3.6"
-      - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
-          parameters:
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
             Directory: ''
             Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- '*.md')
-            CheckLinkGuidance: $true
+          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
@@ -82,7 +85,7 @@ jobs:
           SourceDirectory: $(Build.SourcesDirectory)
       - task: NodeTool@0
         inputs:
-          versionSpec: '13.13.0'
+          versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - task: PowerShell@2
         displayName: "Verify generated code"

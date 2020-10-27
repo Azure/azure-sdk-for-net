@@ -3,6 +3,8 @@
 ## 12.5.0-preview.2 (Unreleased)
 - Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added additional info to exception messages.
+- Added DataLakeDirectoryClient.GetPaths().
+- Fixed bug where Data Lake SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 - Added ability to set Position on streams created with DataLakeFileClient.OpenRead().
 
 ## 12.5.0-preview.1 (2020-09-30)

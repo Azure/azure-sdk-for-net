@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,16 +55,84 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetByIdOptions?.Traceparent != null)
+            if (digitalTwinsGetByIdOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsGetByIdOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsGetByIdOptions.TraceParent);
             }
-            if (digitalTwinsGetByIdOptions?.Tracestate != null)
+            if (digitalTwinsGetByIdOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsGetByIdOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsGetByIdOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<Stream>> GetByIdAsync(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<Stream> GetById(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateDeleteRequest(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
@@ -77,13 +146,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsDeleteOptions?.Traceparent != null)
+            if (digitalTwinsDeleteOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsDeleteOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsDeleteOptions.TraceParent);
             }
-            if (digitalTwinsDeleteOptions?.Tracestate != null)
+            if (digitalTwinsDeleteOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsDeleteOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsDeleteOptions.TraceState);
             }
             if (digitalTwinsDeleteOptions?.IfMatch != null)
             {
@@ -172,13 +241,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateOptions?.Traceparent != null)
+            if (digitalTwinsUpdateOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsUpdateOptions.TraceParent);
             }
-            if (digitalTwinsUpdateOptions?.Tracestate != null)
+            if (digitalTwinsUpdateOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsUpdateOptions.TraceState);
             }
             if (digitalTwinsUpdateOptions?.IfMatch != null)
             {
@@ -210,19 +279,99 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetRelationshipByIdOptions?.Traceparent != null)
+            if (digitalTwinsGetRelationshipByIdOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsGetRelationshipByIdOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsGetRelationshipByIdOptions.TraceParent);
             }
-            if (digitalTwinsGetRelationshipByIdOptions?.Tracestate != null)
+            if (digitalTwinsGetRelationshipByIdOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsGetRelationshipByIdOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsGetRelationshipByIdOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public async Task<Response<Stream>> GetRelationshipByIdAsync(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public Response<Stream> GetRelationshipById(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,15 +384,18 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsAddRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsAddRelationshipOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsAddRelationshipOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsAddRelationshipOptions.TraceParent);
             }
-            if (digitalTwinsAddRelationshipOptions?.Tracestate != null)
+            if (digitalTwinsAddRelationshipOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddRelationshipOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -265,13 +417,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsDeleteRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsDeleteRelationshipOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsDeleteRelationshipOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsDeleteRelationshipOptions.TraceParent);
             }
-            if (digitalTwinsDeleteRelationshipOptions?.Tracestate != null)
+            if (digitalTwinsDeleteRelationshipOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsDeleteRelationshipOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsDeleteRelationshipOptions.TraceState);
             }
             if (digitalTwinsDeleteRelationshipOptions?.IfMatch != null)
             {
@@ -372,13 +524,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsUpdateRelationshipOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateRelationshipOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsUpdateRelationshipOptions.TraceParent);
             }
-            if (digitalTwinsUpdateRelationshipOptions?.Tracestate != null)
+            if (digitalTwinsUpdateRelationshipOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateRelationshipOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsUpdateRelationshipOptions.TraceState);
             }
             if (digitalTwinsUpdateRelationshipOptions?.IfMatch != null)
             {
@@ -413,13 +565,13 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsListRelationshipsOptions?.Traceparent != null)
+            if (digitalTwinsListRelationshipsOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.TraceParent);
             }
-            if (digitalTwinsListRelationshipsOptions?.Tracestate != null)
+            if (digitalTwinsListRelationshipsOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -511,13 +663,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/incomingrelationships", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsListIncomingRelationshipsOptions?.Traceparent != null)
+            if (digitalTwinsListIncomingRelationshipsOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.TraceParent);
             }
-            if (digitalTwinsListIncomingRelationshipsOptions?.Tracestate != null)
+            if (digitalTwinsListIncomingRelationshipsOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -607,13 +759,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendTelemetryOptions?.Traceparent != null)
+            if (digitalTwinsSendTelemetryOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsSendTelemetryOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsSendTelemetryOptions.TraceParent);
             }
-            if (digitalTwinsSendTelemetryOptions?.Tracestate != null)
+            if (digitalTwinsSendTelemetryOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsSendTelemetryOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsSendTelemetryOptions.TraceState);
             }
             request.Headers.Add("Message-Id", messageId);
             if (telemetrySourceTime != null)
@@ -642,13 +794,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendComponentTelemetryOptions?.Traceparent != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.TraceParent);
             }
-            if (digitalTwinsSendComponentTelemetryOptions?.Tracestate != null)
+            if (digitalTwinsSendComponentTelemetryOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.TraceState);
             }
             request.Headers.Add("Message-Id", messageId);
             if (telemetrySourceTime != null)
@@ -676,16 +828,96 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetComponentOptions?.Traceparent != null)
+            if (digitalTwinsGetComponentOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsGetComponentOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsGetComponentOptions.TraceParent);
             }
-            if (digitalTwinsGetComponentOptions?.Tracestate != null)
+            if (digitalTwinsGetComponentOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsGetComponentOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsGetComponentOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public async Task<Response<Stream>> GetComponentAsync(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public Response<Stream> GetComponent(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
@@ -701,13 +933,13 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateComponentOptions?.Traceparent != null)
+            if (digitalTwinsUpdateComponentOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsUpdateComponentOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsUpdateComponentOptions.TraceParent);
             }
-            if (digitalTwinsUpdateComponentOptions?.Tracestate != null)
+            if (digitalTwinsUpdateComponentOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsUpdateComponentOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsUpdateComponentOptions.TraceState);
             }
             if (digitalTwinsUpdateComponentOptions?.IfMatch != null)
             {
@@ -735,13 +967,13 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinsListRelationshipsOptions?.Traceparent != null)
+            if (digitalTwinsListRelationshipsOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.TraceParent);
             }
-            if (digitalTwinsListRelationshipsOptions?.Tracestate != null)
+            if (digitalTwinsListRelationshipsOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -840,13 +1072,13 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinsListIncomingRelationshipsOptions?.Traceparent != null)
+            if (digitalTwinsListIncomingRelationshipsOptions?.TraceParent != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.Traceparent);
+                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.TraceParent);
             }
-            if (digitalTwinsListIncomingRelationshipsOptions?.Tracestate != null)
+            if (digitalTwinsListIncomingRelationshipsOptions?.TraceState != null)
             {
-                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.Tracestate);
+                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.TraceState);
             }
             request.Headers.Add("Accept", "application/json");
             return message;

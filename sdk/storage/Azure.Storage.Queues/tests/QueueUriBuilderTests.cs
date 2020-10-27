@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -391,6 +393,45 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(string.Empty, queueUriBuilder2.AccountName);
             Assert.AreEqual(string.Empty, queueUriBuilder3.AccountName);
             Assert.AreEqual(string.Empty, queueUriBuilder4.AccountName);
+        }
+
+        [Test]
+        [TestCase("2020-10-27", "2020-10-28")]
+        [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
+        [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
+        [TestCase("2020-10-27T12:10:11.1234567Z", "2020-10-28T13:20:14.7654321Z")]
+        public void QueueBuilder_SasStartExpiryTimeFormats(string startTime, string expiryTime)
+        {
+            // Arrange
+            Uri initialUri = new Uri($"https://account.queue.core.windows.net/queue?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+            QueueUriBuilder queueUriBuilder = new QueueUriBuilder(initialUri);
+
+            // Act
+            Uri resultUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual(initialUri, resultUri);
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"st={WebUtility.UrlEncode(startTime)}"));
+            Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
+        }
+
+        [Test]
+        public void QueueUriBuilder_SasInvalidStartExpiryTimeFormat()
+        {
+            // Arrange
+            string startTime = "2020-10-27T12Z";
+            string expiryTime = "2020-10-28T13Z";
+            Uri initialUri = new Uri($"https://account.queue.core.windows.net/queue?sv=2020-02-10&st={WebUtility.UrlEncode(startTime)}&se={WebUtility.UrlEncode(expiryTime)}&sr=b&sp=racwd&sig=jQetX8odiJoZ7Yo0X8vWgh%2FMqRv9WE3GU%2Fr%2BLNMK3GU%3D");
+
+            // Act
+            try
+            {
+                new QueueUriBuilder(initialUri);
+            }
+            catch (FormatException e)
+            {
+                Assert.IsTrue(e.Message.Contains("was not recognized as a valid DateTime."));
+            }
         }
     }
 }

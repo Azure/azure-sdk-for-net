@@ -8,18 +8,11 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class QueryOptions
+    internal partial class QueryOptions
     {
         /// <summary> Initializes a new instance of QueryOptions. </summary>
         public QueryOptions()
         {
         }
-
-        /// <summary> Identifies the request in a distributed tracing system. </summary>
-        public string Traceparent { get; set; }
-        /// <summary> Provides vendor-specific trace identification information and is a companion to traceparent. </summary>
-        public string Tracestate { get; set; }
-        /// <summary> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </summary>
-        public int? MaxItemsPerPage { get; set; }
     }
 }

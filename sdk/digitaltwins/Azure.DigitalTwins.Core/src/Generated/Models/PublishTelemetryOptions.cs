@@ -14,10 +14,5 @@ namespace Azure.DigitalTwins.Core
         public PublishTelemetryOptions()
         {
         }
-
-        /// <summary> Identifies the request in a distributed tracing system. </summary>
-        public string Traceparent { get; set; }
-        /// <summary> Provides vendor-specific trace identification information and is a companion to traceparent. </summary>
-        public string Tracestate { get; set; }
     }
 }
