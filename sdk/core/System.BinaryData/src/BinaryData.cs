@@ -129,11 +129,17 @@ namespace System
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            if (stream.CanSeek && (stream.Length - stream.Position) > int.MaxValue)
+            int streamLength = 0;
+            if (stream.CanSeek)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(stream),
-                    "Stream length must be less than Int32.MaxValue");
+                long longLength = stream.Length - stream.Position;
+                if (longLength > int.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(stream),
+                        "Stream length must be less than Int32.MaxValue");
+                }
+                streamLength = (int)longLength;
             }
 
             MemoryStream? inputMemoryStream = stream as MemoryStream;
@@ -141,7 +147,7 @@ namespace System
 
             if (inputMemoryStream?.TryGetBuffer(out buffer) ?? false)
             {
-                return new BinaryData(buffer.Array.AsMemory(buffer.Offset, buffer.Count));
+                return new BinaryData(new ReadOnlyMemory<byte>(buffer.Array, buffer.Offset, buffer.Count).Slice((int)stream.Position, streamLength));
             }
 
             using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream((int)stream.Length) : new MemoryStream();
