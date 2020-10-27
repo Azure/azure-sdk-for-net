@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class DigitalTwinMetadata
+    public class BasicDigitalTwinMetadata
     {
         /// <summary>
         /// The Id of the model that the digital twin or component is modeled by.

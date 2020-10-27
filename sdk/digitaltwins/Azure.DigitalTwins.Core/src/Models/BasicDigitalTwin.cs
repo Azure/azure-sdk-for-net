@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
     ///     Id = basicDtId,
     ///     // model Id of digital twin
     ///     Metadata = { ModelId = modelId },
-    ///     Properties =
+    ///     Contents =
     ///     {
     ///         // digital twin properties
     ///         { &quot;Prop1&quot;, &quot;Value1&quot; },
@@ -35,10 +35,10 @@ namespace Azure.DigitalTwins.Core
     ///         // component
     ///         {
     ///             &quot;Component1&quot;,
-    ///             new DigitalTwinComponent
+    ///             new BasicDigitalTwinComponent
     ///             {
     ///                 // component properties
-    ///                 Properties =
+    ///                 Contents =
     ///                 {
     ///                     { &quot;ComponentProp1&quot;, &quot;Component value 1&quot; },
     ///                     { &quot;ComponentProp2&quot;, 123 },
@@ -61,13 +61,13 @@ namespace Azure.DigitalTwins.Core
     ///     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
     ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    ///     string component1RawText = ((JsonElement)basicDt.Properties[&quot;Component1&quot;]).GetRawText();
+    ///     string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
     ///     IDictionary&lt;string, object&gt; component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
     ///
     ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
-    ///         $&quot;Prop1: {basicDt.Properties[&quot;Prop1&quot;]}\n\t&quot; +
-    ///         $&quot;Prop2: {basicDt.Properties[&quot;Prop2&quot;]}\n\t&quot; +
+    ///         $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}\n\t&quot; +
+    ///         $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}\n\t&quot; +
     ///         $&quot;ComponentProp1: {component1[&quot;ComponentProp1&quot;]}\n\t&quot; +
     ///         $&quot;ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
     /// }
@@ -92,13 +92,12 @@ namespace Azure.DigitalTwins.Core
         /// This field is present on every digital twin.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
+        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
 
         /// <summary>
-        /// Additional properties of the digital twin.
-        /// This field will contain any properties of the digital twin that are not already defined by the other strong types of this class.
+        /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Contents { get; set; } = new Dictionary<string, object>();
     }
 }
