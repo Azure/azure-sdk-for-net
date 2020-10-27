@@ -44,7 +44,7 @@
     }
   },
   "variables": {
-    "apiVersion": "2017-04",
+    "apiVersion": "2017-04-01",
     "schemaRegistryGroup": "azsdk_net_test_group",
     "schemaRegistryEndpoint": "[format('https://{0}.servicebus.windows.net', parameters('baseName'))]"
   },
