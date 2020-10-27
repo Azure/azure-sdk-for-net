@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class ReleaseResponse
+    internal partial class PhoneNumberReleaseResponse
     {
-        internal static ReleaseResponse DeserializeReleaseResponse(JsonElement element)
+        internal static PhoneNumberReleaseResponse DeserializePhoneNumberReleaseResponse(JsonElement element)
         {
             string releaseId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.Administration.Models
                     continue;
                 }
             }
-            return new ReleaseResponse(releaseId);
+            return new PhoneNumberReleaseResponse(releaseId);
         }
     }
 }

@@ -5,22 +5,23 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Administration.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.Administration
+namespace Azure.Communication.Administration.Models
 {
     /// <summary>
     /// Represents a long-running release phone number operation.
     /// </summary>
     public class ReleasePhoneNumberOperation : Operation<PhoneNumberRelease>
     {
+        private readonly object _lockObject = new object();
         private readonly PhoneNumberAdministrationClient _client;
         private readonly CancellationToken _cancellationToken;
         private bool _hasCompleted;
         private PhoneNumberRelease? _value;
         private Response _rawResponse;
+        private Response _finalRawResponse;
 
         /// <summary>
         /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
@@ -36,6 +37,7 @@ namespace Azure.Communication.Administration
             Id = id;
             _value = null;
             _rawResponse = null!;
+            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -56,6 +58,7 @@ namespace Azure.Communication.Administration
             Id = id;
             _value = null;
             _rawResponse = initialResponse;
+            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -70,10 +73,10 @@ namespace Azure.Communication.Administration
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdocs />
-        public override bool HasValue => _rawResponse != null && _value != null;
+        public override bool HasValue => (_rawResponse != null || _finalRawResponse != null) && _value != null;
 
         /// <inheritdocs />
-        public override Response GetRawResponse() => _rawResponse;
+        public override Response GetRawResponse() => HasCompleted ? _finalRawResponse : _rawResponse;
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -122,8 +125,6 @@ namespace Azure.Communication.Administration
                 ? await _client.GetReleaseByIdAsync(releaseId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
                 : _client.GetReleaseById(releaseId: Id, cancellationToken: cancellationToken);
 
-            _value = update.Value;
-
             var terminateStatuses = new ReleaseStatus[]
             {
                 ReleaseStatus.Complete,
@@ -136,7 +137,12 @@ namespace Azure.Communication.Administration
 
             if (update.Value.Status.HasValue && terminateStatuses.Contains(update.Value.Status.Value))
             {
-                _hasCompleted = true;
+                lock (_lockObject)
+                {
+                    _finalRawResponse = response;
+                    _value = update.Value;
+                    _hasCompleted = true;
+                }
             }
 
             return response;

@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a release response. </summary>
-    public partial class ReleaseResponse
+    internal partial class PhoneNumberReleaseResponse
     {
-        /// <summary> Initializes a new instance of ReleaseResponse. </summary>
+        /// <summary> Initializes a new instance of PhoneNumberReleaseResponse. </summary>
         /// <param name="releaseId"> The release id of a created release. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="releaseId"/> is null. </exception>
-        internal ReleaseResponse(string releaseId)
+        internal PhoneNumberReleaseResponse(string releaseId)
         {
             if (releaseId == null)
             {

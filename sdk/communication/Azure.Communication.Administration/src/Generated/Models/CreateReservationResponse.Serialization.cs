@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CreateReservationResponse
+    internal partial class CreateReservationResponse
     {
         internal static CreateReservationResponse DeserializeCreateReservationResponse(JsonElement element)
         {

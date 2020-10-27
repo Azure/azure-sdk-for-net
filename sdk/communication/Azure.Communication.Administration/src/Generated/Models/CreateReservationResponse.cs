@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a search creation response. </summary>
-    public partial class CreateReservationResponse
+    internal partial class CreateReservationResponse
     {
         /// <summary> Initializes a new instance of CreateReservationResponse. </summary>
         /// <param name="reservationId"> The search id of the search that was created. </param>

@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     [CodeGenModel("CreateSearchResponse")]
-    public partial class CreateReservationResponse
+    internal partial class CreateReservationResponse
     {
         /// <summary> The id of a created reservation. </summary>
         [CodeGenMember("SearchId")]

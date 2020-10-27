@@ -1025,7 +1025,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public async Task<Response<ReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumberReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1038,9 +1038,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        ReleaseResponse value = default;
+                        PhoneNumberReleaseResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
+                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,7 +1052,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public Response<ReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public Response<PhoneNumberReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1065,9 +1065,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        ReleaseResponse value = default;
+                        PhoneNumberReleaseResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
+                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
