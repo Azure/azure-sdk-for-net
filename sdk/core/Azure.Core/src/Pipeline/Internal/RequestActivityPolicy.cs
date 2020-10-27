@@ -126,7 +126,9 @@ namespace Azure.Core.Pipeline
                         {
                             message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
                         }
-                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
+
+                        string? traceStateString = currentActivity.GetTraceState();
+                        if (traceStateString != null)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }

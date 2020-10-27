@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
@@ -145,12 +146,12 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        internal class ActivitySourceAdapter
+        private class ActivitySourceAdapter
         {
             private readonly ActivitySource _activitySource;
             private readonly string _activityName;
             private Activity? _currentActivity;
-            private ActivityTagsCollection? _tagCollection;
+            private ICollection<KeyValuePair<string,object>>? _tagCollection;
             private DateTimeOffset? _startTime;
             private List<ActivityLink>? _linkCollection;
 
@@ -163,7 +164,7 @@ namespace Azure.Core.Pipeline
             public void AddTag<T>(string name, T value)
             {
                 _tagCollection ??= new ActivityTagsCollection();
-                _tagCollection.Add(name, value);
+                _tagCollection.Add(new KeyValuePair<string, object>(name, value!));
             }
 
             public void AddLink(string id, IDictionary<string, string>? attributes)
@@ -205,12 +206,12 @@ namespace Azure.Core.Pipeline
                 // Unset = 0,
                 // Error = 1
                 // Ok = 2
-                _currentActivity?.AddTag("otel.status_code", 1);
+                _currentActivity?.AddTag("otel.status_code", "1");
             }
 
             public void Dispose()
             {
-                _currentActivity?.Dispose();
+                (_currentActivity as IDisposable)?.Dispose();
             }
         }
     }
@@ -220,37 +221,93 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal static class ActivityExtensions
     {
-        private static readonly MethodInfo? s_setIdFormatMethod = typeof(Activity).GetMethod("SetIdFormat");
-        private static readonly MethodInfo? s_getIdFormatMethod = typeof(Activity).GetProperty("IdFormat")?.GetMethod;
-        private static readonly MethodInfo? s_getTraceStateStringMethod = typeof(Activity).GetProperty("TraceStateString")?.GetMethod;
+        private static Type? s_activitySourceType = Type.GetType("System.Diagnostics.ActivitySource, System.Diagnostics.DiagnosticSource");
+        private static Type? s_activityTagsCollectionType = Type.GetType("System.Diagnostics.ActivityTagsCollection, System.Diagnostics.DiagnosticSource");
 
-        public static bool SetW3CFormat(this Activity activity)
+        private static Action<Activity, int>? s_setIdFormatMethod;
+        private static Func<Activity, string?>? s_getTraceStateStringMethod;
+        private static Func<Activity, int>? s_getIdFormatMethod;
+        private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+
+        public static void SetW3CFormat(this Activity activity)
         {
-            if (s_setIdFormatMethod == null) return false;
+            if (s_setIdFormatMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("SetIdFormat");
+                if (method == null)
+                {
+                    s_setIdFormatMethod = (a, v) => { };
+                }
+                else
+                {
+                    var idParameter = Expression.Parameter(typeof(int));
+                    var convertedId = Expression.Convert(idParameter, method.GetParameters()[0].ParameterType);
 
-            s_setIdFormatMethod.Invoke(activity, new object[] {2 /* ActivityIdFormat.W3C */});
+                    s_setIdFormatMethod = Expression.Lambda<Action<Activity, int>>(
+                        Expression.Call(ActivityParameter, method, convertedId),
+                        ActivityParameter, idParameter).Compile();
+                }
+            }
 
-            return true;
+            s_setIdFormatMethod(activity, 2 /* ActivityIdFormat.W3C */);
         }
 
         public static bool IsW3CFormat(this Activity activity)
         {
-            if (s_getIdFormatMethod == null) return false;
+            if (s_getIdFormatMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("IdFormat")?.GetMethod;
+                if (method == null)
+                {
+                    s_getIdFormatMethod = _ => -1;
+                }
+                else
+                {
+                    s_getIdFormatMethod = Expression.Lambda<Func<Activity, int>>(
+                        Expression.Convert(Expression.Call(ActivityParameter, method), typeof(int)),
+                        ActivityParameter).Compile();
+                }
+            }
 
-            object? result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
-            return result != null && (int) result == 2 /* ActivityIdFormat.W3C */;
+            int result = s_getIdFormatMethod(activity);
+
+            return result == 2 /* ActivityIdFormat.W3C */;
         }
 
-        public static bool TryGetTraceState(this Activity activity, out string? traceState)
+        public static string? GetTraceState(this Activity activity)
         {
-            traceState = null;
+            if (s_getTraceStateStringMethod == null)
+            {
+                var method = typeof(Activity).GetProperty("TraceStateString")?.GetMethod;
+                if (method == null)
+                {
+                    s_getTraceStateStringMethod = _ => null;
+                }
+                else
+                {
+                    s_getTraceStateStringMethod = Expression.Lambda<Func<Activity, string?>>(
+                            Expression.Call(ActivityParameter, method),
+                            ActivityParameter).Compile();
+                }
+            }
 
-            if (s_getTraceStateStringMethod == null) return false;
+            return s_getTraceStateStringMethod(activity);
+        }
 
-            traceState = s_getTraceStateStringMethod.Invoke(activity, Array.Empty<object>()) as string;
+        public static bool SupportsActivitySource()
+        {
+            return s_activitySourceType != null && s_activityTagsCollectionType != null;
+        }
 
-            return true;
+        public static object? CreateActivitySource()
+        {
+            return Activator.CreateInstance(s_activitySourceType);
+        }
+
+        public static object? CreateTagsCollection()
+        {
+
         }
     }
 }
