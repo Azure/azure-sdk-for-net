@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class CreateOrReplaceEventRouteOptions
+    internal partial class CreateOrReplaceEventRouteOptions
     {
         /// <summary> Initializes a new instance of CreateOrReplaceEventRouteOptions. </summary>
         public CreateOrReplaceEventRouteOptions()

@@ -19,14 +19,20 @@ namespace Azure.DigitalTwins.Core
         public const string DigitalTwinETag = "$etag";
 
         /// <summary>
-        /// The JSON property name for the metadata field on a digital twin.%
+        /// The JSON property name for the metadata field on a digital twin or a component.
         /// </summary>
         public const string DigitalTwinMetadata = "$metadata";
 
         /// <summary>
-        /// The JSON property name for the model field on a digital twin metadata or component metadata.
+        /// The JSON property name for the model field on a digital twin metadata.
         /// </summary>
         public const string MetadataModel = "$model";
+
+        /// <summary>
+        /// The last update time of a digital twin property, used in the $metadata object
+        /// on a digital twin or component about their properties.
+        /// </summary>
+        public const string MetadataPropertyLastUpdateTime = "lastUpdateTime";
 
         /// <summary>
         /// The JSON property name for the Id field on a relationship.
