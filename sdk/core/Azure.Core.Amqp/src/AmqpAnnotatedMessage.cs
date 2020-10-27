@@ -35,9 +35,7 @@ namespace Azure.Core.Amqp
         /// <param name="dataBody">The data sections comprising the message body.
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
         /// </param>
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public AmqpAnnotatedMessage(IEnumerable<BinaryData> dataBody)
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             Body = new AmqpDataMessageBody(dataBody);
         }
@@ -62,7 +60,7 @@ namespace Azure.Core.Amqp
             }
         }
 
-        private Dictionary<string, object> _footer;
+        private Dictionary<string, object>? _footer;
 
         /// <summary>
         /// The delivery annotations of the AMQP message.
@@ -79,7 +77,7 @@ namespace Azure.Core.Amqp
             }
         }
 
-        private Dictionary<string, object> _deliveryAnnotations;
+        private Dictionary<string, object>? _deliveryAnnotations;
 
         /// <summary>
         /// The message annotations of the AMQP message.
@@ -96,7 +94,7 @@ namespace Azure.Core.Amqp
             }
         }
 
-        private Dictionary<string, object> _messageAnnotations;
+        private Dictionary<string, object>? _messageAnnotations;
 
         /// <summary>
         /// The properties of the AMQP message.
@@ -118,7 +116,7 @@ namespace Azure.Core.Amqp
             }
         }
 
-        private Dictionary<string, object> _applicationProperties;
+        private Dictionary<string, object>? _applicationProperties;
 
         /// <summary>
         /// The body of the AMQP message.
