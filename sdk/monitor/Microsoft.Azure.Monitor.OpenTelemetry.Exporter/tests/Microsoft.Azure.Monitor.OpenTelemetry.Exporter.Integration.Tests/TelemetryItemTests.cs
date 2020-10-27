@@ -18,23 +18,30 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
     /// <summary>
     /// The purpose of these tests are to verify various types of Telemetry.
     /// </summary>
-    public class TelemetryTypeTests
+    public class TelemetryItemTests
     {
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource MyActivitySource = new ActivitySource(ActivitySourceName);
         private const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
+        /// <summary>
+        /// This test creates an Activity that should pass through the OpenTelemetry pipeline.
+        /// AzureMonitorExporter will convert this to a <see cref="TelemetryItem"/>.
+        /// This test will validate the TelemetryItem against expected values.
+        /// </summary>
+        /// <param name="activityKind"></param>
         [Theory]
         [InlineData(ActivityKind.Client)]
         [InlineData(ActivityKind.Consumer)]
         [InlineData(ActivityKind.Internal)]
         [InlineData(ActivityKind.Producer)]
         [InlineData(ActivityKind.Server)]
-        public void VerifyActivityAsTelemetryItem(ActivityKind activityKind)
+        public void VerifyActivity(ActivityKind activityKind)
         {
             this.Setup(processor: out BatchExportProcessor<Activity> processor, transmitter: out MockTransmitter transmitter);
 
-            using (var activity = MyActivitySource.StartActivity(name: "TestActivity", kind: activityKind))
+            var activityName = "TestActivity";
+            using (var activity = MyActivitySource.StartActivity(name: activityName, kind: activityKind))
             {
                 activity.SetTag("integer", 1);
                 activity.SetTag("message", "Hello World!");
@@ -52,13 +59,16 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 activityKind: activityKind,
                 expectedVars: new ExpectedTelemetryItemValues
                 {
-                    Name = "TestActivity",
+                    Name = activityName,
                     CustomProperties = new Dictionary<string, string> {
                         {"integer", "1" },
                         {"message", "Hello World!" },
                         {"intArray", "1,2,3" } }
                 });
         }
+
+        // TODO: ADD THIS TEST AFTER IMPLEMENTING ILOGGER EXPORTER
+        //public void VerifyILoggerAsTelemetryItem
 
         private void Setup(out BatchExportProcessor<Activity> processor, out MockTransmitter transmitter )
         {
