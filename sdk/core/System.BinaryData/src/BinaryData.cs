@@ -67,6 +67,11 @@ namespace System
         /// <param name="data">The string data.</param>
         public BinaryData(string data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
             _bytes = Encoding.UTF8.GetBytes(data);
         }
 
@@ -103,10 +108,17 @@ namespace System
         /// </summary>
         /// <param name="stream">Stream containing the data.</param>
         /// <returns>A value representing all of the data remaining in <paramref name="stream"/>.</returns>
-        public static BinaryData FromStream(Stream stream) =>
+        public static BinaryData FromStream(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            FromStreamAsync(stream, false).GetAwaiter().GetResult();
+            return FromStreamAsync(stream, false).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        }
 
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance from the specified stream.
@@ -115,20 +127,23 @@ namespace System
         /// <param name="stream">Stream containing the data.</param>
         /// <param name="cancellationToken">A token that may be used to cancel the operation.</param>
         /// <returns>A value representing all of the data remaining in <paramref name="stream"/>.</returns>
-        public static async Task<BinaryData> FromStreamAsync(
+        public static Task<BinaryData> FromStreamAsync(
             Stream stream,
-            CancellationToken cancellationToken = default) =>
-            await FromStreamAsync(stream, true, cancellationToken).ConfigureAwait(false);
-
-        private static async Task<BinaryData> FromStreamAsync(
-            Stream stream,
-            bool async,
             CancellationToken cancellationToken = default)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
+
+            return FromStreamAsync(stream, true, cancellationToken);
+        }
+
+        private static async Task<BinaryData> FromStreamAsync(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
             int streamLength = 0;
             if (stream.CanSeek)
             {

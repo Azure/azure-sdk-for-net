@@ -289,9 +289,23 @@ namespace System.Tests
         [Fact]
         public async Task CreateThrowsOnNullStream()
         {
-            Assert.Throws<ArgumentNullException>(() => BinaryData.FromStream(null));
+            var ex = Assert.Throws<ArgumentNullException>(() => BinaryData.FromStream(null));
+            Assert.Contains("stream", ex.Message);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(() => BinaryData.FromStreamAsync(null));
+            ex = await Assert.ThrowsAsync<ArgumentNullException>(() => BinaryData.FromStreamAsync(null));
+            Assert.Contains("stream", ex.Message);
+
+        }
+
+        [Fact]
+        public void CreateThrowsOnNullString()
+        {
+            string payload = null;
+            var ex = Assert.Throws<ArgumentNullException>(() => new BinaryData(payload));
+            Assert.Contains("data", ex.Message);
+
+            ex = Assert.Throws<ArgumentNullException>(() => BinaryData.FromString(payload));
+            Assert.Contains("data", ex.Message);
         }
 
         [Fact]
