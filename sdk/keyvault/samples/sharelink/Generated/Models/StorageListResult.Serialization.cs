@@ -21,11 +21,6 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<StorageAccountItem> array = new List<StorageAccountItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
