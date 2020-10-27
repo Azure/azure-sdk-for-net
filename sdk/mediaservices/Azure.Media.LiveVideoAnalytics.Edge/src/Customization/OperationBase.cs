@@ -14,5 +14,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// Method name
         /// </summary>
         public string MethodName { get; set; }
+
+        /// <summary>
+        /// GetPayloadAsJSON function.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetPayloadAsJSON() { return string.Empty; }
     }
 }

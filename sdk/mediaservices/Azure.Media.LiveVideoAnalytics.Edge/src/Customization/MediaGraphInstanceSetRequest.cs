@@ -9,7 +9,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         ///  Serialize .
         /// </summary>
         /// <returns></returns>
-        public string GetPayloadAsJSON()
+        public override string GetPayloadAsJSON()
         {
             return Instance.Serialize();
         }
