@@ -251,7 +251,8 @@ namespace System.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => BinaryData.FromStream(new OverFlowStream(offset: 0)));
 
             // should not throw
-            var data = BinaryData.FromStream(new OverFlowStream(offset: 1));
+
+            var data = BinaryData.FromStream(new OverFlowStream(offset: int.MaxValue - 1000));
 
         }
 
@@ -467,7 +468,12 @@ namespace System.Tests
         {
             private readonly long _offset;
 
-            public OverFlowStream(long offset, byte[] buffer = default): base(buffer)
+            public OverFlowStream(long offset)
+            {
+                _offset = offset;
+            }
+
+            public OverFlowStream(long offset, byte[] buffer) : base(buffer)
             {
                 _offset = offset;
             }

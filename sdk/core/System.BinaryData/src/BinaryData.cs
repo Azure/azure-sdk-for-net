@@ -142,12 +142,11 @@ namespace System
                 streamLength = (int)longLength;
             }
 
-            MemoryStream? inputMemoryStream = stream as MemoryStream;
             ArraySegment<byte> buffer = default;
 
-            if (inputMemoryStream?.TryGetBuffer(out buffer) ?? false)
+            if (stream.GetType() == typeof(MemoryStream) && ((stream as MemoryStream)?.TryGetBuffer(out buffer) ?? false))
             {
-                return new BinaryData(new ReadOnlyMemory<byte>(buffer.Array, buffer.Offset, buffer.Count).Slice((int)stream.Position, streamLength));
+                return new BinaryData(((ReadOnlyMemory<byte>)buffer).Slice((int)stream.Position, streamLength));
             }
 
             using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream(streamLength) : new MemoryStream();
