@@ -10,9 +10,10 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment for a given span of text.
-    /// For more information regarding text sentiment, see
-    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
+    /// The predicted sentiment and other analysis like Opinion mining
+    /// for each sentence in the corresponding document.
+    /// <para>For more information regarding text sentiment, see
+    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
     /// </summary>
     public readonly struct SentenceSentiment
     {
@@ -55,7 +56,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the mined opinions of a sentence. This is only returned if
-        /// <see cref="AdditionalSentimentAnalyses.OpinionMining"/> is set in <see cref="AnalyzeSentimentOptions.AdditionalSentimentAnalyses"/>.
+        /// <see cref="AnalyzeSentimentOptions.IncludeOpinionMining"/> is set to True.
         /// </summary>
         public IReadOnlyCollection<MinedOpinion> MinedOpinions { get; }
 

@@ -20,10 +20,14 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Get the aspect in text, such as the attributes of products or services.
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// "Hotel Foo".</para>
         /// </summary>
         public AspectSentiment Aspect { get; }
         /// <summary>
         /// The list of opinions that are related to the aspect.
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// "Hotel Foo" and "good" is the opinion related to the aspect.</para>
         /// </summary>
         public IReadOnlyCollection<OpinionSentiment> Opinions { get; }
     }

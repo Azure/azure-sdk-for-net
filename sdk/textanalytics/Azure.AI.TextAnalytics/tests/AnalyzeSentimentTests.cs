@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "The park was clean and pretty. The bathrooms and restaurant were not clean.";
 
-            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
             Assert.AreEqual("Mixed", docSentiment.Sentiment.ToString());
@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = singleEnglish;
 
-            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "en", new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, "en", new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment);
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "The bathrooms are not clean.";
 
-            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(document, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             CheckAnalyzeSentimentProperties(docSentiment, opinionMining: true);
             MinedOpinion minedOpinion = docSentiment.Sentences.FirstOrDefault().MinedOpinions.FirstOrDefault();
@@ -151,7 +151,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "The food and service is not good."
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             foreach (AnalyzeSentimentResult docs in results)
             {
@@ -334,7 +334,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             foreach (AnalyzeSentimentResult docs in results)
             {
