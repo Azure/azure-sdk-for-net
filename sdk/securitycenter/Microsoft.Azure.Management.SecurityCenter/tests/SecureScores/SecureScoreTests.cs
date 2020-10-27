@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Security;
+﻿using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
@@ -10,13 +7,11 @@ using SecurityCenter.Tests.Helpers;
 using System.Net;
 using Xunit;
 
-namespace SecurityCenter.Tests
+namespace Microsoft.Azure.Management.SecurityCenter.Tests.SecureScores
 {
-    public class SubAssessmentTests : TestBase
+    public class SecureScoreTests : TestBase
     {
         #region Test setup
-        private static readonly string AssessmentName = "dbd0cb49-b563-45e7-9724-889e799fa648";
-        private static readonly string SubAssessmentName = "06965065-49c1-4b8c-8f9d-6676e0ecf173";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
@@ -41,52 +36,63 @@ namespace SecurityCenter.Tests
 
         #region Tests
         [Fact]
-        public void SubAssessments_ListAll()
+        public void SecureScores_ListAll()
         {
-            string scope = "subscriptions/487bb485-b5b0-471e-9c0d-10717612f869";
-
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.ListAll(scope);
-                Validate(ret);
+                var ret = securityCenterClient.SecureScores.List();
+                ValidateSecureScoreList(ret);
             }
         }
 
         [Fact]
-        public void SubAssessments_List()
+        public void SecureScores_Get()
         {
-            string scope = "subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef";
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.List(scope, AssessmentName);
-                Validate(ret);
+                var ret = securityCenterClient.SecureScores.Get("ascScore");
+                ValidateSecureScoreItem(ret);
             }
         }
 
         [Fact]
-        public void SubAssessments_Get()
+        public void SecureScores_Get_Unknown()
         {
-            string scope = "subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/subAssessments_sdk_tests/providers/Microsoft.ContainerRegistry/registries/sdkRef";
-
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.SubAssessments.Get(scope, AssessmentName, SubAssessmentName);
-                Assert.NotNull(ret);
+                Assert.Throws<CloudException>(()=> securityCenterClient.SecureScores.Get("unknown"));
             }
         }
         #endregion
 
         #region Validations
-        private static void Validate(IPage<SecuritySubAssessment> ret)
+        private static void ValidateSecureScoreList(IPage<SecureScoreItem> ret)
         {
             Assert.True(ret.IsAny(), "Got empty list");
             foreach (var item in ret)
             {
-                Assert.NotNull(item);
+                ValidateSecureScoreItem(item);
             }
+        }
+
+        private static void ValidateSecureScoreItem(SecureScoreItem item)
+        {
+            Assert.NotNull(item);
+            Assert.NotNull(item.DisplayName);
+            Assert.NotNull(item.Id);
+            Assert.NotNull(item.Type);
+            Assert.NotNull(item.Current);
+            Assert.NotNull(item.Max);
+            Assert.NotNull(item.Weight);
+            Assert.NotNull(item.Percentage);
+            Assert.True(item.Max >= 0);
+            Assert.Equal("Microsoft.Security/secureScores", item.Type);
+            Assert.True(item.Current >= 0.00 && item.Current <= item.Max);
+            Assert.True(item.Weight >= 0);
+            Assert.True(item.Percentage >= 0.00 && item.Percentage <= 1.00);
         }
         #endregion
     }

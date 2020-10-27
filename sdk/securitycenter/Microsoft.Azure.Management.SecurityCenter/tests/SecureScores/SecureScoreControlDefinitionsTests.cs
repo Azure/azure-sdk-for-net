@@ -1,26 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using System.Linq;
-using System.Net;
-using Microsoft.Azure.Management.Security;
+﻿using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
+using System.Net;
 using Xunit;
 
-namespace SecurityCenter.Tests
+namespace Microsoft.Azure.Management.SecurityCenter.Tests.SecureScores
 {
-    public class IotSecuritySolutionAnalyticsTests : TestBase
+    public class SecureScoreControlDefinitionsTests : TestBase
     {
         #region Test setup
-
-        private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
-        private static readonly string SolutionName = "SDK-IotHub-CUS";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
+        #endregion
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
@@ -40,42 +34,52 @@ namespace SecurityCenter.Tests
             return securityCenterClient;
         }
 
-        #endregion
-
         #region Tests
-
         [Fact]
-        public void IotSecuritySolutionAnalytics_Get()
+        public void SecureScoreControlDefinitions_ListAll()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.IotSecuritySolutionAnalytics.Get(ResourceGroupName, SolutionName);
-                Assert.NotNull(ret);
+                Assert.Throws<CloudException>(() => securityCenterClient.SecureScoreControlDefinitions.List());
             }
         }
 
         [Fact]
-        public void IotSecuritySolutionAnalytics_List()
+        public void SecureScoreControlDefinitions_ListBySubscription()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (var context = MockContext.Start(GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = securityCenterClient.IotSecuritySolutionAnalytics.List(ResourceGroupName, SolutionName);
-                Validate(ret);
+                var ret = securityCenterClient.SecureScoreControlDefinitions.ListBySubscription();
+                ValidateSecureScoreControlDefinitionsList(ret);
             }
         }
 
         #endregion
 
         #region Validations
-        private static void Validate(IoTSecuritySolutionAnalyticsModelList ret)
+        private static void ValidateSecureScoreControlDefinitionsList(IPage<SecureScoreControlDefinitionItem> ret)
         {
-            Assert.True(ret.Value.IsAny());
-            foreach (var item in ret.Value)
+            Assert.True(ret.IsAny(), "Got empty list");
+            foreach (var item in ret)
             {
-                Assert.NotNull(item);
+                ValidateSecureScoreControlItem(item);
             }
+        }
+
+        private static void ValidateSecureScoreControlItem(SecureScoreControlDefinitionItem item)
+        {
+            Assert.NotNull(item);
+            Assert.NotNull(item.DisplayName);
+            Assert.NotNull(item.Id);
+            Assert.NotNull(item.Type);
+            Assert.NotNull(item.AssessmentDefinitions);
+            Assert.NotNull(item.MaxScore);
+            Assert.NotNull(item.Name);
+            Assert.NotNull(item.Source);
+            Assert.Equal("Microsoft.Security/secureScoreControlDefinitions", item.Type);
+            Assert.NotEmpty(item.AssessmentDefinitions);
         }
         #endregion
     }

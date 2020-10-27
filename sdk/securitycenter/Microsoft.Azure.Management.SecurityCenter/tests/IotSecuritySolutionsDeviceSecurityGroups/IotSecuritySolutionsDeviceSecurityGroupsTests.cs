@@ -16,9 +16,9 @@ namespace SecurityCenter.Tests
     public class IotSecuritySolutionsDeviceSecurityGroupsTests : TestBase
     {
         #region Test setup
-        private static readonly string SubscriptionId = "075423e9-7d33-4166-8bdf-3920b04e3735";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string IotHubName = "IotHub-CUS";
+        private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
+        private static readonly string IotHubName = "SDK-IotHub-CUS";
         private static readonly string AscLocation = "centralus";
         private static readonly string IotHubResourceId =
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Devices/IotHubs/{IotHubName}";
@@ -73,10 +73,14 @@ namespace SecurityCenter.Tests
         {
             string IotHubResourceId =
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Devices/IotHubs/{IotHubName}";
+            string DeviceSecurityGroupNameToDelete = DeviceSecurityGroupName + "-del";
+
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.DeviceSecurityGroups.Delete(IotHubResourceId, DeviceSecurityGroupName);
+                var ret = securityCenterClient.DeviceSecurityGroups.CreateOrUpdate(IotHubResourceId, DeviceSecurityGroupNameToDelete, new DeviceSecurityGroup());
+                Assert.NotNull(ret);
+                securityCenterClient.DeviceSecurityGroups.Delete(IotHubResourceId, DeviceSecurityGroupNameToDelete);
             }
         }
 

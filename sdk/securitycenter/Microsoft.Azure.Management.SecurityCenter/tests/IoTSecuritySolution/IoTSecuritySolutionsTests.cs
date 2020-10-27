@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
@@ -17,11 +16,14 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static readonly string SubscriptionId = "075423e9-7d33-4166-8bdf-3920b04e3735";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string IotHubName = "IotHub-CUS";
-        private static readonly string SolutionName = "IotHub-CUS";
-        private static readonly string WorkspaceName = "LogAnalytics-CUS";
+        private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
+        private static readonly string IotHubName = "SDK-IotHub-CUS";
+        private static readonly string SolutionName = "SDK-IotHub-CUS";
+        private static readonly string WorkspaceName = "SDK-IotHub-LA-CUS";
+        private static readonly string IotHubNameForDelete = "SDK-IotHub-DEL-CUS";
+        private static readonly string SolutionNameForDelete = "SDK-IotHub-DEL-CUS";
+
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 
@@ -70,7 +72,7 @@ namespace SecurityCenter.Tests
             var udrp = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"v2\"", new[] { SubscriptionId });
 
             IoTSecuritySolutionModel iotSecuritySolutionData = new IoTSecuritySolutionModel(
-                WorkspaceResourceId, $"{SolutionName}-{WorkspaceName}", new[] { IotHubResourceId },
+                $"{SolutionName}-{WorkspaceName}", new[] { IotHubResourceId }, id: WorkspaceResourceId,
                 location: AscLocation, userDefinedResources: udrp);
 
             using (var context = MockContext.Start(this.GetType()))
@@ -84,11 +86,20 @@ namespace SecurityCenter.Tests
         [Fact]
         public void IotSecuritySolution_Delete()
         {
+            var hubResourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Devices/IotHubs/{IotHubNameForDelete}";
+            var udrp = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"v2\"", new[] { SubscriptionId });
+            var iotSecuritySolutionData = new IoTSecuritySolutionModel(
+                $"{SolutionNameForDelete}", new[] { hubResourceId },
+                location: AscLocation, userDefinedResources: udrp);
+
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
+                var ret = securityCenterClient.IotSecuritySolution.CreateOrUpdate(ResourceGroupName, SolutionNameForDelete, iotSecuritySolutionData);
+                ret.Validate();
+
                 var lst = securityCenterClient.IotSecuritySolution.ListByResourceGroup(ResourceGroupName);
-                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionName);
+                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionNameForDelete);
             }
         }
 

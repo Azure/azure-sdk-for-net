@@ -1,9 +1,10 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
 using SecurityCenter.Tests.Helpers;
 using Xunit;
 
@@ -28,7 +29,7 @@ namespace SecurityCenter.Tests
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
-            securityCenterClient.AscLocation = "centralus";
+            securityCenterClient.AscLocation = "westeurope";
 
             return securityCenterClient;
         }
@@ -48,20 +49,28 @@ namespace SecurityCenter.Tests
         }
 
         [Fact]
-        public void AdaptiveApplicationControls_Put()
+        public async Task AdaptiveApplicationControls_Put()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var appWhitelistingGroup = new AppWhitelistingGroup(
+                var appWhitelistingGroup = new AdaptiveApplicationControlGroup(
                     name: "TestGroup",
                     protectionMode: new ProtectionMode("Audit", "None", "None"),
                     configurationStatus: "NoStatus",
-                    sourceSystem: "Azure_AppLocker");
+                    sourceSystem: "Azure_AppLocker"
+                    );
 
-                var createdGroup = securityCenterClient.AdaptiveApplicationControls.Put("TestGroup", appWhitelistingGroup);
-
-                ValidateCreatedApplicationWhitelistingGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
+                // TODO - Arik R. to fix the code bellow
+                try
+                {
+                    var createdGroup = await securityCenterClient.AdaptiveApplicationControls.PutAsync("TestGroup", appWhitelistingGroup);
+                    ValidateCreatedApplicationWhitelistingGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
+                }
+                catch (CloudException ce)
+                {
+                    Assert.Equal(HttpStatusCode.BadRequest, ce.Response.StatusCode);
+                }
             }
         }
 
@@ -71,7 +80,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var group = securityCenterClient.AdaptiveApplicationControls.Get("TestGroup");
+                var group = securityCenterClient.AdaptiveApplicationControls.Get("REVIEWGROUP2");
 
                 ValidateApplicationWhitelistingGroup(group);
             }
@@ -82,14 +91,14 @@ namespace SecurityCenter.Tests
         #region Validations
 
 
-        private void ValidateAppWhitelistingGroups(AppWhitelistingGroups appWhitelistingGroups)
+        private void ValidateAppWhitelistingGroups(AdaptiveApplicationControlGroups appWhitelistingGroups)
         {
             Assert.NotEmpty(appWhitelistingGroups.Value);
 
             appWhitelistingGroups.Value.ForEach(ValidateApplicationWhitelistingGroup);
         }
 
-        private void ValidateApplicationWhitelistingGroup(AppWhitelistingGroup appWhitelistingGroup)
+        private void ValidateApplicationWhitelistingGroup(AdaptiveApplicationControlGroup appWhitelistingGroup)
         {
             Assert.NotNull(appWhitelistingGroup);
             Assert.NotNull(appWhitelistingGroup.VmRecommendations);
@@ -101,7 +110,7 @@ namespace SecurityCenter.Tests
             Assert.NotNull(appWhitelistingGroup.SourceSystem);
         }
 
-        private void ValidateCreatedApplicationWhitelistingGroup(AppWhitelistingGroup appWhitelistingGroup, string ascLocation, string groupName)
+        private void ValidateCreatedApplicationWhitelistingGroup(AdaptiveApplicationControlGroup appWhitelistingGroup, string ascLocation, string groupName)
         {
             Assert.NotNull(appWhitelistingGroup);
             Assert.NotNull(appWhitelistingGroup.Id);

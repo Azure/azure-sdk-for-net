@@ -16,9 +16,8 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "7e5c35c3-c2d0-43c7-ab12-2528b6b8dada"; // Rome-DataProtection-StorageAnalytics-Test1
-        private static string RgName = "NetSdkTests";
-        private static string StorageAccountName = "netsdkstorage";
+        private static string RgName = "DefaultResourceGroup-CUS";
+        private static string StorageAccountName = "samplestorageaccount2";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -50,7 +49,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var resourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";
+                var resourceId = $"/subscriptions/{securityCenterClient.SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";
                 var setting = securityCenterClient.AdvancedThreatProtection.Get(resourceId);
                 ValidateAdvancedThreatProtectionSetting(setting);
             }
@@ -62,7 +61,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var resourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";
+                var resourceId = $"/subscriptions/{securityCenterClient.SubscriptionId}/resourceGroups/{RgName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}";
                 var setting = securityCenterClient.AdvancedThreatProtection.Create(resourceId, isEnabled: true);
                 ValidateAdvancedThreatProtectionSetting(setting);
             }

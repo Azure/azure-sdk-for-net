@@ -17,9 +17,10 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static readonly string AggregatedRecommendationName = "IoT_OpenPorts";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string SolutionName = "IotHub-CUS";
+        private static readonly string AggregatedRecommendationName = "IoT_Baseline";
+        private static readonly string ResourceGroupName = "IoT-Solution-DemoEnv";
+        private static readonly string SolutionName = "rtogm-hub-solution";
+        private static readonly string SubscriptionId = "b77ec8a9-04ed-48d2-a87a-e5887b978ba6";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 
@@ -37,6 +38,7 @@ namespace SecurityCenter.Tests
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
             securityCenterClient.AscLocation = AscLocation;
+            securityCenterClient.SubscriptionId = SubscriptionId;
 
             return securityCenterClient;
         }
