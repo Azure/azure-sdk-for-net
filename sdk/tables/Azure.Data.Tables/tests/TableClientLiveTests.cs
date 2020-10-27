@@ -1012,30 +1012,38 @@ namespace Azure.Data.Tables.Tests
         {
             const string updatedString = "the string was updated!";
 
-            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
-            // Add just the first two entities
+            // Add just the first three entities
             await client.AddEntityAsync(entitiesToCreate[0]).ConfigureAwait(false);
             await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
+            await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
             TableTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
-            // Add all but the first two entities
-            batch.AddEntities(entitiesToCreate.Skip(2));
-
             // Add a Merge operation to the entity we are adding.
             var updatedEntity = entitiesToCreate[0];
             updatedEntity.StringTypeProperty = updatedString;
-
             batch.UpdateEntity(updatedEntity, ETag.All, TableUpdateMode.Merge);
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
             batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
 
+            // Add an Upsert operation to replace the entity with an updated value.
+            entitiesToCreate[2].StringTypeProperty = updatedString;
+            batch.UpsertEntity(entitiesToCreate[2], TableUpdateMode.Replace);
+
+            // Add an Upsert operation to add an entity.
+            batch.UpsertEntity(entitiesToCreate[3], TableUpdateMode.Replace);
+
+            // Add the last entity.
+            batch.AddEntity(entitiesToCreate.Last());
+
+            // Submit the batch.
             TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
@@ -1050,7 +1058,8 @@ namespace Azure.Data.Tables.Tests
             var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
-            Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
         }
 
         /// <summary>

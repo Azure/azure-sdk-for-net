@@ -120,11 +120,45 @@ namespace Azure.Data.Tables
                 entity.RowKey,
                 null,
                 null,
-                ifMatch.ToString(),
+                ifMatch: ifMatch.ToString(),
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
 
             AddMessage(entity, message, RequestType.Update);
+        }
+
+        /// <summary>
+        /// Replaces the specified table entity of type <typeparamref name="T"/>, if it exists. Creates the entity if it does not exist.
+        /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
+        /// <param name="entity">The entity to upsert.</param>
+        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
+        public virtual void UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
+        {
+            var message = mode switch
+            {
+                TableUpdateMode.Replace => _batchOperations.CreateUpdateEntityRequest(
+                    _table,
+                    entity.PartitionKey,
+                    entity.RowKey,
+                    null,
+                    null,
+                    ifMatch: null,
+                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                    queryOptions: new QueryOptions() { Format = _format }),
+                TableUpdateMode.Merge => _batchOperations.CreateMergeEntityRequest(
+                    _table,
+                    entity.PartitionKey,
+                    entity.RowKey,
+                    null,
+                    null,
+                    ifMatch: null,
+                    entity.ToOdataAnnotatedDictionary(),
+                    new QueryOptions() { Format = _format }),
+                _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
+            };
+
+            AddMessage(entity, message, RequestType.Upsert);
         }
 
         /// <summary>
