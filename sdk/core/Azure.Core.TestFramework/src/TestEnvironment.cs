@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
+using System.ComponentModel;
 
 namespace Azure.Core.TestFramework
 {
@@ -19,13 +20,15 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
+
         private readonly string _prefix;
 
         private TokenCredential _credential;
         private TestRecording _recording;
 
-        internal readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         protected TestEnvironment(string serviceName)
         {

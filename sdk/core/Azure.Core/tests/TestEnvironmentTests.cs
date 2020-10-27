@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
@@ -17,6 +18,8 @@ namespace Azure.Core.Tests
     {
         private string _envFilePath;
 
+        private static readonly bool s_isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -29,20 +32,29 @@ namespace Azure.Core.Tests
             Environment.SetEnvironmentVariable("CORE_CustomSecret", "1");
             Environment.SetEnvironmentVariable("CORE_DefaultSecret", "1");
             Environment.SetEnvironmentVariable("CORE_ConnectionStringWithSecret", "endpoint=1;key=2");
-            _envFilePath = Path.Combine(TestEnvironment.RepositoryRoot, "sdk", "core", "test-resources.json.env");
-            using FileStream stream = File.Create(_envFilePath);
-            Dictionary<string, string> envFile = new Dictionary<string, string>();
-            envFile.Add("CORE_TENANT_ID", "7");
-            var serializer = new JsonObjectSerializer();
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(envFile, typeof(Dictionary<string, string>));
-            bytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
-            stream.Write(bytes, 0, bytes.Length);
+
+            // Env file is only supported on Windows.
+            if (s_isWindows)
+            {
+                _envFilePath = Path.Combine(TestEnvironment.RepositoryRoot, "sdk", "core", "test-resources.json.env");
+                using FileStream stream = File.Create(_envFilePath);
+                Dictionary<string, string> envFile = new Dictionary<string, string>
+            {
+                { "CORE_TENANT_ID", "7" }
+            };
+                byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(envFile, typeof(Dictionary<string, string>));
+                bytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+                stream.Write(bytes, 0, bytes.Length);
+            }
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            File.Delete(_envFilePath);
+            if (_envFilePath != null)
+            {
+                File.Delete(_envFilePath);
+            }
         }
 
         [Theory]
