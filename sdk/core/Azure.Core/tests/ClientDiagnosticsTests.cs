@@ -207,6 +207,8 @@ namespace Azure.Core.Tests
                 { "linkAttribute", "linkAttributeValue" }
             });
 
+            Assert.IsTrue(scope.IsEnabled);
+
             scope.Start();
             scope.Dispose();
 
@@ -237,16 +239,6 @@ namespace Azure.Core.Tests
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-            scope.AddAttribute("Attribute1", "Value1");
-            scope.AddAttribute("Attribute2", 2, i => i.ToString());
-            scope.AddAttribute("Attribute3", 3);
-
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00");
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", new Dictionary<string, string>()
-            {
-                { "linkAttribute", "linkAttributeValue" }
-            });
-
             scope.Start();
             scope.Failed(new Exception());
             scope.Dispose();
@@ -261,6 +253,8 @@ namespace Azure.Core.Tests
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
+
+            Assert.IsFalse(scope.IsEnabled);
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());

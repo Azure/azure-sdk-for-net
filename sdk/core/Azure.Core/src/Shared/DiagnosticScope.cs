@@ -13,7 +13,8 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
-        private static readonly ConcurrentDictionary<string, ActivitySource> _activitySources = new ConcurrentDictionary<string, ActivitySource>();
+        private static readonly ConcurrentDictionary<string, ActivitySource> ActivitySources = new ConcurrentDictionary<string, ActivitySource>();
+
         private readonly DiagnosticActivity? _oldStyleActivity;
 
         private readonly DiagnosticListener _source;
@@ -35,7 +36,7 @@ namespace Azure.Core.Pipeline
             string clientName = ns + "." + name.Substring(0, indexOfDot);
             string methodName = name.Substring(indexOfDot + 1);
 
-            var currentSource = _activitySources.GetOrAdd(clientName, n => new ActivitySource(n));
+            var currentSource = ActivitySources.GetOrAdd(clientName, n => new ActivitySource(n));
             if (currentSource != null)
             {
                 _activityAdapter = new ActivitySourceAdapter(currentSource, methodName);
