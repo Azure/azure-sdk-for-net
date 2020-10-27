@@ -1263,7 +1263,7 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// catch (RequestFailedException ex)
         /// {
-        ///     FatalError($&quot;Failed to decommission model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
+        ///     FatalError($&quot;Failed to decommision model &apos;{sampleModelId}&apos; due to:\n{ex}&quot;);
         /// }
         /// </code>
         /// </example>
