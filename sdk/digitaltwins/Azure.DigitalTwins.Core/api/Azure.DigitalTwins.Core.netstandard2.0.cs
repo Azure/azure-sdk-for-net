@@ -170,7 +170,6 @@ namespace Azure.DigitalTwins.Core
     public partial class GetDigitalTwinsEventRoutesOptions
     {
         public GetDigitalTwinsEventRoutesOptions() { }
-        public int? MaxItemsPerPage { get { throw null; } set { } }
     }
     public partial class GetModelsOptions
     {
