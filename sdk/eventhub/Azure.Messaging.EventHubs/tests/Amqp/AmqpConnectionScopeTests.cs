@@ -21,7 +21,6 @@ using Microsoft.Azure.Amqp.Transport;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -795,7 +794,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockScope
                 .Protected()
                 .Setup<TimeSpan>("CalculateLinkAuthorizationRefreshInterval",
-                    ItExpr.IsAny<DateTime>())
+                    ItExpr.IsAny<DateTime>(),
+                    ItExpr.IsAny<DateTime?>())
                 .Returns(TimeSpan.Zero);
 
             mockScope
@@ -1470,7 +1470,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockScope
                 .Protected()
                 .Setup<TimeSpan>("CalculateLinkAuthorizationRefreshInterval",
-                    ItExpr.IsAny<DateTime>())
+                    ItExpr.IsAny<DateTime>(),
+                    ItExpr.IsAny<DateTime?>())
                 .Returns(TimeSpan.Zero);
 
             mockScope
@@ -1946,6 +1947,26 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.CalculateLinkAuthorizationRefreshInterval" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateLinkAuthorizationRefreshIntervalRespectsTheRefreshBuffer()
+        {
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var expireTime = currentTime.AddHours(1);
+            var buffer = GetAuthorizationRefreshBuffer();
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+            var calculatedExpire = currentTime.Add(calculatedRefresh);
+
+            Assert.That(calculatedExpire, Is.LessThan(expireTime), "The refresh should be account for the buffer and be earlier than expiration.");
+            Assert.That(calculatedExpire, Is.EqualTo(expireTime.Subtract(buffer)).Within(TimeSpan.FromSeconds(2)), "The authorization buffer should have been used for buffering.");
+        }
+
+        /// <summary>
         ///   Gets the active connection for the given scope, using the
         ///   private property accessor.
         /// </summary>
@@ -1977,6 +1998,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(AmqpConnectionScope)
                     .GetProperty("OperationCancellationSource", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty)
                     .GetValue(target);
+
+        /// <summary>
+        ///   Gets the token refresh buffer for the scope, using the
+        ///   private property accessor.
+        /// </summary>
+        ///
+        private static TimeSpan GetAuthorizationRefreshBuffer() =>
+            (TimeSpan)
+                typeof(AmqpConnectionScope)
+                    .GetProperty("AuthorizationRefreshBuffer", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetProperty)
+                    .GetValue(null);
 
         /// <summary>
         ///   Creates a set of dummy settings for testing purposes.
@@ -2081,6 +2113,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
 
+            public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(DateTime expirationTimeUtc,
+                                                                            DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);
+
+            public Task<DateTime> InvokeRequestAuthorizationUsingCbsAsync(CbsTokenProvider tokenProvider,
+                                                                          Uri endpoint,
+                                                                          string audience,
+                                                                          string resource,
+                                                                          string[] requiredClaims,
+                                                                          TimeSpan timeout) => base.RequestAuthorizationUsingCbsAsync(MockConnection.Object, tokenProvider, endpoint, audience, resource, requiredClaims, timeout);
+
             protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
                                                                                  Uri serviceEndpoint,
                                                                                  EventHubsTransportType transportType,
@@ -2089,13 +2131,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                  TimeSpan timeout) => Task.FromResult(MockConnection.Object);
 
             protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan timeout) => Task.CompletedTask;
-
-            public Task<DateTime> InvokeRequestAuthorizationUsingCbsAsync(CbsTokenProvider tokenProvider,
-                                                                          Uri endpoint,
-                                                                          string audience,
-                                                                          string resource,
-                                                                          string[] requiredClaims,
-                                                                          TimeSpan timeout) => base.RequestAuthorizationUsingCbsAsync(MockConnection.Object, tokenProvider, endpoint, audience, resource, requiredClaims, timeout);
         }
     }
 }
