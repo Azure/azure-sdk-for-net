@@ -581,3 +581,19 @@ function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex) {
   } while ($pageToken)
   return $returnedArtifacts
 }
+
+# The sequence of Bom bytes differs by different encoding. 
+# The helper function here is only to strip the utf-8 encoding system as it is used by blob storage list api.
+# Return the original string if not in BOM utf-8 sequence.
+function RemoveBomFromString([string]$bomAwareString) {
+  if ($bomAwareString.length -le 3) {
+      return $bomAwareString
+  }
+  $bomPatternByteArray = [byte[]] (0xef, 0xbb, 0xbf)
+  # The default encoding for powershell is ISO-8859-1, so converting bytes with the encoding.
+  $bomAwareBytes = [Text.Encoding]::GetEncoding(28591).GetBytes($bomAwareString.Substring(0, 3))
+  if (@(Compare-Object $bomPatternByteArray $bomAwareBytes -SyncWindow 0).Length -eq 0) {
+      return $bomAwareString.Substring(3)
+  }
+  return $bomAwareString
+}
