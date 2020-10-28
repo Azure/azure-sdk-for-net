@@ -141,11 +141,11 @@ $verifyDeleteScript = {
     try {
         $group = Get-AzResourceGroup -name $ResourceGroupName
     } catch {
-        if ($Error[0].ToString().Contains("Provided resource group does not exist")) {
+        if ($_.ToString().Contains("Provided resource group does not exist")) {
             Write-Verbose "Resource group '$ResourceGroupName' not found. Continuing..."
             return
         }
-        throw $Error[0]
+        throw $_
     }
 
     if ($group.ProvisioningState -ne "Deleting")
