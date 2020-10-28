@@ -21,12 +21,8 @@ function Get-ChangeLogEntries {
     $changeLogEntry = $null
     foreach ($line in $contents) {
       if ($line -match $RELEASE_TITLE_REGEX) {
-        $changeLogEntry = [pscustomobject]@{ 
-          ReleaseVersion = $matches["version"]
-          ReleaseStatus  = $matches["releaseStatus"]
-          ReleaseTitle   = $line
-          ReleaseContent = @() # Release content without the version title
-        }
+        $changeLogEntry = New-ChangeLogEntry -Version $matches["version"] -Status $matches["releaseStatus"] `
+        -Title $line -Content @()
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
@@ -122,27 +118,64 @@ function Confirm-ChangeLogEntry {
   return $true
 }
 
+function New-ChangeLogEntry {
+  param (
+    [Parameter(Mandatory = $true)]
+    [String]$Version,
+    [Parameter(Mandatory = $true)]
+    [ValidateScript({$_.StartsWith('(') -and $_.EndsWith(')')})]
+    [String]$Status,
+    [String]$Title,
+    [String[]]$Content
+  )
+
+  $newChangeLogEntry = [pscustomobject]@{ 
+    ReleaseVersion = $Version
+    ReleaseStatus  = $Status
+    ReleaseTitle   = If ($Title) { $Title } Else { "## $Version $Status"}
+    ReleaseContent = If ($Content) { $Content } Else { @("") }
+  }
+
+  return $newChangeLogEntry
+}
+
 function Add-ChangeLogEntry {
   param (
     [Parameter(Mandatory = $false)]
-    $ChangeLogEntries,
+    [Hashtable]$ChangeLogEntries,
     [Parameter(Mandatory = $true)]
     [String]$NewEntryVersion,
     [String]$NewEntryReleaseStatus="(Unreleased)",
     [String]$NewEntryContent=""
   )
+
+  if ($ChangeLogEntries.Contains($NewEntryVersion))
+  {
+    LogError "This Changelog already contains this entry. Do you mean to edit the entry?"
+    exit 1
+  }
+
+  $newChangeLogEntry = New-ChangeLogEntry -Version $NewEntryVersion -Status $NewEntryReleaseStatus `
+  -Content $NewEntryContent
+  $ChangeLogEntries.Add($NewEntryVersion,$newChangeLogEntry)
+  return $ChangeLogEntries
 }
 
 function Edit-ChangeLogEntry {
   param (
     [Parameter(Mandatory = $true)]
-    $ChangeLogEntries,
+    [Hashtable]$ChangeLogEntries,
     [Parameter(Mandatory = $true)]
     [string]$VersionToEdit,
     [String]$NewEntryReleaseVersion,
     [String]$NewEntryReleaseStatus,
     [String]$NewEntryReleaseContent
   )
+
+  if ($NewEntryReleaseVersion) { $ChangeLogEntries[$VersionToEdit].ReleaseVersion = $NewEntryReleaseVersion }
+  if ($NewEntryReleaseStatus) {$ChangeLogEntries[$VersionToEdit].ReleaseStatus = $NewEntryReleaseStatus }
+  if ($NewEntryReleaseContent) {$ChangeLogEntries[$VersionToEdit].ReleaseContent = $NewEntryReleaseContent }
+  return $ChangeLogEntries
 }
 
 function Set-ChangeLogContent {
@@ -152,12 +185,26 @@ function Set-ChangeLogContent {
     [Parameter(Mandatory = $true)]
     $ChangeLogEntries
   )
-}
 
-function Set-TestChangeLog($TestVersion, $changeLogFile, $ReleaseEntry) {
-  Set-Content -Path $changeLogFile -Value @"
-# Release History
-## $TestVersion ($(Get-Date -f "yyyy-MM-dd"))
-- $ReleaseEntry
-"@
+  $changeLogContent = @()
+  $changeLogContent += "# Release History"
+  
+  try {
+    [AzureEngSemanticVersion]
+  }
+  catch {
+    . "${PSScriptRoot}\SemVer.ps1."
+  }
+
+  $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
+  foreach ($version in $VersionsSorted) {
+    $changeLogEntry = $ChangeLogEntries[$version]
+    $changeLogContent += $changeLogEntry.ReleaseTitle
+    foreach ($line in $changeLogEntry.ReleaseContent) {
+      $changeLogContent += $line
+    }
+    $changeLogContent += ""
+  }
+
+  Set-Content -Path $ChangeLogLocation -Value $changeLogContent
 }
