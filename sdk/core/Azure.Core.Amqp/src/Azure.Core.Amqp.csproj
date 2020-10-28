@@ -14,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 </Project>
