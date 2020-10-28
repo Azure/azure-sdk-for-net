@@ -22,6 +22,7 @@ namespace Kusto.Tests.ScenarioTests
         [Fact]
         public void OperationsTest()
         {
+            Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
             string executingAssemblyPath = typeof(KustoOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
@@ -200,6 +201,7 @@ namespace Kusto.Tests.ScenarioTests
             }
         }
         
+        
         [Fact]
         public void KustoIotHubTests()
         {
@@ -245,7 +247,6 @@ namespace Kusto.Tests.ScenarioTests
                     testBase.databaseName,
                     testBase.dataFormat);
         
-                //delete Iot hub
                 testBase.client.DataConnections.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.iotHubConnectionName);
                 Assert.Throws<CloudException>(() =>
                 {

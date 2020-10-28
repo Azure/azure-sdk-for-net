@@ -55,6 +55,24 @@ namespace Azure
         public static bool operator !=(Azure.HttpRange left, Azure.HttpRange right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class JsonPatchDocument
+    {
+        public JsonPatchDocument() { }
+        public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument) { }
+        public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument, Azure.Core.Serialization.ObjectSerializer serializer) { }
+        public void AppendAddRaw(string path, string rawJsonValue) { }
+        public void AppendAdd<T>(string path, T value) { }
+        public void AppendCopy(string from, string path) { }
+        public void AppendMove(string from, string path) { }
+        public void AppendRemove(string path) { }
+        public void AppendReplaceRaw(string path, string rawJsonValue) { }
+        public void AppendReplace<T>(string path, T value) { }
+        public void AppendTestRaw(string path, string rawJsonValue) { }
+        public void AppendTest<T>(string path, T value) { }
+        public System.ReadOnlyMemory<byte> ToBytes() { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MatchConditions
     {
         public MatchConditions() { }

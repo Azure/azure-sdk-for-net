@@ -113,24 +113,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.To = "to";
                 await sender.SendMessageAsync(msg);
 
-                var receiver = await client.AcceptNextSessionAsync(
-                    scope.QueueName,
-                    new ServiceBusSessionReceiverOptions
-                    {
-                        ReceiveMode = ReceiveMode.ReceiveAndDelete
-                    });
-                var received = await receiver.ReceiveMessageAsync();
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+                AmqpAnnotatedMessage rawReceived = received.GetRawMessage();
+                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
+                AmqpAnnotatedMessage rawSend = toSend.GetRawMessage();
 
                 // verify that all system set properties have been cleared out
-                Assert.IsNull(toSend.AmqpMessage.Header.DeliveryCount);
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
-                Assert.IsFalse(toSend.AmqpMessage.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsNull(rawSend.Header.DeliveryCount);
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
 
@@ -208,9 +211,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var bodyEnum = ((AmqpDataBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                var bodyEnum = ((AmqpDataMessageBody)received.AmqpMessage.Body).Data.GetEnumerator();
                 int ct = 0;
-                foreach (BinaryData data in ((AmqpDataBody)msg.AmqpMessage.Body).Data)
+                foreach (BinaryData data in ((AmqpDataMessageBody)msg.AmqpMessage.Body).Data)
                 {
                     bodyEnum.MoveNext();
                     var bytes = data.ToBytes().ToArray();

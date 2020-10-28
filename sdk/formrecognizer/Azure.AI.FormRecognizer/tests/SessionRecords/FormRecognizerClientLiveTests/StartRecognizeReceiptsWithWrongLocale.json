@@ -1,0 +1,48 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/receipt/analyze?includeTextDetails=false\u0026locale=not-locale",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-737b7be95cf82045aac782d32e5adb9d-80e295e93282e74a-00",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "307cfc684d40c8c378390ad52e6fc30f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "Sanitized"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "5b50d39d-4351-450f-b96a-c3a4bd9e3c29",
+        "Content-Length": "200",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 15 Oct 2020 23:59:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "422"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "UnsupportedLocale",
+          "innerError": {
+            "requestId": "5b50d39d-4351-450f-b96a-c3a4bd9e3c29"
+          },
+          "message": "Locale unsupported. Supported locales include en-AU, en-CA, en-GB, en-IN and en-US."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "RandomSeed": "1546482383"
+  }
+}
