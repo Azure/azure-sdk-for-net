@@ -202,13 +202,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                 if (Options.RollupSettings != null)
                 {
                     patch.AllUpIdentification = Options.RollupSettings.AlreadyRollupIdentificationValue;
-                    patch.NeedRollup = Options.RollupSettings.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(Options.RollupSettings.RollupType.ToString()) : default;
-                    patch.RollUpMethod = Options.RollupSettings.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(Options.RollupSettings.RollupMethod.ToString()) : default;
+                    patch.NeedRollup = Options.RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(Options.RollupSettings.RollupType.ToString()) : default;
+                    patch.RollUpMethod = Options.RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(Options.RollupSettings.RollupMethod.ToString()) : default;
                     patch.RollUpColumns = Options.RollupSettings.AutoRollupGroupByColumnNames;
                 }
                 if (Options.MissingDataPointFillSettings != null)
                 {
-                    patch.FillMissingPointType = Options.MissingDataPointFillSettings.FillType.HasValue == true ? new DataFeedDetailPatchFillMissingPointType(Options.MissingDataPointFillSettings.FillType.ToString()) : default;
+                    patch.FillMissingPointType = Options.MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(Options.MissingDataPointFillSettings.FillType.ToString()) : default;
                     patch.FillMissingPointValue = Options.MissingDataPointFillSettings.CustomFillValue;
                 }
                 patch.Admins = Options.Administrators;
