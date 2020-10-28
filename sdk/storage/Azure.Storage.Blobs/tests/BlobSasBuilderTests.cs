@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -313,8 +314,8 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        [TestCase("TLXDWCAR")]
-        [TestCase("racwdxlt")]
+        [TestCase("TLXDWMECAR")]
+        [TestCase("racwdxltme")]
         public async Task ContainerPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -389,6 +390,83 @@ namespace Azure.Storage.Blobs.Test
             };
             builder.SetPermissions(BlobAccountSasPermissions.Read | BlobAccountSasPermissions.Write | BlobAccountSasPermissions.Delete);
             return builder;
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
+
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
+
+            // Arrange
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasBuilder BlobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = containerName,
+                PreauthorizedAgentObjectId = preauthorizedAgentGuid
+            };
+            BlobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder BlobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = BlobSasBuilder.ToSasQueryParameters(userDelegationKey, test.Container.AccountName)
+            };
+
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(BlobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            BlobClient blobClient = containerClient.GetBlobClient(GetNewBlobName());
+            await blobClient.UploadAsync(new MemoryStream());
+            await blobClient.ExistsAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task BlobSasBuilder_CorrelationId()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
+
+            // Arrange
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = containerName,
+                CorrelationId = Recording.Random.NewGuid().ToString()
+            };
+
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey, test.Container.AccountName)
+            };
+
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await foreach (BlobItem pathItem in containerClient.GetBlobsAsync())
+            {
+                // Just make sure the call succeeds.
+            }
         }
 
         private string BuildSignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)

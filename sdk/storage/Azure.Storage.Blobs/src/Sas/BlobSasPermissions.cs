@@ -52,6 +52,21 @@ namespace Azure.Storage.Sas
         DeleteBlobVersion = 64,
 
         /// <summary>
+        /// Indicates that List is permitted.
+        /// </summary>
+        List = 128,
+
+        /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 256,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 512,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -98,9 +113,21 @@ namespace Azure.Storage.Blobs
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
             }
+            if ((permissions & BlobSasPermissions.List) == BlobSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
             if ((permissions & BlobSasPermissions.Tag) == BlobSasPermissions.Tag)
             {
                 sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & BlobSasPermissions.Move) == BlobSasPermissions.Move)
+            {
+                sb.Append(Constants.Sas.Permissions.Move);
+            }
+            if ((permissions & BlobSasPermissions.Execute) == BlobSasPermissions.Execute)
+            {
+                sb.Append(Constants.Sas.Permissions.Execute);
             }
             return sb.ToString();
         }

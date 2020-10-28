@@ -330,7 +330,8 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                directoryDepth: _directoryDepth);
             return p;
         }
 
