@@ -276,14 +276,13 @@ namespace Azure.DigitalTwins.Core.Samples
 
                 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
                 // happens under the covers.
-                AsyncPageable<string> asyncPageableResponse = client.QueryAsync("SELECT * FROM digitaltwins");
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
                 // Iterate over the twin instances in the pageable response.
                 // The "await" keyword here is required because new pages will be fetched when necessary,
                 // which involves a request to the service.
-                await foreach (string response in asyncPageableResponse)
+                await foreach (BasicDigitalTwin twin in asyncPageableResponse)
                 {
-                    BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
                     Console.WriteLine($"Found digital twin '{twin.Id}'");
                 }
 
@@ -297,11 +296,11 @@ namespace Azure.DigitalTwins.Core.Samples
                 // the query API. It iterates over the response pages first to access to the query-charge header,
                 // and then the digital twin results within each page.
 
-                AsyncPageable<string> asyncPageableResponseWithCharge = client.QueryAsync("SELECT * FROM digitaltwins");
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
                 int pageNum = 0;
 
                 // The "await" keyword here is required as a call is made when fetching a new page.
-                await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
+                await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.AsPages())
                 {
                     Console.WriteLine($"Page {++pageNum} results:");
 
@@ -313,9 +312,8 @@ namespace Azure.DigitalTwins.Core.Samples
 
                     // Iterate over the twin instances.
                     // The "await" keyword is not required here as the paged response is local.
-                    foreach (string response in page.Values)
+                    foreach (BasicDigitalTwin twin in page.Values)
                     {
-                        BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
                         Console.WriteLine($"Found digital twin '{twin.Id}'");
                     }
                 }
