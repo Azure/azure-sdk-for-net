@@ -72,6 +72,7 @@ function Get-ChangeLogEntryAsString {
   return ChangeLogEntryAsString $changeLogEntry
 }
 
+
 function ChangeLogEntryAsString($changeLogEntry) {
   if (!$changeLogEntry) {
     return "[Missing change log entry]"
@@ -119,6 +120,38 @@ function Confirm-ChangeLogEntry {
     }
   }
   return $true
+}
+
+function Add-ChangeLogEntry {
+  param (
+    [Parameter(Mandatory = $false)]
+    $ChangeLogEntries,
+    [Parameter(Mandatory = $true)]
+    [String]$NewEntryVersion,
+    [String]$NewEntryReleaseStatus="(Unreleased)",
+    [String]$NewEntryContent=""
+  )
+}
+
+function Edit-ChangeLogEntry {
+  param (
+    [Parameter(Mandatory = $true)]
+    $ChangeLogEntries,
+    [Parameter(Mandatory = $true)]
+    [string]$VersionToEdit,
+    [String]$NewEntryReleaseVersion,
+    [String]$NewEntryReleaseStatus,
+    [String]$NewEntryReleaseContent
+  )
+}
+
+function Set-ChangeLogContent {
+  param (
+    [Parameter(Mandatory = $true)]
+    [String]$ChangeLogLocation,
+    [Parameter(Mandatory = $true)]
+    $ChangeLogEntries
+  )
 }
 
 function Set-TestChangeLog($TestVersion, $changeLogFile, $ReleaseEntry) {
