@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
             string extensionPath = "AzureWebJobs:Extensions:Blobs";
             var values = new Dictionary<string, string>
             {
-                { $"{extensionPath}:CentralizedPoisonQueue", "true" },
+                { $"{extensionPath}:MaxDegreeOfParallelism", "2" },
             };
 
             BlobsOptions options = TestHelpers.GetConfiguredOptions<BlobsOptions>(b =>
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
                 b.AddAzureStorageBlobs();
             }, values);
 
-            Assert.True(options.CentralizedPoisonQueue);
+            Assert.AreEqual(2, options.MaxDegreeOfParallelism);
         }
     }
 }

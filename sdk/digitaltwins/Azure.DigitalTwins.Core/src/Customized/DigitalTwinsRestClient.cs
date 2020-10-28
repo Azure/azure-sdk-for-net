@@ -17,7 +17,7 @@ namespace Azure.DigitalTwins.Core
     {
         private const string DateTimeOffsetFormat = "MM/dd/yy H:mm:ss zzz";
 
-        internal HttpMessage CreateAddRequest(string id, Stream twin, CreateDigitalTwinOptions digitalTwinsAddOptions)
+        internal HttpMessage CreateAddRequest(string id, Stream twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -36,7 +36,10 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("TraceState", digitalTwinsAddOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             var content = RequestContent.Create(twin);
@@ -47,7 +50,7 @@ namespace Azure.DigitalTwins.Core
         internal async Task<Response<Stream>> AddAsync(
             string id,
             Stream twin,
-            CreateDigitalTwinOptions digitalTwinsAddOptions = null,
+            CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null,
             CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -85,7 +88,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal Response<Stream> Add(string id, Stream twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
+        internal Response<Stream> Add(string id, Stream twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -192,7 +195,7 @@ namespace Azure.DigitalTwins.Core
             string id,
             string relationshipId,
             Stream relationship,
-            CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null,
+            CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null,
             CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -226,7 +229,7 @@ namespace Azure.DigitalTwins.Core
             string id,
             string relationshipId,
             Stream relationship,
-            CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null,
+            CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null,
             CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -618,7 +621,7 @@ namespace Azure.DigitalTwins.Core
                     string id,
                     string relationshipId,
                     Stream relationship,
-                    CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
+                    CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             HttpMessage message = _pipeline.CreateMessage();
             Request request = message.Request;
@@ -639,7 +642,10 @@ namespace Azure.DigitalTwins.Core
             {
                 request.Headers.Add("TraceState", digitalTwinsAddRelationshipOptions.TraceState);
             }
-            request.Headers.Add("If-None-Match", "*");
+            if (digitalTwinsAddRelationshipOptions?.IfNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
+            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             request.Content = RequestContent.Create(relationship);
@@ -800,9 +806,9 @@ namespace Azure.DigitalTwins.Core
 #pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
-        private object AddAsync(string id, object twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
+        private object AddAsync(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response<object> Add(string id, object twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
+        private Response<object> Add(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response>. Changing to object to allow returning null.
         private object UpdateAsync(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default) => null;
@@ -810,9 +816,9 @@ namespace Azure.DigitalTwins.Core
         private Response Update(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response<object>>. Changing to object to allow returning null.
-        private object AddRelationshipAsync(string id, string relationshipId, object relationship = null, CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
+        private object AddRelationshipAsync(string id, string relationshipId, object relationship = null, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private Response<object> AddRelationship(string id, string relationshipId, object relationship = null, CreateRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
+        private Response<object> AddRelationship(string id, string relationshipId, object relationship = null, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
         // Original return type is Task<Response>. Changing to object to allow returning null.
         private Task<Response> UpdateRelationshipAsync(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
@@ -834,7 +840,7 @@ namespace Azure.DigitalTwins.Core
 
         private Response SendComponentTelemetry(string id, string componentPath, string dtId, object telemetry, string dtTimestamp = null, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions = null, CancellationToken cancellationToken = default) => null;
 
-        private HttpMessage CreateAddRequest(string id, object twin, CreateDigitalTwinOptions digitalTwinsAddOptions = null) => null;
+        private HttpMessage CreateAddRequest(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions = null) => null;
 
 #pragma warning restore CA1801, IDE0051, IDE0060 // Remove unused parameter
 

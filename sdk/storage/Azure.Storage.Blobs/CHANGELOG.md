@@ -4,6 +4,8 @@
 - Fixed bug where BlobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added seekability to BaseBlobClient.OpenRead().
 - Added additional info to exception messages.
+- Fixed bug where Blobs SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added ability to set Position on streams created with BlobBaseClient.OpenRead().
 - Added CanGenerateSasUri property, GenerateSasUri() to BlobBaseClient, BlobClient, BlockBlobClient, AppendBlobClient, PageBlobClient and BlobContainerClient.
 - Added CanGenerateSasUri property, GenerateSasUri() to BlobServiceClient.
 - Deprecated proeprty BlobSasBuilder.Version and when generating SAS will always use the latest storage SAS version of the Storage service version supported.

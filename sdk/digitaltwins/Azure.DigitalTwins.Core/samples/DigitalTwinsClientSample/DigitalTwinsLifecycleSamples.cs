@@ -10,7 +10,6 @@ using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -176,7 +175,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     Console.WriteLine($"Retrieved model '{model.Id}', " +
                         $"display name '{model.DisplayName["en"]}', " +
-                        $"upload time '{model.UploadTime}', " +
+                        $"uploaded on '{model.UploadedOn}', " +
                         $"and decommissioned '{model.Decommissioned}'");
                 }
 
@@ -254,7 +253,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twin.Value);
-                    Response<BasicDigitalTwin> response = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(twin.Key, basicDigitalTwin);
+                    Response<BasicDigitalTwin> response = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(twin.Key, basicDigitalTwin);
 
                     Console.WriteLine($"Created digital twin '{twin.Key}'.");
                     Console.WriteLine($"\tBody: {JsonSerializer.Serialize(response?.Value)}");
@@ -352,7 +351,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     try
                     {
-                        Response<BasicRelationship> createRelationshipResponse = await client.CreateRelationshipAsync<BasicRelationship>(
+                        Response<BasicRelationship> createRelationshipResponse = await client.CreateOrReplaceRelationshipAsync<BasicRelationship>(
                             relationship.SourceId,
                             relationship.Id,
                             relationship);
@@ -405,7 +404,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
                 var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
-                await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+                await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
                 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 
                 #endregion Snippet:DigitalTwinsSampleCreateEventRoute

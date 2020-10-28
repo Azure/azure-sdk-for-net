@@ -158,6 +158,25 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// the AAD Object ID of a user authorized by the owner of the
+        /// User Delegation Key to perform the action granted by the SAS.
+        /// The Azure Storage service will ensure that the owner of the
+        /// user delegation key has the required permissions before granting access.
+        /// No additional permission check for the user specified in this value will be performed.
+        /// This is only used with generating User Delegation SAS.
+        /// </summary>
+        public string PreauthorizedAgentObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. Beginning in version 2020-02-10, this value will be used for
+        /// to correlate the storage audit logs with the audit logs used by the
+        /// principal generating and distributing SAS. This is only used for
+        /// User Delegation SAS.
+        /// </summary>
+        public string CorrelationId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -396,9 +415,9 @@ namespace Azure.Storage.Sas
                 signedExpiry,
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
-                null, // PreauthorizedAgentObjectId
-                null, // AgentObjectId
-                null, // CorrelationId
+                PreauthorizedAgentObjectId,
+                null, // AgentObjectId - enabled only in HNS accounts
+                CorrelationId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
@@ -434,7 +453,9 @@ namespace Azure.Storage.Sas
                 contentDisposition: ContentDisposition,
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
-                contentType: ContentType);
+                contentType: ContentType,
+                authorizedAadObjectId: PreauthorizedAgentObjectId,
+                correlationId: CorrelationId);
             return p;
         }
 

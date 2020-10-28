@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using Azure.DigitalTwins.Samples;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 
@@ -58,7 +57,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Metadata = { ModelId = sampleBuildingModelId }
             };
 
-            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>("buildingTwinId", buildingDigitalTwin);
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>("buildingTwinId", buildingDigitalTwin);
             Console.WriteLine($"Created twin '{createDigitalTwinResponse.Value.Id}'.");
 
             // Create a floor digital.
@@ -68,7 +67,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Metadata = { ModelId = sampleFloorModelId }
             };
 
-            Response<BasicDigitalTwin> createFloorDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>("floorTwinId", floorDigitalTwin);
+            Response<BasicDigitalTwin> createFloorDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>("floorTwinId", floorDigitalTwin);
             Console.WriteLine($"Created twin '{createFloorDigitalTwinResponse.Value.Id}'.");
 
             // Create a relationship between building and floor using the BasicRelationship serialization helper.
@@ -81,7 +80,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 SourceId = "buildingTwinId",
                 TargetId = "floorTwinId",
                 Name = "contains",
-                CustomProperties =
+                Properties =
                 {
                     { "Prop1", "Prop1 value" },
                     { "Prop2", 6 }
@@ -89,7 +88,7 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
-                .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+                .CreateOrReplaceRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
             Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
                 $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 
@@ -106,8 +105,8 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
                 Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-                    $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+                    $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+                    $"Prop2: {basicRelationship.Properties["Prop2"]}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetBasicRelationship
@@ -130,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Samples
             };
 
             Response<CustomRelationship> createCustomRelationshipResponse = await client
-                .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+                .CreateOrReplaceRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
             Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
                 $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 
@@ -160,8 +159,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                 Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
                     $"target {relationship.TargetId}.\n\t" +
-                    $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {relationship.CustomProperties["Prop2"]}");
+                    $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+                    $"Prop2: {relationship.Properties["Prop2"]}");
             }
 
             #endregion Snippet:DigitalTwinsSampleGetAllRelationships

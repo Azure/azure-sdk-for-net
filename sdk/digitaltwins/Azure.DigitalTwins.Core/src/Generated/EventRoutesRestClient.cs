@@ -52,14 +52,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/eventroutes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesListOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
-            }
-            if (eventRoutesListOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
-            }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {
                 request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);
@@ -129,14 +121,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesGetByIdOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", eventRoutesGetByIdOptions.TraceParent);
-            }
-            if (eventRoutesGetByIdOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", eventRoutesGetByIdOptions.TraceState);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -209,7 +193,7 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
-        internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateEventRouteOptions eventRoutesAddOptions)
+        internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -220,14 +204,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesAddOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", eventRoutesAddOptions.TraceParent);
-            }
-            if (eventRoutesAddOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", eventRoutesAddOptions.TraceState);
-            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (eventRoute != null)
@@ -254,7 +230,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -287,7 +263,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -316,14 +292,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesDeleteOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", eventRoutesDeleteOptions.TraceParent);
-            }
-            if (eventRoutesDeleteOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", eventRoutesDeleteOptions.TraceState);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -395,14 +363,6 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (eventRoutesListOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", eventRoutesListOptions.TraceParent);
-            }
-            if (eventRoutesListOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", eventRoutesListOptions.TraceState);
-            }
             if (eventRoutesListOptions?.MaxItemsPerPage != null)
             {
                 request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);

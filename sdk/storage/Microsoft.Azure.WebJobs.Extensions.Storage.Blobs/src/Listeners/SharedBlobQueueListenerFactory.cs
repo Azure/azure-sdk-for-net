@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.Host.Queues;
 
 namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
@@ -26,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
         private readonly SharedQueueWatcher _sharedQueueWatcher;
         private readonly QueueClient _hostBlobTriggerQueue;
-        private readonly QueuesOptions _queueOptions;
+        private readonly BlobsOptions _blobsOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly IBlobWrittenWatcher _blobWrittenWatcher;
         private readonly FunctionDescriptor _functionDescriptor;
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             QueueServiceClient hostQueueServiceClient,
             SharedQueueWatcher sharedQueueWatcher,
             QueueClient hostBlobTriggerQueue,
-            QueuesOptions queueOptions,
+            BlobsOptions blobsOptions,
             IWebJobsExceptionHandler exceptionHandler,
             ILoggerFactory loggerFactory,
             IBlobWrittenWatcher blobWrittenWatcher,
@@ -46,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
             _hostQueueServiceClient = hostQueueServiceClient ?? throw new ArgumentNullException(nameof(hostQueueServiceClient));
             _sharedQueueWatcher = sharedQueueWatcher ?? throw new ArgumentNullException(nameof(sharedQueueWatcher));
             _hostBlobTriggerQueue = hostBlobTriggerQueue ?? throw new ArgumentNullException(nameof(hostBlobTriggerQueue));
-            _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
+            _blobsOptions = blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _loggerFactory = loggerFactory;
             _blobWrittenWatcher = blobWrittenWatcher ?? throw new ArgumentNullException(nameof(blobWrittenWatcher));
@@ -68,12 +67,30 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
 
             // This special queue bypasses the QueueProcessorFactory - we don't want people to override this.
             // So we define our own custom queue processor factory for this listener
-           var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, _queueOptions);
+            var queuesOptions = BlobsOptionsToQueuesOptions(_blobsOptions);
+            var queueProcessor = new SharedBlobQueueProcessor(triggerExecutor, _hostBlobTriggerQueue, defaultPoisonQueue, _loggerFactory, queuesOptions);
             QueueListener.RegisterSharedWatcherWithQueueProcessor(queueProcessor, _sharedQueueWatcher);
             IListener listener = new QueueListener(_hostBlobTriggerQueue, defaultPoisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _sharedQueueWatcher, _queueOptions, queueProcessor, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
+                _sharedQueueWatcher, queuesOptions, queueProcessor, _functionDescriptor, functionId: SharedBlobQueueListenerFunctionId);
 
             return new SharedBlobQueueListener(listener, triggerExecutor);
+        }
+
+        internal static QueuesOptions BlobsOptionsToQueuesOptions(BlobsOptions blobsOptions)
+        {
+            // The maximum parallelism of QueueListener is BatchSize + NewBatchThreshold when configuring queue options. I.e. extension will keep requesting new batches until number
+            // of tasks that are still processing messages is below NewBatchThreshold.
+
+            // Split MaxDegreeOfParallelism between BatchSize and NewBatchThreshold. Cap at MaxBatchSize to not exceed the limit and make sure there's at least 1 message pulled
+            // if MaxDegreeOfParallelism is 1.
+            int batchSize = Math.Min(QueuesOptions.MaxBatchSize, blobsOptions.MaxDegreeOfParallelism / 2 + 1);
+            int newBatchThreshold = blobsOptions.MaxDegreeOfParallelism - batchSize;
+
+            return new QueuesOptions()
+            {
+                BatchSize = batchSize,
+                NewBatchThreshold = newBatchThreshold,
+            };
         }
 
         /// <summary>

@@ -1507,6 +1507,52 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        // lower position within _buffer
+        [TestCase(400)]
+        // higher positiuon within _buffer
+        [TestCase(500)]
+        // lower position below _buffer
+        [TestCase(250)]
+        // higher position above _buffer
+        [TestCase(550)]
+        public async Task OpenReadAsync_SetPosition(long position)
+        {
+            int size = Constants.KB;
+            int initalPosition = 450;
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size -  position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            BlobOpenReadOptions options = new BlobOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = 128
+            };
+
+            // Act
+            Stream openReadStream = await blob.OpenReadAsync(options: options).ConfigureAwait(false);
+            int readbytes = initalPosition;
+            while (readbytes > 0)
+            {
+                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
+            }
+
+            openReadStream.Position = position;
+
+            using MemoryStream outputStream = new MemoryStream();
+            await openReadStream.CopyToAsync(outputStream);
+
+            // Assert
+            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

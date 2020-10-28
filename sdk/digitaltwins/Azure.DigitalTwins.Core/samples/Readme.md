@@ -70,7 +70,7 @@ await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
-        $"upload time '{model.UploadTime}', " +
+        $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }
 ```
@@ -131,7 +131,7 @@ var basicTwin = new BasicDigitalTwin
     Id = basicDtId,
     // model Id of digital twin
     Metadata = { ModelId = modelId },
-    CustomProperties =
+    Contents =
     {
         // digital twin properties
         { "Prop1", "Value1" },
@@ -139,10 +139,10 @@ var basicTwin = new BasicDigitalTwin
         // component
         {
             "Component1",
-            new ModelProperties
+            new BasicDigitalTwinComponent
             {
                 // component properties
-                CustomProperties =
+                Contents =
                 {
                     { "ComponentProp1", "Component value 1" },
                     { "ComponentProp2", 123 },
@@ -152,7 +152,7 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
 Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -171,9 +171,9 @@ var customTwin = new CustomDigitalTwin
     {
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
-    }
+    },
 };
-Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
 Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -190,14 +190,15 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+    string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
     IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
-        $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+        $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
+        $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
+        $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
 ```
@@ -212,7 +213,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
     $"ETag: {customDt.ETag}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
     $"Prop2: {customDt.Prop2}\n\t" +
-    $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
+    $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
     $"ComponentProp2: {customDt.Component1.ComponentProp2}");
 ```
 
@@ -315,7 +316,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     SourceId = "buildingTwinId",
     TargetId = "floorTwinId",
     Name = "contains",
-    CustomProperties =
+    Properties =
     {
         { "Prop1", "Prop1 value" },
         { "Prop2", 6 }
@@ -323,7 +324,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
 };
 
 Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
-    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
     $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
@@ -344,7 +345,7 @@ var floorBuildingRelationshipPayload = new CustomRelationship
 };
 
 Response<CustomRelationship> createCustomRelationshipResponse = await client
-    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
     $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
@@ -360,8 +361,8 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 {
     BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-        $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+        $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicRelationship.Properties["Prop2"]}");
 }
 ```
 
@@ -387,8 +388,8 @@ await foreach (var relationshipJson in relationships)
     BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
-        $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {relationship.CustomProperties["Prop2"]}");
+        $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {relationship.Properties["Prop2"]}");
 }
 ```
 
@@ -422,7 +423,7 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
 var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
-await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 ```
 
