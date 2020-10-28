@@ -317,7 +317,7 @@ namespace Azure.Storage
         public override long Position
         {
             get => _position;
-            set => throw new NotSupportedException();
+            set => Seek(value, SeekOrigin.Begin);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
