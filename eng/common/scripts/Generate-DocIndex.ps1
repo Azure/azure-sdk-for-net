@@ -6,6 +6,7 @@ Param (
     $DocGenDir
 )
 . (Join-Path $PSScriptRoot common.ps1)
+$GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
 
 # Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
 # the function will return the csv metadata back as part of response.
