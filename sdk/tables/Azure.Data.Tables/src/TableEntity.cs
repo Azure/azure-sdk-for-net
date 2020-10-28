@@ -259,14 +259,14 @@ namespace Azure.Data.Tables
                     },
                     double _ => newValue switch
                     {
-                        // if we already had a double value, preserve it as double even if neValue was an int.
+                        // if we already had a double value, preserve it as double even if newValue was an int.
                         // example: entity["someDoubleValue"] = 5;
                         int newIntValue => (double)newIntValue,
                         _ => null
                     },
                     long _ => newValue switch
                     {
-                        // if we already had a long value, preserve it as long even if neValue was an int.
+                        // if we already had a long value, preserve it as long even if newValue was an int.
                         // example: entity["someLongValue"] = 5;
                         int newIntValue => (long)newIntValue,
                         _ => null

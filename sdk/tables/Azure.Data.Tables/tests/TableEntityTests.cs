@@ -198,14 +198,17 @@ namespace Azure.Tables.Tests
             // Try to change the value to a double
             entity["IntToDouble"] = 1.1;
             Assert.That(entity["IntToDouble"] is double);
+            Assert.That(entity["IntToDouble"], Is.EqualTo(1.1));
 
             // Change to a double compatible int
             entity["IntToDouble"] = 0;
             Assert.That(entity["IntToDouble"] is double);
+            Assert.That(entity["IntToDouble"], Is.EqualTo(0));
 
             // Change to a double compatible int
             entity["IntToDouble"] = 1;
             Assert.That(entity["IntToDouble"] is double);
+            Assert.That(entity["IntToDouble"], Is.EqualTo(1));
 
             // Validate invalid conversions
             Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = "fail");
@@ -217,14 +220,17 @@ namespace Azure.Tables.Tests
             // Initialize to an int.
             entity["IntToLong"] = 1;
             Assert.That(entity["IntToLong"] is int);
+            Assert.That(entity["IntToLong"], Is.EqualTo(1));
 
             // Change to a long
             entity["IntToLong"] = 5L;
             Assert.That(entity["IntToLong"] is long);
+            Assert.That(entity["IntToLong"], Is.EqualTo(5L));
 
             // Change to a long compatible int
             entity["IntToLong"] = 0;
             Assert.That(entity["IntToLong"] is long);
+            Assert.That(entity["IntToLong"], Is.EqualTo(0));
 
             // Validate invalid conversions
             Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = "fail");
