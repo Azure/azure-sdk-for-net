@@ -9,7 +9,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary>
     /// Contain metadata about changes on properties on a digital twin or component.
     /// </summary>
-    public class BasicDigitalTwinPropertyMetadata
+    public class DigitalTwinPropertyMetadata
     {
         /// <summary>
         /// The date and time the property was last updated.
