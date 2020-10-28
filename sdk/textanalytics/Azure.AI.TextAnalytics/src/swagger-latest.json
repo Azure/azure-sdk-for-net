@@ -702,18 +702,6 @@
               "items": {
                 "$ref": "#/definitions/SentimentTask"
               }
-            },
-            "customClassificationTasks": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomClassificationTask"
-              }
-            },
-            "customEntityRecognitionTasks": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomEntitiesTask"
-              }
             }
           },
           "type": "object"
@@ -836,18 +824,6 @@
         }
       }
     },
-    "TextAnalyticsTask": {
-      "type": "object",
-      "required": [
-        "enable"
-      ],
-      "properties": {
-        "enable": {
-          "default": false,
-          "type": "boolean"
-        }
-      }
-    },
     "TextAnalyticsWarning": {
       "type": "object",
       "required": [
@@ -878,60 +854,46 @@
       }
     },
     "PiiTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
+      "properties": {
+        "parameters": {
           "properties": {
-            "parameters": {
-              "properties": {
-                "domain": {
-                  "default": "none",
-                  "enum": [
-                    "phi",
-                    "none"
-                  ],
-                  "type": "string"
-                },
-                "model-version": {
-                  "default": "latest",
-                  "type": "string"
-                },
-                "stringIndexType": {
-                  "$ref": "#/definitions/StringIndexType"
-                }
-              },
-              "type": "object"
+            "domain": {
+              "default": "none",
+              "enum": [
+                "phi",
+                "none"
+              ],
+              "type": "string"
+            },
+            "model-version": {
+              "default": "latest",
+              "type": "string"
+            },
+            "stringIndexType": {
+              "$ref": "#/definitions/StringIndexType"
             }
           },
           "type": "object"
         }
-      ]
+      },
+      "type": "object"
     },
     "EntitiesTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
+      "properties": {
+        "parameters": {
           "properties": {
-            "parameters": {
-              "properties": {
-                "model-version": {
-                  "default": "latest",
-                  "type": "string"
-                },
-                "stringIndexType": {
-                  "$ref": "#/definitions/StringIndexType"
-                }
-              },
-              "type": "object"
+            "model-version": {
+              "default": "latest",
+              "type": "string"
+            },
+            "stringIndexType": {
+              "$ref": "#/definitions/StringIndexType"
             }
           },
           "type": "object"
         }
-      ]
+      },
+      "type": "object"
     },
     "InnerError": {
       "type": "object",
@@ -1028,201 +990,6 @@
         }
       ]
     },
-    "CustomClassification": {
-      "properties": {
-        "confidenceScore": {
-          "example": 0.87,
-          "format": "double",
-          "type": "number"
-        },
-        "name": {
-          "example": "hotel booking",
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "confidenceScore"
-      ],
-      "type": "object"
-    },
-    "CustomClassificationResult": {
-      "properties": {
-        "documents": {
-          "description": "Response by document",
-          "items": {
-            "$ref": "#/definitions/CustomClassificationDocument"
-          },
-          "type": "array"
-        },
-        "errors": {
-          "description": "Errors by document id.",
-          "items": {
-            "$ref": "#/definitions/DocumentError"
-          },
-          "type": "array"
-        },
-        "statistics": {
-          "$ref": "#/definitions/RequestStatistics"
-        }
-      },
-      "required": [
-        "documents",
-        "errors"
-      ],
-      "type": "object"
-    },
-    "CustomClassificationTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
-          "properties": {
-            "parameters": {
-              "properties": {
-                "appId": {
-                  "type": "string"
-                },
-                "slotName": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "appId",
-                "slotName"
-              ],
-              "type": "object"
-            }
-          },
-          "required": [
-            "parameters"
-          ],
-          "type": "object"
-        }
-      ]
-    },
-    "CustomClassificationDocument": {
-      "type": "object",
-      "required": [
-        "id",
-        "classifications"
-      ],
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "classifications": {
-          "items": {
-            "$ref": "#/definitions/CustomClassification"
-          },
-          "type": "array"
-        }
-      }
-    },
-    "CustomEntitiesDocument": {
-      "type": "object",
-      "required": [
-        "id",
-        "entities"
-      ],
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "entities": {
-          "items": {
-            "$ref": "#/definitions/CustomEntity"
-          },
-          "type": "array"
-        }
-      }
-    },
-    "CustomEntitiesResult": {
-      "properties": {
-        "documents": {
-          "description": "Response by document",
-          "items": {
-            "$ref": "#/definitions/CustomEntitiesDocument"
-          },
-          "type": "array"
-        },
-        "errors": {
-          "description": "Errors by document id.",
-          "items": {
-            "$ref": "#/definitions/DocumentError"
-          },
-          "type": "array"
-        },
-        "statistics": {
-          "$ref": "#/definitions/RequestStatistics"
-        }
-      },
-      "required": [
-        "documents",
-        "errors"
-      ],
-      "type": "object"
-    },
-    "CustomEntitiesTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
-          "properties": {
-            "parameters": {
-              "properties": {
-                "appId": {
-                  "type": "string"
-                },
-                "slotName": {
-                  "type": "string"
-                },
-                "stringIndexType": {
-                  "$ref": "#/definitions/StringIndexType"
-                }
-              },
-              "required": [
-                "appId",
-                "slotName"
-              ],
-              "type": "object"
-            }
-          },
-          "required": [
-            "parameters"
-          ],
-          "type": "object"
-        }
-      ]
-    },
-    "CustomEntity": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Entity"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "children": {
-              "example": [
-                {
-                  "category": "city",
-                  "confidenceScore": 0.78,
-                  "length": 3,
-                  "offset": 5
-                }
-              ],
-              "items": {
-                "$ref": "#/definitions/CustomEntity"
-              },
-              "type": "array"
-            }
-          }
-        }
-      ]
-    },
     "SentimentResponse": {
       "type": "object",
       "required": [
@@ -1255,32 +1022,25 @@
       }
     },
     "SentimentTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
+      "properties": {
+        "parameters": {
           "properties": {
-            "parameters": {
-              "properties": {
-                "model-version": {
-                  "default": "latest",
-                  "type": "string"
-                },
-                "opinionMining": {
-                  "default": false,
-                  "type": "boolean"
-                },
-                "stringIndexType": {
-                  "$ref": "#/definitions/StringIndexType"
-                }
-              },
-              "type": "object"
+            "model-version": {
+              "default": "latest",
+              "type": "string"
+            },
+            "opinionMining": {
+              "default": false,
+              "type": "boolean"
+            },
+            "stringIndexType": {
+              "$ref": "#/definitions/StringIndexType"
             }
           },
           "type": "object"
         }
-      ]
+      },
+      "type": "object"
     },
     "TaskState": {
       "properties": {
@@ -1424,44 +1184,6 @@
                     "properties": {
                       "results": {
                         "$ref": "#/definitions/SentimentResponse"
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "customClassificationTasks": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/TaskState"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "results": {
-                        "$ref": "#/definitions/CustomClassificationResult"
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "customEntityRecognitionTasks": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/TaskState"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "results": {
-                        "$ref": "#/definitions/CustomEntitiesResult"
                       }
                     }
                   }
@@ -2011,28 +1733,21 @@
       }
     },
     "EntityLinkingTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
+      "properties": {
+        "parameters": {
           "properties": {
-            "parameters": {
-              "properties": {
-                "model-version": {
-                  "default": "latest",
-                  "type": "string"
-                },
-                "stringIndexType": {
-                  "$ref": "#/definitions/StringIndexType"
-                }
-              },
-              "type": "object"
+            "model-version": {
+              "default": "latest",
+              "type": "string"
+            },
+            "stringIndexType": {
+              "$ref": "#/definitions/StringIndexType"
             }
           },
           "type": "object"
         }
-      ]
+      },
+      "type": "object"
     },
     "HealthcareJobState": {
       "allOf": [
@@ -2384,25 +2099,18 @@
       }
     },
     "KeyPhrasesTask": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TextAnalyticsTask"
-        },
-        {
+      "properties": {
+        "parameters": {
           "properties": {
-            "parameters": {
-              "properties": {
-                "model-version": {
-                  "default": "latest",
-                  "type": "string"
-                }
-              },
-              "type": "object"
+            "model-version": {
+              "default": "latest",
+              "type": "string"
             }
           },
           "type": "object"
         }
-      ]
+      },
+      "type": "object"
     },
     "LanguageBatchInput": {
       "type": "object",

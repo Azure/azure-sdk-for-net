@@ -8,11 +8,10 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentimentTask. </summary>
-    internal partial class SentimentTask : TextAnalyticsTask
+    internal partial class SentimentTask
     {
         /// <summary> Initializes a new instance of SentimentTask. </summary>
-        /// <param name="enable"> . </param>
-        public SentimentTask(bool enable) : base(enable)
+        public SentimentTask()
         {
         }
 

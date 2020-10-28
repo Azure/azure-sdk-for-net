@@ -8,11 +8,10 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesTask. </summary>
-    internal partial class EntitiesTask : TextAnalyticsTask
+    internal partial class EntitiesTask
     {
         /// <summary> Initializes a new instance of EntitiesTask. </summary>
-        /// <param name="enable"> . </param>
-        public EntitiesTask(bool enable) : base(enable)
+        public EntitiesTask()
         {
         }
 

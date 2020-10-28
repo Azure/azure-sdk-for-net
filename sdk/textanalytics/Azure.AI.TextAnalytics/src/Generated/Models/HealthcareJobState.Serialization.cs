@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static HealthcareJobState DeserializeHealthcareJobState(JsonElement element)
         {
-            Optional<HealthcareEntititesResult> results = default;
+            Optional<HealthcareResult> results = default;
             Optional<string> nextLink = default;
             DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("results"))
                 {
-                    results = HealthcareEntititesResult.DeserializeHealthcareEntititesResult(property.Value);
+                    results = HealthcareResult.DeserializeHealthcareResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))

@@ -30,8 +30,6 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>();
             SentimentAnalysisTasks = new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
-            CustomClassificationTasks = new ChangeTrackingList<CustomClassificationTasksItem>();
-            CustomEntityRecognitionTasks = new ChangeTrackingList<CustomEntityRecognitionTasksItem>();
         }
 
         /// <summary> Initializes a new instance of TasksStateTasks. </summary>
@@ -45,9 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entityLinkingTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
         /// <param name="sentimentAnalysisTasks"> . </param>
-        /// <param name="customClassificationTasks"> . </param>
-        /// <param name="customEntityRecognitionTasks"> . </param>
-        internal TasksStateTasks(IReadOnlyList<TaskState> details, int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<CustomClassificationTasksItem> customClassificationTasks, IReadOnlyList<CustomEntityRecognitionTasksItem> customEntityRecognitionTasks)
+        internal TasksStateTasks(IReadOnlyList<TaskState> details, int completed, int failed, int inProgress, int total, IReadOnlyList<TasksStateTasksEntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<TasksStateTasksEntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> sentimentAnalysisTasks)
         {
             Details = details;
             Completed = completed;
@@ -59,8 +55,6 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = entityLinkingTasks;
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             SentimentAnalysisTasks = sentimentAnalysisTasks;
-            CustomClassificationTasks = customClassificationTasks;
-            CustomEntityRecognitionTasks = customEntityRecognitionTasks;
         }
     }
 }

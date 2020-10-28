@@ -20,8 +20,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("parameters");
                 writer.WriteObjectValue(Parameters);
             }
-            writer.WritePropertyName("enable");
-            writer.WriteBooleanValue(Enable);
             writer.WriteEndObject();
         }
     }

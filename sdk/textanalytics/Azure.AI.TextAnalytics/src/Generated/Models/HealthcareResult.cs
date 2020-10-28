@@ -12,14 +12,15 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomClassificationResult. </summary>
-    internal partial class CustomClassificationResult
+    /// <summary> The HealthcareResult. </summary>
+    internal partial class HealthcareResult
     {
-        /// <summary> Initializes a new instance of CustomClassificationResult. </summary>
+        /// <summary> Initializes a new instance of HealthcareResult. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documents"/> or <paramref name="errors"/> is null. </exception>
-        internal CustomClassificationResult(IEnumerable<CustomClassificationDocument> documents, IEnumerable<DocumentError> errors)
+        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, or <paramref name="modelVersion"/> is null. </exception>
+        internal HealthcareResult(IEnumerable<DocumentHealthcareEntities> documents, IEnumerable<DocumentError> errors, string modelVersion)
         {
             if (documents == null)
             {
@@ -29,27 +30,36 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(errors));
             }
+            if (modelVersion == null)
+            {
+                throw new ArgumentNullException(nameof(modelVersion));
+            }
 
             Documents = documents.ToList();
             Errors = errors.ToList();
+            ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of CustomClassificationResult. </summary>
+        /// <summary> Initializes a new instance of HealthcareResult. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal CustomClassificationResult(IReadOnlyList<CustomClassificationDocument> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics)
+        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        internal HealthcareResult(IReadOnlyList<DocumentHealthcareEntities> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
         {
             Documents = documents;
             Errors = errors;
             Statistics = statistics;
+            ModelVersion = modelVersion;
         }
 
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<CustomClassificationDocument> Documents { get; }
+        public IReadOnlyList<DocumentHealthcareEntities> Documents { get; }
         /// <summary> Errors by document id. </summary>
         public IReadOnlyList<DocumentError> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }
+        /// <summary> This field indicates which model is used for scoring. </summary>
+        public string ModelVersion { get; }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Entity
+    public partial class Entity
     {
         internal static Entity DeserializeEntity(JsonElement element)
         {

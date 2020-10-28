@@ -7,12 +7,12 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="RecognizePiiResult"/> objects corresponding
+    /// Collection of <see cref="RecognizePiiEntitiesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    public class RecognizePiiResultCollection : ReadOnlyCollection<RecognizePiiResult>
+    public class RecognizePiiEntitiesResultCollection : ReadOnlyCollection<RecognizePiiEntitiesResult>
     {
-        internal RecognizePiiResultCollection(IList<RecognizePiiResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal RecognizePiiEntitiesResultCollection(IList<RecognizePiiEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;

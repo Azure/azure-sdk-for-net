@@ -12,21 +12,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomEntitiesResult
+    internal partial class HealthcareResult
     {
-        internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
+        internal static HealthcareResult DeserializeHealthcareResult(JsonElement element)
         {
-            IReadOnlyList<CustomEntitiesDocument> documents = default;
+            IReadOnlyList<DocumentHealthcareEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
+            string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<CustomEntitiesDocument> array = new List<CustomEntitiesDocument>();
+                    List<DocumentHealthcareEntities> array = new List<DocumentHealthcareEntities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntitiesDocument.DeserializeCustomEntitiesDocument(item));
+                        array.Add(DocumentHealthcareEntities.DeserializeDocumentHealthcareEntities(item));
                     }
                     documents = array;
                     continue;
@@ -46,8 +47,13 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
+                if (property.NameEquals("modelVersion"))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CustomEntitiesResult(documents, errors, statistics.Value);
+            return new HealthcareResult(documents, errors, statistics.Value, modelVersion);
         }
     }
 }

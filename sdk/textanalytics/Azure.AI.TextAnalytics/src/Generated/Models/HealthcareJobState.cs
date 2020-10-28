@@ -31,13 +31,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
         /// <param name="nextLink"> . </param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareEntititesResult results, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareResult results, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Results = results;
             NextLink = nextLink;
         }
 
-        public HealthcareEntititesResult Results { get; }
+        public HealthcareResult Results { get; }
         public string NextLink { get; }
     }
 }

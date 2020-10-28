@@ -25,8 +25,6 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
-            Optional<IReadOnlyList<CustomClassificationTasksItem>> customClassificationTasks = default;
-            Optional<IReadOnlyList<CustomEntityRecognitionTasksItem>> customEntityRecognitionTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"))
@@ -109,28 +107,8 @@ namespace Azure.AI.TextAnalytics.Models
                     sentimentAnalysisTasks = array;
                     continue;
                 }
-                if (property.NameEquals("customClassificationTasks"))
-                {
-                    List<CustomClassificationTasksItem> array = new List<CustomClassificationTasksItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CustomClassificationTasksItem.DeserializeCustomClassificationTasksItem(item));
-                    }
-                    customClassificationTasks = array;
-                    continue;
-                }
-                if (property.NameEquals("customEntityRecognitionTasks"))
-                {
-                    List<CustomEntityRecognitionTasksItem> array = new List<CustomEntityRecognitionTasksItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CustomEntityRecognitionTasksItem.DeserializeCustomEntityRecognitionTasksItem(item));
-                    }
-                    customEntityRecognitionTasks = array;
-                    continue;
-                }
             }
-            return new TasksStateTasks(Optional.ToList(details), completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(customClassificationTasks), Optional.ToList(customEntityRecognitionTasks));
+            return new TasksStateTasks(Optional.ToList(details), completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(sentimentAnalysisTasks));
         }
     }
 }

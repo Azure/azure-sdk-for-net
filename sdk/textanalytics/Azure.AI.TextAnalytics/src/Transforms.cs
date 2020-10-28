@@ -168,25 +168,25 @@ namespace Azure.AI.TextAnalytics
             return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
         }
 
-        internal static RecognizePiiResultCollection ConvertToRecognizePiiResultCollection(PiiResult results, IDictionary<string, int> idToIndexMap)
+        internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizePiiResult>();
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                recognizeEntities.Add(new RecognizePiiResult(error.Id, ConvertToError(error.Error)));
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read document entities
             foreach (PiiDocumentEntities docEntities in results.Documents)
             {
-                recognizeEntities.Add(new RecognizePiiResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
+                recognizeEntities.Add(new RecognizePiiEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToPiiEntityCollection(docEntities)));
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
-            return new RecognizePiiResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+            return new RecognizePiiEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
         }
 
         #endregion

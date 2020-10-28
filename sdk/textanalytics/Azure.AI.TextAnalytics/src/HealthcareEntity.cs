@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("HealthcareEntity")]
-    internal partial class HealthcareEntity
+    public partial class HealthcareEntity
     {
         /// <summary>
         /// IsNegated

@@ -21,8 +21,6 @@ namespace Azure.AI.TextAnalytics.Models
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhrasesTask>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentTask>();
-            CustomClassificationTasks = new ChangeTrackingList<CustomClassificationTask>();
-            CustomEntityRecognitionTasks = new ChangeTrackingList<CustomEntitiesTask>();
         }
     }
 }

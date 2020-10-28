@@ -1,22 +1,42 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Models;
-using Azure.Core;
+using System;
 
 namespace Azure.AI.TextAnalytics
 {
-    [CodeGenModel("HealthcareResult")]
-    public partial class HealthcareEntititesResult
+    /// <summary>
+    /// The result of the recognize entities operation on a document,
+    /// containing a collection of the <see cref="DocumentHealthcareEntities"/> objects
+    /// identified in that document.
+    /// </summary>
+    public class HealthcareEntititesResult : TextAnalyticsResult
     {
-        /// <summary> Documents. </summary>
-        [CodeGenMember("Documents")]
-        public IReadOnlyList<DocumentHealthcareEntities> Documents { get; }
+        private readonly DocumentHealthcareEntitiesCollection _entities;
 
-        /// <summary> Errors. </summary>
-        [CodeGenMember("Errors")]
-        internal IReadOnlyList<DocumentError> Errors { get; }
+        internal HealthcareEntititesResult(string id, TextDocumentStatistics statistics, DocumentHealthcareEntitiesCollection entities)
+            : base(id, statistics)
+        {
+            _entities = entities;
+        }
 
+        internal HealthcareEntititesResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// Gets the collection of named entities identified in the document.
+        /// </summary>
+        public DocumentHealthcareEntitiesCollection Entities
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _entities;
+            }
+        }
     }
 }

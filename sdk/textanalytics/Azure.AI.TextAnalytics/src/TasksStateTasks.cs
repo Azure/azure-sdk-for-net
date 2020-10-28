@@ -19,8 +19,5 @@ namespace Azure.AI.TextAnalytics.Models
         internal IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
         internal IReadOnlyList<TasksStateTasksKeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         internal IReadOnlyList<TasksStateTasksSentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
-        internal IReadOnlyList<CustomClassificationTasksItem> CustomClassificationTasks { get; }
-        internal IReadOnlyList<CustomEntityRecognitionTasksItem> CustomEntityRecognitionTasks { get; }
-
     }
 }

@@ -78,11 +78,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> Healthcare entities. </summary>
-        internal IReadOnlyList<HealthcareEntity> Entities { get; }
+        public IReadOnlyList<HealthcareEntity> Entities { get; }
         /// <summary> Healthcare entity relations. </summary>
         public IReadOnlyList<HealthcareRelation> Relations { get; }
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
+        internal IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
     }

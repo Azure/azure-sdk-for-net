@@ -187,7 +187,7 @@ namespace Azure.AI.TextAnalytics
                     if (update.Value.Status == JobStatus.Succeeded)
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = new RecognizeHealthcareEntitiesResultCollection(new List<HealthcareEntititesResult>() { update.Value.Results },
+                        _value = new RecognizeHealthcareEntitiesResultCollection(new List<HealthcareEntititesResult>() { /*update.Value.Results*/ },
                             update.Value.Results.Statistics,
                             update.Value.Results.ModelVersion);
                         _hasCompleted = true;

@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The Entity. </summary>
-    internal partial class Entity
+    public partial class Entity
     {
         /// <summary> Initializes a new instance of Entity. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>

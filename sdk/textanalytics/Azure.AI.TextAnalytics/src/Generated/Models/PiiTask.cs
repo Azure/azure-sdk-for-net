@@ -8,11 +8,10 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PiiTask. </summary>
-    internal partial class PiiTask : TextAnalyticsTask
+    internal partial class PiiTask
     {
         /// <summary> Initializes a new instance of PiiTask. </summary>
-        /// <param name="enable"> . </param>
-        public PiiTask(bool enable) : base(enable)
+        public PiiTask()
         {
         }
 
