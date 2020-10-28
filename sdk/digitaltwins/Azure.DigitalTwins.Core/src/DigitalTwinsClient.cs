@@ -518,7 +518,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// <para>
         /// Relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="BasicRelationship"/>.
@@ -600,7 +600,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1454,7 +1454,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// Note that there may be a delay between before changes in your instance are reflected in queries.
@@ -1546,7 +1546,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// Note that there may be a delay between before changes in your instance are reflected in queries.
