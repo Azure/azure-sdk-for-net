@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Microsoft.Azure.WebJobs.Host
 {
@@ -12,30 +14,40 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class BlobsOptions : IOptionsFormatter
     {
+        private int _maxDegreeOfParallelism;
+
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
         public BlobsOptions()
         {
-            CentralizedPoisonQueue = false;
+            _maxDegreeOfParallelism = 8 * SkuUtility.ProcessorCount;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a single centralized
-        /// poison queue for poison blobs should be used (in the primary
-        /// storage account) or whether the poison queue for a blob triggered
-        /// function should be co-located with the target blob container.
-        /// This comes into play only when using multiple storage accounts via
-        /// <see cref="StorageAccountAttribute"/>. The default is false.
+        /// Gets or sets the maximum number of blob changes that may be processed by concurrently.
         /// </summary>
-        public bool CentralizedPoisonQueue { get; set; }
+        public int MaxDegreeOfParallelism
+        {
+            get { return _maxDegreeOfParallelism; }
+
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value));
+                }
+
+                _maxDegreeOfParallelism = value;
+            }
+        }
 
         /// <inheritdoc/>
         public string Format()
         {
             JObject options = new JObject
             {
-                { nameof(CentralizedPoisonQueue), CentralizedPoisonQueue }
+                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism }
             };
 
             return options.ToString(Formatting.Indented);

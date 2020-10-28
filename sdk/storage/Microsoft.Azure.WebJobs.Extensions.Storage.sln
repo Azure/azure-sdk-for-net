@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Ext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests", "Microsoft.Azure.WebJobs.Extensions.Storage.Queues\samples\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Samples.Tests.csproj", "{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Extensions.Storage", "Microsoft.Azure.WebJobs.Extensions.Storage\src\Microsoft.Azure.WebJobs.Extensions.Storage.csproj", "{022028DA-6134-4648-881C-9503E3034995}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,10 @@ Global
 		{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7A937E4-F4E1-47B7-8D25-AA5FB6BDE010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022028DA-6134-4648-881C-9503E3034995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022028DA-6134-4648-881C-9503E3034995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022028DA-6134-4648-881C-9503E3034995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022028DA-6134-4648-881C-9503E3034995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

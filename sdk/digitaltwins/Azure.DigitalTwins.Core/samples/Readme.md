@@ -70,7 +70,7 @@ await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
         $"display name '{model.DisplayName["en"]}', " +
-        $"upload time '{model.UploadTime}', " +
+        $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }
 ```
@@ -131,7 +131,7 @@ var basicTwin = new BasicDigitalTwin
     Id = basicDtId,
     // model Id of digital twin
     Metadata = { ModelId = modelId },
-    CustomProperties =
+    Contents =
     {
         // digital twin properties
         { "Prop1", "Value1" },
@@ -139,10 +139,10 @@ var basicTwin = new BasicDigitalTwin
         // component
         {
             "Component1",
-            new ModelProperties
+            new BasicDigitalTwinComponent
             {
                 // component properties
-                CustomProperties =
+                Contents =
                 {
                     { "ComponentProp1", "Component value 1" },
                     { "ComponentProp2", 123 },
@@ -152,7 +152,7 @@ var basicTwin = new BasicDigitalTwin
     },
 };
 
-Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
 Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -171,9 +171,9 @@ var customTwin = new CustomDigitalTwin
     {
         ComponentProp1 = "Component prop1 val",
         ComponentProp2 = 123,
-    }
+    },
 };
-Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
 Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 ```
 
@@ -190,14 +190,15 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+    string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
     IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
-        $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+        $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
+        $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
+        $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
+        $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
         $"ComponentProp2: {component1["ComponentProp2"]}");
 }
 ```
@@ -212,7 +213,7 @@ Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" 
     $"ETag: {customDt.ETag}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
     $"Prop2: {customDt.Prop2}\n\t" +
-    $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
+    $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
     $"ComponentProp2: {customDt.Component1.ComponentProp2}");
 ```
 
@@ -223,14 +224,13 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<string> asyncPageableResponse = client.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
 // which involves a request to the service.
-await foreach (string response in asyncPageableResponse)
+await foreach (BasicDigitalTwin twin in asyncPageableResponse)
 {
-    BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
     Console.WriteLine($"Found digital twin '{twin.Id}'");
 }
 ```
@@ -242,11 +242,11 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<string> asyncPageableResponseWithCharge = client.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
-await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
+await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.AsPages())
 {
     Console.WriteLine($"Page {++pageNum} results:");
 
@@ -258,9 +258,8 @@ await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
 
     // Iterate over the twin instances.
     // The "await" keyword is not required here as the paged response is local.
-    foreach (string response in page.Values)
+    foreach (BasicDigitalTwin twin in page.Values)
     {
-        BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
         Console.WriteLine($"Found digital twin '{twin.Id}'");
     }
 }
@@ -315,7 +314,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
     SourceId = "buildingTwinId",
     TargetId = "floorTwinId",
     Name = "contains",
-    CustomProperties =
+    Properties =
     {
         { "Prop1", "Prop1 value" },
         { "Prop2", 6 }
@@ -323,7 +322,7 @@ var buildingFloorRelationshipPayload = new BasicRelationship
 };
 
 Response<BasicRelationship> createBuildingFloorRelationshipResponse = await client
-    .CreateRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<BasicRelationship>("buildingTwinId", "buildingFloorRelationshipId", buildingFloorRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createBuildingFloorRelationshipResponse.Value.Id}' " +
     $"from twin '{createBuildingFloorRelationshipResponse.Value.SourceId}' to twin '{createBuildingFloorRelationshipResponse.Value.TargetId}'.");
 ```
@@ -344,7 +343,7 @@ var floorBuildingRelationshipPayload = new CustomRelationship
 };
 
 Response<CustomRelationship> createCustomRelationshipResponse = await client
-    .CreateRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
+    .CreateOrReplaceRelationshipAsync<CustomRelationship>("floorTwinId", "floorBuildingRelationshipId", floorBuildingRelationshipPayload);
 Console.WriteLine($"Created a digital twin relationship '{createCustomRelationshipResponse.Value.Id}' " +
     $"from twin '{createCustomRelationshipResponse.Value.SourceId}' to twin '{createCustomRelationshipResponse.Value.TargetId}'.");
 ```
@@ -360,8 +359,8 @@ if (getBasicRelationshipResponse.GetRawResponse().Status == (int)HttpStatusCode.
 {
     BasicRelationship basicRelationship = getBasicRelationshipResponse.Value;
     Console.WriteLine($"Retrieved relationship '{basicRelationship.Id}' from twin {basicRelationship.SourceId}.\n\t" +
-        $"Prop1: {basicRelationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {basicRelationship.CustomProperties["Prop2"]}");
+        $"Prop1: {basicRelationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {basicRelationship.Properties["Prop2"]}");
 }
 ```
 
@@ -381,14 +380,13 @@ Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelations
 `GetRelationshipsAsync` lists all the relationships of a digital twin. You can get digital twin relationships and deserialize them into `BasicRelationship`.
 
 ```C# Snippet:DigitalTwinsSampleGetAllRelationships
-AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
-await foreach (var relationshipJson in relationships)
+AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>("buildingTwinId");
+await foreach (BasicRelationship relationship in relationships)
 {
-    BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
-        $"Prop1: {relationship.CustomProperties["Prop1"]}\n\t" +
-        $"Prop2: {relationship.CustomProperties["Prop2"]}");
+        $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
+        $"Prop2: {relationship.Properties["Prop2"]}");
 }
 ```
 
@@ -420,9 +418,9 @@ To create an event route, provide an Id of an event route such as "sampleEventRo
 
 ```C# Snippet:DigitalTwinsSampleCreateEventRoute
 string eventFilter = "$eventType = 'DigitalTwinTelemetryMessages' or $eventType = 'DigitalTwinLifecycleNotification'";
-var eventRoute = new EventRoute(eventhubEndpointName, eventFilter);
+var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
 
-await client.CreateEventRouteAsync(_eventRouteId, eventRoute);
+await client.CreateOrReplaceEventRouteAsync(_eventRouteId, eventRoute);
 Console.WriteLine($"Created event route '{_eventRouteId}'.");
 ```
 
@@ -433,8 +431,8 @@ For more information on the event route filter language, see the "how to manage 
 List a specific event route given event route Id or all event routes setting options with `GetEventRouteAsync` and `GetEventRoutesAsync`.
 
 ```C# Snippet:DigitalTwinsSampleGetEventRoutes
-AsyncPageable<EventRoute> response = client.GetEventRoutesAsync();
-await foreach (EventRoute er in response)
+AsyncPageable<DigitalTwinsEventRoute> response = client.GetEventRoutesAsync();
+await foreach (DigitalTwinsEventRoute er in response)
 {
     Console.WriteLine($"Event route '{er.Id}', endpoint name '{er.EndpointName}'");
 }

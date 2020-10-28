@@ -39,6 +39,7 @@ pr:
     - sdk/cdn/Microsoft.Azure.Management.Cdn
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
+    - sdk/confluent/Microsoft.Azure.Management.Confluent
     - sdk/consumption/Microsoft.Azure.Management.Consumption
     - sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance
     - sdk/containerregistry/Microsoft.Azure.Management.ContainerRegistry
@@ -116,10 +117,10 @@ pr:
     - sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup
     - sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     - sdk/redis/Microsoft.Azure.Management.RedisCache
-    - sdk/regionmove/Microsoft.Azure.Management.Migrate
     - sdk/relay/Microsoft.Azure.Management.Relay
     - sdk/reservations/Microsoft.Azure.Management.Reservations
     - sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph
+    - sdk/resourcemover/Microsoft.Azure.Management.Migrate
     - sdk/resources/Microsoft.Azure.Management.Resource
     - sdk/scheduler/Microsoft.Azure.Management.Scheduler
     - sdk/search/Microsoft.Azure.Management.Search

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 
@@ -53,7 +52,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Id = basicDtId,
                 // model Id of digital twin
                 Metadata = { ModelId = modelId },
-                CustomProperties =
+                Contents =
                 {
                     // digital twin properties
                     { "Prop1", "Value1" },
@@ -61,10 +60,10 @@ namespace Azure.DigitalTwins.Core.Samples
                     // component
                     {
                         "Component1",
-                        new ModelProperties
+                        new BasicDigitalTwinComponent
                         {
                             // component properties
-                            CustomProperties =
+                            Contents =
                             {
                                 { "ComponentProp1", "Component value 1" },
                                 { "ComponentProp2", 123 },
@@ -74,7 +73,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 },
             };
 
-            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
             Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
@@ -91,14 +90,15 @@ namespace Azure.DigitalTwins.Core.Samples
                 BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
                 // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-                string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
+                string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
                 IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
 
                 Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
                     $"ETag: {basicDt.ETag}\n\t" +
-                    $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
-                    $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
+                    $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
+                    $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
+                    $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
+                    $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
                     $"ComponentProp2: {component1["ComponentProp2"]}");
             }
 
@@ -122,9 +122,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
-                }
+                },
             };
-            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
             Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
@@ -140,7 +140,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 $"ETag: {customDt.ETag}\n\t" +
                 $"Prop1: {customDt.Prop1}\n\t" +
                 $"Prop2: {customDt.Prop2}\n\t" +
-                $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
+                $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
                 $"ComponentProp2: {customDt.Component1.ComponentProp2}");
 
             #endregion Snippet:DigitalTwinsSampleGetCustomDigitalTwin
