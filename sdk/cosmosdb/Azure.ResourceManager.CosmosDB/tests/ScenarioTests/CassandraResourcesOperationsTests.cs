@@ -72,8 +72,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TestCase, Order(2)]
         public async Task CassandraKeyspaceCreateUpdateTests()
         {
-            Response responseIsDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Assert.AreEqual(200, responseIsDatabaseNameExists.Status);
+            var responseIsDatabaseNameExists = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(true, responseIsDatabaseNameExists.Value);
+            Assert.AreEqual(200, responseIsDatabaseNameExists.GetRawResponse().Status);
 
             CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
 
