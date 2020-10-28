@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Insights.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = LocalizableString.DeserializeLocalizableString(property.Value);
                     continue;
                 }

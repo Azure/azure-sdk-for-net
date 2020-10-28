@@ -51,11 +51,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("lower"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lower = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("upper"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     upper = property.Value.GetDouble();
                     continue;
                 }
@@ -71,6 +81,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("triggerForMissing"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     triggerForMissing = property.Value.GetBoolean();
                     continue;
                 }

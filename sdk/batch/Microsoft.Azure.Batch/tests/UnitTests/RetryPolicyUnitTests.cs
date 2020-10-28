@@ -411,8 +411,8 @@
             request.ServiceRequestFunc = async (token) =>
             {
                 ++serviceRequestFuncCallCount;
-                
-                Action throwsAction = () => { throw new InvalidOperationException(); };
+
+                void throwsAction() { throw new InvalidOperationException(); }
                 Task throwsTask1 = Task.Factory.StartNew(throwsAction);
                 Task throwsTask2 = Task.Factory.StartNew(throwsAction);
                 await Task.WhenAll(throwsTask1, throwsTask2); //This will throw
@@ -463,7 +463,7 @@
             {
                 ++serviceRequestFuncCallCount;
 
-                Action throwsAction = () => { throw new ArgumentException(); };
+                void throwsAction() { throw new ArgumentException(); }
                 Task throwsTask1 = Task.Factory.StartNew(throwsAction);
                 Task throwsTask2 = Task.Factory.StartNew(throwsAction);
                 await Task.WhenAll(throwsTask1, throwsTask2); //This will throw

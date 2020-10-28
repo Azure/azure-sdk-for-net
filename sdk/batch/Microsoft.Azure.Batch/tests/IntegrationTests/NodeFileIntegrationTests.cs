@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using BatchTestCommon;
     using Fixtures;
     using Microsoft.Azure.Batch;
@@ -35,7 +34,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1480489NodeFileMissingIsDirectory()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1480489Job-" + TestUtilities.GetMyName();
@@ -97,7 +96,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -107,7 +106,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug230385SupportDeleteNodeFileByTask()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug230285Job-" + TestUtilities.GetMyName();
@@ -193,7 +192,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -203,7 +202,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestNode_GetListDeleteFiles()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "TestNodeGetListDeleteFiles-" + TestUtilities.GetMyName();
@@ -389,7 +388,7 @@
                 {
                     batchCli.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -399,7 +398,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug2338301_CheckStreamPositionAfterFileRead()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 JobOperations jobOperations = batchCli.JobOperations;
@@ -448,7 +447,7 @@
                         jobOperations.DeleteJob(jobId);
                     }
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -458,7 +457,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1480491NodeFileFileProperties()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1480491Job-" + TestUtilities.GetMyName();
@@ -540,7 +539,7 @@
                 {
                     batchCli.JobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -550,7 +549,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestGetNodeFileByTask()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 JobOperations jobOperations = batchCli.JobOperations;
@@ -616,7 +615,7 @@
                 {
                     jobOperations.DeleteJob(jobId);
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -669,21 +668,19 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TestFilePropertiesFileMode()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = null;
                 try
                 {
-                    string taskId;
-
                     // create some files on the node
                     TestUtilities.HelloWorld(
                         batchCli,
                         testOutputHelper,
                         poolFixture.Pool,
                         out jobId,
-                        out taskId,
+                        out string taskId,
                         deleteJob: false,
                         isLinux: true);
 
@@ -712,7 +709,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

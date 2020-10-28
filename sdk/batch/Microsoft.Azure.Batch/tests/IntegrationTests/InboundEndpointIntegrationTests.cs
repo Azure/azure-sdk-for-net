@@ -30,7 +30,7 @@ namespace BatchClientIntegrationTests
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void WhenPoolCreatedWithInboundEndpoints_EndpointsAreReturnedByPoolAndComputeNodes()
         {
-            Action test = () =>
+            static void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string poolId = "InboundEndpoints-" + TestUtilities.GetMyName();
@@ -59,7 +59,7 @@ namespace BatchClientIntegrationTests
                 {
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

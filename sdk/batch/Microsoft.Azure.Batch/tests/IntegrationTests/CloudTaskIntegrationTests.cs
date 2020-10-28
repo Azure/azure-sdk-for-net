@@ -112,7 +112,7 @@
         {
             TimeSpan checkSubtasksStateTimeout = TimeSpan.FromMinutes(1);
 
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string jobId = "MultiInstance-" + TestUtilities.GetMyName();
@@ -196,7 +196,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -208,7 +208,7 @@
         {
             TimeSpan checkSubtasksStateTimeout = TimeSpan.FromMinutes(1);
 
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string jobId = "MPI-" + TestUtilities.GetMyName();
@@ -284,7 +284,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -308,7 +308,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1432830TaskEnvSettings()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1432830Job-" + TestUtilities.GetMyName();
@@ -399,7 +399,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -409,7 +409,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void Bug1432973TaskAffinityInfoMissing()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1432973Job-" + TestUtilities.GetMyName();
@@ -439,7 +439,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -449,7 +449,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1447214TaskMissingExeInfoStatsAndConstraints()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1447214Job-" + TestUtilities.GetMyName();
@@ -550,7 +550,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -560,7 +560,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1535329JobOperationsMissingAddTaskMethods()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 StagingStorageAccount stagingStorageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
@@ -620,7 +620,7 @@
                     // clean up
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -630,7 +630,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1611592ComputeNodeInfoMissingOnTask()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = "Bug1611592Job-" + TestUtilities.GetMyName();
@@ -671,7 +671,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -681,7 +681,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void TestBoundTaskTerminateAndDelete()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-TestBoundTaskTerminateAndDelete";
@@ -792,7 +792,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -802,7 +802,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void FailedTaskCanBeReactivated()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
@@ -845,7 +845,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -855,7 +855,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void DependencyActionIsRoundTripped()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
@@ -891,7 +891,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
@@ -900,7 +900,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void AccessScopeCanBeRoundTripped()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
@@ -931,7 +931,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -941,7 +941,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void Bug1432996GetTaskOnJobOperationsAndJob()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = null;
@@ -961,7 +961,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -971,7 +971,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void TaskRunsOnSharedUserAccount()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
@@ -982,15 +982,15 @@
                     CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = poolFixture.PoolId });
                     job.Commit();
 
-                    Func<string, string, CloudTask> createTask = (taskId, userName) =>
+                    static CloudTask createTask(string taskId, string userName)
                     {
-                            //The magic command below will succeed on an admin account but fail for a non-admin account
-                            CloudTask task = new CloudTask(taskId, "cmd /c net session >nul 2>&1")
+                        //The magic command below will succeed on an admin account but fail for a non-admin account
+                        CloudTask task = new CloudTask(taskId, "cmd /c net session >nul 2>&1")
                         {
                             UserIdentity = new UserIdentity(userName)
                         };
                         return task;
-                    };
+                    }
 
                     var adminTask = createTask(adminTaskId, PoolFixture.AdminUserAccountName);
                     var nonAdminTask = createTask(nonAdminTaskId, PoolFixture.NonAdminUserAccountName);
@@ -1011,7 +1011,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -1032,7 +1032,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
         public void UpdateTask_TaskIsUpdatedAsExpected()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string taskId = "task1";
@@ -1105,7 +1105,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -1115,7 +1115,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void SetTaskConditionalHeaders()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
                 string jobId = "TaskConditionalHeaders-" + TestUtilities.GetMyName();
@@ -1170,7 +1170,7 @@
                 {
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
@@ -1179,7 +1179,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
         public void AddTaskOnContainerPool_TaskIsExecuted()
         {
-            Action test = () =>
+            void test()
             {
                 using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
                 const string taskId = "t1";
@@ -1216,7 +1216,7 @@
                     TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
                     TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                 }
-            };
+            }
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }

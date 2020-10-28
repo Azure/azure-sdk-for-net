@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("useAadAuth"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     useAadAuth = property.Value.GetBoolean();
                     continue;
                 }

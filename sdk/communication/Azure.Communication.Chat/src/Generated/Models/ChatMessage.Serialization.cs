@@ -39,6 +39,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = new ChatMessagePriority(property.Value.GetString());
                     continue;
                 }
@@ -59,6 +64,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("createdOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -69,11 +79,21 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("deletedOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("editedOn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     editedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

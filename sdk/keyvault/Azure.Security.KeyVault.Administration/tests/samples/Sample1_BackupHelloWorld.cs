@@ -47,19 +47,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupBlobUri = backupResult.Value;
+            Uri backupFolderUri = backupResult.Value;
             #endregion
 
-            Assert.That(backupBlobUri, Is.Not.Null);
+            Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             #region Snippet:HelloFullRestoreAsync
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
-
-            // Start the restore.
-            RestoreOperation restoreOperation = await Client.StartRestoreAsync(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             Response restoreResult = await restoreOperation.WaitForCompletionAsync();
@@ -94,19 +90,15 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
 
             // Get the Uri for the location of you backup blob.
-            Uri backupBlobUri = backupOperation.Value;
+            Uri backupFolderUri = backupOperation.Value;
             #endregion
 
-            Assert.That(backupBlobUri, Is.Not.Null);
+            Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             #region Snippet:HelloFullRestoreSync
-            // Get the folder name from the backupBlobUri returned from a previous BackupOperation
-            string[] uriSegments = backupBlobUri.Segments;
-            string folderName = uriSegments[uriSegments.Length - 1];
-
-            // Start the restore.
-            RestoreOperation restoreOperation = Client.StartRestore(builder.Uri, sasToken, folderName);
+            // Start the restore using the backupBlobUri returned from a previous BackupOperation.
+            RestoreOperation restoreOperation = Client.StartRestore(backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             while (!restoreOperation.HasCompleted)

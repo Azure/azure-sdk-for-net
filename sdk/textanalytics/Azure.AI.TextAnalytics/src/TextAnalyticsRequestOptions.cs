@@ -6,12 +6,14 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Options that allow callers to specify details about how the operation
     /// is run and what information is returned from it by the service.
+    /// <para>For example set model version, and whether to include statistics.</para>
     /// </summary>
     public class TextAnalyticsRequestOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
-        /// class.
+        /// class which allows callers to specify details about how the operation
+        /// is run. For example set model version, and whether to include statistics.
         /// </summary>
         public TextAnalyticsRequestOptions()
         {

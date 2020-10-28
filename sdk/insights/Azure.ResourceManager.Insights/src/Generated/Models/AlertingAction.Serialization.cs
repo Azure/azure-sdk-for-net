@@ -50,11 +50,21 @@ namespace Azure.ResourceManager.Insights.Models
                 }
                 if (property.NameEquals("aznsAction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     aznsAction = AzNsActionGroup.DeserializeAzNsActionGroup(property.Value);
                     continue;
                 }
                 if (property.NameEquals("throttlingInMin"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     throttlingInMin = property.Value.GetInt32();
                     continue;
                 }

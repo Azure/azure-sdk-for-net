@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("advertisedPublicPrefixes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -76,6 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("advertisedCommunities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -86,16 +96,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("advertisedPublicPrefixesState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     advertisedPublicPrefixesState = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("legacyMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     legacyMode = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("customerASN"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     customerASN = property.Value.GetInt32();
                     continue;
                 }

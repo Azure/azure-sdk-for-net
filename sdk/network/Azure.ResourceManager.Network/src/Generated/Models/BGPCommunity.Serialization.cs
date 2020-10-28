@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("communityPrefixes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,6 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("isAuthorizedToUse"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isAuthorizedToUse = property.Value.GetBoolean();
                     continue;
                 }

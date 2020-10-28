@@ -176,37 +176,34 @@
             where TListOptions : Protocol.Models.IOptions, new()
             where TListNextOptions : Protocol.Models.IOptions, new()
         {
-            var listRequest = req as Protocol.BatchRequest<TListOptions, AzureOperationResponse<IPage<TPage>, THeaders>>;
-            var listNextRequest = req as Protocol.BatchRequest<TListNextOptions, AzureOperationResponse<IPage<TPage>, THeaders>>;
-
-            if (listRequest != null)
+            if (req is Protocol.BatchRequest<TListOptions, AzureOperationResponse<IPage<TPage>, THeaders>> listRequest)
             {
                 listRequest.ServiceRequestFunc = token =>
+                {
+                    var filter = listRequest.Options as Protocol.Models.IODataFilter;
+                    var select = listRequest.Options as Protocol.Models.IODataSelect;
+                    var expand = listRequest.Options as Protocol.Models.IODataExpand;
+
+                    Assert.Equal(expectedDetailLevel.FilterClause, filter?.Filter);
+                    Assert.Equal(expectedDetailLevel.SelectClause, select?.Select);
+                    Assert.Equal(expectedDetailLevel.ExpandClause, expand?.Expand);
+
+                    return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
                     {
-                        var filter = listRequest.Options as Protocol.Models.IODataFilter;
-                        var select = listRequest.Options as Protocol.Models.IODataSelect;
-                        var expand = listRequest.Options as Protocol.Models.IODataExpand;
-
-                        Assert.Equal(expectedDetailLevel.FilterClause, filter?.Filter);
-                        Assert.Equal(expectedDetailLevel.SelectClause, select?.Select);
-                        Assert.Equal(expectedDetailLevel.ExpandClause, expand?.Expand);
-
-                        return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
-                        {
-                            Body = new FakePage<TPage>(new List<TPage>(), "Bar")
-                        });
-                    };
+                        Body = new FakePage<TPage>(new List<TPage>(), "Bar")
+                    });
+                };
             }
 
-            if (listNextRequest != null)
+            if (req is Protocol.BatchRequest<TListNextOptions, AzureOperationResponse<IPage<TPage>, THeaders>> listNextRequest)
             {
                 listNextRequest.ServiceRequestFunc = token =>
+                {
+                    return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
                     {
-                        return Task.FromResult(new AzureOperationResponse<IPage<TPage>, THeaders>()
-                        {
-                            Body = new FakePage<TPage>(new List<TPage>())
-                        });
-                    };
+                        Body = new FakePage<TPage>(new List<TPage>())
+                    });
+                };
             }
         }
     }

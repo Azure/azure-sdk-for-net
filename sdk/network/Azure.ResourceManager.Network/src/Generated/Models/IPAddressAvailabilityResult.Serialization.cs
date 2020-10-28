@@ -21,11 +21,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("available"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     available = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("availableIPAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

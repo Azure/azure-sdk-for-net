@@ -986,6 +986,15 @@ directive:
     $.ShareProperties.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
 ```
 
+### Rename DeleteSnapshotsOptionType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.DeleteSnapshots["x-ms-enum"]["name"] = "ShareSnapshotsDeleteOptionInternal";
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:

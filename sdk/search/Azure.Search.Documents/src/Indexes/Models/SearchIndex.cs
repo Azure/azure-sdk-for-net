@@ -10,6 +10,9 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndex
     {
+        // Force the constructor to set the field;
+        // otherwise, when getting only names, the setter will throw.
+        [CodeGenMember("fields")]
         private IList<SearchField> _fields;
 
         [CodeGenMember("etag")]
