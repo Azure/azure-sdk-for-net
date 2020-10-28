@@ -75,6 +75,9 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
             rule.When("Access", FileAccess.Write).
                 BindToInput<Stream>(ConvertToCloudBlobStreamAsync);
+
+            RegisterCommonConverters(rule);
+            rule.AddConverter(new StorageBlobConverter<BlobClient>());
         }
 
         private void InitializeBlobTriggerBindings(ExtensionConfigContext context)
@@ -85,17 +88,20 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             rule.AddConverter<BlobBaseClient, DirectInvokeString>(blob => new DirectInvokeString(blob.GetBlobPath()));
             rule.AddConverter<DirectInvokeString, BlobBaseClient>(ConvertFromInvokeString);
 
-            // Common converters shared between [Blob] and [BlobTrigger]
+            RegisterCommonConverters(rule);
+            rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
+        }
 
-            // Trigger already has the IStorageBlob. Whereas BindToInput defines: Attr-->Stream.
+#pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."
+        private void RegisterCommonConverters<T>(FluentBindingRule<T> rule) where T : Attribute
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
             //  Converter manager already has Stream-->Byte[],String,TextReader
-            context.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
-
+            rule.AddConverter<BlobBaseClient, Stream>(ConvertToStreamAsync);
             // Blob type is a property of an existing blob.
-            context.AddConverter(new StorageBlobConverter<AppendBlobClient>());
-            context.AddConverter(new StorageBlobConverter<BlockBlobClient>());
-            context.AddConverter(new StorageBlobConverter<PageBlobClient>());
-            context.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
+            rule.AddConverter(new StorageBlobConverter<AppendBlobClient>());
+            rule.AddConverter(new StorageBlobConverter<BlockBlobClient>());
+            rule.AddConverter(new StorageBlobConverter<PageBlobClient>());
         }
 
         #region Container rules
@@ -261,16 +267,11 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         }
 
         // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
-        private BlobClient ConvertBlobBaseClientToBlobClient(BlobBaseClient input, Attribute attr)
+        private BlobClient ConvertBlobBaseClientToBlobClient(BlobBaseClient input, BlobTriggerAttribute attr)
         {
-            if (input is BlobClient)
-            {
-                return (BlobClient)input;
-            }
             if (input is BlockBlobClient)
             {
-                var connectionProvider = (IConnectionProvider)attr;
-                var client = _blobServiceClientProvider.Get(connectionProvider.Connection);
+                var client = _blobServiceClientProvider.Get(attr.Connection);
                 var blob = client.GetBlobContainerClient(input.BlobContainerName).GetBlobClient(input.Name);
 
                 return blob;
