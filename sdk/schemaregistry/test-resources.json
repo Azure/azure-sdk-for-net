@@ -46,7 +46,7 @@
   "variables": {
     "apiVersion": "2018-01-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
-    "schemaRegistryEndpoint": "[format('https://{0}.servicebus.windows.net', parameters('baseName'))]"
+    "schemaRegistryEndpoint": "[format('{0}.servicebus.windows.net', parameters('baseName'))]"
   },
   "resources": [
     {

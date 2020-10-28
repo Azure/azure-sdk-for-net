@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         [Test]
         public void Serialize()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
 
             #region Snippet:SchemaRegistryAvroSerialize
             var employee = new Employee { Age = 42, Name = "John Doe" };
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         [Test]
         public void Deserialize()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryUri, TestEnvironment.Credential);
+            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
             using var memoryStream = new MemoryStream();
 
             #region Snippet:SchemaRegistryAvroDeserialize
