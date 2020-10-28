@@ -113,11 +113,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(dataFeed.Id, Is.Not.Null);
 
-            dataFeed.Options.Description = Recording.GenerateAlphaNumericId("desc");
+            dataFeed.Options = new DataFeedOptions()
+            {
+                Description = Recording.GenerateAlphaNumericId("desc")
+            };
+
             await adminClient.UpdateDataFeedAsync(dataFeed.Id, dataFeed).ConfigureAwait(false);
 
             await adminClient.DeleteDataFeedAsync(dataFeed.Id).ConfigureAwait(false);
-            ;
         }
 
         [RecordedTest]
