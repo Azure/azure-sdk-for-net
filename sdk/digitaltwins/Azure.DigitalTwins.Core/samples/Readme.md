@@ -382,10 +382,9 @@ Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelations
 `GetRelationshipsAsync` lists all the relationships of a digital twin. You can get digital twin relationships and deserialize them into `BasicRelationship`.
 
 ```C# Snippet:DigitalTwinsSampleGetAllRelationships
-AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
-await foreach (var relationshipJson in relationships)
+AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>("buildingTwinId");
+await foreach (BasicRelationship relationship in relationships)
 {
-    BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
         $"Prop1: {relationship.Properties["Prop1"]}\n\t" +
