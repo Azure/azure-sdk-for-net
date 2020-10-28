@@ -7,7 +7,8 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of key phrases present in a document.
+    /// Collection of key phrases present in a document,
+    /// and warnings encountered while processing the document.
     /// </summary>
     public class KeyPhraseCollection : ReadOnlyCollection<string>
     {

@@ -97,10 +97,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PipelineResource DeserializePipelineResource(JsonElement element)
         {
+            Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> etag = default;
             Optional<string> description = default;
             Optional<IList<Activity>> activities = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
@@ -113,6 +113,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
@@ -126,11 +131,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))

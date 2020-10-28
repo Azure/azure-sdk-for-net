@@ -25,14 +25,24 @@ namespace Azure.Storage.Files.DataLake
     public class DataLakePathClient
     {
         /// <summary>
-        /// A <see cref="BlockBlobClient"/> associated with the path;
+        /// A <see cref="BlockBlobClient"/> associated with the path.
         /// </summary>
         internal readonly BlockBlobClient _blockBlobClient;
 
         /// <summary>
-        /// BlobClient
+        /// A <see cref="BlockBlobClient"/> associated with the path.
         /// </summary>
         internal virtual BlockBlobClient BlobClient => _blockBlobClient;
+
+        /// <summary>
+        /// A <see cref="DataLakeFileSystemClient"/> associated with Directory's parent File System.
+        /// </summary>
+        internal readonly DataLakeFileSystemClient _fileSystemClient;
+
+        /// <summary>
+        /// A <see cref="DataLakeFileSystemClient"/> associated with Directory's parent File System.
+        /// </summary>
+        internal virtual DataLakeFileSystemClient FileSystemClient => _fileSystemClient;
 
         /// <summary>
         /// The paths's primary <see cref="Uri"/> endpoint.
@@ -360,6 +370,13 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _pipeline,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>
@@ -399,6 +416,13 @@ namespace Azure.Storage.Files.DataLake
                 _pipeline,
                 Version.AsBlobsVersion(),
                 _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                pipeline,
+                version,
+                clientDiagnostics);
         }
 
         internal DataLakePathClient(
@@ -423,6 +447,13 @@ namespace Azure.Storage.Files.DataLake
                 _pipeline,
                 Version.AsBlobsVersion(),
                 _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                pipeline,
+                version,
+                clientDiagnostics);
         }
 
         /// <summary>
