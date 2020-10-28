@@ -42,13 +42,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 string queryString = "SELECT * FROM digitaltwins where IsOccupied = true";
 
                 // act
-                AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString);
+                AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
 
                 // assert
-                await foreach (string response in asyncPageableResponse)
+                await foreach (JsonElement response in asyncPageableResponse)
                 {
-                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(response);
-                    JsonElement isOccupied = jsonElement.GetProperty("IsOccupied");
+                    JsonElement isOccupied = response.GetProperty("IsOccupied");
                     isOccupied.GetRawText().Should().Be("true");
                 }
             }
@@ -105,9 +104,9 @@ namespace Azure.DigitalTwins.Core.Tests
                         throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
                     }
 
-                    AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, queryTimeoutCancellationToken.Token);
+                    AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString, queryTimeoutCancellationToken.Token);
                     int count = 0;
-                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
+                    await foreach (Page<BasicDigitalTwin> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
                     {
                         count += queriedTwinPage.Values.Count;
                     }
@@ -120,7 +119,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
                 // elements, or have no continuation token (signaling that it is the last page)
                 int pageCount = 0;
-                await foreach (Page<string> page in client.QueryAsync(queryString).AsPages(pageSizeHint: pageSize))
+                await foreach (Page<BasicDigitalTwin> page in client.QueryAsync<BasicDigitalTwin>(queryString).AsPages(pageSizeHint: pageSize))
                 {
                     pageCount++;
                     if (page.ContinuationToken != null)
