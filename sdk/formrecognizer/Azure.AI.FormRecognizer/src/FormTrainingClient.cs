@@ -300,10 +300,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 var composeRequest = new ComposeRequest(modelIdsGuid);
-                if (!string.IsNullOrEmpty(modelName))
-                {
-                    composeRequest.ModelName = modelName;
-                }
+                composeRequest.ModelName = modelName;
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
@@ -341,10 +338,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
 
                 var composeRequest = new ComposeRequest(modelIdsGuid);
-                if (!string.IsNullOrEmpty(modelName))
-                {
-                    composeRequest.ModelName = modelName;
-                }
+                composeRequest.ModelName = modelName;
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest).ConfigureAwait(false);
                 return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
