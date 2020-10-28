@@ -518,7 +518,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// <para>
         /// Relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="BasicRelationship"/>.
@@ -600,7 +600,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
-        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
+        /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1454,6 +1454,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// Note that there may be a delay between before changes in your instance are reflected in queries.
@@ -1467,23 +1468,22 @@ namespace Azure.DigitalTwins.Core
         /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins">
         /// // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
         /// // happens under the covers.
-        /// AsyncPageable&lt;string&gt; asyncPageableResponse = client.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
+        /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponse = client.QueryAsync&lt;BasicDigitalTwin&gt;(&quot;SELECT * FROM digitaltwins&quot;);
         ///
         /// // Iterate over the twin instances in the pageable response.
         /// // The &quot;await&quot; keyword here is required because new pages will be fetched when necessary,
         /// // which involves a request to the service.
-        /// await foreach (string response in asyncPageableResponse)
+        /// await foreach (BasicDigitalTwin twin in asyncPageableResponse)
         /// {
-        ///     BasicDigitalTwin twin = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(response);
         ///     Console.WriteLine($&quot;Found digital twin &apos;{twin.Id}&apos;&quot;);
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<string> QueryAsync(string query, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> QueryAsync<T>(string query, CancellationToken cancellationToken = default)
         {
             // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
             // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<T>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                 scope.Start();
@@ -1500,7 +1500,7 @@ namespace Azure.DigitalTwins.Core
                         MaxItemsPerPage = pageSizeHint
                     };
 
-                    Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, options, cancellationToken).ConfigureAwait(false);
+                    Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1510,7 +1510,7 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<T>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                 scope.Start();
@@ -1527,7 +1527,7 @@ namespace Azure.DigitalTwins.Core
                         MaxItemsPerPage = pageSizeHint
                     };
 
-                    Response<QueryResult> response = await _queryClient.QueryTwinsAsync(querySpecification, options, cancellationToken).ConfigureAwait(false);
+                    Response<QueryResult<T>> response = await _queryClient.QueryTwinsAsync<T>(querySpecification, options, _objectSerializer, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1546,6 +1546,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="query">The query string, in SQL-like syntax.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// Note that there may be a delay between before changes in your instance are reflected in queries.
@@ -1561,11 +1562,11 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="QueryAsync(string, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<string> Query(string query, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> Query<T>(string query, CancellationToken cancellationToken = default)
         {
             // Note: pageSizeHint is not supported as a parameter in the service for query API, so ignoring it.
             // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            Page<T> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                 scope.Start();
@@ -1582,7 +1583,7 @@ namespace Azure.DigitalTwins.Core
                         MaxItemsPerPage = pageSizeHint
                     };
 
-                    Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, options, cancellationToken);
+                    Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1592,7 +1593,7 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<T> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                 scope.Start();
@@ -1609,7 +1610,7 @@ namespace Azure.DigitalTwins.Core
                         MaxItemsPerPage = pageSizeHint
                     };
 
-                    Response<QueryResult> response = _queryClient.QueryTwins(querySpecification, options, cancellationToken);
+                    Response<QueryResult<T>> response = _queryClient.QueryTwins<T>(querySpecification, options, _objectSerializer, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception ex)

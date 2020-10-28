@@ -113,8 +113,8 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, Azure.DigitalTwins.Core.PublishComponentTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishTelemetry(string digitalTwinId, string messageId, string payload, Azure.DigitalTwins.Core.PublishTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, Azure.DigitalTwins.Core.PublishTelemetryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<string> Query(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<string> QueryAsync(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<T> QueryAsync<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<T> Query<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateComponent(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateComponentAsync(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateComponentOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDigitalTwin(string digitalTwinId, Azure.JsonPatchDocument jsonPatchDocument, Azure.DigitalTwins.Core.UpdateDigitalTwinOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -187,7 +187,7 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class QueryChargeHelper
     {
-        public static bool TryGetQueryCharge(Azure.Page<string> page, out float queryCharge) { throw null; }
+        public static bool TryGetQueryCharge(Azure.Page<Azure.DigitalTwins.Core.BasicDigitalTwin> page, out float queryCharge) { throw null; }
     }
     public partial class UpdateComponentOptions
     {
