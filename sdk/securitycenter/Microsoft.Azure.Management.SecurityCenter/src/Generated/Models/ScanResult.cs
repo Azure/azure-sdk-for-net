@@ -11,30 +11,31 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Represents a list of VM/server groups and set of rules that are
-    /// Recommended by Azure Security Center to be allowed
+    /// A vulnerability assessment scan result for a single rule.
     /// </summary>
-    public partial class AppWhitelistingGroups
+    public partial class ScanResult : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroups class.
+        /// Initializes a new instance of the ScanResult class.
         /// </summary>
-        public AppWhitelistingGroups()
+        public ScanResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppWhitelistingGroups class.
+        /// Initializes a new instance of the ScanResult class.
         /// </summary>
-        public AppWhitelistingGroups(IList<AppWhitelistingGroup> value = default(IList<AppWhitelistingGroup>))
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        public ScanResult(string id = default(string), string name = default(string), string type = default(string), ScanResultProperties properties = default(ScanResultProperties))
+            : base(id, name, type)
         {
-            Value = value;
+            Properties = properties;
             CustomInit();
         }
 
@@ -45,8 +46,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<AppWhitelistingGroup> Value { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ScanResultProperties Properties { get; set; }
 
     }
 }
