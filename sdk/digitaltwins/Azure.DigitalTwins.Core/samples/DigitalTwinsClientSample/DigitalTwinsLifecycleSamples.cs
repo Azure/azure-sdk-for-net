@@ -202,10 +202,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 try
                 {
                     // Delete all relationships
-                    AsyncPageable<string> relationships = client.GetRelationshipsAsync(digitalTwinId);
-                    await foreach (var relationshipJson in relationships)
+                    AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>(digitalTwinId);
+                    await foreach (BasicRelationship relationship in relationships)
                     {
-                        BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                         await client.DeleteRelationshipAsync(digitalTwinId, relationship.Id);
                         Console.WriteLine($"Found and deleted relationship '{relationship.Id}'.");
                     }

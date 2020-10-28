@@ -523,9 +523,10 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
         /// <remarks>
         /// <para>
-        /// String relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="BasicRelationship"/>.
+        /// Relationships that are returned as part of the pageable list can always be deserialized into an instance of <see cref="BasicRelationship"/>.
         /// You may also deserialize the relationship into custom type that extend the <see cref="BasicRelationship"/>.
         /// </para>
         /// <para>
@@ -541,10 +542,9 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// This sample demonstrates iterating over outgoing relationships and deserializing relationship strings into BasicRelationship objects.
         /// <code snippet="Snippet:DigitalTwinsSampleGetAllRelationships">
-        /// AsyncPageable&lt;string&gt; relationships = client.GetRelationshipsAsync(&quot;buildingTwinId&quot;);
-        /// await foreach (var relationshipJson in relationships)
+        /// AsyncPageable&lt;BasicRelationship&gt; relationships = client.GetRelationshipsAsync&lt;BasicRelationship&gt;(&quot;buildingTwinId&quot;);
+        /// await foreach (BasicRelationship relationship in relationships)
         /// {
-        ///     BasicRelationship relationship = JsonSerializer.Deserialize&lt;BasicRelationship&gt;(relationshipJson);
         ///     Console.WriteLine($&quot;Retrieved relationship &apos;{relationship.Id}&apos; with source {relationship.SourceId}&apos; and &quot; +
         ///         $&quot;target {relationship.TargetId}.\n\t&quot; +
         ///         $&quot;Prop1: {relationship.Properties[&quot;Prop1&quot;]}\n\t&quot; +
@@ -552,20 +552,22 @@ namespace Azure.DigitalTwins.Core
         /// }
         /// </code>
         /// </example>
-        public virtual AsyncPageable<string> GetRelationshipsAsync(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> GetRelationshipsAsync<T>(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
                 throw new ArgumentNullException(nameof(digitalTwinId));
             }
 
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<T>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
                 scope.Start();
                 try
                 {
-                    Response<RelationshipCollection> response = await _dtRestClient.ListRelationshipsAsync(digitalTwinId, relationshipName, options, cancellationToken).ConfigureAwait(false);
+                    Response<RelationshipCollection<T>> response = await _dtRestClient
+                        .ListRelationshipsAsync<T>(digitalTwinId, relationshipName, options, _objectSerializer, cancellationToken)
+                        .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -575,13 +577,15 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<T>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
                 scope.Start();
                 try
                 {
-                    Response<RelationshipCollection> response = await _dtRestClient.ListRelationshipsNextPageAsync(nextLink, digitalTwinId, relationshipName, options, cancellationToken).ConfigureAwait(false);
+                    Response<RelationshipCollection<T>> response = await _dtRestClient
+                        .ListRelationshipsNextPageAsync<T>(nextLink, digitalTwinId, relationshipName, options, _objectSerializer, cancellationToken)
+                        .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -602,6 +606,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <typeparam name="T">The type to deserialize the component to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -614,20 +619,21 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="GetRelationshipsAsync(string, string, GetRelationshipsOptions, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<string> GetRelationships(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> GetRelationships<T>(string digitalTwinId, string relationshipName = null, GetRelationshipsOptions options = null, CancellationToken cancellationToken = default)
         {
             if (digitalTwinId == null)
             {
                 throw new ArgumentNullException(nameof(digitalTwinId));
             }
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            Page<T> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
                 scope.Start();
                 try
                 {
-                    Response<RelationshipCollection> response = _dtRestClient.ListRelationships(digitalTwinId, relationshipName, options, cancellationToken);
+                    Response<RelationshipCollection<T>> response = _dtRestClient
+                        .ListRelationships<T>(digitalTwinId, relationshipName, options, _objectSerializer, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -637,13 +643,14 @@ namespace Azure.DigitalTwins.Core
                 }
             }
 
-            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<T> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(GetRelationships)}");
                 scope.Start();
                 try
                 {
-                    Response<RelationshipCollection> response = _dtRestClient.ListRelationshipsNextPage(nextLink, digitalTwinId, relationshipName, options, cancellationToken);
+                    Response<RelationshipCollection<T>> response = _dtRestClient
+                        .ListRelationshipsNextPage<T>(nextLink, digitalTwinId, relationshipName, options, _objectSerializer, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception ex)

@@ -825,6 +825,14 @@ namespace Azure.DigitalTwins.Core
 
         private Response UpdateRelationship(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions = null, CancellationToken cancellationToken = default) => null;
 
+        private Task<Response<RelationshipCollection>> ListRelationshipsAsync(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private Response<RelationshipCollection> ListRelationships(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private Task<Response<RelationshipCollection>> ListRelationshipsNextPageAsync(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default) => null;
+
+        private Response<RelationshipCollection> ListRelationshipsNextPage(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default) => null;
+
         // Original return type is Task<Response>. Changing to object to allow returning null.
         private Task<Response> UpdateComponentAsync(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions = null, CancellationToken cancellationToken = default) => null;
 
