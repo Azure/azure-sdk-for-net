@@ -82,7 +82,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream, Encoding.UTF8);
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
                         string value = await streamReader.ReadToEndAsync();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.Data.SchemaRegistry
             {
                 case 200:
                     {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream, Encoding.UTF8);
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
                         string value = streamReader.ReadToEnd();
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
