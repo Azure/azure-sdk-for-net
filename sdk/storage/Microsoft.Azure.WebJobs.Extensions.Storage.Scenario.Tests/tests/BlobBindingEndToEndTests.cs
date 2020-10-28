@@ -222,6 +222,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToIEnumerableBlobClient()
+        {
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableBlobClientBinding"));
+
+            Assert.AreEqual(6, _numBlobsRead);
+        }
+
+        [Test]
         public async Task BindToByteArray()
         {
             await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("ByteArrayBinding"));
@@ -501,6 +509,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [NoAutomaticTrigger]
         public static async Task IEnumerableICloudBlobBinding(
             [Blob(ContainerName)] IEnumerable<BlobBaseClient> blobs)
+        {
+            foreach (var blob in blobs)
+            {
+                Stream stream = await blob.OpenReadAsync();
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string content = reader.ReadToEnd();
+                    Assert.AreEqual(TestData, content);
+                }
+            }
+            _numBlobsRead = blobs.Count();
+        }
+
+        [NoAutomaticTrigger]
+        public static async Task IEnumerableBlobClientBinding(
+            [Blob(ContainerName)] IEnumerable<BlobClient> blobs)
         {
             foreach (var blob in blobs)
             {
