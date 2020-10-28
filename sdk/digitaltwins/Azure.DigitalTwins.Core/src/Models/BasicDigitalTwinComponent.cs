@@ -28,6 +28,6 @@ namespace Azure.DigitalTwins.Core
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
         /// </summary>
         [JsonExtensionData]
-        public IDictionary<string, object> Contents { get; } = new Dictionary<string, object>();
+        public IDictionary<string, object> Contents { get; set; } = new Dictionary<string, object>();
     }
 }
