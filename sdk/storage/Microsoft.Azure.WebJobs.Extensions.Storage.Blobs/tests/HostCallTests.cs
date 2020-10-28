@@ -123,6 +123,19 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
+        public async Task Blob_IfBoundToBlobClient_CanCall()
+        {
+            // Arrange
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
+            var inputBlob = container.GetBlockBlobClient(BlobName);
+            await container.CreateIfNotExistsAsync();
+            await inputBlob.UploadTextAsync("ignore");
+
+            // Act
+            await CallAsync(typeof(BlobProgram), "BindToBlobClient");
+        }
+
+        [Test]
         public async Task Blob_IfBoundToString_CanCall()
         {
             // Arrange
@@ -276,6 +289,50 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             public static TaskCompletionSource<BlockBlobClient> TaskSource { get; set; }
 
             public static void Call([BlobTrigger(BlobPath)] BlockBlobClient blob)
+            {
+                TaskSource.TrySetResult(blob);
+            }
+        }
+
+        [Test]
+        public async Task BlobTrigger_IfBoundToBlobClient_CanCall()
+        {
+            // Arrange
+            var container = blobServiceClient.GetBlobContainerClient(ContainerName);
+            var blob = container.GetBlockBlobClient(BlobName);
+            await container.CreateIfNotExistsAsync();
+            await blob.UploadTextAsync("ignore");
+
+            // TODO: Remove argument once host.Call supports more flexibility.
+            IDictionary<string, object> arguments = new Dictionary<string, object>
+            {
+                { "blob", BlobPath }
+            };
+
+            // Act
+            var result = await CallAsync<BlobClient>(typeof(BlobTriggerBindToBlobClientProgram),
+                "Call", arguments, (s) => BlobTriggerBindToBlobClientProgram.TaskSource = s);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task BlobTrigger_IfBoundToBlobClientAndTriggerArgumentIsMissing_CallThrows()
+        {
+            // Act
+            Exception exception = await CallFailureAsync(typeof(BlobTriggerBindToBlobClientProgram), "Call");
+
+            // Assert
+            Assert.IsInstanceOf<InvalidOperationException>(exception);
+            Assert.AreEqual("Missing value for trigger parameter 'blob'.", exception.Message);
+        }
+
+        private class BlobTriggerBindToBlobClientProgram
+        {
+            public static TaskCompletionSource<BlobClient> TaskSource { get; set; }
+
+            public static void Call([BlobTrigger(BlobPath)] BlobClient blob)
             {
                 TaskSource.TrySetResult(blob);
             }
@@ -601,6 +658,12 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
             }
 
             public static void BindToCloudBlockBlob([Blob(BlobPath)] BlockBlobClient blob)
+            {
+                Assert.NotNull(blob);
+                Assert.AreEqual(BlobName, blob.Name);
+            }
+
+            public static void BindToBlobClient([Blob(BlobPath)] BlobClient blob)
             {
                 Assert.NotNull(blob);
                 Assert.AreEqual(BlobName, blob.Name);

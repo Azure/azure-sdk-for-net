@@ -102,13 +102,13 @@ public static class BlobFunction_WriteStream
 
 ### Binding to Azure Storage Blob SDK types
 
-```C# Snippet:BlobFunction_BlobBaseClient
-public static class BlobFunction_BlobBaseClient
+```C# Snippet:BlobFunction_BlobClient
+public static class BlobFunction_BlobClient
 {
     [FunctionName("BlobFunction")]
     public static async Task Run(
-        [BlobTrigger("sample-container/sample-blob-1")] BlobBaseClient blobTriggerClient,
-        [Blob("sample-container/sample-blob-2")] BlobBaseClient blobClient,
+        [BlobTrigger("sample-container/sample-blob-1")] BlobClient blobTriggerClient,
+        [Blob("sample-container/sample-blob-2")] BlobClient blobClient,
         ILogger logger)
     {
         BlobProperties blobTriggerProperties = await blobTriggerClient.GetPropertiesAsync();

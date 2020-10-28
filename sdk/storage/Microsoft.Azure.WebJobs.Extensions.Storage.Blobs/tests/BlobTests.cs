@@ -65,6 +65,35 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         }
 
         [Test]
+        public async Task Blob_IfBoundToBlobClient_BindsAndCreatesContainerButNotBlob()
+        {
+            // Act
+            var prog = new BindToBlobClientProgram();
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToBlobClientProgram>(prog, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToBlobClientProgram>();
+            await jobHost.CallAsync(nameof(BindToBlobClientProgram.Run));
+
+            var result = prog.Result;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(BlobName, result.Name);
+            Assert.NotNull(result.BlobContainerName);
+            Assert.AreEqual(ContainerName, result.BlobContainerName);
+            var container = GetContainerReference(blobServiceClient, ContainerName);
+            Assert.True(await container.ExistsAsync());
+            var blob = container.GetBlockBlobClient(BlobName);
+            Assert.False(await blob.ExistsAsync());
+        }
+
+        [Test]
         public async Task Blob_IfBoundToTextWriter_CreatesBlob()
         {
             // Arrange
@@ -118,6 +147,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public void Run(
                 [Blob(BlobPath)] BlockBlobClient blob)
+            {
+                this.Result = blob;
+            }
+        }
+
+        private class BindToBlobClientProgram
+        {
+            public BlobClient Result { get; set; }
+
+            public void Run(
+                [Blob(BlobPath)] BlobClient blob)
             {
                 this.Result = blob;
             }
