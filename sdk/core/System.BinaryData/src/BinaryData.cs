@@ -224,8 +224,15 @@ namespace System
         /// Gets the value of this instance as bytes without any further interpretation.
         /// </summary>
         /// <returns>The value of this instance as bytes without any further interpretation.</returns>
-        public ReadOnlyMemory<byte> ToBytes() =>
+        public ReadOnlyMemory<byte> ToMemory() =>
             _bytes;
+
+        /// <summary>
+        /// Converts the <see cref="BinaryData"/> to a byte array.
+        /// </summary>
+        /// <returns>A byte array representing the data.</returns>
+        public byte[] ToArray() =>
+            _bytes.ToArray();
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> to the specified type using

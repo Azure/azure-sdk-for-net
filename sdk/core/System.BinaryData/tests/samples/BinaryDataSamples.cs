@@ -26,10 +26,10 @@ namespace Azure.Core.Experimental.Tests.samples
         public void ToFromBytes()
         {
             #region Snippet:BinaryDataToFromBytes
-            var bytes = Encoding.UTF8.GetBytes("some data");
+            byte[] bytes = Encoding.UTF8.GetBytes("some data");
 
             // Create BinaryData using a constructor ...
-            var data = new BinaryData(bytes);
+            BinaryData data = new BinaryData(bytes);
 
             // Or using a static factory method.
             data = BinaryData.FromBytes(bytes);
@@ -41,7 +41,10 @@ namespace Azure.Core.Experimental.Tests.samples
             ReadOnlySpan<byte> ros = data;
 
             // there is also a ToBytes method that gives access to the ReadOnlyMemory.
-            rom = data.ToBytes();
+            rom = data.ToMemory();
+
+            // and a ToArray method that converts into a byte array.
+            byte[] array = data.ToArray();
             #endregion
         }
 

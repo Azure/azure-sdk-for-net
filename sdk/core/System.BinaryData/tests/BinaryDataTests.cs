@@ -18,7 +18,7 @@ namespace System.Tests
         {
             byte[] payload = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromBytes(payload);
-            Assert.Equal(payload, data.ToBytes().ToArray());
+            Assert.Equal(payload, data.ToArray());
 
             MemoryMarshal.TryGetArray<byte>(payload, out ArraySegment<byte> array);
             Assert.Same(payload, array.Array);
@@ -89,7 +89,7 @@ namespace System.Tests
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             using MemoryStream stream = new MemoryStream(buffer);
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             byte[] output = new byte[buffer.Length];
             var outputStream = data.ToStream();
@@ -98,7 +98,7 @@ namespace System.Tests
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
@@ -111,7 +111,7 @@ namespace System.Tests
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             using MemoryStream stream = new OverFlowStream(offset: int.MaxValue - 10000, buffer);
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             byte[] output = new byte[buffer.Length];
             var outputStream = data.ToStream();
@@ -120,7 +120,7 @@ namespace System.Tests
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
@@ -135,7 +135,7 @@ namespace System.Tests
             stream.Write(buffer, 0, buffer.Length);
             stream.Position = 0;
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToMemory().ToArray());
 
             byte[] output = new byte[buffer.Length];
             var outputStream = data.ToStream();
@@ -144,7 +144,7 @@ namespace System.Tests
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToMemory().ToArray());
 
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
@@ -157,7 +157,7 @@ namespace System.Tests
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             using MemoryStream stream = new NonSeekableStream(buffer);
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             byte[] output = new byte[buffer.Length];
             var outputStream = data.ToStream();
@@ -166,7 +166,7 @@ namespace System.Tests
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
@@ -181,7 +181,7 @@ namespace System.Tests
             stream.Write(buffer, 0, buffer.Length);
             stream.Position = 0;
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             byte[] output = new byte[buffer.Length];
             var outputStream = data.ToStream();
@@ -190,7 +190,7 @@ namespace System.Tests
 
             stream.Position = 0;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(buffer, data.ToBytes().ToArray());
+            Assert.Equal(buffer, data.ToArray());
 
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
@@ -211,12 +211,12 @@ namespace System.Tests
 
             stream.Position = streamStart;
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(payload.ToArray(), data.ToMemory().ToArray());
             Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
 
             stream.Position = streamStart;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(payload.ToArray(), data.ToMemory().ToArray());
             Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
         }
 
@@ -236,12 +236,12 @@ namespace System.Tests
 
             stream.Position = streamStart;
             BinaryData data = BinaryData.FromStream(stream);
-            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(payload.ToArray(), data.ToArray());
             Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
 
             stream.Position = streamStart;
             data = await BinaryData.FromStreamAsync(stream);
-            Assert.Equal(payload.ToArray(), data.ToBytes().ToArray());
+            Assert.Equal(payload.ToArray(), data.ToArray());
             Assert.Equal(buffer.Count - streamStart, data.ToStream().Length);
         }
 

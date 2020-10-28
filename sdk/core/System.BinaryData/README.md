@@ -19,10 +19,10 @@ Console.WriteLine(data.ToString()); // prints "some data"
  
  To/From bytes:
 ```C# Snippet:BinaryDataToFromBytes
-var bytes = Encoding.UTF8.GetBytes("some data");
+byte[] bytes = Encoding.UTF8.GetBytes("some data");
 
 // Create BinaryData using a constructor ...
-var data = new BinaryData(bytes);
+BinaryData data = new BinaryData(bytes);
 
 // Or using a static factory method.
 data = BinaryData.FromBytes(bytes);
@@ -34,7 +34,10 @@ ReadOnlyMemory<byte> rom = data;
 ReadOnlySpan<byte> ros = data;
 
 // there is also a ToBytes method that gives access to the ReadOnlyMemory.
-rom = data.ToBytes();
+rom = data.ToMemory();
+
+// and a ToArray method that converts into a byte array.
+byte[] array = data.ToArray();
 ```
 To/From stream:
 ```C# Snippet:BinaryDataToFromStream
