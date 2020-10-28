@@ -210,7 +210,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 
 ## Recording
 
-When tests are run in recording mode, session records are saved to `artifacts/bin/<ProjectName>/<TargetFramework>/SessionRecords` directory. You can copy recordings to the project directory manually or by executing `dotnet msbuild /t:UpdateSessionRecords` in the test project directory.
+When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
 
 __NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make sure you are running the right target framework.
 

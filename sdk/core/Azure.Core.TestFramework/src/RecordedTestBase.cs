@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -78,7 +79,10 @@ namespace Azure.Core.TestFramework
             string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+
+            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+
+            return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
