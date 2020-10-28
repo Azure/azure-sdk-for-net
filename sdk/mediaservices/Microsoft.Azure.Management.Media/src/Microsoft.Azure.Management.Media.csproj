@@ -14,7 +14,7 @@
         This SDK is using 2020-05-01 version of the API
         
         * The MediaServices entity now supports System Managed Identities
-        * When a MediaServices entity has a Managed Identity, it can be used to enable Encryption at Rest with a Customer Manager Key (use fwlink to https://docs.microsoft.com/en-us/azure/media-services/latest/concept-use-customer-managed-keys-byok)
+        * When a MediaServices entity has a Managed Identity, it can be used to enable Encryption at Rest with a Customer Manager Key
         * When a Media Services entity has a Managed Identity, it can be used to access the attached storage accounts using the Managed Identity.
         * I am purposely being vague here until Encoding vNext is fully deployed and enabled so we don’t want to promise Trusted Storage access capability here yet.
 
