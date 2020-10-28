@@ -525,6 +525,8 @@ namespace Azure.Storage
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
+                Sas.Permissions.Move,
+                Sas.Permissions.Execute
             };
         }
 
