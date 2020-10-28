@@ -118,8 +118,6 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
