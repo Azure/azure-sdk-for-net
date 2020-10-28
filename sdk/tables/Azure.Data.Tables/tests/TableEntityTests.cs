@@ -193,38 +193,48 @@ namespace Azure.Tables.Tests
             Assert.That(entity["Foo"] is double);
             Assert.That(entity["Foo"], Is.EqualTo(1));
 
+            // Initialize a property to an int value
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is int);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
             // Change to a long
-            entity["Foo"] = 5L;
-            Assert.That(entity["Foo"] is long);
-            Assert.That(entity["Foo"], Is.EqualTo(5L));
+            entity["Foo2"] = 5L;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(5L));
 
             // Change to a long compatible int
-            entity["Foo"] = 0;
-            Assert.That(entity["Foo"] is long);
-            Assert.That(entity["Foo"], Is.EqualTo(0));
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
+            // Initialize a property to an int value
+            entity["Foo3"] = 0;
+            Assert.That(entity["Foo3"] is int);
+            Assert.That(entity["Foo3"], Is.EqualTo(0));
 
             // Validate invalid conversions
-            entity["Foo"] = "fail";
-            Assert.That(entity["Foo"], Is.EqualTo("fail"));
-            Assert.That(entity["Foo"] is string);
+            entity["Foo3"] = "fail";
+            Assert.That(entity["Foo3"], Is.EqualTo("fail"));
+            Assert.That(entity["Foo3"] is string);
 
-            entity["Foo"] = new byte[] { 0x02 };
-            Assert.That(entity["Foo"], Is.EqualTo(new byte[] { 0x02 }));
-            Assert.That(entity["Foo"] is byte[]);
+            entity["Foo3"] = new byte[] { 0x02 };
+            Assert.That(entity["Foo3"], Is.EqualTo(new byte[] { 0x02 }));
+            Assert.That(entity["Foo3"] is byte[]);
 
-            entity["Foo"] = false;
-            Assert.That(entity["Foo"], Is.EqualTo(false));
-            Assert.That(entity["Foo"] is bool);
+            entity["Foo3"] = false;
+            Assert.That(entity["Foo3"], Is.EqualTo(false));
+            Assert.That(entity["Foo3"] is bool);
 
             var guid = Guid.NewGuid();
-            entity["Foo"] = guid;
-            Assert.That(entity["Foo"], Is.EqualTo(guid));
-            Assert.That(entity["Foo"] is Guid);
+            entity["Foo3"] = guid;
+            Assert.That(entity["Foo3"], Is.EqualTo(guid));
+            Assert.That(entity["Foo3"] is Guid);
 
             var now = DateTime.Now;
-            entity["Foo"] = now;
-            Assert.That(entity["Foo"], Is.EqualTo(now));
-            Assert.That(entity["Foo"] is DateTime);
+            entity["Foo3"] = now;
+            Assert.That(entity["Foo3"], Is.EqualTo(now));
+            Assert.That(entity["Foo3"] is DateTime);
         }
     }
 }
