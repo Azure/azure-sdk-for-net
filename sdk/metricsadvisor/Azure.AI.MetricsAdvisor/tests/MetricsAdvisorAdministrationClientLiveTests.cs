@@ -207,10 +207,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Validate that we can Get the newly created config
             AnomalyAlertConfiguration getAlertConfig = await adminClient.GetAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
-            Response<IReadOnlyList<AnomalyAlertConfiguration>> getAlertConfigs = await adminClient.GetAnomalyAlertConfigurationsAsync(createdAnomalyDetectionConfiguration.Id).ConfigureAwait(false);
+
+            List<AnomalyAlertConfiguration> getAlertConfigs = new List<AnomalyAlertConfiguration>();
+
+            await foreach (var config in adminClient.GetAnomalyAlertConfigurationsAsync(createdAnomalyDetectionConfiguration.Id))
+            {
+                getAlertConfigs.Add(config);
+            }
 
             Assert.That(getAlertConfig.Id, Is.EqualTo(createdAlertConfig.Id));
-            Assert.That(getAlertConfigs.Value.Any(c => c.Id == createdAlertConfig.Id));
+            Assert.That(getAlertConfigs.Any(c => c.Id == createdAlertConfig.Id));
 
             getAlertConfig.Description = "Updated";
             getAlertConfig.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
@@ -241,27 +247,27 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
-            AlertingHook createdEmailHook = await adminClient.CreateHookAsync(new EmailHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailHook)} description" }).ConfigureAwait(false);
+            NotificationHook createdEmailHook = await adminClient.CreateHookAsync(new EmailNotificationHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailNotificationHook)} description" }).ConfigureAwait(false);
 
-            EmailHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHook.Id).ConfigureAwait(false)).Value as EmailHook;
+            EmailNotificationHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHook.Id).ConfigureAwait(false)).Value as EmailNotificationHook;
 
             getEmailHook.Description = "updated description";
             getEmailHook.EmailsToAlert.Add($"{Recording.GenerateAlphaNumericId("user")}@contoso.com");
 
             await adminClient.UpdateHookAsync(getEmailHook.Id, getEmailHook).ConfigureAwait(false);
 
-            AlertingHook createdWebHook = await adminClient.CreateHookAsync(new WebHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebHook)} description" }).ConfigureAwait(false);
+            NotificationHook createdWebHook = await adminClient.CreateHookAsync(new WebNotificationHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebNotificationHook)} description" }).ConfigureAwait(false);
 
             createdWebHook.Description = "updated description";
 
             await adminClient.UpdateHookAsync(createdEmailHook.Id, createdEmailHook).ConfigureAwait(false);
 
-            WebHook getWebHook = (await adminClient.GetHookAsync(createdWebHook.Id).ConfigureAwait(false)).Value as WebHook;
+            WebNotificationHook getWebHook = (await adminClient.GetHookAsync(createdWebHook.Id).ConfigureAwait(false)).Value as WebNotificationHook;
 
             getWebHook.Description = "updated description";
             getWebHook.CertificateKey = Recording.GenerateAlphaNumericId("key");
 
-            List<AlertingHook> hooks = await adminClient.GetHooksAsync(new GetHooksOptions { HookNameFilter = getWebHook.Name }).ToEnumerableAsync().ConfigureAwait(false);
+            List<NotificationHook> hooks = await adminClient.GetHooksAsync(new GetHooksOptions { HookNameFilter = getWebHook.Name }).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(getEmailHook.Id, Is.EqualTo(createdEmailHook.Id));
             Assert.That(getEmailHook.Name, Is.EqualTo(createdEmailHook.Name));
@@ -284,9 +290,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
 
-            Response<IReadOnlyList<AnomalyDetectionConfiguration>> configs = await adminClient.GetMetricAnomalyDetectionConfigurationsAsync(MetricId).ConfigureAwait(false);
+            bool isResponseEmpty = true;
 
-            Assert.That(configs.Value, Is.Not.Empty);
+            await foreach (AnomalyDetectionConfiguration config in adminClient.GetMetricAnomalyDetectionConfigurationsAsync(MetricId))
+            {
+                isResponseEmpty = false;
+                break;
+            }
+
+            Assert.That(isResponseEmpty, Is.False);
         }
     }
 }

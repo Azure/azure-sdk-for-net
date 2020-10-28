@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2020-06-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMRunCommands", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2020-06-01"),

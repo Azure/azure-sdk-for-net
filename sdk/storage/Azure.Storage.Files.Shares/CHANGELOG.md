@@ -1,8 +1,13 @@
 # Release History
 
 ## 12.5.0-preview.2 (Unreleased)
-- Fixed bug where ShareDirectoryClient.Exists() and ShareFileClient.Exists() would thrown an exception when the directory or file's parent directory didn't exist.
-- Added seekability to ShareFileClient.OpenRead().
+- Fixed bug where ShareDirectoryClient.Exists(), .DeleteIfExists() and ShareFileClient.Exists(), .DeleteIfExists() would thrown an exception when the directory or file's parent directory didn't exist.
+- Renamed ShareClient.SetTier() -> ShareClient.SetProperties().  SetProperties() can be used to set both Share Tier and Share Quota.
+- Changed ShareDeleteOptions.IncludeSnapshots -> .ShareSnapshotsDeleteOption, and added option to also delete Share Snapshots that have been leased.
+- Added additional info to exception messages.
+- Removed ability to create a ShareLeaseClient for a Share or Share Snapshot.  This feature has been rescheduled for future release.
+- Fixed bug where File Share SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
+- Added ability to set Position on streams created with ShareFileClient.OpenRead().
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

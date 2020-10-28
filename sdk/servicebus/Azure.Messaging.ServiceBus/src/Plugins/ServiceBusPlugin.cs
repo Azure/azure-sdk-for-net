@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 #pragma warning disable CA1822 // Mark members as static
         protected void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
-            message.AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { body });
+            message.AmqpMessage.Body = new AmqpDataMessageBody(new BinaryData[] { body });
         }
 
         /// <summary>

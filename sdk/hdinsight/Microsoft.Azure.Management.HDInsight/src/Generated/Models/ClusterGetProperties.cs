@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// include: 'Windows', 'Linux'</param>
         /// <param name="tier">The cluster tier. Possible values include:
         /// 'Standard', 'Premium'</param>
+        /// <param name="clusterId">The cluster id.</param>
         /// <param name="kafkaRestProperties">The cluster kafka rest proxy
         /// configuration.</param>
         /// <param name="securityProfile">The security profile.</param>
@@ -58,12 +59,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// encryption-in-transit properties.</param>
         /// <param name="minSupportedTlsVersion">The minimal supported tls
         /// version.</param>
-        /// <param name="networkSettings">The network settings.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkSettings networkSettings = default(NetworkSettings))
+        /// <param name="networkProperties">The network properties.</param>
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), string clusterId = default(string), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), EncryptionInTransitProperties encryptionInTransitProperties = default(EncryptionInTransitProperties), string minSupportedTlsVersion = default(string), NetworkProperties networkProperties = default(NetworkProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
             Tier = tier;
+            ClusterId = clusterId;
             ClusterDefinition = clusterDefinition;
             KafkaRestProperties = kafkaRestProperties;
             SecurityProfile = securityProfile;
@@ -77,7 +79,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             DiskEncryptionProperties = diskEncryptionProperties;
             EncryptionInTransitProperties = encryptionInTransitProperties;
             MinSupportedTlsVersion = minSupportedTlsVersion;
-            NetworkSettings = networkSettings;
+            NetworkProperties = networkProperties;
             CustomInit();
         }
 
@@ -105,6 +107,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public Tier? Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cluster id.
+        /// </summary>
+        [JsonProperty(PropertyName = "clusterId")]
+        public string ClusterId { get; set; }
 
         /// <summary>
         /// Gets or sets the cluster definition.
@@ -187,10 +195,10 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string MinSupportedTlsVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the network settings.
+        /// Gets or sets the network properties.
         /// </summary>
-        [JsonProperty(PropertyName = "networkSettings")]
-        public NetworkSettings NetworkSettings { get; set; }
+        [JsonProperty(PropertyName = "networkProperties")]
+        public NetworkProperties NetworkProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

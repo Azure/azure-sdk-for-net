@@ -1,5 +1,6 @@
 parameters:
   Artifacts: []
+  TestPipeline: false
   ArtifactName: 'not-specified'
   # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
@@ -54,13 +55,14 @@ stages:
                 deploy:
                   steps:
                     - checkout: self
-                    - task: PowerShell@2
-                      displayName: Prep template pipeline for release
-                      condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
-                      inputs:
-                        pwsh: true
-                        workingDirectory: $(Build.SourcesDirectory)
-                        filePath: eng/scripts/SetTestPipelineVersion.ps1
+                    - ${{if eq(parameters.TestPipeline, 'true')}}:
+                      - task: PowerShell@2
+                        displayName: Prep template pipeline for release
+                        condition: succeeded()
+                        inputs:
+                          pwsh: true
+                          workingDirectory: $(Build.SourcesDirectory)
+                          filePath: eng/scripts/SetTestPipelineVersion.ps1
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -166,6 +168,7 @@ stages:
                           GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
+                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
           - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
             - deployment: PublishDocs
@@ -216,6 +219,7 @@ stages:
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
   - stage: Integration
     dependsOn: Signing

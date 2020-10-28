@@ -4,7 +4,7 @@ parameters:
   WorkingDirectory: '$(System.DefaultWorkingDirectory)'
   ScriptDirectory: 'eng/common/scripts'
   Recursive: $false
-  CheckLinkGuidance: $false
+  CheckLinkGuidance: $true
   Urls: '(Get-ChildItem -Path ./ -Recurse -Include *.md)'
   BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}.*/(?:blob|tree)/)master(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"

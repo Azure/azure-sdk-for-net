@@ -27,11 +27,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     ipConfiguration = NetworkInterfaceIPConfiguration.DeserializeNetworkInterfaceIPConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("health"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     health = new ApplicationGatewayBackendHealthServerHealth(property.Value.GetString());
                     continue;
                 }

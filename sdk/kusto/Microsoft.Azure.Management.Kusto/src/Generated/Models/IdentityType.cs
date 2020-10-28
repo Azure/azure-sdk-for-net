@@ -10,51 +10,15 @@
 
 namespace Microsoft.Azure.Management.Kusto.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for IdentityType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum IdentityType
+    public static class IdentityType
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "SystemAssigned")]
-        SystemAssigned
-    }
-    internal static class IdentityTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this IdentityType? value)
-        {
-            return value == null ? null : ((IdentityType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this IdentityType value)
-        {
-            switch( value )
-            {
-                case IdentityType.None:
-                    return "None";
-                case IdentityType.SystemAssigned:
-                    return "SystemAssigned";
-            }
-            return null;
-        }
-
-        internal static IdentityType? ParseIdentityType(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return IdentityType.None;
-                case "SystemAssigned":
-                    return IdentityType.SystemAssigned;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string UserAssigned = "UserAssigned";
+        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
     }
 }
