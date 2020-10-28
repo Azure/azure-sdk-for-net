@@ -356,8 +356,8 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public enum SelectionMarkState
     {
-        Selected = 0,
-        Unselected = 1,
+        Unselected = 0,
+        Selected = 1,
     }
 }
 namespace Azure.AI.FormRecognizer.Training
