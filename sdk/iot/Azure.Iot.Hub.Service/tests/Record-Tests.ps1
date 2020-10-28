@@ -27,6 +27,8 @@ else
     dotnet test --filter FullyQualifiedName~$TestName
 }
 
+dotnet msbuild
+
 $newConfig = @"
 {
     "TestMode":  "Playback"	
