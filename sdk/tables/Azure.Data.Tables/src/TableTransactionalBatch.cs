@@ -87,7 +87,6 @@ namespace Azure.Data.Tables
             var message = _batchOperations.CreateInsertEntityRequest(
                 _table,
                 null,
-                null,
                 _returnNoContent,
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
@@ -119,7 +118,6 @@ namespace Azure.Data.Tables
                 entity.PartitionKey,
                 entity.RowKey,
                 null,
-                null,
                 ifMatch: ifMatch.ToString(),
                 tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                 queryOptions: new QueryOptions() { Format = _format });
@@ -142,7 +140,6 @@ namespace Azure.Data.Tables
                     entity.PartitionKey,
                     entity.RowKey,
                     null,
-                    null,
                     ifMatch: null,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     queryOptions: new QueryOptions() { Format = _format }),
@@ -150,7 +147,6 @@ namespace Azure.Data.Tables
                     _table,
                     entity.PartitionKey,
                     entity.RowKey,
-                    null,
                     null,
                     ifMatch: null,
                     entity.ToOdataAnnotatedDictionary(),
@@ -179,7 +175,6 @@ namespace Azure.Data.Tables
                 partitionKey,
                 rowKey,
                 ifMatch.ToString(),
-                null,
                 null,
                 queryOptions: new QueryOptions() { Format = _format });
 
