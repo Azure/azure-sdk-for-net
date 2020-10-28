@@ -30,14 +30,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the UserArtifactSource class.
         /// </summary>
-        /// <param name="fileName">Required. The fileName of the
-        /// artifact.</param>
         /// <param name="mediaLink">Required. The mediaLink of the artifact,
-        /// must be a readable storage blob.</param>
-        public UserArtifactSource(string fileName, string mediaLink)
+        /// must be a readable storage page blob.</param>
+        /// <param name="defaultConfigurationLink">Optional. The
+        /// defaultConfigurationLink of the artifact, must be a readable
+        /// storage page blob.</param>
+        public UserArtifactSource(string mediaLink, string defaultConfigurationLink = default(string))
         {
-            FileName = fileName;
             MediaLink = mediaLink;
+            DefaultConfigurationLink = defaultConfigurationLink;
             CustomInit();
         }
 
@@ -47,17 +48,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required. The fileName of the artifact.
-        /// </summary>
-        [JsonProperty(PropertyName = "fileName")]
-        public string FileName { get; set; }
-
-        /// <summary>
         /// Gets or sets required. The mediaLink of the artifact, must be a
-        /// readable storage blob.
+        /// readable storage page blob.
         /// </summary>
         [JsonProperty(PropertyName = "mediaLink")]
         public string MediaLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. The defaultConfigurationLink of the
+        /// artifact, must be a readable storage page blob.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultConfigurationLink")]
+        public string DefaultConfigurationLink { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,10 +69,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FileName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FileName");
-            }
             if (MediaLink == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "MediaLink");
