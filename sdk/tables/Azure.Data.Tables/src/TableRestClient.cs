@@ -166,7 +166,7 @@ namespace Azure.Data.Tables
 
         private static string AppendEntityInfoToMessage(string messsage, ITableEntity entity)
         {
-            return messsage += $"\n\nRowKey={entity.RowKey}";
+            return messsage += $"\nRowKey={entity.RowKey}.";
         }
     }
 }

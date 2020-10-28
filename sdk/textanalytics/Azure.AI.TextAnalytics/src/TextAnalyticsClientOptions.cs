@@ -8,6 +8,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.
+    /// For example, set a default value for Country hint or Language that will apply to all the
+    /// client calls. Add logging, add headers to request, etc.
     /// </summary>
     public class TextAnalyticsClientOptions : ClientOptions
     {

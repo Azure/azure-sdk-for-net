@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -18,7 +19,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ETag { get; set; }
 
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
+        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
 
         [JsonPropertyName("Prop1")]
         public string Prop1 { get; set; }
@@ -33,10 +34,10 @@ namespace Azure.DigitalTwins.Core.Samples
     internal class MyCustomComponent
     {
         /// <summary>
-        /// A component must have a property named $metadata with no properties to be distinguished from other properties as a component.
+        /// A component must have a property named $metadata with no client-supplied properties, to be distinguished from other properties as a component.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public object Metadata { get; set; } = new object();
+        public Dictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
