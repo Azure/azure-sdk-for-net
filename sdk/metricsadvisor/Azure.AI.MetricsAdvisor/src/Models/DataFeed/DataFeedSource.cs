@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Type = dataFeedSourceType;
         }
 
-        internal static DataFeedSource CreateDataFeedSourceInstance(DataFeedDetail dataFeedDetail) =>
+        internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
             dataFeedDetail switch
             {
                 AzureApplicationInsightsDataFeed d => new AzureApplicationInsightsDataFeedSource(d.DataSourceParameter),
@@ -44,7 +44,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         internal DataFeedDetail InstantiateDataFeedDetail(string name, DataFeedGranularityType granularityType, IList<DataFeedMetric> metricColumns, DateTimeOffset ingestionStartTime)
         {
-            // TODO: do we do the same for patch?
             ingestionStartTime = ClientCommon.NormalizeDateTimeOffset(ingestionStartTime);
 
             return Parameter switch

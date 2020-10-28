@@ -284,7 +284,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                DataFeedDetail dataFeedDetail = dataFeed.BuildDataFeedDetail();
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
                 dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
@@ -315,7 +315,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                DataFeedDetail dataFeedDetail = dataFeed.BuildDataFeedDetail();
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
                 dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);

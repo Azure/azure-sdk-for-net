@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.Select(metric => metric.MetricId).ToList();
             Name = dataFeedDetail.DataFeedName;
-            DataSource = DataFeedSource.CreateDataFeedSourceInstance(dataFeedDetail);
+            DataSource = DataFeedSource.GetDataFeedSource(dataFeedDetail);
             SourceType = dataFeedDetail.DataSourceType;
             Schema = new DataFeedSchema(dataFeedDetail);
             Granularity = new DataFeedGranularity(dataFeedDetail);
@@ -126,7 +126,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeedOptions Options { get; set; }
 
-        internal DataFeedDetail BuildDataFeedDetail()
+        internal DataFeedDetail GetDataFeedDetail()
         {
             DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
 
@@ -184,13 +184,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedDetailPatch patch = DataSource.InstantiateDataFeedDetailPatch();
 
             patch.DataFeedName = Name;
-            // TODO
-            // Currently cannot be set. Fix it when a better Update design is in place.
             patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default;
 
             patch.TimestampColumn = Schema.TimestampColumn;
 
-            patch.DataStartFrom = IngestionSettings.IngestionStartTime;
+            patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
             patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
             patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
             patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
@@ -200,19 +198,16 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 patch.DataFeedDescription = Options.Description;
                 patch.ActionLinkTemplate = Options.ActionLinkTemplate;
-                // TODO
                 patch.ViewMode = Options.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(Options.AccessMode.ToString()) : default;
                 if (Options.RollupSettings != null)
                 {
                     patch.AllUpIdentification = Options.RollupSettings.AlreadyRollupIdentificationValue;
-                    // TODO
                     patch.NeedRollup = Options.RollupSettings.RollupType.HasValue == true ? new DataFeedDetailPatchNeedRollup(Options.RollupSettings.RollupType.ToString()) : default;
                     patch.RollUpMethod = Options.RollupSettings.RollupMethod.HasValue == true ? new DataFeedDetailPatchRollUpMethod(Options.RollupSettings.RollupMethod.ToString()) : default;
                     patch.RollUpColumns = Options.RollupSettings.AutoRollupGroupByColumnNames;
                 }
                 if (Options.MissingDataPointFillSettings != null)
                 {
-                    // TODO
                     patch.FillMissingPointType = Options.MissingDataPointFillSettings.FillType.HasValue == true ? new DataFeedDetailPatchFillMissingPointType(Options.MissingDataPointFillSettings.FillType.ToString()) : default;
                     patch.FillMissingPointValue = Options.MissingDataPointFillSettings.CustomFillValue;
                 }
