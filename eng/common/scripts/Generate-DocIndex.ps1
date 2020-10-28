@@ -17,33 +17,33 @@ function Get-CSVMetadata ([string]$MetadataUri) {
   
 # Given the github io blob storage url and language regex,
 # the helper function will return a list of artifact names.
-function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex) {
+function Get-BlobStorage-Artifacts($blobStorageUrl, $blobDirectoryRegex, $blobArtifactsReplacement) {
     LogDebug "Reading artifact from storage blob ..."
     $returnedArtifacts = @()
     $pageToken = ""
     Do {
-        $resp = ""
-        if (!$pageToken) {
-            # First page call.
-            $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrl
-        }
-        else {
-            # Next page call
-            $blobStorageUrlPageToken = $blobStorageUrl + "&marker=$pageToken"
-            $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrlPageToken
-        }
-        # Convert to xml documents. 
-        $xmlDoc = [xml](removeBomFromString $resp)
-        foreach ($elem in $xmlDoc.EnumerationResults.Blobs.BlobPrefix) {
-            # What service return like "dotnet/Azure.AI.Anomalydetector/", needs to fetch out "Azure.AI.Anomalydetector"
-            $artifact = $elem.Name -replace $blobDirectoryRegex, '$1'
-            $returnedArtifacts += $artifact
-        }
-        # Fetch page token
-        $pageToken = $xmlDoc.EnumerationResults.NextMarker
+      $resp = ""
+      if (!$pageToken) {
+        # First page call.
+        $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrl
+      }
+      else {
+        # Next page call
+        $blobStorageUrlPageToken = $blobStorageUrl + "&marker=$pageToken"
+        $resp = Invoke-RestMethod -Method Get -Uri $blobStorageUrlPageToken
+      }
+      # Convert to xml documents. 
+      $xmlDoc = [xml](removeBomFromString $resp)
+      foreach ($elem in $xmlDoc.EnumerationResults.Blobs.BlobPrefix) {
+        # What service return like "dotnet/Azure.AI.Anomalydetector/", needs to fetch out "Azure.AI.Anomalydetector"
+        $artifact = $elem.Name -replace $blobDirectoryRegex, $blobArtifactsReplacement
+        $returnedArtifacts += $artifact
+      }
+      # Fetch page token
+      $pageToken = $xmlDoc.EnumerationResults.NextMarker
     } while ($pageToken)
     return $returnedArtifacts
-}
+  }
   
 # The sequence of Bom bytes differs by different encoding. 
 # The helper function here is only to strip the utf-8 encoding system as it is used by blob storage list api.
@@ -143,6 +143,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
 if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetGithubIoDocIndexFn  }).Count -gt 0)
 {
     &$GetGithubIoDocIndexFn
+}
 else
 {
     LogWarning "The function '$GetGithubIoDocIndexFn' was not found."
