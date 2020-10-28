@@ -317,7 +317,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(table: _table, null, cancellationToken: cancellationToken);
+                return _tableOperations.Delete(table: _table, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -337,7 +337,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(table: _table, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(table: _table, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

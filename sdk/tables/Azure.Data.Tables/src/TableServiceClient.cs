@@ -225,14 +225,12 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.QueryAsync(
                     null,
-                    null,
                     new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, async (nextLink, _) =>
             {
                 var response = await _tableOperations.QueryAsync(
-                       null,
                        nextTableName: nextLink,
                        new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
                        cancellationToken).ConfigureAwait(false);
@@ -267,7 +265,6 @@ namespace Azure.Data.Tables
                 {
                     var response = _tableOperations.Query(
                             null,
-                            null,
                             new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
                             cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
@@ -284,7 +281,6 @@ namespace Azure.Data.Tables
                 try
                 {
                     var response = _tableOperations.Query(
-                        null,
                         nextTableName: nextLink,
                         new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
                         cancellationToken);
@@ -410,7 +406,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(tableName, null, cancellationToken: cancellationToken);
+                return _tableOperations.Delete(tableName, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -431,7 +427,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
