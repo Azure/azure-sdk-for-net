@@ -163,7 +163,6 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
             public BlobCollectionConverter(BlobsExtensionConfigProvider parent)
             {
                 IConverterManager cm = parent._converterManager;
-                var type = typeof(T);
                 _converter = cm.GetConverter<BlobBaseClient, T, BlobAttribute>();
                 if (_converter == null)
                 {
