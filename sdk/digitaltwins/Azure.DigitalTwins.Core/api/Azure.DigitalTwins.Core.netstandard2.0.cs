@@ -18,13 +18,7 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.BasicDigitalTwinComponentMetadata Metadata { get { throw null; } set { } }
-    }
-    public partial class BasicDigitalTwinComponentMetadata
-    {
-        public BasicDigitalTwinComponentMetadata() { }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> PropertyMetadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Metadata { get { throw null; } set { } }
     }
     public partial class BasicDigitalTwinMetadata
     {
@@ -33,12 +27,6 @@ namespace Azure.DigitalTwins.Core
         public string ModelId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> PropertyMetadata { get { throw null; } set { } }
-    }
-    public partial class BasicDigitalTwinPropertyMetadata
-    {
-        public BasicDigitalTwinPropertyMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastUpdateTime")]
-        public System.DateTimeOffset LastUpdatedOn { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -73,6 +61,12 @@ namespace Azure.DigitalTwins.Core
     {
         public DeleteRelationshipOptions() { }
         public string IfMatch { get { throw null; } set { } }
+    }
+    public partial class DigitalTwinPropertyMetadata
+    {
+        public DigitalTwinPropertyMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastUpdateTime")]
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } set { } }
     }
     public partial class DigitalTwinsClient
     {

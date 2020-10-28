@@ -34,10 +34,10 @@ namespace Azure.DigitalTwins.Core.Samples
     internal class MyCustomComponent
     {
         /// <summary>
-        /// A component must have a property named $metadata with no properties to be distinguished from other properties as a component.
+        /// A component must have a property named $metadata with no client-supplied properties, to be distinguished from other properties as a component.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public Dictionary<string, BasicDigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, BasicDigitalTwinPropertyMetadata>();
+        public Dictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
