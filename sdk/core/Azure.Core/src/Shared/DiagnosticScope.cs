@@ -253,14 +253,14 @@ namespace Azure.Core.Pipeline
         private static readonly Type? s_activityLinkType = Type.GetType("System.Diagnostics.ActivityLink, System.Diagnostics.DiagnosticSource");
         private static readonly Type? s_activityContextType = Type.GetType("System.Diagnostics.ActivityContext, System.Diagnostics.DiagnosticSource");
 
-        private static readonly MethodInfo? s_activityContextParseMethod = s_activityContextType?.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
-
         private static Action<Activity, int>? s_setIdFormatMethod;
         private static Func<Activity, string?>? s_getTraceStateStringMethod;
         private static Func<Activity, int>? s_getIdFormatMethod;
         private static Action<Activity, string, object?>? s_activityAddTagMethod;
         private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? s_activitySourceStartActivityMethod;
         private static Func<object, bool>? s_activitySourceHasListenersMethod;
+        private static Func<string, ICollection<KeyValuePair<string, object>>?, object?>? s_createActivityLinkMethod;
+        private static Func<ICollection<KeyValuePair<string,object>>?>? s_createTagsCollectionMethod;
 
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
         public const int ActivityKindInternal = 0;
@@ -364,43 +364,59 @@ namespace Azure.Core.Pipeline
             return s_activitySourceType != null;
         }
 
-        public static object? CreateActivitySource(string name)
-        {
-            if (s_activitySourceType == null)
-            {
-                return null;
-            }
-            return Activator.CreateInstance(s_activitySourceType,
-                name, // name
-                null // version
-                );
-        }
 
         public static ICollection<KeyValuePair<string,object>>? CreateTagsCollection()
         {
-            if (s_activityTagsCollectionType == null)
+            if (s_createTagsCollectionMethod == null)
             {
-                return null;
+                var ctor = s_activityTagsCollectionType?.GetConstructor(Array.Empty<Type>());
+                if (ctor == null)
+                {
+                    s_createTagsCollectionMethod = () => null;
+                }
+                else
+                {
+                    s_createTagsCollectionMethod = Expression.Lambda<Func<ICollection<KeyValuePair<string,object>>?>>(
+                        Expression.New(ctor)).Compile();
+                }
             }
 
-            return Activator.CreateInstance(s_activityTagsCollectionType) as ICollection<KeyValuePair<string,object>>;
+            return s_createTagsCollectionMethod();
         }
 
         public static object? CreateActivityLink(string id, ICollection<KeyValuePair<string,object>>? tags)
         {
-            if (s_activityLinkType == null ||
-                s_activityContextParseMethod == null)
+            if (s_activityLinkType == null)
             {
                 return null;
             }
 
-            Debug.Assert(tags == null || tags.GetType() == s_activityTagsCollectionType);
-
-            var context = s_activityContextParseMethod.Invoke(null, new object?[] {id, null});
-            return Activator.CreateInstance(s_activityLinkType, new object?[]
+            if (s_createActivityLinkMethod == null)
             {
-                context, tags
-            });
+                var parseMethod = s_activityContextType?.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                var ctor = s_activityLinkType?.GetConstructor(new[] { s_activityContextType, s_activityTagsCollectionType });
+
+                if (parseMethod == null ||
+                    ctor == null ||
+                    s_activityTagsCollectionType == null)
+                {
+                    s_createActivityLinkMethod = (id, tags) => null;
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string,object>>));
+
+                    s_createActivityLinkMethod = Expression.Lambda<Func<string, ICollection<KeyValuePair<string, object>>?, object?>>(
+                        Expression.Convert(
+                            Expression.New(ctor,
+                                Expression.Call(parseMethod, nameParameter, Expression.Default(typeof(string))),
+                                Expression.Convert(tagsParameter, s_activityTagsCollectionType)), typeof(object)),
+                            nameParameter, tagsParameter).Compile();
+                }
+            }
+
+            return s_createActivityLinkMethod(id, tags);
         }
 
         public static bool ActivitySourceHasListeners(object? activitySource)
@@ -481,6 +497,18 @@ namespace Azure.Core.Pipeline
             }
 
             return s_activitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, tags, links, startTime);
+        }
+
+        public static object? CreateActivitySource(string name)
+        {
+            if (s_activitySourceType == null)
+            {
+                return null;
+            }
+            return Activator.CreateInstance(s_activitySourceType,
+                name, // name
+                null // version
+            );
         }
 
         public static IList? CreateLinkCollection()
