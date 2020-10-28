@@ -137,9 +137,31 @@ if (![string]::IsNullOrWhiteSpace($ServiceDirectory)) {
     }
 }
 
+$verifyDeleteScript = {
+    try {
+        $group = Get-AzResourceGroup -name $ResourceGroupName
+    } catch {
+        if ($Error[0].ToString().Contains("Provided resource group does not exist")) {
+            Write-Verbose "Resource group '$ResourceGroupName' not found. Continuing..."
+            return
+        }
+        throw $Error[0]
+    }
+
+    if ($group.ProvisioningState -ne "Deleting")
+    {
+        throw "Resource group is in '$($group.ProvisioningState)' state, expected 'Deleting'"
+    }
+}
+
 Log "Deleting resource group '$ResourceGroupName'"
-if (Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob) {
+if ($Force) {
+    Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force -AsJob
+    Retry $verifyDeleteScript 3
     Write-Verbose "Requested async deletion of resource group '$ResourceGroupName'"
+} else {
+    # Don't swallow interactive confirmation when Force is false
+    Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
 }
 
 $exitActions.Invoke()
