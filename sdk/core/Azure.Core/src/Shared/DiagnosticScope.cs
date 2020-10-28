@@ -170,10 +170,7 @@ namespace Azure.Core.Pipeline
             public void AddTag<T>(string name, T value)
             {
                 _tagCollection ??= ActivityExtensions.CreateTagsCollection();
-                if (_tagCollection != null)
-                {
-                    _tagCollection.Add(new KeyValuePair<string, object>(name, value!));
-                }
+                _tagCollection?.Add(new KeyValuePair<string, object>(name, value!));
             }
 
             public void AddLink(string id, IDictionary<string, string>? attributes)
