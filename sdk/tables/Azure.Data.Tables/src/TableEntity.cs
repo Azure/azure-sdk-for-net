@@ -239,50 +239,31 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Performs type coercion for numeric types.
-        /// Integers will be coerced to long or double.
-        /// Double and long values will accept integers values but remain double or long.
+        /// <param name="newValue"/> of type int will be coerced to long or double if <param name="existingValue"/> is typed as long or double.
+        /// All other type assignment changes will be accepted as is.
         /// </summary>
-        /// <exception cref="InvalidOperationException">The type coercion is not allowed.</exception>
         private static object CoerceType(object existingValue, object newValue)
         {
             if (!existingValue.GetType().IsAssignableFrom(newValue.GetType()))
             {
-                object convertedValue = existingValue switch
+                return existingValue switch
                 {
-                    int _ => newValue switch
-                    {
-                        // All int values can be doubles
-                        double newDoubleValue =>  newDoubleValue,
-                        // All int values can be longs
-                        long newLongValue => newLongValue,
-                        _ => null
-                    },
                     double _ => newValue switch
                     {
                         // if we already had a double value, preserve it as double even if newValue was an int.
                         // example: entity["someDoubleValue"] = 5;
                         int newIntValue => (double)newIntValue,
-                        _ => null
+                        _ => newValue
                     },
                     long _ => newValue switch
                     {
                         // if we already had a long value, preserve it as long even if newValue was an int.
                         // example: entity["someLongValue"] = 5;
                         int newIntValue => (long)newIntValue,
-                        _ => null
+                        _ => newValue
                     },
-                    _ => null
+                    _ => newValue
                 };
-
-                if (convertedValue != null)
-                {
-                    return convertedValue;
-                }
-
-                // The value could not be safely converted.
-                throw new InvalidOperationException(string.Format(
-                    CultureInfo.InvariantCulture,
-                    $"Value ({existingValue.GetType()}) {existingValue} is not convertable to ({newValue.GetType()}) {newValue}."));
             }
 
             return newValue;

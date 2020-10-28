@@ -145,17 +145,6 @@ namespace Azure.Tables.Tests
         }
 
         /// <summary>
-        /// Validates setting values to a different type throws InvalidOperationException.
-        /// </summary>
-        [Test]
-        public void DictionaryEntitySetWrongTypeThrows()
-        {
-            var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
-
-            Assert.That(() => entity["exampleBool"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a value with mismatched types should throw an exception.");
-        }
-
-        /// <summary>
         /// Validates setting required and additional properties involving null.
         /// </summary>
         [Test]
@@ -180,64 +169,62 @@ namespace Azure.Tables.Tests
         }
 
         [Test]
-        public void TypeCoercionForNumberTypes()
+        public void TypeCoercionForNumericTypes()
         {
             var entity = new TableEntity("partition", "row");
 
-            // Initialize a property to zero (int)
-            entity["IntToDouble"] = 0;
-            Assert.That(entity["IntToDouble"] is int);
-
-            // Validate invalid conversions
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = "fail");
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = new byte[] { 0x02 });
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = false);
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = Guid.NewGuid());
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = DateTime.Now);
+            // Initialize a property to an int value
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is int);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
 
             // Try to change the value to a double
-            entity["IntToDouble"] = 1.1;
-            Assert.That(entity["IntToDouble"] is double);
-            Assert.That(entity["IntToDouble"], Is.EqualTo(1.1));
+            entity["Foo"] = 1.1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1.1));
 
             // Change to a double compatible int
-            entity["IntToDouble"] = 0;
-            Assert.That(entity["IntToDouble"] is double);
-            Assert.That(entity["IntToDouble"], Is.EqualTo(0));
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
 
             // Change to a double compatible int
-            entity["IntToDouble"] = 1;
-            Assert.That(entity["IntToDouble"] is double);
-            Assert.That(entity["IntToDouble"], Is.EqualTo(1));
-
-            // Validate invalid conversions
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = "fail");
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = new byte[] { 0x02 });
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = false);
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = Guid.NewGuid());
-            Assert.Throws<InvalidOperationException>(() => entity["IntToDouble"] = DateTime.Now);
-
-            // Initialize to an int.
-            entity["IntToLong"] = 1;
-            Assert.That(entity["IntToLong"] is int);
-            Assert.That(entity["IntToLong"], Is.EqualTo(1));
+            entity["Foo"] = 1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1));
 
             // Change to a long
-            entity["IntToLong"] = 5L;
-            Assert.That(entity["IntToLong"] is long);
-            Assert.That(entity["IntToLong"], Is.EqualTo(5L));
+            entity["Foo"] = 5L;
+            Assert.That(entity["Foo"] is long);
+            Assert.That(entity["Foo"], Is.EqualTo(5L));
 
             // Change to a long compatible int
-            entity["IntToLong"] = 0;
-            Assert.That(entity["IntToLong"] is long);
-            Assert.That(entity["IntToLong"], Is.EqualTo(0));
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is long);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
 
             // Validate invalid conversions
-            Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = "fail");
-            Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = new byte[] { 0x02 });
-            Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = false);
-            Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = Guid.NewGuid());
-            Assert.Throws<InvalidOperationException>(() => entity["IntToLong"] = DateTime.Now);
+            entity["Foo"] = "fail";
+            Assert.That(entity["Foo"], Is.EqualTo("fail"));
+            Assert.That(entity["Foo"] is string);
+
+            entity["Foo"] = new byte[] { 0x02 };
+            Assert.That(entity["Foo"], Is.EqualTo(new byte[] { 0x02 }));
+            Assert.That(entity["Foo"] is byte[]);
+
+            entity["Foo"] = false;
+            Assert.That(entity["Foo"], Is.EqualTo(false));
+            Assert.That(entity["Foo"] is bool);
+
+            var guid = Guid.NewGuid();
+            entity["Foo"] = guid;
+            Assert.That(entity["Foo"], Is.EqualTo(guid));
+            Assert.That(entity["Foo"] is Guid);
+
+            var now = DateTime.Now;
+            entity["Foo"] = now;
+            Assert.That(entity["Foo"], Is.EqualTo(now));
+            Assert.That(entity["Foo"] is DateTime);
         }
     }
 }
