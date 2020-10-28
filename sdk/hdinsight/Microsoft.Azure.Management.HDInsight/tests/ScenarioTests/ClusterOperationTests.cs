@@ -656,24 +656,23 @@ namespace Management.HDInsight.Tests
         }
 
         [Fact]
-        public void TestCreateClusterWithPrivateLink()
+        public void TestCreateClusterWithOutboundAndPrivateLink()
         {
             TestInitialize();
 
-            string clusterName = TestUtilities.GenerateName("hdisdk-privatelink");
+            string clusterName = TestUtilities.GenerateName("hdisdk-outboundpl");
             var createParams = CommonData.PrepareClusterCreateParamsForWasb();
             createParams.Location = "South Central US";
 
-            var networkSetting = new NetworkSettings(PublicNetworkAccess.OutboundOnly, OutboundOnlyPublicNetworkAccessType.PublicLoadBalancer);
-            createParams.Properties.NetworkSettings = networkSetting;
+            var networkProperties = new NetworkProperties(ResourceProviderConnection.Outbound, PrivateLink.Enabled);
+            createParams.Properties.NetworkProperties = networkProperties;
 
-            //Create Virturl Network
-            string virtualNetworkName= TestUtilities.GenerateName("hdisdkvnet");
-            var vnet = CreateVnetForPrivateLink(createParams.Location, virtualNetworkName);
+            string vnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet";
+            string subnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default";
 
             foreach (var role in createParams.Properties.ComputeProfile.Roles)
             {
-               role.VirtualNetworkProfile = new VirtualNetworkProfile(vnet.Id, vnet.Subnets.First().Id);
+               role.VirtualNetworkProfile = new VirtualNetworkProfile(vnetId, subnetId);
             }
 
             var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);

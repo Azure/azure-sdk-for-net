@@ -941,10 +941,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -971,10 +972,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1005,10 +1007,11 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<bool> DeleteIfExists(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1039,10 +1042,11 @@ namespace Azure.Storage.Files.Shares
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-            bool includeSnapshots,
-            CancellationToken cancellationToken) =>
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1057,6 +1061,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeSnapshots">
         /// A value indicating whether to delete a share's snapshots in addition
         /// to the share itself.
+        /// </param>
+        /// <param name="shareSnapshotsDeleteOption">
+        /// Parameter indicating if the share's snapshots or leased snapshots should be deleted.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1078,6 +1085,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             bool includeSnapshots,
+            ShareSnapshotsDeleteOption? shareSnapshotsDeleteOption,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1092,6 +1100,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     Response response = await DeleteInternal(
                         includeSnapshots,
+                        shareSnapshotsDeleteOption,
                         conditions,
                         async,
                         cancellationToken,
@@ -1265,10 +1274,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -1297,10 +1307,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            ShareDeleteOptions options = default,
+            ShareDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
-                includeSnapshots: options?.IncludeSnapshots ?? true,
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -1331,10 +1342,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -1365,10 +1377,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
-            bool includeSnapshots,
+            bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -1383,8 +1396,10 @@ namespace Azure.Storage.Files.Shares
         /// Delete Share</see>.
         /// </summary>
         /// <param name="includeSnapshots">
-        /// A value indicating whether to delete a share's snapshots in addition
-        /// to the share itself.
+        /// If this share snapshots should be deleted.  This parameter is for backwards compatibility.
+        /// </param>
+        /// <param name="shareSnapshotsDeleteOption">
+        /// Parameter indicating if the share's snapshots or leased snapshots should be deleted.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1408,7 +1423,8 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         internal async Task<Response> DeleteInternal(
-            bool includeSnapshots,
+            bool? includeSnapshots,
+            ShareSnapshotsDeleteOption? shareSnapshotsDeleteOption,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -1422,16 +1438,15 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    DeleteSnapshotsOptionType? deleteSnapshotsOption;
-
                     // DeleteSnapshotsOptionType.Include is not valid when deleting a Snapshot Share.
                     if (Uri.GetQueryParameters().ContainsKey(Constants.ShareSnapshotParameterName))
                     {
-                        deleteSnapshotsOption = null;
+                        shareSnapshotsDeleteOption = null;
                     }
-                    else
+                    // This is for backwards compatibility.  Perviously, ShareClient.Delete() took a bool includSnapshots parameter.s
+                    else if ((includeSnapshots == null || includeSnapshots == true) && shareSnapshotsDeleteOption == null)
                     {
-                        deleteSnapshotsOption = includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null;
+                        shareSnapshotsDeleteOption = ShareSnapshotsDeleteOption.Include;
                     }
 
                     return await FileRestClient.Share.DeleteAsync(
@@ -1440,7 +1455,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
-                        deleteSnapshots: deleteSnapshotsOption,
+                        deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.TestFramework;
 

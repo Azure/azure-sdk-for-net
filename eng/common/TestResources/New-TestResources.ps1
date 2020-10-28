@@ -145,11 +145,9 @@ if (!$BaseName) {
 }
 
 # Try detecting repos that support OutFile and defaulting to it
-if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows)
-{
+if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows) {
     # TODO: find a better way to detect the language
-    if (Test-Path "$repositoryRoot/eng/service.proj")
-    {
+    if (Test-Path "$repositoryRoot/eng/service.proj") {
         $OutFile = $true
         Log "Detected .NET repository. Defaulting OutFile to true. Test environment settings would be stored into the file so you don't need to set environment variables manually."
     }
@@ -169,7 +167,32 @@ if (!$Location) {
     Write-Verbose "Location was not set. Using default location for environment: '$Location'"
 }
 
-# Log in if requested; otherwise, try to login into playground subscription.
+# If no test application ID is specified during an interactive session, create a new service principal.
+if (!$CI -and !$TestApplicationId) {
+
+    # Make sure the user is logged in to create a service principal.
+    $context = Get-AzContext;
+    if (!$context) {
+        Log "You are not logged in; connecting to 'Azure SDK Developer Playground'"
+        $context = (Connect-AzAccount -Subscription $defaultSubscription).Context
+    }
+
+    Log "TestApplicationId was not specified; creating a new service principal"
+    $servicePrincipal = New-AzADServicePrincipal -Role Owner
+
+    $TestApplicationId = $servicePrincipal.ApplicationId
+    $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
+
+    Log "Created service principal '$TestApplicationId'"
+
+    if (!$ProvisionerApplicationId) {
+        $ProvisionerApplicationId = $TestApplicationId
+        $ProvisionerApplicationSecret = $TestApplicationSecret
+        $TenantId = $context.Tenant.Id
+    }
+}
+
+# Log in as and run pre- and post-scripts as the provisioner service principal.
 if ($ProvisionerApplicationId) {
     $null = Disable-AzContextAutosave -Scope Process
 
@@ -180,8 +203,7 @@ if ($ProvisionerApplicationId) {
     # Use the given subscription ID if provided.
     $subscriptionArgs = if ($SubscriptionId) {
         @{SubscriptionId = $SubscriptionId}
-    }
-    else {
+    } else {
         @{}
     }
 
@@ -192,29 +214,10 @@ if ($ProvisionerApplicationId) {
     $exitActions += {
         Write-Verbose "Logging out of service principal '$($provisionerAccount.Context.Account)'"
 
-        # Only attempt to disconnect if the -WhatIf flag was not set.  Otherwise, this call is not necessary and will fail.
+        # Only attempt to disconnect if the -WhatIf flag was not set. Otherwise, this call is not necessary and will fail.
         if ($PSCmdlet.ShouldProcess($ProvisionerApplicationId)) {
             $null = Disconnect-AzAccount -AzureContext $provisionerAccount.Context
         }
-    }
-}
-elseif (!$CI)
-{
-    # check if user is logged in and login into
-    $context = Get-AzContext;
-    if (!$context)
-    {
-        Log "You are not logged in, connecting to 'Azure SDK Developer Playground'"
-        Connect-AzAccount -Subscription $defaultSubscription
-    }
-    
-    # If no test application id is specified create a new service principal
-    if (!$TestApplicationId) {        
-        Log "TestApplicationId was not specified, creating a new service principal."
-        $servicePrincipal = New-AzADServicePrincipal -Role Owner
-
-        $TestApplicationId = $servicePrincipal.ApplicationId
-        $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
     }
 }
 
@@ -387,10 +390,8 @@ foreach ($templateFile in $templateFiles) {
         }
     }
 
-    if ($OutFile)
-    {
-        if (!$IsWindows)
-        {
+    if ($OutFile) {
+        if (!$IsWindows) {
             Write-Host "File option is supported only on Windows"
         }
 
@@ -403,17 +404,14 @@ foreach ($templateFile in $templateFiles) {
         Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 
         Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
-    }
-    else
-    {
+    } else {
 
         if (!$CI) {
             # Write an extra new line to isolate the environment variables for easy reading.
             Log "Persist the following environment variables based on your detected shell ($shell):`n"
         }
 
-        foreach ($key in $deploymentOutputs.Keys)
-        {
+        foreach ($key in $deploymentOutputs.Keys) {
             $value = $deploymentOutputs[$key]
             $environmentVariables[$key] = $value
 
@@ -445,8 +443,7 @@ foreach ($templateFile in $templateFiles) {
 $exitActions.Invoke()
 
 # Suppress output locally
-if ($CI)
-{
+if ($CI) {
     return $environmentVariables
 }
 
@@ -562,7 +559,7 @@ is based on the cloud to which the template is being deployed:
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
-('PublicCloud')
+('AzureCloud')
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).

@@ -2542,7 +2542,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> Returns true if blob exists and was
+        /// deleted, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2584,7 +2585,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> Returns true if blob exists and was
+        /// deleted, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

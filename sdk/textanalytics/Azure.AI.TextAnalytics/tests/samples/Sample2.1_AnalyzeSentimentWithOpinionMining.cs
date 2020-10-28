@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "We changed rooms as the toilet smelled."
             };
 
-            AnalyzeSentimentResultCollection reviews = client.AnalyzeSentimentBatch(documents, options: new AnalyzeSentimentOptions() { AdditionalSentimentAnalyses = AdditionalSentimentAnalyses.OpinionMining });
+            AnalyzeSentimentResultCollection reviews = client.AnalyzeSentimentBatch(documents, options: new AnalyzeSentimentOptions() { IncludeOpinionMining = true });
 
             Dictionary<string, int> complaints = GetComplaints(reviews);
 
