@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
@@ -28,6 +29,14 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         [CodeGenMember("UploadTime")]
         public DateTimeOffset? UploadedOn { get; }
+
+        /// <summary> A language dictionary that contains the localized display names as specified in the model definition. </summary>
+        [CodeGenMember("DisplayName")]
+        public IReadOnlyDictionary<string, string> LanguageDisplayNames { get; }
+
+        /// <summary> A language dictionary that contains the localized descriptions as specified in the model definition. </summary>
+        [CodeGenMember("Description")]
+        public IReadOnlyDictionary<string, string> LanguageDescriptions { get; }
 
         #region null overrides
 
