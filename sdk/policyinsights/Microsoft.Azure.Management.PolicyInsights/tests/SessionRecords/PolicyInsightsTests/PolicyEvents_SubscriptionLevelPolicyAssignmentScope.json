@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.Authorization/policyAssignments/8e6d811f59d145db97ca9f16/providers/Microsoft.PolicyInsights/policyEvents/default/queryResults?api-version=2018-04-04&$top=10&$from=2020-03-04T00:00:00Z",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lBc3NpZ25tZW50cy84ZTZkODExZjU5ZDE0NWRiOTdjYTlmMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lFdmVudHMvZGVmYXVsdC9xdWVyeVJlc3VsdHM/YXBpLXZlcnNpb249MjAxOC0wNC0wNCYkdG9wPTEwJiRmcm9tPTIwMjAtMDMtMDRUMDAlM0EwMCUzQTAwWg==",
+      "RequestUri": "/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/Microsoft.Authorization/policyAssignments/8e6d811f59d145db97ca9f16/providers/Microsoft.PolicyInsights/policyEvents/default/queryResults?api-version=2019-10-01&$top=10&$from=2020-07-04T00:00:00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lBc3NpZ25tZW50cy84ZTZkODExZjU5ZDE0NWRiOTdjYTlmMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lFdmVudHMvZGVmYXVsdC9xdWVyeVJlc3VsdHM/YXBpLXZlcnNpb249MjAxOS0xMC0wMSYkdG9wPTEwJiRmcm9tPTIwMjAtMDctMDRUMDAlM0EwMCUzQTAwWg==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "13895847-b3b4-49ec-84f2-234c202548a6"
+          "d85880a6-e646-4dfe-b1d6-184ad6741f8d"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "OSVersion/Microsoft.Windows.10.0.19041.",
           "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/3.1.0.0"
         ]
       },
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 19 Mar 2020 23:42:09 GMT"
+          "Thu, 24 Sep 2020 22:02:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,16 +36,16 @@
           "599"
         ],
         "x-ms-request-id": [
-          ":66f172a4-2a29-44ed-b95f-c681d1ae4e81"
+          ":b039fedb-78de-4ace-8c7a-20a00f087ac7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "75bfa01c-3148-4645-9bd7-e5bfe7f13002"
+          "89aa4a98-bf58-4367-8ee5-e7edcb93ca6e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200319T234209Z:75bfa01c-3148-4645-9bd7-e5bfe7f13002"
+          "WESTUS:20200924T220233Z:89aa4a98-bf58-4367-8ee5-e7edcb93ca6e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -69,6 +69,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "f67cc918-f64f-4c3f-aa24-a855465f9d41"
+    "SubscriptionId": "e78961ba-36fe-4739-9212-e3031b4c8db7"
   }
 }

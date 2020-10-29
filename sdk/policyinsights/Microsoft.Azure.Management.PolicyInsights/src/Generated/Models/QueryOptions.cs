@@ -46,10 +46,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// request time.</param>
         /// <param name="apply">OData apply expression for
         /// aggregations.</param>
+        /// <param name="skipToken">Skiptoken is only provided if a previous
+        /// response returned a partial result as a part of nextLink
+        /// element.</param>
         /// <param name="expand">The $expand query parameter. For example, to
-        /// expand policyEvaluationDetails, use
-        /// $expand=policyEvaluationDetails</param>
-        public QueryOptions(int? top = default(int?), string filter = default(string), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string apply = default(string), string expand = default(string))
+        /// expand components use $expand=components</param>
+        public QueryOptions(int? top = default(int?), string filter = default(string), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string apply = default(string), string skipToken = default(string), string expand = default(string))
         {
             Top = top;
             Filter = filter;
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             FromProperty = fromProperty;
             To = to;
             Apply = apply;
+            SkipToken = skipToken;
             Expand = expand;
             CustomInit();
         }
@@ -118,8 +121,15 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string Apply { get; set; }
 
         /// <summary>
+        /// Gets or sets skiptoken is only provided if a previous response
+        /// returned a partial result as a part of nextLink element.
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string SkipToken { get; set; }
+
+        /// <summary>
         /// Gets or sets the $expand query parameter. For example, to expand
-        /// policyEvaluationDetails, use $expand=policyEvaluationDetails
+        /// components use $expand=components
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string Expand { get; set; }
