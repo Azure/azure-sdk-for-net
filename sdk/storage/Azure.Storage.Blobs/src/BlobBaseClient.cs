@@ -4103,6 +4103,35 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion
+
+        #region GetBlobContainerClientCore
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlobContainerClient GetBlobContainerClientCore()
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                // erase parameters unrelated to container
+                BlobName = null,
+                VersionId = null,
+                Snapshot = null,
+            };
+
+            return new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics,
+                CustomerProvidedKey,
+                ClientSideEncryption,
+                EncryptionScope);
+        }
+        #endregion
     }
 
     /// <summary>
@@ -4111,6 +4140,19 @@ namespace Azure.Storage.Blobs.Specialized
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobBaseClient"/>.</param>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public static BlobContainerClient GetBlobContainerClient(this BlobBaseClient client)
+        {
+            return client.GetBlobContainerClientCore();
+        }
+
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by concatenating
         /// <paramref name="blobName"/> to the end of the
