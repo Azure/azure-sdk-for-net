@@ -190,6 +190,26 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; private set; }
 
         /// <summary>
+        /// Gets the IExtendedSqlPoolBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedSqlPoolBlobAuditingPoliciesOperations ExtendedSqlPoolBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataMaskingPoliciesOperations.
+        /// </summary>
+        public virtual IDataMaskingPoliciesOperations DataMaskingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataMaskingRulesOperations.
+        /// </summary>
+        public virtual IDataMaskingRulesOperations DataMaskingRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolColumnsOperations.
+        /// </summary>
+        public virtual ISqlPoolColumnsOperations SqlPoolColumns { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         public virtual IWorkspacesOperations Workspaces { get; private set; }
@@ -203,6 +223,11 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
         /// </summary>
         public virtual IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedSqlPoolsOperations.
+        /// </summary>
+        public virtual IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; private set; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
@@ -263,6 +288,11 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IPrivateLinkHubsOperations.
         /// </summary>
         public virtual IPrivateLinkHubsOperations PrivateLinkHubs { get; private set; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        public virtual IKeysOperations Keys { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
@@ -528,9 +558,14 @@ namespace Microsoft.Azure.Management.Synapse
             SqlPoolVulnerabilityAssessmentScans = new SqlPoolVulnerabilityAssessmentScansOperations(this);
             SqlPoolSecurityAlertPolicies = new SqlPoolSecurityAlertPoliciesOperations(this);
             SqlPoolVulnerabilityAssessmentRuleBaselines = new SqlPoolVulnerabilityAssessmentRuleBaselinesOperations(this);
+            ExtendedSqlPoolBlobAuditingPolicies = new ExtendedSqlPoolBlobAuditingPoliciesOperations(this);
+            DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
+            DataMaskingRules = new DataMaskingRulesOperations(this);
+            SqlPoolColumns = new SqlPoolColumnsOperations(this);
             Workspaces = new WorkspacesOperations(this);
             WorkspaceAadAdmins = new WorkspaceAadAdminsOperations(this);
             WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
+            RestorableDroppedSqlPools = new RestorableDroppedSqlPoolsOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
             IntegrationRuntimeNodeIpAddress = new IntegrationRuntimeNodeIpAddressOperations(this);
             IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
@@ -543,6 +578,7 @@ namespace Microsoft.Azure.Management.Synapse
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkHubs = new PrivateLinkHubsOperations(this);
+            Keys = new KeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-06-01-preview";
             AcceptLanguage = "en-US";
