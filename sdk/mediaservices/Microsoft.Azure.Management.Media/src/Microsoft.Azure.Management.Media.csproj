@@ -6,17 +6,16 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>3.0.1</Version>
+        <Version>3.0.2</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
         This SDK is using 2020-05-01 version of the API
         
-        * The MediaServices entity now supports System Managed Identities
-        * When a MediaServices entity has a Managed Identity, it can be used to enable Encryption at Rest with a Customer Manager Key
-        * When a Media Services entity has a Managed Identity, it can be used to access the attached storage accounts using the Managed Identity.
-        * I am purposely being vague here until Encoding vNext is fully deployed and enabled so we don’t want to promise Trusted Storage access capability here yet.
+        * The Media Services account now supports system managed identities.
+        * When a Media Services account has a managed identity, it can be used to enable encryption at REST with a customer managed key.
+        * When a Media Services account has a managed identity, it can be used to access the attached storage accounts using the managed identity.
 
         * Live event added an Allocate action to put it into StandBy state.
         * Updates to most live event properties are now allowed when the live event is in stopped and standby state.
@@ -35,7 +34,7 @@
         Breaking changes:
         * VanityUrl property on LiveEvent is now called UseStaticHostName to better reflect the intent of the property.
         * SubscriptionMediaService class has been removed in favor of MediaService class. SubscriptionMediaService is a duplicate of MediaService class.
-        * Basic and Standard live encoding types referred to the same live event type.  Basic LiveEventEncodingType has now been removed. Supported encoding types are Standard, Premium1080p or None
+        * Basic and Standard live encoding types referred to the same live event type.  Basic LiveEventEncodingType has now been removed. Supported encoding types are Standard, Premium1080p or None.
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
