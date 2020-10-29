@@ -1009,7 +1009,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual async Task<Response<AnomalyAlertConfiguration>> CreateAnomalyAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateAnomalyAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
@@ -1020,9 +1020,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1042,7 +1042,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual Response<AnomalyAlertConfiguration> CreateAnomalyAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateAnomalyAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
@@ -1053,9 +1053,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
