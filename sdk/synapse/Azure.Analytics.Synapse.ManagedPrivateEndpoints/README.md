@@ -1,4 +1,4 @@
-# Azure Synapse Analytics Managed Virtual Network client library for .NET
+# Azure Synapse Analytics Managed Private Endpoints client library for .NET
 
 This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/develop/net/).
 
@@ -6,7 +6,7 @@ Azure Synapse is a limitless analytics service that brings together enterprise d
 
 Managed private endpoints are private endpoints created in the Managed workspace Microsoft Azure Virtual Network establishing a private link to Azure resources. Azure Synapse manages these private endpoints on your behalf.
 
-The Azure Synapse Analytics managed virtual network client library enables programmatically managing private endpoints.
+The Azure Synapse Analytics managed private endpoints client library enables programmatically managing private endpoints.
 
 ## Getting started
 
@@ -15,10 +15,10 @@ The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Dow
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Azure Synapse Analytics managed virtual network client library for .NET with [NuGet][nuget]:
+Install the Azure Synapse Analytics managed private endpoints client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Analytics.Synapse.ManagedVirtualNetwork --version 0.1.0-preview.1
+dotnet add package Azure.Analytics.Synapse.ManagedPrivateEndpoints --version 1.0.0-preview.1
 ```
 
 ### Prerequisites
@@ -55,7 +55,7 @@ Install-Package Azure.Identity
 With a `ManagedPrivateEndpointClient` you can get private endpoints from the workspace, create new private endpoint and delete private endpoints.
 
 ## Examples
-The Azure.Analytics.Synapse.ManagedVirtualNetwork package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics monitoring related tasks:
+The Azure.Analytics.Synapse.ManagedPrivateEndpoints package supports synchronous and asynchronous APIs. The following section covers some of the most common Azure Synapse Analytics monitoring related tasks:
 
 ### Private endpoints examples
 * [Create a private endpoint](#create-a-private-endpoint)

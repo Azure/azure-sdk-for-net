@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     public partial class ManagedPrivateEndpointListResponse
     {

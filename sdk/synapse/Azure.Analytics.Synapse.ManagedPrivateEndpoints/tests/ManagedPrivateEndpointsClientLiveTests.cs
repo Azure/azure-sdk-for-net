@@ -4,11 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Analytics.Synapse.ManagedVirtualNetwork.Models;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Tests.ManagedVirtualNetwork
+namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
 {
     /// <summary>
     /// The suite of tests for the <see cref="ManagedPrivateEndpointsClient"/> class.

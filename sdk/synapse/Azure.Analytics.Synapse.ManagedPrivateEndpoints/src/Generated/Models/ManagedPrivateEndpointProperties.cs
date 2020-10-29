@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Models
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> Properties of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointProperties

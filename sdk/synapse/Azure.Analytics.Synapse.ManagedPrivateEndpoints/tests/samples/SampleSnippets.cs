@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.ManagedVirtualNetwork.Models;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.ManagedVirtualNetwork.Samples
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
 {
     public partial class Snippets : SampleFixture
     {
