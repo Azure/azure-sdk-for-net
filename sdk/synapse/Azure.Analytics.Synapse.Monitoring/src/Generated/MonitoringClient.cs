@@ -37,15 +37,14 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get list of spark applications for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SparkJobListViewResponse>> GetSparkJobListAsync(string xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SparkJobListViewResponse>> GetSparkJobListAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MonitoringClient.GetSparkJobList");
             scope.Start();
             try
             {
-                return await RestClient.GetSparkJobListAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetSparkJobListAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -55,15 +54,14 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get list of spark applications for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SparkJobListViewResponse> GetSparkJobList(string xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SparkJobListViewResponse> GetSparkJobList(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MonitoringClient.GetSparkJobList");
             scope.Start();
             try
             {
-                return RestClient.GetSparkJobList(xMsClientRequestId, cancellationToken);
+                return RestClient.GetSparkJobList(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,18 +71,17 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get SQL OD/DW Query for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="filter"> The String to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MonitoringClient.GetSqlJobQueryString");
             scope.Start();
             try
             {
-                return await RestClient.GetSqlJobQueryStringAsync(xMsClientRequestId, filter, orderby, skip, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetSqlJobQueryStringAsync(filter, orderby, skip, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -94,18 +91,17 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get SQL OD/DW Query for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="filter"> The String to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlQueryStringDataModel> GetSqlJobQueryString(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual Response<SqlQueryStringDataModel> GetSqlJobQueryString(string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MonitoringClient.GetSqlJobQueryString");
             scope.Start();
             try
             {
-                return RestClient.GetSqlJobQueryString(xMsClientRequestId, filter, orderby, skip, cancellationToken);
+                return RestClient.GetSqlJobQueryString(filter, orderby, skip, cancellationToken);
             }
             catch (Exception e)
             {

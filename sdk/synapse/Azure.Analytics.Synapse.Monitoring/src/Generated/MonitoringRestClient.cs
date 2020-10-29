@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Monitoring
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetSparkJobListRequest(string xMsClientRequestId)
+        internal HttpMessage CreateGetSparkJobListRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,20 +56,15 @@ namespace Azure.Analytics.Synapse.Monitoring
             uri.AppendPath("/monitoring/workloadTypes/spark/Applications", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get list of spark applications for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SparkJobListViewResponse>> GetSparkJobListAsync(string xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SparkJobListViewResponse>> GetSparkJobListAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSparkJobListRequest(xMsClientRequestId);
+            using var message = CreateGetSparkJobListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,11 +81,10 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get list of spark applications for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SparkJobListViewResponse> GetSparkJobList(string xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SparkJobListViewResponse> GetSparkJobList(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSparkJobListRequest(xMsClientRequestId);
+            using var message = CreateGetSparkJobListRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -106,7 +100,7 @@ namespace Azure.Analytics.Synapse.Monitoring
             }
         }
 
-        internal HttpMessage CreateGetSqlJobQueryStringRequest(string xMsClientRequestId, string filter, string orderby, string skip)
+        internal HttpMessage CreateGetSqlJobQueryStringRequest(string filter, string orderby, string skip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -128,23 +122,18 @@ namespace Azure.Analytics.Synapse.Monitoring
                 uri.AppendQuery("skip", skip, true);
             }
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Get SQL OD/DW Query for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="filter"> The String to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSqlJobQueryStringRequest(xMsClientRequestId, filter, orderby, skip);
+            using var message = CreateGetSqlJobQueryStringRequest(filter, orderby, skip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -161,14 +150,13 @@ namespace Azure.Analytics.Synapse.Monitoring
         }
 
         /// <summary> Get SQL OD/DW Query for the workspace. </summary>
-        /// <param name="xMsClientRequestId"> Can provide a guid, which is helpful for debugging and to provide better customer support. </param>
         /// <param name="filter"> The String to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SqlQueryStringDataModel> GetSqlJobQueryString(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
+        public Response<SqlQueryStringDataModel> GetSqlJobQueryString(string filter = null, string orderby = null, string skip = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSqlJobQueryStringRequest(xMsClientRequestId, filter, orderby, skip);
+            using var message = CreateGetSqlJobQueryStringRequest(filter, orderby, skip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
