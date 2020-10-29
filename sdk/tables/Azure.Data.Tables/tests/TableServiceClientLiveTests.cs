@@ -166,8 +166,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 // Create some extra tables.
-                int numberOfTables = 10;
-                for (int i = 0; i < numberOfTables; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
                     createdTables.Add(table);
