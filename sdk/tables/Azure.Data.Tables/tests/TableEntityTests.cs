@@ -145,17 +145,6 @@ namespace Azure.Tables.Tests
         }
 
         /// <summary>
-        /// Validates setting values to a different type throws InvalidOperationException.
-        /// </summary>
-        [Test]
-        public void DictionaryEntitySetWrongTypeThrows()
-        {
-            var entity = new TableEntity("partition", "row") { { "exampleBool", true } };
-
-            Assert.That(() => entity["exampleBool"] = "A random string", Throws.InstanceOf<InvalidOperationException>(), "Setting an existing property to a value with mismatched types should throw an exception.");
-        }
-
-        /// <summary>
         /// Validates setting required and additional properties involving null.
         /// </summary>
         [Test]
@@ -177,6 +166,75 @@ namespace Azure.Tables.Tests
             // Test setting existing null value to a non-null value.
             entity[stringKey] = stringValue;
             Assert.That(entity[stringKey], Is.EqualTo(stringValue));
+        }
+
+        [Test]
+        public void TypeCoercionForNumericTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+
+            // Initialize a property to an int value
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is int);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
+
+            // Try to change the value to a double
+            entity["Foo"] = 1.1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1.1));
+
+            // Change to a double compatible int
+            entity["Foo"] = 0;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(0));
+
+            // Change to a double compatible int
+            entity["Foo"] = 1;
+            Assert.That(entity["Foo"] is double);
+            Assert.That(entity["Foo"], Is.EqualTo(1));
+
+            // Initialize a property to an int value
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is int);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
+            // Change to a long
+            entity["Foo2"] = 5L;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(5L));
+
+            // Change to a long compatible int
+            entity["Foo2"] = 0;
+            Assert.That(entity["Foo2"] is long);
+            Assert.That(entity["Foo2"], Is.EqualTo(0));
+
+            // Initialize a property to an int value
+            entity["Foo3"] = 0;
+            Assert.That(entity["Foo3"] is int);
+            Assert.That(entity["Foo3"], Is.EqualTo(0));
+
+            // Validate invalid conversions
+            entity["Foo3"] = "fail";
+            Assert.That(entity["Foo3"], Is.EqualTo("fail"));
+            Assert.That(entity["Foo3"] is string);
+
+            entity["Foo3"] = new byte[] { 0x02 };
+            Assert.That(entity["Foo3"], Is.EqualTo(new byte[] { 0x02 }));
+            Assert.That(entity["Foo3"] is byte[]);
+
+            entity["Foo3"] = false;
+            Assert.That(entity["Foo3"], Is.EqualTo(false));
+            Assert.That(entity["Foo3"] is bool);
+
+            var guid = Guid.NewGuid();
+            entity["Foo3"] = guid;
+            Assert.That(entity["Foo3"], Is.EqualTo(guid));
+            Assert.That(entity["Foo3"] is Guid);
+
+            var now = DateTime.Now;
+            entity["Foo3"] = now;
+            Assert.That(entity["Foo3"], Is.EqualTo(now));
+            Assert.That(entity["Foo3"] is DateTime);
         }
     }
 }

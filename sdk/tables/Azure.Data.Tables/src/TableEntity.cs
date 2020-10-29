@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables
@@ -185,7 +186,7 @@ namespace Azure.Data.Tables
 
             if (value != null && _properties.TryGetValue(key, out object existingValue) && existingValue != null)
             {
-                EnforceType(existingValue.GetType(), value.GetType());
+                value = CoerceType(existingValue, value);
             }
             _properties[key] = value;
         }
@@ -234,6 +235,38 @@ namespace Azure.Data.Tables
                     CultureInfo.InvariantCulture,
                     $"Cannot return {requestedType} type for a {givenType} typed property."));
             }
+        }
+
+        /// <summary>
+        /// Performs type coercion for numeric types.
+        /// <param name="newValue"/> of type int will be coerced to long or double if <param name="existingValue"/> is typed as long or double.
+        /// All other type assignment changes will be accepted as is.
+        /// </summary>
+        private static object CoerceType(object existingValue, object newValue)
+        {
+            if (!existingValue.GetType().IsAssignableFrom(newValue.GetType()))
+            {
+                return existingValue switch
+                {
+                    double _ => newValue switch
+                    {
+                        // if we already had a double value, preserve it as double even if newValue was an int.
+                        // example: entity["someDoubleValue"] = 5;
+                        int newIntValue => (double)newIntValue,
+                        _ => newValue
+                    },
+                    long _ => newValue switch
+                    {
+                        // if we already had a long value, preserve it as long even if newValue was an int.
+                        // example: entity["someLongValue"] = 5;
+                        int newIntValue => (long)newIntValue,
+                        _ => newValue
+                    },
+                    _ => newValue
+                };
+            }
+
+            return newValue;
         }
     }
 }
