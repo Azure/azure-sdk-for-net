@@ -81,7 +81,7 @@ namespace Azure.Data.SchemaRegistry
                 case 200:
                     {
                         StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        string value = await streamReader.ReadToEndAsync();
+                        string value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
