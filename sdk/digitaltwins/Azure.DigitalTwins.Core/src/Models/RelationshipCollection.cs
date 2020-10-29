@@ -49,7 +49,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="element">The JSON element to be deserialized into a RelationshipCollection.</param>
         /// <param name="objectSerializer">The object serializer instance used to deserialize the items in the collection.</param>
-        /// <returns></returns>
+        /// <returns>A collection of relationships deserialized into type <typeparamref name="T"/>.</returns>
         internal static RelationshipCollection<T> DeserializeRelationshipCollection(JsonElement element, ObjectSerializer objectSerializer)
         {
             Optional<IReadOnlyList<T>> value = default;

@@ -42,13 +42,13 @@ namespace Azure.DigitalTwins.Core.Tests
                 string queryString = "SELECT * FROM digitaltwins where IsOccupied = true";
 
                 // act
-                AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
+                AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString);
 
                 // assert
-                await foreach (JsonElement response in asyncPageableResponse)
+                await foreach (BasicDigitalTwin response in asyncPageableResponse)
                 {
-                    JsonElement isOccupied = response.GetProperty("IsOccupied");
-                    isOccupied.GetRawText().Should().Be("true");
+                    string isOccupied = response.Contents["IsOccupied"].ToString();
+                    isOccupied.Should().Be("True");
                 }
             }
             finally
@@ -129,6 +129,57 @@ namespace Azure.DigitalTwins.Core.Tests
                 }
 
                 pageCount.Should().BeGreaterThan(1, "Expected more than one page of query results");
+            }
+            finally
+            {
+                // clean up
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task Query_GetCount()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // Create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // Create a room twin, with property "IsOccupied": true
+                string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                string queryString = $"SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:example:room;112661046')";
+
+                // act
+                AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
+
+                // assert
+                await foreach (JsonElement response in asyncPageableResponse)
+                {
+                    var i = response;
+                    //JsonElement isOccupied = response.GetProperty("IsOccupied");
+                    //isOccupied.GetRawText().Should().Be("true");
+                }
             }
             finally
             {
