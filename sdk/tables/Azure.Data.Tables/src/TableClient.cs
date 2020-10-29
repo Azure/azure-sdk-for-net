@@ -804,31 +804,34 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
+                    {
+                        var response = await _tableOperations.QueryEntitiesAsync(
+                            _table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            }, async (continuationToken, _) =>
-            {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    },
+                    async (continuationToken, pageSizeHint) =>
+                    {
+                        var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _tableOperations.QueryEntitiesAsync(
+                            _table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            nextPartitionKey: NextPartitionKey,
+                            nextRowKey: NextRowKey,
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            });
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    },
+                    maxPerPage);
             }
             catch (Exception ex)
             {
@@ -861,51 +864,58 @@ namespace Azure.Data.Tables
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
-            return PageableHelpers.CreateEnumerable((int? _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
+            return PageableHelpers.CreateEnumerable(
+                pageSizeHint =>
                 {
-                    var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                        cancellationToken: cancellationToken);
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
+                    {
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
-                    return Page.FromValues(
-                        response.Value.Value.ToTableEntityList<T>(),
-                        CreateContinuationTokenFromHeaders(response.Headers),
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (continuationToken, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                        var response = _tableOperations.QueryEntities(_table,
+                            queryOptions: queryOptions,
+                            cancellationToken: cancellationToken);
 
-                    var response = _tableOperations.QueryEntities(
-                        _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                        nextPartitionKey: NextPartitionKey,
-                        nextRowKey: NextRowKey,
-                        cancellationToken: cancellationToken);
-
-                    return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                        CreateContinuationTokenFromHeaders(response.Headers),
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
+                        return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                (continuationToken, pageSizeHint) =>
                 {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
+                    {
+                        var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+
+                        var response = _tableOperations.QueryEntities(
+                            _table,
+                            queryOptions: queryOptions,
+                            nextPartitionKey: NextPartitionKey,
+                            nextRowKey: NextRowKey,
+                            cancellationToken: cancellationToken);
+
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>

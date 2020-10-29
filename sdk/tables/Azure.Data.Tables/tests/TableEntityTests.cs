@@ -15,6 +15,7 @@ namespace Azure.Tables.Tests
             { "binary", new byte[] { 1, 2 }},
             { "boolean", true },
             { "datetime", new DateTime() },
+            { "datetimeoffset", new DateTimeOffset() },
             { "double", (double)2.0 },
             { "guid", new Guid() },
             { "int32", int.MaxValue },
@@ -33,6 +34,7 @@ namespace Azure.Tables.Tests
             Assert.That(fullEntity.GetBinary("binary"), Is.InstanceOf(typeof(byte[])));
             Assert.That(fullEntity.GetBoolean("boolean"), Is.InstanceOf(typeof(bool?)));
             Assert.That(fullEntity.GetDateTime("datetime"), Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity.GetDateTimeOffset("datetimeoffset"), Is.InstanceOf(typeof(DateTimeOffset?)));
             Assert.That(fullEntity.GetDouble("double"), Is.InstanceOf(typeof(double?)));
             Assert.That(fullEntity.GetGuid("guid"), Is.InstanceOf(typeof(Guid)));
             Assert.That(fullEntity.GetInt32("int32"), Is.InstanceOf(typeof(int?)));
@@ -65,6 +67,7 @@ namespace Azure.Tables.Tests
             Assert.That(fullEntity.GetBinary(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetBoolean(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDateTime(nonexistentKey), Is.Null);
+            Assert.That(fullEntity.GetDateTimeOffset(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetDouble(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetGuid(nonexistentKey), Is.Null);
             Assert.That(fullEntity.GetInt32(nonexistentKey), Is.Null);
@@ -81,6 +84,7 @@ namespace Azure.Tables.Tests
             Assert.That(emptyEntity.GetBinary(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetBoolean(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetDateTime(nulledPropertyKey), Is.Null);
+            Assert.That(emptyEntity.GetDateTimeOffset(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetDouble(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetGuid(nulledPropertyKey), Is.Null);
             Assert.That(emptyEntity.GetInt32(nulledPropertyKey), Is.Null);
@@ -100,6 +104,9 @@ namespace Azure.Tables.Tests
             Assert.That(fullEntity["boolean"], Is.InstanceOf(typeof(bool?)));
             Assert.That(fullEntity["datetime"], Is.Not.Null);
             Assert.That(fullEntity["datetime"], Is.InstanceOf(typeof(DateTime?)));
+            Assert.That(fullEntity["datetimeoffset"], Is.Not.Null);
+            Assert.That(fullEntity["datetimeoffset"], Is.InstanceOf(typeof(DateTimeOffset?)));
+            Assert.That(fullEntity["double"], Is.Not.Null);
             Assert.That(fullEntity["double"], Is.Not.Null);
             Assert.That(fullEntity["double"], Is.InstanceOf(typeof(double?)));
             Assert.That(fullEntity["guid"], Is.Not.Null);

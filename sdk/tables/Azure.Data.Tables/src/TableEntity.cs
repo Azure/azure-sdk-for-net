@@ -64,7 +64,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="TableEntity" /> class.
+        /// Creates an instance of the <see cref="TableEntity" /> class without any properties initialized.
         /// </summary>
         public TableEntity()
             : this(null)
@@ -84,7 +84,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties in the <see cref="IDictionary"/>.
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties specified in <paramref name="values"/>.
         /// </summary>
         /// <param name="values">A <see cref="IDictionary"/> containing the initial values of the entity.</param>
         public TableEntity(IDictionary<string, object> values)
@@ -96,7 +96,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -116,7 +116,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -136,7 +136,17 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Double"/> property called
+        /// <see cref="DateTimeOffset"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="DateTimeOffset" />.</exception>
+        public DateTimeOffset? GetDateTimeOffset(string key) => GetValue<DateTimeOffset?>(key);
+
+        /// <summary>
+        /// Get the value of a <see cref="TableEntity"/>'s
+        /// <see cref="double"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -156,7 +166,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int32"/> property called
+        /// <see cref="int"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -166,7 +176,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int64"/> property called
+        /// <see cref="long"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>

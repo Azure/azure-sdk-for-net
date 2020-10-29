@@ -161,12 +161,11 @@ namespace Azure.Data.Tables.Tests
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
         {
-            var createdTables = new List<string>();
+            var createdTables = new List<string>() { tableName };
 
             try
             {
                 // Create some extra tables.
-
                 for (int i = 0; i < 10; i++)
                 {
                     var table = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
@@ -175,12 +174,23 @@ namespace Azure.Data.Tables.Tests
                 }
 
                 // Get the table list.
-
-                var tableResponses = (await service.GetTablesAsync(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
-
-                Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
+                var remainingItems = createdTables.Count;
+                await foreach (var page in service.GetTablesAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                {
+                    Assert.That(page.Values, Is.Not.Empty);
+                    if (pageCount.HasValue)
+                    {
+                        Assert.That(page.Values.Count, Is.EqualTo(Math.Min(pageCount.Value, remainingItems)));
+                        remainingItems -= page.Values.Count;
+                    }
+                    else
+                    {
+                        Assert.That(page.Values.Count, Is.EqualTo(createdTables.Count));
+                    }
+                    Assert.That(page.Values.All(r => createdTables.Contains(r.TableName)));
+                }
             }
+
             finally
             {
                 foreach (var table in createdTables)

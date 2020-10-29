@@ -221,21 +221,24 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                    null,
-                    new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                    cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, async (nextLink, _) =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                       nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                       cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            });
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            null,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    async (nextLink, pageSizeHint) =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    maxPerPage);
             }
             catch (Exception ex)
             {
@@ -257,41 +260,44 @@ namespace Azure.Data.Tables
         public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
 
-            return PageableHelpers.CreateEnumerable(_ =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
+            return PageableHelpers.CreateEnumerable(
+                pageSizeHint =>
                 {
-                    var response = _tableOperations.Query(
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                (nextLink, pageSizeHint) =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (nextLink, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
-                {
-                    var response = _tableOperations.Query(
-                        nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                        cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>
