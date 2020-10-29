@@ -16,16 +16,16 @@ namespace Azure.DigitalTwins.Core
     {
 
         /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
-        /// <param name="displayNameLanguageDictionary"> A language map that contains the localized display names as specified in the model definition. </param>
-        /// <param name="descriptionLanguageDictionary"> A language map that contains the localized descriptions as specified in the model definition. </param>
+        /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
+        /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
         /// <param name="uploadedOn"> The time the model was uploaded to the service. </param>
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
-        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> displayNameLanguageDictionary, IReadOnlyDictionary<string, string> descriptionLanguageDictionary, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
+        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
         {
-            LanguageDisplayNames = displayNameLanguageDictionary;
-            LanguageDescriptions = descriptionLanguageDictionary;
+            LanguageDisplayNames = languageDisplayNames;
+            LanguageDescriptions = languageDescriptions;
             Id = id;
             UploadedOn = uploadedOn;
             Decommissioned = decommissioned;
