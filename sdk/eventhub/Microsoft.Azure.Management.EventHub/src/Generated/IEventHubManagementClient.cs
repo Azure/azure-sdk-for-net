@@ -76,6 +76,16 @@ namespace Microsoft.Azure.Management.EventHub
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the IConfigurationOperations.
         /// </summary>
         IConfigurationOperations Configuration { get; }
