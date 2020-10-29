@@ -32,11 +32,11 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary> A language dictionary that contains the localized display names as specified in the model definition. </summary>
         [CodeGenMember("DisplayName")]
-        public IReadOnlyDictionary<string, string> DisplayNameLanguageDictionary { get; }
+        public IReadOnlyDictionary<string, string> LanguageDisplayNames { get; }
 
         /// <summary> A language dictionary that contains the localized descriptions as specified in the model definition. </summary>
         [CodeGenMember("Description")]
-        public IReadOnlyDictionary<string, string> DescriptionLanguageDictionary { get; }
+        public IReadOnlyDictionary<string, string> LanguageDescriptions { get; }
 
         #region null overrides
 

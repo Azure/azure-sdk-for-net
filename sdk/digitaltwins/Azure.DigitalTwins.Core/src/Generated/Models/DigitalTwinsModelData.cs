@@ -24,8 +24,8 @@ namespace Azure.DigitalTwins.Core
         /// <param name="dtdlModel"> The model definition. </param>
         internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> displayNameLanguageDictionary, IReadOnlyDictionary<string, string> descriptionLanguageDictionary, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
         {
-            DisplayNameLanguageDictionary = displayNameLanguageDictionary;
-            DescriptionLanguageDictionary = descriptionLanguageDictionary;
+            LanguageDisplayNames = displayNameLanguageDictionary;
+            LanguageDescriptions = descriptionLanguageDictionary;
             Id = id;
             UploadedOn = uploadedOn;
             Decommissioned = decommissioned;

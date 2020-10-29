@@ -98,8 +98,8 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // assert
 
-            wardModel.Value.DisplayNameLanguageDictionary.Count.Should().Be(1, "Should have 1 entry for display name");
-            wardModel.Value.DisplayNameLanguageDictionary.Keys.First().Should().Be("en");
+            wardModel.Value.LanguageDisplayNames.Count.Should().Be(1, "Should have 1 entry for display name");
+            wardModel.Value.LanguageDisplayNames.Keys.First().Should().Be("en");
         }
 
         [Test]
