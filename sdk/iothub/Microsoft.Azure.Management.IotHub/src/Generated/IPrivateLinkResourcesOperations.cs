@@ -19,26 +19,21 @@ namespace Microsoft.Azure.Management.IotHub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// IotHubOperations operations.
+    /// PrivateLinkResourcesOperations operations.
     /// </summary>
-    public partial interface IIotHubOperations
+    public partial interface IPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// Manually initiate a failover for the IoT Hub to its secondary
-        /// region
+        /// List private link resources
         /// </summary>
         /// <remarks>
-        /// Manually initiate a failover for the IoT Hub to its secondary
-        /// region. To learn more, see https://aka.ms/manualfailover
+        /// List private link resources for the given IotHub
         /// </remarks>
-        /// <param name='iotHubName'>
-        /// Name of the IoT hub to failover
-        /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group containing the IoT hub resource
+        /// The name of the resource group that contains the IoT hub.
         /// </param>
-        /// <param name='failoverRegion'>
-        /// Region the hub will be failed over to
+        /// <param name='resourceName'>
+        /// The name of the IoT hub.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,26 +44,27 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="ErrorDetailsException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateLinkResources>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Manually initiate a failover for the IoT Hub to its secondary
-        /// region
+        /// Get the specified private link resource
         /// </summary>
         /// <remarks>
-        /// Manually initiate a failover for the IoT Hub to its secondary
-        /// region. To learn more, see https://aka.ms/manualfailover
+        /// Get the specified private link resource for the given IotHub
         /// </remarks>
-        /// <param name='iotHubName'>
-        /// Name of the IoT hub to failover
-        /// </param>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group containing the IoT hub resource
+        /// The name of the resource group that contains the IoT hub.
         /// </param>
-        /// <param name='failoverRegion'>
-        /// Region the hub will be failed over to
+        /// <param name='resourceName'>
+        /// The name of the IoT hub.
+        /// </param>
+        /// <param name='groupId'>
+        /// The name of the private link resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,9 +75,12 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="ErrorDetailsException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, string resourceGroupName, string failoverRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GroupIdInformation>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
