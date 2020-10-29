@@ -187,7 +187,7 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class QueryChargeHelper
     {
-        public static bool TryGetQueryCharge(Azure.Page<Azure.DigitalTwins.Core.BasicDigitalTwin> page, out float queryCharge) { throw null; }
+        public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
     }
     public partial class UpdateComponentOptions
     {
