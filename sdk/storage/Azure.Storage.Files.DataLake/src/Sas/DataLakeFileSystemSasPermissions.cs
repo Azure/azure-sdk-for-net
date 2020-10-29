@@ -49,6 +49,26 @@ namespace Azure.Storage.Sas
         List = 32,
 
         /// <summary>
+        /// Indicates that Move is permitted.
+        /// </summary>
+        Move = 64,
+
+        /// <summary>
+        /// Indicates that Execute is permitted.
+        /// </summary>
+        Execute = 128,
+
+        /// <summary>
+        /// Indicates that Ownership is permitted.
+        /// </summary>
+        ManageOwnership = 256,
+
+        /// <summary>
+        /// Indicates that Permissions is permitted.
+        /// </summary>
+        ManageAccessControl = 512,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -93,6 +113,22 @@ namespace Azure.Storage.Files.DataLake
             if ((permissions & DataLakeFileSystemSasPermissions.List) == DataLakeFileSystemSasPermissions.List)
             {
                 sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & DataLakeFileSystemSasPermissions.Move) == DataLakeFileSystemSasPermissions.Move)
+            {
+                sb.Append(Constants.Sas.Permissions.Move);
+            }
+            if ((permissions & DataLakeFileSystemSasPermissions.Execute) == DataLakeFileSystemSasPermissions.Execute)
+            {
+                sb.Append(Constants.Sas.Permissions.Execute);
+            }
+            if ((permissions & DataLakeFileSystemSasPermissions.ManageOwnership) == DataLakeFileSystemSasPermissions.ManageOwnership)
+            {
+                sb.Append(Constants.Sas.Permissions.ManageOwnership);
+            }
+            if ((permissions & DataLakeFileSystemSasPermissions.ManageAccessControl) == DataLakeFileSystemSasPermissions.ManageAccessControl)
+            {
+                sb.Append(Constants.Sas.Permissions.ManageAccessControl);
             }
             return sb.ToString();
         }
