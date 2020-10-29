@@ -871,8 +871,10 @@ namespace Azure.Data.Tables
                     scope.Start();
                     try
                     {
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+
                         var response = _tableOperations.QueryEntities(_table,
-                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: queryOptions,
                             cancellationToken: cancellationToken);
 
                         return Page.FromValues(
@@ -894,9 +896,11 @@ namespace Azure.Data.Tables
                     {
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+
                         var response = _tableOperations.QueryEntities(
                             _table,
-                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: queryOptions,
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken);
