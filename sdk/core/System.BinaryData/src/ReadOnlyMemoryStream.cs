@@ -13,25 +13,39 @@ namespace System
     /// <summary>Provides a <see cref="Stream"/> for the contents of a <see cref="ReadOnlyMemory{Byte}"/>.</summary>
     internal sealed class ReadOnlyMemoryStream : Stream
     {
-        private readonly ReadOnlyMemory<byte> _content;
+        private ReadOnlyMemory<byte> _content;
+        private bool _isOpen;
         private int _position;
 
         public ReadOnlyMemoryStream(ReadOnlyMemory<byte> content)
         {
             _content = content;
+            _isOpen = true;
         }
 
-        public override bool CanRead => true;
-        public override bool CanSeek => true;
+        public override bool CanRead => _isOpen;
+        public override bool CanSeek => _isOpen;
         public override bool CanWrite => false;
 
-        public override long Length => _content.Length;
+        public override long Length
+        {
+            get
+            {
+                ValidateNotClosed();
+                return _content.Length;
+            }
+        }
 
         public override long Position
         {
-            get => _position;
+            get
+            {
+                ValidateNotClosed();
+                return _position;
+            }
             set
             {
+                ValidateNotClosed();
                 if (value < 0 || value > int.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
@@ -42,6 +56,7 @@ namespace System
 
         public override long Seek(long offset, SeekOrigin origin)
         {
+            ValidateNotClosed();
             long pos =
                 origin == SeekOrigin.Begin ? offset :
                 origin == SeekOrigin.Current ? _position + offset :
@@ -63,12 +78,14 @@ namespace System
 
         public override int ReadByte()
         {
+            ValidateNotClosed();
             ReadOnlySpan<byte> s = _content.Span;
             return _position < s.Length ? s[_position++] : -1;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
+            ValidateNotClosed();
             ValidateReadArrayArguments(buffer, offset, count);
             return ReadBuffer(new Span<byte>(buffer, offset, count));
         }
@@ -97,6 +114,7 @@ namespace System
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
+            ValidateNotClosed();
             ValidateReadArrayArguments(buffer, offset, count);
             return cancellationToken.IsCancellationRequested ?
                 Task.FromCanceled<int>(cancellationToken) :
@@ -124,6 +142,30 @@ namespace System
             if (count < 0 || buffer.Length - offset < count)
             {
                 throw new ArgumentOutOfRangeException(nameof(count));
+            }
+        }
+
+        private void ValidateNotClosed()
+        {
+            if (!_isOpen)
+            {
+                throw new ObjectDisposedException(null, "Cannot access a closed Stream");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                if (disposing)
+                {
+                    _isOpen = false;
+                    _content = null;
+                }
+            }
+            finally
+            {
+                base.Dispose(disposing);
             }
         }
     }

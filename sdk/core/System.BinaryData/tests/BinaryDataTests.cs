@@ -84,10 +84,32 @@ namespace System.Tests
         }
 
         [Fact]
+        public async Task ToStreamIsNotMutatedWhenCustomerOwnsBuffer()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            BinaryData data = BinaryData.FromBytes(buffer);
+            Stream stream = data.ToStream();
+            buffer[0] = (byte)'z';
+            StreamReader sr = new StreamReader(stream);
+            Assert.Equal("some data", await sr.ReadToEndAsync());
+        }
+
+        [Fact]
+        public async Task ToStreamIsNotMutatedWhenBinaryDataOwnsBuffer()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            BinaryData data = BinaryData.FromStream(new MemoryStream(buffer));
+            Stream stream = data.ToStream();
+            buffer[0] = (byte)'z';
+            StreamReader sr = new StreamReader(stream);
+            Assert.Equal("some data", await sr.ReadToEndAsync());
+        }
+
+        [Fact]
         public async Task CanCreateBinaryDataFromStream()
         {
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
-            using MemoryStream stream = new MemoryStream(buffer);
+            using MemoryStream stream = new MemoryStream(buffer, 0, buffer.Length, true, true);
             BinaryData data = BinaryData.FromStream(stream);
             Assert.Equal(buffer, data.ToArray());
 
@@ -103,6 +125,10 @@ namespace System.Tests
             outputStream = data.ToStream();
             outputStream.Read(output, 0, (int)outputStream.Length);
             Assert.Equal(buffer, output);
+
+            //changing the backing buffer should not affect the BD instance
+            buffer[3] = (byte)'z';
+            Assert.NotEqual(buffer, data.ToMemory().ToArray());
         }
 
         [Fact]
@@ -309,6 +335,17 @@ namespace System.Tests
         }
 
         [Fact]
+        public void CreateThrowsOnNullArray()
+        {
+            byte[] payload = null;
+            var ex = Assert.Throws<ArgumentNullException>(() => new BinaryData(payload));
+            Assert.Contains("data", ex.Message);
+
+            ex = Assert.Throws<ArgumentNullException>(() => BinaryData.FromBytes(null));
+            Assert.Contains("data", ex.Message);
+        }
+
+        [Fact]
         public void ToObjectThrowsExceptionOnIncompatibleType()
         {
             TestModel payload = new TestModel { A = "value", B = 5, C = true };
@@ -468,6 +505,24 @@ namespace System.Tests
             var stream = new BinaryData(buffer).ToStream();
             Assert.Throws<ArgumentOutOfRangeException>(() => stream.Position = -1);
             Assert.Throws<ArgumentOutOfRangeException>(() => stream.Position = (long)int.MaxValue + 1);
+        }
+
+        [Fact]
+        public void CloseStreamValidation()
+        {
+            byte[] buffer = Encoding.UTF8.GetBytes("some data");
+            Stream stream = new BinaryData(buffer).ToStream();
+            stream.Dispose();
+            Assert.Throws<ObjectDisposedException>(() => stream.Position = -1);
+            Assert.Throws<ObjectDisposedException>(() => stream.Position);
+            Assert.Throws<ObjectDisposedException>(() => stream.Seek(0, SeekOrigin.Begin));
+            Assert.Throws<ObjectDisposedException>(() => stream.Read(buffer, 0, buffer.Length));
+            Assert.ThrowsAsync<ObjectDisposedException>(() => stream.ReadAsync(buffer, 0, buffer.Length));
+            Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
+            Assert.Throws<ObjectDisposedException>(() => stream.Length);
+            Assert.False(stream.CanRead);
+            Assert.False(stream.CanSeek);
+
         }
 
         private class TestModel

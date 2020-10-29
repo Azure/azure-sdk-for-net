@@ -40,7 +40,7 @@ namespace Azure.Core.Experimental.Tests.samples
             // There is also an implicit cast defined for ReadOnlySpan<byte>
             ReadOnlySpan<byte> ros = data;
 
-            // there is also a ToBytes method that gives access to the ReadOnlyMemory.
+            // there is also a ToMemory method that gives access to the ReadOnlyMemory.
             rom = data.ToMemory();
 
             // and a ToArray method that converts into a byte array.

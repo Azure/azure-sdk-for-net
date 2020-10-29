@@ -3,7 +3,7 @@ namespace System
     public partial class BinaryData
     {
         public BinaryData(byte[] data) { }
-        public BinaryData(object jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null, System.Type? type = null) { }
+        public BinaryData(object? jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null, System.Type? type = null) { }
         public BinaryData(System.ReadOnlyMemory<byte> data) { }
         public BinaryData(string data) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

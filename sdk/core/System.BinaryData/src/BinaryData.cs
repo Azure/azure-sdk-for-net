@@ -23,6 +23,8 @@ namespace System
         /// </summary>
         private readonly ReadOnlyMemory<byte> _bytes;
 
+        private readonly bool _ownsBuffer;
+
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance by wrapping the
         /// provided byte array.
@@ -30,7 +32,12 @@ namespace System
         /// <param name="data">The array to wrap.</param>
         public BinaryData(byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
             _bytes = data;
+            _ownsBuffer = false;
         }
 
         /// <summary>
@@ -44,10 +51,11 @@ namespace System
         /// <param name="type">The type to use when serializing the data. If not specified, <see cref="object.GetType"/> will
         /// be used to determine the type.</param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public BinaryData(object jsonSerializable, JsonSerializerOptions? options = default, Type? type = default)
+        public BinaryData(object? jsonSerializable, JsonSerializerOptions? options = default, Type? type = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             _bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type, options);
+            _ownsBuffer = true;
         }
 
         /// <summary>
@@ -55,9 +63,14 @@ namespace System
         /// provided bytes.
         /// </summary>
         /// <param name="data">Byte data to wrap.</param>
-        public BinaryData(ReadOnlyMemory<byte> data)
+        public BinaryData(ReadOnlyMemory<byte> data) : this(data, false)
+        {
+        }
+
+        private BinaryData(ReadOnlyMemory<byte> data, bool ownsBuffer)
         {
             _bytes = data;
+            _ownsBuffer = ownsBuffer;
         }
 
         /// <summary>
@@ -73,6 +86,7 @@ namespace System
             }
 
             _bytes = Encoding.UTF8.GetBytes(data);
+            _ownsBuffer = true;
         }
 
         /// <summary>
@@ -157,13 +171,6 @@ namespace System
                 streamLength = (int)longLength;
             }
 
-            ArraySegment<byte> buffer = default;
-
-            if (stream.GetType() == typeof(MemoryStream) && ((stream as MemoryStream)?.TryGetBuffer(out buffer) ?? false))
-            {
-                return new BinaryData(((ReadOnlyMemory<byte>)buffer).Slice((int)stream.Position, streamLength));
-            }
-
             using MemoryStream memoryStream = stream.CanSeek ? new MemoryStream(streamLength) : new MemoryStream();
             if (async)
             {
@@ -173,7 +180,7 @@ namespace System
             {
                 stream.CopyTo(memoryStream);
             }
-            return new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position));
+            return new BinaryData(data: memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position), ownsBuffer: true);
         }
 
         /// <summary>
@@ -218,7 +225,7 @@ namespace System
         /// </summary>
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream() =>
-            new ReadOnlyMemoryStream(_bytes);
+            new ReadOnlyMemoryStream(_ownsBuffer ? _bytes : _bytes.ToArray());
 
         /// <summary>
         /// Gets the value of this instance as bytes without any further interpretation.
