@@ -34,7 +34,7 @@
         Breaking changes:
         * VanityUrl property on LiveEvent is now called UseStaticHostName to better reflect the intent of the property.
         * SubscriptionMediaService class has been removed in favor of MediaService class. SubscriptionMediaService is a duplicate of MediaService class.
-        * Basic and Standard live encoding types referred to the same live event type.  Basic LiveEventEncodingType has now been removed. Supported encoding types are Standard, Premium1080p or None
+        * Basic and Standard live encoding types referred to the same live event type.  Basic LiveEventEncodingType has now been removed. Supported encoding types are Standard, Premium1080p or None.
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
