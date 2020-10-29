@@ -106,6 +106,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
+        public async Task SendingEmptyBatchDoesNotThrow()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                await sender.SendMessagesAsync(batch);
+            }
+        }
+
+        [Test]
         public async Task CanSendAnEmptyBodyMessageBatch()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

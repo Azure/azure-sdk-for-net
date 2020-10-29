@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var messageId = Guid.NewGuid().ToString();
             var partitionKey = Guid.NewGuid().ToString();
             var viaPartitionKey = Guid.NewGuid().ToString();
-            var sessionId = Guid.NewGuid().ToString();
+            var sessionId = partitionKey;
             var correlationId = Guid.NewGuid().ToString();
             var label = Guid.NewGuid().ToString();
             var to = Guid.NewGuid().ToString();
