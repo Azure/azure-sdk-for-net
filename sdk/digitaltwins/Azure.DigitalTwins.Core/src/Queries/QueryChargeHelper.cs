@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core
         ///     }
         /// }
         /// </code>
-        public static bool TryGetQueryCharge(Page<BasicDigitalTwin> page, out float queryCharge)
+        public static bool TryGetQueryCharge<T>(Page<T> page, out float queryCharge)
         {
             Argument.AssertNotNull(page, nameof(page));
 
