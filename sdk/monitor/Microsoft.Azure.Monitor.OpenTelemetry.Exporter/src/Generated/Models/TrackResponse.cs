@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Response containing the status of each telemetry item. </summary>
-    public partial class TrackResponse
+    internal partial class TrackResponse
     {
         /// <summary> Initializes a new instance of TrackResponse. </summary>
         internal TrackResponse()

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Exception details of the exception in a chain. </summary>
-    public partial class TelemetryExceptionDetails
+    internal partial class TelemetryExceptionDetails
     {
         /// <summary> Initializes a new instance of TelemetryExceptionDetails. </summary>
         /// <param name="message"> Exception message. </param>

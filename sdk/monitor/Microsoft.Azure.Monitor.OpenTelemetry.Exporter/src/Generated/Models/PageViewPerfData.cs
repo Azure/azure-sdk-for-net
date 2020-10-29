@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of PageViewPerf represents: a page view with no performance data, a page view with performance data, or just the performance data of an earlier page request. </summary>
-    public partial class PageViewPerfData : MonitorDomain
+    internal partial class PageViewPerfData : MonitorDomain
     {
         /// <summary> Initializes a new instance of PageViewPerfData. </summary>
         /// <param name="version"> Schema version. </param>

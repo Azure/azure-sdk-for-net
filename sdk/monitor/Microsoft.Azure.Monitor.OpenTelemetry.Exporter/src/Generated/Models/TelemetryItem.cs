@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> System variables for a telemetry item. </summary>
-    public partial class TelemetryItem
+    internal partial class TelemetryItem
     {
         /// <summary> Initializes a new instance of TelemetryItem. </summary>
         /// <param name="name"> Type name of telemetry data item. </param>

@@ -11,7 +11,7 @@ using Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
-    public class MockTransmitter : ITransmitter
+    internal class MockTransmitter : ITransmitter
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
 

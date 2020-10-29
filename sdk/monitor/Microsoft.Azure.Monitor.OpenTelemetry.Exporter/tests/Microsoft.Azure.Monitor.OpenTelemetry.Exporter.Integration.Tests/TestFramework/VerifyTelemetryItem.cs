@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
-    public static class VerifyTelemetryItem
+    internal static class VerifyTelemetryItem
     {
 
         public static void Verify(TelemetryItem telemetryItem, ActivityKind activityKind, ExpectedTelemetryItemValues expectedVars)

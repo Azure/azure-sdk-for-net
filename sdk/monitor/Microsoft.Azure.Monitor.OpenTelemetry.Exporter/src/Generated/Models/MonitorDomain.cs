@@ -8,7 +8,7 @@
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The abstract common base of all domains. </summary>
-    public partial class MonitorDomain
+    internal partial class MonitorDomain
     {
         /// <summary> Initializes a new instance of MonitorDomain. </summary>
         /// <param name="version"> Schema version. </param>
