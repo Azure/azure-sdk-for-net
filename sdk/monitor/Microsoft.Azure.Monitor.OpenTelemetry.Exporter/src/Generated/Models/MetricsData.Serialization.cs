@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    public partial class MetricsData : IUtf8JsonSerializable
+    internal partial class MetricsData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

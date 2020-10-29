@@ -564,6 +564,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Create and open the AMQP session associated with the link.
 
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
+
+                // This is the maximum number of unsettled transfers across all receive links on this session.
+                // This will allow the session to accept unlimited number of transfers, even if the recevier(s)
+                // are not settling any of the deliveries.
+                sessionSettings.IncomingWindow = uint.MaxValue;
+
                 session = connection.CreateSession(sessionSettings);
 
                 await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);

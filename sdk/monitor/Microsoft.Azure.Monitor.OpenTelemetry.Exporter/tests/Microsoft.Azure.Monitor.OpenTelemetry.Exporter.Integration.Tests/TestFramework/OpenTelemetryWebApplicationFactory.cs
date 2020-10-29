@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestF
     /// <typeparam name="TStartup">Startup class from the application to be used during this test.</typeparam>
     public class OpenTelemetryWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
-        public ConcurrentBag<TelemetryItem> TelemetryItems => this.Transmitter.TelemetryItems;
+        internal ConcurrentBag<TelemetryItem> TelemetryItems => this.Transmitter.TelemetryItems;
 
         private const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
         private readonly MockTransmitter Transmitter = new MockTransmitter();

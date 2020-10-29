@@ -155,10 +155,10 @@ namespace Azure.DigitalTwins.Core
     {
         internal DigitalTwinsModelData() { }
         public bool? Decommissioned { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
         public string DtdlModel { get { throw null; } }
         public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> LanguageDescriptions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> LanguageDisplayNames { get { throw null; } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } }
     }
     public partial class GetModelsOptions
@@ -187,7 +187,7 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class QueryChargeHelper
     {
-        public static bool TryGetQueryCharge(Azure.Page<Azure.DigitalTwins.Core.BasicDigitalTwin> page, out float queryCharge) { throw null; }
+        public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
     }
     public partial class UpdateComponentOptions
     {

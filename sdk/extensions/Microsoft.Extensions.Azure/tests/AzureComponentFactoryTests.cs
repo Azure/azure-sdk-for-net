@@ -42,7 +42,7 @@ namespace Azure.Core.Extensions.Tests
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
-            TokenCredential credential = factory.CreateCredential(configuration.GetSection("TestClient"));
+            TokenCredential credential = factory.CreateTokenCredential(configuration.GetSection("TestClient"));
 
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;
@@ -62,7 +62,7 @@ namespace Azure.Core.Extensions.Tests
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             AzureComponentFactory factory = provider.GetService<AzureComponentFactory>();
-            TokenCredential credential = factory.CreateCredential(configuration);
+            TokenCredential credential = factory.CreateTokenCredential(configuration);
 
             Assert.IsInstanceOf<EnvironmentCredential>(credential);
         }

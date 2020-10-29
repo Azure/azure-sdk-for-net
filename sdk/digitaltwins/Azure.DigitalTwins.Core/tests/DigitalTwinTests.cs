@@ -121,5 +121,43 @@ namespace Azure.DigitalTwins.Core.Tests
             act.Should().Throw<RequestFailedException>()
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
+
+        [Test]
+        public async Task DigitalTwinOperationsWithCustomObjectSerializer_Succeeds()
+        {
+            // arrange
+
+            var serializer = new TestObjectSerializer();
+            DigitalTwinsClientOptions options = new DigitalTwinsClientOptions
+            {
+                Serializer = serializer
+            };
+
+            DigitalTwinsClient client = GetClient(options);
+
+            serializer.WasDeserializeCalled.Should().BeFalse();
+            serializer.WasSerializeCalled.Should().BeFalse();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            // create room model
+            string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+            await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+            // act
+
+            // create room twin
+            BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+            await client.CreateOrReplaceDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
+
+            roomTwin = await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false);
+
+            // assert
+            roomTwin.Should().NotBeNull();
+            serializer.WasDeserializeCalled.Should().BeTrue();
+            serializer.WasSerializeCalled.Should().BeTrue();
+        }
     }
 }
