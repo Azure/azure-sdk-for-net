@@ -39,7 +39,7 @@ Begin {
     if ($ReleaseDate)
     {
         try {
-            $ReleaseStatus = ([System.DateTime]::ParseExact($ReleaseDate, $dateFormat, $provider)).ToString($dateFormat)
+            $ReleaseStatus = "({0})" -f ([System.DateTime]::ParseExact($ReleaseDate, $dateFormat, $provider)).ToString($dateFormat)
         }
         catch {
             LogError "Invalid Release date. Please use a valid date in the format '$dateFormat'"
@@ -88,22 +88,20 @@ Process {
 
         if ($ReplaceVersion) 
         {
-            $NewChangeLogEntries = Edit-ChangeLogEntry -ChangeLogEntries $ChangeLogEntries -VersionToEdit $LatestVersion `
-            -NewEntryReleaseVersion $Version -NewEntryReleaseStatus $ReleaseStatus
-            Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $NewChangeLogEntries
+            $ChangeLogEntries.Remove($LatestVersion)
+            $ChangeLogEntries[$Version] = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
         }
         else 
         {
-            $NewChangeLogEntries = Add-ChangeLogEntry -ChangeLogEntries $ChangeLogEntries -NewEntryVersion $Version `
-            -NewEntryReleaseStatus $ReleaseStatus
-            Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $NewChangeLogEntries
+            $ChangeLogEntries[$Version] = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
         }
     }
     else 
     {
-        $NewChangeLogEntries = Add-ChangeLogEntry -NewEntryVersion $Version -NewEntryReleaseStatus $ReleaseStatus
-        Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $NewChangeLogEntries
+        $ChangeLogEntries[$Version] = New-ChangeLogEntry -Version $Version -Status $ReleaseStatus
     }
+
+    Set-ChangeLogContent -ChangeLogLocation $PkgProperties.ChangeLogPath -ChangeLogEntries $ChangeLogEntries
 }
 
 

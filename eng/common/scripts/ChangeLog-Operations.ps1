@@ -1,6 +1,9 @@
 # Common Changelog Operations
+. "${PSScriptRoot}\logging.ps1"
+. "${PSScriptRoot}\SemVer.ps1"
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s(?<releaseStatus>\(Unreleased\)|\(\d{4}-\d{2}-\d{2}\)))?)"
+$UNRELEASED_TAG = "(Unreleased)"
 
 # Returns a Collection of changeLogEntry object containing changelog info for all version present in the gived CHANGELOG
 function Get-ChangeLogEntries {
@@ -22,7 +25,7 @@ function Get-ChangeLogEntries {
     foreach ($line in $contents) {
       if ($line -match $RELEASE_TITLE_REGEX) {
         $changeLogEntry = New-ChangeLogEntry -Version $matches["version"] -Status $matches["releaseStatus"] `
-        -Title $line -Content @()
+        -Title $line
         $changeLogEntries[$changeLogEntry.ReleaseVersion] = $changeLogEntry
       }
       else {
@@ -100,12 +103,12 @@ function Confirm-ChangeLogEntry {
   Write-Host "-----"
 
   if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus)) {
-    Write-Error "Entry does not have a correct release status. Please ensure the status is set to a date '(yyyy-MM-dd)' or '(Unreleased)' if not yet released."
+    Write-Error "Entry does not have a correct release status. Please ensure the status is set to a date '(yyyy-MM-dd)' or '$UNRELEASED_TAG' if not yet released."
     return $false
   }
 
   if ($ForRelease -eq $True) {
-    if ($changeLogEntry.ReleaseStatus -eq "(Unreleased)") {
+    if ($changeLogEntry.ReleaseStatus -eq $UNRELEASED_TAG) {
       Write-Error "Entry has no release date set. Please ensure to set a release date with format 'yyyy-MM-dd'."
       return $false
     }
@@ -121,61 +124,38 @@ function Confirm-ChangeLogEntry {
 function New-ChangeLogEntry {
   param (
     [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
     [String]$Version,
-    [Parameter(Mandatory = $true)]
-    [ValidateScript({$_.StartsWith('(') -and $_.EndsWith(')')})]
-    [String]$Status,
+    [String]$Status=$UNRELEASED_TAG,
     [String]$Title,
     [String[]]$Content
   )
 
+  # Validate relase Status
+  $Status = $Status.Trim().Trim("()")
+  if ($Status -ne "Unreleased") {
+    $dateFormat = "yyyy-MM-dd"
+    $provider = [System.Globalization.CultureInfo]::InvariantCulture
+    try {
+      $Status = ([System.DateTime]::ParseExact($Status, $dateFormat, $provider)).ToString($dateFormat)
+    }
+    catch {
+        LogWarning "Invalid date [ $Status ] passed as status for Version [$Version]. Please use a valid date in the format '$dateFormat' or use '$UNRELEASED_TAG'"
+    }
+  }
+
+  $Status = "($Status)"
+  if (!$Content) { $Content = @() }
+  if (!$Title) { $Title = "## $Version $Status" }
+
   $newChangeLogEntry = [pscustomobject]@{ 
     ReleaseVersion = $Version
     ReleaseStatus  = $Status
-    ReleaseTitle   = If ($Title) { $Title } Else { "## $Version $Status"}
-    ReleaseContent = If ($Content) { $Content } Else { @("") }
+    ReleaseTitle   = $Title
+    ReleaseContent = $Content
   }
 
   return $newChangeLogEntry
-}
-
-function Add-ChangeLogEntry {
-  param (
-    [Parameter(Mandatory = $false)]
-    [Hashtable]$ChangeLogEntries,
-    [Parameter(Mandatory = $true)]
-    [String]$NewEntryVersion,
-    [String]$NewEntryReleaseStatus="(Unreleased)",
-    [String]$NewEntryContent=""
-  )
-
-  if ($ChangeLogEntries.Contains($NewEntryVersion))
-  {
-    LogError "This Changelog already contains this entry. Do you mean to edit the entry?"
-    exit 1
-  }
-
-  $newChangeLogEntry = New-ChangeLogEntry -Version $NewEntryVersion -Status $NewEntryReleaseStatus `
-  -Content $NewEntryContent
-  $ChangeLogEntries.Add($NewEntryVersion,$newChangeLogEntry)
-  return $ChangeLogEntries
-}
-
-function Edit-ChangeLogEntry {
-  param (
-    [Parameter(Mandatory = $true)]
-    [Hashtable]$ChangeLogEntries,
-    [Parameter(Mandatory = $true)]
-    [string]$VersionToEdit,
-    [String]$NewEntryReleaseVersion,
-    [String]$NewEntryReleaseStatus,
-    [String]$NewEntryReleaseContent
-  )
-
-  if ($NewEntryReleaseVersion) { $ChangeLogEntries[$VersionToEdit].ReleaseVersion = $NewEntryReleaseVersion }
-  if ($NewEntryReleaseStatus) {$ChangeLogEntries[$VersionToEdit].ReleaseStatus = $NewEntryReleaseStatus }
-  if ($NewEntryReleaseContent) {$ChangeLogEntries[$VersionToEdit].ReleaseContent = $NewEntryReleaseContent }
-  return $ChangeLogEntries
 }
 
 function Set-ChangeLogContent {
@@ -188,22 +168,21 @@ function Set-ChangeLogContent {
 
   $changeLogContent = @()
   $changeLogContent += "# Release History"
-  
-  try {
-    [AzureEngSemanticVersion]
+  $changeLogContent += ""
+
+  try
+  {
+    $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
   }
   catch {
-    . "${PSScriptRoot}\SemVer.ps1."
+    LogError "Problem sorting version in ChangeLogEntries"
+    return
   }
 
-  $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
   foreach ($version in $VersionsSorted) {
     $changeLogEntry = $ChangeLogEntries[$version]
     $changeLogContent += $changeLogEntry.ReleaseTitle
-    foreach ($line in $changeLogEntry.ReleaseContent) {
-      $changeLogContent += $line
-    }
-    $changeLogContent += ""
+    $changeLogContent += $changeLogEntry.ReleaseContent
   }
 
   Set-Content -Path $ChangeLogLocation -Value $changeLogContent

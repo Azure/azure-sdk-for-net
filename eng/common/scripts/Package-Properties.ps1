@@ -91,7 +91,7 @@ function Get-PkgProperties
     {
         $pkgDirectoryPath = Join-Path $serviceDirectoryPath $directory.Name
 
-        if (Test-Path Function:GetPackageInfoFromRepoFn)
+        if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetPackageInfoFromRepoFn }).Count -gt 0)
         {
             $pkgProps = &$GetPackageInfoFromRepoFn -pkgPath $pkgDirectoryPath -serviceDirectory $ServiceDirectory -pkgName $PackageName
         }
