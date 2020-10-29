@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "201",
         "Content-Type": "application/json",
-        "traceparent": "00-651ca3371600e6439976976b86a78c3e-f3aba385bd73654f-00",
+        "traceparent": "00-e1f7ec07d3554d4ab5fe1663356668cb-a78204e0a94ffa43-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201015.1",
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "2c77d15414b442a08b40e097de18b62b",
@@ -28,12 +28,12 @@
         "Access-Control-Expose-Headers": "Location",
         "Content-Length": "641",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 07:43:19 GMT",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
         "Location": "https://testsynapsevnet.dev.azuresynapse.net/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882?api-version=2019-06-01-preview",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "2c77d15414b442a08b40e097de18b62b",
-        "x-ms-request-id": "57da8143-2e7d-4349-aa5c-b1718600804b"
+        "x-ms-request-id": "8aba1256-027e-4c35-af56-b2727a4ff0b8"
       },
       "ResponseBody": {
         "name": "myPrivateEndpoint7882",
@@ -57,7 +57,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201015.1",
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "7dd93c177c8a7a148f5d7fa3a0de7f85",
@@ -68,14 +68,28 @@
       "ResponseHeaders": {
         "Content-Length": "2268",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 07:43:19 GMT",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "7dd93c177c8a7a148f5d7fa3a0de7f85",
-        "x-ms-request-id": "993d6207-25d2-4098-8d29-5774e384c9a7"
+        "x-ms-request-id": "7a5d76c7-7b6d-46b4-a909-4a9802e2d7d0"
       },
       "ResponseBody": {
         "value": [
+          {
+            "name": "myPrivateEndpoint7882",
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882",
+            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+            "properties": {
+              "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
+              "groupId": "blob",
+              "provisioningState": "Provisioning",
+              "connectionState": {},
+              "isReserved": false,
+              "fqdns": [],
+              "isCompliant": false
+            }
+          },
           {
             "name": "synapse-ws-sql--testsynapsevnet",
             "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/synapse-ws-sql--testsynapsevnet",
@@ -115,20 +129,6 @@
               ],
               "isCompliant": false
             }
-          },
-          {
-            "name": "myPrivateEndpoint7882",
-            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapsevnet/managedVirtualNetworks/default/managedPrivateEndpoints/myPrivateEndpoint7882",
-            "type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
-            "properties": {
-              "privateLinkResourceId": "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/myStorageAccount20002",
-              "groupId": "blob",
-              "provisioningState": "Provisioning",
-              "connectionState": {},
-              "isReserved": false,
-              "fqdns": [],
-              "isCompliant": false
-            }
           }
         ]
       }
@@ -139,9 +139,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-764e971c459d0d4aa5ff7095af43d661-047b789f5b8d7448-00",
+        "traceparent": "00-7777f9faabefae44b8c48f71fae45d61-b4c5c726fa9ed94d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201015.1",
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "9f986633d3731b3d46d7b5c6afcf59f9",
@@ -152,11 +152,11 @@
       "ResponseHeaders": {
         "Content-Length": "635",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 07:43:19 GMT",
+        "Date": "Thu, 29 Oct 2020 06:30:30 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "9f986633d3731b3d46d7b5c6afcf59f9",
-        "x-ms-request-id": "5cb84d5e-3024-4728-8559-f4f959f5b934"
+        "x-ms-request-id": "97bd09df-a858-4a7d-9a9d-30b49611ad4e"
       },
       "ResponseBody": {
         "name": "myPrivateEndpoint7882",
@@ -178,9 +178,9 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-a1c9af6a3a307748b129b05d2e95cf36-2a3351d7b0160345-00",
+        "traceparent": "00-4d7ff91613e5334fac22cc0a3feec41d-8c35445353b6af4b-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201015.1",
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8ed15d129b17d775bcfc9c5695fda1ad",
@@ -190,11 +190,11 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Thu, 15 Oct 2020 07:43:20 GMT",
+        "Date": "Thu, 29 Oct 2020 06:30:31 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "8ed15d129b17d775bcfc9c5695fda1ad",
-        "x-ms-request-id": "abc5bcd6-bd05-4d6d-a24c-a8f0d09b7eb3"
+        "x-ms-request-id": "6391e363-5ff3-44ed-bd2a-a4e7052d873c"
       },
       "ResponseBody": []
     },
@@ -205,7 +205,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201015.1",
+          "azsdk-net-Analytics.Synapse.ManagedPrivateEndpoints/1.0.0-alpha.20201028.1",
           "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "78635bc0178043b8ffbe36b3c74ecbbf",
@@ -216,11 +216,11 @@
       "ResponseHeaders": {
         "Content-Length": "1626",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 07:43:20 GMT",
+        "Date": "Thu, 29 Oct 2020 06:30:31 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-client-request-id": "78635bc0178043b8ffbe36b3c74ecbbf",
-        "x-ms-request-id": "2f83cbfb-7fe6-4d77-96f9-2af48600caf9"
+        "x-ms-request-id": "d0709634-4fbc-4cb3-8b79-d90fc8b69c7c"
       },
       "ResponseBody": {
         "value": [
