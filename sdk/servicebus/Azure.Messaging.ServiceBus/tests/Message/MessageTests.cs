@@ -97,6 +97,66 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         [Test]
+        public void PartitionKeyMustMatchSessionIdIfBothSet()
+        {
+            var message = new ServiceBusMessage
+            {
+                SessionId = "session"
+            };
+            Assert.That(
+                () => message.PartitionKey = "partition",
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            message = new ServiceBusMessage
+            {
+                PartitionKey = "partition"
+            };
+            Assert.That(
+                () => message.SessionId = "session",
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            message = new ServiceBusMessage
+            {
+                SessionId = "session"
+            };
+            Assert.That(
+                () => message.PartitionKey = null,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            message = new ServiceBusMessage
+            {
+                PartitionKey = "partition"
+            };
+            Assert.That(
+                () => message.SessionId = null,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            message = new ServiceBusMessage
+            {
+                PartitionKey = null,
+                SessionId = "session"
+            };
+
+            message = new ServiceBusMessage
+            {
+                SessionId = null,
+                PartitionKey = "partition"
+            };
+
+            message = new ServiceBusMessage
+            {
+                SessionId = "partition",
+                PartitionKey = "partition"
+            };
+
+            message = new ServiceBusMessage
+            {
+                PartitionKey = "partition",
+                SessionId = "partition"
+            };
+        }
+
+        [Test]
         public void SetMessageBodyToString()
         {
             var messageBody = "some message";
@@ -173,8 +233,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromHours(2)).UtcDateTime, receivedMessage.ScheduledEnqueueTime.UtcDateTime);
             Assert.IsNotNull(receivedMessage.ApplicationProperties);
             Assert.IsNotEmpty(receivedMessage.ApplicationProperties);
-            Assert.AreEqual(new[]{ "42", "properties0864"}, receivedMessage.ApplicationProperties.Keys);
-            Assert.AreEqual(new object[]{ 6420, "testValue"}, receivedMessage.ApplicationProperties.Values);
+            Assert.AreEqual(new[] { "42", "properties0864" }, receivedMessage.ApplicationProperties.Keys);
+            Assert.AreEqual(new object[] { 6420, "testValue" }, receivedMessage.ApplicationProperties.Values);
             Assert.AreEqual("f5ae57c7-963b-4864-ae19-32b12451e5d8", receivedMessage.LockTokenGuid.ToString());
             Assert.AreEqual(4321, receivedMessage.DeliveryCount);
             Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromMinutes(18)).UtcDateTime, receivedMessage.LockedUntil.UtcDateTime);
