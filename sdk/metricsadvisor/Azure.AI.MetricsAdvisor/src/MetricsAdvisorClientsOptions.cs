@@ -4,22 +4,22 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Administration
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when creating a <see cref="MetricsAdvisorAdministrationClient" />
+    /// The set of options that can be specified when creating a <see cref="MetricsAdvisorClient" />
     /// to configure its behavior.
     /// </summary>
-    public class MetricsAdvisorAdministrationClientOptions : ClientOptions
+    public class MetricsAdvisorClientsOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="MetricsAdvisorClientsOptions"/> class.
         /// </summary>
         /// <param name="version">The version of the service to send requests to.</param>
         /// <exception cref="ArgumentException"><paramref name="version"/> is <c>default</c>.</exception>
-        public MetricsAdvisorAdministrationClientOptions(ServiceVersion version = LatestVersion)
+        public MetricsAdvisorClientsOptions(ServiceVersion version = LatestVersion)
         {
             if (version == default)
             {
