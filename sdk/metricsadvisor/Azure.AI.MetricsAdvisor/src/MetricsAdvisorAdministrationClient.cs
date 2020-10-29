@@ -1004,7 +1004,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
@@ -1037,7 +1037,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
@@ -1324,12 +1324,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1344,9 +1344,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1361,12 +1361,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1381,9 +1381,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {

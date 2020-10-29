@@ -256,35 +256,38 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task HookOperations()
         {
             var adminClient = GetMetricsAdvisorAdministrationClient();
+            var emailHook = new EmailNotificationHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailNotificationHook)} description" };
 
-            NotificationHook createdEmailHook = await adminClient.CreateHookAsync(new EmailNotificationHook(Recording.GenerateAlphaNumericId("test"), new List<string> { "foo@contoso.com" }) { Description = $"{nameof(EmailNotificationHook)} description" }).ConfigureAwait(false);
+            string createdEmailHookId = await adminClient.CreateHookAsync(emailHook).ConfigureAwait(false);
 
-            EmailNotificationHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHook.Id).ConfigureAwait(false)).Value as EmailNotificationHook;
+            EmailNotificationHook getEmailHook = (await adminClient.GetHookAsync(createdEmailHookId).ConfigureAwait(false)).Value as EmailNotificationHook;
 
             getEmailHook.Description = "updated description";
             getEmailHook.EmailsToAlert.Add($"{Recording.GenerateAlphaNumericId("user")}@contoso.com");
 
             await adminClient.UpdateHookAsync(getEmailHook.Id, getEmailHook).ConfigureAwait(false);
 
-            NotificationHook createdWebHook = await adminClient.CreateHookAsync(new WebNotificationHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebNotificationHook)} description" }).ConfigureAwait(false);
+            var webHook = new WebNotificationHook(Recording.GenerateAlphaNumericId("test"), "http://contoso.com") { Description = $"{nameof(WebNotificationHook)} description" };
 
-            createdWebHook.Description = "updated description";
+            string createdWebHookId = await adminClient.CreateHookAsync(webHook).ConfigureAwait(false);
 
-            await adminClient.UpdateHookAsync(createdEmailHook.Id, createdEmailHook).ConfigureAwait(false);
+            webHook.Description = "updated description";
 
-            WebNotificationHook getWebHook = (await adminClient.GetHookAsync(createdWebHook.Id).ConfigureAwait(false)).Value as WebNotificationHook;
+            await adminClient.UpdateHookAsync(createdEmailHookId, emailHook).ConfigureAwait(false);
+
+            WebNotificationHook getWebHook = (await adminClient.GetHookAsync(createdWebHookId).ConfigureAwait(false)).Value as WebNotificationHook;
 
             getWebHook.Description = "updated description";
             getWebHook.CertificateKey = Recording.GenerateAlphaNumericId("key");
 
             List<NotificationHook> hooks = await adminClient.GetHooksAsync(new GetHooksOptions { HookNameFilter = getWebHook.Name }).ToEnumerableAsync().ConfigureAwait(false);
 
-            Assert.That(getEmailHook.Id, Is.EqualTo(createdEmailHook.Id));
-            Assert.That(getEmailHook.Name, Is.EqualTo(createdEmailHook.Name));
+            Assert.That(getEmailHook.Id, Is.EqualTo(createdEmailHookId));
+            Assert.That(getEmailHook.Name, Is.EqualTo(emailHook.Name));
             Assert.That(hooks, Is.Not.Empty);
-            Assert.That(hooks.Any(h => h.Name == getWebHook.Name), $"hooks should contain name {createdEmailHook.Name}, but contained names: {string.Join(",", hooks.Select(h => h.Name))}");
+            Assert.That(hooks.Any(h => h.Name == getWebHook.Name), $"hooks should contain name {emailHook.Name}, but contained names: {string.Join(",", hooks.Select(h => h.Name))}");
 
-            await adminClient.DeleteHookAsync(createdEmailHook.Id).ConfigureAwait(false);
+            await adminClient.DeleteHookAsync(createdEmailHookId).ConfigureAwait(false);
         }
 
         [RecordedTest]
