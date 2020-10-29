@@ -112,7 +112,8 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateMessageId(value);
+                Argument.AssertNotNullOrEmpty(value, nameof(MessageId));
+                Argument.AssertNotTooLong(value, Constants.MaxMessageIdLength, nameof(MessageId));
                 AmqpMessage.Properties.MessageId = value;
             }
         }
@@ -133,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                ValidatePartitionKey(value);
+                Argument.AssertNotTooLong(value, Constants.MaxPartitionKeyLength, nameof(PartitionKey));
                 AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = value;
             }
         }
@@ -154,7 +155,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                ValidatePartitionKey(value);
+                Argument.AssertNotTooLong(value, Constants.MaxPartitionKeyLength, nameof(TransactionPartitionKey));
                 AmqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = value;
             }
         }
@@ -174,7 +175,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(value);
+                Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(SessionId));
                 AmqpMessage.Properties.GroupId = value;
             }
         }
@@ -192,7 +193,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(value);
+                Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(ReplyToSessionId));
                 AmqpMessage.Properties.ReplyToGroupId = value;
             }
         }
@@ -370,31 +371,6 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
-        }
-
-        private static void ValidateMessageId(string messageId)
-        {
-            if (string.IsNullOrEmpty(messageId) ||
-                messageId.Length > Constants.MaxMessageIdLength)
-            {
-                throw new ArgumentException("MessageIdIsNullOrEmptyOrOverMaxValue");
-            }
-        }
-
-        private static void ValidateSessionId(string sessionId)
-        {
-            if (sessionId != null && sessionId.Length > Constants.MaxSessionIdLength)
-            {
-                throw new ArgumentException("SessionIdIsOverMaxValue");
-            }
-        }
-
-        private static void ValidatePartitionKey(string partitionKey)
-        {
-            if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
-            {
-                throw new ArgumentException("PropertyValueOverMaxValue");
-            }
         }
     }
 }

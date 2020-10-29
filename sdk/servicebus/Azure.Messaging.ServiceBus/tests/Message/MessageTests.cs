@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Azure.Core;
 using NUnit.Framework;
@@ -38,6 +39,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             var message = new ServiceBusMessage();
             Assert.That(() => message.MessageId = "", Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void SettingLongMessageIdThrows()
+        {
+            var message = new ServiceBusMessage();
+            Assert.That(() => message.MessageId = string.Concat(Enumerable.Repeat("a", 130)), Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void SettingNullSessionDoesNotThrow()
+        {
+            var message = new ServiceBusMessage
+            {
+                SessionId = null
+            };
+        }
+
+        [Test]
+        public void SettingLongSessionIdThrows()
+        {
+            var message = new ServiceBusMessage();
+            Assert.That(() => message.SessionId = string.Concat(Enumerable.Repeat("a", 130)), Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void SettingNullReplyToSessionDoesNotThrow()
+        {
+            var message = new ServiceBusMessage
+            {
+                ReplyToSessionId = null
+            };
+        }
+
+        [Test]
+        public void SettingLongReplyToSessionIdThrows()
+        {
+            var message = new ServiceBusMessage();
+            Assert.That(() => message.ReplyToSessionId = string.Concat(Enumerable.Repeat("a", 130)), Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void SettingNullPartitionKeyDoesNotThrow()
+        {
+            var message = new ServiceBusMessage
+            {
+                PartitionKey = null
+            };
+        }
+
+        [Test]
+        public void SettingLongPartitionKeyThrows()
+        {
+            var message = new ServiceBusMessage();
+            Assert.That(() => message.PartitionKey = string.Concat(Enumerable.Repeat("a", 130)), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
