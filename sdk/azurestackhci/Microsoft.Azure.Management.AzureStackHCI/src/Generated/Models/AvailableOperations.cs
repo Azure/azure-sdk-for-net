@@ -16,24 +16,27 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     using System.Linq;
 
     /// <summary>
-    /// List of available operations.
+    /// Available operations of the service
     /// </summary>
-    public partial class OperationList
+    public partial class AvailableOperations
     {
         /// <summary>
-        /// Initializes a new instance of the OperationList class.
+        /// Initializes a new instance of the AvailableOperations class.
         /// </summary>
-        public OperationList()
+        public AvailableOperations()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationList class.
+        /// Initializes a new instance of the AvailableOperations class.
         /// </summary>
-        /// <param name="value">List of operations.</param>
-        /// <param name="nextLink">Link to the next set of results.</param>
-        public OperationList(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
+        /// <param name="value">Collection of available operation
+        /// details</param>
+        /// <param name="nextLink">URL client should use to fetch the next page
+        /// (per server side paging).
+        /// It's null for now, added for future use.</param>
+        public AvailableOperations(IList<OperationDetail> value = default(IList<OperationDetail>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -46,16 +49,18 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of operations.
+        /// Gets or sets collection of available operation details
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Operation> Value { get; set; }
+        public IList<OperationDetail> Value { get; set; }
 
         /// <summary>
-        /// Gets link to the next set of results.
+        /// Gets or sets URL client should use to fetch the next page (per
+        /// server side paging).
+        /// It's null for now, added for future use.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; private set; }
+        public string NextLink { get; set; }
 
     }
 }
