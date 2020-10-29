@@ -83,7 +83,7 @@ namespace Microsoft.Extensions.Hosting
                     throw new InvalidOperationException("Unable to detect the client option type");
                 }
 
-                var credential = _componentFactory.CreateCredential(_configuration);
+                var credential = _componentFactory.CreateTokenCredential(_configuration);
                 var options = _componentFactory.CreateClientOptions(clientOptionType, null, _configuration);
 
                 return Task.FromResult(_componentFactory.CreateClient(_clientType, _configuration, credential, options));

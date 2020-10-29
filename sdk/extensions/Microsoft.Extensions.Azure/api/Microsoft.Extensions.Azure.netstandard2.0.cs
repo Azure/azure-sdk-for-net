@@ -32,7 +32,7 @@ namespace Microsoft.Extensions.Azure
         protected AzureComponentFactory() { }
         public abstract object CreateClient(System.Type clientType, Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential, object clientOptions);
         public abstract object CreateClientOptions(System.Type optionsType, object serviceVersion, Microsoft.Extensions.Configuration.IConfiguration configuration);
-        public abstract Azure.Core.TokenCredential CreateCredential(Microsoft.Extensions.Configuration.IConfiguration configuration);
+        public abstract Azure.Core.TokenCredential CreateTokenCredential(Microsoft.Extensions.Configuration.IConfiguration configuration);
     }
     public sealed partial class AzureEventSourceLogForwarder : System.IDisposable
     {
