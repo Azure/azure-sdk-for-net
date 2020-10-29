@@ -21,8 +21,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string endpoint = TestEnvironment.SchemaRegistryEndpoint;
 
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
-            // Create a new access Spark batch client using the default credential from Azure.Identity using environment variables previously set,
+            // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
             var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
             #endregion
 
@@ -30,6 +31,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 
         [Test]
+        [Order(1)]
         public void RegisterSchema()
         {
             string groupName = TestEnvironment.SchemaRegistryGroup;
@@ -57,9 +59,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 
         [Test]
+        [Order(2)]
         public void RetrieveSchemaId()
         {
-            RegisterSchema();
             string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRetrieveSchemaId
@@ -85,9 +87,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 
         [Test]
+        [Order(3)]
         public void RetrieveSchema()
         {
-            RegisterSchema();
             var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema

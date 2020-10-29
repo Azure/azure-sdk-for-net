@@ -42,8 +42,9 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
 ```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
-// Create a new access Spark batch client using the default credential from Azure.Identity using environment variables previously set,
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
 ```
 
