@@ -28,7 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
             : this(endpoint, credential, null)
         {
         }
@@ -40,12 +42,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
@@ -71,12 +75,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
+        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
