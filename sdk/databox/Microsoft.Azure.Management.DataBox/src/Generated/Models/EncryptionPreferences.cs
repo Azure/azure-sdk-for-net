@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Minimum properties that should be present in each individual validation
-    /// response.
+    /// Preferences related to the Encryption.
     /// </summary>
-    public partial class ValidationInputResponse
+    public partial class EncryptionPreferences
     {
         /// <summary>
-        /// Initializes a new instance of the ValidationInputResponse class.
+        /// Initializes a new instance of the EncryptionPreferences class.
         /// </summary>
-        public ValidationInputResponse()
+        public EncryptionPreferences()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ValidationInputResponse class.
+        /// Initializes a new instance of the EncryptionPreferences class.
         /// </summary>
-        /// <param name="error">Error code and message of validation
-        /// response.</param>
-        public ValidationInputResponse(CloudError error = default(CloudError))
+        /// <param name="doubleEncryption">Defines secondary layer of
+        /// software-based encryption enablement. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        public EncryptionPreferences(DoubleEncryption? doubleEncryption = default(DoubleEncryption?))
         {
-            Error = error;
+            DoubleEncryption = doubleEncryption;
             CustomInit();
         }
 
@@ -44,10 +44,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code and message of validation response.
+        /// Gets or sets defines secondary layer of software-based encryption
+        /// enablement. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public CloudError Error { get; private set; }
+        [JsonProperty(PropertyName = "doubleEncryption")]
+        public DoubleEncryption? DoubleEncryption { get; set; }
 
     }
 }

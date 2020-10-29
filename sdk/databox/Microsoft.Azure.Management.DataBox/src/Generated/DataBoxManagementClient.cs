@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.DataBox
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01";
+            ApiVersion = "2020-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

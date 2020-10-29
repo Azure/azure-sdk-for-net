@@ -32,17 +32,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="streetAddress1">Street Address line 1.</param>
         /// <param name="country">Name of the Country.</param>
-        /// <param name="postalCode">Postal code.</param>
         /// <param name="streetAddress2">Street Address line 2.</param>
         /// <param name="streetAddress3">Street Address line 3.</param>
         /// <param name="city">Name of the City.</param>
         /// <param name="stateOrProvince">Name of the State or
         /// Province.</param>
+        /// <param name="postalCode">Postal code.</param>
         /// <param name="zipExtendedCode">Extended Zip Code.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="addressType">Type of address. Possible values include:
         /// 'None', 'Residential', 'Commercial'</param>
-        public ShippingAddress(string streetAddress1, string country, string postalCode, string streetAddress2 = default(string), string streetAddress3 = default(string), string city = default(string), string stateOrProvince = default(string), string zipExtendedCode = default(string), string companyName = default(string), AddressType? addressType = default(AddressType?))
+        public ShippingAddress(string streetAddress1, string country, string streetAddress2 = default(string), string streetAddress3 = default(string), string city = default(string), string stateOrProvince = default(string), string postalCode = default(string), string zipExtendedCode = default(string), string companyName = default(string), AddressType? addressType = default(AddressType?))
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -138,10 +138,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (Country == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Country");
-            }
-            if (PostalCode == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PostalCode");
             }
         }
     }

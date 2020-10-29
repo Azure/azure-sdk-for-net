@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// <summary>
     /// Job details.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("JobDetails")]
     public partial class JobDetails
     {
         /// <summary>

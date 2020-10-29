@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,11 +35,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="principalId">Service Principal Id backing the
         /// Msi</param>
         /// <param name="tenantId">Home Tenant Id</param>
-        public ResourceIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string))
+        /// <param name="userAssignedIdentities">User Assigned
+        /// Identities</param>
+        public ResourceIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -63,6 +68,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets user Assigned Identities
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
 
     }
 }

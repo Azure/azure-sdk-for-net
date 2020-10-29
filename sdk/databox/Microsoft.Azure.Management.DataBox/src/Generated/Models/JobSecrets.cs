@@ -10,14 +10,12 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base class for the secrets
     /// </summary>
-    [Newtonsoft.Json.JsonObject("JobSecrets")]
     public partial class JobSecrets
     {
         /// <summary>
