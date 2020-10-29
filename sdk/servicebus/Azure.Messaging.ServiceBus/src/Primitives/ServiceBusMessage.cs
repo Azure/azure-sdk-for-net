@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotTooLong(value, Constants.MaxPartitionKeyLength, nameof(value));
                 if (SessionId != null && SessionId != value)
                 {
-                    throw new ArgumentOutOfRangeException($"PartitionKey:{value} cannot be set to a different value than SessionId:{SessionId}.");
+                    throw new ArgumentOutOfRangeException(nameof(value), $"PartitionKey:{value} cannot be set to a different value than SessionId:{SessionId}.");
                 }
                 AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = value;
             }
@@ -182,7 +182,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(value));
                 if (PartitionKey != null && PartitionKey != value)
                 {
-                    throw new ArgumentOutOfRangeException($"SessionId:{value} cannot be set to a different value than PartitionKey:{PartitionKey}.");
+                    throw new ArgumentOutOfRangeException(nameof(value), $"SessionId:{value} cannot be set to a different value than PartitionKey:{PartitionKey}.");
                 }
                 AmqpMessage.Properties.GroupId = value;
             }
