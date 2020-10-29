@@ -47,7 +47,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 await CreateModelsAndTwins(client, wifiModelId, roomWithWifiModelId, wifiComponentName, roomWithWifiTwinId).ConfigureAwait(false);
 
                 // Act - Test publishing telemetry to a digital twin.
-                Response publishTelemetryResponse = await client.PublishTelemetryAsync(roomWithWifiTwinId, Recording.Random.NewGuid().ToString(), "{\"Telemetry1\": 5}", timeStamp: default(DateTimeOffset)).ConfigureAwait(false);
+                Response publishTelemetryResponse = await client.PublishTelemetryAsync(
+                    roomWithWifiTwinId,
+                    Recording.Random.NewGuid().ToString(),
+                    "{\"Telemetry1\": 5}",
+                    timeStamp: default(DateTimeOffset))
+                    .ConfigureAwait(false);
 
                 // Assert
                 publishTelemetryResponse.Status.Should().Be((int)HttpStatusCode.NoContent);
@@ -57,8 +62,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     { "ComponentTelemetry1", 9}
                 };
-                Response publishComponentTelemetryResponse = await client
-                    .PublishComponentTelemetryAsync(roomWithWifiTwinId, wifiComponentName, Recording.Random.NewGuid().ToString(), JsonSerializer.Serialize(telemetryPayload), timeStamp: default(DateTimeOffset))
+                Response publishComponentTelemetryResponse = await client.PublishComponentTelemetryAsync(
+                    roomWithWifiTwinId,
+                    wifiComponentName,
+                    Recording.Random.NewGuid().ToString(),
+                    JsonSerializer.Serialize(telemetryPayload),
+                    timeStamp: default(DateTimeOffset))
                     .ConfigureAwait(false);
 
                 // Assert
