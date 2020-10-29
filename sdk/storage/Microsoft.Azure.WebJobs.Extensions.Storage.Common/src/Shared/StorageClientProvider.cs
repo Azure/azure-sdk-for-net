@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
                 throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
             }
 
-            var credential = _componentFactory.CreateCredential(connectionSection);
+            var credential = _componentFactory.CreateTokenCredential(connectionSection);
             var endpointUri = new Uri(endpoint);
             return CreateClientFromTokenCredential(endpointUri, credential, CreateClientOptions(connectionSection));
         }
