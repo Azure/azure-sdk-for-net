@@ -155,8 +155,8 @@ namespace Azure.DigitalTwins.Core
     {
         internal DigitalTwinsModelData() { }
         public bool? Decommissioned { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DescriptionLanguageDictionary { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DisplayNameLanguageDictionary { get { throw null; } }
         public string DtdlModel { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } }

@@ -174,7 +174,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 await foreach (DigitalTwinsModelData model in allModels)
                 {
                     Console.WriteLine($"Retrieved model '{model.Id}', " +
-                        $"display name '{model.DisplayNameLanguageMap["en"]}', " +
+                        $"display name '{model.DisplayNameLanguageDictionary["en"]}', " +
                         $"uploaded on '{model.UploadedOn}', " +
                         $"and decommissioned '{model.Decommissioned}'");
                 }
