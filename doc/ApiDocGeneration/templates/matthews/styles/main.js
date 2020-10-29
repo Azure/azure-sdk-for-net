@@ -91,7 +91,7 @@ function httpGetAsync(targetUrl, callback) {
     xmlHttp.send(null);
 }
 
-function httpGetAsyncOnSuccessAndFailed(targetUrl, successCallback, failureCallback) {
+function httpGetAsyncFallbackOnFail(targetUrl, successCallback, failureCallback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4) {
@@ -137,7 +137,7 @@ function populateOptions(selector, packageName) {
             url = WINDOW_CONTENTS.slice()
             url[6] = targetVersion
             var targetUrl = url.join('/')
-            httpGetAsyncOnSuccessAndFailed(targetUrl, (unused) => window.location.href = url.join('/'),
+            httpGetAsyncFallbackOnFail(targetUrl, (unused) => window.location.href = url.join('/'),
                 (failureStatus) => window.location.href = getPackageUrl(SELECTED_LANGUAGE, packageName, targetVersion))
         });
 
