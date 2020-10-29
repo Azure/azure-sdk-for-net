@@ -91,6 +91,21 @@ function httpGetAsync(targetUrl, callback) {
     xmlHttp.send(null);
 }
 
+function httpGetAsyncOnSuccessAndFailed(targetUrl, successCallback, failureCallback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+                successCallback(xmlHttp.responseText);
+            } else {
+                failureCallback(xmlHttp.status)
+            }
+        }
+    }
+    xmlHttp.open("GET", targetUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
 function populateOptions(selector, packageName) {
     var versionRequestUrl = BLOB_URI_PREFIX + packageName + "/versioning/versions"
 
@@ -118,9 +133,12 @@ function populateOptions(selector, packageName) {
 
         $(versionselector).change(function () {
             targetVersion = $(this).val()
+            original
             url = WINDOW_CONTENTS.slice()
             url[6] = targetVersion
-            window.location.href = url.join('/')
+            var targetUrl = url.join('/')
+            httpGetAsyncOnSuccessAndFailed(targetUrl, (unused) => window.location.href = url.join('/'),
+                (failureStatus) => window.location.href = getPackageUrl(SELECTED_LANGUAGE, packageName, targetVersion))
         });
 
     })
