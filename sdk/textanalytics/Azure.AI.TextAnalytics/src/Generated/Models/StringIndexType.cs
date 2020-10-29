@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The StringIndexType. </summary>
-    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 
