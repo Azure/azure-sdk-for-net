@@ -19,15 +19,8 @@ namespace Microsoft.Azure.Management.Authorization
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Authorization", "ClassicAdministrators", "2015-06-01"),
-                new Tuple<string, string, string>("Authorization", "DenyAssignments", "2018-07-01-preview"),
-                new Tuple<string, string, string>("Authorization", "Permissions", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Authorization", "ProviderOperationsMetadata", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Authorization", "RoleAssignments", "2018-09-01-preview"),
-                new Tuple<string, string, string>("Authorization", "RoleDefinitions", "2018-01-01-preview"),
-                new Tuple<string, string, string>("AuthorizationManagementClient", "DenyAssignments", "2018-07-01-preview"),
-                new Tuple<string, string, string>("AuthorizationManagementClient", "RoleAssignments", "2018-09-01-preview"),
-                new Tuple<string, string, string>("AuthorizationManagementClient", "RoleDefinitions", "2018-01-01-preview"),
+                new Tuple<string, string, string>("Authorization", "RoleAssignments", "2020-04-01-preview"),
+                new Tuple<string, string, string>("AuthorizationManagementClient", "RoleAssignments", "2020-04-01-preview"),
               }.AsEnumerable();
           }
       }
