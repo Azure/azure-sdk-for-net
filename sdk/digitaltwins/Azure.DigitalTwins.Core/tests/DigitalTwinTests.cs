@@ -52,12 +52,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 updateTwinPatchDocument.AppendReplace("/Temperature", 70);
                 updateTwinPatchDocument.AppendRemove("/EmployeeId");
 
-                var requestOptions = new UpdateDigitalTwinOptions
-                {
-                    IfMatch = "*"
-                };
-
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, requestOptions).ConfigureAwait(false);
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
