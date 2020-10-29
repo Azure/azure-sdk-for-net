@@ -6,7 +6,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>3.0.1</Version>
+        <Version>3.0.2</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>
@@ -16,7 +16,6 @@
         * The MediaServices entity now supports System Managed Identities
         * When a MediaServices entity has a Managed Identity, it can be used to enable Encryption at Rest with a Customer Manager Key
         * When a Media Services entity has a Managed Identity, it can be used to access the attached storage accounts using the Managed Identity.
-        * I am purposely being vague here until Encoding vNext is fully deployed and enabled so we don’t want to promise Trusted Storage access capability here yet.
 
         * Live event added an Allocate action to put it into StandBy state.
         * Updates to most live event properties are now allowed when the live event is in stopped and standby state.
