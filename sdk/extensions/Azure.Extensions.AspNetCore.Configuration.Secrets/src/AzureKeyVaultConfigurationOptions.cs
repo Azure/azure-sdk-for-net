@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
@@ -22,21 +21,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="AzureKeyVaultConfigurationOptions"/>.
-        /// </summary>
-        /// <param name="vaultUri">Azure Key Vault uri.</param>
-        /// <param name="credential">The <see cref="TokenCredential"/> to use for authentication.</param>
-        public AzureKeyVaultConfigurationOptions(
-            Uri vaultUri,
-            TokenCredential credential) : this()
-        {
-            Client = new SecretClient(vaultUri, credential);
-        }
-
-        /// <summary>
         /// Gets or sets the <see cref="SecretClient"/> to use for retrieving values.
         /// </summary>
-        public SecretClient Client { get; set; }
+        internal SecretClient Client { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="KeyVaultSecretManager"/> instance used to control secret loading.
