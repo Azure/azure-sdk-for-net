@@ -272,11 +272,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
-        public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
@@ -287,8 +287,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
-                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
-                return Response.FromValue(dataFeed, response.GetRawResponse());
+                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -303,11 +303,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
-        public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
@@ -318,8 +318,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
-                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
-                return Response.FromValue(dataFeed, response.GetRawResponse());
+                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
