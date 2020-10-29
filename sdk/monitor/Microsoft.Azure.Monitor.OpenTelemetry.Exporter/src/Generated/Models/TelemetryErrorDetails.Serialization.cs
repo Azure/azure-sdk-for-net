@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    public partial class TelemetryErrorDetails
+    internal partial class TelemetryErrorDetails
     {
         internal static TelemetryErrorDetails DeserializeTelemetryErrorDetails(JsonElement element)
         {
