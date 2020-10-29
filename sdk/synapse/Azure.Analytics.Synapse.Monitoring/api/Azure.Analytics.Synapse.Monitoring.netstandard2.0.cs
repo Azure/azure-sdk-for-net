@@ -5,10 +5,10 @@ namespace Azure.Analytics.Synapse.Monitoring
         protected MonitoringClient() { }
         public MonitoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MonitoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions options) { }
-        public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse> GetSparkJobList(string xMsClientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>> GetSparkJobListAsync(string xMsClientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel> GetSqlJobQueryString(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string xMsClientRequestId = null, string filter = null, string orderby = null, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse> GetSparkJobList(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse>> GetSparkJobListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel> GetSqlJobQueryString(string filter = null, string orderby = null, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.Monitoring.Models.SqlQueryStringDataModel>> GetSqlJobQueryStringAsync(string filter = null, string orderby = null, string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MonitoringClientOptions : Azure.Core.ClientOptions
     {
