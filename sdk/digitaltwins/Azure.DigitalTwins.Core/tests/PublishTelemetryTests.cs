@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     roomWithWifiTwinId,
                     Recording.Random.NewGuid().ToString(),
                     "{\"Telemetry1\": 5}",
-                    timeStamp: default(DateTimeOffset))
+                    timestamp: default(DateTimeOffset))
                     .ConfigureAwait(false);
 
                 // Assert
@@ -67,7 +67,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     wifiComponentName,
                     Recording.Random.NewGuid().ToString(),
                     JsonSerializer.Serialize(telemetryPayload),
-                    timeStamp: default(DateTimeOffset))
+                    timestamp: default(DateTimeOffset))
                     .ConfigureAwait(false);
 
                 // Assert

@@ -1994,7 +1994,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="timeStamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2017,7 +2017,7 @@ namespace Azure.DigitalTwins.Core
             string digitalTwinId,
             string messageId,
             string payload,
-            DateTimeOffset? timeStamp = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
@@ -2026,10 +2026,10 @@ namespace Azure.DigitalTwins.Core
                 messageId = Guid.NewGuid().ToString();
             }
 
-            PublishTelemetryOptions options = new PublishTelemetryOptions();
-            if (timeStamp != null)
+            var options = new PublishTelemetryOptions();
+            if (timestamp != null)
             {
-                options.TimeStamp = timeStamp.Value;
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient
@@ -2044,7 +2044,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="timeStamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2059,7 +2059,7 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="PublishTelemetryAsync(string, string, string, DateTimeOffset?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, DateTimeOffset? timeStamp = null, CancellationToken cancellationToken = default)
+        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
@@ -2067,10 +2067,10 @@ namespace Azure.DigitalTwins.Core
                 messageId = Guid.NewGuid().ToString();
             }
 
-            PublishTelemetryOptions options = new PublishTelemetryOptions();
-            if (timeStamp != null)
+            var options = new PublishTelemetryOptions();
+            if (timestamp != null)
             {
-                options.TimeStamp = timeStamp.Value;
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient.SendTelemetry(digitalTwinId, messageId, payload, options, cancellationToken);
@@ -2085,7 +2085,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="timeStamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2116,7 +2116,7 @@ namespace Azure.DigitalTwins.Core
             string componentName,
             string messageId,
             string payload,
-            DateTimeOffset? timeStamp = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
@@ -2125,10 +2125,10 @@ namespace Azure.DigitalTwins.Core
                 messageId = Guid.NewGuid().ToString();
             }
 
-            PublishComponentTelemetryOptions options = new PublishComponentTelemetryOptions();
-            if (timeStamp != null)
+            var options = new PublishComponentTelemetryOptions();
+            if (timestamp != null)
             {
-                options.TimeStamp = timeStamp.Value;
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient
@@ -2144,7 +2144,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="timeStamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2163,7 +2163,7 @@ namespace Azure.DigitalTwins.Core
             string componentName,
             string messageId,
             string payload,
-            DateTimeOffset? timeStamp = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
@@ -2172,10 +2172,10 @@ namespace Azure.DigitalTwins.Core
                 messageId = Guid.NewGuid().ToString();
             }
 
-            PublishComponentTelemetryOptions options = new PublishComponentTelemetryOptions();
-            if (timeStamp != null)
+            var options = new PublishComponentTelemetryOptions();
+            if (timestamp != null)
             {
-                options.TimeStamp = timeStamp.Value;
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient.SendComponentTelemetry(digitalTwinId, componentName, messageId, payload, options, cancellationToken);
