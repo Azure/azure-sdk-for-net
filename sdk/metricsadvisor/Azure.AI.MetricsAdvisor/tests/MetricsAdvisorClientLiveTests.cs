@@ -363,14 +363,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var feedback in feedbacks)
             {
-                MetricFeedback createdFeedback = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
+                string createdFeedbackId = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
 
-                Assert.That(createdFeedback.MetricId, Is.EqualTo(MetricId));
-                Assert.That(createdFeedback.Id, Is.Not.Null);
+                Assert.That(createdFeedbackId, Is.Not.Null);
 
-                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedback.Id).ConfigureAwait(false);
+                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedbackId).ConfigureAwait(false);
 
-                Assert.That(getFeedback.Id, Is.EqualTo(createdFeedback.Id));
+                Assert.That(getFeedback.Id, Is.EqualTo(createdFeedbackId));
             }
         }
     }
