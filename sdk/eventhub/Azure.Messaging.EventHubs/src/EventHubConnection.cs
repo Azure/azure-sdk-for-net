@@ -202,13 +202,13 @@ namespace Azure.Messaging.EventHubs
         /// <param name="credential">The <see cref="EventHubsSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
-        public EventHubConnection(string fullyQualifiedNamespace,
-                                  string eventHubName,
-                                  EventHubsSharedAccessKeyCredential credential,
-                                  EventHubConnectionOptions connectionOptions = default) : this(fullyQualifiedNamespace,
-                                                                                                eventHubName,
-                                                                                                TranslateSharedKeyCredential(credential, fullyQualifiedNamespace, eventHubName, connectionOptions?.TransportType),
-                                                                                                connectionOptions)
+        internal EventHubConnection(string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    EventHubsSharedAccessKeyCredential credential,
+                                    EventHubConnectionOptions connectionOptions = default) : this(fullyQualifiedNamespace,
+                                                                                                  eventHubName,
+                                                                                                  TranslateSharedKeyCredential(credential, fullyQualifiedNamespace, eventHubName, connectionOptions?.TransportType),
+                                                                                                  connectionOptions)
         {
         }
 
