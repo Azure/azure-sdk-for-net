@@ -60,14 +60,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var adminClient = GetMetricsAdvisorAdministrationClient();
             InitDataFeedSources();
 
-            DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings, _dataFeedOptions).ConfigureAwait(false);
+            DataFeed dataFeed = new DataFeed(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings)
+            {
+                Options = _dataFeedOptions
+            };
 
-            Assert.That(createdDataFeed.Id, Is.Not.Null);
+            dataFeed = await adminClient.CreateDataFeedAsync(dataFeed).ConfigureAwait(false);
 
-            createdDataFeed.Options.Description = Recording.GenerateAlphaNumericId("desc");
-            await adminClient.UpdateDataFeedAsync(createdDataFeed.Id, createdDataFeed).ConfigureAwait(false);
+            Assert.That(dataFeed.Id, Is.Not.Null);
 
-            await adminClient.DeleteDataFeedAsync(createdDataFeed.Id);
+            dataFeed.Options.Description = Recording.GenerateAlphaNumericId("desc");
+            await adminClient.UpdateDataFeedAsync(dataFeed.Id, dataFeed).ConfigureAwait(false);
+
+            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
 
         [RecordedTest]
@@ -76,11 +81,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var adminClient = GetMetricsAdvisorAdministrationClient();
             InitDataFeedSources();
 
-            DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings, _dataFeedOptions).ConfigureAwait(false);
+            DataFeed dataFeed = new DataFeed(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings)
+            {
+                Options = _dataFeedOptions
+            };
 
-            Assert.That(createdDataFeed.Id, Is.Not.Null);
+            dataFeed = await adminClient.CreateDataFeedAsync(dataFeed).ConfigureAwait(false);
 
-            DataFeed getDataFeed = await adminClient.GetDataFeedAsync(createdDataFeed.Id);
+            Assert.That(dataFeed.Id, Is.Not.Null);
+
+            DataFeed getDataFeed = await adminClient.GetDataFeedAsync(dataFeed.Id);
 
             getDataFeed.Options.Description = Recording.GenerateAlphaNumericId("desc");
             getDataFeed.Options.MissingDataPointFillSettings.CustomFillValue = 42;
@@ -88,7 +98,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await adminClient.UpdateDataFeedAsync(getDataFeed.Id, getDataFeed).ConfigureAwait(false);
 
-            await adminClient.DeleteDataFeedAsync(createdDataFeed.Id);
+            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
         }
 
         [RecordedTest]
@@ -97,15 +107,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var adminClient = GetMetricsAdvisorAdministrationClient();
             InitDataFeedSources();
 
-            DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings, dataFeedOptions: null).ConfigureAwait(false);
+            DataFeed dataFeed = new DataFeed(_blobFeedName, _blobSource, _dailyGranularity, _dataFeedSchema, _dataFeedIngestionSettings);
 
-            Assert.That(createdDataFeed.Id, Is.Not.Null);
+            dataFeed = await adminClient.CreateDataFeedAsync(dataFeed).ConfigureAwait(false);
 
-            createdDataFeed.Options.Description = Recording.GenerateAlphaNumericId("desc");
-            await adminClient.UpdateDataFeedAsync(createdDataFeed.Id, createdDataFeed).ConfigureAwait(false);
+            Assert.That(dataFeed.Id, Is.Not.Null);
 
-            await adminClient.DeleteDataFeedAsync(createdDataFeed.Id).ConfigureAwait(false);
-            ;
+            dataFeed.Options = new DataFeedOptions()
+            {
+                Description = Recording.GenerateAlphaNumericId("desc")
+            };
+
+            await adminClient.UpdateDataFeedAsync(dataFeed.Id, dataFeed).ConfigureAwait(false);
+
+            await adminClient.DeleteDataFeedAsync(dataFeed.Id).ConfigureAwait(false);
         }
 
         [RecordedTest]

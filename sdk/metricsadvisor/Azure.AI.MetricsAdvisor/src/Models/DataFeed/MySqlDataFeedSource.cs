@@ -26,5 +26,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new SqlSourceParameter(connectionString, query);
         }
+
+        internal MySqlDataFeedSource(SqlSourceParameter parameter)
+            : base(DataFeedSourceType.MySql)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }
