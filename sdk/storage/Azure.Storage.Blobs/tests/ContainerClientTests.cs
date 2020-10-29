@@ -2626,6 +2626,60 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
+        [Test]
+        public void CanMockBlobServiceClientRetrieval()
+        {
+            // Arrange
+            Mock<BlobContainerClient> containerClientMock = new Mock<BlobContainerClient>();
+            Mock<BlobServiceClient> blobServiceClientMock = new Mock<BlobServiceClient>();
+            containerClientMock.Protected().Setup<BlobServiceClient>("GetBlobServiceClientCore").Returns(blobServiceClientMock.Object);
+
+            // Act
+            var blobServiceClient = containerClientMock.Object.GetBlobServiceClient();
+
+            // Assert
+            Assert.IsNotNull(blobServiceClient);
+            Assert.AreSame(blobServiceClientMock.Object, blobServiceClient);
+        }
+
+        [Test]
+        public async Task CanGetParentBlobServiceClient()
+        {
+            // Arrange
+            BlobContainerClient container = InstrumentClient(GetServiceClient_SharedKey().GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            BlobServiceClient service = container.GetBlobServiceClient();
+            //make sure it's functional
+            var containers = await service.GetBlobContainersAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(container.AccountName, service.AccountName);
+            Assert.IsNotNull(container);
+
+            // Cleanup
+            await container.DeleteIfExistsAsync();
+        }
+
+        [Test]
+        public async Task CanGetParentBlobServiceClient_WithAccountSAS()
+        {
+            // Arrange
+            BlobContainerClient container = InstrumentClient(GetServiceClient_AccountSas().GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            BlobServiceClient service = container.GetBlobServiceClient();
+            //make sure it's functional
+            var containers = await service.GetBlobContainersAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(container.AccountName, service.AccountName);
+            Assert.IsNotNull(container);
+
+            // Cleanup
+            await container.DeleteIfExistsAsync();
+        }
+
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
