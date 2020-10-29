@@ -8,8 +8,8 @@
 - Added a public setter to `DataFeed.Options`.
 
 ### Breaking Changes
-- In `MetricsAdvisorClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
+- In `MetricsAdvisorAdministrationClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
 - In `MetricsAdvisorAdministrationClient`, changed return types of sync and async methods `GetAnomalyAlertConfigurations` and `GetMetricAnomalyDetectionConfigurations` to pageables.
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.
@@ -18,6 +18,9 @@
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+
+### Key Bug Fixes
+- Fixed a bug in `GetMetricEnrichedSeriesData` sync and async methods where a `NullReferenceException` was thrown if a returned data point had missing data.
 
 ## 1.0.0-beta.1 (2020-10-08)
 
