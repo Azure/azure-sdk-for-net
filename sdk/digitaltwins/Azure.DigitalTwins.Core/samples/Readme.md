@@ -69,7 +69,7 @@ AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
 await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
-        $"display name '{model.DisplayName["en"]}', " +
+        $"display name '{model.LanguageDisplayNames["en"]}', " +
         $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }

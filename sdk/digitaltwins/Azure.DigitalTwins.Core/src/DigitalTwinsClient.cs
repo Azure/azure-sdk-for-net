@@ -1077,7 +1077,7 @@ namespace Azure.DigitalTwins.Core
         /// await foreach (DigitalTwinsModelData model in allModels)
         /// {
         ///     Console.WriteLine($&quot;Retrieved model &apos;{model.Id}&apos;, &quot; +
-        ///         $&quot;display name &apos;{model.DisplayName[&quot;en&quot;]}&apos;, &quot; +
+        ///         $&quot;display name &apos;{model.LanguageDisplayNames[&quot;en&quot;]}&apos;, &quot; +
         ///         $&quot;uploaded on &apos;{model.UploadedOn}&apos;, &quot; +
         ///         $&quot;and decommissioned &apos;{model.Decommissioned}&apos;&quot;);
         /// }
