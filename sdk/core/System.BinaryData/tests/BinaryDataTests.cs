@@ -30,6 +30,15 @@ namespace System.Tests
             // using implicit conversion
             ReadOnlySpan<byte> span = data;
             Assert.Equal(payload, span.ToArray());
+
+            // using implicit conversion from null
+            BinaryData nullData = null;
+            ReadOnlyMemory<byte> emptyBytes = nullData;
+            Assert.True(emptyBytes.IsEmpty);
+
+            // using implicit conversion from null
+            ReadOnlySpan<byte> emptySpan = nullData;
+            Assert.True(emptySpan.IsEmpty);
         }
 
         [Fact]

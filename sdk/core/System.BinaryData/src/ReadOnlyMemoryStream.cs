@@ -160,7 +160,7 @@ namespace System
                 if (disposing)
                 {
                     _isOpen = false;
-                    _content = null;
+                    _content = default;
                 }
             }
             finally

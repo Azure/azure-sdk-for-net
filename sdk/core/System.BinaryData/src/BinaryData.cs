@@ -36,6 +36,7 @@ namespace System
             {
                 throw new ArgumentNullException(nameof(data));
             }
+
             _bytes = data;
             _ownsBuffer = false;
         }
@@ -200,7 +201,7 @@ namespace System
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, typeof(T), options);
-            return new BinaryData(buffer);
+            return new BinaryData(data: buffer, ownsBuffer: true);
         }
 
         /// <summary>
@@ -262,16 +263,21 @@ namespace System
         /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlyMemory<byte>(
             BinaryData data) =>
-            data._bytes;
+            data?._bytes ?? default;
 
         /// <summary>
         /// Defines an implicit conversion from a <see cref="BinaryData" /> to a <see cref="ReadOnlySpan{Byte}"/>.
         /// </summary>
         /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlySpan<byte>(
-            BinaryData data) =>
-            data._bytes.Span;
-
+            BinaryData data)
+        {
+            if (data == null)
+            {
+                return default;
+            }
+            return data._bytes.Span;
+        }
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>

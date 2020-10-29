@@ -12,7 +12,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\src\System.BinaryData.csproj" />
+    <ProjectReference Include="..\src\System.Buffers.Data.csproj" />
   </ItemGroup>
 
 </Project>

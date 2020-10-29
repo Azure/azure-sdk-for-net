@@ -38,6 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.BinaryData\src\System.BinaryData.csproj" />
+    <ProjectReference Include="..\..\System.BinaryData\src\System.Buffers.Data.csproj" />
   </ItemGroup>
 </Project>
