@@ -15,9 +15,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// A private endpoint connection
-    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PrivateEndpointConnection : ProxyResource
     {
@@ -32,24 +29,22 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="privateEndpoint">The private endpoint which the
-        /// connection belongs to.</param>
-        /// <param name="privateLinkServiceConnectionState">Connection state of
-        /// the private endpoint connection.</param>
-        /// <param name="provisioningState">Provisioning state of the private
-        /// endpoint connection.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), string provisioningState = default(string))
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="provisioningState">Provisioning state</param>
+        /// <param name="privateEndpoint">Private Endpoint</param>
+        /// <param name="privateLinkServiceConnectionState">Private Link
+        /// Service Connection State</param>
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
             : base(id, name, type)
         {
+            ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -59,22 +54,22 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the private endpoint which the connection belongs to.
+        /// Gets provisioning state
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets private Endpoint
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
         public PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets connection state of the private endpoint connection.
+        /// Gets or sets private Link Service Connection State
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
-
-        /// <summary>
-        /// Gets provisioning state of the private endpoint connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
 
     }
 }

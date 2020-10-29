@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="identity">The identity of the workspace</param>
         /// <param name="sqlAdministratorLoginPassword">SQL administrator login
         /// password</param>
+        /// <param name="managedVirtualNetworkSettings">Managed Virtual Network
+        /// Settings</param>
         /// <param name="provisioningState">Resource provisioning state</param>
-        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), string provisioningState = default(string))
+        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), string provisioningState = default(string))
         {
             Tags = tags;
             Identity = identity;
             SqlAdministratorLoginPassword = sqlAdministratorLoginPassword;
+            ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlAdministratorLoginPassword")]
         public string SqlAdministratorLoginPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed Virtual Network Settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedVirtualNetworkSettings")]
+        public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
 
         /// <summary>
         /// Gets resource provisioning state
