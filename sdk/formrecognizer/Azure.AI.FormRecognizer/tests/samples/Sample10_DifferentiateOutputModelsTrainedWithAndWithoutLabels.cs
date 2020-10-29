@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained with labels
-            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "My Model with labels"} ).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: true, "My Model with labels").WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Samples
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Model trained without labels
-            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, new TrainingOptions() { ModelName = "My Model" }).WaitForCompletionAsync();
+            CustomFormModel modelTrainedWithoutLabels = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();
 
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
