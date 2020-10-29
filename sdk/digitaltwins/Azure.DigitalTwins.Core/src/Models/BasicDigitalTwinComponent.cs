@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core
         /// The metadata property, required on a component to identify as one.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public BasicDigitalTwinComponentMetadata Metadata { get; set; } = new BasicDigitalTwinComponentMetadata();
+        public IDictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
 
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.

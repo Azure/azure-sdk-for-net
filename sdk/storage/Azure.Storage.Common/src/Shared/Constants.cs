@@ -70,7 +70,10 @@ namespace Azure.Storage
 
         // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
         // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-        public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormatSeconds = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormatSubSeconds = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+        public const string SasTimeFormatMinutes = "yyyy-MM-ddTHH:mmZ";
+        public const string SasTimeFormatDays = "yyyy-MM-dd";
 
         public const string SnapshotParameterName = "snapshot";
         public const string VersionIdParameterName = "versionid";
@@ -522,6 +525,8 @@ namespace Azure.Storage
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
+                Sas.Permissions.Move,
+                Sas.Permissions.Execute
             };
         }
 

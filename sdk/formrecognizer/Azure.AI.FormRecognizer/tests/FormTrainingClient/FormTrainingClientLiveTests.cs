@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
-            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" });
+            CreateComposedModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, "My composed model");
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(operation.HasValue);
@@ -210,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var modelIds = new List<string> { trainedModelA.ModelId, "00000000-0000-0000-0000-000000000000" };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "My composed model" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, "My composed model"));
             Assert.AreEqual("1001", ex.ErrorCode);
         }
 
@@ -249,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, new TrainingOptions() { ModelName = modelName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: true, modelName);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -265,7 +265,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelName = "My training";
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, new TrainingOptions() { ModelName = modelName });
+            TrainingOperation operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false, modelName);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 

@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("EventRoutesListOptions")]
-    public partial class GetDigitalTwinsEventRoutesOptions
+    internal partial class GetDigitalTwinsEventRoutesOptions
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
 
@@ -21,5 +21,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
         internal string TraceState { get; set; }
+
+        internal int? MaxItemsPerPage { get; set; }
     }
 }

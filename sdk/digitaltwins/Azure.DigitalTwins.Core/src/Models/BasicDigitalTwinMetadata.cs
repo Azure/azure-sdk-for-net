@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// This field will contain metadata about changes on properties on the digital twin.
-        /// For your convenience, the value can be deserialized into <see cref="BasicDigitalTwinPropertyMetadata"/>.
+        /// For your convenience, the value can be deserialized into <see cref="DigitalTwinPropertyMetadata"/>.
         /// </summary>
         [JsonExtensionData]
         public IDictionary<string, object> PropertyMetadata { get; set; } = new Dictionary<string, object>();

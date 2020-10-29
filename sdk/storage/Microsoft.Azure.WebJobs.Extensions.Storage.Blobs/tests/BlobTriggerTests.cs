@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
         {
             public static TaskCompletionSource<BlobBaseClient> TaskSource { get; set; }
 
-            public static void Run([BlobTrigger(BlobPath)] BlobBaseClient blob) // TODO (kasobol-msft how about binding to BlobClient??
+            public static void Run([BlobTrigger(BlobPath)] BlobBaseClient blob)
             {
                 TaskSource.TrySetResult(blob);
             }

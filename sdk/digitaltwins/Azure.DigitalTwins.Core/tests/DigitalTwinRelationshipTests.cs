@@ -137,7 +137,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 numberOfIncomingRelationshipsToFloor.Should().Be(2, "floor has incoming relationships from room and hvac");
 
                 // LIST relationships
-                AsyncPageable<string> floorRelationships = client.GetRelationshipsAsync(floorTwinId);
+                AsyncPageable<BasicRelationship> floorRelationships = client.GetRelationshipsAsync<BasicRelationship>(floorTwinId);
 
                 int numberOfFloorRelationships = 0;
                 await foreach (var relationship in floorRelationships)
@@ -147,8 +147,8 @@ namespace Azure.DigitalTwins.Core.Tests
                 numberOfFloorRelationships.Should().Be(2, "floor has an relationship to room and hvac");
 
                 // LIST relationships by name
-                AsyncPageable<string> roomTwinRelationships = client
-                   .GetRelationshipsAsync(
+                AsyncPageable<BasicRelationship> roomTwinRelationships = client
+                   .GetRelationshipsAsync<BasicRelationship>(
                        roomTwinId,
                        ContainedInRelationship);
                 containsRelationshipId.Value.Id.Should().Be(floorContainsRoomRelationshipId);
@@ -325,10 +325,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 incomingRelationshipPageCount.Should().BeGreaterThan(1, "Expected more than one page of incoming relationships");
 
                 // LIST outgoing relationships by page
-                AsyncPageable<string> outgoingRelationships = client.GetRelationshipsAsync(floorTwinId);
+                AsyncPageable<BasicRelationship> outgoingRelationships = client.GetRelationshipsAsync<BasicRelationship>(floorTwinId);
 
                 int outgoingRelationshipPageCount = 0;
-                await foreach (Page<string> outgoingRelationshipPage in outgoingRelationships.AsPages())
+                await foreach (Page<BasicRelationship> outgoingRelationshipPage in outgoingRelationships.AsPages())
                 {
                     outgoingRelationshipPageCount++;
                     if (outgoingRelationshipPage.ContinuationToken != null)
