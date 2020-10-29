@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -71,7 +72,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.IsNotNull(schemaProperties.Value);
             Assert.IsNotNull(schemaProperties.Value.Id);
             Assert.IsTrue(Guid.TryParse(schemaProperties.Value.Id, out Guid _));
-            Assert.AreEqual(SchemaContent.Replace(" ", string.Empty), schemaProperties.Value.Content);
+            Assert.AreEqual(Regex.Replace(SchemaContent, @"\s+", string.Empty), schemaProperties.Value.Content);
         }
     }
 }

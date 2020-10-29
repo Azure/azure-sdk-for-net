@@ -1,39 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {
-    [Ignore("Only verifying that the sample builds")]
     public class Sample01_ReadmeSnippets : SamplesBase<SchemaRegistryClientTestEnvironment>
     {
-        [Ignore("Only verifying that the sample builds")]
-        [Test]
+#pragma warning disable IDE1006 // Naming Styles
+        private SchemaRegistryClient client;
+#pragma warning restore IDE1006 // Naming Styles
+        private SchemaProperties _schemaProperties;
+
+        [OneTimeSetUp]
         public void CreateSchemaRegistryClient()
         {
+            string endpoint = TestEnvironment.SchemaRegistryEndpoint;
+
             #region Snippet:SchemaRegistryCreateSchemaRegistryClient
-            string endpoint = "<event_hubs_namespace_hostname>";
-            var credentials = new ClientSecretCredential(
-                "<tenant_id>",
-                "<client_id>",
-                "<client_secret>"
-            );
-            var client = new SchemaRegistryClient(endpoint, credentials);
+            // Create a new access Spark batch client using the default credential from Azure.Identity using environment variables previously set,
+            // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+            var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
             #endregion
+
+            this.client = client;
         }
 
-        [Ignore("Only verifying that the sample builds")]
         [Test]
         public void RegisterSchema()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
+            string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRegisterSchema
-            string schemaName = "<schema_name>";
-            string groupName = "<schema_group_name>";
+            string schemaName = "employeeSample";
             SerializationType schemaType = SerializationType.Avro;
             // Example schema's content
             string schemaContent = @"
@@ -49,17 +51,19 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 
             Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, schemaName, schemaType, schemaContent);
             #endregion
+
+            Assert.NotNull(schemaProperties);
+            _schemaProperties = schemaProperties.Value;
         }
 
-        [Ignore("Only verifying that the sample builds")]
         [Test]
         public void RetrieveSchemaId()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
+            RegisterSchema();
+            string groupName = TestEnvironment.SchemaRegistryGroup;
 
             #region Snippet:SchemaRegistryRetrieveSchemaId
-            string schemaName = "<schema_name>";
-            string groupName = "<schema_group_name>";
+            string schemaName = "employeeSample";
             SerializationType schemaType = SerializationType.Avro;
             // Example schema's content
             string schemaContent = @"
@@ -76,20 +80,22 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = client.GetSchemaId(groupName, schemaName, schemaType, schemaContent);
             string schemaId = schemaProperties.Value.Id;
             #endregion
+
+            Assert.AreEqual(_schemaProperties.Id, schemaId);
         }
 
-        [Ignore("Only verifying that the sample builds")]
         [Test]
         public void RetrieveSchema()
         {
-            var client = new SchemaRegistryClient(TestEnvironment.SchemaRegistryEndpoint, TestEnvironment.Credential);
+            RegisterSchema();
+            var schemaId = _schemaProperties.Id;
 
             #region Snippet:SchemaRegistryRetrieveSchema
-            string schemaId = "<schema_id>";
-
             Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
             string schemaContent = schemaProperties.Value.Content;
             #endregion
+
+            Assert.AreEqual(Regex.Replace(_schemaProperties.Content, @"\s+", string.Empty), schemaContent);
         }
     }
 }
