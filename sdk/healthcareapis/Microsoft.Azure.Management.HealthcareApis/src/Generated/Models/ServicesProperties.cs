@@ -45,7 +45,12 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// configuration of the service instance.</param>
         /// <param name="exportConfiguration">The settings for the export
         /// operation of the service instance.</param>
-        public ServicesProperties(string provisioningState = default(string), IList<ServiceAccessPolicyEntry> accessPolicies = default(IList<ServiceAccessPolicyEntry>), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo))
+        /// <param name="privateEndpointConnections">The list of private
+        /// endpoint connections that are set up for this resource.</param>
+        /// <param name="publicNetworkAccess">Control permission for data plane
+        /// traffic coming from public networks while private endpoint is
+        /// enabled. Possible values include: 'Enabled', 'Disabled'</param>
+        public ServicesProperties(string provisioningState = default(string), IList<ServiceAccessPolicyEntry> accessPolicies = default(IList<ServiceAccessPolicyEntry>), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
         {
             ProvisioningState = provisioningState;
             AccessPolicies = accessPolicies;
@@ -53,6 +58,8 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
             AuthenticationConfiguration = authenticationConfiguration;
             CorsConfiguration = corsConfiguration;
             ExportConfiguration = exportConfiguration;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -104,6 +111,21 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         public ServiceExportConfigurationInfo ExportConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of private endpoint connections that are set
+        /// up for this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets control permission for data plane traffic coming from
+        /// public networks while private endpoint is enabled. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -128,6 +150,16 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
             if (CorsConfiguration != null)
             {
                 CorsConfiguration.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element1 in PrivateEndpointConnections)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

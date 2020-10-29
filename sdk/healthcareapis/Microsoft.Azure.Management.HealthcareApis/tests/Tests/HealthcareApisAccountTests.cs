@@ -277,6 +277,55 @@ namespace HealthcareApis.Tests
                 Assert.True(servicesNameAvailabilityInfo.NameAvailable);
             }
         }
+
+        [Fact]
+        public void HealthcareApisAccountPrivateEndpointConnectionTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { 
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("hca");
+                    ServicesResource parameters = new ServicesResource
+                    {
+                        Location = "westus",
+                        Properties = new ServicesProperties(),
+                    };
+
+                    var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                    // Create healthcare apis account
+                    var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+
+                    // Create private link resource
+                    var plResouces = healthCareApisMgmtClient.PrivateLinkResources.List(rgname, accountName);
+
+                    PrivateEndpointConnection pec = null;
+                    try
+                    {
+                        pec = healthCareApisMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, "notExistPCN");
+                    }
+                    catch { }
+
+                    // verify
+                    Assert.NotNull(plResouces);
+                    Assert.True(plResouces.Value.Count == 1);
+                    Assert.Equal("fhir", plResouces.Value[0].Properties?.GroupId);
+                    Assert.Null(pec);
+
+                    var plConnections = healthCareApisMgmtClient.PrivateEndpointConnections.List(rgname, accountName);
+                    Assert.True(plConnections.Value.Count == 0);
+                }
+            }
+        }
     }
 }
 
