@@ -52,5 +52,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new AzureBlobParameter(connectionString, container, blobTemplate);
         }
+
+        internal AzureBlobDataFeedSource(AzureBlobParameter parameter)
+            : base(DataFeedSourceType.AzureBlob)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

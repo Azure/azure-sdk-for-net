@@ -32,5 +32,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new InfluxDBParameter(connectionString, database, username, password, query);
         }
+
+        internal InfluxDbDataFeedSource(InfluxDBParameter parameter)
+            : base(DataFeedSourceType.InfluxDb)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

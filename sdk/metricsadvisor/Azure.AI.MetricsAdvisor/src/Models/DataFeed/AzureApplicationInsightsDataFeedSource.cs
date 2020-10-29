@@ -30,5 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
         }
+
+        internal AzureApplicationInsightsDataFeedSource(AzureApplicationInsightsParameter parameter)
+            : base(DataFeedSourceType.AzureApplicationInsights)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

@@ -30,5 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
         }
+
+        internal AzureCosmosDbDataFeedSource(AzureCosmosDBParameter parameter)
+            : base(DataFeedSourceType.AzureCosmosDb)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

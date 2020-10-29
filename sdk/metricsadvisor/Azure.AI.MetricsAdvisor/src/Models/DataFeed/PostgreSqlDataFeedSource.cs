@@ -26,5 +26,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new SqlSourceParameter(connectionString, query);
         }
+
+        internal PostgreSqlDataFeedSource(SqlSourceParameter parameter)
+            : base(DataFeedSourceType.PostgreSql)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

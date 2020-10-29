@@ -28,5 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new MongoDBParameter(connectionString, database, command);
         }
+        internal MongoDbDataFeedSource(MongoDBParameter parameter)
+            : base(DataFeedSourceType.MongoDb)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
+
     }
 }
