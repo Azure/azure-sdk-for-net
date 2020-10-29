@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareEntity. </summary>
-    internal partial class HealthcareEntity : Entity
+    public partial class HealthcareEntity : Entity
     {
         /// <summary> Initializes a new instance of HealthcareEntity. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
@@ -52,9 +52,5 @@ namespace Azure.AI.TextAnalytics.Models
             IsNegated = isNegated;
             Links = links;
         }
-
-        public bool IsNegated { get; }
-        /// <summary> Entity references in known data sources. </summary>
-        public IReadOnlyList<HealthcareEntityLink> Links { get; }
     }
 }

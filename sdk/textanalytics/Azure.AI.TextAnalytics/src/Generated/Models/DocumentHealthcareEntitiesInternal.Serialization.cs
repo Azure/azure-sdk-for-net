@@ -7,18 +7,18 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class DocumentHealthcareEntities
+    internal partial class DocumentHealthcareEntitiesInternal
     {
-        internal static DocumentHealthcareEntities DeserializeDocumentHealthcareEntities(JsonElement element)
+        internal static DocumentHealthcareEntitiesInternal DeserializeDocumentHealthcareEntitiesInternal(JsonElement element)
         {
             string id = default;
             IReadOnlyList<HealthcareEntity> entities = default;
-            IReadOnlyList<HealthcareRelation> relations = default;
+            IReadOnlyList<HealthcareRelationInternal> relations = default;
             IReadOnlyList<TextAnalyticsWarningInternal> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
@@ -40,10 +40,10 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("relations"))
                 {
-                    List<HealthcareRelation> array = new List<HealthcareRelation>();
+                    List<HealthcareRelationInternal> array = new List<HealthcareRelationInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareRelation.DeserializeHealthcareRelation(item));
+                        array.Add(HealthcareRelationInternal.DeserializeHealthcareRelationInternal(item));
                     }
                     relations = array;
                     continue;
@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentHealthcareEntities(id, entities, relations, warnings, Optional.ToNullable(statistics));
+            return new DocumentHealthcareEntitiesInternal(id, entities, relations, warnings, Optional.ToNullable(statistics));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal JobMetadata(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status)
+        internal JobMetadata(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
         {
             CreatedDateTime = createdDateTime;
             JobId = jobId;
@@ -32,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal JobMetadata(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status)
+        internal JobMetadata(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
         {
             CreatedDateTime = createdDateTime;
             DisplayName = displayName;
@@ -47,6 +48,6 @@ namespace Azure.AI.TextAnalytics.Models
         public DateTimeOffset? ExpirationDateTime { get; }
         public Guid JobId { get; }
         public DateTimeOffset LastUpdateDateTime { get; }
-        public State Status { get; }
+        public JobStatus Status { get; }
     }
 }

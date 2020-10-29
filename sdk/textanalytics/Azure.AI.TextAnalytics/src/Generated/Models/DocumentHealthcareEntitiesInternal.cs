@@ -8,20 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The DocumentHealthcareEntities. </summary>
-    internal partial class DocumentHealthcareEntities
+    internal partial class DocumentHealthcareEntitiesInternal
     {
-        /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
+        /// <summary> Initializes a new instance of DocumentHealthcareEntitiesInternal. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="relations"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentHealthcareEntities(string id, IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelation> relations, IEnumerable<TextAnalyticsWarningInternal> warnings)
+        internal DocumentHealthcareEntitiesInternal(string id, IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelationInternal> relations, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)
             {
@@ -46,13 +46,13 @@ namespace Azure.AI.TextAnalytics.Models
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
+        /// <summary> Initializes a new instance of DocumentHealthcareEntitiesInternal. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Healthcare entities. </param>
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentHealthcareEntities(string id, IReadOnlyList<HealthcareEntity> entities, IReadOnlyList<HealthcareRelation> relations, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
+        internal DocumentHealthcareEntitiesInternal(string id, IReadOnlyList<HealthcareEntity> entities, IReadOnlyList<HealthcareRelationInternal> relations, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             Entities = entities;
@@ -60,16 +60,5 @@ namespace Azure.AI.TextAnalytics.Models
             Warnings = warnings;
             Statistics = statistics;
         }
-
-        /// <summary> Unique, non-empty document identifier. </summary>
-        public string Id { get; }
-        /// <summary> Healthcare entities. </summary>
-        public IReadOnlyList<HealthcareEntity> Entities { get; }
-        /// <summary> Healthcare entity relations. </summary>
-        public IReadOnlyList<HealthcareRelation> Relations { get; }
-        /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarningInternal> Warnings { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
-        public TextDocumentStatistics? Statistics { get; }
     }
 }

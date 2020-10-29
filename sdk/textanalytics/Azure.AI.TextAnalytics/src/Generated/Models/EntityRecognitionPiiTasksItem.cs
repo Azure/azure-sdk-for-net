@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, State status) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
         {
             if (name == null)
             {
@@ -32,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, State status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
         {
             if (name == null)
             {

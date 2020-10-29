@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static HealthcareResult DeserializeHealthcareResult(JsonElement element)
         {
-            IReadOnlyList<DocumentHealthcareEntities> documents = default;
+            IReadOnlyList<DocumentHealthcareEntitiesInternal> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
@@ -24,10 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentHealthcareEntities> array = new List<DocumentHealthcareEntities>();
+                    List<DocumentHealthcareEntitiesInternal> array = new List<DocumentHealthcareEntitiesInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentHealthcareEntities.DeserializeDocumentHealthcareEntities(item));
+                        array.Add(DocumentHealthcareEntitiesInternal.DeserializeDocumentHealthcareEntitiesInternal(item));
                     }
                     documents = array;
                     continue;

@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntity
+    public partial class HealthcareEntity
     {
         internal static HealthcareEntity DeserializeHealthcareEntity(JsonElement element)
         {

@@ -7,18 +7,18 @@
 
 using System;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareRelation. </summary>
-    internal partial class HealthcareRelation
+    internal partial class HealthcareRelationInternal
     {
-        /// <summary> Initializes a new instance of HealthcareRelation. </summary>
+        /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
         /// <param name="bidirectional"> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </param>
         /// <param name="source"> Reference link to the source entity. </param>
         /// <param name="target"> Reference link to the target entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relationType"/>, <paramref name="source"/>, or <paramref name="target"/> is null. </exception>
-        internal HealthcareRelation(string relationType, bool bidirectional, string source, string target)
+        internal HealthcareRelationInternal(string relationType, bool bidirectional, string source, string target)
         {
             if (relationType == null)
             {

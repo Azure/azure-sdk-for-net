@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
-    internal partial class HealthcareRelation
+    internal partial class HealthcareRelationInternal
     {
-        internal static HealthcareRelation DeserializeHealthcareRelation(JsonElement element)
+        internal static HealthcareRelationInternal DeserializeHealthcareRelationInternal(JsonElement element)
         {
             string relationType = default;
             bool bidirectional = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareRelation(relationType, bidirectional, source, target);
+            return new HealthcareRelationInternal(relationType, bidirectional, source, target);
         }
     }
 }
