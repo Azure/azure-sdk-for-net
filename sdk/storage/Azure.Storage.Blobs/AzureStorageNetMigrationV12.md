@@ -14,6 +14,9 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Authentication](#authentication)
   - [Shared access policies](#shared-access-policies)
   - [Client structure](#client-structure)
+    - [Migrating from CloudBlockBlob](#migrating-from-cloudblockblob)
+    - [Migrating from CloudBlobDirectory](#migrating-from-cloudblobdirectory)
+    - [Class Conversion Reference](#class-conversion-reference)
 - [Migration samples](#migration-samples)
   - [Creating a Container](#creating-a-container)
   - [Uploading Blobs to a Container](#uploading-blobs-to-a-container)
@@ -91,7 +94,7 @@ CloudBlob blob = new CloudBlob(blobLocationWithSAS);
 
 v12
 
-The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, there is currently no way to rotate a SAS in a client.
+The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, a new client instance with a new SAS must be created in order to rotate a SAS.
 
 ```csharp
 Uri blobLocationWithSAS; // self-authenticating SAS URI to a blob
@@ -239,9 +242,9 @@ async static Task CreateStoredAccessPolicyAsync(string containerName)
 }
 ```
 
-### Client structure
+### Client Structure
 
-The legacy SDK was structured like an object model. There were container and blob objects that held state and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
+The legacy SDK used a stateful model. There were container and blob objects that held state regarding service resources and required the user to manually call their update methods. But blob contents were not a part of this state and had to be uploaded/downloaded whenever they were to be interacted with. This became increasingly confusing over time, and increasingly susceptible to thread safety issues.
 
 The modern SDK has taken a client-based approach. There are no objects designed to be representations of storage resources, but instead clients that act as your mechanism to interact with your storage resources in the cloud. Clients hold no state of your resources.
 
@@ -250,11 +253,19 @@ The hierarchical structure of Azure Blob Storage can be understood by the follow
 
 In the interest of simplifying the API surface, v12 uses three top level clients to match this structure that can be used to interact with a majority of your resources: `BlobServiceClient`, `BlobContainerClient`, and `BlobClient`. Note that blob-type-specific operations can still be accessed by their specific clients, as in v11.
 
-`BlobClient` is NOT a replacement of v11's `CloudBlob`, which served as a base class for the three blob type classes. v12 contains `BlobBaseClient` as a replacement base class. `BlobClient` is a SDK-only concept that trades off advanced functionality like partial blob updates for an easier to understand abstraction of blobs, wher you do not need to worry about blob types or their implementation mechanisms. They are backed up by block blobs in Storage, and you can switch your code over to using `BlockBlobClient`s with no extra steps involving your already-stored data.
+#### Migrating from CloudBlockBlob
 
-Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram above, containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
+We recommend `BlobClient` as a starting place when migrating code that used v11's `CloudBlockBlob`.
+
+`BlobClient` doesn't have a true equivalent to any classes in v11. v12 contains `BlobBaseClient` as an analog for `CloudBlob` and `BlockBlobClient` as an analog for `CloudBlockBlob`. `BlobClient` is a new class to interact with blobs in Azure Storage. It trades off advanced functionality like partial blob updates for an easier to understand abstraction of blobs, where you do not need to worry about blob types or their implementation mechanisms. Blobs created through `BlobClient` are block blobs in Azure Storage, and you can later switch your code over to using `BlockBlobClient`s with no extra steps involving your already-stored data.
+
+#### Migrating from CloudBlobDirectory
+
+Note the absence of a v12 equivalent for v11's `CloudBlobDirectory`. Directories were an SDK-only concept that did not exist in Azure Blob Storage, and which were not brought forwards into the modern Storage SDK. As shown by the diagram in [Client Structure](#client-structure)], containers only contain a flat list of blobs, but those blobs can be named and listed in ways that imply a folder-like structure. See our [Listing Blobs in a Container](#listing-blobs-in-a-container) migration samples later in this guide for more information.
 
 For those whose workloads revolve around manipulating directories and heavily relied on the leagacy SDKs abstraction of this structure, consider the [pros and cons of enabling hierarchical namespace](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-namespace) on your storage account, which would allow switching to the [Data Lake gen 2 SDK](https://docs.microsoft.com/dotnet/api/overview/azure/storage.files.datalake-readme), whose migration is not covered in this document.
+
+#### Class Conversion Reference
 
 The following table lists v11 classes and their v12 equivalents for quick reference.
 
@@ -263,7 +274,7 @@ The following table lists v11 classes and their v12 equivalents for quick refere
 | `CloudBlobClient` | `BlobServiceClient` |
 | `CloudBlobContainer`  | `BlobContainerClient` |
 | `CloudBlobDirectory` | No equivalent |
-| No equivalent | `BlobClient`
+| No equivalent | `BlobClient` |
 | `CloudBlob` | `BlobBaseClient` |
 | `CloudBlockBlob` | `BlockBlobClient` |
 | `CloudPageBlob` | `PageBlobClient` |
