@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary>
     /// The results of a query operation.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the individual items in the collection.</typeparam>
     internal partial class QueryResult<T>
     {
         /// <summary>
