@@ -11,7 +11,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class FullBackupClientLiveTests : BackupRestoreTestBase
     {
-        public FullBackupClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public FullBackupClientLiveTests(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]

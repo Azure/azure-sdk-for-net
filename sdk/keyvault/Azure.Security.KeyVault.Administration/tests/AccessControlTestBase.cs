@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Keys;
 using Azure.Security.KeyVault.Tests;
@@ -13,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class AccessControlTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public KeyVaultAccessControlClient Client { get; set; }
         public KeyClient KeyClient { get; set; }
@@ -31,10 +30,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         private readonly ConcurrentQueue<(string Name, string Scope)> _roleAssignmentsToDelete = new ConcurrentQueue<(string Name, string Scope)>();
 
-        public AccessControlTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        { }
-
-        public AccessControlTestBase(bool isAsync) : base(isAsync)
+        public AccessControlTestBase(bool isAsync, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)

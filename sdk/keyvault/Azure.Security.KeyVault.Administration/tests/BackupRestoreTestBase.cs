@@ -10,19 +10,15 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class BackupRestoreTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class BackupRestoreTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public KeyVaultBackupClient Client { get; set; }
         internal string SasToken { get; set; }
         internal string BlobContainerName = "backup";
         internal string PreviouslyBackedUpKeyName = "rsa-1";
 
-        public BackupRestoreTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new BackupRestoreRecordedTestSanitizer();
-        }
-
-        public BackupRestoreTestBase(bool isAsync) : base(isAsync)
+        public BackupRestoreTestBase(bool isAsync, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
