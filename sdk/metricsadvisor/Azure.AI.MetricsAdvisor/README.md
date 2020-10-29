@@ -7,7 +7,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 - Configure and fine-tune the anomaly detection model used on your data.
 - Diagnose anomalies and help with root cause analysis.
 
-[Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | API reference documentation | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
+[Source code][metricsadv_client_src] | [Package (NuGet)][metricsadv_nuget_package] | [API reference documentation][metricsadv_refdocs] | [Product documentation][metricsadv_docs] | [Samples][metricsadv_samples]
 
 ## Getting started
 
@@ -107,7 +107,7 @@ var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), cred
 
 ### Data Feed
 
-A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data and, therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
+A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data, and therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
 
 ### Data Feed Metric
 
@@ -180,10 +180,11 @@ var dataFeedSchema = new DataFeedSchema(dataFeedMetrics)
 var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
 
-Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeedName, dataFeedSource,
-    dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
 
-DataFeed dataFeed = response.Value;
+Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
+
+dataFeed = response.Value;
 
 Console.WriteLine($"Data feed ID: {dataFeed.Id}");
 ```

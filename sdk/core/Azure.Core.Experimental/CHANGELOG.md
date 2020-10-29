@@ -1,6 +1,9 @@
 # Release History
 
-## 0.1.0-preview.7 (Unreleased)
+## 0.1.0-preview.8 (Unreleased)
+
+
+## 0.1.0-preview.7 (2020-10-28)
 
 ### Breaking Changes
 - `JsonPatchDocument` type moved to `Azure.Core` package.

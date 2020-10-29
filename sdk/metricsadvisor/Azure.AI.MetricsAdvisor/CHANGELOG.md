@@ -2,7 +2,13 @@
 
 ## 1.0.0-beta.2 (Unreleased)
 
+### New Features
+- Added a public constructor to `DataFeed`.
+- Added the `DataSource` property to `DataFeed`.
+- Added a public setter to `DataFeed.Options`.
+
 ### Breaking Changes
+- In `MetricsAdvisorClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
 - In `MetricsAdvisorAdministrationClient`, changed return types of sync and async methods `GetAnomalyAlertConfigurations` and `GetMetricAnomalyDetectionConfigurations` to pageables.
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.

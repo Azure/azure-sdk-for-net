@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Tests
 {
