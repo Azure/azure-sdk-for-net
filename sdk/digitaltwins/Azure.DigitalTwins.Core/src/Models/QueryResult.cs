@@ -38,10 +38,10 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
-                    List<T> array = new List<T>();
+                    var array = new List<T>();
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
+                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
                         T obj = (T)objectSerializer.Deserialize(streamedObject, typeof(T), default);
                         array.Add(obj);
                     }
