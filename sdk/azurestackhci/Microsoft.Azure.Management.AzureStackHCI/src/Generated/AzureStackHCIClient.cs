@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             Operations = new Operations(this);
             Clusters = new ClustersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-01-preview";
+            ApiVersion = "2020-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

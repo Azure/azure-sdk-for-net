@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     using System.Linq;
 
     /// <summary>
-    /// Operation properties.
+    /// Operation display payload
     /// </summary>
     public partial class OperationDisplay
     {
@@ -29,10 +29,12 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Resource provider name.</param>
-        /// <param name="resource">Resource type name.</param>
-        /// <param name="operation">Operation name.</param>
-        /// <param name="description">Operation description.</param>
+        /// <param name="provider">Resource provider of the operation</param>
+        /// <param name="resource">Resource of the operation</param>
+        /// <param name="operation">Localized friendly name for the
+        /// operation</param>
+        /// <param name="description">Localized friendly description for the
+        /// operation</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -48,25 +50,25 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource provider name.
+        /// Gets or sets resource provider of the operation
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets resource type name.
+        /// Gets or sets resource of the operation
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets operation name.
+        /// Gets or sets localized friendly name for the operation
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets operation description.
+        /// Gets or sets localized friendly description for the operation
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

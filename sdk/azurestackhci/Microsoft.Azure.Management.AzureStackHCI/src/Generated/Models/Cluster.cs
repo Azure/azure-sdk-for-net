@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// include: 'Succeeded', 'Failed', 'Canceled', 'Accepted',
         /// 'Provisioning'</param>
         /// <param name="status">Status of the cluster agent. Possible values
-        /// include: 'NeverConnected', 'ConnectedRecently',
-        /// 'NotConnectedRecently', 'Expired', 'Error'</param>
+        /// include: 'NotYetRegistered', 'ConnectedRecently',
+        /// 'NotConnectedRecently', 'Disconnected', 'Error'</param>
         /// <param name="cloudId">Unique, immutable resource id.</param>
         /// <param name="reportedProperties">Properties reported by cluster
         /// agent.</param>
@@ -59,7 +59,13 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// trial period.</param>
         /// <param name="billingModel">Type of billing applied to the
         /// resource.</param>
-        public Cluster(string location, string aadClientId, string aadTenantId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string status = default(string), string cloudId = default(string), ClusterReportedProperties reportedProperties = default(ClusterReportedProperties), double? trialDaysRemaining = default(double?), string billingModel = default(string))
+        /// <param name="registrationTimestamp">First cluster sync
+        /// timestamp.</param>
+        /// <param name="lastSyncTimestamp">Most recent cluster sync
+        /// timestamp.</param>
+        /// <param name="lastBillingTimestamp">Most recent billing meter
+        /// timestamp.</param>
+        public Cluster(string location, string aadClientId, string aadTenantId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string status = default(string), string cloudId = default(string), ClusterReportedProperties reportedProperties = default(ClusterReportedProperties), double? trialDaysRemaining = default(double?), string billingModel = default(string), System.DateTime? registrationTimestamp = default(System.DateTime?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastBillingTimestamp = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -70,6 +76,9 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
             ReportedProperties = reportedProperties;
             TrialDaysRemaining = trialDaysRemaining;
             BillingModel = billingModel;
+            RegistrationTimestamp = registrationTimestamp;
+            LastSyncTimestamp = lastSyncTimestamp;
+            LastBillingTimestamp = lastBillingTimestamp;
             CustomInit();
         }
 
@@ -87,8 +96,8 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
 
         /// <summary>
         /// Gets status of the cluster agent. Possible values include:
-        /// 'NeverConnected', 'ConnectedRecently', 'NotConnectedRecently',
-        /// 'Expired', 'Error'
+        /// 'NotYetRegistered', 'ConnectedRecently', 'NotConnectedRecently',
+        /// 'Disconnected', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -128,6 +137,24 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingModel")]
         public string BillingModel { get; private set; }
+
+        /// <summary>
+        /// Gets first cluster sync timestamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.registrationTimestamp")]
+        public System.DateTime? RegistrationTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets most recent cluster sync timestamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastSyncTimestamp")]
+        public System.DateTime? LastSyncTimestamp { get; private set; }
+
+        /// <summary>
+        /// Gets most recent billing meter timestamp.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastBillingTimestamp")]
+        public System.DateTime? LastBillingTimestamp { get; private set; }
 
     }
 }
