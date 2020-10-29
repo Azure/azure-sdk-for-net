@@ -87,6 +87,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings");
@@ -113,6 +118,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, string>> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
             Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<EncryptionDetails> encryption = default;
+            Optional<string> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -246,6 +253,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("encryption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("workspaceUID"))
+                        {
+                            workspaceUID = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("extraProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -275,7 +297,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, workspaceUID.Value, Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value);
         }
     }
 }

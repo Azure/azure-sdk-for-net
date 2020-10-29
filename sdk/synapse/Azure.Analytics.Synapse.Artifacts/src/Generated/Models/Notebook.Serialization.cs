@@ -23,8 +23,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(BigDataPool))
             {
-                writer.WritePropertyName("bigDataPool");
-                writer.WriteObjectValue(BigDataPool);
+                if (BigDataPool != null)
+                {
+                    writer.WritePropertyName("bigDataPool");
+                    writer.WriteObjectValue(BigDataPool);
+                }
+                else
+                {
+                    writer.WriteNull("bigDataPool");
+                }
             }
             if (Optional.IsDefined(SessionProperties))
             {
@@ -74,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        bigDataPool = null;
                         continue;
                     }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);

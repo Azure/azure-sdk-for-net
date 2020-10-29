@@ -57,6 +57,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("isComputeIsolationEnabled");
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
+            if (Optional.IsDefined(SessionLevelPackagesEnabled))
+            {
+                writer.WritePropertyName("sessionLevelPackagesEnabled");
+                writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
+            }
             if (Optional.IsDefined(SparkEventsFolder))
             {
                 writer.WritePropertyName("sparkEventsFolder");
@@ -71,6 +76,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("libraryRequirements");
                 writer.WriteObjectValue(LibraryRequirements);
+            }
+            if (Optional.IsCollectionDefined(CustomLibraries))
+            {
+                writer.WritePropertyName("customLibraries");
+                writer.WriteStartArray();
+                foreach (var item in CustomLibraries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
@@ -113,9 +128,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> creationDate = default;
             Optional<AutoPauseProperties> autoPause = default;
             Optional<bool> isComputeIsolationEnabled = default;
+            Optional<bool> sessionLevelPackagesEnabled = default;
             Optional<string> sparkEventsFolder = default;
             Optional<int> nodeCount = default;
             Optional<LibraryRequirements> libraryRequirements = default;
+            Optional<IList<LibraryInfo>> customLibraries = default;
             Optional<LibraryRequirements> sparkConfigProperties = default;
             Optional<string> sparkVersion = default;
             Optional<string> defaultSparkLogFolder = default;
@@ -212,6 +229,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             isComputeIsolationEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("sessionLevelPackagesEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sessionLevelPackagesEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("sparkEventsFolder"))
                         {
                             sparkEventsFolder = property0.Value.GetString();
@@ -235,6 +262,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 continue;
                             }
                             libraryRequirements = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("customLibraries"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<LibraryInfo> array = new List<LibraryInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(LibraryInfo.DeserializeLibraryInfo(item));
+                            }
+                            customLibraries = array;
                             continue;
                         }
                         if (property0.NameEquals("sparkConfigProperties"))
@@ -281,7 +323,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily));
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily));
         }
     }
 }
