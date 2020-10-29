@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <inheritdoc />
-        public override TokenCredential CreateCredential(IConfiguration configuration)
+        public override TokenCredential CreateTokenCredential(IConfiguration configuration)
         {
             return ClientFactory.CreateCredential(configuration) ?? _globalOptions.CurrentValue.CredentialFactory(_serviceProvider);
         }
