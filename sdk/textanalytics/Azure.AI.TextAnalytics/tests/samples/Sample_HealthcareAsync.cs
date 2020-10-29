@@ -75,5 +75,4 @@ namespace Azure.AI.TextAnalytics.Samples
 
         #endregion
     }
-    }
 }

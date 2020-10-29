@@ -2462,6 +2462,59 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
+        /// <summary> Cancel healthcare prediction job. </summary>
+        /// <param name="operation"> operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        // Look for other alternatives of operation cancellation
+        #pragma warning disable AZC0003 // DO make service methods virtual.
+        #pragma warning disable AZC0015 // Unexpected client method return type.
+        public async Task<string> StartCancelHealthJobAsync(AnalyzeHealthOperation operation, CancellationToken cancellationToken = default)
+        #pragma warning restore AZC0015 // Unexpected client method return type.
+        #pragma warning restore AZC0003 // DO make service methods virtual.
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceRestClient.CancelHealthJobAsync(new Guid(operation.Id), cancellationToken).ConfigureAwait(false);
+
+                return response.Headers.OperationLocation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
+        }
+
+        /// <summary> Cancel healthcare prediction job. </summary>
+        /// <param name="operation"> Job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        #pragma warning disable AZC0003 // DO make service methods virtual.
+        #pragma warning disable AZC0015 // Unexpected client method return type.
+        public string StartCancelHealthJob(AnalyzeHealthOperation operation, CancellationToken cancellationToken = default)
+        #pragma warning restore AZC0015 // Unexpected client method return type.
+        #pragma warning restore AZC0003 // DO make service methods virtual.
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
+            scope.Start();
+            // Look for other alternatives of operation cancellation
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceRestClient.CancelHealthJob(new Guid(operation.Id), cancellationToken);
+
+                return response.Headers.OperationLocation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Common
