@@ -30,11 +30,11 @@ namespace Azure.DigitalTwins.Core
         [CodeGenMember("UploadTime")]
         public DateTimeOffset? UploadedOn { get; }
 
-        /// <summary> A language map that contains the localized display names as specified in the model definition. </summary>
+        /// <summary> A language dictionary that contains the localized display names as specified in the model definition. </summary>
         [CodeGenMember("DisplayName")]
         public IReadOnlyDictionary<string, string> DisplayNameLanguageMap { get; }
 
-        /// <summary> A language map that contains the localized descriptions as specified in the model definition. </summary>
+        /// <summary> A language dictionary that contains the localized descriptions as specified in the model definition. </summary>
         [CodeGenMember("Description")]
         public IReadOnlyDictionary<string, string> DescriptionLanguageMap { get; }
 
