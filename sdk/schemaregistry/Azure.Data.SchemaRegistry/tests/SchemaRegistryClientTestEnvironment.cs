@@ -11,6 +11,8 @@ namespace Azure.Data.SchemaRegistry.Tests
         {
         }
 
-        public string SchemaRegistryUri => GetRecordedVariable("SCHEMAREGISTRY_URL");
+        public string SchemaRegistryEndpoint => GetRecordedVariable("SCHEMAREGISTRY_ENDPOINT");
+
+        public string SchemaRegistryGroup => GetRecordedVariable("SCHEMAREGISTRY_GROUP");
     }
 }
