@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             _dailyGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
             _dataFeedSchema = new DataFeedSchema(new List<DataFeedMetric> { new DataFeedMetric("someMetricId", "someMetricName", "someMetricDisplayName", "someDescription") });
             _dataFeedIngestionSettings = new DataFeedIngestionSettings(new DateTimeOffset(Recording.UtcNow.Year, Recording.UtcNow.Month, Recording.UtcNow.Day, 0, 0, 0, TimeSpan.Zero));
-            _dataFeedOptions = new DataFeedOptions() { Description = "my feed description" };
+            _dataFeedDescription = "my feed description";
         }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClientAad()
@@ -103,6 +103,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal DataFeedGranularity _dailyGranularity;
         internal DataFeedSchema _dataFeedSchema;
         internal DataFeedIngestionSettings _dataFeedIngestionSettings;
-        internal DataFeedOptions _dataFeedOptions;
+        internal string _dataFeedDescription;
     }
 }
