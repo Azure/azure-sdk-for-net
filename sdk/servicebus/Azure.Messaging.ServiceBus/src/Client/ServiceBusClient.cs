@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
-        public ServiceBusClient(string fullyQualifiedNamespace, ServiceBusSharedAccessKeyCredential credential) :
+        internal ServiceBusClient(string fullyQualifiedNamespace, ServiceBusSharedAccessKeyCredential credential) :
             this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
         }
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
-        public ServiceBusClient(
+        internal ServiceBusClient(
             string fullyQualifiedNamespace,
             ServiceBusSharedAccessKeyCredential credential,
             ServiceBusClientOptions options)

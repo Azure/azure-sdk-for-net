@@ -286,6 +286,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme..
+        /// </summary>
+        internal static string InvalidEndpointAddress {
+            get {
+                return ResourceManager.GetString("InvalidEndpointAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a well-formed Service Bus fully qualified namespace..
         /// </summary>
         internal static string InvalidFullyQualifiedNamespace {
@@ -376,7 +385,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shard Access Signature to be valid..
+        ///   Looks up a localized string similar to The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shared Access Signature to be valid..
         /// </summary>
         internal static string MissingConnectionInformation {
             get {
