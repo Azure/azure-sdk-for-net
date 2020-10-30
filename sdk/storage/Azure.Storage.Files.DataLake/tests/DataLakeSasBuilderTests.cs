@@ -92,8 +92,43 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        [TestCase("LDWCAR")]
-        [TestCase("racwdl")]
+        [TestCase(DataLakeFileSystemSasPermissions.List)]
+        [TestCase(DataLakeFileSystemSasPermissions.Read | DataLakeFileSystemSasPermissions.List)]
+        [TestCase(DataLakeFileSystemSasPermissions.All)]
+        public async Task SetPermissions_Filesystem(DataLakeFileSystemSasPermissions permissions)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                FileSystemName = test.FileSystem.Name
+            };
+
+            dataLakeSasBuilder.SetPermissions(permissions);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(test.FileSystem.Uri)
+            {
+                Sas = dataLakeSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
+
+            // Act
+            await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync())
+            {
+                // Just make sure the call succeeds.
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        [TestCase("LDWCMEAOPR")]
+        [TestCase("racwdlmeop")]
         public async Task FileSystemPermissionsRawPermissions(string permissionsString)
         {
             // Arrange
@@ -125,7 +160,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // Just make sure the call succeeds.
             }
         }
-
 
         [Test]
         public async Task FileSystemPermissionsRawPermissions_Invalid()
