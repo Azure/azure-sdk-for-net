@@ -248,10 +248,10 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        public EventHubProducerClient(string fullyQualifiedNamespace,
-                                      string eventHubName,
-                                      EventHubsSharedAccessKeyCredential credential,
-                                      EventHubProducerClientOptions clientOptions = default)
+        internal EventHubProducerClient(string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        EventHubsSharedAccessKeyCredential credential,
+                                        EventHubProducerClientOptions clientOptions = default)
         {
             Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));

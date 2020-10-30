@@ -421,13 +421,14 @@ namespace Azure.Messaging.EventHubs
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
         /// </remarks>
         ///
-        public EventProcessorClient(BlobContainerClient checkpointStore,
-                                    string consumerGroup,
-                                    string fullyQualifiedNamespace,
-                                    string eventHubName,
-                                    EventHubsSharedAccessKeyCredential credential,
-                                    EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
+        internal EventProcessorClient(BlobContainerClient checkpointStore,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      EventHubsSharedAccessKeyCredential credential,
+                                      EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (TokenCredential)(object)credential, CreateOptions(clientOptions))
         {
+            // TODO: Update the credential type and base class constructor invocation.
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
         }
@@ -481,8 +482,9 @@ namespace Azure.Messaging.EventHubs
                                       string eventHubName,
                                       int cacheEventCount,
                                       EventHubsSharedAccessKeyCredential credential,
-                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (TokenCredential)(object)credential, clientOptions)
         {
+            // TODO: Update the credential type and base class constructor invocation.
             Argument.AssertNotNull(storageManager, nameof(storageManager));
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);

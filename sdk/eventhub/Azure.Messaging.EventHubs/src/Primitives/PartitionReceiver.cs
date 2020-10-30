@@ -214,13 +214,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="credential">The Event Hubs shared key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         ///
-        public PartitionReceiver(string consumerGroup,
-                                 string partitionId,
-                                 EventPosition eventPosition,
-                                 string fullyQualifiedNamespace,
-                                 string eventHubName,
-                                 EventHubsSharedAccessKeyCredential credential,
-                                 PartitionReceiverOptions options = default)
+        internal PartitionReceiver(string consumerGroup,
+                                   string partitionId,
+                                   EventPosition eventPosition,
+                                   string fullyQualifiedNamespace,
+                                   string eventHubName,
+                                   EventHubsSharedAccessKeyCredential credential,
+                                   PartitionReceiverOptions options = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));

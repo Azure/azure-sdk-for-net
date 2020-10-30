@@ -328,12 +328,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
-        protected EventProcessor(int eventBatchMaximumCount,
-                                 string consumerGroup,
-                                 string fullyQualifiedNamespace,
-                                 string eventHubName,
-                                 EventHubsSharedAccessKeyCredential credential,
-                                 EventProcessorOptions options = default)
+        internal EventProcessor(int eventBatchMaximumCount,
+                               string consumerGroup,
+                               string fullyQualifiedNamespace,
+                               string eventHubName,
+                               EventHubsSharedAccessKeyCredential credential,
+                               EventProcessorOptions options = default)
         {
             Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
