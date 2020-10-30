@@ -55,6 +55,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(fileTemplate, nameof(fileTemplate));
 
             Parameter = new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
+
+            AccountName = accountName;
+            AccountKey = accountKey;
+            FileSystemName = fileSystemName;
+            DirectoryTemplate = directoryTemplate;
+            FileTemplate = fileTemplate;
         }
 
         internal AzureDataLakeStorageGen2DataFeedSource(AzureDataLakeStorageGen2Parameter parameter)
@@ -63,6 +69,59 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            AccountName = parameter.AccountName;
+            AccountKey = parameter.AccountKey;
+            FileSystemName = parameter.FileSystemName;
+            DirectoryTemplate = parameter.DirectoryTemplate;
+            FileTemplate = parameter.FileTemplate;
         }
+
+        /// <summary>
+        /// The name of the Storage Account.
+        /// </summary>
+        public string AccountName { get; }
+
+        /// <summary>
+        /// The Storage Account key.
+        /// </summary>
+        public string AccountKey { get; }
+
+        /// <summary>
+        /// The name of the file system.
+        /// </summary>
+        public string FileSystemName { get; }
+
+        /// <summary>
+        /// The directory template.
+        /// </summary>
+        public string DirectoryTemplate { get; }
+
+        /// <summary>
+        /// This is the file template of the Blob file. For example: X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>%Y</term>
+        /// <description>The year formatted as yyyy</description>
+        /// </item>
+        /// <item>
+        /// <term>%m</term>
+        /// <description>The month formatted as MM</description>
+        /// </item>
+        /// <item>
+        /// <term>%d</term>
+        /// <description>The day formatted as dd</description>
+        /// </item>
+        /// <item>
+        /// <term>%h</term>
+        /// <description>The hour formatted as HH</description>
+        /// </item>
+        /// <item>
+        /// <term>%M</term>
+        /// <description>The minute formatted as mm</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        public string FileTemplate { get; }
     }
 }

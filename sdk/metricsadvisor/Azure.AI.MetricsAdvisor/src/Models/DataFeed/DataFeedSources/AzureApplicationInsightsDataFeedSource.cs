@@ -23,12 +23,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query)
             : base(DataFeedSourceType.AzureApplicationInsights)
         {
-            Argument.AssertNotNullOrEmpty(azureCloud, nameof(azureCloud));
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+            Argument.AssertNotNullOrEmpty(azureCloud, nameof(azureCloud));
             Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
             Parameter = new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
+
+            ApplicationId = applicationId;
+            ApiKey = apiKey;
+            AzureCloud = azureCloud;
+            Query = query;
         }
 
         internal AzureApplicationInsightsDataFeedSource(AzureApplicationInsightsParameter parameter)
@@ -37,6 +42,31 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ApplicationId = parameter.ApplicationId;
+            ApiKey = parameter.ApiKey;
+            AzureCloud = parameter.AzureCloud;
+            Query = parameter.Query;
         }
+
+        /// <summary>
+        /// The Application ID.
+        /// </summary>
+        public string ApplicationId { get; }
+
+        /// <summary>
+        /// The API key.
+        /// </summary>
+        public string ApiKey { get; }
+
+        /// <summary>
+        /// The Azure cloud environment.
+        /// </summary>
+        public string AzureCloud { get; }
+
+        /// <summary>
+        /// The query used to filter the data to be ingested.
+        /// </summary>
+        public string Query { get; }
     }
 }
