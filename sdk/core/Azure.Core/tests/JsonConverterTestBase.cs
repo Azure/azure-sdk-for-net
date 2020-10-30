@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using Azure.Core.Serialization;
 using NUnit.Framework;
 using JsonConverter = System.Text.Json.Serialization.JsonConverter;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -51,7 +52,7 @@ namespace Azure.Core.Tests
 
         private Newtonsoft.Json.JsonSerializerSettings CreateJsonSerializerSettings()
         {
-            var options = new Newtonsoft.Json.JsonSerializerSettings();
+            var options = NewtonsoftJsonObjectSerializer.CreateJsonSerializerSettings();
 
             var converter = CreateNewtonsoftJsonConverter();
             if (converter != null)

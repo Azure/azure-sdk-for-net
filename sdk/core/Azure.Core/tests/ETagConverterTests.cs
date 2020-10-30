@@ -13,11 +13,6 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected override JsonConverter CreateNewtonsoftJsonConverter()
-        {
-            return new NewtonsoftJsonETagConverter();
-        }
-
         [Theory]
         [TestCase(null)]
         [TestCase("\"tag\"")]
