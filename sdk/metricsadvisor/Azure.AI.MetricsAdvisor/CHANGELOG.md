@@ -6,7 +6,6 @@
 - Added a public constructor to `DataFeed`.
 - Added the `DataSource` property to `DataFeed`.
 - All `DataSource`s now have public properties exposing the associated parameters used to get the data, such as endpoints, connection strings, and query strings.
-- Added a public setter to `DataFeed.Options`.
 
 ### Breaking Changes
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
@@ -15,6 +14,7 @@
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
+- Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
 - Renamed `MetricDimension` to `DataFeedDimension`.
 - Renamed `DataAnomaly` to `DataPointAnomaly`.
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.

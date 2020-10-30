@@ -23,3 +23,4 @@ The 'Sync eng/common directory' PRs will be created in the language repositories
 6. Sign off on CreateSyncPRs stage of the sync pipeline using the approval gate. This stage will create the **Sync PRs** in the various language repos. A link to each of the **Sync PRs** will show up in the **Tools PR** for you to click and review.
 7. Go review and approve each of your **Sync PRs**.
 8. Sign Off on the VerifyAndMerge stage. This will merge any remaining open **Sync PR** and also append `auto-merge` to the **Tools PR**.
+   * If a **Sync PR** has any failing checks, it will need to be manually merged, even if `/check-enforcer override` has been run ([azure-sdk-tools#1147](https://github.com/Azure/azure-sdk-tools/issues/1147)).

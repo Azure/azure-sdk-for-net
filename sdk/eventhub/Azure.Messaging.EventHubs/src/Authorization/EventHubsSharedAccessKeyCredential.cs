@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs
     ///   Event Hub instance.
     /// </summary>
     ///
-    public sealed class EventHubsSharedAccessKeyCredential
+    internal sealed class EventHubsSharedAccessKeyCredential
     {
         /// <summary>
         ///   The name of the shared access key to be used for authorization, as
