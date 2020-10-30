@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Factors that increase our confidence that the alert is a true positive
+    /// Protocol data
     /// </summary>
-    public partial class AlertConfidenceReason
+    public partial class Protocol1
     {
         /// <summary>
-        /// Initializes a new instance of the AlertConfidenceReason class.
+        /// Initializes a new instance of the Protocol1 class.
         /// </summary>
-        public AlertConfidenceReason()
+        public Protocol1()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AlertConfidenceReason class.
+        /// Initializes a new instance of the Protocol1 class.
         /// </summary>
-        /// <param name="type">Type of confidence factor</param>
-        /// <param name="reason">description of the confidence reason</param>
-        public AlertConfidenceReason(string type = default(string), string reason = default(string))
+        /// <param name="name">Protocol name</param>
+        /// <param name="identifiers">list of protocol identifiers.</param>
+        public Protocol1(string name = default(string), string identifiers = default(string))
         {
-            Type = type;
-            Reason = reason;
+            Name = name;
+            Identifiers = identifiers;
             CustomInit();
         }
 
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets type of confidence factor
+        /// Gets protocol name
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets description of the confidence reason
+        /// Gets or sets list of protocol identifiers.
         /// </summary>
-        [JsonProperty(PropertyName = "reason")]
-        public string Reason { get; private set; }
+        [JsonProperty(PropertyName = "identifiers")]
+        public string Identifiers { get; set; }
 
     }
 }
