@@ -220,6 +220,34 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Healthcare
+
+        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var healthcareEntititesResults = new List<RecognizeHealthcareEntititesResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                healthcareEntititesResults.Add(new RecognizeHealthcareEntititesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read entities
+            foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
+            {
+                healthcareEntititesResults.Add(
+                    new RecognizeHealthcareEntititesResult(documentHealthcareEntities.Id,
+                    documentHealthcareEntities.Statistics ?? default,
+                    new DocumentHealthcareEntities(documentHealthcareEntities)));
+            }
+
+            healthcareEntititesResults = SortHeterogeneousCollection(healthcareEntititesResults, idToIndexMap);
+
+            return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();

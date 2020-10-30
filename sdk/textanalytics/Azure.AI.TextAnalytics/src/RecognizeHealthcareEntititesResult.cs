@@ -12,9 +12,9 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeHealthcareEntititesResult : TextAnalyticsResult
     {
-        private readonly DocumentHealthcareEntitiesCollection _entities;
+        private readonly DocumentHealthcareEntities _entities;
 
-        internal RecognizeHealthcareEntititesResult(string id, TextDocumentStatistics statistics, DocumentHealthcareEntitiesCollection entities)
+        internal RecognizeHealthcareEntititesResult(string id, TextDocumentStatistics statistics, DocumentHealthcareEntities entities)
             : base(id, statistics)
         {
             _entities = entities;
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of named entities identified in the document.
         /// </summary>
-        public DocumentHealthcareEntitiesCollection Entities
+        public DocumentHealthcareEntities Entities
         {
             get
             {

@@ -43,6 +43,14 @@ namespace Azure.AI.TextAnalytics
             Warnings = Transforms.ConvertToWarnings(warnings.ToList());
         }
 
+        internal DocumentHealthcareEntities(DocumentHealthcareEntitiesInternal documentHealthcareEntities)
+        {
+            Entities = documentHealthcareEntities.Entities;
+            Relations = ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations);
+            Id = documentHealthcareEntities.Id;
+            Warnings = documentHealthcareEntities.Warnings != null ? Transforms.ConvertToWarnings(documentHealthcareEntities.Warnings) : null;
+        }
+
         /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Healthcare entities. </param>

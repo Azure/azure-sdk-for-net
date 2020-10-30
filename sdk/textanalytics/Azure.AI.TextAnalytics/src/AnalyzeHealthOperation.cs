@@ -21,6 +21,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
+        private readonly MultiLanguageBatchInput _batchInput;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -90,10 +91,12 @@ namespace Azure.AI.TextAnalytics
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        /// <param name="batchInput"></param>
+        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, MultiLanguageBatchInput batchInput)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
+            _batchInput = batchInput;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -186,10 +189,9 @@ namespace Azure.AI.TextAnalytics
 
                     if (update.Value.Status == JobStatus.Succeeded)
                     {
+                        IDictionary<string, int> map = CreateIdToIndexMap(_batchInput.Documents);
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = new RecognizeHealthcareEntitiesResultCollection(new List<RecognizeHealthcareEntititesResult>() { /*update.Value.Results*/ },
-                            update.Value.Results.Statistics,
-                            update.Value.Results.ModelVersion);
+                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, map);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == JobStatus.Failed)
@@ -208,6 +210,26 @@ namespace Azure.AI.TextAnalytics
             }
 
             return GetRawResponse();
+        }
+
+        private static IDictionary<string, int> CreateIdToIndexMap<T>(IEnumerable<T> documents)
+        {
+            var map = new Dictionary<string, int>(documents.Count());
+
+            int i = 0;
+            foreach (T item in documents)
+            {
+                string id = item switch
+                {
+                    LanguageInput li => li.Id,
+                    MultiLanguageInput mli => mli.Id,
+                    _ => throw new NotSupportedException(),
+                };
+
+                map[id] = i++;
+            }
+
+            return map;
         }
     }
 }

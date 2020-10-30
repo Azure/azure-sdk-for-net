@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
@@ -44,19 +45,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+                    Console.WriteLine($"    Recognized the following {result.Entities.Entities.Count()} healthcare entities:");
 
-                    foreach (DocumentHealthcareEntities entities in result.Entities)
+                    foreach (HealthcareEntity entity in result.Entities.Entities)
                     {
-                        foreach (HealthcareEntity entity in entities.Entities)
+                        Console.WriteLine($"    Entity: {entity.Text}");
+                        Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                        Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
+                        Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+                        if (entity.Links.Count > 0)
                         {
-                            Console.WriteLine($"    Entity: {entity.Text}");
-                            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-                            Console.WriteLine($"    Offset: {entity.Offset}");
-                            Console.WriteLine($"    Length: {entity.Length}");
-                            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
                             Console.WriteLine($"    Links:");
-
                             foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
                             {
                                 Console.WriteLine($"        ID: {healthcareEntityLink.Id}");

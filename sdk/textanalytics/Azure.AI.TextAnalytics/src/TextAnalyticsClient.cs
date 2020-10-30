@@ -2378,7 +2378,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
-                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location);
+                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, documentInputs);
             }
             catch (Exception e)
             {
@@ -2411,7 +2411,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
-                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location);
+                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, documentInputs);
             }
             catch (Exception e)
             {
@@ -2432,7 +2432,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
-                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location);
+                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, batchInput);
             }
             catch (Exception e)
             {
@@ -2453,7 +2453,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
-                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location);
+                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, batchInput);
             }
             catch (Exception e)
             {
