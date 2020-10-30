@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
@@ -57,10 +57,19 @@
     "variables": {
         "searchServiceName": "[concat('azs-net-', parameters('baseName'))]",
         "searchApiVersion": "2020-03-13",
+        "searchEncryptionLocations": [
+            "westus2",
+            "eastus2",
+            "southcentralus",
+            "usgovvirginia",
+            "usgovarizona"
+        ],
         "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
         "storageApiVersion": "2019-06-01",
         "cognitiveServicesAccountName": "[concat(parameters('baseName'), 'cog')]",
-        "cognitiveServicesApiVersion": "2017-04-18"
+        "cognitiveServicesApiVersion": "2017-04-18",
+        "keyVaultName": "[concat(parameters('baseName'), 'kv')]",
+        "keyVaultApiVersion": "2016-10-01"
     },
     "resources": [
         {
@@ -108,6 +117,43 @@
                 "apiProperties": { },
                 "publicNetworkAccess": "Enabled"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "[variables('keyVaultApiVersion')]",
+            "name": "[variables('keyVaultName')]",
+            "condition": "[contains(variables('searchEncryptionLocations'), parameters('location'))]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "standard"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantId')]",
+                        "objectId": "[parameters('testApplicationOid')]",
+                        "permissions": {
+                            "certificates": [
+                                "get"
+                            ],
+                            "keys": [
+                                "create",
+                                "get",
+                                "purge",
+                                "unwrapKey",
+                                "wrapKey"
+                            ],
+                            "secrets": [
+                                "get"
+                            ]
+                        }
+                    }
+                ],
+                "enablePurgeProtection": true,
+                "enableSoftDelete": true
+            }
         }
     ],
     "outputs": {
@@ -134,6 +180,11 @@
         "SEARCH_COGNITIVE_KEY": {
             "type": "string",
             "value": "[listKeys(variables('cognitiveServicesAccountName'), variables('cognitiveServicesApiVersion')).key1]"
+        },
+        "SEARCH_KEYVAULT_URL": {
+            "type": "string",
+            "condition": "[contains(variables('searchEncryptionLocations'), parameters('location'))]",
+            "value": "[reference(variables('keyVaultName')).vaultUri]"
         }
     }
 }
