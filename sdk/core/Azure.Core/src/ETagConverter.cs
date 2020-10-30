@@ -22,7 +22,14 @@ namespace Azure
 
         public override void Write(Utf8JsonWriter writer, ETag value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToString("H"));
+            if (value == default)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                writer.WriteStringValue(value.ToString("H"));
+            }
         }
     }
 }
