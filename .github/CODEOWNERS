@@ -37,7 +37,7 @@
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
@@ -49,7 +49,7 @@
 /sdk/identity/                                  @schaabs @alexanderSher
 
 # PRLabel: %Iot
-/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum @jamdavi
 
 # PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
