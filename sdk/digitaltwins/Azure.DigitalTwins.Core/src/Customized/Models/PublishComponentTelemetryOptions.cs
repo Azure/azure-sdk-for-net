@@ -8,7 +8,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinsSendComponentTelemetryOptions")]
-    public partial class PublishComponentTelemetryOptions
+    internal partial class PublishComponentTelemetryOptions
     {
         // This class declaration changes the namespace and adds the timestamp property; do not remove.
 

@@ -52,12 +52,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 updateTwinPatchDocument.AppendReplace("/Temperature", 70);
                 updateTwinPatchDocument.AppendRemove("/EmployeeId");
 
-                var requestOptions = new UpdateDigitalTwinOptions
-                {
-                    IfMatch = "*"
-                };
-
-                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, requestOptions).ConfigureAwait(false);
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
 
                 // delete a twin
                 await client.DeleteDigitalTwinAsync(roomTwinId).ConfigureAwait(false);
@@ -158,6 +153,351 @@ namespace Azure.DigitalTwins.Core.Tests
             roomTwin.Should().NotBeNull();
             serializer.WasDeserializeCalled.Should().BeTrue();
             serializer.WasSerializeCalled.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task DigitalTwins_CreateOrReplaceTwinFailsWhenIfNoneMatchStar()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // act
+                Func<Task> act = async () =>
+                {
+                    // "ifNoneMatch = *" header should cause the server to throw 412 since an entity does match
+                    await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin, ETag.All).ConfigureAwait(false);
+                };
+
+                // assert
+                act.Should().Throw<RequestFailedException>()
+                    .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task DigitalTwins_CreateOrReplaceTwinSucceedsWithNoIfNoneMatchHeader()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // Deliberately not passing in ifNoneMatch header, request should succeed because of that
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.PreconditionFailed)
+            {
+                throw new AssertionException("CreateOrReplaceDigitalTwin should not fail with PreconditionFailed when ifNoneMatch header wasn't set", ex);
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task DigitalTwins_PatchTwinFailsIfInvalidETagProvided()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // get twin
+                ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
+
+                Assert.IsNotNull(etagBeforeUpdate);
+
+                // update twin once to make the previous etag fall out of date
+                JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
+                updateTwinPatchDocument.AppendAdd("/Humidity", 30);
+                updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendRemove("/EmployeeId");
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
+
+                // update twin again, but with an out of date etag, which should cause a 412 from service
+                JsonPatchDocument secondUpdateTwinPatchDocument = new JsonPatchDocument();
+                secondUpdateTwinPatchDocument.AppendReplace("/Humidity", 80);
+                Func<Task> act = async () =>
+                {
+                    await client.UpdateDigitalTwinAsync(roomTwinId, secondUpdateTwinPatchDocument, etagBeforeUpdate).ConfigureAwait(false);
+                };
+
+                act.Should().Throw<RequestFailedException>()
+                    .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task DigitalTwins_PatchTwinSucceedsIfCorrectETagProvided()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // update twin once
+                JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
+                updateTwinPatchDocument.AppendAdd("/Humidity", 30);
+                updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendRemove("/EmployeeId");
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
+
+                // get twin
+                ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
+
+                Assert.IsNotNull(etagBeforeUpdate);
+
+                // update twin again, but with the correct etag
+                JsonPatchDocument secondUpdateTwinPatchDocument = new JsonPatchDocument();
+                secondUpdateTwinPatchDocument.AppendReplace("/Humidity", 80);
+                try
+                {
+                    await client.UpdateDigitalTwinAsync(roomTwinId, secondUpdateTwinPatchDocument, etagBeforeUpdate).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.PreconditionFailed)
+                {
+                    throw new AssertionException("UpdateDigitalTwin should not have thrown PreconditionFailed because the ETag was up to date", ex);
+                }
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task DigitalTwins_DeleteTwinFailsIfMatchProvidesOutdatedEtag()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // get twin
+                ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
+
+                // update twin
+                JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
+                updateTwinPatchDocument.AppendAdd("/Humidity", 30);
+                updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendRemove("/EmployeeId");
+
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
+
+                // assert
+                Func<Task> act = async () =>
+                {
+                    // since the ETag is out of date, this call should throw a 412
+                    await client.DeleteDigitalTwinAsync(roomTwinId, etagBeforeUpdate).ConfigureAwait(false);
+                };
+
+                act.Should().Throw<RequestFailedException>()
+                    .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
+        }
+
+        [Test]
+        public async Task DigitalTwins_DeleteTwinSucceedsIfMatchProvidesCorrectEtag()
+        {
+            DigitalTwinsClient client = GetClient();
+
+            string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
+            string floorModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.FloorModelIdPrefix).ConfigureAwait(false);
+            string roomModelId = await GetUniqueModelIdAsync(client, TestAssetDefaults.RoomModelIdPrefix).ConfigureAwait(false);
+
+            try
+            {
+                // arrange
+
+                // create room model
+                string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
+                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+
+                // act
+
+                // create room twin
+                BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+
+                // update twin
+                JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
+                updateTwinPatchDocument.AppendAdd("/Humidity", 30);
+                updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendRemove("/EmployeeId");
+                await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);
+
+                // get twin
+                ETag? correctETag = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false)).Value.ETag;
+                Assert.IsNotNull(correctETag);
+
+                try
+                {
+                    // since the ETag is not out of date, this call should not throw a 412
+                    await client.DeleteDigitalTwinAsync(roomTwinId, correctETag).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.PreconditionFailed)
+                {
+                    throw new AssertionException("UpdateRelationship should not have thrown PreconditionFailed because the ETag was up to date", ex);
+                }
+            }
+            finally
+            {
+                // cleanup
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(roomModelId))
+                    {
+                        await client.DeleteModelAsync(roomModelId).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Test clean up failed: {ex.Message}");
+                }
+            }
         }
     }
 }
