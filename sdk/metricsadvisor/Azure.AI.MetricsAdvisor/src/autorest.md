@@ -96,6 +96,14 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
+  where: $.definitions.EnrichmentStatus
+  transform: >
+    $["required"] = ["timestamp", "status", "message"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
   where: $.definitions.MetricSeriesItem
   transform: >
     $["required"] = ["metricId", "dimension"]
