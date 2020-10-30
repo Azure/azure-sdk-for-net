@@ -40,19 +40,6 @@ namespace Azure.Storage.Blobs.Test
                 Value = constants.Sas.KeyValue
             };
 
-        private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
-        {
-            blobName ??= GetNewBlobName();
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
-
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            return blob;
-        }
-
         [Test]
         public void ToSasQueryParameters_ContainerTest()
         {

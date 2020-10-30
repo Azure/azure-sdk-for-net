@@ -2769,18 +2769,5 @@ namespace Azure.Storage.Blobs.Test
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
         }
-
-        private async Task<BlockBlobClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
-        {
-            blobName ??= GetNewBlobName();
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
-
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            return blob;
-        }
     }
 }
