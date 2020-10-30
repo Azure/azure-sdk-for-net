@@ -121,3 +121,13 @@ namespace Azure.Communication.Chat
         public string Id { get { throw null; } }
     }
 }
+namespace Azure.Communication.Chat.Models
+{
+    public static partial class ChatModelFactory
+    {
+        public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, string type, Azure.Communication.Chat.ChatMessagePriority? priority, string version, string content, string senderDisplayName, System.DateTimeOffset? createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
+        public static Azure.Communication.Chat.ChatThreadInfo ChatThreadInfo(string id, string topic, bool? isDeleted, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
+        public static Azure.Communication.Chat.ReadReceipt ReadReceipt(string senderId, string chatMessageId, System.DateTimeOffset? readOn) { throw null; }
+        public static Azure.Communication.Chat.SendChatMessageResult SendChatMessageResult(string id) { throw null; }
+    }
+}
