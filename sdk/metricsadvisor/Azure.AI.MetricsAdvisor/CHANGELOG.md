@@ -5,7 +5,6 @@
 ### New Features
 - Added a public constructor to `DataFeed`.
 - Added the `DataSource` property to `DataFeed`.
-- Added a public setter to `DataFeed.Options`.
 
 ### Breaking Changes
 - In `MetricsAdvisorClient`, renamed `CreateMetricFeedback` sync and async methods to `AddMetricFeedback`.
@@ -19,6 +18,7 @@
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
+- Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
 - Renamed `GetMetricFeedbacksOptions` to `GetAllMetricFeedbackOptions`.
 - Renamed `GetMetricDimensionValuesOptions` to `GetDimensionValuesOptions`.
 - Renamed `MetricDimension` to `DataFeedDimension`.

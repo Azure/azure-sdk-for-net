@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var options = new ServiceBusClientOptions();
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
-                var parsed = ConnectionStringParser.Parse(connectionString);
+                var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
                 var credential = new ServiceBusSharedAccessKeyCredential(parsed.SharedAccessSignature);
 
                 await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
