@@ -16,26 +16,21 @@ namespace Azure.DigitalTwins.Core
     {
 
         /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
-        /// <param name="displayName"> A language map that contains the localized display names as specified in the model definition. </param>
-        /// <param name="description"> A language map that contains the localized descriptions as specified in the model definition. </param>
+        /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
+        /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
         /// <param name="uploadedOn"> The time the model was uploaded to the service. </param>
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
-        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
+        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
         {
-            DisplayName = displayName;
-            Description = description;
+            LanguageDisplayNames = languageDisplayNames;
+            LanguageDescriptions = languageDescriptions;
             Id = id;
             UploadedOn = uploadedOn;
             Decommissioned = decommissioned;
             DtdlModel = dtdlModel;
         }
-
-        /// <summary> A language map that contains the localized display names as specified in the model definition. </summary>
-        public IReadOnlyDictionary<string, string> DisplayName { get; }
-        /// <summary> A language map that contains the localized descriptions as specified in the model definition. </summary>
-        public IReadOnlyDictionary<string, string> Description { get; }
         /// <summary> The id of the model as specified in the model definition. </summary>
         public string Id { get; }
         /// <summary> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </summary>

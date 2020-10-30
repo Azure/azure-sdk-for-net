@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of the Metric item is a list of measurements (single data points) and/or aggregations. </summary>
-    public partial class MetricsData : MonitorDomain
+    internal partial class MetricsData : MonitorDomain
     {
         /// <summary> Initializes a new instance of MetricsData. </summary>
         /// <param name="version"> Schema version. </param>

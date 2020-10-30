@@ -7,12 +7,12 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinsAddOptions")]
-    public partial class CreateOrReplaceDigitalTwinOptions
+    internal partial class CreateOrReplaceDigitalTwinOptions
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
 
         /// <summary>
-        /// If-Non-Match header that makes the request method conditional on a recipient cache or origin server either not having any current representation of the target resource.
+        /// If-None-Match header that makes the request method conditional on a recipient cache or origin server either not having any current representation of the target resource.
         /// For more information about this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC</see>.
         /// Acceptable values are null or "*".
         /// If IfNonMatch option is null the service will replace the existing entity with the new entity.

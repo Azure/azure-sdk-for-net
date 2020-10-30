@@ -54,10 +54,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var ingestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var dataFeedIngestionSettings = new DataFeedIngestionSettings(ingestionStartTime);
 
-            Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeedName, dataFeedSource,
-                dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
+            var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
 
-            DataFeed dataFeed = response.Value;
+            Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
+
+            dataFeed = response.Value;
 
             Console.WriteLine($"Data feed ID: {dataFeed.Id}");
             #endregion

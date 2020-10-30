@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> An instance of Request represents completion of an external request to the application to do work and contains a summary of that request execution and the results. </summary>
-    public partial class RequestData : MonitorDomain
+    internal partial class RequestData : MonitorDomain
     {
         /// <summary> Initializes a new instance of RequestData. </summary>
         /// <param name="version"> Schema version. </param>

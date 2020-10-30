@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables
@@ -63,7 +64,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="TableEntity" /> class.
+        /// Creates an instance of the <see cref="TableEntity" /> class without any properties initialized.
         /// </summary>
         public TableEntity()
             : this(null)
@@ -83,7 +84,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties in the <see cref="IDictionary"/>.
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties specified in <paramref name="values"/>.
         /// </summary>
         /// <param name="values">A <see cref="IDictionary"/> containing the initial values of the entity.</param>
         public TableEntity(IDictionary<string, object> values)
@@ -95,7 +96,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -115,7 +116,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -135,7 +136,17 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Double"/> property called
+        /// <see cref="DateTimeOffset"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="DateTimeOffset" />.</exception>
+        public DateTimeOffset? GetDateTimeOffset(string key) => GetValue<DateTimeOffset?>(key);
+
+        /// <summary>
+        /// Get the value of a <see cref="TableEntity"/>'s
+        /// <see cref="double"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -155,7 +166,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int32"/> property called
+        /// <see cref="int"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -165,7 +176,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int64"/> property called
+        /// <see cref="long"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -185,7 +196,7 @@ namespace Azure.Data.Tables
 
             if (value != null && _properties.TryGetValue(key, out object existingValue) && existingValue != null)
             {
-                EnforceType(existingValue.GetType(), value.GetType());
+                value = CoerceType(existingValue, value);
             }
             _properties[key] = value;
         }
@@ -234,6 +245,38 @@ namespace Azure.Data.Tables
                     CultureInfo.InvariantCulture,
                     $"Cannot return {requestedType} type for a {givenType} typed property."));
             }
+        }
+
+        /// <summary>
+        /// Performs type coercion for numeric types.
+        /// <param name="newValue"/> of type int will be coerced to long or double if <param name="existingValue"/> is typed as long or double.
+        /// All other type assignment changes will be accepted as is.
+        /// </summary>
+        private static object CoerceType(object existingValue, object newValue)
+        {
+            if (!existingValue.GetType().IsAssignableFrom(newValue.GetType()))
+            {
+                return existingValue switch
+                {
+                    double _ => newValue switch
+                    {
+                        // if we already had a double value, preserve it as double even if newValue was an int.
+                        // example: entity["someDoubleValue"] = 5;
+                        int newIntValue => (double)newIntValue,
+                        _ => newValue
+                    },
+                    long _ => newValue switch
+                    {
+                        // if we already had a long value, preserve it as long even if newValue was an int.
+                        // example: entity["someLongValue"] = 5;
+                        int newIntValue => (long)newIntValue,
+                        _ => newValue
+                    },
+                    _ => newValue
+                };
+            }
+
+            return newValue;
         }
     }
 }

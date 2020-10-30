@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static OperationList List(this IOperations operations)
+            public static AvailableOperations List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationList> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableOperations> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

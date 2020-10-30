@@ -28,5 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new AzureTableParameter(connectionString, table, query);
         }
+
+        internal AzureTableDataFeedSource(AzureTableParameter parameter)
+            : base(DataFeedSourceType.AzureTable)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

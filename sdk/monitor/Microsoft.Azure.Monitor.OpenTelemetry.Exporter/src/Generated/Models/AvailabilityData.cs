@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Instances of AvailabilityData represent the result of executing an availability test. </summary>
-    public partial class AvailabilityData : MonitorDomain
+    internal partial class AvailabilityData : MonitorDomain
     {
         /// <summary> Initializes a new instance of AvailabilityData. </summary>
         /// <param name="version"> Schema version. </param>

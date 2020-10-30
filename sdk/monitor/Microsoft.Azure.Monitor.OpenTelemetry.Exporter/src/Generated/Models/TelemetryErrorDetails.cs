@@ -8,7 +8,7 @@
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The error details. </summary>
-    public partial class TelemetryErrorDetails
+    internal partial class TelemetryErrorDetails
     {
         /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
         internal TelemetryErrorDetails()
