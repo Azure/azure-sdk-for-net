@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinsUpdateOptions")]
-    public partial class UpdateDigitalTwinOptions
+    internal partial class UpdateDigitalTwinOptions
     {
         // This class declaration changes the namespace, class name and property visibility; do not remove.
 
