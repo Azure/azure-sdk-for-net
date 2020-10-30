@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
 
@@ -40,6 +41,7 @@ namespace Microsoft.Azure.WebJobs
     /// The parameter type can be CloudBlobContainer, CloudBlobDirectory or <see cref="IEnumerable{T}"/>
     /// of one of the following element types:
     /// <list type = "bullet" >
+    /// <item><description><see cref="BlobClient"/></description></item>
     /// <item><description><see cref="BlobBaseClient"/></description></item>
     /// <item><description><see cref="AppendBlobClient"/></description></item>
     /// <item><description><see cref="BlockBlobClient"/></description></item>

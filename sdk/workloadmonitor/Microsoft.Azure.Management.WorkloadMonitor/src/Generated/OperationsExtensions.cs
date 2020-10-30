@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Gets a list of possible operations
+            /// Get a list of all available REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
 
             /// <summary>
-            /// Gets a list of possible operations
+            /// Get a list of all available REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
 
             /// <summary>
-            /// Gets a list of possible operations
+            /// Get a list of all available REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             }
 
             /// <summary>
-            /// Gets a list of possible operations
+            /// Get a list of all available REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

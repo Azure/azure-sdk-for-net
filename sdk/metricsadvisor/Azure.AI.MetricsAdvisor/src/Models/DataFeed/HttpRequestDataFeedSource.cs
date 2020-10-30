@@ -30,5 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new HttpRequestParameter(url.AbsoluteUri, httpHeader, httpMethod, payload);
         }
+
+        internal HttpRequestDataFeedSource(HttpRequestParameter parameter)
+            : base(DataFeedSourceType.HttpRequest)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

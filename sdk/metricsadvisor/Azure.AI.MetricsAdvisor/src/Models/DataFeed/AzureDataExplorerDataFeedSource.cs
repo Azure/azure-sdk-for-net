@@ -26,5 +26,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new SqlSourceParameter(connectionString, query);
         }
+
+        internal AzureDataExplorerDataFeedSource(SqlSourceParameter parameter)
+            : base(DataFeedSourceType.AzureDataExplorer)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

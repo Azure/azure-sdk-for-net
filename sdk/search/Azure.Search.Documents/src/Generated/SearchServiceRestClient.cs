@@ -59,10 +59,6 @@ namespace Azure.Search.Documents
             uri.AppendPath("/servicestats", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (xMsClientRequestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
-            }
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             return message;
         }

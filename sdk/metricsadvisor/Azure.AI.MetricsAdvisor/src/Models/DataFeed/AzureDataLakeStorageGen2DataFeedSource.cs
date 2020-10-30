@@ -56,5 +56,13 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
         }
+
+        internal AzureDataLakeStorageGen2DataFeedSource(AzureDataLakeStorageGen2Parameter parameter)
+            : base(DataFeedSourceType.AzureDataLakeStorageGen2)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
+        }
     }
 }

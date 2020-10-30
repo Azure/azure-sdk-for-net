@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.DigitalTwins.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Tests
@@ -36,13 +35,18 @@ namespace Azure.DigitalTwins.Core.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected DigitalTwinsClient GetClient()
+        protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)
         {
+            if (options == null)
+            {
+                options = new DigitalTwinsClientOptions();
+            }
+
             return InstrumentClient(
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(options)));
         }
 
         protected DigitalTwinsClient GetFakeClient()

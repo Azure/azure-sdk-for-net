@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -38,18 +37,17 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Create a room twin, with property "IsOccupied": true
                 string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
                 BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
-                await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+                await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 string queryString = "SELECT * FROM digitaltwins where IsOccupied = true";
 
                 // act
-                AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString);
+                AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
 
                 // assert
-                await foreach (string response in asyncPageableResponse)
+                await foreach (JsonElement response in asyncPageableResponse)
                 {
-                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(response);
-                    JsonElement isOccupied = jsonElement.GetProperty("IsOccupied");
+                    JsonElement isOccupied = response.GetProperty("IsOccupied");
                     isOccupied.GetRawText().Should().Be("true");
                 }
             }
@@ -91,15 +89,12 @@ namespace Azure.DigitalTwins.Core.Tests
                 for (int i = 0; i < pageSize * 2; i++)
                 {
                     string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
-                    await client.CreateDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
+                    await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(roomTwinId, roomTwin).ConfigureAwait(false);
                 }
 
                 string queryString = "SELECT * FROM digitaltwins";
 
                 // act
-                var options = new QueryOptions();
-                options.MaxItemsPerPage = pageSize;
-
                 CancellationTokenSource queryTimeoutCancellationToken = new CancellationTokenSource(QueryWaitTimeout);
                 bool queryHasExpectedCount = false;
                 while (!queryHasExpectedCount)
@@ -109,9 +104,9 @@ namespace Azure.DigitalTwins.Core.Tests
                         throw new AssertionException($"Timed out waiting for at least {pageSize + 1} twins to be queryable");
                     }
 
-                    AsyncPageable<string> asyncPageableResponse = client.QueryAsync(queryString, null, queryTimeoutCancellationToken.Token);
+                    AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString, queryTimeoutCancellationToken.Token);
                     int count = 0;
-                    await foreach (Page<string> queriedTwinPage in asyncPageableResponse.AsPages())
+                    await foreach (Page<BasicDigitalTwin> queriedTwinPage in asyncPageableResponse.AsPages(pageSizeHint: pageSize))
                     {
                         count += queriedTwinPage.Values.Count;
                     }
@@ -124,7 +119,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // Test that page size hint works, and that all returned pages either have the page size hint amount of
                 // elements, or have no continuation token (signaling that it is the last page)
                 int pageCount = 0;
-                await foreach (Page<string> page in client.QueryAsync(queryString, options).AsPages())
+                await foreach (Page<BasicDigitalTwin> page in client.QueryAsync<BasicDigitalTwin>(queryString).AsPages(pageSizeHint: pageSize))
                 {
                     pageCount++;
                     if (page.ContinuationToken != null)

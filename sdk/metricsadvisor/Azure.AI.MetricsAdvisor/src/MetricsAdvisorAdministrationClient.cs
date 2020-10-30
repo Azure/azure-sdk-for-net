@@ -40,12 +40,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
@@ -71,12 +71,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
+        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
@@ -269,37 +269,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
-        /// <param name="dataSource">The source from which data will be consumed.</param>
-        /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
-        /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
-        /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
-            Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
             try
             {
-                dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataSource.DataFeedDetail, cancellationToken).ConfigureAwait(false);
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
-                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
-                var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
-                return Response.FromValue(createdDataFeed, response.GetRawResponse());
+                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeed, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -311,37 +300,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
-        /// <param name="dataSource">The source from which data will be consumed.</param>
-        /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
-        /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
-        /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public virtual Response<DataFeed> CreateDataFeed(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
-            Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
             try
             {
-                dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataSource.DataFeedDetail, cancellationToken);
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
-                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
-                var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
-                return Response.FromValue(createdDataFeed, response.GetRawResponse());
+                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeed, response.GetRawResponse());
             }
             catch (Exception ex)
             {

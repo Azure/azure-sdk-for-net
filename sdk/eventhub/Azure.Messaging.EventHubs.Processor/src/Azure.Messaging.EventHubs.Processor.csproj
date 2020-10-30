@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
+    <Compile Include="..\..\Azure.Messaging.EventHubs\src\Authorization\EventHubsSharedAccessKeyCredential.cs" Link="EventHubsSharedAccessKeyCredential.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

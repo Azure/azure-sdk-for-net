@@ -7,8 +7,8 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "fa97b3e673c1795cb4d508fd78961ec8",
         "x-ms-return-client-request-id": "true"
@@ -18,7 +18,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -35,8 +35,8 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "4a164ce3e3b36b015cbff77b83d297fd",
         "x-ms-return-client-request-id": "true"
@@ -46,7 +46,7 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -65,8 +65,8 @@
         "Content-Length": "804",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "d5f4d0f8f700f2d06348c4fd82796841",
         "x-ms-return-client-request-id": "true"
@@ -74,12 +74,12 @@
       "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:room;123439021\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Room\u0022,    \u0022description\u0022: \u0022An enclosure inside a building.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022containedIn\u0022,            \u0022target\u0022: \u0022dtmi:example:floor;12337958\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Temperature\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022Humidity\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022IsOccupied\u0022,            \u0022schema\u0022: \u0022boolean\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022EmployeeId\u0022,            \u0022schema\u0022: \u0022string\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "190",
+        "Content-Length": "193",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;123439021\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-26T17:04:53.2479\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:room;123439021\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022An enclosure inside a building.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Room\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-10-30T16:55:45.1169124\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1982570493?api-version=2020-10-31",
@@ -88,8 +88,8 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "33de3ee132da95cf8e65b364fd310370",
         "x-ms-return-client-request-id": "true"
@@ -99,13 +99,13 @@
       "ResponseHeaders": {
         "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
-        "ETag": "W/\u002276250cee-8993-46a4-b9ed-20d47138be10\u0022",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
+        "ETag": "W/\u0022fac9a617-2d58-4918-9d17-48be539ce2b0\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "$dtId": "roomTwin1982570493",
-        "$etag": "W/\u002276250cee-8993-46a4-b9ed-20d47138be10\u0022",
+        "$etag": "W/\u0022fac9a617-2d58-4918-9d17-48be539ce2b0\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -113,16 +113,16 @@
         "$metadata": {
           "$model": "dtmi:example:room;123439021",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+            "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+            "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+            "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+            "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
           }
         }
       }
@@ -134,213 +134,29 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "f32ac67fecc5237ce76b1f04e9e256b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "461",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
-        "ETag": "W/\u0022e32bf024-85eb-4095-aedb-aa6385608e38\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin1266490367",
-        "$etag": "W/\u0022e32bf024-85eb-4095-aedb-aa6385608e38\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;123439021",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1904515709?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "c9b893a29d1e402471921c8d6517c18c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "461",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
-        "ETag": "W/\u002298bdf707-1431-4138-b18a-db71a81142dc\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin1904515709",
-        "$etag": "W/\u002298bdf707-1431-4138-b18a-db71a81142dc\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;123439021",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1410570626?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "0a17a2fa521b0f62f2c7b091a4835dae",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "461",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
-        "ETag": "W/\u0022daced9e9-5fad-4328-ba39-6e7d6e195d58\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin1410570626",
-        "$etag": "W/\u0022daced9e9-5fad-4328-ba39-6e7d6e195d58\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;123439021",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin59174272?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "35b86f8e2861b305535a609681535e77",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "459",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
-        "ETag": "W/\u0022dc826323-ef03-4ecd-8712-8941cfcb5412\u0022",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "$dtId": "roomTwin59174272",
-        "$etag": "W/\u0022dc826323-ef03-4ecd-8712-8941cfcb5412\u0022",
-        "Temperature": 80,
-        "Humidity": 25,
-        "IsOccupied": true,
-        "EmployeeId": "Employee1",
-        "$metadata": {
-          "$model": "dtmi:example:room;123439021",
-          "Temperature": {
-            "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-          },
-          "Humidity": {
-            "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-          },
-          "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-          },
-          "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin151639911?api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "739eb3e84186b9562bd674aecd0fbede",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "270",
+        "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:52 GMT",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "DigitalTwinNotFound",
-          "message": "There is no digital twin instance that exists with the ID roomTwin151639911. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
+          "message": "There is no digital twin instance that exists with the ID roomTwin1266490367. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins http://aka.ms/adtv2query."
         }
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin151639911?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin1266490367?api-version=2020-10-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -348,10 +164,10 @@
         "Content-Length": "154",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "d45188e5994c117a57c8f70179707352",
+        "x-ms-client-request-id": "b893a27d1ec9249d4071921c8d6517c1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -367,15 +183,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "460",
+        "Content-Length": "461",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:53 GMT",
-        "ETag": "W/\u002254257157-3b68-498a-8ec6-8ded1f570a0c\u0022",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
+        "ETag": "W/\u002234e30dff-344d-4f44-8e11-73e4532692e9\u0022",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "$dtId": "roomTwin151639911",
-        "$etag": "W/\u002254257157-3b68-498a-8ec6-8ded1f570a0c\u0022",
+        "$dtId": "roomTwin1266490367",
+        "$etag": "W/\u002234e30dff-344d-4f44-8e11-73e4532692e9\u0022",
         "Temperature": 80,
         "Humidity": 25,
         "IsOccupied": true,
@@ -383,16 +199,16 @@
         "$metadata": {
           "$model": "dtmi:example:room;123439021",
           "Temperature": {
-            "lastUpdateTime": "2020-10-26T17:04:53.5099059Z"
+            "lastUpdateTime": "2020-10-30T16:55:45.2215600Z"
           },
           "Humidity": {
-            "lastUpdateTime": "2020-10-26T17:04:53.5099059Z"
+            "lastUpdateTime": "2020-10-30T16:55:45.2215600Z"
           },
           "IsOccupied": {
-            "lastUpdateTime": "2020-10-26T17:04:53.5099059Z"
+            "lastUpdateTime": "2020-10-30T16:55:45.2215600Z"
           },
           "EmployeeId": {
-            "lastUpdateTime": "2020-10-26T17:04:53.5099059Z"
+            "lastUpdateTime": "2020-10-30T16:55:45.2215600Z"
           }
         }
       }
@@ -406,10 +222,10 @@
         "Content-Length": "62",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "a99a3d190c102e07627c35529104864b",
+        "x-ms-client-request-id": "a2fa828c0a17521b620ff2c7b091a483",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -417,201 +233,1010 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "46453",
+        "Content-Length": "31521",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:53 GMT",
-        "query-charge": "20.91",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
+        "query-charge": "14.92",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "value": [
           {
-            "$dtId": "roomTwin1495950345",
-            "$etag": "W/\u002205d2ae31-6929-4d7e-af04-4a44b4b31e8b\u0022",
+            "$dtId": "RoomTwin",
+            "$etag": "W/\u0022645f113f-2396-4bd5-9b2e-c9321321ca53\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
+            "wifiAccessPoint": {
+              "RouterName": "Cisco1",
+              "Network": "Room1",
+              "$metadata": {
+                "RouterName": {
+                  "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
+                },
+                "Network": {
+                  "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
+                }
+              }
+            },
             "$metadata": {
-              "$model": "dtmi:example:room;112984610",
+              "$model": "dtmi:com:samples:Room;1",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:04:50.2177669Z"
+                "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:04:50.2177669Z"
+                "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:04:50.2177669Z"
+                "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:04:50.2177669Z"
+                "lastUpdateTime": "2020-10-30T01:21:41.3218556Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin344050324",
-            "$etag": "W/\u0022f8d463fc-b497-42c5-9d24-8bf2eb63c8ac\u0022",
+            "$dtId": "roomTwin954107803",
+            "$etag": "W/\u0022e63cffbb-424b-4ecf-9a29-b4cd621adf9a\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;112462194",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:07:40.1690347Z"
+                "lastUpdateTime": "2020-10-30T01:27:43.8159416Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:07:40.1690347Z"
+                "lastUpdateTime": "2020-10-30T01:27:43.8159416Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:07:40.1690347Z"
+                "lastUpdateTime": "2020-10-30T01:27:43.8159416Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:07:40.1690347Z"
+                "lastUpdateTime": "2020-10-30T01:27:43.8159416Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin427623005",
-            "$etag": "W/\u00221af94c6c-ba7b-43af-b731-3c747d441259\u0022",
+            "$dtId": "roomTwin594730422",
+            "$etag": "W/\u0022e38ad238-b876-42c4-814a-ad7dcc17ff6d\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;119618957",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:10:04.2422987Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.3507708Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:10:04.2422987Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.3507708Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:10:04.2422987Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.3507708Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:10:04.2422987Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.3507708Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin410651761",
-            "$etag": "W/\u00229de8f988-b123-411e-81d1-b9b2647c5bfa\u0022",
+            "$dtId": "roomTwin230290952",
+            "$etag": "W/\u00222ecfeee0-0dc0-4223-ae26-a3e47725096e\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;112725529",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:16:07.6922287Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.1436214Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:16:07.6922287Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.1436214Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:16:07.6922287Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.1436214Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:16:07.6922287Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.1436214Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin744180983",
-            "$etag": "W/\u002263bb6047-a862-4977-b4f0-c9890d2b3370\u0022",
+            "$dtId": "roomTwin249900826",
+            "$etag": "W/\u00221b025e0e-13f4-4588-aad2-44584d061327\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;115056947",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:17:42.6969774Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.0411754Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:17:42.6969774Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.0411754Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:17:42.6969774Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.0411754Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:17:42.6969774Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.0411754Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1437249777",
-            "$etag": "W/\u0022ef65f3f3-9966-4092-bf4c-b466ccb270f9\u0022",
+            "$dtId": "roomTwin1481528649",
+            "$etag": "W/\u0022d9229737-158f-4da9-9a84-7546efd5538f\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;158485519",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T21:20:58.7466947Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.8199400Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T21:20:58.7466947Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.8199400Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T21:20:58.7466947Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.8199400Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T21:20:58.7466947Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.8199400Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1579359106",
-            "$etag": "W/\u00226c41c324-e714-4346-97ee-3d7a43ebf892\u0022",
+            "$dtId": "roomTwin29311913",
+            "$etag": "W/\u00223c4e4ae3-56d1-4365-b0b1-880581084c60\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;113317821",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T22:23:51.8870999Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.6832781Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T22:23:51.8870999Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.6832781Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T22:23:51.8870999Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.6832781Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T22:23:51.8870999Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.6832781Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin2008432736",
-            "$etag": "W/\u0022322fe163-968c-4989-aa8e-a3a4e448907b\u0022",
+            "$dtId": "roomTwin862215953",
+            "$etag": "W/\u002207599304-9acc-43b0-9636-91d4a02e4381\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;121439350",
+              "$model": "dtmi:example:room;178502708",
               "Temperature": {
-                "lastUpdateTime": "2020-10-23T22:24:28.9734048Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.5966515Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-23T22:24:28.9734048Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.5966515Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-23T22:24:28.9734048Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.5966515Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-23T22:24:28.9734048Z"
+                "lastUpdateTime": "2020-10-30T01:27:44.5966515Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1579739693",
+            "$etag": "W/\u00229d5d8c59-66ea-4d1c-9ee7-e923edfab12b\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;178502708",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:27:44.9275777Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:27:44.9275777Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:27:44.9275777Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:27:44.9275777Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1176785505",
+            "$etag": "W/\u002215920321-e9c0-49e5-942a-9288f9f7f80a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;178502708",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:27:44.4540210Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:27:44.4540210Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:27:44.4540210Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:27:44.4540210Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin206550275",
+            "$etag": "W/\u00226a2d359b-099e-4a31-a661-a46c836543f4\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;178502708",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:27:45.0982474Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:27:45.0982474Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:27:45.0982474Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:27:45.0982474Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin201764702",
+            "$etag": "W/\u002299a0bb45-628e-4bab-8f38-5b6037ff6252\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120901170",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2404521Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2404521Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2404521Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2404521Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin26918924",
+            "$etag": "W/\u0022ddd8a29f-c582-4377-9131-05a5be8dcb70\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;112477032",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2517802Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2517802Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2517802Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:02.2517802Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1346756257",
+            "$etag": "W/\u0022be9748cb-d4e7-42e7-b4c7-018bd10f7b89\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.4100406Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.4100406Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.4100406Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.4100406Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1893968151",
+            "$etag": "W/\u0022e5c39595-abe1-457f-9bef-888c4d943fd1\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.5146394Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.5146394Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.5146394Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.5146394Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1652440098",
+            "$etag": "W/\u0022b9bade2e-155d-4acd-a35e-af64fe085ea9\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6099557Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6099557Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6099557Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6099557Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin521801433",
+            "$etag": "W/\u002205409b5e-1d82-4e1a-aa83-79aae2da38b7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6567432Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6567432Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6567432Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6567432Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin463432203",
+            "$etag": "W/\u002232ecbf06-cba0-4eab-8ff1-5a725bc3d836\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6915838Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6915838Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6915838Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.6915838Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1564838062",
+            "$etag": "W/\u0022075ec4e0-265b-498f-85b0-db16c98ee8da\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7134654Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7134654Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7134654Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7134654Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1987541105",
+            "$etag": "W/\u00220cbd429e-9175-4963-8c7c-24a12dcf1897\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7867574Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7867574Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7867574Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.7867574Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin80968418",
+            "$etag": "W/\u0022cffe5080-fd16-4995-be6a-d99e22122e16\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8245375Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8245375Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8245375Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8245375Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1745892459",
+            "$etag": "W/\u0022261c55fe-0a81-46eb-b0a2-d927bd17b9c7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8708393Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8708393Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8708393Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.8708393Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1275411467",
+            "$etag": "W/\u0022cd78b1b2-c6c5-4732-b54d-425f6b780df1\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9070031Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9070031Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9070031Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9070031Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin356921230",
+            "$etag": "W/\u00228a2b47d0-1be4-448f-b842-2250d7809e9c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9496003Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9496003Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9496003Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:03.9496003Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1808374783",
+            "$etag": "W/\u002281397fa2-49df-4bed-a523-82cd50a6affd\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0047147Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0047147Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0047147Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0047147Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin19191928",
+            "$etag": "W/\u0022c778b727-342a-4c54-b7e8-2b2dd0366fc5\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0227168Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0227168Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0227168Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0227168Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin523260394",
+            "$etag": "W/\u0022f69b17a0-3c61-4ec6-bfbe-bc22e6bc269c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0671453Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0671453Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0671453Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0671453Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1995940440",
+            "$etag": "W/\u00226a20fc47-87c6-40d2-a581-968914674cbe\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0820793Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0820793Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0820793Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.0820793Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin946132036",
+            "$etag": "W/\u00227a5c80c6-8848-40a2-8fd7-5a15969eb02f\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;161596852",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1690809Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1690809Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1690809Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1690809Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin395570331",
+            "$etag": "W/\u002204b319fa-d289-4a3a-98d5-066e35e2470c\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1830694Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1830694Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1830694Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.1830694Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin632788370",
+            "$etag": "W/\u0022a784db3d-0be8-45e0-a843-16bdb10b79ed\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.2704333Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.2704333Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.2704333Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.2704333Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin675473422",
+            "$etag": "W/\u002277a22736-2bbf-4dd5-a875-303d171a5cf2\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.3275721Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.3275721Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.3275721Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.3275721Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin55781621",
+            "$etag": "W/\u00223eaecf33-8edd-470e-8e33-c765c46364d7\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;137678963",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.4131344Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.4131344Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.4131344Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.4131344Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1256149006",
+            "$etag": "W/\u0022b7ffc2f2-47c0-4e91-8c18-f2382d0c4f4a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;115661859",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:04.9855245Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:04.9855245Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:04.9855245Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:04.9855245Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin983010409",
+            "$etag": "W/\u00229a10e774-00d9-4356-b4b5-fd5eda29c4ca\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;173964173",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T01:28:05.1433889Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T01:28:05.1433889Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T01:28:05.1433889Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T01:28:05.1433889Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin61537088",
+            "$etag": "W/\u002289912bf5-c63c-49c9-b482-080f993af216\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;190129607",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:28.7206549Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:28.7206549Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:28.7206549Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:28.7206549Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1166423701",
+            "$etag": "W/\u002279642b7a-0c6c-4467-b718-5e0f732071c5\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;116018086",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:28.6443985Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:28.6443985Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:28.6443985Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:28.6443985Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin420191521",
+            "$etag": "W/\u0022d0dcbbab-778b-4154-9917-9af883680acc\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;125476269",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0417528Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0417528Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0417528Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0417528Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin408427594",
+            "$etag": "W/\u00222f145ed7-aec2-4c7b-803e-a593c7b21efd\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;194463124",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0534162Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0534162Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0534162Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:30.0534162Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin549827987",
+            "$etag": "W/\u002220e67a48-6c46-4349-a6e0-5e35541a94fa\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;111584242",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:31.2958583Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:31.2958583Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:31.2958583Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:31.2958583Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1275693257",
+            "$etag": "W/\u00224e7797ee-ce20-4821-8692-762709563eaf\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;116635757",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:31.3019366Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:31.3019366Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:31.3019366Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:31.3019366Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin181914230",
+            "$etag": "W/\u00228dbc38e3-9f97-4cc2-b433-7f5115b3893b\u0022",
+            "Temperature": 70,
+            "Humidity": 30,
+            "IsOccupied": true,
+            "$metadata": {
+              "$model": "dtmi:example:room;13504382",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:32.3791397Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:32.3791397Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:32.3105122Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1877559182",
+            "$etag": "W/\u002226506b46-1f80-43e7-8597-2aee9fbb6a84\u0022",
+            "Temperature": 70,
+            "Humidity": 30,
+            "IsOccupied": true,
+            "$metadata": {
+              "$model": "dtmi:example:room;135501209",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:32.6059768Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:32.6059768Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:32.5379967Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1369668520",
-            "$etag": "W/\u0022c9cfdf66-7b27-437e-adcb-cab05b938c6c\u0022",
+            "$etag": "W/\u0022e018425f-6dc0-49fa-b766-db135d1c4fab\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -619,114 +1244,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:16.7635679Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0008602Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:16.7635679Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0008602Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:16.7635679Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0008602Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:16.7635679Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1470142442",
-            "$etag": "W/\u00221eb68b8a-bf13-4720-80b6-a69fe4426840\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1425007Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1425007Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1425007Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1425007Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin873268829",
-            "$etag": "W/\u00221464a0f1-2db0-4bee-aa03-2a79ccf25f90\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:16.9164262Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:16.9164262Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:16.9164262Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:16.9164262Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1469731366",
-            "$etag": "W/\u00222845c406-2076-4575-8891-9417d5bffb6e\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.4708472Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.4708472Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.4708472Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.4708472Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin152530184",
-            "$etag": "W/\u0022baf82ed1-133e-47f8-89aa-cd90ce1296d1\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1213615Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1213615Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1213615Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.1213615Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0008602Z"
               }
             }
           },
           {
             "$dtId": "roomTwin537968733",
-            "$etag": "W/\u00229bfbe99a-3784-425e-ba96-fe46e0de2602\u0022",
+            "$etag": "W/\u00221f151409-870a-4417-b56f-28af131aae57\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -734,45 +1267,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;120254295",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:16.6552838Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0220922Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:16.6552838Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0220922Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:16.6552838Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0220922Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:16.6552838Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0220922Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1775617169",
-            "$etag": "W/\u0022553a122e-a4d1-45ef-8ebb-cf9143db963c\u0022",
+            "$dtId": "roomTwin1470142442",
+            "$etag": "W/\u00223e9b1ecf-7500-43c1-8791-a000a1135878\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;120254295",
+              "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3178991Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0937143Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3178991Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0937143Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3178991Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0937143Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3178991Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.0937143Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin545487351",
-            "$etag": "W/\u00225b73646b-2193-441f-94d8-8038c015fafd\u0022",
+            "$dtId": "roomTwin873268829",
+            "$etag": "W/\u0022f9121746-826b-4590-bf3b-944e4420aea7\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -780,45 +1313,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;120254295",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3886707Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1126385Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3886707Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1126385Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3886707Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1126385Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3886707Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin886314449",
-            "$etag": "W/\u0022552c47a7-cf72-4c83-88e3-a333dba19485\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7242509Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7242509Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7242509Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7242509Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1126385Z"
               }
             }
           },
           {
             "$dtId": "roomTwin581255239",
-            "$etag": "W/\u0022418b00ea-8e3e-45f1-a9c4-df279018c5a4\u0022",
+            "$etag": "W/\u00229009ed49-77dd-4599-b521-3d3934fdbd50\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -826,22 +1336,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3493386Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1843053Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3493386Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1843053Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3493386Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1843053Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.3493386Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.1843053Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin152530184",
+            "$etag": "W/\u00227db6fcdd-7a3f-4819-b826-ce24be944d74\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2251792Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2251792Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2251792Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2251792Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1115371378",
-            "$etag": "W/\u0022ce9d5ab4-b7ed-4edb-a766-588dddfc7092\u0022",
+            "$etag": "W/\u0022188919ee-eabc-4bb9-9838-a0c3e0790c81\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -849,22 +1382,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7195620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.2810639Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7195620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.2810639Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7195620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.2810639Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.7195620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.2810639Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1775617169",
+            "$etag": "W/\u00224991d00d-e590-4e88-98e1-b828703ec83a\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2915482Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2915482Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2915482Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:33.2915482Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1107764983",
-            "$etag": "W/\u002294127080-a0bc-4a3e-8e4c-2e22a9b7400f\u0022",
+            "$etag": "W/\u00228e655f15-fd2d-4185-bed9-c5aa0c6c64ac\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -872,22 +1428,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8432855Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3457594Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8432855Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3457594Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8432855Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3457594Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8432855Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3457594Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin619580090",
-            "$etag": "W/\u00223d4e535f-9a99-4d39-b9ef-5d8b2712102b\u0022",
+            "$dtId": "roomTwin545487351",
+            "$etag": "W/\u0022dbfeafa4-4514-49b5-baf9-e01ee9ab9bca\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -895,22 +1451,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;120254295",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8466731Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3648677Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8466731Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3648677Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8466731Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3648677Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.8466731Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.3648677Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1651185579",
-            "$etag": "W/\u0022294e1038-72ab-4a19-b643-18b3cf5c1d37\u0022",
+            "$etag": "W/\u0022e3300b3c-8e66-4d21-baf2-117e2647c936\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -918,22 +1474,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9302826Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4334589Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9302826Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4334589Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9302826Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4334589Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9302826Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4334589Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1135525785",
-            "$etag": "W/\u0022d281534a-cb4a-4d79-8d0d-ae6f7b7fa1f5\u0022",
+            "$dtId": "roomTwin1469731366",
+            "$etag": "W/\u0022c04d16db-39ee-48fa-b61c-f0d222132d0e\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -941,45 +1497,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;120254295",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9909368Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4566804Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9909368Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4566804Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9909368Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4566804Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:17.9909368Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1105345787",
-            "$etag": "W/\u002240cf5ea0-b65a-4d1c-ab15-8558f01b6e73\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0762146Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0762146Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0762146Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0762146Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.4566804Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1965876829",
-            "$etag": "W/\u0022403065a8-8e71-469a-b528-339c0b4a8e35\u0022",
+            "$etag": "W/\u00225f15c10f-f122-4437-9c81-fe2539b2a6e7\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -987,22 +1520,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0345832Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.5395321Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0345832Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.5395321Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0345832Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.5395321Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:18.0345832Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.5395321Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin886314449",
+            "$etag": "W/\u0022739ea8a7-b30f-412e-bf8e-c015024d12eb\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6047155Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6047155Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6047155Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6047155Z"
               }
             }
           },
           {
             "$dtId": "roomTwin829263883",
-            "$etag": "W/\u0022c3ece407-5fd5-436a-bfd7-dd10dc758e93\u0022",
+            "$etag": "W/\u002219f71c51-c6a0-4d2a-b914-7438db13c82a\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -1010,22 +1566,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:18.1454149Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.6078153Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:18.1454149Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.6078153Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:18.1454149Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.6078153Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:18.1454149Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.6078153Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin619580090",
+            "$etag": "W/\u00226795b8c2-0933-44af-9c00-dbc879a29c64\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6883128Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6883128Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6883128Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:33.6883128Z"
               }
             }
           },
           {
             "$dtId": "roomTwin469162630",
-            "$etag": "W/\u0022bb0d50f4-fd31-42c5-ba91-74cdc790dd1c\u0022",
+            "$etag": "W/\u002268f83b7f-7fbf-40cc-840b-f89b62f2ec9d\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -1033,22 +1612,45 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:18.2266474Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7036065Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:18.2266474Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7036065Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:18.2266474Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7036065Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:18.2266474Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7036065Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin1135525785",
+            "$etag": "W/\u00220a03fac1-0726-4f30-a839-b13ea8ad5129\u0022",
+            "Temperature": 80,
+            "Humidity": 25,
+            "IsOccupied": true,
+            "EmployeeId": "Employee1",
+            "$metadata": {
+              "$model": "dtmi:example:room;120254295",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:33.7532209Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:33.7532209Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:33.7532209Z"
+              },
+              "EmployeeId": {
+                "lastUpdateTime": "2020-10-30T16:55:33.7532209Z"
               }
             }
           },
           {
             "$dtId": "roomTwin2079625124",
-            "$etag": "W/\u002268eb8c04-fde5-4c9d-9b13-55c14d17a5a2\u0022",
+            "$etag": "W/\u002264aa5680-b0ba-436f-abe6-be552ae58f2c\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -1056,45 +1658,64 @@
             "$metadata": {
               "$model": "dtmi:example:room;113863769",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:18.3366733Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7751312Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:18.3366733Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7751312Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:18.3366733Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7751312Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:18.3366733Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.7751312Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin77902172",
-            "$etag": "W/\u002211ac094d-3591-4098-bbf0-560ccafb8862\u0022",
+            "$dtId": "roomTwin1105345787",
+            "$etag": "W/\u00228889a465-1dcd-4b51-aec9-54f8263623dc\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
             "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;180130729",
+              "$model": "dtmi:example:room;120254295",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:19.4270620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.8437627Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:19.4270620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.8437627Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:19.4270620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.8437627Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:19.4270620Z"
+                "lastUpdateTime": "2020-10-30T16:55:33.8437627Z"
+              }
+            }
+          },
+          {
+            "$dtId": "roomTwin30759861",
+            "$etag": "W/\u00221fe39487-e998-4888-9ee1-ab820d9ed263\u0022",
+            "Temperature": 70,
+            "Humidity": 30,
+            "IsOccupied": true,
+            "$metadata": {
+              "$model": "dtmi:example:room;117762358",
+              "Temperature": {
+                "lastUpdateTime": "2020-10-30T16:55:36.0703353Z"
+              },
+              "Humidity": {
+                "lastUpdateTime": "2020-10-30T16:55:36.0703353Z"
+              },
+              "IsOccupied": {
+                "lastUpdateTime": "2020-10-30T16:55:36.0053805Z"
               }
             }
           },
           {
             "$dtId": "roomTwin1982570493",
-            "$etag": "W/\u002276250cee-8993-46a4-b9ed-20d47138be10\u0022",
+            "$etag": "W/\u0022fac9a617-2d58-4918-9d17-48be539ce2b0\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -1102,482 +1723,22 @@
             "$metadata": {
               "$model": "dtmi:example:room;123439021",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:19.0062124Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.2834184Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin2121647958",
-            "$etag": "W/\u0022682c6854-eb59-4b7a-b0b2-23f4fb357f78\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5077074Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5077074Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5077074Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5077074Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin258863380",
-            "$etag": "W/\u0022f53e9a9b-16f5-4156-b376-1aa9dd23e838\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5381572Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5381572Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5381572Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.5381572Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin565072308",
-            "$etag": "W/\u00229fbf9dbc-8eba-42a2-b690-7fd0a32239bc\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6051383Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6051383Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6051383Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6051383Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2047600035",
-            "$etag": "W/\u0022b2917b45-8fb8-4976-a59a-1a3c9bb7574f\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7178725Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7178725Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7178725Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7178725Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1286738412",
-            "$etag": "W/\u00227d18a751-a241-4523-8d72-7e33196d97dc\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6692943Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6692943Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6692943Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.6692943Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1189666982",
-            "$etag": "W/\u00222a2e4748-c4a8-4ce2-a755-68efd52528fa\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8339651Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8339651Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8339651Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8339651Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin484073712",
-            "$etag": "W/\u00228468c658-1feb-4faf-8bfa-5379012e88a8\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7838762Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7838762Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7838762Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.7838762Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin489387498",
-            "$etag": "W/\u00227ec14c16-e75b-4307-a18f-aa2bae497248\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.9880892Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.9880892Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.9880892Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.9880892Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin532106151",
-            "$etag": "W/\u0022c60c9190-89a5-451f-8b85-ee2165c86924\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8891608Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8891608Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8891608Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:22.8891608Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2060296123",
-            "$etag": "W/\u002231152dd5-003f-4f41-a193-eb503ae3988d\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.0033038Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.0033038Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.0033038Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.0033038Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1162878836",
-            "$etag": "W/\u002261f15449-ef3b-4eaf-a667-247648c141b4\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1317506Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1317506Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1317506Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1317506Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1225195112",
-            "$etag": "W/\u0022b4dfb1a8-4df1-4fdd-b65e-77175e5f8b85\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1415535Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1415535Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1415535Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.1415535Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin809589682",
-            "$etag": "W/\u0022b94a81ae-820b-442f-98aa-1a1210fcd8b1\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2497548Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2497548Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2497548Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2497548Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1312290533",
-            "$etag": "W/\u0022ba1ba1e3-6335-4748-98bb-0adb30f9a8c0\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2637419Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2637419Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2637419Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.2637419Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1882526098",
-            "$etag": "W/\u00223fb9fd3b-b10a-42a3-96cd-c97c516a445a\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3528327Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3528327Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3528327Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3528327Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin424570723",
-            "$etag": "W/\u0022bd0955c9-221e-4024-b1e6-9a7377fdafcd\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3580160Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3580160Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3580160Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.3580160Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin74665732",
-            "$etag": "W/\u00222547770e-a761-4276-9a44-5ed7cab6d320\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4514222Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4514222Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4514222Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4514222Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin357005613",
-            "$etag": "W/\u0022d65324bf-9d35-49e3-b1f7-63ddb1b11d27\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4738804Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4738804Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4738804Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.4738804Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2079678761",
-            "$etag": "W/\u0022facc9bb8-5b4a-4355-a1e5-a0fed59798be\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.5574604Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.5574604Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.5574604Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.5574604Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin857070193",
-            "$etag": "W/\u0022344b1b43-9954-446a-9648-592ad0cd2b33\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:23.6026739Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:23.6026739Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:23.6026739Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:23.6026739Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1837133952",
-            "$etag": "W/\u002213d5244f-6f92-44a9-92f0-95a58df577a7\u0022",
+            "$dtId": "roomTwin77902172",
+            "$etag": "W/\u00224bea319e-cb51-4f3b-8667-d94229dfacef\u0022",
             "Temperature": 80,
             "Humidity": 25,
             "IsOccupied": true,
@@ -1585,1589 +1746,73 @@
             "$metadata": {
               "$model": "dtmi:example:room;180130729",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:25.1551734Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3298495Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:25.1551734Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3298495Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:25.1551734Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3298495Z"
               },
               "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:25.1551734Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3298495Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1266490367",
-            "$etag": "W/\u0022e32bf024-85eb-4095-aedb-aa6385608e38\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
+            "$dtId": "roomTwin352865850",
+            "$etag": "W/\u0022495488cf-f5ec-472f-84ef-8e16a5122318\u0022",
+            "Temperature": 70,
+            "Humidity": 30,
             "IsOccupied": true,
-            "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;123439021",
+              "$model": "dtmi:example:room;114800440",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3548372Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.3548372Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:56:25.2339355Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1525191687",
-            "$etag": "W/\u00225175f719-342b-4532-9f0a-f74a7a348a89\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:40.9632066Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:40.9632066Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:40.9632066Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:40.9632066Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin644310332",
-            "$etag": "W/\u0022680af627-2e01-4ac8-af38-3cb3e79a7503\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.0635147Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.0635147Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.0635147Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.0635147Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1614607475",
-            "$etag": "W/\u0022f4c1ad67-fd8a-4c7a-944a-341c82ba5fe2\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.1774050Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.1774050Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.1774050Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.1774050Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1438249970",
-            "$etag": "W/\u002229634e48-7cc6-4291-9940-3248a57e5414\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.2934680Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.2934680Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.2934680Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.2934680Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1380454223",
-            "$etag": "W/\u00226c820be3-8744-4bde-8e25-2aa409b0d2f3\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.3974578Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.3974578Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.3974578Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.3974578Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin738047304",
-            "$etag": "W/\u0022737811d1-9aed-475d-b5c2-260cb281afbb\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5193294Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5193294Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5193294Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5193294Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin379883128",
-            "$etag": "W/\u0022a8ff6946-ee58-45dd-bef8-d189e86281a6\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5374829Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5374829Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5374829Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.5374829Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin64365696",
-            "$etag": "W/\u00226447225b-3ea7-44f0-a749-74d01de4b0f6\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6328701Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6328701Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6328701Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6328701Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1753584378",
-            "$etag": "W/\u002267c15d28-08e0-4f21-b715-2f163b19f9a7\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7503383Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7503383Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7503383Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7503383Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2028986873",
-            "$etag": "W/\u0022d5811809-19fe-43ed-8074-f0595974de59\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6474217Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6474217Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6474217Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.6474217Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin847442141",
-            "$etag": "W/\u002236fd1881-ac66-4f4b-b7a1-2b5ece25b67c\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8600085Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8600085Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8600085Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8600085Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2106608761",
-            "$etag": "W/\u0022d1c30c84-1030-4cef-9d85-609d968aff40\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7556447Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7556447Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7556447Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.7556447Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1662618080",
-            "$etag": "W/\u0022a7518287-834e-439b-9371-4442e4009ac9\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9683165Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9683165Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9683165Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9683165Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin279835412",
-            "$etag": "W/\u00224fc1be2c-7a96-469e-aedf-8f90db26a9cc\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8767260Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8767260Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8767260Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.8767260Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2001547295",
-            "$etag": "W/\u002265298c2f-3a64-4af4-bdd8-dc3b8c32c703\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:42.0764189Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:42.0764189Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:42.0764189Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:42.0764189Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin254397244",
-            "$etag": "W/\u00229a4458dc-c730-4129-86a1-fe7062161ba9\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9843599Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9843599Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9843599Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:41.9843599Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin312098304",
-            "$etag": "W/\u00228c00c75d-1d48-4e95-a038-7a57e29ddfb2\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:42.3112661Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:42.3112661Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:42.3112661Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:42.3112661Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin857257843",
-            "$etag": "W/\u002262efaa49-c478-42c4-adc4-bafcf161b386\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:42.1846023Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:42.1846023Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:42.1846023Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:42.1846023Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1017374329",
-            "$etag": "W/\u0022f4bc66c7-22da-4ae9-a2f3-4f2d15a84b44\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:42.5813740Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:42.5813740Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:42.5813740Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:42.5813740Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin187351254",
-            "$etag": "W/\u0022cb532999-1e35-4bea-ac08-1e6d35585fd2\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:42.4811460Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:42.4811460Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:42.4811460Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:42.4811460Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1904515709",
-            "$etag": "W/\u002298bdf707-1431-4138-b18a-db71a81142dc\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;123439021",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:43.4598136Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin363377363",
-            "$etag": "W/\u0022ad77294f-1d23-44ad-af85-a7e1a58d868c\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;180130729",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:43.9666070Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2146208947",
-            "$etag": "W/\u00225835d863-4ea6-4ad7-a831-985a7c81ced7\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2178127Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1062677703",
-            "$etag": "W/\u00225e977d72-2d41-456b-8ea5-ae401b39bf0a\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.2375516Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin324722902",
-            "$etag": "W/\u002214c5c5ce-59b5-4a4c-a6aa-1e41ab2171c7\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3162395Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1462038290",
-            "$etag": "W/\u0022297e8e3d-fa21-48d2-8ad0-5140dad410aa\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.3375425Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin462997606",
-            "$etag": "W/\u0022520d9d8f-26a0-49eb-bf4a-97089ee3b215\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4134025Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1012472014",
-            "$etag": "W/\u00222ff06d59-f560-40d9-bf73-d2957887b818\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.4251067Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1543128019",
-            "$etag": "W/\u0022e3395b82-f93a-41fb-8903-89de4b68a5bf\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5127224Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin955385887",
-            "$etag": "W/\u00223128b366-23a9-4a19-ab7e-b2fcbef9af3e\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5196597Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin672739146",
-            "$etag": "W/\u0022dd179afe-3a30-4f55-bcfc-b529538ed18b\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.5922633Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1750846709",
-            "$etag": "W/\u002251a2b553-2d6d-427e-8779-d27e3d15bfd2\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.6432310Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin422308472",
-            "$etag": "W/\u00228ea17c08-4542-4f10-8e98-f4a044b3a616\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7315470Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1661689683",
-            "$etag": "W/\u0022fcd235a2-c5fe-46ee-9cbd-4f70b90a0d2d\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.7373797Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1648554203",
-            "$etag": "W/\u0022fe961330-5592-47a0-8433-11baa6cafa72\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8193971Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin528003268",
-            "$etag": "W/\u00222af11057-a459-4406-84dc-82a12ad38106\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.8364606Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin817870353",
-            "$etag": "W/\u0022781ecf84-02fb-4a64-9959-6c1286246ee6\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9075377Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1251286994",
-            "$etag": "W/\u002204f4c379-5934-4788-8c96-0de3beba29b6\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9149657Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1240738903",
-            "$etag": "W/\u0022f210ec66-b4c9-488d-bcdc-bf8948f84bd9\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:46.9950539Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1738906707",
-            "$etag": "W/\u00226e952007-ad31-492e-a7c2-62ad7d4b54e9\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0006358Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1491061385",
-            "$etag": "W/\u00224c895d19-e817-4c79-8aaf-8e4769287e97\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:47.0845454Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1776075638",
-            "$etag": "W/\u002258d54f8d-5e34-4060-b955-8a486d30f447\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:47.1112419Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin619913832",
-            "$etag": "W/\u00220f62adc9-a00b-423a-bc62-54588da70511\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;180130729",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4645598Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1410570626",
-            "$etag": "W/\u0022daced9e9-5fad-4328-ba39-6e7d6e195d58\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;123439021",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T16:57:48.4828141Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1067365890",
-            "$etag": "W/\u002249dafe72-a4f4-4986-9a66-94b82f4fdd32\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.3105798Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin757295793",
-            "$etag": "W/\u00220b31dafa-a92e-4139-91c2-cea3a0de96e7\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.4685160Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin633630133",
-            "$etag": "W/\u0022a194cd57-9a12-40a8-8641-eef149c38829\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.6151517Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1052658490",
-            "$etag": "W/\u00225ddb7fae-81be-4b0b-920f-26947783a711\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.7270156Z"
-              }
-            }
-          }
-        ],
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaOAAAAAAAAAA==#RT:4#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAI6AAsAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins where IsOccupied = true\u0022}"
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2020-10-31",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "400",
-        "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "ca9cb7a1a30c4f1a398c1bbd495440ba",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "continuationToken": "{\u0022_t\u0022:2,\u0022_s\u0022:null,\u0022_rc\u0022:\u0022[{\\\u0022token\\\u0022:\\\u0022\u002BRID:~WftkAJ4MUjaOAAAAAAAAAA==#RT:4#TRC:100#ISV:2#IEO:65551#FPC:AgEAAAAIAI6AAsAk8v8H\\\u0022,\\\u0022range\\\u0022:{\\\u0022min\\\u0022:\\\u0022\\\u0022,\\\u0022max\\\u0022:\\\u0022FF\\\u0022}}]\u0022,\u0022_q\u0022:\u0022SELECT * FROM digitaltwins where IsOccupied = true\u0022}"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "8341",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 Oct 2020 17:04:53 GMT",
-        "query-charge": "4.48",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "value": [
-          {
-            "$dtId": "roomTwin1626036685",
-            "$etag": "W/\u002288043f16-cc41-41fa-a4c2-89b79dc679b6\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.8491024Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin687114800",
-            "$etag": "W/\u0022e40bc758-5024-403f-be36-b991984dd165\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:44.9562298Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1274856786",
-            "$etag": "W/\u00225799d61b-4453-46c0-81c4-fcf3f4570f4a\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0095068Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1098941419",
-            "$etag": "W/\u002233a4b889-0aba-4d63-b65d-a42a40e4c456\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.0583183Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin125346931",
-            "$etag": "W/\u0022af62467a-acb1-4395-8c26-eb38dfc9874b\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1523262Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin345229702",
-            "$etag": "W/\u002255c487c4-984f-465f-bc95-125288661377\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2563196Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin904769627",
-            "$etag": "W/\u0022f0e97abe-4660-4e4e-8ae7-ce9a7cc4eabc\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.1721294Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin840530319",
-            "$etag": "W/\u00227b0aed29-4924-4edb-a4f6-57b379179e7a\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.3779044Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin19991913",
-            "$etag": "W/\u00227b4544bb-5313-421d-821b-0b47810f6ed1\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.2933660Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1846282992",
-            "$etag": "W/\u0022e96b7675-5265-486e-a565-51c09f86292e\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4896902Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1501230847",
-            "$etag": "W/\u00226802e3a6-b98a-4da6-b472-4b02220454d2\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;120254295",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.4099335Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2112889309",
-            "$etag": "W/\u0022a8b818f4-cac5-4152-af3b-6501b11b2a20\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.7530673Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1261829064",
-            "$etag": "W/\u0022d227561c-e41d-4503-b9b9-e6c04d18d682\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.6451385Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin20831578",
-            "$etag": "W/\u002228e89f63-cbd8-432d-8408-cbe836c136a9\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.9475741Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin2061740721",
-            "$etag": "W/\u0022809c12e1-14b3-49ab-8d2a-f138e6e9f5bb\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:45.8509513Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.2892475Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin59174272",
-            "$etag": "W/\u0022dc826323-ef03-4ecd-8712-8941cfcb5412\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
+            "$dtId": "roomTwin991511580",
+            "$etag": "W/\u00222bf1b201-7df4-4ebe-a26a-03e96a6d7493\u0022",
+            "Temperature": 70,
+            "Humidity": 80,
             "IsOccupied": true,
-            "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;123439021",
+              "$model": "dtmi:example:room;116706153",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.7122141Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.7925752Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:47.9236813Z"
-              }
-            }
-          },
-          {
-            "$dtId": "roomTwin1511973902",
-            "$etag": "W/\u0022e512e115-b43b-493d-b71e-8e7d617e48de\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
-            "IsOccupied": true,
-            "EmployeeId": "Employee1",
-            "$metadata": {
-              "$model": "dtmi:example:room;113863769",
-              "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
-              },
-              "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
-              },
-              "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:46.0886398Z"
+                "lastUpdateTime": "2020-10-30T16:55:36.6285816Z"
               }
             }
           },
           {
-            "$dtId": "roomTwin1357107878",
-            "$etag": "W/\u00227ce2ee84-70b9-4669-881b-b191b7816f06\u0022",
-            "Temperature": 80,
-            "Humidity": 25,
+            "$dtId": "roomTwin1839538260",
+            "$etag": "W/\u0022ae99ce6a-5edc-49ca-a982-897dec45be21\u0022",
+            "Temperature": 70,
+            "Humidity": 80,
             "IsOccupied": true,
-            "EmployeeId": "Employee1",
             "$metadata": {
-              "$model": "dtmi:example:room;180130729",
+              "$model": "dtmi:example:room;153107858",
               "Temperature": {
-                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+                "lastUpdateTime": "2020-10-30T16:55:37.3880034Z"
               },
               "Humidity": {
-                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+                "lastUpdateTime": "2020-10-30T16:55:37.4483739Z"
               },
               "IsOccupied": {
-                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
-              },
-              "EmployeeId": {
-                "lastUpdateTime": "2020-10-26T17:04:48.5105656Z"
+                "lastUpdateTime": "2020-10-30T16:55:37.3405212Z"
               }
             }
           }
@@ -3182,17 +1827,17 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201026.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201030.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "8f9421631574d8ce802372d063288052",
+        "x-ms-client-request-id": "8e80ae5db86f61352805b3535a609681",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 26 Oct 2020 17:04:53 GMT",
+        "Date": "Fri, 30 Oct 2020 16:55:44 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []

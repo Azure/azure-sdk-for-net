@@ -228,6 +228,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Setup(transport => transport.TryAddMessage(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
 
+            mockTransportBatch
+                .Setup(transport => transport.Count)
+                .Returns(1);
+
             mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
