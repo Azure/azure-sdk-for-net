@@ -14,6 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     public class DataFeed
     {
+        private IList<string> _administrators;
+
+        private IList<string> _viewers;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeed"/> class.
         /// </summary>
@@ -38,6 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Granularity = dataFeedGranularity;
             Schema = dataFeedSchema;
             IngestionSettings = dataFeedIngestionSettings;
+            Administrators = new ChangeTrackingList<string>();
+            Viewers = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
@@ -54,7 +60,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             Schema = new DataFeedSchema(dataFeedDetail);
             Granularity = new DataFeedGranularity(dataFeedDetail);
             IngestionSettings = new DataFeedIngestionSettings(dataFeedDetail);
-            Options = new DataFeedOptions(dataFeedDetail);
+            Description = dataFeedDetail.DataFeedDescription;
+            ActionLinkTemplate = dataFeedDetail.ActionLinkTemplate;
+            AccessMode = dataFeedDetail.ViewMode;
+            RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
+            MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
+            Administrators = dataFeedDetail.Admins;
+            Viewers = dataFeedDetail.Viewers;
         }
 
         /// <summary>
@@ -121,10 +133,64 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedIngestionSettings IngestionSettings { get; }
 
         /// <summary>
-        /// A set of options configuring the behavior of this <see cref="DataFeed"/>. Options include administrators,
-        /// roll-up settings, access mode, and others.
+        /// A description of this <see cref="DataFeed"/>.
         /// </summary>
-        public DataFeedOptions Options { get; set; }
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Defines actionable HTTP URLs, which consist of the placeholders %datafeed, %metric, %timestamp, %detect_config, and %tagset.
+        /// You can use the template to redirect from an anomaly or an incident to a specific URL to drill down.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/manage-data-feeds#action-link-template">documentation</see> for details.
+        /// </summary>
+        public string ActionLinkTemplate { get; set; }
+
+        /// <summary>
+        /// The access mode for this <see cref="DataFeed"/>.
+        /// </summary>
+        public DataFeedAccessMode? AccessMode { get; set; }
+
+        /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
+        /// before detecting anomalies.
+        /// </summary>
+        public DataFeedRollupSettings RollupSettings { get; set; }
+
+        /// <summary>
+        /// Configures the behavior of this <see cref="DataFeed"/> when dealing with missing points
+        /// in the data ingested from the data source.
+        /// </summary>
+        public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
+
+        /// <summary>
+        /// The emails of this data feed's administrators. Administrators have total control over a
+        /// data feed, being allowed to update, delete or pause them. They also have access to the
+        /// credentials used to authenticate to the data source.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Administrators"/> is null.</exception>
+        public IList<string> Administrators
+        {
+            get => _administrators;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(Administrators));
+                _administrators = value;
+            }
+        }
+
+        /// <summary>
+        /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
+        /// do not have access to the credentials used to authenticate to the data source.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">The value assigned to <see cref="Viewers"/> is null.</exception>
+        public IList<string> Viewers
+        {
+            get => _viewers;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(Viewers));
+                _viewers = value;
+            }
+        }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
@@ -143,35 +209,29 @@ namespace Azure.AI.MetricsAdvisor.Models
             detail.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
             detail.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
 
-            if (Options != null)
+            detail.DataFeedDescription = Description;
+            detail.ActionLinkTemplate = ActionLinkTemplate;
+            detail.ViewMode = AccessMode;
+
+            if (RollupSettings != null)
             {
-                detail.DataFeedDescription = Options.Description;
-                detail.ActionLinkTemplate = Options.ActionLinkTemplate;
-                detail.ViewMode = Options.AccessMode;
-                if (Options.RollupSettings != null)
+                detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                detail.NeedRollup = RollupSettings.RollupType;
+                detail.RollUpMethod = RollupSettings.RollupMethod;
+                foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
                 {
-                    detail.AllUpIdentification = Options.RollupSettings.AlreadyRollupIdentificationValue;
-                    detail.NeedRollup = Options.RollupSettings.RollupType;
-                    detail.RollUpMethod = Options.RollupSettings.RollupMethod;
-                    foreach (string columnName in Options.RollupSettings.AutoRollupGroupByColumnNames)
-                    {
-                        detail.RollUpColumns.Add(columnName);
-                    }
-                }
-                if (Options.MissingDataPointFillSettings != null)
-                {
-                    detail.FillMissingPointType = Options.MissingDataPointFillSettings.FillType;
-                    detail.FillMissingPointValue = Options.MissingDataPointFillSettings.CustomFillValue;
-                }
-                foreach (string admin in Options.Administrators)
-                {
-                    detail.Admins.Add(admin);
-                }
-                foreach (string viewer in Options.Viewers)
-                {
-                    detail.Admins.Add(viewer);
+                    detail.RollUpColumns.Add(columnName);
                 }
             }
+
+            if (MissingDataPointFillSettings != null)
+            {
+                detail.FillMissingPointType = MissingDataPointFillSettings.FillType;
+                detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
+            }
+
+            Administrators = detail.Admins;
+            Viewers = detail.Viewers;
 
             return detail;
         }
@@ -194,26 +254,26 @@ namespace Azure.AI.MetricsAdvisor.Models
             patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
             patch.StopRetryAfterInSeconds = (long?)IngestionSettings.StopRetryAfter?.TotalSeconds;
 
-            if (Options != null)
+            patch.DataFeedDescription = Description;
+            patch.ActionLinkTemplate = ActionLinkTemplate;
+            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default;
+
+            if (RollupSettings != null)
             {
-                patch.DataFeedDescription = Options.Description;
-                patch.ActionLinkTemplate = Options.ActionLinkTemplate;
-                patch.ViewMode = Options.AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(Options.AccessMode.ToString()) : default;
-                if (Options.RollupSettings != null)
-                {
-                    patch.AllUpIdentification = Options.RollupSettings.AlreadyRollupIdentificationValue;
-                    patch.NeedRollup = Options.RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(Options.RollupSettings.RollupType.ToString()) : default;
-                    patch.RollUpMethod = Options.RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(Options.RollupSettings.RollupMethod.ToString()) : default;
-                    patch.RollUpColumns = Options.RollupSettings.AutoRollupGroupByColumnNames;
-                }
-                if (Options.MissingDataPointFillSettings != null)
-                {
-                    patch.FillMissingPointType = Options.MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(Options.MissingDataPointFillSettings.FillType.ToString()) : default;
-                    patch.FillMissingPointValue = Options.MissingDataPointFillSettings.CustomFillValue;
-                }
-                patch.Admins = Options.Administrators;
-                patch.Viewers = Options.Viewers;
+                patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
+                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default;
+                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default;
+                patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
             }
+
+            if (MissingDataPointFillSettings != null)
+            {
+                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default;
+                patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
+            }
+
+            patch.Admins = Administrators;
+            patch.Viewers = Viewers;
 
             return patch;
         }

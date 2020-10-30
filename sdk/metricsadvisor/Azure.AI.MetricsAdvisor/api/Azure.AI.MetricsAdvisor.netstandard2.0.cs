@@ -336,19 +336,25 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class DataFeed
     {
         public DataFeed(string dataFeedName, Azure.AI.MetricsAdvisor.Models.DataFeedSource dataSource, Azure.AI.MetricsAdvisor.Models.DataFeedGranularity dataFeedGranularity, Azure.AI.MetricsAdvisor.Models.DataFeedSchema dataFeedSchema, Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings dataFeedIngestionSettings) { }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
+        public string ActionLinkTemplate { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Administrators { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedTime { get { throw null; } }
         public string Creator { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSource DataSource { get { throw null; } }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedGranularity Granularity { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } }
         public bool? IsAdministrator { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> MetricIds { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedOptions Options { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSchema Schema { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedSourceType SourceType { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IList<string> Viewers { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFeedAccessMode : System.IEquatable<Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode>
@@ -481,17 +487,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static implicit operator Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType (string value) { throw null; }
         public static bool operator !=(Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType left, Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DataFeedOptions
-    {
-        public DataFeedOptions() { }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedAccessMode? AccessMode { get { throw null; } set { } }
-        public string ActionLinkTemplate { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Administrators { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Viewers { get { throw null; } set { } }
     }
     public partial class DataFeedRollupSettings
     {
