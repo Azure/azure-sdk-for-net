@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Threading;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
@@ -29,6 +29,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Wait for completion of the LRO.
             Uri backupResult = await backupOperation.WaitForCompletionAsync(source.Token);
 
+            await WaitForOperationAsync();
+
             Assert.That(source.IsCancellationRequested, Is.False);
             Assert.That(backupResult, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
@@ -38,6 +40,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // Wait for completion of the LRO
             var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
+
+            await WaitForOperationAsync();
 
             Assert.That(source.IsCancellationRequested, Is.False);
             Assert.That(restoreResult, Is.Not.Null);

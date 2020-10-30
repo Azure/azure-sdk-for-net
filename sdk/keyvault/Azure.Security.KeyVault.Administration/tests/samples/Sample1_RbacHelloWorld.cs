@@ -18,7 +18,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public partial class RbacHelloWorld : AccessControlTestBase
     {
-        public RbacHelloWorld(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public RbacHelloWorld(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
@@ -32,7 +33,7 @@ namespace Azure.Security.KeyVault.Administration.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.ManagedHsmUrl;
 
             #region Snippet:HelloCreateKeyVaultAccessControlClient
             KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
