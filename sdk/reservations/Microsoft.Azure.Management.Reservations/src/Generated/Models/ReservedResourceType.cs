@@ -24,5 +24,17 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public const string SqlDataWarehouse = "SqlDataWarehouse";
         public const string VMwareCloudSimple = "VMwareCloudSimple";
         public const string RedHatOsa = "RedHatOsa";
+        public const string Databricks = "Databricks";
+        public const string AppService = "AppService";
+        public const string ManagedDisk = "ManagedDisk";
+        public const string BlockBlob = "BlockBlob";
+        public const string RedisCache = "RedisCache";
+        public const string AzureDataExplorer = "AzureDataExplorer";
+        public const string MySql = "MySql";
+        public const string MariaDb = "MariaDb";
+        public const string PostgreSql = "PostgreSql";
+        public const string DedicatedHost = "DedicatedHost";
+        public const string SapHana = "SapHana";
+        public const string SqlAzureHybridBenefit = "SqlAzureHybridBenefit";
     }
 }

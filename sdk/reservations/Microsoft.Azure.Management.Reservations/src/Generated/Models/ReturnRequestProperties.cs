@@ -13,23 +13,27 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ScopeProperties
+    /// <summary>
+    /// Return request properties
+    /// </summary>
+    public partial class ReturnRequestProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ScopeProperties class.
+        /// Initializes a new instance of the ReturnRequestProperties class.
         /// </summary>
-        public ScopeProperties()
+        public ReturnRequestProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ScopeProperties class.
+        /// Initializes a new instance of the ReturnRequestProperties class.
         /// </summary>
-        public ScopeProperties(string scope = default(string), bool? valid = default(bool?))
+        /// <param name="scope">Possible values include: 'Reservation'</param>
+        public ReturnRequestProperties(string scope = default(string), ReservationToReturn reservationToReturn = default(ReservationToReturn))
         {
             Scope = scope;
-            Valid = valid;
+            ReservationToReturn = reservationToReturn;
             CustomInit();
         }
 
@@ -39,14 +43,15 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets possible values include: 'Reservation'
         /// </summary>
         [JsonProperty(PropertyName = "scope")]
         public string Scope { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "valid")]
-        public bool? Valid { get; set; }
+        [JsonProperty(PropertyName = "reservationToReturn")]
+        public ReservationToReturn ReservationToReturn { get; set; }
 
     }
 }

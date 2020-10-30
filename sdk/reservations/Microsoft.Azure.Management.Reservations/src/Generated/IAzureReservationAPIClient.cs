@@ -93,6 +93,16 @@ namespace Microsoft.Azure.Management.Reservations
         IOperationOperations Operation { get; }
 
         /// <summary>
+        /// Gets the ICalculateExchangeOperations.
+        /// </summary>
+        ICalculateExchangeOperations CalculateExchange { get; }
+
+        /// <summary>
+        /// Gets the IExchangeOperations.
+        /// </summary>
+        IExchangeOperations Exchange { get; }
+
+        /// <summary>
         /// Get the regions and skus that are available for RI purchase for the
         /// specified Azure subscription.
         /// </summary>
