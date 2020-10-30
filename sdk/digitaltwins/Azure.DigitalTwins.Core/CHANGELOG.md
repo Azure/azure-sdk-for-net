@@ -10,6 +10,8 @@
 
 ### Breaking changes
 
+Note that these breaking changes are only breaking changes from the preview version of this library.
+
 - Replace all Response<string> and Pageable<string> APIs with Response<T> and Pageable<T> respectively
 - Rename CreateDigitalTwin, CreateRelationship and CreateEventRoute APIs to CreateOrReplaceDigitalTwin, CreateOrReplaceRelationship and CreateOrReplaceEventRoute respectively
 - Renamed model type "ModelData" to "DigitalTwinsModelData" to make type less generic, and less likely to conflict with other libraries
@@ -17,6 +19,7 @@
 - Remove UpdateOperationsUtility and replace it with a direct dependency on JsonPatchDocument from Azure.Core
 - Remove WritableProperty since service no longer returns that type
 - Remove MaxItemCount parameter as an option for GetEventRoutes APIs since users are expected to provide page size in pageable type's .AsPages() method instead
+- Remove Serialization namespace, moving its contents to the base Azure.DigitalTwins.Core namespace
 - Rename DigitalTwinsModelData field "DisplayName" to "LanguageDisplayNames" for clarity
 - Rename DigitalTwinsModelData field "Description" to "LanguageDescriptions" for clarity
 - Flatten DigitalTwinsRequestOptions so that each API takes in ifMatch and ifNoneMatch header directly
