@@ -66,6 +66,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
         private RecognizeHealthcareEntitiesResultCollection _value;
 
+
+        private int? _top { get; }
+        private int? _skip { get; }
+        private bool? _showStats { get; }
+
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
@@ -92,11 +97,17 @@ namespace Azure.AI.TextAnalytics
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="batchInput"></param>
-        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, MultiLanguageBatchInput batchInput)
+        /// <param name="top"></param>
+        /// <param name="skip"></param>
+        /// <param name="showStats"></param>
+        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, MultiLanguageBatchInput batchInput, int? top = null, int? skip = null, bool? showStats = null)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _batchInput = batchInput;
+            _top = top;
+            _skip = skip;
+            _showStats = showStats;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -178,9 +189,6 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    bool? _showStats = null;
-                    int? _top = null;
-                    int? _skip = null;
                     Response<HealthcareJobState> update = async
                         ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, _showStats, cancellationToken).ConfigureAwait(false)
                         : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, _showStats, cancellationToken);

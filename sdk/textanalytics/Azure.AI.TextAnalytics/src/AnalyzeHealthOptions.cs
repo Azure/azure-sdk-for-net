@@ -16,5 +16,20 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeHealthOptions()
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthOptions"/>
+        /// class.
+        /// </summary>
+        public AnalyzeHealthOptions(int? top = null, int? skip = null, bool? showStats = null)
+        {
+            Top = top;
+            Skip = skip;
+            ShowStats = showStats;
+        }
+
+        public int? Top { get; internal set; }
+        public int? Skip { get; internal set; }
+        public bool? ShowStats { get; internal set; }
     }
 }

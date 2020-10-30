@@ -2453,7 +2453,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
-                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, batchInput);
+                return new AnalyzeHealthOperation(_serviceRestClient, _clientDiagnostics, location, batchInput, options.Top, options.Skip, options.ShowStats);
             }
             catch (Exception e)
             {
