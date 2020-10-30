@@ -7,16 +7,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"www.withoutHttp.com\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6246416f-e06a-43bd-9bac-a08c7ff5a7c5"
+          "76727524-2b48-4985-a4c3-247666e27747"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,10 +33,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "12dc848a-1302-40ef-acca-b07175e14fb2"
+          "f0d3d270-0b1b-41af-9f56-afe38f95aabe"
         ],
         "x-ms-client-request-id": [
-          "6246416f-e06a-43bd-9bac-a08c7ff5a7c5"
+          "76727524-2b48-4985-a4c3-247666e27747"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,16 +54,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "f8d5aed1-ec53-45ab-9e60-795261eca348"
+          "2b4a92a3-9b5f-4079-8f11-885e263a8223"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233413Z:f8d5aed1-ec53-45ab-9e60-795261eca348"
+          "WESTUS:20201027T015151Z:2b4a92a3-9b5f-4079-8f11-885e263a8223"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:12 GMT"
+          "Tue, 27 Oct 2020 01:51:51 GMT"
         ],
         "Content-Length": [
           "114"
@@ -88,16 +88,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"https://www.notexist.com/notexist/notexist.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2742619c-4cf7-4d84-8855-806237255627"
+          "5f7904e1-3295-45f2-b717-54f85c9ed4e0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -114,10 +114,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b20b7147-45e9-4fd0-b1e0-5ed0be49967f"
+          "c55ce8eb-ceba-45ec-932a-72950aa81a4f"
         ],
         "x-ms-client-request-id": [
-          "2742619c-4cf7-4d84-8855-806237255627"
+          "5f7904e1-3295-45f2-b717-54f85c9ed4e0"
         ],
         "OData-Version": [
           "4.0"
@@ -138,16 +138,16 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "767f25b9-3e70-4384-a580-ffb4cdd700f5"
+          "33a36a45-2e8f-4319-94bc-cc69d28ecb71"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233415Z:767f25b9-3e70-4384-a580-ffb4cdd700f5"
+          "WESTUS:20201027T015153Z:33a36a45-2e8f-4319-94bc-cc69d28ecb71"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:14 GMT"
+          "Tue, 27 Oct 2020 01:51:53 GMT"
         ],
         "Content-Length": [
           "200"
@@ -169,16 +169,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "07558f8e-84c5-4e91-a313-0effacced5a6"
+          "1b76a230-d096-41f8-bf07-20204425ae54"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,10 +195,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "84195d30-5ce0-49db-b4c4-dc548cb33d60"
+          "f0f4c963-f14d-4367-8dd0-50f314e7c54c"
         ],
         "x-ms-client-request-id": [
-          "07558f8e-84c5-4e91-a313-0effacced5a6"
+          "1b76a230-d096-41f8-bf07-20204425ae54"
         ],
         "OData-Version": [
           "4.0"
@@ -219,16 +219,16 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "82d79b6d-18a1-4e07-a705-c5cfda1bf5f4"
+          "0394a8e9-1dab-4580-84d2-dd099235bf3f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233416Z:82d79b6d-18a1-4e07-a705-c5cfda1bf5f4"
+          "WESTUS:20201027T015154Z:0394a8e9-1dab-4580-84d2-dd099235bf3f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:15 GMT"
+          "Tue, 27 Oct 2020 01:51:54 GMT"
         ],
         "Content-Length": [
           "56"
@@ -250,16 +250,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://999.999.999.999/nonexist.txt\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4e3802b3-6bf7-4291-94dc-da237b4220cb"
+          "e8274913-2038-44a0-9a54-9c4d16d23bd9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -276,10 +276,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d9b52cea-3b8b-4fe8-a6a4-47efbf1a70e3"
+          "e037e185-4669-4785-9541-0ede268dcc4e"
         ],
         "x-ms-client-request-id": [
-          "4e3802b3-6bf7-4291-94dc-da237b4220cb"
+          "e8274913-2038-44a0-9a54-9c4d16d23bd9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -297,16 +297,16 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "e1555786-b968-4b5d-b86c-f42d172627e3"
+          "c9bfac98-9c38-4267-a667-38d09debb2d3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233417Z:e1555786-b968-4b5d-b86c-f42d172627e3"
+          "WESTUS:20201027T015155Z:c9bfac98-9c38-4267-a667-38d09debb2d3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:16 GMT"
+          "Tue, 27 Oct 2020 01:51:55 GMT"
         ],
         "Content-Length": [
           "114"
@@ -331,16 +331,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://192.168.1.1/nonexist.aspx\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "02e22d75-1d3c-4bc0-bb3a-35ac2000e78c"
+          "741c9be8-9b15-44b0-b47f-6e06e3c37737"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -357,10 +357,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "308a28bf-3e9d-4f71-88d9-f9a8d8b3501f"
+          "b9609320-3958-4460-a1f3-8bb885b97b55"
         ],
         "x-ms-client-request-id": [
-          "02e22d75-1d3c-4bc0-bb3a-35ac2000e78c"
+          "741c9be8-9b15-44b0-b47f-6e06e3c37737"
         ],
         "OData-Version": [
           "4.0"
@@ -381,16 +381,16 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "1deb7bb1-f355-4aab-9bff-cd8ec4763a71"
+          "15ccb10a-3211-4c45-a94e-adfd601ba327"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233428Z:1deb7bb1-f355-4aab-9bff-cd8ec4763a71"
+          "WESTUS:20201027T015206Z:15ccb10a-3211-4c45-a94e-adfd601ba327"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:27 GMT"
+          "Tue, 27 Oct 2020 01:52:06 GMT"
         ],
         "Content-Length": [
           "200"
@@ -412,16 +412,16 @@
       "RequestBody": "{\r\n  \"probeURL\": \"http://137.117.34.31/contact/contact.aspx\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d5e176ee-f091-4722-8c7a-76b05b6389e6"
+          "54cc1e75-41dd-479e-9a54-40ab5e97968f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -438,10 +438,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c1bce992-8878-4796-aa08-5ae2cd6d0e5f"
+          "1bf91343-b8e7-4ee0-a1cd-bbdc4f17ef1e"
         ],
         "x-ms-client-request-id": [
-          "d5e176ee-f091-4722-8c7a-76b05b6389e6"
+          "54cc1e75-41dd-479e-9a54-40ab5e97968f"
         ],
         "OData-Version": [
           "4.0"
@@ -462,16 +462,16 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "323abd3b-91f0-47e0-b56c-69dba11cec63"
+          "2085fece-9052-4891-b898-4c33e72b42ae"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200810T233429Z:323abd3b-91f0-47e0-b56c-69dba11cec63"
+          "WESTUS:20201027T015208Z:2085fece-9052-4891-b898-4c33e72b42ae"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Mon, 10 Aug 2020 23:34:28 GMT"
+          "Tue, 27 Oct 2020 01:52:07 GMT"
         ],
         "Content-Length": [
           "56"

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup3795?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlZ3JvdXBzL2NkblJlc291cmNlR3JvdXAzNzk1P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup9228?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlZ3JvdXBzL2NkblJlc291cmNlR3JvdXA5MjI4P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "96df5995-e2c1-4524-99d2-2657c4571f68"
+          "61dfc467-e2f0-48b9-a6cf-686c9fcefc58"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
+          "OSVersion/Microsoft.Windows.10.0.20231.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "acde7f0a-7d0c-4231-b48b-878cee2118a0"
+          "97079181-2a65-4482-9110-46404bc86717"
         ],
         "x-ms-correlation-request-id": [
-          "acde7f0a-7d0c-4231-b48b-878cee2118a0"
+          "97079181-2a65-4482-9110-46404bc86717"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200811T163137Z:acde7f0a-7d0c-4231-b48b-878cee2118a0"
+          "WESTUS:20201027T013124Z:97079181-2a65-4482-9110-46404bc86717"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Aug 2020 16:31:37 GMT"
+          "Tue, 27 Oct 2020 01:31:24 GMT"
         ],
         "Content-Length": [
           "193"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup3795\",\r\n  \"name\": \"cdnResourceGroup3795\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup9228\",\r\n  \"name\": \"cdnResourceGroup9228\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup3795/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy4017?api-version=2020-04-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXAzNzk1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3k0MDE3P2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
+      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup9228/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy2267?api-version=2020-04-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA5MjI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3kyMjY3P2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  },\r\n  \"location\": \"Global\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "30609641-31a9-4a35-b6a3-61146fd7d202"
+          "8cd917fd-50bd-4167-874e-e674f323b7be"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,10 +99,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1bea1924-2835-4adf-a4aa-096c92d54d4a"
+          "2fb33cec-fbde-4229-ade0-2a7f9d952057"
         ],
         "x-ms-client-request-id": [
-          "30609641-31a9-4a35-b6a3-61146fd7d202"
+          "8cd917fd-50bd-4167-874e-e674f323b7be"
         ],
         "OData-Version": [
           "4.0"
@@ -123,16 +123,16 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "811c748d-1dd5-470c-a9f9-7ea9ac032384"
+          "834c4df3-78fd-4606-afef-6597bd417d44"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200811T163148Z:811c748d-1dd5-470c-a9f9-7ea9ac032384"
+          "WESTUS:20201027T013129Z:834c4df3-78fd-4606-afef-6597bd417d44"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Aug 2020 16:31:48 GMT"
+          "Tue, 27 Oct 2020 01:31:29 GMT"
         ],
         "Content-Length": [
           "827"
@@ -144,26 +144,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy4017\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup3795/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy4017\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"defaultRedirectUrl\": null,\r\n      \"defaultCustomBlockResponseStatusCode\": null,\r\n      \"defaultCustomBlockResponseBody\": null\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": []\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": []\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": []\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {},\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy2267\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup9228/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy2267\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Prevention\",\r\n      \"defaultRedirectUrl\": null,\r\n      \"defaultCustomBlockResponseStatusCode\": null,\r\n      \"defaultCustomBlockResponseBody\": null\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": []\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": []\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": []\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {},\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup3795/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy4017?api-version=2020-04-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXAzNzk1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3k0MDE3P2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
+      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup9228/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy2267?api-version=2020-04-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA5MjI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3kyMjY3P2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"rateLimitThreshold\": 3,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"rateLimitThreshold\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "308ea602-e901-469b-99b0-4e8a104270f3"
+          "04a71117-18e3-4c57-865c-52ab48e8b56c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -180,10 +180,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5accb58f-a139-40ea-80e7-a0116109271e"
+          "fcf81a4c-cf01-426b-9ec0-07b971114774"
         ],
         "x-ms-client-request-id": [
-          "308ea602-e901-469b-99b0-4e8a104270f3"
+          "04a71117-18e3-4c57-865c-52ab48e8b56c"
         ],
         "OData-Version": [
           "4.0"
@@ -204,16 +204,16 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "31683559-4675-464c-af45-95c1b407b7cf"
+          "defd43bc-2518-409a-820e-1e00efb578d6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200811T163150Z:31683559-4675-464c-af45-95c1b407b7cf"
+          "WESTUS:20201027T013131Z:defd43bc-2518-409a-820e-1e00efb578d6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Aug 2020 16:31:50 GMT"
+          "Tue, 27 Oct 2020 01:31:31 GMT"
         ],
         "Content-Length": [
           "2562"
@@ -225,26 +225,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy4017\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup3795/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy4017\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 3,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"anomalyScore\": 0\r\n        }\r\n      ]\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy2267\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup9228/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy2267\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 3,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"anomalyScore\": 0\r\n        }\r\n      ]\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup3795/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy8190?api-version=2020-04-15",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXAzNzk1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3k4MTkwP2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
+      "RequestUri": "/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/cdnResourceGroup9228/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/policy7292?api-version=2020-04-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjdjYWZjYTgtYjlhNC00MjY0LWIzOTktNDVkMGM5Y2NhMWFiL3Jlc291cmNlR3JvdXBzL2NkblJlc291cmNlR3JvdXA5MjI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL0NkbldlYkFwcGxpY2F0aW9uRmlyZXdhbGxQb2xpY2llcy9wb2xpY3k3MjkyP2FwaS12ZXJzaW9uPTIwMjAtMDQtMTU=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"rateLimitThreshold\": 3,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"rateLimitThreshold\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cf401ea2-b0d9-4067-b539-8d142d59b27e"
+          "695e0491-daf2-4576-a86d-fa55a46da45f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29017.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.20185.",
-          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.0.0"
+          "OSVersion/Microsoft.Windows.10.0.20231.",
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/4.4.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,10 +261,10 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fa0efe40-64e0-4380-be27-f1e4701d8461"
+          "612cc9c0-2382-4403-a2d9-886890c61a83"
         ],
         "x-ms-client-request-id": [
-          "cf401ea2-b0d9-4067-b539-8d142d59b27e"
+          "695e0491-daf2-4576-a86d-fa55a46da45f"
         ],
         "OData-Version": [
           "4.0"
@@ -285,16 +285,16 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "d93f5d32-dd82-4b72-a051-9a12f4827f42"
+          "100194f2-113b-444b-a788-276794d12b65"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200811T163157Z:d93f5d32-dd82-4b72-a051-9a12f4827f42"
+          "WESTUS:20201027T013134Z:100194f2-113b-444b-a788-276794d12b65"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Aug 2020 16:31:56 GMT"
+          "Tue, 27 Oct 2020 01:31:33 GMT"
         ],
         "Content-Length": [
           "2562"
@@ -306,17 +306,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"policy8190\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup3795/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy8190\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 3,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"anomalyScore\": 0\r\n        }\r\n      ]\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"policy7292\",\r\n  \"id\": \"/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourcegroups/cdnResourceGroup9228/providers/Microsoft.Cdn/cdnwebapplicationfirewallpolicies/policy7292\",\r\n  \"type\": \"Microsoft.Cdn/cdnwebapplicationfirewallpolicies\",\r\n  \"properties\": {\r\n    \"resourceState\": \"Enabled\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"policySettings\": {\r\n      \"enabledState\": \"Enabled\",\r\n      \"mode\": \"Detection\",\r\n      \"defaultRedirectUrl\": \"https://example.com/redirected\",\r\n      \"defaultCustomBlockResponseStatusCode\": 406,\r\n      \"defaultCustomBlockResponseBody\": \"PGh0bWw+PGJvZHk+PGgzPkludmFsaWQgcmVxdWVzdDwvaDM+PC9ib2R5PjwvaHRtbD4=\"\r\n    },\r\n    \"rateLimitRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"RateLimitRule1\",\r\n          \"enabledState\": \"Disabled\",\r\n          \"priority\": 1,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 3,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RemoteAddr\",\r\n              \"selector\": null,\r\n              \"operator\": \"IPMatch\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"131.107.0.0/16\",\r\n                \"167.220.0.0/16\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        },\r\n        {\r\n          \"name\": \"RateLimitRule2\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 10,\r\n          \"rateLimitDurationInMinutes\": 1,\r\n          \"rateLimitThreshold\": 1,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"RequestUri\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"yes\"\r\n              ],\r\n              \"transforms\": []\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"customRules\": {\r\n      \"rules\": [\r\n        {\r\n          \"name\": \"CustomRule1\",\r\n          \"enabledState\": \"Enabled\",\r\n          \"priority\": 2,\r\n          \"matchConditions\": [\r\n            {\r\n              \"matchVariable\": \"QueryString\",\r\n              \"selector\": null,\r\n              \"operator\": \"Contains\",\r\n              \"negateCondition\": false,\r\n              \"matchValue\": [\r\n                \"TestTrigger123\"\r\n              ],\r\n              \"transforms\": [\r\n                \"Uppercase\"\r\n              ]\r\n            }\r\n          ],\r\n          \"action\": \"Block\"\r\n        }\r\n      ]\r\n    },\r\n    \"managedRules\": {\r\n      \"managedRuleSets\": [\r\n        {\r\n          \"ruleSetType\": \"DefaultRuleSet\",\r\n          \"ruleSetVersion\": \"1.0\",\r\n          \"ruleGroupOverrides\": [\r\n            {\r\n              \"ruleGroupName\": \"JAVA\",\r\n              \"rules\": [\r\n                {\r\n                  \"ruleId\": \"944100\",\r\n                  \"enabledState\": \"Disabled\",\r\n                  \"action\": \"Redirect\"\r\n                }\r\n              ]\r\n            }\r\n          ],\r\n          \"anomalyScore\": 0\r\n        }\r\n      ]\r\n    },\r\n    \"endpointLinks\": []\r\n  },\r\n  \"tags\": {\r\n    \"abc\": \"123\"\r\n  },\r\n  \"location\": \"Global\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_Microsoft\"\r\n  }\r\n}",
       "StatusCode": 201
     }
   ],
   "Names": {
     "CreateResourceGroup": [
-      "cdnResourceGroup3795"
+      "cdnResourceGroup9228"
     ],
     "WafPolicyCreateOrUpdateTest": [
-      "policy4017",
-      "policy8190"
+      "policy2267",
+      "policy7292"
     ]
   },
   "Variables": {

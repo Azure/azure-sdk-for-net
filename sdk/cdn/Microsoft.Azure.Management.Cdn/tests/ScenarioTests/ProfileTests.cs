@@ -366,7 +366,7 @@ namespace Cdn.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This test fails due to a bug in RP with large lists of results. Once the RP bug is fixed this test will be re-enabled.")]
         public void ProfileListBySubcriptionTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -407,7 +407,12 @@ namespace Cdn.Tests.ScenarioTests
 
                 // List profile returns the created profile
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.NotNull(profiles.FirstOrDefault(x => x.Name == profileName));
+                while (profiles.FirstOrDefault(x => x.Name == profileName) == null)
+                {
+                    // Assert we haven't reached the end of the list without finding the profile.
+                    Assert.NotNull(profiles.NextPageLink);
+                    profiles = cdnMgmtClient.Profiles.ListNext(profiles.NextPageLink);
+                }
 
                 // Create another resource group
                 var resourceGroupName2 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
