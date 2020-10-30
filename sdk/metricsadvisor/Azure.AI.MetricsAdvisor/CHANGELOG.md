@@ -5,6 +5,7 @@
 ### New Features
 - Added a public constructor to `DataFeed`.
 - Added the `DataSource` property to `DataFeed`.
+- All `DataSource`s now have public properties exposing the associated parameters used to get the data, such as endpoints, connection strings, and query strings.
 - Added a public setter to `DataFeed.Options`.
 
 ### Breaking Changes
@@ -19,6 +20,7 @@
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+- In `ElasticsearchDataFeedSource`, renamed the constructor parameter `authHeader` to `authorizationHeader`.
 
 ### Key Bug Fixes
 - Fixed a bug in `GetMetricEnrichedSeriesData` sync and async methods where a `NullReferenceException` was thrown if a returned data point had missing data.
