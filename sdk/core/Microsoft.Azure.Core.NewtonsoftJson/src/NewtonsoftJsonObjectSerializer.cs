@@ -36,7 +36,7 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// Returns a <see cref="JsonSerializerSettings"/> that's used when initializing the <see cref="NewtonsoftJsonObjectSerializer"/> using parameterless constructor.
+        /// Returns a <see cref="JsonSerializerSettings"/> that's used when initializing the <see cref="NewtonsoftJsonObjectSerializer"/> using the parameterless constructor.
         /// The settings have default converters added.
         /// </summary>
         public static JsonSerializerSettings CreateJsonSerializerSettings()
