@@ -31,6 +31,8 @@ namespace Azure.DigitalTwins.Core
     public partial class BasicRelationship
     {
         public BasicRelationship() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$etag")]
+        public Azure.ETag? ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$relationshipName")]
