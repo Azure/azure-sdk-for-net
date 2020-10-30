@@ -312,7 +312,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -345,7 +345,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -375,7 +375,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -401,7 +401,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -496,7 +496,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -533,7 +533,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -904,7 +904,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -929,7 +929,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1094,7 +1094,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1121,7 +1121,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="ifMatch">Optional.  Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>

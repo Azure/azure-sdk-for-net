@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -90,24 +91,6 @@ namespace Azure.DigitalTwins.Core
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
         [JsonConverter(typeof(OptionalETagConverter))] // TODO: Remove when #16272 is fixed
         public ETag? ETag { get; set; }
-
-        // TODO: Remove when #16272 is fixed
-        private class OptionalETagConverter : JsonConverter<ETag?>
-        {
-            public override ETag? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                string value = reader.GetString();
-                return value != null
-                    ? new ETag(value)
-                    : (ETag?)null;
-
-            }
-            public override void Write(Utf8JsonWriter writer, ETag? value, JsonSerializerOptions options)
-            {
-                if (value == null) { writer.WriteNullValue(); }
-                else { writer.WriteStringValue(value.ToString()); }
-            }
-        }
 
         /// <summary>
         /// Information about the model a digital twin conforms to.
