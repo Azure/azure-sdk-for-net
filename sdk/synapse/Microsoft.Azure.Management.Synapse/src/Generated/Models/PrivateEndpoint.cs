@@ -10,15 +10,13 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Private endpoint details
+    /// Private Endpoint
     /// </summary>
-    public partial class PrivateEndpoint : IResource
+    public partial class PrivateEndpoint
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpoint class.
@@ -31,7 +29,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="id">Resource id of the private endpoint.</param>
+        /// <param name="id">identifier</param>
         public PrivateEndpoint(string id = default(string))
         {
             Id = id;
@@ -44,7 +42,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource id of the private endpoint.
+        /// Gets identifier
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

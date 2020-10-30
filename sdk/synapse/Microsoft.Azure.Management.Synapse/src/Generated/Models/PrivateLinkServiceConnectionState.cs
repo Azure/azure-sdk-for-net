@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     using System.Linq;
 
     /// <summary>
-    /// Connection state details of the private endpoint
+    /// Private Link Service Connection State
     /// </summary>
     public partial class PrivateLinkServiceConnectionState
     {
@@ -31,13 +31,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Initializes a new instance of the PrivateLinkServiceConnectionState
         /// class.
         /// </summary>
-        /// <param name="status">The private link service connection status.
-        /// Possible values include: 'Approved', 'Pending', 'Rejected',
-        /// 'Disconnected'</param>
-        /// <param name="description">The private link service connection
-        /// description.</param>
-        /// <param name="actionsRequired">The actions required for private link
-        /// service connection.</param>
+        /// <param name="status">Status of private link service connection
+        /// state</param>
+        /// <param name="description">Description of private link service
+        /// connection state</param>
+        /// <param name="actionsRequired">Actions Required</param>
         public PrivateLinkServiceConnectionState(string status = default(string), string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
@@ -52,20 +50,19 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the private link service connection status. Possible
-        /// values include: 'Approved', 'Pending', 'Rejected', 'Disconnected'
+        /// Gets status of private link service connection state
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public string Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets the private link service connection description.
+        /// Gets description of private link service connection state
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         /// <summary>
-        /// Gets the actions required for private link service connection.
+        /// Gets actions Required
         /// </summary>
         [JsonProperty(PropertyName = "actionsRequired")]
         public string ActionsRequired { get; private set; }
