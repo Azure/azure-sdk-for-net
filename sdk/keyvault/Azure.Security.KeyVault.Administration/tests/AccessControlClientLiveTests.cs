@@ -12,7 +12,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
-        public AccessControlClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public AccessControlClientLiveTests(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]

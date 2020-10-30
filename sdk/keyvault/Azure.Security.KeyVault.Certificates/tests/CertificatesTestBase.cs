@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -35,7 +34,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             _serviceVersion = serviceVersion;
         }
