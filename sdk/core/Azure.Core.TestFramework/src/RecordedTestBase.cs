@@ -76,7 +76,9 @@ namespace Azure.Core.TestFramework
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
                 null;
 
-            string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+            // Use the current class name instead of the name of the class that declared a test.
+            // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
+            string className = GetType().Name;
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
