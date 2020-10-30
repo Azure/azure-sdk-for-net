@@ -274,7 +274,7 @@ var detectionCondition = new MetricWholeSeriesDetectionCondition()
 
 var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
 
-Response<AnomalyDetectionConfiguration> response = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfiguration);
+Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
 detectionConfiguration = response.Value;
 
@@ -321,7 +321,7 @@ var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
 
 AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
 
-Response<AnomalyAlertConfiguration> response = await adminClient.CreateAnomalyAlertConfigurationAsync(alertConfiguration);
+Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
 alertConfiguration = response.Value;
 
