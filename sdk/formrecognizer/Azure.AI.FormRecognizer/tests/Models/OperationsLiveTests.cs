@@ -107,7 +107,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("CHECK REGIONS")]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
