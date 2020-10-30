@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string sqlServerQuery = "<query>";
 
             var dataFeedName = "Sample data feed";
-            var dataFeedSource = new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+            var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
             var dataFeedMetrics = new List<DataFeedMetric>()
