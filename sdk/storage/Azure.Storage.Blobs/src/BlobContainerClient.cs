@@ -2879,6 +2879,9 @@ namespace Azure.Storage.Blobs
         #endregion DeleteBlob
 
         #region GetBlobServiceClientCore
+
+        private BlobServiceClient _parentBlobServiceClient;
+
         /// <summary>
         /// Create a new <see cref="BlobServiceClient"/> that pointing to this <see cref="BlobContainerClient"/>'s blob service.
         /// The new <see cref="BlobServiceClient"/>
@@ -2888,24 +2891,29 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
         protected internal virtual BlobServiceClient GetBlobServiceClientCore()
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            if (_parentBlobServiceClient == null)
             {
-                // erase parameters unrelated to service
-                BlobContainerName = null,
-                BlobName = null,
-                VersionId = null,
-                Snapshot = null,
-            };
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to service
+                    BlobContainerName = null,
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
 
-            return new BlobServiceClient(
-                blobUriBuilder.ToUri(),
-                null,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope,
-                Pipeline);
+                _parentBlobServiceClient = new BlobServiceClient(
+                    blobUriBuilder.ToUri(),
+                    null,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope,
+                    Pipeline);
+            }
+
+            return _parentBlobServiceClient;
         }
         #endregion
     }

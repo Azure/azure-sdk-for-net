@@ -4105,6 +4105,9 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion
 
         #region GetBlobContainerClientCore
+
+        private BlobContainerClient _parentBlobContainerClient;
+
         /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
         /// The new <see cref="BlockBlobClient"/>
@@ -4114,22 +4117,27 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
         protected internal virtual BlobContainerClient GetBlobContainerClientCore()
         {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            if (_parentBlobContainerClient == null)
             {
-                // erase parameters unrelated to container
-                BlobName = null,
-                VersionId = null,
-                Snapshot = null,
-            };
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
 
-            return new BlobContainerClient(
-                blobUriBuilder.ToUri(),
-                Pipeline,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                ClientSideEncryption,
-                EncryptionScope);
+                _parentBlobContainerClient = new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope);
+            }
+
+            return _parentBlobContainerClient;
         }
         #endregion
     }
