@@ -77,6 +77,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The current status of this <see cref="AnomalyIncident"/>.
         /// </summary>
         [CodeGenMember("IncidentStatus")]
-        public AnomalyIncidentStatus? Status { get; }
+        public AnomalyIncidentStatus Status { get; }
     }
 }
