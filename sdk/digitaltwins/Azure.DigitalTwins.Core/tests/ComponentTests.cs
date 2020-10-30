@@ -94,7 +94,6 @@ namespace Azure.DigitalTwins.Core.Tests
             }
         }
 
-        [Ignore(reason: "Service doesn't return the expected 412 status code, so the client library doesn't fail in this scenario")]
         [Test]
         public async Task Component_UpdateComponentFailsWhenIfMatchHeaderOutOfDate()
         {
@@ -145,7 +144,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Patch component again, but with the now out of date ETag
                 JsonPatchDocument secondComponentUpdatePatchDocument = new JsonPatchDocument();
-                componentUpdatePatchDocument.AppendReplace("/Network", "Even newer Network");
+                secondComponentUpdatePatchDocument.AppendReplace("/Network", "Even newer Network");
 
                 Func<Task> act = async () =>
                 {
