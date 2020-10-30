@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
         [Test]
         public void LineCoordinatesWork()
         {
-            var line = new GeoLine(new GeoPosition[]
+            var line = new GeoLineString(new GeoPosition[]
             {
                 new GeoPosition(1, 2),
                 new GeoPosition(3, 4),
@@ -77,13 +77,13 @@ namespace Azure.Core.Tests
         [Test]
         public void LineCollectionCoordinatesWork()
         {
-            var lineCollection = new GeoLineCollection(new[]
+            var lineCollection = new GeoLineStringCollection(new[]
             {
-                new GeoLine(new[] {
+                new GeoLineString(new[] {
                     new GeoPosition(1, 2),
                     new GeoPosition(3, 4)
                 }),
-                new GeoLine(new[] {
+                new GeoLineString(new[] {
                     new GeoPosition(5, 6),
                     new GeoPosition(7, 8)
                 }),

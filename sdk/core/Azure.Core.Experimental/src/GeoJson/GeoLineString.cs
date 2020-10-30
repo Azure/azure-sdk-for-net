@@ -9,23 +9,23 @@ namespace Azure.Core.GeoJson
     /// <summary>
     /// Represents a line geometry that consists of multiple coordinates.
     /// </summary>
-    public sealed class GeoLine : GeoObject
+    public sealed class GeoLineString : GeoObject
     {
         /// <summary>
-        /// Initializes new instance of <see cref="GeoLine"/>.
+        /// Initializes new instance of <see cref="GeoLineString"/>.
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoPosition"/> that make up the line.</param>
-        public GeoLine(IEnumerable<GeoPosition> coordinates): this(coordinates, null, DefaultProperties)
+        public GeoLineString(IEnumerable<GeoPosition> coordinates): this(coordinates, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="GeoLine"/>.
+        /// Initializes new instance of <see cref="GeoLineString"/>.
         /// </summary>
         /// <param name="coordinates">The collection of <see cref="GeoPosition"/> that make up the line.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoLine(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoLineString(IEnumerable<GeoPosition> coordinates, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Coordinates = new GeoArray<GeoPosition>(coordinates.ToArray());;
         }

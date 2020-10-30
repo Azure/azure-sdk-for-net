@@ -31,7 +31,7 @@ namespace Azure.Core.GeoJson
                 {
                     T[] array => array[index],
                     GeoPointCollection pointCollection => (T) (object) pointCollection.Points[index].Coordinates,
-                    GeoLineCollection lineCollection => (T) (object) lineCollection.Lines[index].Coordinates,
+                    GeoLineStringCollection lineCollection => (T) (object) lineCollection.Lines[index].Coordinates,
                     GeoPolygon polygon => (T) (object) polygon.Rings[index].Coordinates,
                     GeoPolygonCollection polygonCollection => (T) (object) polygonCollection.Polygons[index].Coordinates,
                     _ => default!
@@ -50,7 +50,7 @@ namespace Azure.Core.GeoJson
                 {
                     T[] array => array.Length,
                     GeoPointCollection pointCollection => pointCollection.Points.Count,
-                    GeoLineCollection lineCollection => lineCollection.Lines.Count,
+                    GeoLineStringCollection lineCollection => lineCollection.Lines.Count,
                     GeoPolygon polygon => polygon.Rings.Count,
                     GeoPolygonCollection polygonCollection => polygonCollection.Polygons.Count,
                     _ => 0

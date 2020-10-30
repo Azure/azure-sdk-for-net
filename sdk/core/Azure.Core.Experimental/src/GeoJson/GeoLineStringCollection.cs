@@ -8,25 +8,25 @@ using System.Linq;
 namespace Azure.Core.GeoJson
 {
     /// <summary>
-    /// Represents a geometry that is composed of multiple <see cref="GeoLine"/>.
+    /// Represents a geometry that is composed of multiple <see cref="GeoLineString"/>.
     /// </summary>
-    public sealed class GeoLineCollection : GeoObject, IReadOnlyList<GeoLine>
+    public sealed class GeoLineStringCollection : GeoObject, IReadOnlyList<GeoLineString>
     {
         /// <summary>
-        /// Initializes new instance of <see cref="GeoLineCollection"/>.
+        /// Initializes new instance of <see cref="GeoLineStringCollection"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        public GeoLineCollection(IEnumerable<GeoLine> lines): this(lines, null, DefaultProperties)
+        public GeoLineStringCollection(IEnumerable<GeoLineString> lines): this(lines, null, DefaultProperties)
         {
         }
 
         /// <summary>
-        /// Initializes new instance of <see cref="GeoLineCollection"/>.
+        /// Initializes new instance of <see cref="GeoLineStringCollection"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of additional properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoLineCollection(IEnumerable<GeoLine> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoLineStringCollection(IEnumerable<GeoLineString> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(lines, nameof(lines));
 
@@ -36,10 +36,10 @@ namespace Azure.Core.GeoJson
         /// <summary>
         ///
         /// </summary>
-        internal IReadOnlyList<GeoLine> Lines { get; }
+        internal IReadOnlyList<GeoLineString> Lines { get; }
 
         /// <inheritdoc />
-        public IEnumerator<GeoLine> GetEnumerator()
+        public IEnumerator<GeoLineString> GetEnumerator()
         {
             return Lines.GetEnumerator();
         }
@@ -53,7 +53,7 @@ namespace Azure.Core.GeoJson
         public int Count => Lines.Count;
 
         /// <inheritdoc />
-        public GeoLine this[int index] => Lines[index];
+        public GeoLineString this[int index] => Lines[index];
 
         /// <summary>
         /// Returns a view over the coordinates array that forms this geometry.

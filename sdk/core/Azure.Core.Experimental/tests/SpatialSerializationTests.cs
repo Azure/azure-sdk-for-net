@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
-            var polygon = AssertRoundtrip<GeoLineCollection>(input);
+            var polygon = AssertRoundtrip<GeoLineStringCollection>(input);
             Assert.AreEqual(2, polygon.Lines.Count);
 
             CollectionAssert.AreEqual(new[]
@@ -212,7 +212,7 @@ namespace Azure.Core.Tests
             var point = (GeoPoint) collection.Geometries[0];
             Assert.AreEqual(P(0), point.Coordinates);
 
-            var lineString = (GeoLine) collection.Geometries[1];
+            var lineString = (GeoLineString) collection.Geometries[1];
             Assert.AreEqual(P(1), lineString.Coordinates[0]);
             Assert.AreEqual(P(2), lineString.Coordinates[1]);
 

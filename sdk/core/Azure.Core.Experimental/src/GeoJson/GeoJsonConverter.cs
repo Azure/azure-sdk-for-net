@@ -71,7 +71,7 @@ namespace Azure.Core.GeoJson
                 case PointType:
                     return new GeoPoint(ReadCoordinate(coordinates), boundingBox, additionalProperties);
                 case LineStringType:
-                    return new GeoLine(ReadCoordinates(coordinates), boundingBox, additionalProperties);
+                    return new GeoLineString(ReadCoordinates(coordinates), boundingBox, additionalProperties);
                 case MultiPointType:
                     var points = new List<GeoPoint>();
                     foreach (GeoPosition coordinate in ReadCoordinates(coordinates))
@@ -91,13 +91,13 @@ namespace Azure.Core.GeoJson
                     return new GeoPolygon(rings, boundingBox, additionalProperties);
 
                 case MultiLineStringType:
-                    var lineStrings = new List<GeoLine>();
+                    var lineStrings = new List<GeoLineString>();
                     foreach (JsonElement ringArray in coordinates.EnumerateArray())
                     {
-                        lineStrings.Add(new GeoLine(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
+                        lineStrings.Add(new GeoLineString(ReadCoordinates(ringArray), null, GeoObject.DefaultProperties));
                     }
 
-                    return new GeoLineCollection(lineStrings, boundingBox, additionalProperties);
+                    return new GeoLineStringCollection(lineStrings, boundingBox, additionalProperties);
 
                 case MultiPolygonType:
 
@@ -297,7 +297,7 @@ namespace Azure.Core.GeoJson
                     WritePosition(point.Coordinates);
                     break;
 
-                case GeoLine lineString:
+                case GeoLineString lineString:
                     WriteType(LineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     WritePositions(lineString.Coordinates);
@@ -327,7 +327,7 @@ namespace Azure.Core.GeoJson
                     writer.WriteEndArray();
                     break;
 
-                case GeoLineCollection multiLineString:
+                case GeoLineStringCollection multiLineString:
                     WriteType(MultiLineStringType);
                     writer.WritePropertyName(CoordinatesProperty);
                     writer.WriteStartArray();
