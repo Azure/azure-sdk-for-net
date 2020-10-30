@@ -10,23 +10,15 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.BasicDigitalTwinMetadata Metadata { get { throw null; } set { } }
+        public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
     public partial class BasicDigitalTwinComponent
     {
         public BasicDigitalTwinComponent() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Metadata { get { throw null; } set { } }
-    }
-    public partial class BasicDigitalTwinMetadata
-    {
-        public BasicDigitalTwinMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
-        public string ModelId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> PropertyMetadata { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -43,6 +35,13 @@ namespace Azure.DigitalTwins.Core
         public string SourceId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
         public string TargetId { get { throw null; } set { } }
+    }
+    public partial class DigitalTwinMetadata
+    {
+        public DigitalTwinMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
+        public string ModelId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> PropertyMetadata { get { throw null; } set { } }
     }
     public partial class DigitalTwinPropertyMetadata
     {

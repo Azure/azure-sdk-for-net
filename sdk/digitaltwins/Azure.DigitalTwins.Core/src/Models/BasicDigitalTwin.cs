@@ -59,22 +59,19 @@ namespace Azure.DigitalTwins.Core
     ///
     /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
     /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
-    /// if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-    /// {
-    ///     BasicDigitalTwin basicDt = getBasicDtResponse.Value;
+    /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
-    ///     // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    ///     string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
-    ///     IDictionary&lt;string, object&gt; component1 = JsonSerializer.Deserialize&lt;IDictionary&lt;string, object&gt;&gt;(component1RawText);
+    /// // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+    /// string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
+    /// var component1 = JsonSerializer.Deserialize&lt;BasicDigitalTwinComponent&gt;(component1RawText);
     ///
-    ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
-    ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
-    ///         $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}\n\t&quot; +
-    ///         $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}\n\t&quot; +
-    ///         $&quot;Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t&quot; +
-    ///         $&quot;Component1.Prop1: {component1[&quot;ComponentProp1&quot;]}\n\t&quot; +
-    ///         $&quot;ComponentProp2: {component1[&quot;ComponentProp2&quot;]}&quot;);
-    /// }
+    /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
+    ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
+    ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
+    ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]} and  last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]} and last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn}&quot;);
     /// </code>
     /// </example>
     public class BasicDigitalTwin
@@ -97,7 +94,7 @@ namespace Azure.DigitalTwins.Core
         /// This field is present on every digital twin.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
+        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
 
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.

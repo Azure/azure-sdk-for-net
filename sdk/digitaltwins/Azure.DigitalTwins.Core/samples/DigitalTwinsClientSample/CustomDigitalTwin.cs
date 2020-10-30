@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
@@ -19,7 +18,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ETag { get; set; }
 
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
+        public MyCustomDigitalTwinMetadata Metadata { get; set; } = new MyCustomDigitalTwinMetadata();
 
         [JsonPropertyName("Prop1")]
         public string Prop1 { get; set; }
@@ -31,18 +30,33 @@ namespace Azure.DigitalTwins.Core.Samples
         public MyCustomComponent Component1 { get; set; }
     }
 
+    internal class MyCustomDigitalTwinMetadata
+    {
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataModel)]
+        public string ModelId { get; set; }
+
+        public DigitalTwinPropertyMetadata Prop1 { get; set; }
+        public DigitalTwinPropertyMetadata Prop2 { get; set; }
+    }
+
     internal class MyCustomComponent
     {
         /// <summary>
         /// A component must have a property named $metadata with no client-supplied properties, to be distinguished from other properties as a component.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public Dictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
+        public MyCustomComponentMetadata Metadata { get; set; } = new MyCustomComponentMetadata();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
 
         [JsonPropertyName("ComponentProp2")]
         public int ComponentProp2 { get; set; }
+    }
+
+    internal class MyCustomComponentMetadata
+    {
+        public DigitalTwinPropertyMetadata ComponentProp1 { get; set; }
+        public DigitalTwinPropertyMetadata ComponentProp2 { get; set; }
     }
 }
