@@ -6,15 +6,15 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetMetricFeedbacks"/>
-    /// or <see cref="MetricsAdvisorClient.GetMetricFeedbacksAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAllMetricFeedback"/>
+    /// or <see cref="MetricsAdvisorClient.GetAllMetricFeedbackAsync"/> to configure the behavior of the request.
     /// </summary>
-    public class GetMetricFeedbacksOptions
+    public class GetAllMetricFeedbackOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetMetricFeedbacksOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetAllMetricFeedbackOptions"/> class.
         /// </summary>
-        public GetMetricFeedbacksOptions()
+        public GetAllMetricFeedbackOptions()
         {
             Filter = new DimensionKey();
         }

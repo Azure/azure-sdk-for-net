@@ -130,30 +130,30 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var config = await CreateMetricAnomalyDetectionConfiguration(adminClient).ConfigureAwait(false);
 
-            AnomalyDetectionConfiguration createdConfiguration = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
+            AnomalyDetectionConfiguration createdConfiguration = await adminClient.CreateDetectionConfigurationAsync(config).ConfigureAwait(false);
 
             Assert.That(createdConfiguration.Id, Is.Not.Null);
             Assert.That(createdConfiguration.Name, Is.EqualTo(config.Name));
 
-            AnomalyDetectionConfiguration getConfig = await adminClient.GetMetricAnomalyDetectionConfigurationAsync(createdConfiguration.Id).ConfigureAwait(false);
+            AnomalyDetectionConfiguration getConfig = await adminClient.GetDetectionConfigurationAsync(createdConfiguration.Id).ConfigureAwait(false);
 
             Assert.That(getConfig.Id, Is.EqualTo(createdConfiguration.Id));
 
             getConfig.Description = "updated";
 
-            await adminClient.UpdateMetricAnomalyDetectionConfigurationAsync(getConfig.Id, getConfig).ConfigureAwait(false);
+            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, getConfig).ConfigureAwait(false);
 
             // try an update with a user instantiated model.
             AnomalyDetectionConfiguration userCreatedModel = PopulateMetricAnomalyDetectionConfiguration(MetricId);
             userCreatedModel.Description = "updated again!";
 
-            await adminClient.UpdateMetricAnomalyDetectionConfigurationAsync(getConfig.Id, userCreatedModel).ConfigureAwait(false);
+            await adminClient.UpdateDetectionConfigurationAsync(getConfig.Id, userCreatedModel).ConfigureAwait(false);
 
-            getConfig = await adminClient.GetMetricAnomalyDetectionConfigurationAsync(getConfig.Id).ConfigureAwait(false);
+            getConfig = await adminClient.GetDetectionConfigurationAsync(getConfig.Id).ConfigureAwait(false);
 
             Assert.That(getConfig.Description, Is.EqualTo(userCreatedModel.Description));
 
-            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(createdConfiguration.Id).ConfigureAwait(false);
+            await adminClient.DeleteDetectionConfigurationAsync(createdConfiguration.Id).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -198,7 +198,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             DataFeed feed = await GetFirstDataFeed(adminClient);
             AnomalyDetectionConfiguration detectionConfig = await CreateMetricAnomalyDetectionConfiguration(adminClient).ConfigureAwait(false);
 
-            AnomalyDetectionConfiguration createdAnomalyDetectionConfiguration = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfig).ConfigureAwait(false);
+            AnomalyDetectionConfiguration createdAnomalyDetectionConfiguration = await adminClient.CreateDetectionConfigurationAsync(detectionConfig).ConfigureAwait(false);
 
             var alertConfigToCreate = new AnomalyAlertConfiguration(
                     Recording.GenerateAlphaNumericId("test"),
@@ -216,16 +216,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
                                 new TopNGroupScope(8, 4, 2)))
                     });
 
-            AnomalyAlertConfiguration createdAlertConfig = await adminClient.CreateAnomalyAlertConfigurationAsync(alertConfigToCreate).ConfigureAwait(false);
+            AnomalyAlertConfiguration createdAlertConfig = await adminClient.CreateAlertConfigurationAsync(alertConfigToCreate).ConfigureAwait(false);
 
             Assert.That(createdAlertConfig.Id, Is.Not.Null);
 
             // Validate that we can Get the newly created config
-            AnomalyAlertConfiguration getAlertConfig = await adminClient.GetAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
+            AnomalyAlertConfiguration getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
 
             List<AnomalyAlertConfiguration> getAlertConfigs = new List<AnomalyAlertConfiguration>();
 
-            await foreach (var config in adminClient.GetAnomalyAlertConfigurationsAsync(createdAnomalyDetectionConfiguration.Id))
+            await foreach (var config in adminClient.GetAlertConfigurationsAsync(createdAnomalyDetectionConfiguration.Id))
             {
                 getAlertConfigs.Add(config);
             }
@@ -236,25 +236,25 @@ namespace Azure.AI.MetricsAdvisor.Tests
             getAlertConfig.Description = "Updated";
             getAlertConfig.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
 
-            await adminClient.UpdateAnomalyAlertConfigurationAsync(getAlertConfig.Id, getAlertConfig).ConfigureAwait(false);
+            await adminClient.UpdateAlertConfigurationAsync(getAlertConfig.Id, getAlertConfig).ConfigureAwait(false);
 
             // Validate that the update succeeded.
-            getAlertConfig = await adminClient.GetAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
+            getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
 
             Assert.That(getAlertConfig.Description, Is.EqualTo(getAlertConfig.Description));
 
             // Update again starting with our locally created model.
             alertConfigToCreate.Description = "updated again!";
             alertConfigToCreate.CrossMetricsOperator = MetricAnomalyAlertConfigurationsOperator.And;
-            await adminClient.UpdateAnomalyAlertConfigurationAsync(getAlertConfig.Id, alertConfigToCreate).ConfigureAwait(false);
+            await adminClient.UpdateAlertConfigurationAsync(getAlertConfig.Id, alertConfigToCreate).ConfigureAwait(false);
 
             // Validate that the update succeeded.
-            getAlertConfig = await adminClient.GetAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
+            getAlertConfig = await adminClient.GetAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
 
             Assert.That(getAlertConfig.Description, Is.EqualTo(alertConfigToCreate.Description));
 
             // Cleanup
-            await adminClient.DeleteAnomalyAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
+            await adminClient.DeleteAlertConfigurationAsync(createdAlertConfig.Id).ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -307,7 +307,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             bool isResponseEmpty = true;
 
-            await foreach (AnomalyDetectionConfiguration config in adminClient.GetMetricAnomalyDetectionConfigurationsAsync(MetricId))
+            await foreach (AnomalyDetectionConfiguration config in adminClient.GetDetectionConfigurationsAsync(MetricId))
             {
                 isResponseEmpty = false;
                 break;
