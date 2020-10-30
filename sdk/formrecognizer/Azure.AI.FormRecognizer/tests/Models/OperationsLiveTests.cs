@@ -46,6 +46,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,

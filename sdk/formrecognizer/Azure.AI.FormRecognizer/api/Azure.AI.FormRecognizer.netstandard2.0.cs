@@ -7,6 +7,7 @@ namespace Azure.AI.FormRecognizer
         Png = 2,
         Jpeg = 3,
         Tiff = 4,
+        Bmp = 5,
     }
     public partial class FormRecognizerClient
     {

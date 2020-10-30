@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="docType"> Document type. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
-        /// <param name="docTypeConfidence"> Predicted document type confidence. </param>
+        /// <param name="docTypeConfidence"> Confidence score. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
         internal DocumentResult(string docType, Guid? modelId, IReadOnlyList<int> pageRange, float? docTypeConfidence, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Models
         public Guid? ModelId { get; }
         /// <summary> First and last page number where the document is found. </summary>
         public IReadOnlyList<int> PageRange { get; }
-        /// <summary> Predicted document type confidence. </summary>
+        /// <summary> Confidence score. </summary>
         public float? DocTypeConfidence { get; }
         /// <summary> Dictionary of named field values. </summary>
         public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; }
