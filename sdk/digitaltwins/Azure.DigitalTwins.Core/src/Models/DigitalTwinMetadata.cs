@@ -13,7 +13,8 @@ namespace Azure.DigitalTwins.Core
     /// <remarks>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
-    public class BasicDigitalTwinMetadata
+    [JsonConverter(typeof(DigitalTwinMetadataJsonConverter))]
+    public class DigitalTwinMetadata
     {
         /// <summary>
         /// The Id of the model that the digital twin or component is modeled by.
@@ -23,9 +24,8 @@ namespace Azure.DigitalTwins.Core
 
         /// <summary>
         /// This field will contain metadata about changes on properties on the digital twin.
-        /// For your convenience, the value can be deserialized into <see cref="DigitalTwinPropertyMetadata"/>.
+        /// The key will be the property name, and the value is the metadata.
         /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> PropertyMetadata { get; set; } = new Dictionary<string, object>();
+        public IDictionary<string, DigitalTwinPropertyMetadata> PropertyMetadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
     }
 }
