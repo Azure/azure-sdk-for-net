@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class DeleteRelationshipOptions
+    internal partial class DeleteRelationshipOptions
     {
         /// <summary> Initializes a new instance of DeleteRelationshipOptions. </summary>
         public DeleteRelationshipOptions()

@@ -194,7 +194,18 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifNoneMatch">
+        /// If-None-Match header that makes the request method conditional on a
+        /// recipient cache or origin server either not having any current
+        /// representation of the target resource.  For more information about
+        /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
+        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// the service will replace the existing entity with the new entity.
+        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// service will reject the request if the entity already exists.
+        /// An optional etag to only make the request if the value does not
+        /// match on the service.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
@@ -228,13 +239,16 @@ namespace Azure.DigitalTwins.Core
         public virtual async Task<Response<T>> CreateOrReplaceDigitalTwinAsync<T>(
             string digitalTwinId,
             T digitalTwin,
-            CreateOrReplaceDigitalTwinOptions options = null,
+            ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a stream
             using MemoryStream memoryStream = await WriteToStreamAsync<T>(digitalTwin, _objectSerializer, cancellationToken).ConfigureAwait(false);
 
             // Get the response of the digital twin as a stream object
+            CreateOrReplaceDigitalTwinOptions options = ifNoneMatch != null ?
+                new CreateOrReplaceDigitalTwinOptions { IfNoneMatch = ifNoneMatch.Value.ToString() } :
+                null;
             Response<Stream> digitalTwinStream = await _dtRestClient.AddAsync(digitalTwinId, memoryStream, options, cancellationToken).ConfigureAwait(false);
 
             // Deserialize the stream into the specified type
@@ -249,7 +263,18 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="digitalTwin">The application/json digital twin to create.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifNoneMatch">
+        /// If-None-Match header that makes the request method conditional on a
+        /// recipient cache or origin server either not having any current
+        /// representation of the target resource.  For more information about
+        /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
+        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// the service will replace the existing entity with the new entity.
+        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// service will reject the request if the entity already exists.
+        /// An optional etag to only make the request if the value does not
+        /// match on the service.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
@@ -265,13 +290,16 @@ namespace Azure.DigitalTwins.Core
         public virtual Response<T> CreateOrReplaceDigitalTwin<T>(
             string digitalTwinId,
             T digitalTwin,
-            CreateOrReplaceDigitalTwinOptions options = null,
+            ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the digital twin object and write it to a stream
             using MemoryStream memoryStream = WriteToStream<T>(digitalTwin, _objectSerializer, cancellationToken);
 
             // Get the response of the digital twin as a stream object
+            CreateOrReplaceDigitalTwinOptions options = ifNoneMatch != null ?
+                new CreateOrReplaceDigitalTwinOptions { IfNoneMatch = ifNoneMatch.Value.ToString() } :
+                null;
             Response<Stream> digitalTwinStream = _dtRestClient.Add(digitalTwinId, memoryStream, options, cancellationToken);
 
             // Deserialize the stream into the specified type
@@ -284,7 +312,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin asynchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -305,8 +333,11 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Deleted digital twin &apos;{digitalTwinId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, DeleteDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteDigitalTwinAsync(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            DeleteDigitalTwinOptions options = ifMatch != null ?
+                new DeleteDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.DeleteAsync(digitalTwinId, options, cancellationToken);
         }
 
@@ -314,7 +345,7 @@ namespace Azure.DigitalTwins.Core
         /// Deletes a digital twin synchronously.
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -331,8 +362,11 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
-        public virtual Response DeleteDigitalTwin(string digitalTwinId, DeleteDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteDigitalTwin(string digitalTwinId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            DeleteDigitalTwinOptions options = ifMatch != null ?
+                new DeleteDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.Delete(digitalTwinId, options, cancellationToken);
         }
 
@@ -341,7 +375,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -353,9 +387,12 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateDigitalTwinOptions options = ifMatch != null ?
+                new UpdateDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.UpdateAsync(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -364,7 +401,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the digital twin to update.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -376,12 +413,15 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateDigitalTwinAsync(string, JsonPatchDocument, UpdateDigitalTwinOptions, CancellationToken)">
+        /// <seealso cref="UpdateDigitalTwinAsync(string, JsonPatchDocument, ETag?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateDigitalTwin(string digitalTwinId, JsonPatchDocument jsonPatchDocument, UpdateDigitalTwinOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateDigitalTwin(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateDigitalTwinOptions options = ifMatch != null ?
+                new UpdateDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.Update(digitalTwinId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -456,7 +496,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -478,9 +518,12 @@ namespace Azure.DigitalTwins.Core
         /// Console.WriteLine($&quot;Updated component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
         /// </example>
-        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateComponentAsync(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateComponentOptions options = ifMatch != null ?
+                new UpdateComponentOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.UpdateComponentAsync(digitalTwinId, componentName, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -490,7 +533,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="componentName">The component being modified.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
@@ -502,12 +545,15 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, UpdateComponentOptions, CancellationToken)">
+        /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateComponent(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, UpdateComponentOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateComponent(string digitalTwinId, string componentName, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateComponentOptions options = ifMatch != null ?
+                new UpdateComponentOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.UpdateComponent(digitalTwinId, componentName, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -858,7 +904,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -870,8 +916,11 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
-        public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, DeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            DeleteRelationshipOptions options = ifMatch != null ?
+                new DeleteRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.DeleteRelationshipAsync(digitalTwinId, relationshipId, options, cancellationToken);
         }
 
@@ -880,7 +929,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -892,11 +941,14 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="DeleteRelationshipAsync(string, string, DeleteRelationshipOptions, CancellationToken)">
+        /// <seealso cref="DeleteRelationshipAsync(string, string, ETag?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, DeleteRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteRelationship(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            DeleteRelationshipOptions options = ifMatch != null ?
+                new DeleteRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.DeleteRelationship(digitalTwinId, relationshipId, options, cancellationToken);
         }
 
@@ -907,7 +959,18 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship which is being created.</param>
         /// <param name="relationship">The application/json relationship to be created.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifNoneMatch">
+        /// If-None-Match header that makes the request method conditional on a
+        /// recipient cache or origin server either not having any current
+        /// representation of the target resource.  For more information about
+        /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
+        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// the service will replace the existing entity with the new entity.
+        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// service will reject the request if the entity already exists.
+        /// An optional etag to only make the request if the value does not
+        /// match on the service.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <remarks>
         /// <para>
@@ -946,13 +1009,16 @@ namespace Azure.DigitalTwins.Core
             string digitalTwinId,
             string relationshipId,
             T relationship,
-            CreateOrReplaceRelationshipOptions options = null,
+            ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the relationship and write it to a stream
             using MemoryStream memoryStream = await WriteToStreamAsync<T>(relationship, _objectSerializer, cancellationToken).ConfigureAwait(false);
 
             // Get the response component as a stream object
+            CreateOrReplaceRelationshipOptions options = ifNoneMatch != null ?
+                new CreateOrReplaceRelationshipOptions { IfNoneMatch = ifNoneMatch.Value.ToString() } :
+                null;
             Response<Stream> relationshipStream = await _dtRestClient.AddRelationshipAsync(digitalTwinId, relationshipId, memoryStream, options, cancellationToken).ConfigureAwait(false);
 
             // Deserialize the stream into the specified type
@@ -968,7 +1034,18 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
         /// <param name="relationship">The application/json relationship to be created.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifNoneMatch">
+        /// If-None-Match header that makes the request method conditional on a
+        /// recipient cache or origin server either not having any current
+        /// representation of the target resource.  For more information about
+        /// this property, see <see href="https://tools.ietf.org/html/rfc7232#section-3.2">RFC 7232</see>.
+        /// Acceptable values are null or "*".  If ifNonMatch option is null
+        /// the service will replace the existing entity with the new entity.
+        /// If ifNoneMatch option is "*" (or <see cref="ETag.All"/>) the
+        /// service will reject the request if the entity already exists.
+        /// An optional etag to only make the request if the value does not
+        /// match on the service.
+        /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
@@ -986,20 +1063,23 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, CreateOrReplaceRelationshipOptions, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceRelationshipAsync{T}(string, string, T, ETag?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Response<T> CreateOrReplaceRelationship<T>(
             string digitalTwinId,
             string relationshipId,
             T relationship,
-            CreateOrReplaceRelationshipOptions options = null,
+            ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
             // Serialize the relationship and write it to a stream
             using MemoryStream memoryStream = WriteToStream<T>(relationship, _objectSerializer, cancellationToken);
 
             // Get the response relationship as a stream object
+            CreateOrReplaceRelationshipOptions options = ifNoneMatch != null ?
+                new CreateOrReplaceRelationshipOptions { IfNoneMatch = ifNoneMatch.Value.ToString() } :
+                null;
             Response<Stream> relationshipStream = _dtRestClient.AddRelationship(digitalTwinId, relationshipId, memoryStream, options, cancellationToken);
 
             // Deserialize the stream into the specified type
@@ -1014,7 +1094,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1026,9 +1106,12 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response> UpdateRelationshipAsync(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateRelationshipOptions options = ifMatch != null ?
+                new UpdateRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.UpdateRelationshipAsync(digitalTwinId, relationshipId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -1038,7 +1121,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to be updated.</param>
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="ifMatch">Optional. Only perform the operation if the entity's etag matches this optional etag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1050,12 +1133,15 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="UpdateRelationshipAsync(string, string, JsonPatchDocument, UpdateRelationshipOptions, CancellationToken)">
+        /// <seealso cref="UpdateRelationshipAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, UpdateRelationshipOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response UpdateRelationship(string digitalTwinId, string relationshipId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+            UpdateRelationshipOptions options = ifMatch != null ?
+                new UpdateRelationshipOptions { IfMatch = ifMatch.Value.ToString() } :
+                null;
             return _dtRestClient.UpdateRelationship(digitalTwinId, relationshipId, jsonPatchDocument.ToString(), options, cancellationToken);
         }
 
@@ -1908,7 +1994,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1931,13 +2017,19 @@ namespace Azure.DigitalTwins.Core
             string digitalTwinId,
             string messageId,
             string payload,
-            PublishTelemetryOptions options = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
                 //MessageId is a mandatory parameter, but our convenience layer makes it optional by having a default value
                 messageId = Guid.NewGuid().ToString();
+            }
+
+            var options = new PublishTelemetryOptions();
+            if (timestamp != null)
+            {
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient
@@ -1952,7 +2044,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -1964,15 +2056,21 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishTelemetryAsync(string, string, string, PublishTelemetryOptions, CancellationToken)">
+        /// <seealso cref="PublishTelemetryAsync(string, string, string, DateTimeOffset?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, PublishTelemetryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response PublishTelemetry(string digitalTwinId, string messageId, string payload, DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
                 //MessageId is a mandatory parameter, but our convenience layer makes it optional by having a default value
                 messageId = Guid.NewGuid().ToString();
+            }
+
+            var options = new PublishTelemetryOptions();
+            if (timestamp != null)
+            {
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient.SendTelemetry(digitalTwinId, messageId, payload, options, cancellationToken);
@@ -1987,7 +2085,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2018,13 +2116,19 @@ namespace Azure.DigitalTwins.Core
             string componentName,
             string messageId,
             string payload,
-            PublishComponentTelemetryOptions options = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
                 //MessageId is a mandatory parameter, but our convenience layer makes it optional by having a default value
                 messageId = Guid.NewGuid().ToString();
+            }
+
+            var options = new PublishComponentTelemetryOptions();
+            if (timestamp != null)
+            {
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient
@@ -2040,7 +2144,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="componentName">The name of the DTDL component.</param>
         /// <param name="messageId">A unique message identifier (within the scope of the digital twin id) that is commonly used for de-duplicating messages. Defaults to a random GUID if argument is null.</param>
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
-        /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
+        /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The http response <see cref="Response"/>.</returns>
         /// <remarks>
@@ -2052,20 +2156,26 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
-        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, PublishComponentTelemetryOptions, CancellationToken)">
+        /// <seealso cref="PublishComponentTelemetryAsync(string, string, string, string, DateTimeOffset?, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         public virtual Response PublishComponentTelemetry(string digitalTwinId,
             string componentName,
             string messageId,
             string payload,
-            PublishComponentTelemetryOptions options = null,
+            DateTimeOffset? timestamp = null,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(messageId))
             {
                 //MessageId is a mandatory parameter, but our convenience layer makes it optional by having a default value
                 messageId = Guid.NewGuid().ToString();
+            }
+
+            var options = new PublishComponentTelemetryOptions();
+            if (timestamp != null)
+            {
+                options.TimeStamp = timestamp.Value;
             }
 
             return _dtRestClient.SendComponentTelemetry(digitalTwinId, componentName, messageId, payload, options, cancellationToken);

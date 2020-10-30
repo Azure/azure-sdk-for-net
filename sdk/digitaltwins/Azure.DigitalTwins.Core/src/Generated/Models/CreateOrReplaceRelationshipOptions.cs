@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class CreateOrReplaceRelationshipOptions
+    internal partial class CreateOrReplaceRelationshipOptions
     {
         /// <summary> Initializes a new instance of CreateOrReplaceRelationshipOptions. </summary>
         public CreateOrReplaceRelationshipOptions()

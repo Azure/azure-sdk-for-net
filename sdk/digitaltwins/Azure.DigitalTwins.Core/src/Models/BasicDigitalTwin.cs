@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -86,7 +89,8 @@ namespace Azure.DigitalTwins.Core
         /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
-        public string ETag { get; set; }
+        [JsonConverter(typeof(OptionalETagConverter))] // TODO: Remove when #16272 is fixed
+        public ETag? ETag { get; set; }
 
         /// <summary>
         /// Information about the model a digital twin conforms to.

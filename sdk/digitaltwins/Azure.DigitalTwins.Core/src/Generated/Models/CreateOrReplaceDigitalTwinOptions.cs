@@ -8,7 +8,7 @@
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
-    public partial class CreateOrReplaceDigitalTwinOptions
+    internal partial class CreateOrReplaceDigitalTwinOptions
     {
         /// <summary> Initializes a new instance of CreateOrReplaceDigitalTwinOptions. </summary>
         public CreateOrReplaceDigitalTwinOptions()
