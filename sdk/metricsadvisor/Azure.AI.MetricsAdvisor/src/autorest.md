@@ -88,17 +88,33 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.AlertResult
+  where: $.definitions.IngestionStatus
   transform: >
-    $["required"] = ["alertId", "createdTime", "modifiedTime", "timestamp"]
+    $["required"] = ["timestamp", "status", "message"]
 ```
 
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.IngestionStatus
+  where: $.definitions.MetricSeriesItem
   transform: >
-    $["required"] = ["timestamp", "status", "message"]
+    $["required"] = ["metricId", "dimension"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MetricDataItem
+  transform: >
+    $["required"] = ["id", "timestampList", "valueList"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AlertResult
+  transform: >
+    $["required"] = ["alertId", "createdTime", "modifiedTime", "timestamp"]
 ```
 
 ### Add x-ms-paths section if not exists

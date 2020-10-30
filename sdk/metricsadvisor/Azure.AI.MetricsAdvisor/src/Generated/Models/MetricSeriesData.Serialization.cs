@@ -16,28 +16,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static MetricSeriesData DeserializeMetricSeriesData(JsonElement element)
         {
-            Optional<MetricSeriesDefinition> id = default;
-            Optional<IReadOnlyList<DateTimeOffset>> timestampList = default;
-            Optional<IReadOnlyList<double>> valueList = default;
+            MetricSeriesDefinition id = default;
+            IReadOnlyList<DateTimeOffset> timestampList = default;
+            IReadOnlyList<double> valueList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     id = MetricSeriesDefinition.DeserializeMetricSeriesDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timestampList"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -48,11 +38,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("valueList"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -62,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSeriesData(id.Value, Optional.ToList(timestampList), Optional.ToList(valueList));
+            return new MetricSeriesData(id, timestampList, valueList);
         }
     }
 }
