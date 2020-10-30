@@ -22,12 +22,14 @@ Note that these breaking changes are only breaking changes from the preview vers
 - Remove Serialization namespace, moving its contents to the base Azure.DigitalTwins.Core namespace
 - Rename DigitalTwinsModelData field "DisplayName" to "LanguageDisplayNames" for clarity
 - Rename DigitalTwinsModelData field "Description" to "LanguageDescriptions" for clarity
+- Rename DigitalTwinsModelData field "model" to "dtdlModel"
 - Flatten DigitalTwinsRequestOptions so that each API takes in ifMatch and ifNoneMatch header directly
 - Rework BasicDigitalTwin and other helper classes to better match the service definitions
 - Add messageId as mandatory parameter for telemetry APIs. Service API version 2020-10-31 requires this parameter.
 
 ### Fixes and improvements
 - Fix bug where CreateDigitalTwin and CreateRelationship APIs always sent ifNoneMatch header with value "*" making it impossible to replace an existing entity
+- Rename CreateModels API parameter "models" to "dtdtlModels" for clarity
 
 
 ## 1.0.0-preview.3 (2020-07-13)
