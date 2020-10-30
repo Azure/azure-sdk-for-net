@@ -18,8 +18,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="acquiredCapabilities"> The set of all acquired capabilities of the phone number. </param>
         /// <param name="availableCapabilities"> The set of all available capabilities that can be acquired for this phone number. </param>
         /// <returns>A new <see cref="AcquiredPhoneNumber"/> instance for mocking.</returns>
-        public static AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, IEnumerable<PhoneNumberCapability> acquiredCapabilities, IEnumerable<PhoneNumberCapability> availableCapabilities) =>
-            new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities);
+        public static AcquiredPhoneNumber AcquiredPhoneNumber(string phoneNumber, IEnumerable<PhoneNumberCapability> acquiredCapabilities, IEnumerable<PhoneNumberCapability> availableCapabilities)
+            => new AcquiredPhoneNumber(phoneNumber, acquiredCapabilities, availableCapabilities);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AcquiredPhoneNumbers"/> class.
@@ -27,8 +27,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="AcquiredPhoneNumbers"/> instance for mocking.</returns>
-        public static AcquiredPhoneNumbers AcquiredPhoneNumbers(IReadOnlyList<AcquiredPhoneNumber> phoneNumbers, string nextLink) =>
-            new AcquiredPhoneNumbers(phoneNumbers, nextLink);
+        public static AcquiredPhoneNumbers AcquiredPhoneNumbers(IReadOnlyList<AcquiredPhoneNumber> phoneNumbers, string nextLink)
+            => new AcquiredPhoneNumbers(phoneNumbers, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AreaCodes"/> class.
@@ -37,8 +37,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="secondaryAreaCodes"> Represents the list of secondary area codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="AreaCodes"/> instance for mocking.</returns>
-        public static AreaCodes AreaCodes(IReadOnlyList<string> primaryAreaCodes, IReadOnlyList<string> secondaryAreaCodes, string nextLink) =>
-            new AreaCodes(primaryAreaCodes, secondaryAreaCodes, nextLink);
+        public static AreaCodes AreaCodes(IReadOnlyList<string> primaryAreaCodes, IReadOnlyList<string> secondaryAreaCodes, string nextLink)
+            => new AreaCodes(primaryAreaCodes, secondaryAreaCodes, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CarrierDetails"/> class.
@@ -46,8 +46,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="name"> Name of carrier details. </param>
         /// <param name="localizedName"> Display name of carrier details. </param>
         /// <returns>A new <see cref="CarrierDetails"/> instance for mocking.</returns>
-        public static CarrierDetails CarrierDetails(string name, string localizedName) =>
-            new CarrierDetails(name, localizedName);
+        public static CarrierDetails CarrierDetails(string name, string localizedName)
+            => new CarrierDetails(name, localizedName);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunicationUserToken"/> class.
@@ -56,16 +56,16 @@ namespace Azure.Communication.Administration.Models
         /// <param name="token"> taken value of communication user token. </param>
         /// <param name="expiresOn"> expiry date time of communication user token. </param>
         /// <returns>A new <see cref="CommunicationUserToken"/> instance for mocking.</returns>
-        public static CommunicationUserToken CommunicationUserToken(string id, string token, DateTimeOffset expiresOn) =>
-            new CommunicationUserToken(id, token, expiresOn);
+        public static CommunicationUserToken CommunicationUserToken(string id, string token, DateTimeOffset expiresOn)
+            => new CommunicationUserToken(id, token, expiresOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSearchResponse"/> class.
         /// </summary>
         /// <param name="searchId"> The search id of the search that was created. </param>
         /// <returns>A new <see cref="CreateSearchResponse"/> instance for mocking.</returns>
-        public static CreateSearchResponse CreateSearchResponse(string searchId) =>
-            new CreateSearchResponse(searchId);
+        public static CreateSearchResponse CreateSearchResponse(string searchId)
+            => new CreateSearchResponse(searchId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptions"/> class.
@@ -74,8 +74,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="labelName"> The display name of the location. </param>
         /// <param name="options"> The underlying location option details. </param>
         /// <returns>A new <see cref="LocationOptions"/> instance for mocking.</returns>
-        public static LocationOptions LocationOptions(string labelId, string labelName, IList<LocationOptionsDetails> options) =>
-            new LocationOptions(labelId, labelName, options);
+        public static LocationOptions LocationOptions(string labelId, string labelName, IList<LocationOptionsDetails> options)
+            => new LocationOptions(labelId, labelName, options);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptionsDetails"/> class.
@@ -84,24 +84,24 @@ namespace Azure.Communication.Administration.Models
         /// <param name="value"> The abbreviated name of the location options. </param>
         /// <param name="locationOptions"> The underlying location options. </param>
         /// <returns>A new <see cref="LocationOptionsDetails"/> instance for mocking.</returns>
-        public static LocationOptionsDetails LocationOptionsDetails(string name, string value, IList<LocationOptions> locationOptions) =>
-            new LocationOptionsDetails(name, value, locationOptions);
+        public static LocationOptionsDetails LocationOptionsDetails(string name, string value, IList<LocationOptions> locationOptions)
+            => new LocationOptionsDetails(name, value, locationOptions);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptionsResponse"/> class.
         /// </summary>
         /// <param name="locationOptions"> Represents a location options. </param>
         /// <returns>A new <see cref="LocationOptionsResponse"/> instance for mocking.</returns>
-        public static LocationOptionsResponse LocationOptionsResponse(LocationOptions locationOptions) =>
-            new LocationOptionsResponse(locationOptions);
+        public static LocationOptionsResponse LocationOptionsResponse(LocationOptions locationOptions)
+            => new LocationOptionsResponse(locationOptions);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberConfigurationResponse"/> class.
         /// </summary>
         /// <param name="pstnConfiguration"> Definition for pstn number configuration. </param>
         /// <returns>A new <see cref="NumberConfigurationResponse"/> instance for mocking.</returns>
-        public static NumberConfigurationResponse NumberConfigurationResponse(PstnConfiguration pstnConfiguration) =>
-            new NumberConfigurationResponse(pstnConfiguration);
+        public static NumberConfigurationResponse NumberConfigurationResponse(PstnConfiguration pstnConfiguration)
+            => new NumberConfigurationResponse(pstnConfiguration);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberUpdateCapabilities"/> class.
@@ -109,8 +109,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="add"> Capabilities to be added to a phone number. </param>
         /// <param name="remove"> Capabilities to be removed from a phone number. </param>
         /// <returns>A new <see cref="NumberUpdateCapabilities"/> instance for mocking.</returns>
-        public static NumberUpdateCapabilities NumberUpdateCapabilities(IList<PhoneNumberCapability> @add, IList<PhoneNumberCapability> @remove) =>
-            new NumberUpdateCapabilities(@add, @remove);
+        public static NumberUpdateCapabilities NumberUpdateCapabilities(IList<PhoneNumberCapability> @add, IList<PhoneNumberCapability> @remove)
+            => new NumberUpdateCapabilities(@add, @remove);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberCountries"/> class.
@@ -118,8 +118,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="countries"> Represents the underlying list of countries. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="PhoneNumberCountries"/> instance for mocking.</returns>
-        public static PhoneNumberCountries PhoneNumberCountries(IReadOnlyList<PhoneNumberCountry> countries, string nextLink) =>
-            new PhoneNumberCountries(countries, nextLink);
+        public static PhoneNumberCountries PhoneNumberCountries(IReadOnlyList<PhoneNumberCountry> countries, string nextLink)
+            => new PhoneNumberCountries(countries, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberCountry"/> class.
@@ -127,8 +127,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="localizedName"> Represents the name of the country. </param>
         /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
         /// <returns>A new <see cref="PhoneNumberCountry"/> instance for mocking.</returns>
-        public static PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode) =>
-            new PhoneNumberCountry(localizedName, countryCode);
+        public static PhoneNumberCountry PhoneNumberCountry(string localizedName, string countryCode)
+            => new PhoneNumberCountry(localizedName, countryCode);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberEntities"/> class.
@@ -136,8 +136,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="entities"> The underlying list of entities. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="PhoneNumberEntities"/> instance for mocking.</returns>
-        public static PhoneNumberEntities PhoneNumberEntities(IReadOnlyList<PhoneNumberEntity> entities, string nextLink) =>
-            new PhoneNumberEntities(entities, nextLink);
+        public static PhoneNumberEntities PhoneNumberEntities(IReadOnlyList<PhoneNumberEntity> entities, string nextLink)
+            => new PhoneNumberEntities(entities, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberEntity"/> class.
@@ -151,8 +151,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="focDate"> The Firm Order Confirmation date of the phone number entity. </param>
         /// <returns>A new <see cref="PhoneNumberEntity"/> instance for mocking.</returns>
 
-        public static PhoneNumberEntity PhoneNumberEntity(string id, DateTimeOffset? createdAt, string displayName, int? quantity, int? quantityObtained, string status, DateTimeOffset? focDate) =>
-            new PhoneNumberEntity(id, createdAt, displayName, quantity, quantityObtained, status, focDate);
+        public static PhoneNumberEntity PhoneNumberEntity(string id, DateTimeOffset? createdAt, string displayName, int? quantity, int? quantityObtained, string status, DateTimeOffset? focDate)
+            => new PhoneNumberEntity(id, createdAt, displayName, quantity, quantityObtained, status, focDate);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberRelease"/> class.
@@ -163,8 +163,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="errorMessage"> The underlying error message of a release. </param>
         /// <param name="phoneNumberReleaseStatusDetails"> The list of phone numbers in the release, mapped to its individual statuses. </param>
         /// <returns>A new <see cref="PhoneNumberRelease"/> instance for mocking.</returns>
-        public static PhoneNumberRelease PhoneNumberRelease(string releaseId, DateTimeOffset? createdAt, ReleaseStatus? status, string errorMessage, IReadOnlyDictionary<string, PhoneNumberReleaseDetails> phoneNumberReleaseStatusDetails) =>
-            new PhoneNumberRelease(releaseId, createdAt, status, errorMessage, phoneNumberReleaseStatusDetails);
+        public static PhoneNumberRelease PhoneNumberRelease(string releaseId, DateTimeOffset? createdAt, ReleaseStatus? status, string errorMessage, IReadOnlyDictionary<string, PhoneNumberReleaseDetails> phoneNumberReleaseStatusDetails)
+            => new PhoneNumberRelease(releaseId, createdAt, status, errorMessage, phoneNumberReleaseStatusDetails);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberReleaseDetails"/> class.
@@ -172,8 +172,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="status"> The release status of a phone number. </param>
         /// <param name="errorCode"> The error code in the case the status is error. </param>
         /// <returns>A new <see cref="PhoneNumberReleaseDetails"/> instance for mocking.</returns>
-        public static PhoneNumberReleaseDetails PhoneNumberReleaseDetails(PhoneNumberReleaseStatus? status, int? errorCode) =>
-            new PhoneNumberReleaseDetails(status, errorCode);
+        public static PhoneNumberReleaseDetails PhoneNumberReleaseDetails(PhoneNumberReleaseStatus? status, int? errorCode)
+            => new PhoneNumberReleaseDetails(status, errorCode);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhoneNumberSearch"/> class.
@@ -191,8 +191,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="reservationExpiryDate"> The date that search expires and the numbers become available. </param>
         /// <param name="errorCode"> The error code of the search. </param>
         /// <returns>A new <see cref="PhoneNumberSearch"/> instance for mocking.</returns>
-        public static PhoneNumberSearch PhoneNumberSearch(string searchId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, SearchStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode) =>
-            new PhoneNumberSearch(searchId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
+        public static PhoneNumberSearch PhoneNumberSearch(string searchId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, SearchStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
+            => new PhoneNumberSearch(searchId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlan"/> class.
@@ -201,8 +201,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="localizedName"> The name of the phone plan. </param>
         /// <param name="locationType"> The location type of the phone plan. </param>
         /// <returns>A new <see cref="PhonePlan"/> instance for mocking.</returns>
-        public static PhonePlan PhonePlan(string phonePlanId, string localizedName, LocationType locationType) =>
-            new PhonePlan(phonePlanId, localizedName, locationType);
+        public static PhonePlan PhonePlan(string phonePlanId, string localizedName, LocationType locationType)
+            => new PhonePlan(phonePlanId, localizedName, locationType);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlanGroup"/> class.
@@ -211,8 +211,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="localizedName"> The name of the plan group. </param>
         /// <param name="localizedDescription"> The description of the plan group. </param>
         /// <returns>A new <see cref="PhonePlanGroup"/> instance for mocking.</returns>
-        public static PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription) =>
-            new PhonePlanGroup(phonePlanGroupId, localizedName, localizedDescription);
+        public static PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription)
+            => new PhonePlanGroup(phonePlanGroupId, localizedName, localizedDescription);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlanGroups"/> class.
@@ -220,8 +220,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="phonePlanGroupsValue"> The underlying list of phone plan groups. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="PhonePlanGroups"/> instance for mocking.</returns>
-        public static PhonePlanGroups PhonePlanGroups(IReadOnlyList<PhonePlanGroup> phonePlanGroupsValue, string nextLink) =>
-            new PhonePlanGroups(phonePlanGroupsValue, nextLink);
+        public static PhonePlanGroups PhonePlanGroups(IReadOnlyList<PhonePlanGroup> phonePlanGroupsValue, string nextLink)
+            => new PhonePlanGroups(phonePlanGroupsValue, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlansResponse"/> class.
@@ -230,8 +230,8 @@ namespace Azure.Communication.Administration.Models
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
         /// <returns>A new <see cref="PhonePlansResponse"/> instance for mocking.</returns>
 
-        public static PhonePlansResponse PhonePlansResponse(IReadOnlyList<PhonePlan> phonePlans, string nextLink) =>
-            new PhonePlansResponse(phonePlans, nextLink);
+        public static PhonePlansResponse PhonePlansResponse(IReadOnlyList<PhonePlan> phonePlans, string nextLink)
+            => new PhonePlansResponse(phonePlans, nextLink);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RateInformation"/> class.
@@ -240,24 +240,24 @@ namespace Azure.Communication.Administration.Models
         /// <param name="currencyType"> The currency of a phone plan group. </param>
         /// <param name="rateErrorMessage"> The error code of a phone plan group. </param>
         /// <returns>A new <see cref="RateInformation"/> instance for mocking.</returns>
-        public static RateInformation RateInformation(double? monthlyRate, CurrencyType? currencyType, string rateErrorMessage) =>
-            new RateInformation(monthlyRate, currencyType, rateErrorMessage);
+        public static RateInformation RateInformation(double? monthlyRate, CurrencyType? currencyType, string rateErrorMessage)
+            => new RateInformation(monthlyRate, currencyType, rateErrorMessage);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReleaseResponse"/> class.
         /// </summary>
         /// <param name="releaseId"> The release id of a created release. </param>
         /// <returns>A new <see cref="ReleaseResponse"/> instance for mocking.</returns>
-        public static ReleaseResponse ReleaseResponse(string releaseId) =>
-            new ReleaseResponse(releaseId);
+        public static ReleaseResponse ReleaseResponse(string releaseId)
+            => new ReleaseResponse(releaseId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateNumberCapabilitiesResponse"/> class.
         /// </summary>
         /// <param name="capabilitiesUpdateId"> The capabilities id. </param>
         /// <returns>A new <see cref="UpdateNumberCapabilitiesResponse"/> instance for mocking.</returns>
-        public static UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId) =>
-            new UpdateNumberCapabilitiesResponse(capabilitiesUpdateId);
+        public static UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId)
+            => new UpdateNumberCapabilitiesResponse(capabilitiesUpdateId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdatePhoneNumberCapabilitiesResponse"/> class.
@@ -267,7 +267,7 @@ namespace Azure.Communication.Administration.Models
         /// <param name="capabilitiesUpdateStatus"> Status of the capabilities update. </param>
         /// <param name="phoneNumberCapabilitiesUpdates"> The capabilities update for each of a set of phone numbers. </param>
         /// <returns>A new <see cref="UpdatePhoneNumberCapabilitiesResponse"/> instance for mocking.</returns>
-        public static UpdatePhoneNumberCapabilitiesResponse UpdatePhoneNumberCapabilitiesResponse(string capabilitiesUpdateId, DateTimeOffset? createdAt, CapabilitiesUpdateStatus? capabilitiesUpdateStatus, IReadOnlyDictionary<string, NumberUpdateCapabilities> phoneNumberCapabilitiesUpdates) =>
-            new UpdatePhoneNumberCapabilitiesResponse(capabilitiesUpdateId, createdAt, capabilitiesUpdateStatus, phoneNumberCapabilitiesUpdates);
+        public static UpdatePhoneNumberCapabilitiesResponse UpdatePhoneNumberCapabilitiesResponse(string capabilitiesUpdateId, DateTimeOffset? createdAt, CapabilitiesUpdateStatus? capabilitiesUpdateStatus, IReadOnlyDictionary<string, NumberUpdateCapabilities> phoneNumberCapabilitiesUpdates)
+            => new UpdatePhoneNumberCapabilitiesResponse(capabilitiesUpdateId, createdAt, capabilitiesUpdateStatus, phoneNumberCapabilitiesUpdates);
     }
 }

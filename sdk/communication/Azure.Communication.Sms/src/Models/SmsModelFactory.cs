@@ -12,7 +12,7 @@ namespace Azure.Communication.Sms.Models
         /// Initializes a new instance of the <see cref="SendSmsResponse"/> class.
         /// </summary>
         /// <param name="messageId"> The identifier of the outgoing SMS message. </param>
-        public static SendSmsResponse SendSmsResponse(string messageId) =>
-            new SendSmsResponse(messageId);
+        public static SendSmsResponse SendSmsResponse(string messageId)
+            => new SendSmsResponse(messageId);
     }
 }
