@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("ADD not supported")]
+        [Ignore("AAD not supported")]
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
 
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
-                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
+                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to two.");
 
                 // row = 2, column = 5 has empty text and no elements
                 if (cell.RowIndex == 2 && cell.ColumnIndex == 5)

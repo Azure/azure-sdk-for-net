@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The text line style name, including handwriting and other. </summary>
-    public readonly partial struct TextStyle : IEquatable<TextStyle>
+    internal readonly partial struct TextStyle : IEquatable<TextStyle>
     {
         private readonly string _value;
 
