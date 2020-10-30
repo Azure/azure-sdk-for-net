@@ -270,7 +270,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessagesAsync(messages);
 
-                var receiver = client.CreateReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions
+                {
+                    PrefetchCount = 10
+                });
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
@@ -610,6 +613,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(
                     async () => await receiver.DeadLetterMessageAsync(peekedMessage),
                     Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        /// <summary>
+        /// This test validates that we are not limited to 5k unsettled messages on the link, as we have updated
+        /// the sessionSettings.IncomingWindow value to Int32.MaxValue in AmqpConnectionScope. Without this change, receivers
+        /// would just stop receiving after 5k unsettled messages and would not throw an exception.
+        /// </summary>
+        [Test]
+        public async Task CanHaveManyUnsettledMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                int sentCount = 6000;
+                int messagesPerBatch = 1000;
+
+                await sender.SendMessagesAsync(new List<ServiceBusMessage>());
+
+                for (int i = 0; i < sentCount/messagesPerBatch; i++)
+                {
+                    await sender.SendMessagesAsync(GetMessages(messagesPerBatch));
+                }
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var receivedCount = 0;
+                while (receivedCount <= sentCount)
+                {
+                    var msgs = await receiver.ReceiveMessagesAsync(sentCount);
+                    receivedCount += msgs.Count;
+                }
             }
         }
 

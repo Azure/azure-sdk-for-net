@@ -29,11 +29,11 @@ namespace Azure.DigitalTwins.Core
         /// // the query API. It iterates over the response pages first to access to the query-charge header,
         /// // and then the digital twin results within each page.
         ///
-        /// AsyncPageable&lt;string&gt; asyncPageableResponseWithCharge = client.QueryAsync(&quot;SELECT * FROM digitaltwins&quot;);
+        /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponseWithCharge = client.QueryAsync&lt;BasicDigitalTwin&gt;(&quot;SELECT * FROM digitaltwins&quot;);
         /// int pageNum = 0;
         ///
         /// // The &quot;await&quot; keyword here is required as a call is made when fetching a new page.
-        /// await foreach (Page&lt;string&gt; page in asyncPageableResponseWithCharge.AsPages())
+        /// await foreach (Page&lt;BasicDigitalTwin&gt; page in asyncPageableResponseWithCharge.AsPages())
         /// {
         ///     Console.WriteLine($&quot;Page {++pageNum} results:&quot;);
         ///
@@ -45,14 +45,13 @@ namespace Azure.DigitalTwins.Core
         ///
         ///     // Iterate over the twin instances.
         ///     // The &quot;await&quot; keyword is not required here as the paged response is local.
-        ///     foreach (string response in page.Values)
+        ///     foreach (BasicDigitalTwin twin in page.Values)
         ///     {
-        ///         BasicDigitalTwin twin = JsonSerializer.Deserialize&lt;BasicDigitalTwin&gt;(response);
         ///         Console.WriteLine($&quot;Found digital twin &apos;{twin.Id}&apos;&quot;);
         ///     }
         /// }
         /// </code>
-        public static bool TryGetQueryCharge(Page<string> page, out float queryCharge)
+        public static bool TryGetQueryCharge<T>(Page<T> page, out float queryCharge)
         {
             Argument.AssertNotNull(page, nameof(page));
 

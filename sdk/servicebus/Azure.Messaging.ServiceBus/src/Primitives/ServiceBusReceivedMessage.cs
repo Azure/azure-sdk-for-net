@@ -44,11 +44,19 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSettled { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that was transmitted over the wire.
         /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; internal set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that was transmitted over the wire.
+        /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.
@@ -57,7 +65,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
+                if (AmqpMessage.Body is AmqpDataMessageBody dataBody)
                 {
                     return dataBody.Data.ConvertAndFlattenData();
                 }
@@ -196,16 +204,6 @@ namespace Azure.Messaging.ServiceBus
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
         public IReadOnlyDictionary<string, object> ApplicationProperties => new ReadOnlyDictionary<string, object>(AmqpMessage.ApplicationProperties);
-
-        /// <summary>
-        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterReasonHeader = "DeadLetterReason";
-
-        /// <summary>
-        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
 
         /// <summary>
         /// Gets the lock token for the current message.
@@ -396,7 +394,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterReasonHeader, out object reason))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reason))
                 {
                     return reason as string;
                 }
@@ -411,7 +409,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterErrorDescriptionHeader, out object description))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object description))
                 {
                     return description as string;
                 }

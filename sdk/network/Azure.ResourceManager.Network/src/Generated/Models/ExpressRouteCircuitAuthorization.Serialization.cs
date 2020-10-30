@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("authorizationKey"))
@@ -83,11 +88,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("authorizationUseStatus"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             authorizationUseStatus = new AuthorizationUseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }

@@ -104,15 +104,30 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("allocatedOutboundPorts"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allocatedOutboundPorts = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("frontendIPConfigurations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -123,26 +138,51 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("backendAddressPool"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             backendAddressPool = DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             protocol = new LoadBalancerOutboundRuleProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableTcpReset"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             enableTcpReset = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("idleTimeoutInMinutes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             idleTimeoutInMinutes = property0.Value.GetInt32();
                             continue;
                         }

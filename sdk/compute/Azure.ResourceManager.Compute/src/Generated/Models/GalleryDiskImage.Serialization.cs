@@ -37,16 +37,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("sizeInGB"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sizeInGB = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("hostCaching"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     hostCaching = property.Value.GetString().ToHostCaching();
                     continue;
                 }
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
                     continue;
                 }

@@ -25,13 +25,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string BothValue = "Both";
         private const string DownValue = "Down";
         private const string UpValue = "Up";
-
-        /// <summary> Both. </summary>
-        public static BoundaryDirection Both { get; } = new BoundaryDirection(BothValue);
-        /// <summary> Down. </summary>
-        public static BoundaryDirection Down { get; } = new BoundaryDirection(DownValue);
-        /// <summary> Up. </summary>
-        public static BoundaryDirection Up { get; } = new BoundaryDirection(UpValue);
         /// <summary> Determines if two <see cref="BoundaryDirection"/> values are the same. </summary>
         public static bool operator ==(BoundaryDirection left, BoundaryDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BoundaryDirection"/> values are not the same. </summary>

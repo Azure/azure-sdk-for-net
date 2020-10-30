@@ -19,11 +19,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesIdentity series = default;
             IReadOnlyList<DateTimeOffset> timestampList = default;
             IReadOnlyList<double> valueList = default;
-            IReadOnlyList<bool> isAnomalyList = default;
-            IReadOnlyList<int> periodList = default;
-            IReadOnlyList<double> expectedValueList = default;
-            IReadOnlyList<double> lowerBoundaryList = default;
-            IReadOnlyList<double> upperBoundaryList = default;
+            IReadOnlyList<bool?> isAnomalyList = default;
+            IReadOnlyList<int?> periodList = default;
+            IReadOnlyList<double?> expectedValueList = default;
+            IReadOnlyList<double?> lowerBoundaryList = default;
+            IReadOnlyList<double?> upperBoundaryList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("series"))
@@ -53,50 +53,85 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("isAnomalyList"))
                 {
-                    List<bool> array = new List<bool>();
+                    List<bool?> array = new List<bool?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetBoolean());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetBoolean());
+                        }
                     }
                     isAnomalyList = array;
                     continue;
                 }
                 if (property.NameEquals("periodList"))
                 {
-                    List<int> array = new List<int>();
+                    List<int?> array = new List<int?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetInt32());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetInt32());
+                        }
                     }
                     periodList = array;
                     continue;
                 }
                 if (property.NameEquals("expectedValueList"))
                 {
-                    List<double> array = new List<double>();
+                    List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetDouble());
+                        }
                     }
                     expectedValueList = array;
                     continue;
                 }
                 if (property.NameEquals("lowerBoundaryList"))
                 {
-                    List<double> array = new List<double>();
+                    List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetDouble());
+                        }
                     }
                     lowerBoundaryList = array;
                     continue;
                 }
                 if (property.NameEquals("upperBoundaryList"))
                 {
-                    List<double> array = new List<double>();
+                    List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetDouble());
+                        }
                     }
                     upperBoundaryList = array;
                     continue;

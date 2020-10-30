@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,7 +15,7 @@ namespace Azure.DigitalTwins.Core.Tests
     [Parallelizable(ParallelScope.Self)]
     public abstract class E2eTestBase : RecordedTestBase<DigitalTwinsTestEnvironment>
     {
-        protected static readonly int MaxTries = 10;
+        protected static readonly int MaxTries = 1000;
 
         // Based on testing, the max length of models can be 27 only and works well for other resources as well. This can be updated when required.
         protected static readonly int MaxIdLength = 27;
@@ -37,13 +35,18 @@ namespace Azure.DigitalTwins.Core.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected DigitalTwinsClient GetClient()
+        protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)
         {
+            if (options == null)
+            {
+                options = new DigitalTwinsClientOptions();
+            }
+
             return InstrumentClient(
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(options)));
         }
 
         protected DigitalTwinsClient GetFakeClient()
@@ -52,7 +55,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     new FakeTokenCredential(),
-                    Recording.InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
         }
 
         public async Task<string> GetUniqueModelIdAsync(DigitalTwinsClient dtClient, string baseName)
@@ -62,7 +65,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         public async Task<string> GetUniqueTwinIdAsync(DigitalTwinsClient dtClient, string baseName)
         {
-            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync(twinId)).ConfigureAwait(false);
+            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<BasicDigitalTwin>(twinId)).ConfigureAwait(false);
         }
 
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)

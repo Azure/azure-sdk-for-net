@@ -11,12 +11,10 @@
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// properties related to eventgrid.
+    /// Properties related to EventGrid.
     /// </summary>
     [Newtonsoft.Json.JsonObject("EventGrid")]
     public partial class EventGrid : DigitalTwinsEndpointResourceProperties
@@ -32,19 +30,21 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// <summary>
         /// Initializes a new instance of the EventGrid class.
         /// </summary>
+        /// <param name="topicEndpoint">EventGrid Topic Endpoint</param>
         /// <param name="accessKey1">EventGrid secondary accesskey. Will be
-        /// obfuscated during read</param>
-        /// <param name="accessKey2">EventGrid secondary accesskey. Will be
-        /// obfuscated during read</param>
+        /// obfuscated during read.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Provisioning', 'Deleting', 'Succeeded', 'Failed',
-        /// 'Canceled'</param>
+        /// 'Canceled', 'Deleted', 'Warning', 'Suspending', 'Restoring',
+        /// 'Moving', 'Disabled'</param>
         /// <param name="createdTime">Time when the Endpoint was added to
         /// DigitalTwinsInstance.</param>
-        /// <param name="tags">The resource tags.</param>
-        /// <param name="topicEndpoint">EventGrid Topic Endpoint</param>
-        public EventGrid(string accessKey1, string accessKey2, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), IDictionary<string, string> tags = default(IDictionary<string, string>), string topicEndpoint = default(string))
-            : base(provisioningState, createdTime, tags)
+        /// <param name="deadLetterSecret">Dead letter storage secret. Will be
+        /// obfuscated during read.</param>
+        /// <param name="accessKey2">EventGrid secondary accesskey. Will be
+        /// obfuscated during read.</param>
+        public EventGrid(string topicEndpoint, string accessKey1, string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), string deadLetterSecret = default(string), string accessKey2 = default(string))
+            : base(provisioningState, createdTime, deadLetterSecret)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;
@@ -65,14 +65,14 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 
         /// <summary>
         /// Gets or sets eventGrid secondary accesskey. Will be obfuscated
-        /// during read
+        /// during read.
         /// </summary>
         [JsonProperty(PropertyName = "accessKey1")]
         public string AccessKey1 { get; set; }
 
         /// <summary>
         /// Gets or sets eventGrid secondary accesskey. Will be obfuscated
-        /// during read
+        /// during read.
         /// </summary>
         [JsonProperty(PropertyName = "accessKey2")]
         public string AccessKey2 { get; set; }

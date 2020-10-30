@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("linkSpeedInMbps"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     linkSpeedInMbps = property.Value.GetInt32();
                     continue;
                 }

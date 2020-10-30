@@ -48,87 +48,63 @@ param(
   [Parameter(Mandatory = $false)]
   [string]$PRBody = $PRTitle,
 
-  [Parameter(Mandatory = $false)]
-  [string]$PRLabels
+  [string]$PRLabels,
+
+  [string]$UserReviewers,
+
+  [string]$TeamReviewers,
+
+  [string]$Assignees,
+
+  [boolean]$CloseAfterOpenForTesting=$false
 )
 
-$headers = @{
-  Authorization = "bearer $AuthToken"
-}
-
-$query = "state=open&head=${PROwner}:${PRBranch}&base=${BaseBranch}"
-
-function AddLabels([int] $prNumber, [string] $prLabelString, [array] $existingLabels)
-{
-  # Adding labels to the pr.
-  if (-not $prLabelString) {
-    Write-Verbose "There are no labels added to the PR."
-    return
-  }
-
-  # Parse the labels from string to array
-  $prLabelArray = @($prLabelString.Split(",") | % { $_.Trim() } | ? { return $_ })
-  foreach ($label in $existingLabels) {
-    if ($prLabelArray -contains $label.name) {
-      continue
-    }
-    $prLabelArray += $label.name
-  }
-  $prLabelUri = "https://api.github.com/repos/$RepoOwner/$RepoName/issues/$prNumber"
-  $labelRequestData = @{
-    labels = $prLabelArray
-  }
-  try {
-    $resp = Invoke-RestMethod -Method PATCH -Headers $headers $prLabelUri -Body ($labelRequestData | ConvertTo-Json)
-  }
-  catch {
-    Write-Error "Invoke-RestMethod $prLabelUri failed with exception:`n$_"
-  }
-
-  $resp | Write-Verbose
-  Write-Host -f green "Label(s) [$prLabelArray] added to pull request: https://github.com/$RepoOwner/$RepoName/pull/$prNumber"
-}
+. "${PSScriptRoot}\common.ps1"
 
 try {
-  $resp = Invoke-RestMethod -Headers $headers "https://api.github.com/repos/$RepoOwner/$RepoName/pulls?$query"
+  $resp = Get-GitHubPullRequests -RepoOwner $RepoOwner -RepoName $RepoName `
+  -Head "${PROwner}:${PRBranch}" -Base $BaseBranch
 }
 catch { 
-  Write-Error "Invoke-RestMethod [https://api.github.com/repos/$RepoOwner/$RepoName/pulls?$query] failed with exception:`n$_"
+  LogError "Get-GitHubPullRequests failed with exception:`n$_"
   exit 1
 }
+
 $resp | Write-Verbose
 
 if ($resp.Count -gt 0) {
-    Write-Host -f green "Pull request already exists $($resp[0].html_url)"
-
-    # setting variable to reference the pull request by number
-    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp[0].number)"
-    AddLabels $resp[0].number $PRLabels $resp[0].labels
+  LogDebug "Pull request already exists $($resp[0].html_url)"
+  # setting variable to reference the pull request by number
+  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp[0].number)"
 }
 else {
-  $data = @{
-    title                 = $PRTitle
-    head                  = "${PROwner}:${PRBranch}"
-    base                  = $BaseBranch
-    body                  = $PRBody
-    maintainer_can_modify = $true
-  }
-
   try {
-    $resp = Invoke-RestMethod -Method POST -Headers $headers `
-                              "https://api.github.com/repos/$RepoOwner/$RepoName/pulls" `
-                              -Body ($data | ConvertTo-Json)
+    $resp = New-GitHubPullRequest -RepoOwner $RepoOwner -RepoName $RepoName -Title $PRTitle `
+    -Head "${PROwner}:${PRBranch}" -Base $BaseBranch -Body $PRBody -Maintainer_Can_Modify $true `
+    -AuthToken $AuthToken
+
+    $resp | Write-Verbose
+    LogDebug "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
+  
+    # setting variable to reference the pull request by number
+    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
+
+    Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
+    -Users $UserReviewers -Teams $TeamReviewers -AuthToken $AuthToken
+
+    if ($CloseAfterOpenForTesting) {
+      $prState = "closed"
+      LogDebug "Updating https://github.com/$RepoOwner/$RepoName/pull/$($resp.number) state to closed because this was only testing."
+    }
+    else {
+      $prState = "open"
+    }
+
+    Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $resp.number `
+    -State $prState -Labels $PRLabels -Assignees $Assignees -AuthToken $AuthToken
   }
   catch {
-    Write-Error "Invoke-RestMethod [https://api.github.com/repos/$RepoOwner/$RepoName/pulls] failed with exception:`n$_"
+    LogError "Call to GitHub API failed with exception:`n$_"
     exit 1
   }
-
-  $resp | Write-Verbose
-  Write-Host -f green "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
-
-  # setting variable to reference the pull request by number
-  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
-
-  AddLabels $resp.number $PRLabels $resp.labels
 }

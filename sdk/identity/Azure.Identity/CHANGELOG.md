@@ -1,5 +1,19 @@
 # Release History
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
+
+### Breaking Changes
+- Rename property `IncludeX5CClaimHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
+- Removing Application Authentication APIs for GA release. These will be reintroduced in 1.4.0-beta.1.
+  - Removed class `AuthenticationRecord`
+  - Removed class `AuthenticationRequiredException`
+  - Removed class `ClientSecretCredentialOptions` and `ClientSecretCredential` constructor overloads accepting this type
+  - Removed class `UsernamePasswordCredentialOptions` and `UsernamePasswordCredential` constructor overloads accepting this type
+  - Removed properties `EnablePersistentCache` and `AllowUnprotectedCache` from `ClientCertificateCredentialOptions`, `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
+  - Removed properties `AuthenticationRecord` and `DisableAutomaticAuthentication` from `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
+  - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
+  - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`, `InteractiveBrowserCredential` and `UsernamePasswordCredential`
+
+## 1.3.0-beta.2 (2020-10-07)
 
 ### New Features
 - Update `DeviceCodeCredential` to output device code information and authentication instructions in the console, in the case no `deviceCodeCallback` is specified.

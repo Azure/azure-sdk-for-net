@@ -23,21 +23,21 @@
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
-/sdk/applicationinsights/Microsoft.Azure.App*/  @divya-jay @geneh @alongafni
-/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divya-jay @geneh @alongafni
+/sdk/applicationinsights/Microsoft.Azure.App*/  @divyajay @geneh @alongafni
+/sdk/operationalinsights/Microsoft.Azure.Ope*/  @divyajay @geneh @alongafni
 
 # PRLabel: %Batch
 /sdk/batch/                                     @paterasMSFT @dpwatrous
 
 # PRLabel: %Communication
-/sdk/communication/                             @RezaJooyandeh @DominikMe
+/sdk/communication/                             @RezaJooyandeh @DominikMe @ankitarorabit @Azure/azure-sdk-communication-code-reviewers
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
 # PRLabel: %DigitalTwins
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS
@@ -49,10 +49,13 @@
 /sdk/identity/                                  @schaabs @alexanderSher
 
 # PRLabel: %Iot
-/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum
+/sdk/iot/                                       @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @prmathur-microsoft @bikamani @barustum @jamdavi
 
 # PRLabel: %KeyVault
 /sdk/keyvault/                                  @schaabs @heaths
+
+# PRLabel: %Cognitive - Metrics Advisor
+/sdk/metricsadvisor/                            @kinelski
 
 # PRLabel: %Search
 /sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
@@ -65,6 +68,7 @@
 # PRLabel: %Storage
 /sdk/storage/                                   @tg-msft
 /sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
 
 # PRLabel: %Tables
 /sdk/tables/                                    @christothes

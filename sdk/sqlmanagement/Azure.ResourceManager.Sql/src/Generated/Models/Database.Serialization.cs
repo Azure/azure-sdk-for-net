@@ -181,6 +181,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
@@ -201,6 +206,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -226,10 +236,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("createMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             createMode = new CreateMode(property0.Value.GetString());
                             continue;
                         }
@@ -240,11 +260,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("maxSizeBytes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("sampleName"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sampleName = new SampleName(property0.Value.GetString());
                             continue;
                         }
@@ -260,16 +290,31 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("status"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             status = new DatabaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -295,11 +340,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("restorePointInTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseDeletionDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sourceDatabaseDeletionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -325,61 +380,121 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("catalogCollation"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             catalogCollation = new CatalogCollationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("licenseType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             licenseType = new DatabaseLicenseType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxLogSizeBytes"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maxLogSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("earliestRestoreDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("readScale"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             readScale = new DatabaseReadScale(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("readReplicaCount"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             readReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("currentSku"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             currentSku = Sku.DeserializeSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             autoPauseDelay = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             minCapacity = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("pausedDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             pausedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("resumedDate"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             resumedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }

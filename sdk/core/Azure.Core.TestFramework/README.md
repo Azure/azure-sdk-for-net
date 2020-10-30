@@ -28,7 +28,7 @@ public class ConfigurationLiveTests: ClientTestBase
         InstrumentClient(
             new ConfigurationClient(
                 ..., 
-                Recording.InstrumentClientOptions(
+                InstrumentClientOptions(
                     new ConfigurationClientClientOptions())));
     }
 
@@ -140,7 +140,7 @@ If a test or sample uses `TokenCredential` to construct the client use `TestEnvi
             InstrumentClient(
                 new KeyClient(
                     new Uri(TestEnvironment.KeyVaultUrl),TestEnvironment.Credential,
-                    Recording.InstrumentClientOptions(
+                    InstrumentClientOptions(
                         new KeyClientOptions())));
         }
     }
@@ -151,7 +151,7 @@ If a test or sample uses `TokenCredential` to construct the client use `TestEnvi
 
 The test framework provides an ability to record HTTP requests and responses and replay them for offline test runs. This allows the full suite of tests to be run as part of PR validation without running live tests. In general, live tests are run as part of a separate internal pipeline that runs nightly.
 
-To use recorded test functionality inherit from `RecordedTestBase<T>` class and use `Recording.InstrumentClientOptions` method when creating the client instance. Pass the test environment class as a generic argument to `RecordedTestBase`.
+To use recorded test functionality inherit from `RecordedTestBase<T>` class and use `InstrumentClientOptions` method when creating the client instance. Pass the test environment class as a generic argument to `RecordedTestBase`.
 
 
 ``` C#
@@ -165,7 +165,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
         InstrumentClient(
             new ConfigurationClient(
                 ..., 
-                Recording.InstrumentClientOptions(
+                InstrumentClientOptions(
                     new ConfigurationClientClientOptions())));
     }
 
@@ -210,7 +210,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 
 ## Recording
 
-When tests are run in recording mode, session records are saved to `artifacts/bin/<ProjectName>/<TargetFramework>/SessionRecords` directory. You can copy recordings to the project directory manually or by executing `dotnet msbuild /t:UpdateSessionRecords` in the test project directory.
+When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
 
 __NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make sure you are running the right target framework.
 

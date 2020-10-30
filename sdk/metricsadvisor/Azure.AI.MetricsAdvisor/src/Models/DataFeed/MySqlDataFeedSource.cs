@@ -7,16 +7,17 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A Data feed source.
+    /// Describes a MySQL data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public class MySqlDataFeedSource : DataFeedSource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MySqlDataFeedSource"/> class.
         /// </summary>
-        /// <param name="connectionString"> Database connection string. </param>
-        /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="query"/> is null. </exception>
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="query">The query to retrieve the data to be ingested.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public MySqlDataFeedSource(string connectionString, string query)
             : base(DataFeedSourceType.MySql)
         {
@@ -24,6 +25,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
             Parameter = new SqlSourceParameter(connectionString, query);
+        }
+
+        internal MySqlDataFeedSource(SqlSourceParameter parameter)
+            : base(DataFeedSourceType.MySql)
+        {
+            Argument.AssertNotNull(parameter, nameof(parameter));
+
+            Parameter = parameter;
         }
     }
 }

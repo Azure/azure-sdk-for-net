@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     /// </summary>
     public static class Status
     {
-        public const string NeverConnected = "NeverConnected";
+        public const string NotYetRegistered = "NotYetRegistered";
         public const string ConnectedRecently = "ConnectedRecently";
         public const string NotConnectedRecently = "NotConnectedRecently";
-        public const string Expired = "Expired";
+        public const string Disconnected = "Disconnected";
         public const string Error = "Error";
     }
 }

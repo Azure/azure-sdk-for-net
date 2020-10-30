@@ -16,8 +16,7 @@ using Azure.Data.Tables.Sas;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// The <see cref="TableClient"/> allows you to interact with Azure Storage
-    /// Tables.
+    /// The <see cref="TableClient"/> allows you to interact with Azure Tables hosted in either Azure storage accounts or Azure Cosmos DB table API.
     /// </summary>
     public class TableClient
     {
@@ -30,7 +29,8 @@ namespace Azure.Data.Tables
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
+        /// token credential. See <see cref="TableClient.GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -48,12 +48,12 @@ namespace Azure.Data.Tables
 
             if (endpoint.Scheme != "https")
             {
-                throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
+                throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified table service <see cref="Uri" /> and <see cref="TableSharedKeyCredential" />.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -70,7 +70,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified table service <see cref="Uri" /> and <see cref="TableSharedKeyCredential" />.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -89,9 +89,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified connection string.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -109,6 +108,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified connection string.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -175,15 +175,15 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/>
-        /// class for mocking.
+        /// Initializes a new instance of the <see cref="TableClient"/> class for mocking.
         /// </summary>
         protected TableClient()
         { }
 
-
         /// <summary>
-        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table which can be used to generate a Shared Access Signature (SAS)
+        /// token capable of granting limited access to table resources.
+        /// See <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas">Create a service SAS</see> for more details.
         /// </summary>
         /// <param name="permissions"><see cref="TableSasPermissions"/> containing the allowed permissions.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
@@ -194,9 +194,15 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table which can be used to generate a Shared Access Signature (SAS)
+        /// token capable of granting limited access to table resources.
+        /// See <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas">Create a service SAS</see> for more details.
         /// </summary>
-        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="rawPermissions">
+        /// The permissions associated with the shared access signature.
+        /// This string should contain one or more of the following permission characters in this order: "racwdl".
+        /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)"/> if you prefer to specify strongly typed permission settings.
+        /// </param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
@@ -205,7 +211,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the current table.
+        /// Creates the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -227,7 +233,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the current table.
+        /// Creates the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -249,7 +255,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the current table.
+        /// Creates the table specified by the tableName parameter used to construct this client instance if it does not already exist.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -275,7 +281,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the current table.
+        /// Creates the table specified by the tableName parameter used to construct this client instance if it does not already exist.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -301,7 +307,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes the current table.
+        /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
@@ -311,7 +317,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(table: _table, null, cancellationToken: cancellationToken);
+                return _tableOperations.Delete(table: _table, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -321,7 +327,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes the current table.
+        /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
@@ -331,7 +337,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(table: _table, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(table: _table, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -341,8 +347,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Adds a Table Entity into the Table.
+        /// Adds a Table Entity of type <typeparamref name="T"/> into the Table.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -373,8 +380,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Adds a Table Entity into the Table.
+        /// Adds a Table Entity of type <typeparamref name="T"/> into the Table.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to add.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> containing headers such as ETag</returns>
@@ -404,8 +412,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets the specified table entity.
+        /// Gets the specified table entity of type <typeparamref name="T"/>.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set.</param>
@@ -442,8 +451,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets the specified table entity.
+        /// Gets the specified table entity of type <typeparamref name="T"/>.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="select">Selects which set of entity properties to return in the result set.</param>
@@ -480,10 +490,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
+        /// Replaces the specified table entity of type <typeparamref name="T"/>, if it exists. Creates the entity if it does not exist.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
+        /// <param name="mode">Determines the behavior of the upsert operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -527,10 +538,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
+        /// Replaces the specified table entity of type <typeparamref name="T"/>, if it exists. Creates the entity if it does not exist.
         /// </summary>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
+        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -574,11 +586,21 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists.
+        /// Updates the specified table entity of type <typeparamref name="T"/>, if it exists.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Replace"/>, the entity will be replaced.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/> will be merged with the existing entity.
         /// </summary>
+        /// <remarks>
+        /// See <see cref="TableUpdateMode"/> for more information about the behavior of the <paramref name="mode"/>.
+        /// </remarks>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// </param>
+        /// <param name="mode">Determines the behavior of the Update operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -626,11 +648,21 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Replaces the specified table entity, if it exists.
+        /// Updates the specified table entity of type <typeparamref name="T"/>, if it exists.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Replace"/>, the entity will be replaced.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/> will be merged with the existing entity.
         /// </summary>
+        /// <remarks>
+        /// See <see cref="TableUpdateMode"/> for more information about the behavior of the <paramref name="mode"/>.
+        /// </remarks>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to update.</param>
-        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
-        /// <param name="mode">An enum that determines which upsert operation to perform.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// </param>
+        /// <param name="mode">Determines the behavior of the Update operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -680,10 +712,21 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
+        /// <param name="filter">
+        /// Returns only entities that satisfy the specified filter expression.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="select">
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
@@ -703,10 +746,21 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
+        /// <param name="filter">
+        /// Returns only entities that satisfy the specified filter expression.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="select">
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
@@ -726,11 +780,22 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
+        /// <param name="filter">
+        /// Returns only entities that satisfy the specified OData filter.
+        /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="select">
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             string selectArg = select == null ? null : string.Join(",", select);
@@ -739,31 +804,34 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
+                    {
+                        var response = await _tableOperations.QueryEntitiesAsync(
+                            _table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            }, async (continuationToken, _) =>
-            {
-                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    },
+                    async (continuationToken, pageSizeHint) =>
+                    {
+                        var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                var response = await _tableOperations.QueryEntitiesAsync(
-                    _table,
-                    queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                    nextPartitionKey: NextPartitionKey,
-                    nextRowKey: NextRowKey,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await _tableOperations.QueryEntitiesAsync(
+                            _table,
+                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            nextPartitionKey: NextPartitionKey,
+                            nextRowKey: NextRowKey,
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                    CreateContinuationTokenFromHeaders(response.Headers),
-                    response.GetRawResponse());
-            });
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    },
+                    maxPerPage);
             }
             catch (Exception ex)
             {
@@ -776,60 +844,78 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Queries entities in the table.
         /// </summary>
-        /// <param name="filter">Returns only entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of entities that will be returned per page.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set.</param>
+        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
+        /// <param name="filter">
+        /// Returns only entities that satisfy the specified OData filter.
+        /// For example, the following filter would filter entities with a PartitionKey of 'foo': <c>"PartitionKey eq 'foo'"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="select">
+        /// An <see cref="IEnumerable{String}"/> of entity property names that selects which set of entity properties to return in the result set.
+        /// For example, the following value would return only the PartitionKey and RowKey properties: <c>new[] { "PartitionKey, RowKey"}</c>.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-
+        /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
-            return PageableHelpers.CreateEnumerable((int? _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
+            return PageableHelpers.CreateEnumerable(
+                pageSizeHint =>
                 {
-                    var response = _tableOperations.QueryEntities(_table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                        cancellationToken: cancellationToken);
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
+                    {
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
-                    return Page.FromValues(
-                        response.Value.Value.ToTableEntityList<T>(),
-                        CreateContinuationTokenFromHeaders(response.Headers),
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (continuationToken, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
-                scope.Start();
-                try
-                {
-                    var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+                        var response = _tableOperations.QueryEntities(_table,
+                            queryOptions: queryOptions,
+                            cancellationToken: cancellationToken);
 
-                    var response = _tableOperations.QueryEntities(
-                        _table,
-                        queryOptions: new QueryOptions() { Format = _format, Top = maxPerPage, Filter = filter, Select = selectArg },
-                        nextPartitionKey: NextPartitionKey,
-                        nextRowKey: NextRowKey,
-                        cancellationToken: cancellationToken);
-
-                    return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
-                        CreateContinuationTokenFromHeaders(response.Headers),
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
+                        return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                (continuationToken, pageSizeHint) =>
                 {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+                    scope.Start();
+                    try
+                    {
+                        var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+
+                        var response = _tableOperations.QueryEntities(
+                            _table,
+                            queryOptions: queryOptions,
+                            nextPartitionKey: NextPartitionKey,
+                            nextRowKey: NextRowKey,
+                            cancellationToken: cancellationToken);
+
+                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                            CreateContinuationTokenFromHeaders(response.Headers),
+                            response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>
@@ -837,7 +923,12 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// The default is to delete unconditionally.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -868,7 +959,12 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="ifMatch">The If-Match value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
+        /// <param name="ifMatch">
+        /// The If-Match value to be used for optimistic concurrency.
+        /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// The default is to delete unconditionally.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -895,7 +991,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(CancellationToken cancellationToken = default)
         {
@@ -914,7 +1010,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(CancellationToken cancellationToken = default)
         {
@@ -934,7 +1030,7 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
@@ -953,7 +1049,7 @@ namespace Azure.Data.Tables
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
@@ -971,15 +1067,15 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates an Odata filter query string from the provided expression.
+        /// Creates an OData filter query string from the provided expression.
         /// </summary>
-        /// <typeparam name="T">The type of the entity being queried. Typically this will be derrived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
-        /// <param name="filter">A filter expresssion.</param>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expression.</param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
         /// <summary>
-        /// Create a <see cref="TableTransactionalBatch" /> for the given partitionkey value.
+        /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
         /// <returns></returns>

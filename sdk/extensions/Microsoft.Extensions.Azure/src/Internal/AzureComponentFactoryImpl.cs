@@ -20,13 +20,14 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <inheritdoc />
-        public override TokenCredential CreateCredential(IConfiguration configuration)
+        public override TokenCredential CreateTokenCredential(IConfiguration configuration)
         {
             return ClientFactory.CreateCredential(configuration) ?? _globalOptions.CurrentValue.CredentialFactory(_serviceProvider);
         }
 
         public override object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration)
         {
+            if (optionsType == null) throw new ArgumentNullException(nameof(optionsType));
             var options = ClientFactory.CreateClientOptions(serviceVersion, optionsType);
 
             if (options is ClientOptions clientOptions)
@@ -38,6 +39,15 @@ namespace Microsoft.Extensions.Azure
             }
             configuration?.Bind(options);
             return options;
+        }
+
+        public override object CreateClient(Type clientType, IConfiguration configuration, TokenCredential credential, object clientOptions)
+        {
+            if (clientType == null) throw new ArgumentNullException(nameof(clientType));
+            if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+            if (clientOptions == null) throw new ArgumentNullException(nameof(clientOptions));
+
+            return ClientFactory.CreateClient(clientType, clientOptions.GetType(), clientOptions, configuration, credential);
         }
     }
 }

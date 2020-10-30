@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Client
@@ -14,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
     {
         /// <summary>
         ///   Verifies that the <see cref="EventHubConnection" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   connect to the Service Bus service.
         /// </summary>
         ///
         [Test]
@@ -27,6 +25,76 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
 
                 await using (var client = new ServiceBusClient(connectionString, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectUsingSharedKeyCredentialWithSignature()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
+                var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
+                var credential = new ServiceBusSharedAccessKeyCredential(parsed.SharedAccessSignature);
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
+                {
+                    Assert.That(async () =>
+                    {
+                        ServiceBusReceiver receiver = null;
+
+                        try
+                        {
+                            receiver = client.CreateReceiver(scope.QueueName);
+                        }
+                        finally
+                        {
+                            await (receiver?.DisposeAsync() ?? new ValueTask());
+                        }
+
+                    }, Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   connect to the Service Bus service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectUsingSharedKeyCredentialWithSharedKey()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
+                var credential = new ServiceBusSharedAccessKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
+
+                await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
                 {
                     Assert.That(async () =>
                     {
@@ -66,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
@@ -81,10 +149,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.CreateSessionReceiverAsync(
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.AcceptSessionAsync(
                         scope.QueueName,
-                        new ServiceBusSessionReceiverOptions { SessionId = "sessionId" }));
+                        "sessionId"));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.CreateProcessor(scope.QueueName));
             }
@@ -110,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 }
                 else
                 {
-                    receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 var receivedMessage = await receiver.ReceiveMessageAsync().ConfigureAwait(false);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
@@ -125,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 {
                     // close old receiver so we can get session lock
                     await receiver.DisposeAsync();
-                    await client.CreateSessionReceiverAsync(scope.QueueName);
+                    await client.AcceptNextSessionAsync(scope.QueueName);
                 }
                 client.CreateProcessor(scope.QueueName);
             }

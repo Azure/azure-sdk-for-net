@@ -20,16 +20,14 @@ steps:
     displayName: (MacOS) Grant access to ~/.Azure
     condition: contains(variables['OSVmImage'], 'mac')
 
-  # New-TestResources command requires Az module
-  - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
-    displayName: Install Azure PowerShell module
-
   - task: Powershell@2
     inputs:
       displayName: Register Dogfood environment
       targetType: inline
       pwsh: true
       script: |
+        eng/common/TestResources/Import-AzModules.ps1
+
         $environmentSpec = @"
           $(env-config-dogfood)
         "@ | ConvertFrom-Json -AsHashtable;

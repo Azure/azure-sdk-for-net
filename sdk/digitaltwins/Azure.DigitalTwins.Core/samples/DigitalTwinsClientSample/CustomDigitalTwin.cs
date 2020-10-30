@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
@@ -12,14 +12,14 @@ namespace Azure.DigitalTwins.Core.Samples
     /// </summary>
     internal class CustomDigitalTwin
     {
-        [JsonPropertyName("$dtId")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinId)]
         public string Id { get; set; }
 
-        [JsonPropertyName("$etag")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
         public string ETag { get; set; }
 
-        [JsonPropertyName("$metadata")]
-        public CustomDigitalTwinMetadata Metadata { get; set; } = new CustomDigitalTwinMetadata();
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
+        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
 
         [JsonPropertyName("Prop1")]
         public string Prop1 { get; set; }
@@ -28,42 +28,21 @@ namespace Azure.DigitalTwins.Core.Samples
         public int Prop2 { get; set; }
 
         [JsonPropertyName("Component1")]
-        public Component1 Component1 { get; set; }
+        public MyCustomComponent Component1 { get; set; }
     }
 
-    internal class Component1
+    internal class MyCustomComponent
     {
-        [JsonPropertyName("$metadata")]
-        public Component1Metadata Metadata { get; set; } = new Component1Metadata();
+        /// <summary>
+        /// A component must have a property named $metadata with no client-supplied properties, to be distinguished from other properties as a component.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
+        public Dictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
 
         [JsonPropertyName("ComponentProp1")]
         public string ComponentProp1 { get; set; }
 
         [JsonPropertyName("ComponentProp2")]
         public int ComponentProp2 { get; set; }
-    }
-
-    internal class Metadata
-    {
-        [JsonPropertyName("$model")]
-        public string ModelId { get; set; }
-    }
-
-    internal class CustomDigitalTwinMetadata : Metadata
-    {
-        [JsonPropertyName("Prop1")]
-        public WritableProperty Prop1 { get; set; }
-
-        [JsonPropertyName("Prop2")]
-        public WritableProperty Prop2 { get; set; }
-    }
-
-    internal class Component1Metadata
-    {
-        [JsonPropertyName("ComponentProp1")]
-        public WritableProperty ComponentProp1 { get; set; }
-
-        [JsonPropertyName("ComponentProp2")]
-        public WritableProperty ComponentProp2 { get; set; }
     }
 }

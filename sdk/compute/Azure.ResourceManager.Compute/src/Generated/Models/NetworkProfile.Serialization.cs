@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("networkInterfaces"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NetworkInterfaceReference> array = new List<NetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

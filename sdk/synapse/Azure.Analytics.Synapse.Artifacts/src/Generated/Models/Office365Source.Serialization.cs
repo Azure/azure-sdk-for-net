@@ -89,31 +89,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("allowedGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     allowedGroups = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("userScopeFilterUri"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     userScopeFilterUri = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("dateFilterColumn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dateFilterColumn = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTime = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endTime = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("outputColumns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     outputColumns = property.Value.GetObject();
                     continue;
                 }
@@ -124,16 +154,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("sourceRetryCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }

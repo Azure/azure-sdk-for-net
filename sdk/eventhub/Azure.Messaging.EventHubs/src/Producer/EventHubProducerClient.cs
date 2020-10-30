@@ -26,13 +26,24 @@ namespace Azure.Messaging.EventHubs.Producer
     /// </summary>
     ///
     /// <remarks>
-    ///   Allowing automatic routing of partitions is recommended when:
-    ///   <para>- The sending of events needs to be highly available.</para>
-    ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+    ///   <para>
+    ///     Allowing automatic routing of partitions is recommended when:
+    ///     <para>- The sending of events needs to be highly available.</para>
+    ///     <para>- The event data should be evenly distributed among all available partitions.</para>
+    ///   </para>
     ///
-    ///   If no partition is specified, the following rules are used for automatically selecting one:
-    ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-    ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    ///   <para>
+    ///     If no partition is specified, the following rules are used for automatically selecting one:
+    ///     <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+    ///     <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    ///   </para>
+    ///
+    ///   <para>
+    ///     The <see cref="EventHubProducerClient" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
+    ///     publishes events regularly or semi-regularly.  The producer holds responsibility for efficient resource management, working to keep resource usage low during
+    ///     periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
+    ///     method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///   </para>
     /// </remarks>
     ///
     public class EventHubProducerClient : IAsyncDisposable
@@ -214,6 +225,44 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Options = clientOptions;
+
+            PartitionProducerPool = new TransportProducerPool(partitionId =>
+                Connection.CreateTransportProducer(
+                    partitionId,
+                    clientOptions.CreateFeatureFlags(),
+                    Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
+                    RetryPolicy));
+
+            if (RequiresStatefulPartitions(clientOptions))
+            {
+                PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
+            }
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
+        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
+        ///
+        internal EventHubProducerClient(string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        EventHubsSharedAccessKeyCredential credential,
+                                        EventHubProducerClientOptions clientOptions = default)
+        {
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
+
+            OwnsConnection = true;
+            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            Options = clientOptions;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
 
             PartitionProducerPool = new TransportProducerPool(partitionId =>
                 Connection.CreateTransportProducer(

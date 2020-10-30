@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
@@ -17,9 +17,9 @@
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.Search.Documents" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
   </ItemGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

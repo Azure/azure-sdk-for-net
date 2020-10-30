@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("paths"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -58,11 +63,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("kind"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     kind = new PartitionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     version = property.Value.GetInt32();
                     continue;
                 }

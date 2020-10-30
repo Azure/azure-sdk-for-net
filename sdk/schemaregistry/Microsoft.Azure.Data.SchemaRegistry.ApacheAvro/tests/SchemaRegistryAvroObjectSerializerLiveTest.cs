@@ -23,17 +23,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
         private SchemaRegistryClient CreateClient() =>
             InstrumentClient(new SchemaRegistryClient(
-                TestEnvironment.SchemaRegistryUri,
+                TestEnvironment.SchemaRegistryEndpoint,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserialize()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             using var memoryStream = new MemoryStream();
@@ -49,11 +48,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var record = new GenericRecord((RecordSchema)Employee._SCHEMA);
             record.Add("Name", "Caketown");
             record.Add("Age", 42);
@@ -71,11 +69,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var timeZoneInfo = TimeZoneInfo.Utc;
 
             using var memoryStream = new MemoryStream();
@@ -85,11 +82,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
-        [PlaybackOnly("Service not provisioned to all regions yet.")]
         public async Task CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
 
             using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });

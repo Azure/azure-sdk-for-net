@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("order"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     order = property.Value.GetInt32();
                     continue;
                 }
@@ -31,6 +36,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = new UpsertManagedServerOperationStepStatus(property.Value.GetString());
                     continue;
                 }

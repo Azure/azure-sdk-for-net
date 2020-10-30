@@ -107,46 +107,91 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("rowCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rowCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("rowSkips"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rowSkips = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("rfcTableFields"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rfcTableFields = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("rfcTableOptions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rfcTableOptions = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("batchSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     batchSize = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("customRfcReadTableFunctionModule"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     customRfcReadTableFunctionModule = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionOption"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionOption = new SapTablePartitionOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     queryTimeout = property.Value.GetObject();
                     continue;
                 }
@@ -157,16 +202,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("sourceRetryCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }

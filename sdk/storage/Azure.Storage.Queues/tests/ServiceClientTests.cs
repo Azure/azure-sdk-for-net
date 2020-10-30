@@ -205,5 +205,128 @@ namespace Azure.Storage.Queues.Test
             return testExceptionPolicy;
         }
         #endregion
+
+        #region GetProperties
+        [Test]
+        public async Task GetPropertiesAsync()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            Response<QueueServiceProperties> response = await service.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Logging.RetentionPolicy);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Error()
+        {
+            // Arrange
+            QueueServiceClient service = InstrumentClient(
+                new QueueServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetPropertiesAsync(),
+                e => { });
+        }
+        #endregion
+
+        #region SetProperties
+        [Test]
+        public async Task SetPropertiesAsync()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueServiceProperties originalProperties = await service.GetPropertiesAsync();
+            QueueServiceProperties properties = GetQueueServiceProperties();
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            QueueServiceProperties responseProperties = await service.GetPropertiesAsync();
+            Assert.AreEqual(properties.Cors.Count, responseProperties.Cors.Count);
+            Assert.AreEqual(properties.Cors[0].AllowedHeaders, responseProperties.Cors[0].AllowedHeaders);
+            Assert.AreEqual(properties.Cors[0].AllowedMethods, responseProperties.Cors[0].AllowedMethods);
+            Assert.AreEqual(properties.Cors[0].AllowedOrigins, responseProperties.Cors[0].AllowedOrigins);
+            Assert.AreEqual(properties.Cors[0].ExposedHeaders, responseProperties.Cors[0].ExposedHeaders);
+            Assert.AreEqual(properties.Cors[0].MaxAgeInSeconds, responseProperties.Cors[0].MaxAgeInSeconds);
+            Assert.AreEqual(properties.Logging.Read, responseProperties.Logging.Read);
+            Assert.AreEqual(properties.Logging.Write, responseProperties.Logging.Write);
+            Assert.AreEqual(properties.Logging.Delete, responseProperties.Logging.Delete);
+            Assert.AreEqual(properties.Logging.Version, responseProperties.Logging.Version);
+            Assert.AreEqual(properties.Logging.RetentionPolicy.Days, responseProperties.Logging.RetentionPolicy.Days);
+            Assert.AreEqual(properties.Logging.RetentionPolicy.Enabled, responseProperties.Logging.RetentionPolicy.Enabled);
+            Assert.AreEqual(properties.HourMetrics.Enabled, responseProperties.HourMetrics.Enabled);
+            Assert.AreEqual(properties.HourMetrics.IncludeApis, responseProperties.HourMetrics.IncludeApis);
+            Assert.AreEqual(properties.HourMetrics.Version, responseProperties.HourMetrics.Version);
+            Assert.AreEqual(properties.HourMetrics.RetentionPolicy.Days, responseProperties.HourMetrics.RetentionPolicy.Days);
+            Assert.AreEqual(properties.HourMetrics.RetentionPolicy.Enabled, responseProperties.HourMetrics.RetentionPolicy.Enabled);
+            Assert.AreEqual(properties.MinuteMetrics.Enabled, responseProperties.MinuteMetrics.Enabled);
+            Assert.AreEqual(properties.MinuteMetrics.IncludeApis, responseProperties.MinuteMetrics.IncludeApis);
+            Assert.AreEqual(properties.MinuteMetrics.Version, responseProperties.MinuteMetrics.Version);
+            Assert.AreEqual(properties.MinuteMetrics.RetentionPolicy.Days, responseProperties.MinuteMetrics.RetentionPolicy.Days);
+            Assert.AreEqual(properties.MinuteMetrics.RetentionPolicy.Enabled, responseProperties.MinuteMetrics.RetentionPolicy.Enabled);
+
+            // Clean Up
+            await service.SetPropertiesAsync(originalProperties);
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_ExistingProperties()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueServiceProperties properties = await service.GetPropertiesAsync();
+            QueueCorsRule[] originalCors = properties.Cors.ToArray();
+            properties.Cors =
+                new[]
+                {
+                    new QueueCorsRule
+                    {
+                        MaxAgeInSeconds = 1000,
+                        AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
+                        AllowedMethods = "PUT,GET",
+                        AllowedOrigins = "*",
+                        ExposedHeaders = "x-ms-meta-*"
+                    }
+                };
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(1, properties.Cors.Count());
+            Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
+
+            // Cleanup
+            properties.Cors = originalCors;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_Error()
+        {
+            // Arrange
+            QueueServiceClient service = GetServiceClient_SharedKey();
+            QueueServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            QueueServiceClient invalidService = InstrumentClient(
+                new QueueServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                invalidService.SetPropertiesAsync(properties),
+                e => { });
+        }
+        #endregion
     }
 }

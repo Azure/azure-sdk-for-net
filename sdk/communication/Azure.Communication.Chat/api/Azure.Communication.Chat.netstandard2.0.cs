@@ -10,7 +10,7 @@ namespace Azure.Communication.Chat
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteChatThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Chat.ChatThread> GetChatThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Chat.ChatThread>> GetChatThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Communication.Chat.ChatThreadClient GetChatThreadClient(string threadId, Azure.Communication.Chat.ChatClientOptions? options = null) { throw null; }
+        public virtual Azure.Communication.Chat.ChatThreadClient GetChatThreadClient(string threadId) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Chat.ChatThreadInfo> GetChatThreadsInfo(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.Chat.ChatThreadInfo> GetChatThreadsInfoAsync(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -101,28 +101,12 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? LastMessageReceivedOn { get { throw null; } }
         public string Topic { get { throw null; } }
     }
-    public partial class ChatThreadInternal
-    {
-        internal ChatThreadInternal() { }
-        public string CreatedBy { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatThreadMemberInternal> Members { get { throw null; } }
-        public string Topic { get { throw null; } }
-    }
     public partial class ChatThreadMember
     {
         public ChatThreadMember(Azure.Communication.CommunicationUser communicationUser) { }
         public string? DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
         public Azure.Communication.CommunicationUser User { get { throw null; } set { } }
-    }
-    public partial class ChatThreadMemberInternal
-    {
-        public ChatThreadMemberInternal(string id) { }
-        public string DisplayName { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
     }
     public partial class ReadReceipt
     {

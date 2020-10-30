@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
         /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourcesOperations.CheckExistence");
             scope.Start();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceName"> The name of the resource to check whether it exists. </param>
         /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourcesOperations.CheckExistence");
             scope.Start();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceByIdAsync(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceByIdAsync(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourcesOperations.CheckExistenceById");
             scope.Start();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceId"> The fully qualified ID of the resource, including the resource name and resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}. </param>
         /// <param name="apiVersion"> The API version to use for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceById(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistenceById(string resourceId, string apiVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourcesOperations.CheckExistenceById");
             scope.Start();

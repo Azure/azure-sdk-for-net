@@ -271,8 +271,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             databaseAccountsCreateOrUpdateParameters.Capabilities.Add(new Capability(capability));
             await WaitForCompletionAsync(
                 await CosmosDBManagementClient.DatabaseAccounts.StartCreateOrUpdateAsync(resourceGroupName, databaseAccountName, databaseAccountsCreateOrUpdateParameters));
-            Response response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
-            Assert.AreEqual(200, response.Status);
+            var response = await CosmosDBManagementClient.DatabaseAccounts.CheckNameExistsAsync(databaseAccountName);
+            Assert.AreEqual(true, response.Value);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
         }
 
         private void VerifyMongoDBDatases(MongoDBDatabaseGetResults expectedValue, MongoDBDatabaseGetResults actualValue)
