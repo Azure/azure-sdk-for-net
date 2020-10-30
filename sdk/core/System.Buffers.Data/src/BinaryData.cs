@@ -262,7 +262,7 @@ namespace System
         /// </summary>
         /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlyMemory<byte>(
-            BinaryData data) =>
+            BinaryData? data) =>
             data?._bytes ?? default;
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace System
         /// </summary>
         /// <param name="data">The value to be converted.</param>
         public static implicit operator ReadOnlySpan<byte>(
-            BinaryData data)
+            BinaryData? data)
         {
             if (data == null)
             {

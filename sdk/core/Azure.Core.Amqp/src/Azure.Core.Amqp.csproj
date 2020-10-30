@@ -13,6 +13,6 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\System.BinaryData\src\System.Buffers.Data.csproj" />
+    <ProjectReference Include="..\..\System.Buffers.Data\src\System.Buffers.Data.csproj" />
   </ItemGroup>
 </Project>

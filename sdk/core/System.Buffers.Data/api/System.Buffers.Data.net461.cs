@@ -16,8 +16,8 @@ namespace System
         public static System.BinaryData FromString(string data) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.BinaryData data) { throw null; }
-        public static implicit operator System.ReadOnlySpan<byte> (System.BinaryData data) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (System.BinaryData? data) { throw null; }
+        public static implicit operator System.ReadOnlySpan<byte> (System.BinaryData? data) { throw null; }
         public byte[] ToArray() { throw null; }
         public System.ReadOnlyMemory<byte> ToMemory() { throw null; }
         public T ToObjectFromJson<T>(System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
