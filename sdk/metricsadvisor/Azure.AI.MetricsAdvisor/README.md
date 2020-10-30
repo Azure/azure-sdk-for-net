@@ -202,7 +202,7 @@ Console.WriteLine($"Data feed status: {dataFeed.Status.Value}");
 Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in dataFeed.Options.Administrators)
+foreach (string admin in dataFeed.Administrators)
 {
     Console.WriteLine($" - {admin}");
 }
