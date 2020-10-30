@@ -20,12 +20,12 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> URL location of schema, identified by schema group, schema name, and version. </summary>
         public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
         /// <summary> Serialization type for the schema being stored. </summary>
-        public string XSchemaType => _response.Headers.TryGetValue("X-Schema-Type", out string value) ? value : null;
+        public string SerializationType => _response.Headers.TryGetValue("Serialization-Type", out string value) ? value : null;
         /// <summary> References specific schema in registry namespace. </summary>
-        public string XSchemaId => _response.Headers.TryGetValue("X-Schema-Id", out string value) ? value : null;
+        public string SchemaId => _response.Headers.TryGetValue("Schema-Id", out string value) ? value : null;
         /// <summary> URL location of schema, identified by schema ID. </summary>
-        public string XSchemaIdLocation => _response.Headers.TryGetValue("X-Schema-Id-Location", out string value) ? value : null;
+        public string SchemaIdLocation => _response.Headers.TryGetValue("Schema-Id-Location", out string value) ? value : null;
         /// <summary> Version of the returned schema. </summary>
-        public int? XSchemaVersion => _response.Headers.TryGetValue("X-Schema-Version", out int? value) ? value : null;
+        public int? SchemaVersion => _response.Headers.TryGetValue("Schema-Version", out int? value) ? value : null;
     }
 }
