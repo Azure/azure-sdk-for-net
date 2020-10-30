@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -29,17 +30,20 @@ namespace Azure.AI.FormRecognizer.Models
             Rows = rows;
             Columns = columns;
             Cells = cells.ToList();
+            BoundingBox = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of DataTable. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells)
+        /// <param name="boundingBox"> Bounding box of the table. </param>
+        internal DataTable(int rows, int columns, IReadOnlyList<DataTableCell> cells, IReadOnlyList<float> boundingBox)
         {
             Rows = rows;
             Columns = columns;
             Cells = cells;
+            BoundingBox = boundingBox;
         }
 
         /// <summary> Number of rows. </summary>
@@ -48,5 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int Columns { get; }
         /// <summary> List of cells contained in the table. </summary>
         public IReadOnlyList<DataTableCell> Cells { get; }
+        /// <summary> Bounding box of the table. </summary>
+        public IReadOnlyList<float> BoundingBox { get; }
     }
 }

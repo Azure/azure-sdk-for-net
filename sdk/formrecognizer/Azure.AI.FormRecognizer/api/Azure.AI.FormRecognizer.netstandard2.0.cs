@@ -7,6 +7,7 @@ namespace Azure.AI.FormRecognizer
         Png = 2,
         Jpeg = 3,
         Tiff = 4,
+        Bmp = 5,
     }
     public partial class FormRecognizerClient
     {
@@ -332,6 +333,24 @@ namespace Azure.AI.FormRecognizer.Models
     {
         Selected = 0,
         Unselected = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TextStyle : System.IEquatable<Azure.AI.FormRecognizer.Models.TextStyle>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TextStyle(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.TextStyle Handwriting { get { throw null; } }
+        public static Azure.AI.FormRecognizer.Models.TextStyle Other { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.Models.TextStyle other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.Models.TextStyle left, Azure.AI.FormRecognizer.Models.TextStyle right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.Models.TextStyle (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.Models.TextStyle left, Azure.AI.FormRecognizer.Models.TextStyle right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Azure.AI.FormRecognizer.Training

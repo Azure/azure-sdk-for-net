@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -47,7 +48,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -111,7 +112,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             if (includeKeys != null)
@@ -174,7 +175,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
@@ -221,7 +222,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -295,7 +296,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -360,7 +361,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
@@ -421,7 +422,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
@@ -489,7 +490,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copyResults/", false);
@@ -550,7 +551,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -606,7 +607,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models/compose", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -682,7 +683,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -758,7 +759,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -825,7 +826,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/businessCard/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -875,6 +876,206 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails, string locale)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
+            uri.AppendPath("/prebuilt/invoice/analyze", false);
+            if (includeTextDetails != null)
+            {
+                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
+            request.Headers.Add("Accept", "application/json");
+            request.Content = RequestContent.Create(fileStream);
+            return message;
+        }
+
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the invoice. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
+
+            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, fileStream, includeTextDetails, locale);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the invoice. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(FormContentType contentType, Stream fileStream, bool? includeTextDetails = null, string locale = null, CancellationToken cancellationToken = default)
+        {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
+
+            using var message = CreateAnalyzeInvoiceAsyncRequest(contentType, fileStream, includeTextDetails, locale);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeInvoiceAsyncRequest(bool? includeTextDetails, string locale, SourcePath fileStream)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
+            uri.AppendPath("/prebuilt/invoice/analyze", false);
+            if (includeTextDetails != null)
+            {
+                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            if (fileStream != null)
+            {
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(fileStream);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the invoice. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders>> AnalyzeInvoiceAsyncAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Extract field text and semantic values from a given invoice document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri) of the document to be analyzed. </summary>
+        /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
+        /// <param name="locale"> Locale of the invoice. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default). </param>
+        /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<FormRecognizerAnalyzeInvoiceAsyncHeaders> AnalyzeInvoiceAsync(bool? includeTextDetails = null, string locale = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateAnalyzeInvoiceAsyncRequest(includeTextDetails, locale, fileStream);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FormRecognizerAnalyzeInvoiceAsyncHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetAnalyzeInvoiceResultRequest(Guid resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
+            uri.AppendPath("/prebuilt/invoice/analyzeResults/", false);
+            uri.AppendPath(resultId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Track the progress and obtain the result of the analyze invoice operation. </summary>
+        /// <param name="resultId"> Analyze operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeInvoiceResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAnalyzeInvoiceResultRequest(resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Track the progress and obtain the result of the analyze invoice operation. </summary>
+        /// <param name="resultId"> Analyze operation result identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<AnalyzeOperationResult> GetAnalyzeInvoiceResult(Guid resultId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetAnalyzeInvoiceResultRequest(resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAnalyzeReceiptAsyncRequest(FormContentType contentType, Stream fileStream, bool? includeTextDetails, string locale)
         {
             var message = _pipeline.CreateMessage();
@@ -882,7 +1083,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -958,7 +1159,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1025,7 +1226,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1075,15 +1276,19 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, Stream fileStream, IEnumerable<string> pages)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQueryDelimited("Pages", pages, ",", true);
+            }
             request.Uri = uri;
             request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Headers.Add("Accept", "application/json");
@@ -1091,19 +1296,20 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, Stream fileStream, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
                 throw new ArgumentNullException(nameof(fileStream));
             }
 
-            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream, pages);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1115,19 +1321,20 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileStream"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, Stream fileStream, IEnumerable<string> pages = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
                 throw new ArgumentNullException(nameof(fileStream));
             }
 
-            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream, pages);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1139,15 +1346,19 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(IEnumerable<string> pages, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQueryDelimited("Pages", pages, ",", true);
+            }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
@@ -1160,12 +1371,13 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1177,12 +1389,13 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos; or &apos;image/bmp&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
+        /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma or space. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
+            using var message = CreateAnalyzeLayoutAsyncRequest(pages, fileStream);
             _pipeline.Send(message, cancellationToken);
             var headers = new FormRecognizerAnalyzeLayoutAsyncHeaders(message.Response);
             switch (message.Response.Status)
@@ -1201,7 +1414,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1258,7 +1471,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
@@ -1313,7 +1526,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
@@ -1368,7 +1581,7 @@ namespace Azure.AI.FormRecognizer
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.1-preview.1", false);
+            uri.AppendRaw("/formrecognizer/v2.1-preview.2", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

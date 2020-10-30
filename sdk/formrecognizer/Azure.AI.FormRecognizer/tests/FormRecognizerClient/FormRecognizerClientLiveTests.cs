@@ -43,6 +43,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("ADD not supported")]
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -122,12 +123,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var table = formPage.Tables.Single();
 
-            Assert.AreEqual(2, table.RowCount);
+            Assert.AreEqual(3, table.RowCount);
             Assert.AreEqual(6, table.ColumnCount);
 
             var cells = table.Cells.ToList();
 
-            Assert.AreEqual(10, cells.Count);
+            Assert.AreEqual(11, cells.Count);
 
             var expectedText = new string[2, 6]
             {
@@ -142,22 +143,31 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
                 Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with text {cell.Text} should have column index less than {table.ColumnCount}.");
 
-                // There's a single cell in the table (row = 1, column = 3) that has a column span of 2.
-
-                var expectedColumnSpan = (cell.RowIndex == 1 && cell.ColumnIndex == 3) ? 2 : 1;
-
-                Assert.AreEqual(1, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of 1.");
+                // Column = 3 has a column span of 2.
+                var expectedColumnSpan = cell.ColumnIndex == 3 ? 2 : 1;
                 Assert.AreEqual(expectedColumnSpan, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of {expectedColumnSpan}.");
 
-                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+                // Row = 1 and columns 0-4 have a row span of 2.
+                var expectedRowSpan = (cell.RowIndex == 1 && cell.ColumnIndex != 5) ? 2 : 1;
+                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of {expectedRowSpan}.");
 
                 Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
                 Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
 
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
-                Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
+                Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
 
-                Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
+                // row = 2, column = 5 has empty text and no elements
+                if (cell.RowIndex == 2 && cell.ColumnIndex == 5)
+                {
+                    Assert.IsEmpty(cell.Text);
+                    Assert.AreEqual(0, cell.FieldElements.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+                    Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
+                }
             }
         }
 
@@ -214,40 +224,49 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(2, formPage.Tables.Count);
 
-            var sampleTable = formPage.Tables.First();
+            var sampleTable = formPage.Tables[1];
 
             Assert.AreEqual(4, sampleTable.RowCount);
-            Assert.AreEqual(3, sampleTable.ColumnCount);
+            Assert.AreEqual(2, sampleTable.ColumnCount);
 
             var cells = sampleTable.Cells.ToList();
 
-            Assert.AreEqual(7, cells.Count);
+            Assert.AreEqual(8, cells.Count);
 
-            var expectedText = new string[4, 3]
+            var expectedText = new string[4, 2]
             {
-                { "", "", "" },
-                { "", "SUBTOTAL", "$140.00" },
-                { "", "TAX", "$4.00" },
-                { "Bernie Sanders", "TOTAL", "$144.00" }
+                { "SUBTOTAL", "$140.00" },
+                { "TAX", "$4.00" },
+                { "", ""},
+                { "TOTAL", "$144.00" }
             };
 
-            foreach (var cell in cells)
+            for (int i = 0; i < cells.Count; i++)
             {
-                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
-                Assert.Less(cell.RowIndex, sampleTable.RowCount, $"Cell with text {cell.Text} should have row index less than {sampleTable.RowCount}.");
-                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
-                Assert.Less(cell.ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cell.Text} should have column index less than {sampleTable.ColumnCount}.");
+                Assert.GreaterOrEqual(cells[i].RowIndex, 0, $"Cell with text {cells[i].Text} should have row index greater than or equal to zero.");
+                Assert.Less(cells[i].RowIndex, sampleTable.RowCount, $"Cell with text {cells[i].Text} should have row index less than {sampleTable.RowCount}.");
+                Assert.GreaterOrEqual(cells[i].ColumnIndex, 0, $"Cell with text {cells[i].Text} should have column index greater than or equal to zero.");
+                Assert.Less(cells[i].ColumnIndex, sampleTable.ColumnCount, $"Cell with text {cells[i].Text} should have column index less than {sampleTable.ColumnCount}.");
 
-                Assert.AreEqual(1, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of 1.");
-                Assert.AreEqual(1, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of 1.");
+                Assert.AreEqual(1, cells[i].RowSpan, $"Cell with text {cells[i].Text} should have a row span of 1.");
+                Assert.AreEqual(1, cells[i].ColumnSpan, $"Cell with text {cells[i].Text} should have a column span of 1.");
 
-                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+                Assert.AreEqual(expectedText[cells[i].RowIndex, cells[i].ColumnIndex], cells[i].Text);
 
-                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
-                Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
+                Assert.IsFalse(cells[i].IsFooter, $"Cell with text {cells[i].Text} should not have been classified as footer.");
+                Assert.IsFalse(cells[i].IsHeader, $"Cell with text {cells[i].Text} should not have been classified as header.");
 
-                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
-                Assert.Greater(cell.FieldElements.Count, 0, $"Cell with text {cell.Text} should have at least one field element.");
+                Assert.GreaterOrEqual(cells[i].Confidence, 0, $"Cell with text {cells[i].Text} should have confidence greater or equal to zero.");
+
+                // Empty row
+                if (cells[i].RowIndex != 2)
+                {
+                    Assert.Greater(cells[i].FieldElements.Count, 0, $"Cell with text {cells[i].Text} should have at least one field element.");
+                }
+                else
+                {
+                    Assert.AreEqual(0, cells[i].FieldElements.Count);
+                }
             }
         }
 
@@ -421,8 +440,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -532,8 +551,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -646,8 +665,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported")]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -702,6 +721,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -733,6 +753,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -785,6 +806,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public void StartRecognizeReceiptsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -803,6 +825,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
+        [Ignore("Not supported")]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -813,8 +836,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase("en-US")]
-        [TestCase("")]
+        [TestCase("en-US", Ignore = "Not supported")]
+        [TestCase("", Ignore = "Not supported")]
         public async Task StartRecognizeReceiptsWithSupportedLocale(string locale)
         {
             var client = CreateFormRecognizerClient();
@@ -851,6 +874,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public void StartRecognizeReceiptsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -865,8 +889,8 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeBusinessCards
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false) ]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported") ]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -972,8 +996,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported")]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1079,6 +1103,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public async Task StartRecognizeBusinessCardsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1103,6 +1128,7 @@ namespace Azure.AI.FormRecognizer.Tests
        }
 
         [Test]
+        [Ignore("Not supported")]
         public async Task StartRecognizeBusinessCardsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1135,6 +1161,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("Not supported")]
         public void StartRecognizeBusinessCardsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1153,6 +1180,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
+        [Ignore("Not supported")]
         public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1163,8 +1191,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Not supported")]
+        [TestCase(false, Ignore = "Not supported")]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();

@@ -44,12 +44,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="language"> The detected language of this line, if different from the overall page language. </param>
         /// <param name="words"> List of words in the text line. </param>
-        internal TextLine(string text, IReadOnlyList<float> boundingBox, Language? language, IReadOnlyList<TextWord> words)
+        /// <param name="appearance"> Text appearance properties. </param>
+        internal TextLine(string text, IReadOnlyList<float> boundingBox, Language? language, IReadOnlyList<TextWord> words, Appearance appearance)
         {
             Text = text;
             BoundingBox = boundingBox;
             Language = language;
             Words = words;
+            Appearance = appearance;
         }
 
         /// <summary> The text content of the line. </summary>
@@ -60,5 +62,7 @@ namespace Azure.AI.FormRecognizer.Models
         public Language? Language { get; }
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<TextWord> Words { get; }
+        /// <summary> Text appearance properties. </summary>
+        public Appearance Appearance { get; }
     }
 }

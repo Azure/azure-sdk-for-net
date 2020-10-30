@@ -40,5 +40,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         [CodeGenMember("ImageTiff")]
         Tiff,
+
+        /// <summary>
+        /// Used for BMP files.
+        /// </summary>
+        [CodeGenMember("ImageBmp")]
+        Bmp,
     }
 }
