@@ -16,13 +16,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The date and time, in UTC, of the ingestion attempt.
         /// </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset Timestamp { get; }
 
         /// <summary>
         /// The ingestion status for this <see cref="Timestamp"/>. This is the status of the
         /// latest attempt.
         /// </summary>
-        public IngestionStatusType? Status { get; }
+        public IngestionStatusType Status { get; }
 
         /// <summary>
         /// A message created by the service with additional information about the latest

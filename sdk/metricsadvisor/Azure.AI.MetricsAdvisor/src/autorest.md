@@ -35,7 +35,8 @@ directive:
   from: swagger-document
   where: $.definitions.DataFeedIngestionProgress
   transform: >
-    $.properties.latestSuccessTimestamp["x-nullable"] = true
+    $.properties.latestSuccessTimestamp["x-nullable"] = true;
+    $.properties.latestActiveTimestamp["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -89,7 +90,15 @@ directive:
   from: swagger-document
   where: $.definitions.AlertResult
   transform: >
-    $["required"] = ["createdTime", "modifiedTime", "timestamp"]
+    $["required"] = ["alertId", "createdTime", "modifiedTime", "timestamp"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IngestionStatus
+  transform: >
+    $["required"] = ["timestamp", "status", "message"]
 ```
 
 ### Add x-ms-paths section if not exists

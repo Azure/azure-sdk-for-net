@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyAlert DeserializeAnomalyAlert(JsonElement element)
         {
-            Optional<string> alertId = default;
+            string alertId = default;
             DateTimeOffset timestamp = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset modifiedTime = default;
@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlert(alertId.Value, timestamp, createdTime, modifiedTime);
+            return new AnomalyAlert(alertId, timestamp, createdTime, modifiedTime);
         }
     }
 }

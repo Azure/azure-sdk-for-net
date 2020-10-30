@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFeedIngestionStatusesAsync(dataFeedId, options))
             {
                 Console.WriteLine($"Timestamp: {ingestionStatus.Timestamp}");
-                Console.WriteLine($"Status: {ingestionStatus.Status.Value}");
+                Console.WriteLine($"Status: {ingestionStatus.Status}");
                 Console.WriteLine($"Service message: {ingestionStatus.Message}");
                 Console.WriteLine();
 
