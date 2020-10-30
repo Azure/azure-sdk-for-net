@@ -3,12 +3,14 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Azure
 {
     /// <summary>
     /// Represents an HTTP ETag.
     /// </summary>
+    [JsonConverter(typeof(ETagConverter))]
     public readonly struct ETag : IEquatable<ETag>
     {
         private const char QuoteCharacter = '"';

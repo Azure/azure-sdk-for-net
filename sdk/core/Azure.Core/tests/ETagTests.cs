@@ -2,7 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Azure.Core.Tests
 {
@@ -123,6 +128,66 @@ namespace Azure.Core.Tests
         {
             ETag tag  = new ETag("foo");
             Assert.Throws<ArgumentException>(() => tag.ToString(format));
+        }
+
+        [Theory]
+        [TestCase(null)]
+        [TestCase("\"tag\"")]
+        [TestCase("W/\"weakETag\"")]
+        public void CanSerializeAndDeserializeETag(string value)
+        {
+            var escapedValue = value != null ? JsonConvert.ToString(value) : "null";
+            var expected = $"{{\"ETag\":{escapedValue}}}";
+            var deserialized = JsonSerializer.Deserialize<ClassWithEtagProperty>(expected);
+            var serialized = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(deserialized, new JsonSerializerOptions()
+            {
+                Encoder =  JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }));
+
+            if (value == null)
+            {
+                Assert.AreEqual("<null>", deserialized.ETag);
+            }
+            else
+            {
+                Assert.AreEqual(value, deserialized.ETag.ToString("H"));
+            }
+            Assert.AreEqual(expected, serialized);
+        }
+
+        [Theory]
+        [TestCase(null)]
+        [TestCase("\"tag\"")]
+        [TestCase("W/\"weakETag\"")]
+        public void CanSerializeAndDeserializeNullableETag(string value)
+        {
+            var escapedValue = value != null ? JsonConvert.ToString(value) : "null";
+            var expected = $"{{\"ETag\":{escapedValue}}}";
+            var deserialized = JsonSerializer.Deserialize<ClassWithNullableEtagProperty>(expected);
+            var serialized = Encoding.UTF8.GetString(JsonSerializer.SerializeToUtf8Bytes(deserialized, new JsonSerializerOptions()
+            {
+                Encoder =  JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }));
+
+            if (value == null)
+            {
+                Assert.Null(deserialized.ETag);
+            }
+            else
+            {
+                Assert.AreEqual(value, deserialized.ETag.Value.ToString("H"));
+            }
+            Assert.AreEqual(expected, serialized);
+        }
+
+        private class ClassWithEtagProperty
+        {
+            public ETag ETag { get; set; }
+        }
+
+        private class ClassWithNullableEtagProperty
+        {
+            public ETag? ETag { get; set; }
         }
     }
 }
