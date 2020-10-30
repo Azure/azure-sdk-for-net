@@ -176,9 +176,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         [Test]
         [TestCaseSource(nameof(ConstructorSharedKeyCredentialArgumentInvalidCases))]
         public void ConstructorValidatesSharedKeyArguments(string fullyQualifiedNamespace,
-                                                           ServiceBusSharedAccessKeyCredential credential)
+                                                             object credential)
         {
-            Assert.That(() => new ServiceBusClient(fullyQualifiedNamespace, credential), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new ServiceBusClient(fullyQualifiedNamespace, (ServiceBusSharedAccessKeyCredential)credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
             }
 
-            public ReadableOptionsMock(string fullyQualifiedNamespace,
+            internal ReadableOptionsMock(string fullyQualifiedNamespace,
                                        ServiceBusSharedAccessKeyCredential credential,
                                        ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions)
             {

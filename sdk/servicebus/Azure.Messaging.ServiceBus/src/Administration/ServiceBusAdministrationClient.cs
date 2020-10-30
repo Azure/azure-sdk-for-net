@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             options ??= new ServiceBusAdministrationClientOptions();
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            ServiceBusConnectionStringProperties connectionStringProperties = ServiceBusConnectionStringProperties.Parse(connectionString);
 
             if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
                 || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        public ServiceBusAdministrationClient(
+        internal ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
             ServiceBusSharedAccessKeyCredential credential)
             : this(fullyQualifiedNamespace, credential, new ServiceBusAdministrationClientOptions())
@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The <see cref="ServiceBusSharedAccessKeyCredential"/> to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the connection.</param>
-        public ServiceBusAdministrationClient(
+        internal ServiceBusAdministrationClient(
             string fullyQualifiedNamespace,
             ServiceBusSharedAccessKeyCredential credential,
             ServiceBusAdministrationClientOptions options)

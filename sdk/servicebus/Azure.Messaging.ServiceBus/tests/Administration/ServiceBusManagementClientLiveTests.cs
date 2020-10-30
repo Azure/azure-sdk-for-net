@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
         private ServiceBusAdministrationClient GetSharedKeyTokenClient()
         {
-            var properties = ConnectionStringParser.Parse(GetConnectionString());
+            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
             var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
 
             return InstrumentClient(
