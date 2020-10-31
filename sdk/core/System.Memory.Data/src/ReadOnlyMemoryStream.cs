@@ -3,12 +3,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #pragma warning restore SA1636 // File header copyright text should match
 
-using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System
+namespace System.IO
 {
     /// <summary>Provides a <see cref="Stream"/> for the contents of a <see cref="ReadOnlyMemory{Byte}"/>.</summary>
     internal sealed class ReadOnlyMemoryStream : Stream
