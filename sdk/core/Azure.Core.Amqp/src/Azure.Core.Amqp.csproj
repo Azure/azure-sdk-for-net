@@ -12,7 +12,8 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Buffers.Data\src\System.Buffers.Data.csproj" />
+    <ProjectReference Include="..\..\System.Memory.Data\src\System.Memory.Data.csproj" />
   </ItemGroup>
 </Project>

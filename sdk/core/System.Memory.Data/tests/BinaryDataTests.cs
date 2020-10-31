@@ -93,14 +93,14 @@ namespace System.Tests
         }
 
         [Fact]
-        public async Task ToStreamIsNotMutatedWhenCustomerOwnsBuffer()
+        public async Task ToStreamIsMutatedWhenCustomerOwnsBuffer()
         {
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromBytes(buffer);
             Stream stream = data.ToStream();
             buffer[0] = (byte)'z';
             StreamReader sr = new StreamReader(stream);
-            Assert.Equal("some data", await sr.ReadToEndAsync());
+            Assert.Equal("zome data", await sr.ReadToEndAsync());
         }
 
         [Fact]

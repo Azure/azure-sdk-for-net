@@ -23,8 +23,6 @@ namespace System
         /// </summary>
         private readonly ReadOnlyMemory<byte> _bytes;
 
-        private readonly bool _ownsBuffer;
-
         /// <summary>
         /// Creates a <see cref="BinaryData"/> instance by wrapping the
         /// provided byte array.
@@ -38,7 +36,6 @@ namespace System
             }
 
             _bytes = data;
-            _ownsBuffer = false;
         }
 
         /// <summary>
@@ -56,7 +53,6 @@ namespace System
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             _bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type, options);
-            _ownsBuffer = true;
         }
 
         /// <summary>
@@ -64,14 +60,9 @@ namespace System
         /// provided bytes.
         /// </summary>
         /// <param name="data">Byte data to wrap.</param>
-        public BinaryData(ReadOnlyMemory<byte> data) : this(data, false)
-        {
-        }
-
-        private BinaryData(ReadOnlyMemory<byte> data, bool ownsBuffer)
+        public BinaryData(ReadOnlyMemory<byte> data)
         {
             _bytes = data;
-            _ownsBuffer = ownsBuffer;
         }
 
         /// <summary>
@@ -87,7 +78,6 @@ namespace System
             }
 
             _bytes = Encoding.UTF8.GetBytes(data);
-            _ownsBuffer = true;
         }
 
         /// <summary>
@@ -181,7 +171,7 @@ namespace System
             {
                 stream.CopyTo(memoryStream);
             }
-            return new BinaryData(data: memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position), ownsBuffer: true);
+            return new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Position));
         }
 
         /// <summary>
@@ -201,7 +191,7 @@ namespace System
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, typeof(T), options);
-            return new BinaryData(data: buffer, ownsBuffer: true);
+            return new BinaryData(buffer);
         }
 
         /// <summary>
@@ -226,7 +216,7 @@ namespace System
         /// </summary>
         /// <returns>A stream representing the data.</returns>
         public Stream ToStream() =>
-            new ReadOnlyMemoryStream(_ownsBuffer ? _bytes : _bytes.ToArray());
+            new ReadOnlyMemoryStream(_bytes);
 
         /// <summary>
         /// Gets the value of this instance as bytes without any further interpretation.
