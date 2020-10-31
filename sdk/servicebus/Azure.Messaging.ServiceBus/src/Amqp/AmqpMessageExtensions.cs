@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 yield return new Data
                 {
-                    Value = new ArraySegment<byte>(data.ToBytes().IsEmpty ? Array.Empty<byte>() : data.ToBytes().ToArray())
+                    Value = new ArraySegment<byte>(data.ToMemory().IsEmpty ? Array.Empty<byte>() : data.ToArray())
                 };
             }
         }
@@ -70,14 +70,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Memory<byte> memory;
             foreach (BinaryData data in dataList)
             {
-                ReadOnlyMemory<byte> bytes = data.ToBytes();
+                ReadOnlyMemory<byte> bytes = data.ToMemory();
                 memory = writer.GetMemory(bytes.Length);
                 bytes.CopyTo(memory);
                 writer.Advance(bytes.Length);
             }
             if (writer.WrittenCount == 0)
             {
-                return new BinaryData();
+                return new BinaryData(Array.Empty<byte>());
             }
             return BinaryData.FromBytes(writer.WrittenMemory);
         }

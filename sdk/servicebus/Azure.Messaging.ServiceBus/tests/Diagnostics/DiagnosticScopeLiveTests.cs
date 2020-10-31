@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                     // get state
                     var getState = await sessionReceiver.GetSessionStateAsync();
-                    Assert.AreEqual(state.ToBytes().ToArray(), getState.ToBytes().ToArray());
+                    Assert.AreEqual(state.ToArray(), getState.ToArray());
                     (string Key, object Value, DiagnosticListener) getStateStart = _listener.Events.Dequeue();
                     Assert.AreEqual(DiagnosticProperty.GetSessionStateActivityName + ".Start", getStateStart.Key);
                     Activity getStateActivity = (Activity)getStateStart.Value;

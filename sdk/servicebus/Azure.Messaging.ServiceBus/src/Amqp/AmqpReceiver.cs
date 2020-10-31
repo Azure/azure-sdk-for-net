@@ -1126,7 +1126,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
 
-            var value = new ArraySegment<byte>(sessionState.ToBytes().ToArray());
+            var value = new ArraySegment<byte>(sessionState.ToArray());
             amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = value;
 
             var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
