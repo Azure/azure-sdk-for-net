@@ -133,7 +133,6 @@ function populateOptions(selector, packageName) {
 
         $(versionselector).change(function () {
             targetVersion = $(this).val()
-            original
             url = WINDOW_CONTENTS.slice()
             url[6] = targetVersion
             var targetUrl = url.join('/')
