@@ -12,6 +12,8 @@ param(
   [Parameter(Mandatory = $true)]
   [int]$DefinitionId,
 
+  [boolean]$CancelPreviousBuilds=$false,
+
   [Parameter(Mandatory = $false)]
   [string]$VsoQueuedPipelines,
 
@@ -20,25 +22,31 @@ param(
 )
 
 . "${PSScriptRoot}\logging.ps1"
+. "${PSScriptRoot}\Invoke-DevOpsAPI.ps1"
 
-$headers = @{
-  Authorization = "Basic $AuthToken"
+if ($CancelPreviousBuilds)
+{
+  try {
+    $queuedBuilds = Get-DevOpsBuilds -BranchName "refs/heads/$SourceBranch" -Definitions $DefinitionId `
+    -StatusFilter "inProgress, notStarted" -AuthToken $AuthToken
+
+    foreach ($build in $queuedBuilds.Value) {
+      $buildID = $build.id
+      LogDebug "Canceling build [ $($build._links.web) ]"
+      Update-DevOpsBuild -BuildId $buildID -Status "canceling" -AuthToken $AuthToken
+    }
+  }
+  catch {
+    LogError "Call to DevOps API failed with exception:`n$_"
+    exit 1
+  }
 }
-
-$apiUrl = "https://dev.azure.com/$Organization/$Project/_apis/build/builds?api-version=6.0"
-
-$body = @{
-  sourceBranch = $SourceBranch
-  definition = @{ id = $DefinitionId }
-}
-
-Write-Verbose ($body | ConvertTo-Json)
 
 try {
-  $resp = Invoke-RestMethod -Method POST -Headers $headers $apiUrl -Body ($body | ConvertTo-Json) -ContentType application/json
+  $resp = Start-DevOpsBuild -SourceBranch $SourceBranch -DefinitionId $DefinitionId -AuthToken $AuthToken
 }
 catch {
-  LogError "Invoke-RestMethod [ $apiUrl ] failed with exception:`n$_"
+  LogError "Start-DevOpsBuild failed with exception:`n$_"
   exit 1
 }
 
