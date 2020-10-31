@@ -838,6 +838,10 @@ namespace Azure.Storage.Sas
         Write = 8,
         Delete = 16,
         List = 32,
+        Move = 64,
+        Execute = 128,
+        ManageOwnership = 256,
+        ManageAccessControl = 512,
     }
     public partial class DataLakeSasBuilder
     {
