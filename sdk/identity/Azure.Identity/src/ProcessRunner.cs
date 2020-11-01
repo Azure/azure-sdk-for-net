@@ -15,24 +15,24 @@ namespace Azure.Identity
     {
         private readonly IProcess _process;
         private readonly TimeSpan _timeout;
-        private readonly TaskCompletionSource<string> _tcs;
+        private readonly TaskCompletionSource<bool> _processExitedComplectionSource;
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
         private readonly StringBuilder _stdOutBuilder;
         private readonly StringBuilder _stdErrBuilder;
-        private readonly TaskCompletionSource<bool> _stdOutCompletionSource;
-        private readonly TaskCompletionSource<bool> _stdErrCompletionSource;
+        private readonly TaskCompletionSource<string> _stdOutCompletionSource;
+        private readonly TaskCompletionSource<string> _stdErrCompletionSource;
 
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
             _process = process;
             _timeout = timeout;
-            _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _processExitedComplectionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             _stdOutBuilder = new StringBuilder();
             _stdErrBuilder = new StringBuilder();
-            _stdOutCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            _stdErrCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _stdOutCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _stdErrCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             if (timeout.TotalMilliseconds >= 0)
             {
@@ -49,25 +49,40 @@ namespace Azure.Identity
         {
             StartProcess();
 
-            await _stdOutCompletionSource.Task.ConfigureAwait(false);
-            await _stdErrCompletionSource.Task.ConfigureAwait(false);
-
-            return await _tcs.Task.ConfigureAwait(false);
+            try
+            {
+                await _processExitedComplectionSource.Task.ConfigureAwait(false);
+                var output = await _stdOutCompletionSource.Task.ConfigureAwait(false);
+                await _stdErrCompletionSource.Task.ConfigureAwait(false);
+                return output;
+            }
+            finally
+            {
+                DisposeProcess();
+            }
         }
 
         public string Run()
         {
             StartProcess();
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            _stdOutCompletionSource.Task.GetAwaiter().GetResult();
-            _stdErrCompletionSource.Task.GetAwaiter().GetResult();
-            return _tcs.Task.GetAwaiter().GetResult();
+            try
+            {
+                _processExitedComplectionSource.Task.GetAwaiter().GetResult();
+                var output = _stdOutCompletionSource.Task.GetAwaiter().GetResult();
+                _stdErrCompletionSource.Task.GetAwaiter().GetResult();
+                return output;
+            }
+            finally
+            {
+                DisposeProcess();
+            }
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
         private void StartProcess()
         {
-            if (TrySetCanceled() || _tcs.Task.IsCompleted)
+            if (TrySetCanceled() || _processExitedComplectionSource.Task.IsCompleted)
             {
                 return;
             }
@@ -91,18 +106,26 @@ namespace Azure.Identity
         {
             if (_process.ExitCode == 0)
             {
-                TrySetResult(_stdOutBuilder.ToString());
+                _processExitedComplectionSource.TrySetResult(true);
             }
             else
             {
-                TrySetException(new InvalidOperationException(_stdErrBuilder.ToString()));
+                _processExitedComplectionSource.TrySetResult(false);
             }
         }
         private void HandleStdErrDataReceived(object sender, DataReceivedEventArgsWrapper e)
         {
             if (e.Data is null)
             {
-                _stdErrCompletionSource.TrySetResult(true);
+                var result = _stdErrBuilder.ToString();
+                if (result.Length == 0)
+                {
+                    _stdErrCompletionSource.TrySetResult(result);
+                }
+                else
+                {
+                    _stdErrCompletionSource.TrySetException(new InvalidOperationException(result));
+                }
             }
             else
             {
@@ -114,7 +137,7 @@ namespace Azure.Identity
         {
             if (e.Data is null)
             {
-                _stdOutCompletionSource.TrySetResult(true);
+                _stdOutCompletionSource.TrySetResult(_stdOutBuilder.ToString());
             }
             else
             {
@@ -124,7 +147,7 @@ namespace Azure.Identity
 
         private void HandleCancel()
         {
-            if (_tcs.Task.IsCompleted)
+            if (_processExitedComplectionSource.Task.IsCompleted)
             {
                 return;
             }
@@ -137,18 +160,12 @@ namespace Azure.Identity
                 }
                 catch (Exception ex)
                 {
-                    TrySetException(ex);
+                    _processExitedComplectionSource.TrySetException(ex);
                     return;
                 }
             }
 
             TrySetCanceled();
-        }
-
-        private void TrySetResult(string result)
-        {
-            DisposeProcess();
-            _tcs.TrySetResult(result);
         }
 
         private bool TrySetCanceled()
@@ -158,18 +175,10 @@ namespace Azure.Identity
                 DisposeProcess();
                 _stdOutCompletionSource.TrySetCanceled(_cancellationToken);
                 _stdErrCompletionSource.TrySetCanceled(_cancellationToken);
-                _tcs.TrySetCanceled(_cancellationToken);
+                _processExitedComplectionSource.TrySetCanceled(_cancellationToken);
             }
 
             return _cancellationToken.IsCancellationRequested;
-        }
-
-        private void TrySetException(Exception exception)
-        {
-            DisposeProcess();
-            _stdOutCompletionSource.TrySetResult(false);
-            _stdErrCompletionSource.TrySetResult(false);
-            _tcs.TrySetException(exception);
         }
 
         private void DisposeProcess()
