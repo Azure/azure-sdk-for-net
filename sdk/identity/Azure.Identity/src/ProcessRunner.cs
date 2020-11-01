@@ -172,7 +172,6 @@ namespace Azure.Identity
         {
             if (_cancellationToken.IsCancellationRequested)
             {
-                DisposeProcess();
                 _stdOutCompletionSource.TrySetCanceled(_cancellationToken);
                 _stdErrCompletionSource.TrySetCanceled(_cancellationToken);
                 _processExitedCompletionSource.TrySetCanceled(_cancellationToken);
