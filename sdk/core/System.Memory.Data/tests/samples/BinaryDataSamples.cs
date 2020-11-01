@@ -4,14 +4,13 @@
 using System;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 
 namespace Azure.Core.Experimental.Tests.samples
 {
     public class BinaryDataSamples
     {
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
         public void ToFromString()
         {
             #region Snippet:BinaryDataToFromString
@@ -22,29 +21,34 @@ namespace Azure.Core.Experimental.Tests.samples
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
+
         public void ToFromBytes()
         {
             #region Snippet:BinaryDataToFromBytes
-            var bytes = Encoding.UTF8.GetBytes("some data");
+            byte[] bytes = Encoding.UTF8.GetBytes("some data");
 
-            // when using the ReadOnlySpan constructor the underlying data is copied.
-            var data = new BinaryData(new ReadOnlySpan<byte>(bytes));
+            // Create BinaryData using a constructor ...
+            BinaryData data = new BinaryData(bytes);
 
-            // when using the static factory method, the data is wrapped
+            // Or using a static factory method.
             data = BinaryData.FromBytes(bytes);
 
-            // there is an implicit cast defined for ReadOnlyMemory<byte>
+            // There is an implicit cast defined for ReadOnlyMemory<byte>
             ReadOnlyMemory<byte> rom = data;
 
-            // there is also a Bytes property that holds the data
-            rom = data.Bytes;
+            // There is also an implicit cast defined for ReadOnlySpan<byte>
+            ReadOnlySpan<byte> ros = data;
+
+            // there is also a ToMemory method that gives access to the ReadOnlyMemory.
+            rom = data.ToMemory();
+
+            // and a ToArray method that converts into a byte array.
+            byte[] array = data.ToArray();
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
         public void ToFromStream()
         {
             #region Snippet:BinaryDataToFromStream
@@ -58,8 +62,8 @@ namespace Azure.Core.Experimental.Tests.samples
             #endregion
         }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
+        [Fact(Skip = "Only verifying that the sample builds")]
+
         public void ToFromCustomType()
         {
             #region Snippet:BinaryDataToFromCustomModel
@@ -70,8 +74,8 @@ namespace Azure.Core.Experimental.Tests.samples
                 C = true
             };
 
-            var data = BinaryData.FromObject(model);
-            model = data.ToObject<CustomModel>();
+            var data = BinaryData.FromObjectAsJson(model);
+            model = data.ToObjectFromJson<CustomModel>();
             #endregion
         }
 

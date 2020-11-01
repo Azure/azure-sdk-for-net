@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message.</param>
         public ServiceBusMessage(BinaryData body)
         {
-            AmqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
+            AmqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body ?? new BinaryData(Array.Empty<byte>()) });
         }
 
         /// <summary>

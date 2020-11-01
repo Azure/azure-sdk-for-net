@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             if (egEvent.GetData() is BinaryData binaryEventData)
             {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObject<ContosoItemReceivedEventData>();
+                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
                     BinaryData binaryEventData = (BinaryData)egEvent.GetData();
-                    Assert.True(binaryEventData.ToObject<bool>());
+                    Assert.True(binaryEventData.ToObjectFromJson<bool>());
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
                     BinaryData binaryEventData = (BinaryData)egEvent.GetData();
-                    Assert.AreEqual("stringdata", binaryEventData.ToObject<string>());
+                    Assert.AreEqual("stringdata", binaryEventData.ToObjectFromJson<string>());
                 }
             }
         }
@@ -1494,7 +1494,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
                     case (BinaryData binaryData, "BinaryDataType"):
-                        Assert.AreEqual(Convert.ToBase64String(binaryData.ToBytes().ToArray()), "ZGF0YQ==");
+                        Assert.AreEqual(Convert.ToBase64String(binaryData.ToArray()), "ZGF0YQ==");
                         break;
                     case (_, "Contoso.Items.ItemReceived"):
                         ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
@@ -1528,7 +1528,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             if (cloudEvent.GetData() is BinaryData binaryEventData)
             {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObject<ContosoItemReceivedEventData>();
+                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
@@ -1640,7 +1640,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             BinaryData binaryEventData = (BinaryData)events[0].GetData();
-            bool eventData = binaryEventData.ToObject<bool>();
+            bool eventData = binaryEventData.ToObjectFromJson<bool>();
             Assert.True(eventData);
         }
 
@@ -1652,7 +1652,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             BinaryData binaryEventData = (BinaryData)events[0].GetData();
-            string eventData = binaryEventData.ToObject<string>();
+            string eventData = binaryEventData.ToObjectFromJson<string>();
             Assert.AreEqual("stringdata", eventData);
         }
         #endregion

@@ -51,9 +51,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 BinaryData state = await receiver.GetSessionStateAsync();
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToBytes().ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
-                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state.ToBytes().ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state.ToArray());
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Console.WriteLine(receivedMessage.SessionId);
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToBytes().ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }

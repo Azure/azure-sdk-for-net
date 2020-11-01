@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var streamData = bodyStream.ToArray();
             Assert.That(streamData, Is.Not.Null, "There should have been data in the stream.");
-            Assert.That(streamData, Is.EqualTo(eventData.EventBody.ToBytes().ToArray()), "The body data and the data read from the stream should agree.");
+            Assert.That(streamData, Is.EqualTo(eventData.EventBody.ToArray()), "The body data and the data read from the stream should agree.");
         }
 
         /// <summary>

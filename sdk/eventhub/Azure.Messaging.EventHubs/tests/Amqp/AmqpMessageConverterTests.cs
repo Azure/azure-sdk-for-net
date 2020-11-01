@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = message.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The AMQP message should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToBytes().ToArray()), "The AMQP message data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The AMQP message data should match the event body.");
         }
 
         /// <summary>
@@ -474,7 +474,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = message.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToBytes().ToArray()), "The batch envelope data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(message.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");
             Assert.That(propertyValue, Is.EqualTo(property), "The application property value should match.");
@@ -676,7 +676,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var messageData = batchEnvelope.DataBody.ToList();
             Assert.That(messageData.Count, Is.EqualTo(1), "The batch envelope should a single data body.");
-            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToBytes().ToArray()), "The batch envelope data should match the event body.");
+            Assert.That(messageData[0].Value, Is.EqualTo(eventData.EventBody.ToArray()), "The batch envelope data should match the event body.");
 
             Assert.That(batchEnvelope.ApplicationProperties.Map.TryGetValue(nameof(property), out object propertyValue), Is.True, "The application property should exist in the batch.");
             Assert.That(propertyValue, Is.EqualTo(property), "The application property value should match.");
@@ -807,7 +807,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
-            Assert.That(eventData.EventBody.ToBytes().ToArray(), Is.EqualTo(body), "The body contents should match.");
+            Assert.That(eventData.EventBody.ToArray(), Is.EqualTo(body), "The body contents should match.");
         }
 
         /// <summary>

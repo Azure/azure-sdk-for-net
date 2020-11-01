@@ -12,8 +12,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" /><!-- This package will be removed when v5.3.0 is released for GA -->
+  <ItemGroup><!-- This package will be removed when v5.3.0 is released for GA -->
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
@@ -56,5 +55,9 @@
       <Link>Resources.resx</Link>
       <CustomToolNamespace>Azure.Messaging.EventHubs</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\..\core\System.Memory.Data\src\System.Memory.Data.csproj" />
   </ItemGroup>
 </Project>

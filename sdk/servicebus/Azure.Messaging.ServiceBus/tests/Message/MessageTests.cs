@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         public void CreateReceivedMessageViaFactory()
         {
             var receivedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();
-            Assert.AreEqual(default(BinaryData), receivedMessage.Body);
+            Assert.IsTrue(receivedMessage.Body.ToMemory().IsEmpty);
             Assert.AreEqual(default(string), receivedMessage.MessageId);
             Assert.AreEqual(default(string), receivedMessage.PartitionKey);
             Assert.AreEqual(default(string), receivedMessage.ViaPartitionKey);

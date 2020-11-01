@@ -153,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     completionSources[setIndex].SetResult(true);
                     sessions.TryRemove(args.SessionId, out byte[] state);
                     BinaryData getState = await args.GetSessionStateAsync();
-                    Assert.AreEqual(state, getState.ToBytes().ToArray());
+                    Assert.AreEqual(state, getState.ToArray());
                 }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)

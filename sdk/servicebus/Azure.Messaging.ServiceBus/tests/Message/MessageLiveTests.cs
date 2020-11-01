@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
                 await receiver.CompleteMessageAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToBytes().ToArray());
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.ToBytes().ToArray().SequenceEqual(sentMessage.Body.ToBytes().ToArray()));
+                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Subject, sentMessage.Subject);
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = BinaryData.FromObject(testBody, serializer);
+                var body = serializer.SerializeToBinaryData(testBody);
                 var msg = new ServiceBusMessage(body);
 
                 await sender.SendMessageAsync(msg);
@@ -216,15 +216,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 foreach (BinaryData data in ((AmqpDataMessageBody)msg.AmqpMessage.Body).Data)
                 {
                     bodyEnum.MoveNext();
-                    var bytes = data.ToBytes().ToArray();
-                    Assert.AreEqual(bytes, bodyEnum.Current.ToBytes().ToArray());
+                    var bytes = data.ToArray();
+                    Assert.AreEqual(bytes, bodyEnum.Current.ToArray());
                     if (ct++ == 0)
                     {
-                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(0, 100).ToArray());
+                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(0, 100).ToArray());
                     }
                     else
                     {
-                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(100, 100).ToArray());
+                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(100, 100).ToArray());
                     }
                 }
             }
