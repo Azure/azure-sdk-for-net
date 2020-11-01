@@ -21,8 +21,8 @@ namespace Azure.Identity
         private CancellationTokenRegistration _ctRegistration;
         private readonly StringBuilder _stdOutBuilder;
         private readonly StringBuilder _stdErrBuilder;
-        private readonly AutoResetEvent _stdOutWaitHandle;
-        private readonly AutoResetEvent _stdErrWaitHandle;
+        private readonly TaskCompletionSource<bool> _stdOutCompletionSource;
+        private readonly TaskCompletionSource<bool> _stdErrCompletionSource;
 
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
@@ -31,8 +31,8 @@ namespace Azure.Identity
             _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
             _stdOutBuilder = new StringBuilder();
             _stdErrBuilder = new StringBuilder();
-            _stdOutWaitHandle = new AutoResetEvent(false);
-            _stdErrWaitHandle = new AutoResetEvent(false);
+            _stdOutCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _stdErrCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             if (timeout.TotalMilliseconds >= 0)
             {
@@ -45,16 +45,22 @@ namespace Azure.Identity
             }
         }
 
-        public Task<string> RunAsync()
+        public async Task<string> RunAsync()
         {
             StartProcess();
-            return _tcs.Task;
+
+            await _stdOutCompletionSource.Task.ConfigureAwait(false);
+            await _stdErrCompletionSource.Task.ConfigureAwait(false);
+
+            return await _tcs.Task.ConfigureAwait(false);
         }
 
         public string Run()
         {
             StartProcess();
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            _stdOutCompletionSource.Task.GetAwaiter().GetResult();
+            _stdErrCompletionSource.Task.GetAwaiter().GetResult();
             return _tcs.Task.GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
@@ -83,9 +89,6 @@ namespace Azure.Identity
 
         private void HandleExit()
         {
-            _stdOutWaitHandle.WaitOne(_timeout);
-            _stdErrWaitHandle.WaitOne(_timeout);
-
             if (_process.ExitCode == 0)
             {
                 TrySetResult(_stdOutBuilder.ToString());
@@ -99,7 +102,7 @@ namespace Azure.Identity
         {
             if (e.Data is null)
             {
-                _stdErrWaitHandle.Set();
+                _stdErrCompletionSource.TrySetResult(true);
             }
             else
             {
@@ -111,7 +114,7 @@ namespace Azure.Identity
         {
             if (e.Data is null)
             {
-                _stdOutWaitHandle.Set();
+                _stdOutCompletionSource.TrySetResult(true);
             }
             else
             {
@@ -153,6 +156,8 @@ namespace Azure.Identity
             if (_cancellationToken.IsCancellationRequested)
             {
                 DisposeProcess();
+                _stdOutCompletionSource.TrySetCanceled(_cancellationToken);
+                _stdErrCompletionSource.TrySetCanceled(_cancellationToken);
                 _tcs.TrySetCanceled(_cancellationToken);
             }
 
@@ -162,6 +167,8 @@ namespace Azure.Identity
         private void TrySetException(Exception exception)
         {
             DisposeProcess();
+            _stdOutCompletionSource.TrySetResult(false);
+            _stdErrCompletionSource.TrySetResult(false);
             _tcs.TrySetException(exception);
         }
 
@@ -169,8 +176,6 @@ namespace Azure.Identity
         {
             _process.OutputDataReceived -= HandleStdOutDataReceived;
             _process.ErrorDataReceived -= HandleStdErrDataReceived;
-            _stdOutWaitHandle.Dispose();
-            _stdErrWaitHandle.Dispose();
 
             _process.Dispose();
             _ctRegistration.Dispose();
