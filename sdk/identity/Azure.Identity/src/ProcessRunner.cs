@@ -15,7 +15,7 @@ namespace Azure.Identity
     {
         private readonly IProcess _process;
         private readonly TimeSpan _timeout;
-        private readonly TaskCompletionSource<bool> _processExitedComplectionSource;
+        private readonly TaskCompletionSource<bool> _processExitedCompletionSource;
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
@@ -28,7 +28,7 @@ namespace Azure.Identity
         {
             _process = process;
             _timeout = timeout;
-            _processExitedComplectionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _processExitedCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             _stdOutBuilder = new StringBuilder();
             _stdErrBuilder = new StringBuilder();
             _stdOutCompletionSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -51,7 +51,7 @@ namespace Azure.Identity
 
             try
             {
-                await _processExitedComplectionSource.Task.ConfigureAwait(false);
+                await _processExitedCompletionSource.Task.ConfigureAwait(false);
                 var output = await _stdOutCompletionSource.Task.ConfigureAwait(false);
                 await _stdErrCompletionSource.Task.ConfigureAwait(false);
                 return output;
@@ -68,7 +68,7 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             try
             {
-                _processExitedComplectionSource.Task.GetAwaiter().GetResult();
+                _processExitedCompletionSource.Task.GetAwaiter().GetResult();
                 var output = _stdOutCompletionSource.Task.GetAwaiter().GetResult();
                 _stdErrCompletionSource.Task.GetAwaiter().GetResult();
                 return output;
@@ -82,7 +82,7 @@ namespace Azure.Identity
 
         private void StartProcess()
         {
-            if (TrySetCanceled() || _processExitedComplectionSource.Task.IsCompleted)
+            if (TrySetCanceled() || _processExitedCompletionSource.Task.IsCompleted)
             {
                 return;
             }
@@ -106,11 +106,11 @@ namespace Azure.Identity
         {
             if (_process.ExitCode == 0)
             {
-                _processExitedComplectionSource.TrySetResult(true);
+                _processExitedCompletionSource.TrySetResult(true);
             }
             else
             {
-                _processExitedComplectionSource.TrySetResult(false);
+                _processExitedCompletionSource.TrySetResult(false);
             }
         }
         private void HandleStdErrDataReceived(object sender, DataReceivedEventArgsWrapper e)
@@ -147,7 +147,7 @@ namespace Azure.Identity
 
         private void HandleCancel()
         {
-            if (_processExitedComplectionSource.Task.IsCompleted)
+            if (_processExitedCompletionSource.Task.IsCompleted)
             {
                 return;
             }
@@ -160,7 +160,7 @@ namespace Azure.Identity
                 }
                 catch (Exception ex)
                 {
-                    _processExitedComplectionSource.TrySetException(ex);
+                    _processExitedCompletionSource.TrySetException(ex);
                     return;
                 }
             }
@@ -175,7 +175,7 @@ namespace Azure.Identity
                 DisposeProcess();
                 _stdOutCompletionSource.TrySetCanceled(_cancellationToken);
                 _stdErrCompletionSource.TrySetCanceled(_cancellationToken);
-                _processExitedComplectionSource.TrySetCanceled(_cancellationToken);
+                _processExitedCompletionSource.TrySetCanceled(_cancellationToken);
             }
 
             return _cancellationToken.IsCancellationRequested;
