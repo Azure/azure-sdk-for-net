@@ -87,17 +87,17 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 GenericRecord firstEventRecord = new GenericRecord(exampleSchema);
                 firstEventRecord.Add("Message", "Hello, Event Hubs!");
-                EventData firstEvent = new EventData(new BinaryData(firstEventRecord, avroSerializer, typeof(GenericRecord)));
+                EventData firstEvent = new EventData(avroSerializer.SerializeToBinaryData(firstEventRecord, typeof(GenericRecord)));
                 eventBatch.TryAdd(firstEvent);
 
                 GenericRecord secondEventRecord = new GenericRecord(exampleSchema);
                 secondEventRecord.Add("Message", "The middle event is this one");
-                EventData secondEvent = new EventData(new BinaryData(secondEventRecord, avroSerializer, typeof(GenericRecord)));
+                EventData secondEvent = new EventData(avroSerializer.SerializeToBinaryData(secondEventRecord, typeof(GenericRecord)));
                 eventBatch.TryAdd(secondEvent);
 
                 GenericRecord thirdEventRecord = new GenericRecord(exampleSchema);
                 thirdEventRecord.Add("Message", "Goodbye, Event Hubs!");
-                EventData thirdEvent = new EventData(new BinaryData(thirdEventRecord, avroSerializer, typeof(GenericRecord)));
+                EventData thirdEvent = new EventData(avroSerializer.SerializeToBinaryData(thirdEventRecord, typeof(GenericRecord)));
                 eventBatch.TryAdd(thirdEvent);
 
                 await producerClient.SendAsync(eventBatch);
