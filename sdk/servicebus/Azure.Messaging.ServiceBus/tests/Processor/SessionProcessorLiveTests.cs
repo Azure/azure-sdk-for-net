@@ -220,7 +220,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 List<string> receivedMessages = new List<string>();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += args =>
+                {
+                    var exception = (ServiceBusException)args.Exception;
+                    if (!(args.Exception is ServiceBusException sbEx) ||
+                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
+                    {
+                        Assert.Fail(args.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                };
 
                 await processor.StartProcessingAsync();
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)

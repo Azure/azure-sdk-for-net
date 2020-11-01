@@ -65,13 +65,6 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        /// If <see cref="ServiceBusSenderOptions.TransactionQueueOrTopicName"/> is set,
-        /// the message is sent to <see cref="EntityPath"/> via <see cref="TransactionEntityPath"/>;
-        /// null otherwise.
-        /// </summary>
-        public string TransactionEntityPath { get; }
-
-        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
@@ -122,15 +115,13 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
-                TransactionEntityPath = options.TransactionQueueOrTopicName;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
-                    TransactionEntityPath,
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
