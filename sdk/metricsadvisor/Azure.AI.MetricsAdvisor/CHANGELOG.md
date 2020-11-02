@@ -7,10 +7,10 @@
 - Added the `DataSource` property to `DataFeed`.
 
 ### Breaking Changes
-- In `MetricsAdvisorClient`, renamed sync and async methods `CreateMetricFeedback` to `AddMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed sync and async methods `GetMetricFeedbacks` to `GetAllMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed sync and async methods `GetMetricDimensionValues` to `GetDimensionValues`.
-- In `MetricsAdvisorClient`, changed return types of sync and async methods `CreateMetricFeedback` to a `Response<string>` containing the ID of the created feedback.
+- In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricDimensionValues` methods to `GetDimensionValues`.
+- In `MetricsAdvisorClient`, changed return types of sync and async `CreateMetricFeedback` methods to a `Response<string>` containing the ID of the created feedback.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `AnomalyAlertConfiguration` CRUD methods, removing the `Anomaly` word from their names (e.g., `GetAnomalyAlertConfiguration` became `GetAlertConfiguration`).
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `MetricAnomalyDetectionConfiguration` CRUD methods, removing the `MetricAnomaly` term from their names (e.g., `GetMetricAnomalyDetectionConfiguration` became `GetDetectionConfiguration`).
@@ -30,7 +30,7 @@
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
 
 ### Key Bug Fixes
-- Fixed a bug in `GetMetricEnrichedSeriesData` sync and async methods where a `NullReferenceException` was thrown if a returned data point had missing data.
+- Fixed a bug in sync and async `GetMetricEnrichedSeriesData` methods where a `NullReferenceException` was thrown if a returned data point had missing data.
 
 ## 1.0.0-beta.1 (2020-10-08)
 
