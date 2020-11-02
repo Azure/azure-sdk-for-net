@@ -35,7 +35,8 @@ directive:
   from: swagger-document
   where: $.definitions.DataFeedIngestionProgress
   transform: >
-    $.properties.latestSuccessTimestamp["x-nullable"] = true
+    $.properties.latestSuccessTimestamp["x-nullable"] = true;
+    $.properties.latestActiveTimestamp["x-nullable"] = true;
 ```
 
 ``` yaml
@@ -87,9 +88,49 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
+  where: $.definitions.IngestionStatus
+  transform: >
+    $["required"] = ["timestamp", "status", "message"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.EnrichmentStatus
+  transform: >
+    $["required"] = ["timestamp", "status", "message"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MetricSeriesItem
+  transform: >
+    $["required"] = ["metricId", "dimension"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.MetricDataItem
+  transform: >
+    $["required"] = ["id", "timestampList", "valueList"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
   where: $.definitions.AlertResult
   transform: >
-    $["required"] = ["createdTime", "modifiedTime", "timestamp"]
+    $["required"] = ["alertId", "createdTime", "modifiedTime", "timestamp"]
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IncidentProperty
+  transform: >
+    $["required"] = ["maxSeverity", "incidentStatus"]
 ```
 
 ### Add x-ms-paths section if not exists

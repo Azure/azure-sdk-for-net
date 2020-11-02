@@ -186,7 +186,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string MetricId { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity Severity { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus? Status { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AnomalyIncidentStatus : System.IEquatable<Azure.AI.MetricsAdvisor.Models.AnomalyIncidentStatus>
@@ -472,8 +472,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal DataFeedIngestionStatus() { }
         public string Message { get { throw null; } }
-        public Azure.AI.MetricsAdvisor.Models.IngestionStatusType? Status { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public Azure.AI.MetricsAdvisor.Models.IngestionStatusType Status { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class DataFeedMetric
     {
@@ -656,7 +656,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal EnrichmentStatus() { }
         public string Message { get { throw null; } }
         public string Status { get { throw null; } }
-        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class FeedbackDimensionFilter
     {

@@ -12,13 +12,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary> Initializes a new instance of IncidentProperty. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity)
-        {
-            MaxSeverity = maxSeverity;
-        }
-
-        /// <summary> Initializes a new instance of IncidentProperty. </summary>
-        /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
         /// 
@@ -26,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// only return for alerting incident result.
         /// </param>
-        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus? incidentStatus)
+        internal IncidentProperty(AnomalySeverity maxSeverity, AnomalyIncidentStatus incidentStatus)
         {
             MaxSeverity = maxSeverity;
             IncidentStatus = incidentStatus;
@@ -41,6 +34,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// 
         /// only return for alerting incident result.
         /// </summary>
-        public AnomalyIncidentStatus? IncidentStatus { get; }
+        public AnomalyIncidentStatus IncidentStatus { get; }
     }
 }
