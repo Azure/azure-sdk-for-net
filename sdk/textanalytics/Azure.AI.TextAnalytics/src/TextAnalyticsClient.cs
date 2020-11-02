@@ -2247,7 +2247,7 @@ namespace Azure.AI.TextAnalytics
 
         //#endregion
 
-        #region Health Async
+        #region Healthcare
 
         /// <summary>
         /// <a href="https://aka.ms/tanerpii"/>.
@@ -2271,7 +2271,7 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartHealthcareAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2296,7 +2296,7 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartHealthcare(documentInputs, options, cancellationToken);
+            return StartHealthcareBatch(documentInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -2312,13 +2312,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<HealthcareOperation> StartHealthcareAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new HealthcareOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartHealthcareAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2345,13 +2345,13 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual HealthcareOperation StartHealthcare(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
+        public virtual HealthcareOperation StartHealthcareBatch(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new HealthcareOptions();
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartHealthcare(documentInputs, options, cancellationToken);
+            return StartHealthcareBatch(documentInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -2362,7 +2362,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual HealthcareOperation StartHealthcare(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
+        public virtual HealthcareOperation StartHealthcareBatch(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2370,23 +2370,7 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken);
-                string location = response.Headers.OperationLocation;
-
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
-
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return StartHealthcareBatch(documentInputs, options, cancellationToken);
         }
 
         /// <summary>
@@ -2397,7 +2381,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<HealthcareOperation> StartHealthcareAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2405,25 +2389,10 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
-                string location = response.Headers.OperationLocation;
-
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private HealthcareOperation StartHealthcare(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private HealthcareOperation StartHealthcareBatch(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new HealthcareOptions();
 
@@ -2446,7 +2415,7 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private async Task<HealthcareOperation> StartHealthcareAsync(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
+        private async Task<HealthcareOperation> StartHealthcareBatchAsync(MultiLanguageBatchInput batchInput, HealthcareOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new HealthcareOptions();
 
@@ -2507,7 +2476,6 @@ namespace Azure.AI.TextAnalytics
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
             scope.Start();
-            // Look for other alternatives of operation cancellation
 
             try
             {
