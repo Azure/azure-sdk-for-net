@@ -40,7 +40,7 @@ namespace Azure.Core.Amqp.Tests
             message.Properties.UserId = Encoding.UTF8.GetBytes("userId");
 
             Assert.AreEqual(AmqpMessageBodyType.Data, message.Body.BodyType);
-            Assert.AreEqual("some data", Encoding.UTF8.GetString(((AmqpDataBody)message.Body).Data.First().ToArray()));
+            Assert.AreEqual("some data", Encoding.UTF8.GetString(((AmqpDataMessageBody)message.Body).Data.First().ToArray()));
             Assert.AreEqual("applicationValue", message.ApplicationProperties["applicationKey"]);
             Assert.AreEqual("deliveryValue", message.DeliveryAnnotations["deliveryKey"]);
             Assert.AreEqual("messageValue", message.MessageAnnotations["messageKey"]);

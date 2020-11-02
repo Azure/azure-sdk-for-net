@@ -15,7 +15,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
+            if (message.AmqpMessage.Body is AmqpDataMessageBody dataBody)
+            {
+                return AmqpMessage.Create(dataBody.Data.AsAmqpData());
+            }
+            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
         private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)
@@ -126,11 +130,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static BinaryData GetBody(this AmqpAnnotatedMessage message)
         {
-            if (message.Body is AmqpDataBody dataBody)
+            if (message.Body is AmqpDataMessageBody dataBody)
             {
                 return dataBody.Data.ConvertAndFlattenData();
             }
-            return default;
+            throw new NotSupportedException($"{message.Body.GetType()} is not a supported message body type.");
         }
     }
 }

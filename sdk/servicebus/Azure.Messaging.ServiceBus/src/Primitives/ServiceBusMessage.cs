@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpDataBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[] { value });
             }
         }
 

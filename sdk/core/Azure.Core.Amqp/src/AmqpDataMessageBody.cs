@@ -11,14 +11,14 @@ namespace Azure.Core.Amqp
     /// This consists of one or more data sections.
     /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data" />
     /// </summary>
-    public class AmqpDataBody : AmqpMessageBody
+    public class AmqpDataMessageBody : AmqpMessageBody
     {
         /// <summary>
-        /// Initializes a new <see cref="AmqpDataBody"/> instance with the
+        /// Initializes a new <see cref="AmqpDataMessageBody"/> instance with the
         /// passed in data sections.
         /// </summary>
         /// <param name="data">The data sections.</param>
-        public AmqpDataBody(IEnumerable<ReadOnlyMemory<byte>> data)
+        public AmqpDataMessageBody(IEnumerable<ReadOnlyMemory<byte>> data)
         {
             Data = data;
         }
@@ -27,5 +27,10 @@ namespace Azure.Core.Amqp
         /// The data sections for the AMQP message body.
         /// </summary>
         public virtual IEnumerable<ReadOnlyMemory<byte>> Data { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of the message body.
+        /// </summary>
+        public override AmqpMessageBodyType BodyType => AmqpMessageBodyType.Data;
     }
 }

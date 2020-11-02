@@ -12,6 +12,8 @@ namespace Azure.Core.Amqp
         public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Amqp.AmqpAddress left, Azure.Core.Amqp.AmqpAddress right) { throw null; }
+        public static bool operator !=(Azure.Core.Amqp.AmqpAddress left, Azure.Core.Amqp.AmqpAddress right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AmqpAnnotatedMessage
@@ -25,15 +27,16 @@ namespace Azure.Core.Amqp
         public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
     }
-    public partial class AmqpDataBody : Azure.Core.Amqp.AmqpMessageBody
+    public partial class AmqpDataMessageBody : Azure.Core.Amqp.AmqpMessageBody
     {
-        public AmqpDataBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
-        public System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> Data { get { throw null; } }
+        public AmqpDataMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
+        public override Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
+        public virtual System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> Data { get { throw null; } }
     }
     public abstract partial class AmqpMessageBody
     {
         protected AmqpMessageBody() { }
-        public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
+        public abstract Azure.Core.Amqp.AmqpMessageBodyType BodyType { get; }
     }
     public enum AmqpMessageBodyType
     {
@@ -62,6 +65,8 @@ namespace Azure.Core.Amqp
         public bool Equals(string other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Amqp.AmqpMessageId left, Azure.Core.Amqp.AmqpMessageId right) { throw null; }
+        public static bool operator !=(Azure.Core.Amqp.AmqpMessageId left, Azure.Core.Amqp.AmqpMessageId right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AmqpMessageProperties

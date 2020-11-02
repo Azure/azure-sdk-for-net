@@ -20,7 +20,7 @@ namespace Azure.Core.Amqp
         /// </param>
         public AmqpAnnotatedMessage(IEnumerable<ReadOnlyMemory<byte>> dataBody)
         {
-            Body = new AmqpDataBody(dataBody);
+            Body = new AmqpDataMessageBody(dataBody);
         }
 
         /// <summary>
