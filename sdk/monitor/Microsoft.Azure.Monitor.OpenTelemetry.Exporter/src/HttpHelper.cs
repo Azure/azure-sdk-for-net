@@ -41,16 +41,15 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 
                 if (httpHost != null)
                 {
-                    var httpPort = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHostPort);
-                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
+                    var httpPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeHttpHostPort, SemanticConventions.AttributeHttpTarget);
 
-                    if (httpPort != null && httpPort.ToString() != "80" && httpPort.ToString() != "443")
+                    if (httpPortAndTarget[0] != null && httpPortAndTarget[0].ToString() != "80" && httpPortAndTarget[0].ToString() != "443")
                     {
-                        url = $"{httpScheme}://{httpHost}:{httpPort}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}:{httpPortAndTarget[0]}{httpPortAndTarget[1]}";
                     }
                     else
                     {
-                        url = $"{httpScheme}://{httpHost}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}{httpPortAndTarget[1]}";
                     }
 
                     return url;
@@ -60,18 +59,16 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 
                 if (netPeerName != null)
                 {
-                    var netPeerPort = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerPort);
-                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
-                    return string.IsNullOrWhiteSpace(netPeerName?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort?.ToString()) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var netPeerPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeNetPeerPort, SemanticConventions.AttributeHttpTarget);
+                    return string.IsNullOrWhiteSpace(netPeerName?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPortAndTarget[0]?.ToString()) ? null : Colon)}{netPeerPortAndTarget[0]}{netPeerPortAndTarget[1]}";
                 }
 
                 var netPeerIP = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerIp);
 
                 if (netPeerIP != null)
                 {
-                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
-                    var netPeerPort = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerPort);
-                    return string.IsNullOrWhiteSpace(netPeerIP?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort?.ToString()) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var netPeerPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeNetPeerPort, SemanticConventions.AttributeHttpTarget);
+                    return string.IsNullOrWhiteSpace(netPeerIP?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPortAndTarget[0]?.ToString()) ? null : Colon)}{netPeerPortAndTarget[0]}{netPeerPortAndTarget[1]}";
                 }
             }
 
@@ -79,9 +76,8 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 
             if (host != null)
             {
-                var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
-                var httpPort = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHostPort);
-                url = $"{host}{(string.IsNullOrWhiteSpace(httpPort?.ToString()) ? null : ":")}{httpPort}{httpTarget}";
+                var httpPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeHttpHostPort, SemanticConventions.AttributeHttpTarget);
+                url = $"{host}{(string.IsNullOrWhiteSpace(httpPortAndTarget[0]?.ToString()) ? null : ":")}{httpPortAndTarget[0]}{httpPortAndTarget[1]}";
             }
 
             return string.IsNullOrWhiteSpace(url) ? null : url;
@@ -121,6 +117,29 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             return state.Value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static object[] GetTagValues(this PooledList<KeyValuePair<string, object>> tagObjects, params string[] tagNames)
+        {
+            if (tagNames.Length == 0)
+            {
+                return null;
+            }
+
+            ActivityMultipleTagEnumerator state = new ActivityMultipleTagEnumerator(tagNames);
+            ActivityTagsEnumeratorFactory<ActivityMultipleTagEnumerator>.Enumerate(tagObjects, ref state);
+
+            return state.Values;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static object GetTagValues(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
+        {
+            ActivitySingleTagEnumerator state = new ActivitySingleTagEnumerator(tagName);
+            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(tagObjects, ref state);
+
+            return state.Value;
+        }
+
         internal struct ActivitySingleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
         {
             public object Value;
@@ -139,6 +158,38 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
                 {
                     this.Value = item.Value;
                     return false;
+                }
+
+                return true;
+            }
+        }
+
+        internal struct ActivityMultipleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
+        {
+            public object[] Values;
+
+            private readonly string[] tagNames;
+            private int length;
+
+            public ActivityMultipleTagEnumerator(params string[] tagNames)
+            {
+                this.tagNames = tagNames;
+                this.length = tagNames.Length;
+                this.Values = new object[this.length];
+            }
+
+            public bool ForEach(KeyValuePair<string, object> item)
+            {
+                var index = Array.IndexOf(tagNames, item.Key);
+                if (index >= 0)
+                {
+                    this.Values[index] = item.Value;
+                    this.length--;
+
+                    if (length == 0)
+                    {
+                        return false;
+                    }
                 }
 
                 return true;
