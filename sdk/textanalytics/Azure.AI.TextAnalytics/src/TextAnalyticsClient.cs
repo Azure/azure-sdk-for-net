@@ -2269,7 +2269,7 @@ namespace Azure.AI.TextAnalytics
         // Look for other alternatives of operation cancellation
         #pragma warning disable AZC0003 // DO make service methods virtual.
         #pragma warning disable AZC0015 // Unexpected client method return type.
-        public async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
+        public virtual async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
         #pragma warning restore AZC0003 // DO make service methods virtual.
         {
@@ -2295,7 +2295,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         #pragma warning disable AZC0003 // DO make service methods virtual.
         #pragma warning disable AZC0015 // Unexpected client method return type.
-        public string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
+        public virtual string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
         #pragma warning restore AZC0003 // DO make service methods virtual.
         {
