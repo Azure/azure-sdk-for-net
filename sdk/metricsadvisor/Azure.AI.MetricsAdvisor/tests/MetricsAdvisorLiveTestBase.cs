@@ -78,7 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return feed;
         }
 
-        internal async Task<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
+        internal async Task<string> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
         {
             DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
             AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());

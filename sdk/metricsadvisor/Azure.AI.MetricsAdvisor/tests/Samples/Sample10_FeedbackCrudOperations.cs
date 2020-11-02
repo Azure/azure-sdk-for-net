@@ -35,11 +35,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startTime, endTime, AnomalyValue.NotAnomaly);
 
-            Response<MetricFeedback> response = await client.CreateMetricFeedbackAsync(anomalyFeedback);
+            Response<string> response = await client.CreateMetricFeedbackAsync(anomalyFeedback);
 
-            MetricFeedback feedback = response.Value;
+            string feedbackId = response.Value;
 
-            Console.WriteLine($"Feedback ID: {feedback.Id}");
+            Console.WriteLine($"Feedback ID: {feedbackId}");
         }
 
         [Test]

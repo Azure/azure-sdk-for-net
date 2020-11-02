@@ -33,17 +33,17 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var emailHook = new EmailNotificationHook(hookName, emailsToAlert);
 
-            Response<NotificationHook> response = await adminClient.CreateHookAsync(emailHook);
+            Response<string> response = await adminClient.CreateHookAsync(emailHook);
 
-            NotificationHook hook = response.Value;
+            string hookId = response.Value;
 
-            Console.WriteLine($"Hook ID: {hook.Id}");
+            Console.WriteLine($"Hook ID: {hookId}");
             #endregion
 
             // Delete the created hook to clean up the Metrics Advisor resource. Do not perform this
             // step if you intend to keep using the hook.
 
-            await adminClient.DeleteHookAsync(hook.Id);
+            await adminClient.DeleteHookAsync(hookId);
         }
 
         [Test]

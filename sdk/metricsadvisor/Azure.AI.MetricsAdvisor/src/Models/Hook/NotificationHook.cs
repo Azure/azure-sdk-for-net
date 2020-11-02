@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The unique identifier for the hook.
         /// </summary>
         [CodeGenMember("HookId")]
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// The name of the hook.

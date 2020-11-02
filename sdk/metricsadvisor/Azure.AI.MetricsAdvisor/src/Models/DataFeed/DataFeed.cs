@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// The current ingestion status of this <see cref="DataFeed"/>.

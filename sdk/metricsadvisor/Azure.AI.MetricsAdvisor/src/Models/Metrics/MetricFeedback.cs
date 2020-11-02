@@ -30,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> feedback unique id. </summary>
         [CodeGenMember("FeedbackId")]
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary> feedback created time. </summary>
         public DateTimeOffset? CreatedTime { get; }
