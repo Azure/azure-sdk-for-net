@@ -12,42 +12,6 @@ namespace Azure.AI.TextAnalytics
 {
     internal static class ClientCommon
     {
-        /// <summary>
-        /// Used as part of argument validation. Attempts to create a <see cref="Guid"/> from a <c>string</c> and
-        /// throws an <see cref="ArgumentException"/> in case of failure.
-        /// </summary>
-        /// <param name="modelId">The model identifier to be parsed into a <see cref="Guid"/>.</param>
-        /// <param name="paramName">The original parameter name of the <paramref name="modelId"/>. Used to create exceptions in case of failure.</param>
-        /// <returns>The <see cref="Guid"/> instance created from the <paramref name="modelId"/>.</returns>
-        /// <exception cref="ArgumentException">Thrown when parsing fails.</exception>
-        public static Guid ValidateModelId(string modelId, string paramName)
-        {
-            Guid guid;
-
-            try
-            {
-                guid = new Guid(modelId);
-            }
-            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
-            {
-                throw new ArgumentException($"The {paramName} must be a valid GUID.", paramName, ex);
-            }
-
-            return guid;
-        }
-
-        public static string GetResponseHeader(ResponseHeaders responseHeaders, string headerName)
-        {
-            if (responseHeaders.TryGetValue(headerName, out var headerValue))
-            {
-                return headerValue;
-            }
-            else
-            {
-                throw new KeyNotFoundException($"Header '{headerName}' was not present in the response sent by the server.");
-            }
-        }
-
         public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<DocumentError> errors, string errorMessage = default)
         {
             string errorCode = default;
