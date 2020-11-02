@@ -46,17 +46,17 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
 
-            Response<AnomalyDetectionConfiguration> response = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfiguration);
+            Response<string> response = await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(detectionConfiguration);
 
-            detectionConfiguration = response.Value;
+            string detectionConfigurationId = response.Value;
 
-            Console.WriteLine($"Anomaly detection configuration ID: {detectionConfiguration.Id}");
+            Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
             #endregion
 
             // Delete the created anomaly detection configuration to clean up the Metrics Advisor resource.
             // Do not perform this step if you intend to keep using the configuration.
 
-            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(detectionConfiguration.Id);
+            await adminClient.DeleteMetricAnomalyDetectionConfigurationAsync(detectionConfigurationId);
         }
 
         [Test]

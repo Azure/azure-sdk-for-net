@@ -1,6 +1,8 @@
 # Release History
 
 ## 1.0.0-beta.3 (Unreleased)
+### Added
+- Support for mocking all client methods that use models with internal constructors
 
 
 ## 1.0.0-beta.2 (2020-10-06)
