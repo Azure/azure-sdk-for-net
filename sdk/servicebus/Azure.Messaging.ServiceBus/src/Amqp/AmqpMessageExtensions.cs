@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-           return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
+            return AmqpMessage.Create(((AmqpDataBody)message.AmqpMessage.Body).Data.AsAmqpData());
         }
 
         private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)
@@ -130,10 +130,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return dataBody.Data.ConvertAndFlattenData();
             }
-            else
-            {
-                return default;
-            }
+            return default;
         }
     }
 }

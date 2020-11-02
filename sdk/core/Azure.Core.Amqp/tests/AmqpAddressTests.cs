@@ -6,7 +6,6 @@ using NUnit.Framework;
 namespace Azure.Core.Amqp.Tests
 {
     public class AmqpAddressTests
-
     {
         [Test]
         public void CanCreateFromString()

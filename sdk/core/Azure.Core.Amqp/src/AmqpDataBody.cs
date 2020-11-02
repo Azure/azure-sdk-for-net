@@ -26,6 +26,6 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The data sections for the AMQP message body.
         /// </summary>
-        public IEnumerable<ReadOnlyMemory<byte>> Data { get; internal set; }
+        public virtual IEnumerable<ReadOnlyMemory<byte>> Data { get; internal set; }
     }
 }

@@ -24,12 +24,14 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
-        /// The header of the AMQP message.
+        /// Gets the header of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header" />
         /// </summary>
         public AmqpMessageHeader Header { get; } = new AmqpMessageHeader();
 
         /// <summary>
-        /// The footer of the AMQP message.
+        /// Gets the footer of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-footer" />
         /// </summary>
         public IDictionary<string, object> Footer
         {
@@ -46,7 +48,8 @@ namespace Azure.Core.Amqp
         private Dictionary<string, object>? _footer;
 
         /// <summary>
-        /// The delivery annotations of the AMQP message.
+        /// Gets the delivery annotations of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-delivery-annotations"/>
         /// </summary>
         public IDictionary<string, object> DeliveryAnnotations
         {
@@ -63,7 +66,8 @@ namespace Azure.Core.Amqp
         private Dictionary<string, object>? _deliveryAnnotations;
 
         /// <summary>
-        /// The message annotations of the AMQP message.
+        /// Gets the message annotations of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-annotations"/>
         /// </summary>
         public IDictionary<string, object> MessageAnnotations
         {
@@ -86,6 +90,7 @@ namespace Azure.Core.Amqp
 
         /// <summary>
         /// Gets the application properties of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties"/>
         /// </summary>
         public IDictionary<string, object> ApplicationProperties
         {
@@ -103,6 +108,7 @@ namespace Azure.Core.Amqp
 
         /// <summary>
         /// Gets or sets the body of the AMQP message.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
         /// </summary>
         public AmqpMessageBody Body { get; set; }
     }

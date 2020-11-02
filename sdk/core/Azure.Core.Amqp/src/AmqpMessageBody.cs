@@ -12,6 +12,6 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Gets the type of the message body.
         /// </summary>
-        public AmqpMessageBodyType BodyType { get; internal set; }
+        public virtual AmqpMessageBodyType BodyType { get; }
     }
 }
