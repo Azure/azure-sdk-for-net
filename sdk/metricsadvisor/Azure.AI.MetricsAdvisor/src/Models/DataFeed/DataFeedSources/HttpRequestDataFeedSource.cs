@@ -29,6 +29,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(payload, nameof(payload));
 
             Parameter = new HttpRequestParameter(url.AbsoluteUri, httpHeader, httpMethod, payload);
+
+            Url = url;
+            HttpHeader = httpHeader;
+            HttpMethod = httpMethod;
+            Payload = payload;
         }
 
         internal HttpRequestDataFeedSource(HttpRequestParameter parameter)
@@ -37,6 +42,31 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            Url = new Uri(parameter.Url);
+            HttpHeader = parameter.HttpHeader;
+            HttpMethod = parameter.HttpMethod;
+            Payload = parameter.Payload;
         }
+
+        /// <summary>
+        /// The HTTP URL.
+        /// </summary>
+        public Uri Url { get; }
+
+        /// <summary>
+        /// The HTTP header.
+        /// </summary>
+        public string HttpHeader { get; }
+
+        /// <summary>
+        /// The HTTP method.
+        /// </summary>
+        public string HttpMethod { get; }
+
+        /// <summary>
+        /// The HTTP request body.
+        /// </summary>
+        public string Payload { get; }
     }
 }

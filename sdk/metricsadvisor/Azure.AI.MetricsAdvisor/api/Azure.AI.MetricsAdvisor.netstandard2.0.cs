@@ -265,26 +265,47 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class AzureApplicationInsightsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query) { }
+        public string ApiKey { get { throw null; } }
+        public string ApplicationId { get { throw null; } }
+        public string AzureCloud { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class AzureBlobDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate) { }
+        public string BlobTemplate { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Container { get { throw null; } }
     }
     public partial class AzureCosmosDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureCosmosDbDataFeedSource(string connectionString, string sqlQuery, string database, string collectionId) { }
+        public string CollectionId { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
+        public string SqlQuery { get { throw null; } }
     }
     public partial class AzureDataExplorerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataExplorerDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class AzureDataLakeStorageGen2DataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureDataLakeStorageGen2DataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
+        public string AccountKey { get { throw null; } }
+        public string AccountName { get { throw null; } }
+        public string DirectoryTemplate { get { throw null; } }
+        public string FileSystemName { get { throw null; } }
+        public string FileTemplate { get { throw null; } }
     }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureTableDataFeedSource(string connectionString, string table, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
+        public string Table { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BoundaryDirection : System.IEquatable<Azure.AI.MetricsAdvisor.Models.BoundaryDirection>
@@ -619,7 +640,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     }
     public partial class ElasticsearchDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
-        public ElasticsearchDataFeedSource(string host, string port, string authHeader, string query) { }
+        public ElasticsearchDataFeedSource(string host, string port, string authorizationHeader, string query) { }
+        public string AuthorizationHeader { get { throw null; } }
+        public string Host { get { throw null; } }
+        public string Port { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class EmailNotificationHook : Azure.AI.MetricsAdvisor.Models.NotificationHook
     {
@@ -814,6 +839,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class HttpRequestDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public HttpRequestDataFeedSource(System.Uri url, string httpHeader, string httpMethod, string payload) { }
+        public string HttpHeader { get { throw null; } }
+        public string HttpMethod { get { throw null; } }
+        public string Payload { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
     }
     public partial class IncidentRootCause
     {
@@ -826,6 +855,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class InfluxDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public InfluxDbDataFeedSource(string connectionString, string database, string username, string password, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
+        public string Password { get { throw null; } }
+        public string Query { get { throw null; } }
+        public string Username { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionStatusType : System.IEquatable<Azure.AI.MetricsAdvisor.Models.IngestionStatusType>
@@ -1015,10 +1049,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MongoDbDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MongoDbDataFeedSource(string connectionString, string database, string command) { }
+        public string Command { get { throw null; } }
+        public string ConnectionString { get { throw null; } }
+        public string Database { get { throw null; } }
     }
     public partial class MySqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public MySqlDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class NotificationHook
     {
@@ -1050,6 +1089,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class PostgreSqlDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public PostgreSqlDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class SeverityCondition
     {
@@ -1085,6 +1126,8 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public SqlServerDataFeedSource(string connectionString, string query) { }
+        public string ConnectionString { get { throw null; } }
+        public string Query { get { throw null; } }
     }
     public partial class SuppressCondition
     {

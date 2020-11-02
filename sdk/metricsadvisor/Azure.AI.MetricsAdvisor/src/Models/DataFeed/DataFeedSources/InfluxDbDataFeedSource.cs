@@ -31,6 +31,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
             Parameter = new InfluxDBParameter(connectionString, database, username, password, query);
+
+            ConnectionString = connectionString;
+            Database = database;
+            Username = username;
+            Password = password;
+            Query = query;
         }
 
         internal InfluxDbDataFeedSource(InfluxDBParameter parameter)
@@ -39,6 +45,37 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ConnectionString = parameter.ConnectionString;
+            Database = parameter.Database;
+            Username = parameter.UserName;
+            Password = parameter.Password;
+            Query = parameter.Query;
         }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        public string ConnectionString { get; }
+
+        /// <summary>
+        /// The name of the database.
+        /// </summary>
+        public string Database { get; }
+
+        /// <summary>
+        /// The access username.
+        /// </summary>
+        public string Username { get; }
+
+        /// <summary>
+        /// The access password.
+        /// </summary>
+        public string Password { get; }
+
+        /// <summary>
+        /// The query to retrieve the data to be ingested.
+        /// </summary>
+        public string Query { get; }
     }
 }
