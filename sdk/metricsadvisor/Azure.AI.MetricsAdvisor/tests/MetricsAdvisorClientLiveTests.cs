@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            List<DataPointAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
+            List<DataPointAnomaly> anomalies = await client.GetAnomaliesAsync(
                 DetectionConfigurationId,
                 new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
             ).ToEnumerableAsync().ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForDetectionConfigurationAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                  DetectionConfigurationId,
                  new GetIncidentsForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
             {
@@ -199,7 +199,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var anomaly in client.GetAnomaliesForAlertAsync(
+            await foreach (var anomaly in client.GetAnomaliesAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetAnomaliesForAlertOptions() { TopCount = 1 }))
@@ -223,7 +223,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForAlertAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetIncidentsForAlertOptions() { TopCount = 1 }))
