@@ -40,12 +40,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+        public MetricsAdvisorAdministrationClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
@@ -71,12 +71,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
+        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
@@ -269,37 +269,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
-        /// <param name="dataSource">The source from which data will be consumed.</param>
-        /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
-        /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
-        /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
-            Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
             try
             {
-                dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataSource.DataFeedDetail, cancellationToken).ConfigureAwait(false);
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
-                var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
-                return Response.FromValue(createdDataFeed, response.GetRawResponse());
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -311,37 +300,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <summary>
         /// Creates a <see cref="DataFeed"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="dataFeedName">A custom name for the <see cref="DataFeed"/> to be displayed on the web portal.</param>
-        /// <param name="dataSource">The source from which data will be consumed.</param>
-        /// <param name="dataFeedGranularity">The frequency with which ingestion from the data source will happen.</param>
-        /// <param name="dataFeedSchema">Defines how this <see cref="DataFeed"/> structures the data ingested from the data source in terms of metrics and dimensions.</param>
-        /// <param name="dataFeedIngestionSettings">Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.</param>
-        /// <param name="dataFeedOptions">An optional set of options configuring the behavior of the <see cref="DataFeed"/>.</param>
+        /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="dataFeedName"/>, <paramref name="dataSource"/>, <paramref name="dataFeedGranularity"/>, <paramref name="dataFeedSchema"/>, or <paramref name="dataFeedIngestionSettings"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dataFeedName"/> is empty.</exception>
-        public virtual Response<DataFeed> CreateDataFeed(string dataFeedName, DataFeedSource dataSource, DataFeedGranularity dataFeedGranularity, DataFeedSchema dataFeedSchema, DataFeedIngestionSettings dataFeedIngestionSettings, DataFeedOptions dataFeedOptions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
+        public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
-            Argument.AssertNotNull(dataFeedGranularity, nameof(dataFeedGranularity));
-            Argument.AssertNotNull(dataFeedSchema, nameof(dataFeedSchema));
-            Argument.AssertNotNull(dataFeedIngestionSettings, nameof(dataFeedIngestionSettings));
+            Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
             scope.Start();
             try
             {
-                dataSource.SetDetail(dataFeedName, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings, dataFeedOptions);
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataSource.DataFeedDetail, cancellationToken);
+                DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
                 string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
-                var createdDataFeed = new DataFeed(dataSource.DataFeedDetail) { Id = dataFeedId };
-                return Response.FromValue(createdDataFeed, response.GetRawResponse());
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -710,11 +688,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual async Task<Response<AnomalyDetectionConfiguration>> CreateMetricAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateMetricAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -724,9 +702,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
-                detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
+                string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfiguration, response.GetRawResponse());
+                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -741,11 +719,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual Response<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateMetricAnomalyDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
@@ -755,9 +733,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
-                detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
+                string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfiguration, response.GetRawResponse());
+                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1026,12 +1004,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual async Task<Response<AnomalyAlertConfiguration>> CreateAnomalyAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateAnomalyAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
@@ -1042,9 +1020,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1059,12 +1037,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual Response<AnomalyAlertConfiguration> CreateAnomalyAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateAnomalyAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
@@ -1075,9 +1053,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1346,12 +1324,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1366,9 +1344,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1383,12 +1361,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1403,9 +1381,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {

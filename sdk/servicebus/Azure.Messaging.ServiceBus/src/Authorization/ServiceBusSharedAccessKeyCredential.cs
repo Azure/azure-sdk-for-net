@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     ///   Service Bus entity.
     /// </summary>
     ///
-    public sealed class ServiceBusSharedAccessKeyCredential
+    internal sealed class ServiceBusSharedAccessKeyCredential
     {
         /// <summary>
         ///   The name of the shared access key to be used for authorization, as

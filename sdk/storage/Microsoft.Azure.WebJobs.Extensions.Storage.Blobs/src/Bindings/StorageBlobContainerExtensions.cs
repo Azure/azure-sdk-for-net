@@ -16,7 +16,12 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
         public static Task<BlobBaseClient> GetBlobReferenceForArgumentTypeAsync(this BlobContainerClient container,
             string blobName, Type argumentType, CancellationToken cancellationToken)
         {
-            if (argumentType == typeof(BlockBlobClient))
+            if (argumentType == typeof(BlobClient))
+            {
+                BlobBaseClient blob = container.GetBlobClient(blobName);
+                return Task.FromResult(blob);
+            }
+            else if (argumentType == typeof(BlockBlobClient))
             {
                 BlobBaseClient blob = container.GetBlockBlobClient(blobName);
                 return Task.FromResult(blob);

@@ -225,11 +225,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public EventHubConsumerClient(string consumerGroup,
-                                      string fullyQualifiedNamespace,
-                                      string eventHubName,
-                                      EventHubsSharedAccessKeyCredential credential,
-                                      EventHubConsumerClientOptions clientOptions = default)
+        internal EventHubConsumerClient(string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        EventHubsSharedAccessKeyCredential credential,
+                                        EventHubConsumerClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));

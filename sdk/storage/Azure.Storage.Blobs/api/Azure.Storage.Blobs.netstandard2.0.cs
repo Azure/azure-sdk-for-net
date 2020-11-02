@@ -1454,6 +1454,8 @@ namespace Azure.Storage.Sas
         List = 32,
         Tag = 64,
         DeleteBlobVersion = 128,
+        Move = 256,
+        Execute = 512,
     }
     public partial class BlobSasBuilder
     {
@@ -1466,10 +1468,12 @@ namespace Azure.Storage.Sas
         public string ContentEncoding { get { throw null; } set { } }
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
+        public string PreauthorizedAgentObjectId { get { throw null; } set { } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
         public string Resource { get { throw null; } set { } }
         public string Snapshot { get { throw null; } set { } }
@@ -1502,6 +1506,9 @@ namespace Azure.Storage.Sas
         Delete = 16,
         Tag = 32,
         DeleteBlobVersion = 64,
+        List = 128,
+        Move = 256,
+        Execute = 512,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {

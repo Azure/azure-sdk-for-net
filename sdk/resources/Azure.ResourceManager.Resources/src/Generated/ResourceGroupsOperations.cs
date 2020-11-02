@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupsOperations.CheckExistence");
             scope.Start();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether a resource group exists. </summary>
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ResourceGroupsOperations.CheckExistence");
             scope.Start();

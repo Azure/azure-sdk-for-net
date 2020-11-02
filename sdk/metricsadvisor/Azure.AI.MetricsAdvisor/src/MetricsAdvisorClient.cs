@@ -42,12 +42,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientOptions options)
+        public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new MetricsAdvisorKeyCredentialPolicy(credential));
@@ -73,12 +73,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="credential">A credential used to authenticate to the service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientOptions options)
+        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MetricsAdvisorClientOptions();
+            options ??= new MetricsAdvisorClientsOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
@@ -671,10 +671,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
+        /// containing the ID of the newly created feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -684,10 +685,9 @@ namespace Azure.AI.MetricsAdvisor
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = await _serviceRestClient.CreateMetricFeedbackAsync(feedback, cancellationToken).ConfigureAwait(false);
+                string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
-
-                return Response.FromValue(feedback, response.GetRawResponse());
+                return Response.FromValue(feedbackId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -702,10 +702,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="feedback">The <see cref="MetricFeedback"/> to be created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the created <see cref="MetricFeedback"/>s.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
+        /// containing the ID of the newly created feedback.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="feedback"/> is null.</exception>
-        public virtual Response<MetricFeedback> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateMetricFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(feedback, nameof(feedback));
 
@@ -715,10 +716,9 @@ namespace Azure.AI.MetricsAdvisor
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateMetricFeedbackHeaders> response = _serviceRestClient.CreateMetricFeedback(feedback, cancellationToken);
+                string feedbackId = ClientCommon.GetFeedbackId(response.Headers.Location);
 
-                feedback.Id = ClientCommon.GetFeedbackId(response.Headers.Location);
-
-                return Response.FromValue(feedback, response.GetRawResponse());
+                return Response.FromValue(feedbackId, response.GetRawResponse());
             }
             catch (Exception e)
             {

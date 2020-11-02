@@ -352,6 +352,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            if (messageBatch.Count == 0)
+            {
+                return;
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
