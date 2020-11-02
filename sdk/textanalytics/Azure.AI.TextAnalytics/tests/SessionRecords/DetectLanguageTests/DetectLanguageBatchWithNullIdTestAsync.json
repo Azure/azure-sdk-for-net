@@ -11,7 +11,7 @@
         "Content-Length": "67",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f7c842cf7e614a40b1a885320f8dbb75-07b37c141cbb294b-00",
+        "traceparent": "00-737a7466d1db4042ab8761f83c5d3797-18ef4e158a519e4a-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201102.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
@@ -30,9 +30,9 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "bb189336-01ce-479b-99a9-0387da783a63",
+        "apim-request-id": "5422c14f-f9fa-43d4-aee9-feca5e060e6e",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 19:02:29 GMT",
+        "Date": "Mon, 02 Nov 2020 19:19:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -51,6 +51,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1421275547"
+    "RandomSeed": "1421275547",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }

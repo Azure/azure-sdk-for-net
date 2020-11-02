@@ -11,7 +11,7 @@
         "Content-Length": "224",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0866c19c531c27428b1bc93801936359-17a59f33d542634b-00",
+        "traceparent": "00-e918bc41c56fcc4aa0a2940d8602a6a8-0a971260055ba74f-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201102.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
@@ -35,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a9b60274-0f50-4205-b06d-581623fe4842",
+        "apim-request-id": "79b4a55f-0143-4a6d-9189-5e8b8a3c6c05",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 02 Nov 2020 19:02:26 GMT",
+        "Date": "Mon, 02 Nov 2020 19:19:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "106"
+        "x-envoy-upstream-service-time": "90"
       },
       "ResponseBody": {
         "documents": [
@@ -121,6 +121,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "876796289"
+    "RandomSeed": "876796289",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
   }
 }
