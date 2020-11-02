@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry.Trace;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class HttpHelper
+    internal static class HttpHelper
     {
         private const string SchemePostfix = "://";
         private const string Colon = ":";
@@ -16,68 +19,85 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
         /// This method follows OpenTelemetry specification to retrieve http URL.
         /// Reference: https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client.
         /// </summary>
-        /// <param name="tags">Activity Tags</param>
+        /// <param name="tagObjects">Activity Tags</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetUrl(Dictionary<string, string> tags)
+        internal static string GetUrl(this PooledList<KeyValuePair<string, object>> tagObjects)
         {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
+            var httpurl = tagObjects.GetTagValue(SemanticConventions.AttributeHttpUrl);
+
+            if (httpurl != null && Uri.TryCreate(httpurl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
             {
-                if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
-                {
-                    return url;
-                }
+                return uri.AbsoluteUri;
             }
 
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme))
+            string url = null;
+
+            var httpScheme = tagObjects.GetTagValue(SemanticConventions.AttributeHttpScheme);
+
+            if (httpScheme != null)
             {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost) && !string.IsNullOrWhiteSpace(httpHost))
+                var httpHost = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost);
+
+                if (httpHost != null)
                 {
-                    tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
-                    if (httpPort != null && httpPort != "80" && httpPort != "443")
+                    var httpPort = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHostPort);
+                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
+
+                    if (httpPort != null && httpPort.ToString() != "80" && httpPort.ToString() != "443")
                     {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}:{httpPort}{httpTarget}";
                     }
                     else
                     {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}{httpTarget}";
                     }
 
                     return url;
                 }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerName, out var netPeerName)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out var netPeerPort))
+
+                var netPeerName = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerName);
+
+                if (netPeerName != null)
                 {
-                    return string.IsNullOrWhiteSpace(netPeerName) ? null :  $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var netPeerPort = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerPort);
+                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
+                    return string.IsNullOrWhiteSpace(netPeerName?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort?.ToString()) ? null : Colon)}{netPeerPort}{httpTarget}";
                 }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerIp, out var netPeerIP)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out netPeerPort))
+
+                var netPeerIP = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerIp);
+
+                if (netPeerIP != null)
                 {
-                    return string.IsNullOrWhiteSpace(netPeerIP) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
+                    var netPeerPort = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerPort);
+                    return string.IsNullOrWhiteSpace(netPeerIP?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort?.ToString()) ? null : Colon)}{netPeerPort}{httpTarget}";
                 }
             }
 
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host) && !string.IsNullOrWhiteSpace(host))
+            var host = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost);
+
+            if (host != null)
             {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
-                url = $"{host}{(string.IsNullOrWhiteSpace(httpPort) ? null : Colon)}{httpPort}{httpTarget}";
-                return url;
+                var httpTarget = tagObjects.GetTagValue(SemanticConventions.AttributeHttpTarget);
+                var httpPort = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHostPort);
+                url = $"{host}{(string.IsNullOrWhiteSpace(httpPort?.ToString()) ? null : ":")}{httpPort}{httpTarget}";
             }
 
             return string.IsNullOrWhiteSpace(url) ? null : url;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHttpStatusCode(Dictionary<string, string> tags)
+        internal static string GetHttpStatusCode(this PooledList<KeyValuePair<string, object>> tagObjects)
         {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
-            {
-                return status;
-            }
+            var status = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString();
+            return status ?? "0";
+        }
 
-            return "0";
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetMessagingUrl(this PooledList<KeyValuePair<string, object>> tagObjects)
+        {
+            return tagObjects.GetTagValue(SemanticConventions.AttributeMessagingUrl)?.ToString();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -87,14 +107,86 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHost(Dictionary<string, string> tags)
+        internal static string GetHost(this PooledList<KeyValuePair<string, object>> tagObjects)
         {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
+            return tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost)?.ToString();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static object GetTagValue(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
+        {
+            ActivitySingleTagEnumerator state = new ActivitySingleTagEnumerator(tagName);
+            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(tagObjects, ref state);
+
+            return state.Value;
+        }
+
+        internal struct ActivitySingleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
+        {
+            public object Value;
+
+            private readonly string tagName;
+
+            public ActivitySingleTagEnumerator(string tagName)
             {
-                return host;
+                this.tagName = tagName;
+                this.Value = null;
             }
 
-            return null;
+            public bool ForEach(KeyValuePair<string, object> item)
+            {
+                if (item.Key == this.tagName)
+                {
+                    this.Value = item.Value;
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        internal static class ActivityTagsEnumeratorFactory<TState>
+           where TState : struct, IActivityEnumerator<KeyValuePair<string, object>>
+        {
+            private static readonly DictionaryEnumerator<string, object, TState>.AllocationFreeForEachDelegate
+                PooledListObjectsEnumerator = DictionaryEnumerator<string, object, TState>.BuildAllocationFreeForEachDelegate(
+                    typeof(PooledList<KeyValuePair<string, object>>).GetField("buffer", BindingFlags.Instance | BindingFlags.NonPublic).FieldType);
+
+            private static readonly DictionaryEnumerator<string, object, TState>.AllocationFreeForEachDelegate
+                KeyValuePairEnumerator = DictionaryEnumerator<string, object, TState>.BuildAllocationFreeForEachDelegate(typeof(IEnumerable<KeyValuePair<string, object>>));
+
+            private static readonly DictionaryEnumerator<string, object, TState>.ForEachDelegate ForEachTagValueCallbackRef = ForEachTagValueCallback;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static void Enumerate(PooledList<KeyValuePair<string, object>> tagObjects, ref TState state)
+            {
+                if (tagObjects.Count == 0)
+                {
+                    return;
+                }
+
+                PooledListObjectsEnumerator(
+                    tagObjects,
+                    ref state,
+                    ForEachTagValueCallbackRef);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static void Enumerate(IEnumerable<KeyValuePair<string, object>> tagObjects, ref TState state)
+            {
+                if (tagObjects == null || tagObjects.Count() == 0)
+                {
+                    return;
+                }
+
+                KeyValuePairEnumerator(
+                    tagObjects,
+                    ref state,
+                    ForEachTagValueCallbackRef);
+            }
+
+            private static bool ForEachTagValueCallback(ref TState state, KeyValuePair<string, object> item)
+                => state.ForEach(item);
         }
     }
 }
