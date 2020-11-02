@@ -2490,6 +2490,54 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
+        /// <summary>
+        /// Gets collection of healthcare entities from the HealthOperation using async pageable.
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A collection of <see cref="RecognizeHealthcareEntitiesResultCollection"/> items.</returns>
+        public virtual AsyncPageable<DocumentHealthcareResult> GetHealthcareEntities(HealthcareOperation operation, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DocumentHealthcareResult>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+
+                    RecognizeHealthcareEntitiesResultCollection result = operation.Value;
+                    return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<DocumentHealthcareResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(GetHealthcareEntities)}");
+                scope.Start();
+
+                try
+                {
+                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+
+                    RecognizeHealthcareEntitiesResultCollection result = operation.Value;
+                    return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         #endregion
 
         #region Common

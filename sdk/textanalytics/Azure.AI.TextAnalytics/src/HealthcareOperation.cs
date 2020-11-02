@@ -34,6 +34,11 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
+        /// next link string for pagination
+        /// </summary>
+        public string NextLink { get; set; }
+
+        /// <summary>
         /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
@@ -69,7 +74,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
         private RecognizeHealthcareEntitiesResultCollection _value;
-
 
         private int? _top { get; }
         private int? _skip { get; }
@@ -203,6 +207,7 @@ namespace Azure.AI.TextAnalytics
                     {
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
                         _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
+                        NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == JobStatus.Failed)

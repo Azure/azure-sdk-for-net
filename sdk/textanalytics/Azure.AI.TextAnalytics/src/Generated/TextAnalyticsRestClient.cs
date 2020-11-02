@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/analyze/jobs/", false);
             uri.AppendPath(jobId, true);
             if (showStats != null)
@@ -176,7 +176,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             if (top != null)
@@ -251,7 +251,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/health/jobs/", false);
             uri.AppendPath(jobId, true);
             request.Uri = uri;
@@ -300,7 +300,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/health/jobs", false);
             if (modelVersion != null)
             {
@@ -376,7 +376,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/recognition/general", false);
             if (modelVersion != null)
             {
@@ -466,7 +466,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/recognition/pii", false);
             if (modelVersion != null)
             {
@@ -568,7 +568,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/entities/linking", false);
             if (modelVersion != null)
             {
@@ -658,7 +658,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/keyPhrases", false);
             if (modelVersion != null)
             {
@@ -742,7 +742,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/languages", false);
             if (modelVersion != null)
             {
@@ -826,7 +826,7 @@ namespace Azure.AI.TextAnalytics
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/text/analytics/v3.2-preview.1", false);
+            uri.AppendRaw("/text/analytics/v3.1-preview.3", false);
             uri.AppendPath("/sentiment", false);
             if (modelVersion != null)
             {

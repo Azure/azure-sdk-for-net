@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "v3.2-preview.1",
+    "version": "v3.1-preview.3",
     "contact": {
       "name": "Microsoft Cognitive Services",
       "url": "https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/",
@@ -23,7 +23,7 @@
     }
   ],
   "x-ms-parameterized-host": {
-    "hostTemplate": "{Endpoint}/text/analytics/v3.2-preview.1",
+    "hostTemplate": "{Endpoint}/text/analytics/v3.1-preview.3",
     "useSchemePrefix": false,
     "parameters": [
       {
