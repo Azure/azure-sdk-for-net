@@ -17,8 +17,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task HealthcareAsync()
         {
-						string endpoint = TestEnvironment.Endpoint;
-						string apiKey = TestEnvironment.ApiKey;
+			string endpoint = TestEnvironment.Endpoint;
+			string apiKey = TestEnvironment.ApiKey;
 
             #region Snippet:TextAnalyticsSample1CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
