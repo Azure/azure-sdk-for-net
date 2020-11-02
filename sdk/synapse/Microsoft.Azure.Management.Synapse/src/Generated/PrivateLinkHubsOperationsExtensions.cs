@@ -253,6 +253,43 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Deletes a privateLinkHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// The name of the privateLinkHub
+            /// </param>
+            public static void BeginDelete(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, privateLinkHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a privateLinkHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateLinkHubName'>
+            /// The name of the privateLinkHub
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IPrivateLinkHubsOperations operations, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateLinkHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Returns a list of privateLinkHubs in a resource group
             /// </summary>
             /// <param name='operations'>
