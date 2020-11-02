@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The unique identifier of this <see cref="AnomalyDetectionConfiguration"/>. Set by the service.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// The identifier of the metric to which this configuration applies.

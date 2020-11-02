@@ -51,6 +51,19 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
         public string GetNewNonAsciiBlobName() => $"test-β£©þ‽%3A-{Recording.Random.NewGuid()}";
 
+        internal async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
+        {
+            blobName ??= GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            return blob;
+        }
+
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
             var options = new BlobClientOptions(_serviceVersion)

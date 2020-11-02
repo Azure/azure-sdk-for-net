@@ -7,13 +7,15 @@
 - Added the `DataSource` property to `DataFeed`.
 
 ### Breaking Changes
-- In `MetricsAdvisorClient`, renamed `CreateMetricFeedback` sync and async methods to `AddMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed `GetMetricFeedbacks` sync and async methods to `GetAllMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed `GetMetricDimensionValues` sync and async methods to `GetDimensionValues`.
+- In `MetricsAdvisorClient`, renamed sync and async methods `CreateMetricFeedback` to `AddMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async methods `GetMetricFeedbacks` to `GetAllMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async methods `GetMetricDimensionValues` to `GetDimensionValues`.
+- In `MetricsAdvisorClient`, changed return types of sync and async methods `CreateMetricFeedback` to a `Response<string>` containing the ID of the created feedback.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
-- In `MetricsAdvisorAdministrationClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `AnomalyAlertConfiguration` CRUD methods, removing the `Anomaly` word from their names (e.g., `GetAnomalyAlertConfiguration` became `GetAlertConfiguration`).
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `MetricAnomalyDetectionConfiguration` CRUD methods, removing the `MetricAnomaly` term from their names (e.g., `GetMetricAnomalyDetectionConfiguration` became `GetDetectionConfiguration`).
+- In `MetricsAdvisorAdministrationClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
+- In `MetricsAdvisorAdministrationClient`, changed return types of sync and async `Create` methods (e.g., `CreateDataFeed`) to a `Response<string>` containing the ID of the created resource.
 - In `MetricsAdvisorAdministrationClient`, changed return types of sync and async methods `GetAnomalyAlertConfigurations` and `GetMetricAnomalyDetectionConfigurations` to pageables.
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.

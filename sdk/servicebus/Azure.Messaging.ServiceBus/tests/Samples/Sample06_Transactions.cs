@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 }
                 #endregion
                 var bytes = await receiver.GetSessionStateAsync();
-                Assert.AreEqual(state, bytes.ToBytes().ToArray());
+                Assert.AreEqual(state, bytes.ToArray());
             };
         }
 
