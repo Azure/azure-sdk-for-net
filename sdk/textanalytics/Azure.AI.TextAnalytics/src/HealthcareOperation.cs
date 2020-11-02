@@ -13,15 +13,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The AnalyzeOperation class for LRO. </summary>
-    public class AnalyzeHealthOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
+    /// <summary> The HealthcareOperation class for LRO. </summary>
+    public class HealthcareOperation : Operation<RecognizeHealthcareEntitiesResultCollection>
     {
-        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
         private readonly TextAnalyticsRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
-        private readonly MultiLanguageBatchInput _batchInput;
+
+        /// <summary>
+        /// Provides the input to be part of HealthcareOperation class
+        /// </summary>
+        private readonly IDictionary<string, int> _idToIndexMap;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -77,11 +81,11 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthOperation"/> class.
+        /// Initializes a new instance of the <see cref="HealthcareOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public AnalyzeHealthOperation(string operationId, TextAnalyticsClient client)
+        public HealthcareOperation(string operationId, TextAnalyticsClient client)
         {
             // TODO: Add argument validation here.
 
@@ -91,20 +95,20 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthOperation"/> class.
+        /// Initializes a new instance of the <see cref="HealthcareOperation"/> class.
         /// </summary>
-        /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="batchInput"></param>
+        /// <param name="idToIndexMap"></param>
         /// <param name="top"></param>
         /// <param name="skip"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeHealthOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, MultiLanguageBatchInput batchInput, int? top = null, int? skip = null, bool? showStats = null)
+        internal HealthcareOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, int? top = default, int? skip = default, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _batchInput = batchInput;
+            _idToIndexMap = idToIndexMap;
             _top = top;
             _skip = skip;
             _showStats = showStats;
@@ -120,7 +124,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="AnalyzeHealthOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="HealthcareOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _response;
@@ -184,7 +188,7 @@ namespace Azure.AI.TextAnalytics
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(HealthcareOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try
@@ -197,9 +201,8 @@ namespace Azure.AI.TextAnalytics
 
                     if (update.Value.Status == JobStatus.Succeeded)
                     {
-                        IDictionary<string, int> map = CreateIdToIndexMap(_batchInput.Documents);
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, map);
+                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == JobStatus.Failed)
@@ -218,26 +221,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return GetRawResponse();
-        }
-
-        private static IDictionary<string, int> CreateIdToIndexMap<T>(IEnumerable<T> documents)
-        {
-            var map = new Dictionary<string, int>(documents.Count());
-
-            int i = 0;
-            foreach (T item in documents)
-            {
-                string id = item switch
-                {
-                    LanguageInput li => li.Id,
-                    MultiLanguageInput mli => mli.Id,
-                    _ => throw new NotSupportedException(),
-                };
-
-                map[id] = i++;
-            }
-
-            return map;
         }
     }
 }

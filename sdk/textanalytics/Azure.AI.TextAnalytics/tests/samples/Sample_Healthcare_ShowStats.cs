@@ -33,14 +33,14 @@ namespace Azure.AI.TextAnalytics.Samples
                     document,
                 };
 
-            AnalyzeHealthOptions options = new AnalyzeHealthOptions()
+            HealthcareOptions options = new HealthcareOptions()
             {
                 Top = 1,
                 Skip = 0,
                 ShowStats = true
             };
 
-            AnalyzeHealthOperation healthOperation = client.StartAnalyzeHealth(batchInput, "en", options);
+            HealthcareOperation healthOperation = client.StartHealthcare(batchInput, "en", options);
 
             await healthOperation.WaitForCompletionAsync();
 
