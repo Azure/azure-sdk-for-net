@@ -492,10 +492,10 @@ namespace Azure.Messaging.ServiceBus.Administration
     {
         public CorrelationRuleFilter() { }
         public CorrelationRuleFilter(string correlationId) { }
+        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
         public string ReplyTo { get { throw null; } set { } }
         public string ReplyToSessionId { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
@@ -801,7 +801,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     public sealed partial class SqlRuleAction : Azure.Messaging.ServiceBus.Administration.RuleAction
     {
         public SqlRuleAction(string sqlExpression) { }
-        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
         public string SqlExpression { get { throw null; } }
         public override bool Equals(Azure.Messaging.ServiceBus.Administration.RuleAction other) { throw null; }
         public override bool Equals(object obj) { throw null; }

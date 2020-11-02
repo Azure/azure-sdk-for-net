@@ -130,12 +130,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public static bool operator ==(CreateRuleOptions left, CreateRuleOptions right)
         {
             if (ReferenceEquals(left, right))
@@ -151,12 +146,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public static bool operator !=(CreateRuleOptions left, CreateRuleOptions right)
         {
             return !(left == right);

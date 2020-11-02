@@ -41,10 +41,10 @@ namespace Azure.Messaging.ServiceBus.Administration
         public string SqlExpression { get; }
 
         /// <summary>
-        /// Sets the value of a rule action.
+        /// Gets the value of a rule action.
         /// </summary>
         /// <value>The value of a rule action.</value>
-        public IDictionary<string, object> Parameters { get; set; } = new PropertyDictionary();
+        public IDictionary<string, object> Parameters { get; internal set; } = new PropertyDictionary();
 
         /// <summary>
         /// Returns a string representation of <see cref="SqlRuleAction" />.
@@ -97,12 +97,8 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
+
         public static bool operator ==(SqlRuleAction left, SqlRuleAction right)
         {
             if (ReferenceEquals(left, right))
@@ -118,12 +114,8 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
+
         public static bool operator !=(SqlRuleAction left, SqlRuleAction right)
         {
             return !(left == right);

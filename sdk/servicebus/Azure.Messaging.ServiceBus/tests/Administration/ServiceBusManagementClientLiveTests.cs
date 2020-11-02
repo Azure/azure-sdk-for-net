@@ -326,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 SessionId = "sessionId",
                 To = "to"
             };
-            correlationRuleFilter.Properties.Add("customKey", "customValue");
+            correlationRuleFilter.ApplicationProperties.Add("customKey", "customValue");
             var rule3 = new CreateRuleOptions()
             {
                 Name = "rule3",
@@ -758,15 +758,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
             var filter = new CorrelationRuleFilter();
-            filter.Properties.Add("stringKey", "stringVal");
-            filter.Properties.Add("intKey", 5);
-            filter.Properties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            filter.ApplicationProperties.Add("stringKey", "stringVal");
+            filter.ApplicationProperties.Add("intKey", 5);
+            filter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
 
             RuleProperties rule = await client.CreateRuleAsync(
                 topicName,
                 subscriptionName,
                 new CreateRuleOptions("rule1", filter));
-            Assert.True(filter.Properties.Count == 3);
+            Assert.True(filter.ApplicationProperties.Count == 3);
             Assert.AreEqual(filter, rule.Filter);
 
             await client.DeleteTopicAsync(topicName);

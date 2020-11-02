@@ -56,10 +56,9 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                //throw new ServiceBusException(false, ex);
+                throw new ServiceBusException(isTransient: false, message: "An error occurred while attempting to parse the rule property.", innerException: ex);
             }
-            return null;
-            //throw new MessagingEntityNotFoundException("Rule was not found");
+            throw new ServiceBusException("Rule was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         public static List<RuleProperties> ParseCollectionFromContent(string xml)
@@ -85,10 +84,9 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                //throw new ServiceBusException(false, ex);
+                throw new ServiceBusException(isTransient: false, message: "An error occurred while attempting to parse the collection of rule properties.", innerException: ex);
             }
-            return null;
-            //throw new MessagingEntityNotFoundException("Rule was not found");
+            throw new ServiceBusException("Rule was not found", ServiceBusFailureReason.MessagingEntityNotFound);
         }
 
         private static RuleProperties ParseFromEntryElement(XElement xEntry)
@@ -101,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             if (rdXml == null)
             {
-                //throw new MessagingEntityNotFoundException("Rule was not found");
+                throw new ServiceBusException("Rule was not found", ServiceBusFailureReason.MessagingEntityNotFound);
             }
 
             foreach (var element in rdXml.Elements())
