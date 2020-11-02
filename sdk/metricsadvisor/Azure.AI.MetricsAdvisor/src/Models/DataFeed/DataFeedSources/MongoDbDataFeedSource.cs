@@ -27,6 +27,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(command, nameof(command));
 
             Parameter = new MongoDBParameter(connectionString, database, command);
+
+            ConnectionString = connectionString;
+            Database = database;
+            Command = command;
         }
         internal MongoDbDataFeedSource(MongoDBParameter parameter)
             : base(DataFeedSourceType.MongoDb)
@@ -34,7 +38,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ConnectionString = parameter.ConnectionString;
+            Database = parameter.Database;
+            Command = parameter.Command;
         }
 
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        public string ConnectionString { get; }
+
+        /// <summary>
+        /// The name of the database.
+        /// </summary>
+        public string Database { get; }
+
+        /// <summary>
+        /// The query to retrieve the data to be ingested.
+        /// </summary>
+        public string Command { get; }
     }
 }

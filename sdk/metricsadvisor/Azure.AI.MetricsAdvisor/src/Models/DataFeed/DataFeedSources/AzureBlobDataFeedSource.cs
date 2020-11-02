@@ -51,6 +51,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(blobTemplate, nameof(blobTemplate));
 
             Parameter = new AzureBlobParameter(connectionString, container, blobTemplate);
+
+            ConnectionString = connectionString;
+            Container = container;
+            BlobTemplate = blobTemplate;
         }
 
         internal AzureBlobDataFeedSource(AzureBlobParameter parameter)
@@ -59,6 +63,47 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ConnectionString = parameter.ConnectionString;
+            Container = parameter.Container;
+            BlobTemplate = parameter.BlobTemplate;
         }
+
+        /// <summary>
+        /// The connection string for authenticating to the Azure Storage Account.
+        /// </summary>
+        public string ConnectionString { get; }
+
+        /// <summary>
+        /// The name of the blob container.
+        /// </summary>
+        public string Container { get; }
+
+        /// <summary>
+        /// This is the template of the Blob file names. For example: /%Y/%m/X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>%Y</term>
+        /// <description>The year formatted as yyyy</description>
+        /// </item>
+        /// <item>
+        /// <term>%m</term>
+        /// <description>The month formatted as MM</description>
+        /// </item>
+        /// <item>
+        /// <term>%d</term>
+        /// <description>The day formatted as dd</description>
+        /// </item>
+        /// <item>
+        /// <term>%h</term>
+        /// <description>The hour formatted as HH</description>
+        /// </item>
+        /// <item>
+        /// <term>%M</term>
+        /// <description>The minute formatted as mm</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        public string BlobTemplate { get; }
     }
 }
