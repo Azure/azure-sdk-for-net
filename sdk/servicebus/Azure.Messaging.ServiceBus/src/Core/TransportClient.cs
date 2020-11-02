@@ -42,13 +42,12 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
+        public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier);
 
         /// <summary>
         ///   Creates a receiver strongly aligned with the active protocol and transport, responsible

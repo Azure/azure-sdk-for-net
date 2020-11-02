@@ -212,10 +212,9 @@ namespace Azure.Messaging.ServiceBus
 
         internal virtual TransportSender CreateTransportSender(
             string entityPath,
-            string viaEntityPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier) =>
-            _innerClient.CreateSender(entityPath, viaEntityPath, retryPolicy, identifier);
+            _innerClient.CreateSender(entityPath, retryPolicy, identifier);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,

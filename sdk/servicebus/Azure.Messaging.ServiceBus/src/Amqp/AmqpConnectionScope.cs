@@ -300,7 +300,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Opens an AMQP link for use with sender operations.
         /// </summary>
         /// <param name="entityPath"></param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -308,7 +307,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public virtual async Task<SendingAmqpLink> OpenSenderLinkAsync(
             string entityPath,
-            string viaEntityPath,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -321,7 +319,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             SendingAmqpLink link = await CreateSendingLinkAsync(
                 entityPath,
-                viaEntityPath,
                 connection,
                 timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
@@ -643,7 +640,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates an AMQP link for use with publishing operations.
         /// </summary>
         /// <param name="entityPath">The entity path to send to.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -651,7 +647,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use for operations related to receiving events.</returns>
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(
             string entityPath,
-            string viaEntityPath,
             AmqpConnection connection,
             TimeSpan timeout,
             CancellationToken cancellationToken)
@@ -667,19 +662,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 string[] audience;
                 Uri destinationEndpoint = null;
 
-                // if there is a via entityPath, include that in the audience
-
-                if (!string.IsNullOrEmpty(viaEntityPath))
-                {
-                    destinationEndpoint = new Uri(ServiceEndpoint, viaEntityPath);
-                    var finalDestinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                    audience = new string[] { finalDestinationEndpoint.AbsoluteUri, destinationEndpoint.AbsoluteUri };
-                }
-                else
-                {
-                    destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
-                    audience = new string[] { destinationEndpoint.AbsoluteUri };
-                }
+                destinationEndpoint = new Uri(ServiceEndpoint, entityPath);
+                audience = new string[] { destinationEndpoint.AbsoluteUri };
 
                 // Perform the initial authorization for the link.
 
@@ -713,11 +697,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Source = new Source { Address = Guid.NewGuid().ToString() },
                     Target = new Target { Address = destinationEndpoint.AbsolutePath }
                 };
-
-                if (!string.IsNullOrEmpty(viaEntityPath))
-                {
-                    linkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, entityPath);
-                }
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
@@ -885,28 +864,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         refreshTimeout)
                     .ConfigureAwait(false);
 
-                // Reset the timer for the next refresh.
+                    // Reset the timer for the next refresh.
 
-                if (authExpirationUtc >= DateTimeOffset.UtcNow)
+                    if (authExpirationUtc >= DateTimeOffset.UtcNow)
                     {
                         refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
                 }
                 catch (ObjectDisposedException)
                 {
-                // This can occur if the connection is closed or the scope disposed after the factory
-                // is called but before the timer is updated.  The callback may also fire while the timer is
-                // in the act of disposing.  Do not consider it an error.
-            }
+                    // This can occur if the connection is closed or the scope disposed after the factory
+                    // is called but before the timer is updated.  The callback may also fire while the timer is
+                    // in the act of disposing.  Do not consider it an error.
+                }
                 catch (Exception ex)
                 {
                     ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(entityPath, endpoint.AbsoluteUri, ex.Message);
 
-                // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
-                // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
-                // At worse, another timer tick will occur and the operation will be retried.
+                    // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
+                    // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
+                    // At worse, another timer tick will occur and the operation will be retried.
 
-                try
+                    try
                     { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); }
                     catch { }
                 }
