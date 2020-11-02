@@ -427,7 +427,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     foreach (var property in amqpCorrelationFilter.Properties)
                     {
-                        correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
+                        correlationFilter.ApplicationProperties.Add(property.Key.Key.ToString(), property.Value);
                     }
 
                     filter = correlationFilter;
@@ -678,7 +678,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             };
 
             var propertiesMap = new AmqpMap();
-            foreach (var property in correlationRuleFilter.Properties)
+            foreach (var property in correlationRuleFilter.ApplicationProperties)
             {
                 propertiesMap[new MapKey(property.Key)] = property.Value;
             }
