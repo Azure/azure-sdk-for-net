@@ -479,14 +479,20 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends an event to the associated Event Hub using a batched approach.  If the size of the event exceeds the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
+        ///   overhead associated with measuring and validating the size in the client, validation will
+        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
+        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
+        ///   maximum allowable size of a single event.
         /// </summary>
         ///
         /// <param name="eventData">The event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <returns>
+        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
+        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
+        /// </returns>
         ///
         /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
@@ -501,15 +507,21 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends an event to the associated Event Hub using a batched approach.  If the size of the event exceeds the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
+        ///   overhead associated with measuring and validating the size in the client, validation will
+        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
+        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
+        ///   maximum allowable size of a single event.
         /// </summary>
         ///
         /// <param name="eventData">The event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <returns>
+        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
+        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
+        /// </returns>
         ///
         /// <seealso cref="SendAsync(EventData, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
@@ -525,19 +537,30 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  Because the batch is implicitly created, the size of the event set is not
-        ///   validated until this method is invoked.  The call will fail if the size of the specified set of events exceeds the maximum allowable size of a single batch.
+        ///   Sends a set of events to the associated Event Hub as a single operation.  To avoid the
+        ///   overhead associated with measuring and validating the size in the client, validation will
+        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
+        ///   The call will fail if the size of the specified set of events exceeds the maximum allowable
+        ///   size of a single batch.
         /// </summary>
         ///
         /// <param name="eventSet">The set of event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <returns>
+        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
+        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the set of events.
+        /// </returns>
         ///
         /// <exception cref="EventHubsException">
         ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
         ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
         /// </exception>
+        ///
+        /// <remarks>
+        ///   When published, the result is atomic; either all events that belong to the set were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
@@ -547,20 +570,31 @@ namespace Azure.Messaging.EventHubs.Producer
                                             CancellationToken cancellationToken = default) => await SendAsync(eventSet, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  Because the batch is implicitly created, the size of the event set is not
-        ///   validated until this method is invoked.  The call will fail if the size of the specified set of events exceeds the maximum allowable size of a single batch.
+        ///   Sends a set of events to the associated Event Hub as a single operation.  To avoid the
+        ///   overhead associated with measuring and validating the size in the client, validation will
+        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
+        ///   The call will fail if the size of the specified set of events exceeds the maximum allowable
+        ///   size of a single batch.
         /// </summary>
         ///
         /// <param name="eventSet">The set of event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <returns>
+        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
+        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the set of events.
+        /// </returns>
         ///
         /// <exception cref="EventHubsException">
         ///   Occurs when the set of events exceeds the maximum size allowed in a single batch, as determined by the Event Hubs service.  The <see cref="EventHubsException.Reason" /> will be set to
         ///   <see cref="EventHubsException.FailureReason.MessageSizeExceeded"/> in this case.
         /// </exception>
+        ///
+        /// <remarks>
+        ///   When published, the result is atomic; either all events that belong to the set were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
@@ -600,7 +634,15 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="eventBatch">The set of event data to send. A batch may be created using <see cref="CreateBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <returns>
+        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
+        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the batch.
+        /// </returns>
+        ///
+        /// <remarks>
+        ///   When published, the result is atomic; either all events that belong to the batch were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         ///
         /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         ///
