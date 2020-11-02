@@ -1,4 +1,4 @@
-#  System.Buffers.Data library for .NET
+#  System.Memory.Data library for .NET
 
 ## Binary Data
  The `BinaryData` type provides a lightweight abstraction for a payload of bytes. It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes. The assumption when converting to and from string is that the encoding is UTF-8.
