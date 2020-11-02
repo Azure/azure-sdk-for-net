@@ -5,30 +5,30 @@ namespace Azure.AI.MetricsAdvisor
         protected MetricsAdvisorClient() { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
-        public virtual Azure.Response<string> CreateMetricFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateMetricFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<string> AddMetricFeedback(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<string>> AddMetricFeedbackAsync(Azure.AI.MetricsAdvisor.Models.MetricFeedback feedback, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlerts(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlert> GetAlertsAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAlertsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetAllMetricFeedback(string metricId, Azure.AI.MetricsAdvisor.Models.GetAllMetricFeedbackOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetAllMetricFeedbackAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetAllMetricFeedbackOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomalies(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomalies(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomaliesAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomaliesAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetDimensionValues(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetDimensionValuesAsync(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCauses(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCausesAsync(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidentsAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<string> GetMetricDimensionValues(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetMetricDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<string> GetMetricDimensionValuesAsync(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetMetricDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData> GetMetricEnrichedSeriesData(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricEnrichedSeriesData> GetMetricEnrichedSeriesDataAsync(System.Collections.Generic.IEnumerable<Azure.AI.MetricsAdvisor.Models.DimensionKey> seriesKeys, string detectionConfigurationId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricEnrichmentStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedback(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.MetricFeedback>> GetMetricFeedbackAsync(string feedbackId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedbacks(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricFeedbacksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricFeedback> GetMetricFeedbacksAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricFeedbacksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesData> GetMetricSeriesData(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesData> GetMetricSeriesDataAsync(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.MetricSeriesDefinition> GetMetricSeriesDefinitions(string metricId, Azure.AI.MetricsAdvisor.Models.GetMetricSeriesDefinitionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -59,26 +59,26 @@ namespace Azure.AI.MetricsAdvisor.Administration
         protected MetricsAdvisorAdministrationClient() { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential) { }
         public MetricsAdvisorAdministrationClient(System.Uri endpoint, Azure.AI.MetricsAdvisor.MetricsAdvisorKeyCredential credential, Azure.AI.MetricsAdvisor.MetricsAdvisorClientsOptions options) { }
-        public virtual Azure.Response<string> CreateAnomalyAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateAnomalyAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<string> CreateAlertConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateAlertConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateDataFeed(Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateDataFeedAsync(Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<string> CreateDetectionConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateDetectionConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<string> CreateHook(Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateHookAsync(Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<string> CreateMetricAnomalyDetectionConfiguration(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<string>> CreateMetricAnomalyDetectionConfigurationAsync(Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteAnomalyAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAnomalyAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDataFeed(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataFeedAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteHook(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHookAsync(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteMetricAnomalyDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfiguration(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration>> GetAlertConfigurationAsync(string alertConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfigurations(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration> GetAlertConfigurationsAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeed(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeed>> GetDataFeedAsync(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionProgress> GetDataFeedIngestionProgress(string dataFeedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -87,24 +87,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeedIngestionStatus> GetDataFeedIngestionStatusesAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.GetDataFeedIngestionStatusesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeeds(Azure.AI.MetricsAdvisor.Models.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataFeed> GetDataFeedsAsync(Azure.AI.MetricsAdvisor.Models.GetDataFeedsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> GetDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfigurations(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetDetectionConfigurationsAsync(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHook(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.NotificationHook>> GetHookAsync(string hookId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHooks(Azure.AI.MetricsAdvisor.Models.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.NotificationHook> GetHooksAsync(Azure.AI.MetricsAdvisor.Models.GetHooksOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurations(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RefreshDataFeedIngestion(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshDataFeedIngestionAsync(string dataFeedId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateAlertConfiguration(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAlertConfigurationAsync(string alertConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyAlertConfiguration alertConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateDataFeed(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDataFeedAsync(string dataFeedId, Azure.AI.MetricsAdvisor.Models.DataFeed dataFeed, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateHook(string hookId, Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateHookAsync(string hookId, Azure.AI.MetricsAdvisor.Models.NotificationHook hook, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.AnomalyDetectionConfiguration detectionConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.AI.MetricsAdvisor.Models
@@ -710,6 +710,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         public Azure.AI.MetricsAdvisor.Models.AlertQueryTimeMode TimeMode { get { throw null; } }
         public int? TopCount { get { throw null; } set { } }
     }
+    public partial class GetAllMetricFeedbackOptions
+    {
+        public GetAllMetricFeedbackOptions() { }
+        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
+        public int? SkipCount { get { throw null; } set { } }
+        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        public Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
     public partial class GetAnomaliesForAlertOptions
     {
         public GetAnomaliesForAlertOptions() { }
@@ -757,6 +768,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         public int? SkipCount { get { throw null; } set { } }
         public int? TopCount { get { throw null; } set { } }
     }
+    public partial class GetDimensionValuesOptions
+    {
+        public GetDimensionValuesOptions() { }
+        public string DimensionValueToFilter { get { throw null; } set { } }
+        public int? SkipCount { get { throw null; } set { } }
+        public int? TopCount { get { throw null; } set { } }
+    }
     public partial class GetHooksOptions
     {
         public GetHooksOptions() { }
@@ -778,30 +796,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public System.DateTimeOffset StartTime { get { throw null; } }
         public int? TopCount { get { throw null; } set { } }
     }
-    public partial class GetMetricDimensionValuesOptions
-    {
-        public GetMetricDimensionValuesOptions() { }
-        public string DimensionValueToFilter { get { throw null; } set { } }
-        public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
-    }
     public partial class GetMetricEnrichmentStatusesOptions
     {
         public GetMetricEnrichmentStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
-    }
-    public partial class GetMetricFeedbacksOptions
-    {
-        public GetMetricFeedbacksOptions() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
-        public int? SkipCount { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        public Azure.AI.MetricsAdvisor.Models.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
         public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetMetricSeriesDataOptions

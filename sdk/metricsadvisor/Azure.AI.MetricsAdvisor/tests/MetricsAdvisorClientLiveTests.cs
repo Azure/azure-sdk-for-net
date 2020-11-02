@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
-                    await foreach (string value in client.GetMetricDimensionValuesAsync(metricId, dimension.DimensionName))
+                    await foreach (string value in client.GetDimensionValuesAsync(metricId, dimension.DimensionName))
                     {
                         Assert.That(!string.IsNullOrEmpty(value));
                     }
@@ -301,7 +301,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions() { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetAllMetricFeedbackAsync(MetricId, new GetAllMetricFeedbackOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
@@ -363,7 +363,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var feedback in feedbacks)
             {
-                string createdFeedbackId = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
+                string createdFeedbackId = await client.AddMetricFeedbackAsync(feedback).ConfigureAwait(false);
 
                 Assert.That(createdFeedbackId, Is.Not.Null);
 
