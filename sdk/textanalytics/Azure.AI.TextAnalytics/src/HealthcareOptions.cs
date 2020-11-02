@@ -18,18 +18,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HealthcareOptions"/>
-        /// class.
+        /// The first top documents from the result.
         /// </summary>
-        public HealthcareOptions(int? top = null, int? skip = null, bool? showStats = null)
-        {
-            Top = top;
-            Skip = skip;
-            ShowStats = showStats;
-        }
+        public int? Top { get; set; }
 
-        public int? Top { get; internal set; }
-        public int? Skip { get; internal set; }
-        public bool? ShowStats { get; internal set; }
+        /// <summary>
+        /// The skipped documents from the result. The Skip is called first when used with Top.
+        /// </summary>
+        public int? Skip { get; set; }
     }
 }

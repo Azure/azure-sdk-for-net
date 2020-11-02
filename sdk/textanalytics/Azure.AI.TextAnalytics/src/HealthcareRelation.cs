@@ -7,10 +7,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Azure.AI.TextAnalytics.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// HealthcareRelation class.
+    /// </summary>
     public partial class HealthcareRelation
     {
         /// <summary> Initializes a new instance of HealthcareRelation. </summary>

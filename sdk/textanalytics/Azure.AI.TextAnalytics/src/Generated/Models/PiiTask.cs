@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics.Models;
-
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiTask. </summary>
@@ -16,7 +14,5 @@ namespace Azure.AI.TextAnalytics
         public PiiTask()
         {
         }
-
-        public PiiTaskParameters Parameters { get; set; }
     }
 }

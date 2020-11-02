@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The PiiTaskParameters. </summary>
     public partial class PiiTaskParameters
@@ -16,9 +16,5 @@ namespace Azure.AI.TextAnalytics.Models
         public PiiTaskParameters()
         {
         }
-
-        public PiiTaskParametersDomain? Domain { get; set; }
-        public string ModelVersion { get; set; }
-        public StringIndexTypeResponse? StringIndexType { get; set; }
     }
 }

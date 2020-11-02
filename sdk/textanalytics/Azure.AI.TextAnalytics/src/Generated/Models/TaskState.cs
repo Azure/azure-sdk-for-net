@@ -12,25 +12,5 @@ namespace Azure.AI.TextAnalytics
     /// <summary> The TaskState. </summary>
     public partial class TaskState
     {
-        /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, JobStatus status)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            LastUpdateDateTime = lastUpdateDateTime;
-            Name = name;
-            Status = status;
-        }
-
-        public DateTimeOffset LastUpdateDateTime { get; }
-        public string Name { get; }
-        public JobStatus Status { get; }
     }
 }

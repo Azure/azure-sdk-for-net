@@ -16,7 +16,5 @@ namespace Azure.AI.TextAnalytics
         public EntitiesTask()
         {
         }
-
-        public EntitiesTaskParameters Parameters { get; set; }
     }
 }

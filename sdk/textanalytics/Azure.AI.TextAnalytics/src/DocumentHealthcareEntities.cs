@@ -10,6 +10,9 @@ using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// DocumentHealthcareEntities.
+    /// </summary>
     public partial class DocumentHealthcareEntities
     {
         /// <summary> Initializes a new instance of DocumentHealthcareEntities. </summary>
