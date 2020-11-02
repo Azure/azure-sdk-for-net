@@ -14,43 +14,22 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Initializes a new <see cref="AmqpMessageProperties"/> instance.
         /// </summary>
-        public AmqpMessageProperties() { }
-
-        /// <summary>
-        /// Initializes a new <see cref="AmqpMessageProperties"/> instance by copying the passed in properties.
-        /// </summary>
-        /// <param name="properties">The properties to copy.</param>
-        public AmqpMessageProperties(AmqpMessageProperties properties)
-        {
-            MessageId = properties.MessageId;
-            UserId = properties.UserId;
-            To = properties.To;
-            Subject = properties.Subject;
-            ReplyTo = properties.ReplyTo;
-            CorrelationId = properties.CorrelationId;
-            ContentType = properties.ContentType;
-            ContentEncoding = properties.ContentEncoding;
-            AbsoluteExpiryTime = properties.AbsoluteExpiryTime;
-            CreationTime = properties.CreationTime;
-            GroupId = properties.GroupId;
-            GroupSequence = properties.GroupSequence;
-            ReplyToGroupId = properties.ReplyToGroupId;
-        }
+        internal AmqpMessageProperties() { }
 
         /// <summary>
         /// The message-id value from the AMQP properties.
         /// </summary>
-        public string? MessageId { get; set; }
+        public AmqpMessageId? MessageId { get; set; }
 
         /// <summary>
         /// The user-id value from the AMQP properties.
         /// </summary>
-        public BinaryData? UserId { get; set; }
+        public ReadOnlyMemory<byte>? UserId { get; set; }
 
         /// <summary>
         /// The to value from the AMQP properties.
         /// </summary>
-        public string? To { get; set; }
+        public AmqpAddress? To { get; set; }
 
         /// <summary>
         /// The subject value from the AMQP properties.
@@ -60,12 +39,12 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The reply-to value from the AMQP properties.
         /// </summary>
-        public string? ReplyTo { get; set; }
+        public AmqpAddress? ReplyTo { get; set; }
 
         /// <summary>
         /// The correlation-id value from the AMQP properties.
         /// </summary>
-        public string? CorrelationId { get; set; }
+        public AmqpMessageId? CorrelationId { get; set; }
 
         /// <summary>
         /// The content-type value from the AMQP properties.

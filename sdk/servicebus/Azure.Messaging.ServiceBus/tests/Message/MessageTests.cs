@@ -165,6 +165,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         [Test]
+        public void CanSetNullBody()
+        {
+            var message = new ServiceBusMessage();
+            Assert.IsTrue(message.Body.ToMemory().IsEmpty);
+
+            message = new ServiceBusMessage((BinaryData) null);
+            Assert.IsTrue(message.Body.ToMemory().IsEmpty);
+        }
+
+        [Test]
         public void CreateReceivedMessageViaFactory()
         {
             var receivedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage();

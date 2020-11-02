@@ -10,10 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Memory.Data\src\System.Memory.Data.csproj" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
   </ItemGroup>
 </Project>

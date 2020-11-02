@@ -14,44 +14,30 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Initializes a new <see cref="AmqpMessageHeader"/> instance.
         /// </summary>
-        public AmqpMessageHeader() { }
+        internal AmqpMessageHeader() { }
 
         /// <summary>
-        /// Initializes a new <see cref="AmqpMessageHeader"/> instance by copying the passed in
-        /// AMQP message transport header.
-        /// </summary>
-        /// <param name="header">The AMQP message transport header to copy.</param>
-        internal AmqpMessageHeader(AmqpMessageHeader header)
-        {
-            Durable = header.Durable;
-            Priority = header.Priority;
-            TimeToLive = header.TimeToLive;
-            FirstAcquirer = header.FirstAcquirer;
-            DeliveryCount = header.DeliveryCount;
-        }
-
-        /// <summary>
-        /// The durable value from the AMQP message transport header.
+        /// Gets or sets the durable value from the AMQP message transport header.
         /// </summary>
         public bool? Durable { get; set; }
 
         /// <summary>
-        /// The priority value from the AMQP message transport header.
+        /// Gets or sets the priority value from the AMQP message transport header.
         /// </summary>
         public byte? Priority { get; set; }
 
         /// <summary>
-        /// The ttl value from the AMQP message transport header.
+        /// Gets or sets the ttl value from the AMQP message transport header.
         /// </summary>
         public TimeSpan? TimeToLive { get; set; }
 
         /// <summary>
-        /// The first-acquirer value from the AMQP message transport header.
+        /// Gets or sets the first-acquirer value from the AMQP message transport header.
         /// </summary>
         public bool? FirstAcquirer { get; set; }
 
         /// <summary>
-        /// The delivery-count value from the AMQP message transport header.
+        /// Gets or sets the delivery-count value from the AMQP message transport header.
         /// </summary>
         public uint? DeliveryCount { get; set; }
     }

@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new BinaryData[] { new BinaryData(Array.Empty<byte>())});
+                annotatedMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { Array.Empty<byte>() });
             }
             ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
 
@@ -240,12 +240,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (amqpMessage.Properties.MessageId != null)
                 {
-                    annotatedMessage.Properties.MessageId = amqpMessage.Properties.MessageId.ToString();
+                    annotatedMessage.Properties.MessageId = new AmqpMessageId(amqpMessage.Properties.MessageId.ToString());
                 }
 
                 if (amqpMessage.Properties.CorrelationId != null)
                 {
-                    annotatedMessage.Properties.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
+                    annotatedMessage.Properties.CorrelationId = new AmqpMessageId(amqpMessage.Properties.CorrelationId.ToString());
                 }
 
                 if (amqpMessage.Properties.ContentType.Value != null)
@@ -260,12 +260,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (amqpMessage.Properties.To != null)
                 {
-                    annotatedMessage.Properties.To = amqpMessage.Properties.To.ToString();
+                    annotatedMessage.Properties.To = new AmqpAddress(amqpMessage.Properties.To.ToString());
                 }
 
                 if (amqpMessage.Properties.ReplyTo != null)
                 {
-                    annotatedMessage.Properties.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
+                    annotatedMessage.Properties.ReplyTo = new AmqpAddress(amqpMessage.Properties.ReplyTo.ToString());
                 }
 
                 if (amqpMessage.Properties.GroupId != null)
