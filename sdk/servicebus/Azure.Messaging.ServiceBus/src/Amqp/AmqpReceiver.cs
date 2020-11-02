@@ -1089,7 +1089,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>.
         /// </summary>
         ///
         /// <param name="sessionState">A <see cref="BinaryData"/> of session state</param>
