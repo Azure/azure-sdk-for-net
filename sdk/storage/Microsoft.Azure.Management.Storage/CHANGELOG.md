@@ -9,6 +9,7 @@
 - Support enable ProtocolSettings.Smb.Multichannel on FileServices properties
 - Support ResourceAccessRule in Microsoft.Azure.Management.Storage.Models.NetworkRuleSet
 - Support Set ExtendedLocation in create storage account
+- Support Blob Inventory rule of storage account
 
 **Breaking changes**
 

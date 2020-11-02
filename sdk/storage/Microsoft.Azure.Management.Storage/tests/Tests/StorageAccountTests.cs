@@ -2377,5 +2377,121 @@ namespace Storage.Tests
                 Assert.Equal("microsoftrrdclab1", account.ExtendedLocation.Name);
             }
         }
+
+        [Fact]
+        public void StorageAccountBlobInventory()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
+                Assert.Equal(Kind.StorageV2, account.Kind);
+
+                string containerName = "container1";
+                storageMgmtClient.BlobContainers.Create(rgname, accountName, containerName, new BlobContainer());
+
+                //Prepare policy objects
+                List<BlobInventoryPolicyRule> ruleList = new List<BlobInventoryPolicyRule>();
+                BlobInventoryPolicyRule rule1 = new BlobInventoryPolicyRule(true, "rule1",
+                    new BlobInventoryPolicyDefinition(
+                        new BlobInventoryPolicyFilter(
+                            blobTypes: new List<string>(new string[] { "blockBlob", "appendBlob", "pageBlob" }),
+                            prefixMatch: new List<string>(new string[] { "prefix1", "prefix2" }),
+                            includeBlobVersions: false,
+                            includeSnapshots: true)));
+
+                BlobInventoryPolicyRule rule2 = new BlobInventoryPolicyRule(true, "rule2",
+                    new BlobInventoryPolicyDefinition(
+                        new BlobInventoryPolicyFilter(
+                            blobTypes: new List<string>(new string[] { "blockBlob" }),
+                            //includeBlobVersions: true,
+                            includeSnapshots: false)));
+
+                ruleList.Add(rule1);
+                BlobInventoryPolicySchema policy = new BlobInventoryPolicySchema(true, containerName, ruleList);
+
+                //Create/Get policy
+                BlobInventoryPolicy outputPolicy = storageMgmtClient.BlobInventoryPolicies.CreateOrUpdate(rgname, accountName, policy);
+                Assert.Equal(containerName, outputPolicy.Policy.Destination);
+                Assert.True(outputPolicy.Policy.Enabled);
+                CompareBlobInventoryPolicySchema(policy, outputPolicy.Policy);
+
+                outputPolicy = storageMgmtClient.BlobInventoryPolicies.Get(rgname, accountName);
+                Assert.Equal(containerName, outputPolicy.Policy.Destination);
+                Assert.True(outputPolicy.Policy.Enabled);
+                CompareBlobInventoryPolicySchema(policy, outputPolicy.Policy);
+
+                //Update/List policy
+                ruleList.Add(rule2);
+                BlobInventoryPolicySchema policy2 = new BlobInventoryPolicySchema(true, containerName, ruleList);
+
+                outputPolicy = storageMgmtClient.BlobInventoryPolicies.CreateOrUpdate(rgname, accountName, policy2);
+                Assert.Equal(containerName, outputPolicy.Policy.Destination);
+                Assert.True(outputPolicy.Policy.Enabled);
+                Assert.Equal(2, outputPolicy.Policy.Rules.Count);
+                CompareBlobInventoryPolicySchema(policy2, outputPolicy.Policy);
+
+                var outputPolicies = storageMgmtClient.BlobInventoryPolicies.List(rgname, accountName);
+                Assert.Equal(containerName, outputPolicy.Policy.Destination);
+                Assert.True(outputPolicy.Policy.Enabled);
+                CompareBlobInventoryPolicySchema(policy2, outputPolicy.Policy);
+
+                // Delete policy
+                storageMgmtClient.BlobInventoryPolicies.Delete(rgname, accountName);
+                try
+                {
+                    outputPolicy = storageMgmtClient.BlobInventoryPolicies.Get(rgname, accountName);
+                    throw new Exception("BlobInventoryPolicy should already beene deleted, so get BlobInventoryPolicy should fail with 404. But not fail.");
+                }
+                catch (ErrorResponseException e) when (e.Response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // get not exist blob inventory policy should report 404(NotFound)
+                }
+            }
+        }
+
+        // Comppare blob inventory policy schema.
+        internal static void CompareBlobInventoryPolicySchema(BlobInventoryPolicySchema inputPolicy, BlobInventoryPolicySchema outputPolicy)
+        {
+
+            Assert.Equal(inputPolicy.Destination, outputPolicy.Destination);
+            Assert.Equal(inputPolicy.Enabled, outputPolicy.Enabled);
+            Assert.Equal(inputPolicy.Rules.Count, outputPolicy.Rules.Count);
+
+            foreach (BlobInventoryPolicyRule inputRule in inputPolicy.Rules)
+            {
+                bool ruleFound = false;
+                foreach(BlobInventoryPolicyRule outputRule in outputPolicy.Rules)
+                {
+                    if (inputRule.Name == outputRule.Name)
+                    {
+                        ruleFound = true;
+                        Assert.Equal(inputRule.Enabled, outputRule.Enabled);
+                        Assert.Equal(inputRule.Definition.Filters.BlobTypes, inputRule.Definition.Filters.BlobTypes);
+                        Assert.Equal(inputRule.Definition.Filters.IncludeBlobVersions, inputRule.Definition.Filters.IncludeBlobVersions);
+                        Assert.Equal(inputRule.Definition.Filters.IncludeSnapshots, inputRule.Definition.Filters.IncludeSnapshots);
+                        Assert.Equal(inputRule.Definition.Filters.PrefixMatch, inputRule.Definition.Filters.PrefixMatch);
+                    }
+                }
+                Assert.True(ruleFound);
+            }
+        }
     }
 }

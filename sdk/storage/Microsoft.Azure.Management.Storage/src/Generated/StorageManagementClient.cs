@@ -105,6 +105,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IBlobInventoryPoliciesOperations.
+        /// </summary>
+        public virtual IBlobInventoryPoliciesOperations BlobInventoryPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -411,6 +416,7 @@ namespace Microsoft.Azure.Management.Storage
             DeletedAccounts = new DeletedAccountsOperations(this);
             Usages = new UsagesOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
+            BlobInventoryPolicies = new BlobInventoryPoliciesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             ObjectReplicationPolicies = new ObjectReplicationPoliciesOperations(this);
