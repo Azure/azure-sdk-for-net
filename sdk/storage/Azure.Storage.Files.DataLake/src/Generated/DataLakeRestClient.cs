@@ -2800,6 +2800,10 @@ namespace Azure.Storage.Files.DataLake
                         {
                             _value.Continuation = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-deletion-id", out _header))
+                        {
+                            _value.DeletionId = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -3857,6 +3861,162 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion Path.SetExpiryAsync
+
+            #region Path.UndeleteAsync
+            /// <summary>
+            /// Undelete a path that was previously soft deleted
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="undeleteSource">Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.PathUndeleteResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.PathUndeleteResult>> UndeleteAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string undeleteSource = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "PathClient.Undelete",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = UndeleteAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        undeleteSource,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return UndeleteAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Path.UndeleteAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="undeleteSource">Only for hierarchical namespace enabled accounts. Optional. The path of the soft deleted blob to undelete.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Path.UndeleteAsync Message.</returns>
+            internal static Azure.Core.HttpMessage UndeleteAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string undeleteSource = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "undelete", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (undeleteSource != null) { _request.Headers.SetValue("x-ms-undelete-source", undeleteSource); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Path.UndeleteAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Path.UndeleteAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathUndeleteResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathUndeleteResult> UndeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.PathUndeleteResult _value = new Azure.Storage.Files.DataLake.Models.PathUndeleteResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Path.UndeleteAsync
         }
         #endregion Path operations
     }
@@ -4332,6 +4492,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Continuation { get; internal set; }
 
         /// <summary>
+        /// Returned only for hierarchical namespace space enabled accounts when soft delete is enabled. A unique identifier for the entity that can be used to restore it. See the Undelete REST API for more information.
+        /// </summary>
+        public string DeletionId { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathDeleteResult instances.
         /// You can use DataLakeModelFactory.PathDeleteResult instead.
         /// </summary>
@@ -4701,6 +4866,46 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class PathSetAccessControlResult
+
+#region class PathUndeleteResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Path UndeleteResult
+    /// </summary>
+    public partial class PathUndeleteResult
+    {
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PathUndeleteResult instances.
+        /// You can use DataLakeModelFactory.PathUndeleteResult instead.
+        /// </summary>
+        internal PathUndeleteResult() { }
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new PathUndeleteResult instance for mocking.
+        /// </summary>
+        public static PathUndeleteResult PathUndeleteResult(
+            string clientRequestId)
+        {
+            return new PathUndeleteResult()
+            {
+                ClientRequestId = clientRequestId,
+            };
+        }
+    }
+}
+#endregion class PathUndeleteResult
 
 #region class PathUpdateResult
 namespace Azure.Storage.Files.DataLake.Models
