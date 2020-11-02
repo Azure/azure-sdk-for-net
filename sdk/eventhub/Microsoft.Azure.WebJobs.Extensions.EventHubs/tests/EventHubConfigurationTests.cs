@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Azure.Messaging.EventHubs;
 using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Host.Triggers;
@@ -47,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.Equal(true, options.EventProcessorOptions.InvokeProcessorAfterReceiveTimeout);
             Assert.Equal(5, options.BatchCheckpointFrequency);
             Assert.Equal(31, options.PartitionManagerOptions.LeaseDuration.TotalSeconds);
-            Assert.Equal(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
+            Assert.Equal(21, options.EventProcessorOptions.RenewInterval.TotalSeconds);
         }
 
         [Fact]

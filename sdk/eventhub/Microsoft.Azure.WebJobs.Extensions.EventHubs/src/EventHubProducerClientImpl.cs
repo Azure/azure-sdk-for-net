@@ -1,10 +1,14 @@
-﻿using System.Threading;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 
 namespace Microsoft.Azure.WebJobs
 {
-    class EventHubProducerClientImpl : IEventHubProducerClient
+    /// TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/9117 is fixed
+    internal class EventHubProducerClientImpl : IEventHubProducerClient
     {
         private readonly EventHubProducerClient _client;
 

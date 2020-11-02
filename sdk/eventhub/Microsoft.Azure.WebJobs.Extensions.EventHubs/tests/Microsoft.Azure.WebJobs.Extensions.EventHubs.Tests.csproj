@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>SA1636</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +21,9 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
+    <Compile Remove="EventHubConfigurationTests.cs" />
+    <Compile Remove="EventHubEndToEndTests.cs" />
+    <Compile Remove="EventHubListenerTests.cs" />
+    <Compile Remove="EventHubTests.cs" />
   </ItemGroup>
 </Project>

@@ -4,27 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Messaging.EventHubs;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
 using static Moq.It;
-using BlobProperties = Azure.Storage.Blobs.Models.BlobProperties;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Producer;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     /// Any user parameter that sends EventHub events will eventually get bound to this object.
     /// This will queue events and send in batches, also keeping under the 1024kb event hub limit per batch.
     /// </summary>
-    internal class EventHubAsyncCollector : IAsyncCollector<EventData>
+    internal class EventHubAsyncCollector : IAsyncCollector<EventData>, IDisposable
     {
         private readonly IEventHubProducerClient _client;
         private readonly SemaphoreSlim _batchSemaphore;
@@ -115,6 +114,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     _batchSemaphore.Release();
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _batchSemaphore.Dispose();
         }
     }
 }

@@ -7,6 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
@@ -211,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     false,
                                     new EventHubOptions(),
                                     testLogger,
-                                    new Mock<CloudBlobContainer>(MockBehavior.Strict, new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/azure-webjobs-eventhub")).Object);
+                                    new Mock<BlobContainerClient>(MockBehavior.Strict, new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/azure-webjobs-eventhub")).Object);
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 
