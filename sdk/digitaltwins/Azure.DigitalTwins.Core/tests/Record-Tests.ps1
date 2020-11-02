@@ -9,7 +9,7 @@ $oldConfig = Get-Content -Path $PSScriptRoot/config/$fileName
 
 $newConfig = @"
 {
-    "TestMode":  "Record"	
+    "TestMode":  "Record"
 }
 "@
 
@@ -29,7 +29,7 @@ else
 
 $newConfig = @"
 {
-    "TestMode":  "Playback"	
+    "TestMode":  "Playback"
 }
 "@
 
