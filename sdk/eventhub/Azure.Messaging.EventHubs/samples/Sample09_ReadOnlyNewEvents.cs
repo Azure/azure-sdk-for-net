@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 foreach (EventData currentEvent in receivedEvents)
                 {
-                    string message = Encoding.UTF8.GetString(currentEvent.EventBody.ToBytes().ToArray());
+                    string message = Encoding.UTF8.GetString(currentEvent.EventBody.ToArray());
                     Console.WriteLine($"\tEvent Message: \"{ message }\"");
                 }
             }

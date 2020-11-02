@@ -3,7 +3,7 @@ namespace Azure.Core.Amqp
     public partial class AmqpAnnotatedMessage
     {
         public AmqpAnnotatedMessage(Azure.Core.Amqp.AmqpAnnotatedMessage messageToCopy) { }
-        public AmqpAnnotatedMessage(System.Collections.Generic.IEnumerable<Azure.BinaryData> dataBody) { }
+        public AmqpAnnotatedMessage(System.Collections.Generic.IEnumerable<System.BinaryData> dataBody) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageBody Body { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } }
@@ -14,8 +14,8 @@ namespace Azure.Core.Amqp
     }
     public partial class AmqpDataMessageBody : Azure.Core.Amqp.AmqpMessageBody
     {
-        public AmqpDataMessageBody(System.Collections.Generic.IEnumerable<Azure.BinaryData> data) { }
-        public System.Collections.Generic.IEnumerable<Azure.BinaryData> Data { get { throw null; } }
+        public AmqpDataMessageBody(System.Collections.Generic.IEnumerable<System.BinaryData> data) { }
+        public System.Collections.Generic.IEnumerable<System.BinaryData> Data { get { throw null; } }
     }
     public abstract partial class AmqpMessageBody
     {
@@ -46,6 +46,6 @@ namespace Azure.Core.Amqp
         public string? ReplyToGroupId { get { throw null; } set { } }
         public string? Subject { get { throw null; } set { } }
         public string? To { get { throw null; } set { } }
-        public Azure.BinaryData? UserId { get { throw null; } set { } }
+        public System.BinaryData? UserId { get { throw null; } set { } }
     }
 }
