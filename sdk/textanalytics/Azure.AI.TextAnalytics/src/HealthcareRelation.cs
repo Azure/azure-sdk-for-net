@@ -2,11 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -42,27 +37,6 @@ namespace Azure.AI.TextAnalytics
             Target = target;
         }
 
-        private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-
-        internal static HealthcareEntity ResolveHealthcareEntity(IEnumerable<HealthcareEntity> entities, string reference)
-        {
-            var healthcareEntityMatch = _healthcareEntityRegex.Match(reference);
-            if (healthcareEntityMatch.Success)
-            {
-                int entityIndex = int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
-                //int entityIndex = int.Parse(healthcareEntityMatch.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                if (entityIndex < entities.Count())
-                {
-                    var entity = entities.ElementAt(entityIndex);
-                    return new HealthcareEntity(entity.Text, entity.Category,
-                        entity.Offset, entity.Length, entity.ConfidenceScore,
-                        entity.IsNegated);
-                }
-            }
-
-            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
-        }
         /// <summary>
         /// Source Entity
         /// </summary>

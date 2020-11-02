@@ -11,14 +11,14 @@ namespace Azure.AI.TextAnalytics
     /// Collection of <see cref="RecognizeHealthcareEntititesResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    public class RecognizeHealthcareEntitiesResultCollection : ReadOnlyCollection<RecognizeHealthcareEntititesResult>
+    public class RecognizeHealthcareEntitiesResultCollection : ReadOnlyCollection<DocumentHealthcareResult>
     {
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"></param>
-        internal RecognizeHealthcareEntitiesResultCollection(IList<RecognizeHealthcareEntititesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal RecognizeHealthcareEntitiesResultCollection(IList<DocumentHealthcareResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;

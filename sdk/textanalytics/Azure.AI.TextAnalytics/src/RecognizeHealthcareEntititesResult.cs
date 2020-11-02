@@ -6,18 +6,18 @@ using System;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the recognize entities operation on a document,
-    /// containing a collection of the <see cref="DocumentHealthcareEntities"/> objects
+    /// The result of the recognize healthcare entities in a document,
+    /// containing a collection of the <see cref="DocumentHealthcareResult"/> objects
     /// identified in that document.
     /// </summary>
     public class RecognizeHealthcareEntititesResult : TextAnalyticsResult
     {
-        private readonly DocumentHealthcareEntities _entities;
+        private readonly DocumentHealthcareResult _result;
 
-        internal RecognizeHealthcareEntititesResult(string id, TextDocumentStatistics statistics, DocumentHealthcareEntities entities)
+        internal RecognizeHealthcareEntititesResult(string id, TextDocumentStatistics statistics, DocumentHealthcareResult result)
             : base(id, statistics)
         {
-            _entities = entities;
+            _result = result;
         }
 
         internal RecognizeHealthcareEntititesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of named entities identified in the document.
         /// </summary>
-        public DocumentHealthcareEntities Entities
+        public DocumentHealthcareResult Result
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics
                     throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.ErrorCode}: {Error.Message}");
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                return _entities;
+                return _result;
             }
         }
     }

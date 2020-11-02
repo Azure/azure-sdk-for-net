@@ -5,50 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The StringIndexTypeResponse. </summary>
-    public readonly partial struct StringIndexTypeResponse : IEquatable<StringIndexTypeResponse>
+    internal enum StringIndexTypeResponse
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="StringIndexTypeResponse"/> values are the same. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StringIndexTypeResponse(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string TextElementsV8Value = "TextElements_v8";
-        private const string UnicodeCodePointValue = "UnicodeCodePoint";
-        private const string Utf16CodeUnitValue = "Utf16CodeUnit";
-
         /// <summary> Returned offset and length values will correspond to TextElements (Graphemes and Grapheme clusters) confirming to the Unicode 8.0.0 standard. Use this option if your application is written in .Net Framework or .Net Core and you will be using StringInfo. </summary>
-        public static StringIndexTypeResponse TextElementsV8 { get; } = new StringIndexTypeResponse(TextElementsV8Value);
+        TextElementsV8,
         /// <summary> Returned offset and length values will correspond to Unicode code points. Use this option if your application is written in a language that support Unicode, for example Python. </summary>
-        public static StringIndexTypeResponse UnicodeCodePoint { get; } = new StringIndexTypeResponse(UnicodeCodePointValue);
+        UnicodeCodePoint,
         /// <summary> Returned offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
-        public static StringIndexTypeResponse Utf16CodeUnit { get; } = new StringIndexTypeResponse(Utf16CodeUnitValue);
-        /// <summary> Determines if two <see cref="StringIndexTypeResponse"/> values are the same. </summary>
-        public static bool operator ==(StringIndexTypeResponse left, StringIndexTypeResponse right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StringIndexTypeResponse"/> values are not the same. </summary>
-        public static bool operator !=(StringIndexTypeResponse left, StringIndexTypeResponse right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StringIndexTypeResponse"/>. </summary>
-        public static implicit operator StringIndexTypeResponse(string value) => new StringIndexTypeResponse(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StringIndexTypeResponse other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(StringIndexTypeResponse other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Utf16CodeUnit
     }
 }

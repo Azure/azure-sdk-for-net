@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("HealthcareEntity")]
     public partial class HealthcareEntity
@@ -12,14 +12,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary>
         /// IsNegated
         /// </summary>
-        [CodeGenMember("IsNegated")]
         public bool IsNegated { get; }
-
-        /// <summary>
-        /// Links
-        /// </summary>
-        [CodeGenMember("Links")]
-        public IReadOnlyList<HealthcareEntityLink> Links { get; }
 
     }
 }

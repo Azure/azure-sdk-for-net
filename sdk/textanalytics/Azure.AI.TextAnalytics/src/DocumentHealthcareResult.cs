@@ -13,14 +13,25 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// DocumentHealthcareEntities.
     /// </summary>
-    public partial class DocumentHealthcareEntities
+    public partial class DocumentHealthcareResult
     {
-        internal DocumentHealthcareEntities(DocumentHealthcareEntitiesInternal documentHealthcareEntities)
+        internal DocumentHealthcareResult(DocumentHealthcareEntitiesInternal documentHealthcareEntities)
         {
             Entities = documentHealthcareEntities.Entities;
             Relations = ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations);
             Id = documentHealthcareEntities.Id;
             Warnings = documentHealthcareEntities.Warnings != null ? Transforms.ConvertToWarnings(documentHealthcareEntities.Warnings) : null;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DocumentHealthcareResult"/> class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="textAnalyticsError"></param>
+        public DocumentHealthcareResult(string id, TextAnalyticsError textAnalyticsError)
+        {
+            Id = id;
+            TextAnalyticsError = textAnalyticsError;
         }
 
         internal static IReadOnlyList<HealthcareRelation> ResolveHealthcareRelations(IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelationInternal> relations)
@@ -47,6 +58,9 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
+
+        /// <summary> TextAnalyticsError. </summary>
+        public TextAnalyticsError TextAnalyticsError { get; }
 
         private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 

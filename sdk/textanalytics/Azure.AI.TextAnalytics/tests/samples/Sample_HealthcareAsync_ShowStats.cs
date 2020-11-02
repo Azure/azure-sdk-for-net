@@ -50,40 +50,30 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (RecognizeHealthcareEntititesResult result in results)
+            foreach (DocumentHealthcareResult result in results)
             {
-                if (result.HasError)
-                {
-                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
-                    Console.WriteLine($"    Message: {result.Error.Message}.");
-                }
-                else
-                {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Entities.Count()} healthcare entities:");
+                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-                    foreach (HealthcareEntity entity in result.Entities.Entities)
+                foreach (HealthcareEntity entity in result.Entities)
+                {
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+                    Console.WriteLine($"    Links:");
+
+                    foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
                     {
-                        Console.WriteLine($"    Entity: {entity.Text}");
-                        Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    Length: {entity.Length}");
-                        Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-                        if (entity.Links.Count > 0)
-                        {
-                            Console.WriteLine($"    Links:");
-                            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
-                            {
-                                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
-                            }
-                        }
+                        Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                        Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
                     }
-
-                    Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Console.WriteLine("");
                 }
+
+                Console.WriteLine($"    Document statistics:");
+                Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
+                Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
+                Console.WriteLine("");
             }
         }
 

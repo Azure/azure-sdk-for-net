@@ -35,18 +35,11 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (RecognizeHealthcareEntititesResult result in results)
+            foreach (DocumentHealthcareResult result in results)
             {
-                if (result.HasError)
-                {
-                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
-                    Console.WriteLine($"    Message: {result.Error.Message}.");
-                }
-                else
-                {
-                    Console.WriteLine($"    Recognized the following {result.Entities.Entities.Count} healthcare entities:");
+                   Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-                    foreach (HealthcareEntity entity in result.Entities.Entities)
+                    foreach (HealthcareEntity entity in result.Entities)
                     {
                         Console.WriteLine($"    Entity: {entity.Text}");
                         Console.WriteLine($"    Subcategory: {entity.Subcategory}");
@@ -61,12 +54,7 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
                         }
                     }
-
-                    Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
-                }
             }
         }
 

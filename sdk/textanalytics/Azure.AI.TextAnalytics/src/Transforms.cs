@@ -222,26 +222,22 @@ namespace Azure.AI.TextAnalytics
 
         #region Healthcare
 
-        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results)
         {
-            var healthcareEntititesResults = new List<RecognizeHealthcareEntititesResult>();
+            var healthcareEntititesResults = new List<DocumentHealthcareResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                healthcareEntititesResults.Add(new RecognizeHealthcareEntititesResult(error.Id, ConvertToError(error.Error)));
+                healthcareEntititesResults.Add(new DocumentHealthcareResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read entities
             foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
             {
                 healthcareEntititesResults.Add(
-                    new RecognizeHealthcareEntititesResult(documentHealthcareEntities.Id,
-                    documentHealthcareEntities.Statistics ?? default,
-                    new DocumentHealthcareEntities(documentHealthcareEntities)));
+               new DocumentHealthcareResult(documentHealthcareEntities));
             }
-
-            healthcareEntititesResults = SortHeterogeneousCollection(healthcareEntititesResults, idToIndexMap);
 
             return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
         }

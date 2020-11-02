@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareEntity. </summary>
     public partial class HealthcareEntity : Entity
@@ -52,5 +51,7 @@ namespace Azure.AI.TextAnalytics.Models
             IsNegated = isNegated;
             Links = links;
         }
+        /// <summary> Entity references in known data sources. </summary>
+        public IReadOnlyList<HealthcareEntityLink> Links { get; }
     }
 }
