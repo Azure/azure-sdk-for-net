@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
-        public async Task GetMetricDimensionValuesAsync()
+        public async Task GetDimensionValuesAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -25,13 +25,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string metricId = MetricId;
 
             string dimensionName = "city";
-            var options = new GetMetricDimensionValuesOptions() { TopCount = 10 };
+            var options = new GetDimensionValuesOptions() { TopCount = 10 };
 
             Console.WriteLine($"The dimension '{dimensionName}' can assume the following values (limited to 10):");
 
             int dimensionValueCount = 0;
 
-            await foreach (string dimensionValue in client.GetMetricDimensionValuesAsync(metricId, dimensionName, options))
+            await foreach (string dimensionValue in client.GetDimensionValuesAsync(metricId, dimensionName, options))
             {
                 Console.WriteLine($"  {dimensionValue}");
 
