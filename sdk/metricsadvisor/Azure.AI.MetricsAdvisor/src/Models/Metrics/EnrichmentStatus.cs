@@ -8,13 +8,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EnrichmentStatus. </summary>
     public partial class EnrichmentStatus
     {
-        /// <summary> data slice timestamp. </summary>
+        /// <summary> Data slice timestamp. </summary>
         public DateTimeOffset Timestamp { get; }
 
-        /// <summary> latest enrichment status for this data slice. </summary>
+        /// <summary> Latest enrichment status for this data slice. </summary>
         public string Status { get; }
 
-        /// <summary> the trimmed message describes details of the enrichment status. </summary>
+        /// <summary> The trimmed message describes details of the enrichment status. </summary>
         public string Message { get; }
     }
 }
