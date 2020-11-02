@@ -5,8 +5,11 @@
 ### New Features
 - Added a public constructor to `DataFeed`.
 - Added the `DataSource` property to `DataFeed`.
+- All `DataSource`s now have public properties exposing the associated parameters used to get the data, such as endpoints, connection strings, and query strings.
 
 ### Breaking Changes
+- In `MetricsAdvisorClient`, renamed `GetAnomaliesForDetectionConfiguration` and `GetAnomaliesForAlert` sync and async methods to `GetAnomalies`.
+- In `MetricsAdvisorClient`, renamed `GetIncidentsForDetectionConfiguration` and `GetIncidentsForAlert` sync and async methods to `GetIncidents`.
 - In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddMetricFeedback`.
 - In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllMetricFeedback`.
 - In `MetricsAdvisorClient`, renamed sync and async `GetMetricDimensionValues` methods to `GetDimensionValues`.
@@ -28,6 +31,7 @@
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+- In `ElasticsearchDataFeedSource`, renamed the constructor parameter `authHeader` to `authorizationHeader`.
 
 ### Key Bug Fixes
 - Fixed a bug in sync and async `GetMetricEnrichedSeriesData` methods where a `NullReferenceException` was thrown if a returned data point had missing data.

@@ -27,6 +27,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(query, nameof(query));
 
             Parameter = new AzureTableParameter(connectionString, table, query);
+
+            ConnectionString = connectionString;
+            Table = table;
+            Query = query;
         }
 
         internal AzureTableDataFeedSource(AzureTableParameter parameter)
@@ -35,6 +39,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ConnectionString = parameter.ConnectionString;
+            Table = parameter.Table;
+            Query = parameter.Query;
         }
+
+        /// <summary>
+        /// The connection string for authenticating to the Azure Storage Account.
+        /// </summary>
+        public string ConnectionString { get; }
+
+        /// <summary>
+        /// The name of the Table.
+        /// </summary>
+        public string Table { get; }
+
+        /// <summary>
+        /// The query to retrieve the data to be ingested.
+        /// </summary>
+        public string Query { get; }
     }
 }

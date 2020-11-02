@@ -29,6 +29,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
             Parameter = new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
+
+            ConnectionString = connectionString;
+            SqlQuery = sqlQuery;
+            Database = database;
+            CollectionId = collectionId;
         }
 
         internal AzureCosmosDbDataFeedSource(AzureCosmosDBParameter parameter)
@@ -37,6 +42,31 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(parameter, nameof(parameter));
 
             Parameter = parameter;
+
+            ConnectionString = parameter.ConnectionString;
+            SqlQuery = parameter.SqlQuery;
+            Database = parameter.Database;
+            CollectionId = parameter.CollectionId;
         }
+
+        /// <summary>
+        /// The connection string.
+        /// </summary>
+        public string ConnectionString { get; }
+
+        /// <summary>
+        /// The SQL query to retrieve the data to be ingested.
+        /// </summary>
+        public string SqlQuery { get; }
+
+        /// <summary>
+        /// The name of the database.
+        /// </summary>
+        public string Database { get; }
+
+        /// <summary>
+        /// The collection ID.
+        /// </summary>
+        public string CollectionId { get; }
     }
 }
