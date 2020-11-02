@@ -108,9 +108,9 @@ public class QueueDescriptionTests
             $"<DeadLetteringOnMessageExpiration>false</DeadLetteringOnMessageExpiration>" +
             $"<DuplicateDetectionHistoryTimeWindow>{XmlConvert.ToString(TimeSpan.FromMinutes(2))}</DuplicateDetectionHistoryTimeWindow>" +
             $"<MaxDeliveryCount>10</MaxDeliveryCount>" +
-            $"<EnableBatchedOperations>true</EnableBatchedOperations>" +
-            $"<AuthorizationRules />" +
+            $"<EnableBatchedOperations>true</EnableBatchedOperations>" +            
             $"<IsAnonymousAccessible>false</IsAnonymousAccessible>" +
+            $"<AuthorizationRules />" +
             $"<Status>Active</Status>" +
             $"<ForwardTo>fq1</ForwardTo>" +
             $"<UserMetadata></UserMetadata>" +

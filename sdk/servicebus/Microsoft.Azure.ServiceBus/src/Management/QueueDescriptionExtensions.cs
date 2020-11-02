@@ -25,8 +25,8 @@ namespace Microsoft.Azure.ServiceBus.Management
                     : null,
                 new XElement(XName.Get("MaxDeliveryCount", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxDeliveryCount)),
                 new XElement(XName.Get("EnableBatchedOperations", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableBatchedOperations)),
-                description.AuthorizationRules?.Serialize(),
                 new XElement(XName.Get("IsAnonymousAccessible", ManagementClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.IsAnonymousAccessible)),
+                description.AuthorizationRules?.Serialize(),
                 new XElement(XName.Get("Status", ManagementClientConstants.ServiceBusNamespace), description.Status.ToString()),
                 description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", ManagementClientConstants.ServiceBusNamespace), description.ForwardTo) : null,
                 description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", ManagementClientConstants.ServiceBusNamespace), description.UserMetadata) : null,
@@ -116,11 +116,11 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "EnableBatchedOperations":
                         qd.EnableBatchedOperations = Boolean.Parse(element.Value);
                         break;
-                    case "AuthorizationRules":
-                        qd.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
-                        break;
                     case "IsAnonymousAccessible":
                         qd.IsAnonymousAccessible = Boolean.Parse(element.Value);
+                        break;
+                    case "AuthorizationRules":
+                        qd.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
                         break;
                     case "Status":
                         qd.Status = (EntityStatus)Enum.Parse(typeof(EntityStatus), element.Value);
