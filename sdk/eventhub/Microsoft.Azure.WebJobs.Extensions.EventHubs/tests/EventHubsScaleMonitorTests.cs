@@ -5,9 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Messaging.EventHubs;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
+using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
@@ -17,6 +23,8 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Moq;
 using Newtonsoft.Json;
 using Xunit;
+using static Moq.It;
+using BlobProperties = Azure.Storage.Blobs.Models.BlobProperties;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -31,13 +39,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         private readonly Uri _storageUri = new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/");
         private readonly EventHubsScaleMonitor _scaleMonitor;
-        private readonly Mock<CloudBlobContainer> _mockBlobContainer;
+        private readonly Mock<BlobContainerClient> _mockBlobContainer;
         private readonly TestLoggerProvider _loggerProvider;
         private readonly LoggerFactory _loggerFactory;
 
         public EventHubsScaleMonitorTests()
         {
-            _mockBlobContainer = new Mock<CloudBlobContainer>(MockBehavior.Strict, new Uri(_storageUri, _eventHubContainerName));
+            _mockBlobContainer = new Mock<BlobContainerClient>(MockBehavior.Strict, new Uri(_storageUri, _eventHubContainerName));
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
@@ -64,20 +72,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
             string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/0";
 
-            var mockBlobReference = new Mock<CloudBlockBlob>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
+            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
 
             _mockBlobContainer
-                .Setup(c => c.GetBlockBlobReference(prefix))
+                .Setup(c => c.GetBlobClient(prefix))
                 .Returns(mockBlobReference.Object);
 
-            // No messages processed, no messages in queue
-            mockBlobReference
-                .Setup(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 0 }"));
+            SetupBlobMock(mockBlobReference, 0, 0);
 
-            var partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            var partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 0 }
+                new TestPartitionProperties(lastSequenceNumber: 0)
             };
 
             var metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -87,9 +92,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Partition got its first message (Offset == null, LastEnqueued == 0)
-            mockBlobReference
-                .Setup(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ sequencenumber: 0 }"));
+            SetupBlobMock(mockBlobReference, null, 0);
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
 
@@ -98,13 +101,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // No instances assigned to process events on partition (Offset == null, LastEnqueued > 0)
-            mockBlobReference
-                .Setup(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ sequencenumber: 0 }"));
+            SetupBlobMock(mockBlobReference, null, 0);
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 5 }
+                new TestPartitionProperties(lastSequenceNumber: 5)
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -114,13 +115,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Checkpointing is ahead of partition info (SequenceNumber > LastEnqueued)
-            mockBlobReference
-                .Setup(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ offset: 25, sequencenumber: 11 }"));
+            SetupBlobMock(mockBlobReference, 25, 11);
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 10 }
+                new TestPartitionProperties(lastSequenceNumber: 10)
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -136,24 +135,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
             string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/";
 
-            var mockBlobReference = new Mock<CloudBlockBlob>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
+            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
 
             _mockBlobContainer
-                .Setup(c => c.GetBlockBlobReference(It.IsAny<string>()))
+                .Setup(c => c.GetBlobClient(IsAny<string>()))
                 .Returns(mockBlobReference.Object);
 
             // No messages processed, no messages in queue
-            mockBlobReference
-                .SetupSequence(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 0 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 0 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 0 }"));
+            SetupBlobMock(mockBlobReference, 0, 0);
+            SetupBlobMock(mockBlobReference, 0, 0);
+            SetupBlobMock(mockBlobReference, 0, 0);
 
-            var partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            var partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 0 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 0 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 0 }
+                new TestPartitionProperties(lastSequenceNumber: 0),
+                new TestPartitionProperties(lastSequenceNumber: 0),
+                new TestPartitionProperties(lastSequenceNumber: 0)
             };
 
             var metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -163,17 +160,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Messages processed, Messages in queue
-            mockBlobReference
-                .SetupSequence(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 2 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 3 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 4 }"));
+            SetupBlobMock(mockBlobReference, 0, 2);
+            SetupBlobMock(mockBlobReference, 0, 3);
+            SetupBlobMock(mockBlobReference, 0, 4);
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 12 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 13 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 14 }
+                new TestPartitionProperties(lastSequenceNumber: 12),
+                new TestPartitionProperties(lastSequenceNumber: 13),
+                new TestPartitionProperties(lastSequenceNumber: 14)
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -183,17 +178,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // One invalid sample
-            mockBlobReference
-                .SetupSequence(m => m.DownloadTextAsync())
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 2 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 3 }"))
-                .Returns(Task.FromResult("{ offset: 0, sequencenumber: 4 }"));
+            SetupBlobMock(mockBlobReference, 0, 2);
+            SetupBlobMock(mockBlobReference, 0, 3);
+            SetupBlobMock(mockBlobReference, 0, 4);
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 12 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 13 },
-                new EventHubPartitionRuntimeInformation { LastEnqueuedSequenceNumber = 1 }
+                new TestPartitionProperties(lastSequenceNumber: 12),
+                new TestPartitionProperties(lastSequenceNumber: 13),
+                new TestPartitionProperties(lastSequenceNumber: 1)
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
@@ -208,12 +201,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             // StorageException
             _mockBlobContainer
-                .Setup(c => c.GetBlockBlobReference(It.IsAny<string>()))
-                .Throws(new StorageException(new RequestResult { HttpStatusCode = (int)HttpStatusCode.NotFound }, "Uh oh", new Exception("Inner uh oh")));
+                .Setup(c => c.GetBlobClient(IsAny<string>()))
+                .Throws(new RequestFailedException(404, "Not found"));
 
-            var partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            var partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation()
+                new TestPartitionProperties()
             };
 
             var metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo, true);
@@ -231,12 +224,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // JsonSerializationException
             _mockBlobContainer
-                .Setup(c => c.GetBlockBlobReference(It.IsAny<string>()))
+                .Setup(c => c.GetBlobClient(IsAny<string>()))
                 .Throws(new JsonSerializationException("Uh oh"));
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation()
+                new TestPartitionProperties()
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo, true);
@@ -254,12 +247,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             // Generic Exception
             _mockBlobContainer
-                .Setup(c => c.GetBlockBlobReference(It.IsAny<string>()))
+                .Setup(c => c.GetBlobClient(IsAny<string>()))
                 .Throws(new Exception("Uh oh"));
 
-            partitionInfo = new List<EventHubPartitionRuntimeInformation>
+            partitionInfo = new List<PartitionProperties>
             {
-                new EventHubPartitionRuntimeInformation()
+                new TestPartitionProperties()
             };
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo, true);
@@ -479,6 +472,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var log = logs[0];
             Assert.Equal(Extensions.Logging.LogLevel.Information, log.Level);
             Assert.Equal($"EventHubs entity '{_eventHubName}' is steady.", log.FormattedMessage);
+        }
+
+        private static void SetupBlobMock(Mock<BlobClient> mock, int? offset, int? sequencenumber)
+        {
+            var metadata = new Dictionary<string, string>();
+            if (offset != null)
+            {
+                metadata.Add("offset", offset.ToString());
+            }
+
+            if (sequencenumber != null)
+            {
+                metadata.Add("sequencenumber", sequencenumber.ToString());
+            }
+
+            var response = Response.FromValue(BlobsModelFactory.BlobProperties(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, metadata, default, default, default, default), Mock.Of<Response>());
+
+            // No messages processed, no messages in queue
+            mock
+                .Setup(m => m.GetPropertiesAsync(IsAny<BlobRequestConditions>(), IsAny<CancellationToken>()))
+                .ReturnsAsync(response);
         }
     }
 }
