@@ -984,20 +984,6 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         #endregion
 
-        internal static XElement RemoveDuplicateChildElements(XElement source)
-        {
-            XElement copyElement = new XElement(source.Name);
-            foreach (var childElement in source.Elements())
-            {
-                if (copyElement.Element(childElement.Name) == null)
-                {
-                    copyElement.Add(childElement);
-                }
-            }
-
-            return copyElement;
-        }
-
         private static int GetPort(string endpoint)
         {
             // used for internal testing

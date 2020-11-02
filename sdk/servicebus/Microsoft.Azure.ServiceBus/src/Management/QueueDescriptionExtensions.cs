@@ -84,10 +84,6 @@ namespace Microsoft.Azure.ServiceBus.Management
                 throw new MessagingEntityNotFoundException("Queue was not found");
             }
 
-            // Needed to deal with cases where this SDK caused many duplicate elements in the entry xml.
-            // One Get+Update combo from this SDK will remove those duplicate elements.
-            // This can be removed later when all duplicate entries are removed eventually.
-            qdXml = ManagementClient.RemoveDuplicateChildElements(qdXml);
             var qd = new QueueDescription(name);
             foreach (var element in qdXml.Elements())
             {
