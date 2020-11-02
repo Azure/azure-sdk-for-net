@@ -2,6 +2,13 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### New Features
+
+### Breaking changes
+
+### Fixes and improvements
+
+- Improved deserialization and error reporting for `BasicDigitalTwin` for `DigitalTwinMetadata`.
 
 ## 1.0.0 (2020-10-30)
 
