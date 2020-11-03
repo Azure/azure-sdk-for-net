@@ -49,7 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="workspaceUID"> The workspace unique identifier. </param>
         /// <param name="extraProperties"> Workspace level configs and feature flags. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, string workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings) : base(id, name, type, tags, location)
+        /// <param name="babylonConfiguration"> Babylon Configuration. </param>
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, BabylonConfiguration babylonConfiguration) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -65,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WorkspaceUID = workspaceUID;
             ExtraProperties = extraProperties;
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            BabylonConfiguration = babylonConfiguration;
         }
 
         /// <summary> Identity of the workspace. </summary>
@@ -90,10 +92,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The encryption details of the workspace. </summary>
         public EncryptionDetails Encryption { get; set; }
         /// <summary> The workspace unique identifier. </summary>
-        public string WorkspaceUID { get; }
+        public Guid? WorkspaceUID { get; }
         /// <summary> Workspace level configs and feature flags. </summary>
         public IReadOnlyDictionary<string, object> ExtraProperties { get; }
         /// <summary> Managed Virtual Network Settings. </summary>
         public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+        /// <summary> Babylon Configuration. </summary>
+        public BabylonConfiguration BabylonConfiguration { get; set; }
     }
 }

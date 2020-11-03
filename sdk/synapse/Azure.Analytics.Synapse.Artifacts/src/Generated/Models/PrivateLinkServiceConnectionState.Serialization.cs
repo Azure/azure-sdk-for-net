@@ -15,34 +15,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
             writer.WriteEndObject();
         }
 
         internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<PrivateLinkServiceConnectionStateStatus> status = default;
+            Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    status = new PrivateLinkServiceConnectionStateStatus(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -56,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new PrivateLinkServiceConnectionState(status.Value, description.Value, actionsRequired.Value);
         }
     }
 }

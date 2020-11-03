@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -97,6 +98,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("managedVirtualNetworkSettings");
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
+            if (Optional.IsDefined(BabylonConfiguration))
+            {
+                writer.WritePropertyName("babylonConfiguration");
+                writer.WriteObjectValue(BabylonConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -119,9 +125,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> managedVirtualNetwork = default;
             Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<EncryptionDetails> encryption = default;
-            Optional<string> workspaceUID = default;
+            Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
+            Optional<BabylonConfiguration> babylonConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -265,7 +272,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("workspaceUID"))
                         {
-                            workspaceUID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceUID = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("extraProperties"))
@@ -293,11 +305,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("babylonConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            babylonConfiguration = BabylonConfiguration.DeserializeBabylonConfiguration(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, workspaceUID.Value, Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, babylonConfiguration.Value);
         }
     }
 }

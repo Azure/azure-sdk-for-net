@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Private endpoint details. </summary>
+    /// <summary> Private Endpoint. </summary>
     public partial class PrivateEndpoint
     {
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
@@ -16,13 +16,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
-        /// <param name="id"> Resource id of the private endpoint. </param>
+        /// <param name="id"> identifier. </param>
         internal PrivateEndpoint(string id)
         {
             Id = id;
         }
 
-        /// <summary> Resource id of the private endpoint. </summary>
+        /// <summary> identifier. </summary>
         public string Id { get; }
     }
 }
