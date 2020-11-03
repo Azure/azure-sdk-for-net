@@ -23,6 +23,5 @@ namespace Azure.Communication.Pipeline
                 return await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
         }
-
     }
 }
