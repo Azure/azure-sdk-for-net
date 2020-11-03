@@ -2916,7 +2916,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         ifTags: conditions?.TagConditions,
-                        blobDeleteType: deleteType.ToBlobDeleteTypeString(),
+                        blobDeleteType: deleteType,
                         async: async,
                         operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)

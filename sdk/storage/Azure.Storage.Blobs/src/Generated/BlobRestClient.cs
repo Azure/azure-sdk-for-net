@@ -4743,7 +4743,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
                 string requestId = default,
-                string blobDeleteType = default,
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default,
                 bool async = true,
                 string operationName = "BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4831,7 +4831,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
                 string requestId = default,
-                string blobDeleteType = default)
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -4853,7 +4853,7 @@ namespace Azure.Storage.Blobs
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
                 if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (blobDeleteType != null) { _request.Uri.AppendQuery("deletetype", blobDeleteType); }
+                if (blobDeleteType != null) { _request.Uri.AppendQuery("deletetype", blobDeleteType.Value.ToString()); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
@@ -17087,6 +17087,22 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobCorsRule
+
+#region enum BlobDeleteType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
+    /// </summary>
+    public enum BlobDeleteType
+    {
+        /// <summary>
+        /// Permanent
+        /// </summary>
+        Permanent
+    }
+}
+#endregion enum BlobDeleteType
 
 #region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models

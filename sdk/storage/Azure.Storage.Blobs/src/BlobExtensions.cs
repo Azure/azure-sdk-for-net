@@ -315,21 +315,5 @@ namespace Azure.Storage.Blobs
                 return RehydratePriority.Standard;
             }
         }
-
-        internal static string ToBlobDeleteTypeString(this BlobDeleteType? blobDeleteType)
-        {
-            if (blobDeleteType == null)
-            {
-                return null;
-            }
-            else if (blobDeleteType == BlobDeleteType.Permanent)
-            {
-                return Constants.Blob.BlobPermanentDeleteQueryValue;
-            }
-            else
-            {
-                throw new ArgumentException($"Unknown {nameof(BlobDeleteType)}: {blobDeleteType}");
-            }
-        }
     }
 }
