@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -17,8 +16,6 @@ namespace Azure.Data.Tables.Models
         {
             _requestLookup = requestLookup;
         }
-
-        public bool IsBatchSuccessful => _requestLookup.Values.Any(r => r.Message.Response.Status >= 400);
 
         public int ResponseCount => _requestLookup.Keys.Count;
 

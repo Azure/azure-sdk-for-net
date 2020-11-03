@@ -175,7 +175,6 @@ namespace Azure.Data.Tables.Models
     public partial class TableBatchResponse
     {
         internal TableBatchResponse() { }
-        public bool IsBatchSuccessful { get { throw null; } }
         public int ResponseCount { get { throw null; } }
         public Azure.Response GetResponseForEntity(string rowKey) { throw null; }
     }
