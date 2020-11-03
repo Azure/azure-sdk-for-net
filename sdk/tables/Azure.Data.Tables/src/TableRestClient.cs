@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,7 +93,10 @@ namespace Azure.Data.Tables
                                 // create a new exception with the additional info populated.
                                 var appendedMessage = AppendEntityInfoToMessage(ex.Message);
                                 var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
-                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = messageList[failedEntityIndex].Entity;
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = JsonSerializer.Serialize(messageList[failedEntityIndex].Entity);
+                                rfe.Data[TableConstants.ExceptionData.EntityType] = messageList[failedEntityIndex].Entity.GetType();
                                 throw rfe;
                             }
                             else
@@ -148,7 +152,10 @@ namespace Azure.Data.Tables
                                 // reset the response stream position so we can read it again
                                 var appendedMessage = AppendEntityInfoToMessage(ex.Message);
                                 var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
-                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = messageList[failedEntityIndex].Entity;
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = JsonSerializer.Serialize(messageList[failedEntityIndex].Entity);
+                                rfe.Data[TableConstants.ExceptionData.EntityType] = messageList[failedEntityIndex].Entity.GetType();
                                 throw rfe;
                             }
                             else

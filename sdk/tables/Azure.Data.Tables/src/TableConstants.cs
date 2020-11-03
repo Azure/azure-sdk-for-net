@@ -63,6 +63,7 @@ namespace Azure.Data.Tables
         internal static class ExceptionData
         {
             internal const string FailedEntity = "FailedEntity";
+            internal const string EntityType = "EntityType";
         }
 
         /// <summary>

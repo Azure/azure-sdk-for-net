@@ -5,6 +5,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -257,7 +259,16 @@ namespace Azure.Data.Tables
 
             if (exception.Data.Contains(TableConstants.ExceptionData.FailedEntity))
             {
-                failedEntity = exception.Data[TableConstants.ExceptionData.FailedEntity] as ITableEntity;
+                try
+                {
+                    var entityJson = exception.Data[TableConstants.ExceptionData.FailedEntity] as string;
+                    Type entityType = exception.Data[TableConstants.ExceptionData.EntityType] as Type;
+                    failedEntity = JsonSerializer.Deserialize(entityJson, entityType) as ITableEntity;
+                }
+                catch
+                {
+                    // We just don't want to throw here.
+                }
             }
 
             return failedEntity != null;
