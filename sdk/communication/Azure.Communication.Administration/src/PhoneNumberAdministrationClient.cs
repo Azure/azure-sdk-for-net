@@ -18,7 +18,7 @@ namespace Azure.Communication.Administration
     /// </summary>
     public class PhoneNumberAdministrationClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        internal ClientDiagnostics ClientDiagnostics { get; private set; }
         internal PhoneNumberAdministrationRestClient RestClient { get; }
 
         /// <summary>
@@ -44,13 +44,13 @@ namespace Azure.Communication.Administration
         internal PhoneNumberAdministrationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
             RestClient = new PhoneNumberAdministrationRestClient(clientDiagnostics, pipeline, endpointUrl);
-            _clientDiagnostics = clientDiagnostics;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>Initializes a new instance of <see cref="PhoneNumberAdministrationClient"/> for mocking.</summary>
         protected PhoneNumberAdministrationClient()
         {
-            _clientDiagnostics = null!;
+            ClientDiagnostics = null!;
             RestClient = null!;
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual AsyncPageable<AcquiredPhoneNumber> GetAllPhoneNumbersAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
             scope.Start();
 
             try
@@ -84,7 +84,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{AcquiredPhoneNumber}"/>. </returns>
         public virtual Pageable<AcquiredPhoneNumber> GetAllPhoneNumbers(string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllPhoneNumbers)}");
             scope.Start();
 
             try
@@ -108,7 +108,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{AreaCodes}"/>. </returns>
         public virtual async Task<Response<AreaCodes>> GetAllAreaCodesAsync(string locationType, string countryCode, string phonePlanId, IEnumerable<LocationOptionsQuery> locationOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{AreaCodes}"/>. </returns>
         public virtual Response<AreaCodes> GetAllAreaCodes(string locationType, string countryCode, string phonePlanId, IEnumerable<LocationOptionsQuery> locationOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllAreaCodes)}");
             scope.Start();
             try
             {
@@ -149,7 +149,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{UpdatePhoneNumberCapabilitiesResponse}"/>. </returns>
         public virtual async Task<Response<UpdatePhoneNumberCapabilitiesResponse>> GetCapabilitiesUpdateAsync(string capabilitiesUpdateId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
             scope.Start();
             try
             {
@@ -168,7 +168,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{UpdatePhoneNumberCapabilitiesResponse}"/>. </returns>
         public virtual Response<UpdatePhoneNumberCapabilitiesResponse> GetCapabilitiesUpdate(string capabilitiesUpdateId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetCapabilitiesUpdate)}");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{UpdateNumberCapabilitiesResponse}"/>. </returns>
         public virtual async Task<Response<UpdateNumberCapabilitiesResponse>> UpdateCapabilitiesAsync(IDictionary<string, NumberUpdateCapabilities> phoneNumberUpdateCapabilities, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UpdateCapabilities)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UpdateCapabilities)}");
             scope.Start();
             try
             {
@@ -206,7 +206,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{UpdateNumberCapabilitiesResponse}"/>. </returns>
         public virtual Response<UpdateNumberCapabilitiesResponse> UpdateCapabilities(IDictionary<string, NumberUpdateCapabilities> phoneNumberUpdateCapabilities, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(UpdateCapabilities)}.{nameof(UpdateCapabilities)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(UpdateCapabilities)}.{nameof(UpdateCapabilities)}");
             scope.Start();
             try
             {
@@ -225,7 +225,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberCountry> GetAllSupportedCountriesAsync(string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberCountry}"/>. </returns>
         public virtual Pageable<PhoneNumberCountry> GetAllSupportedCountries(string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllSupportedCountries)}");
             scope.Start();
             try
             {
@@ -268,7 +268,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
         public virtual async Task<Response<NumberConfigurationResponse>> GetNumberConfigurationAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{NumberConfigurationResponse}"/>. </returns>
         public virtual Response<NumberConfigurationResponse> GetNumberConfiguration(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetNumberConfiguration)}");
             scope.Start();
             try
             {
@@ -307,7 +307,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual async Task<Response> ConfigureNumberAsync(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
             try
             {
@@ -327,7 +327,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual Response ConfigureNumber(PstnConfiguration pstnConfiguration, PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(ConfigureNumber)}");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual async Task<Response> UnconfigureNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
             try
             {
@@ -365,7 +365,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual Response UnconfigureNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(UnconfigureNumber)}");
             scope.Start();
             try
             {
@@ -386,7 +386,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhonePlanGroup}"/>. </returns>
         public virtual AsyncPageable<PhonePlanGroup> GetPhonePlanGroupsAsync(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
             scope.Start();
             try
             {
@@ -411,7 +411,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhonePlanGroup}"/>. </returns>
         public virtual Pageable<PhonePlanGroup> GetPhonePlanGroups(string countryCode, string? locale = null, bool? includeRateInformation = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanGroups)}");
             scope.Start();
             try
             {
@@ -433,7 +433,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhonePlan}"/>. </returns>
         public virtual AsyncPageable<PhonePlan> GetPhonePlansAsync(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
             scope.Start();
             try
             {
@@ -458,7 +458,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhonePlan}"/>. </returns>
         public virtual Pageable<PhonePlan> GetPhonePlans(string countryCode, string phonePlanGroupId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlans)}");
             scope.Start();
             try
             {
@@ -481,7 +481,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{LocationOptionsResponse}"/>. </returns>
         public virtual async Task<Response<LocationOptionsResponse>> GetPhonePlanLocationOptionsAsync(string countryCode, string phonePlanGroupId, string phonePlanId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
             scope.Start();
             try
             {
@@ -503,7 +503,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{LocationOptionsResponse}"/>. </returns>
         public virtual Response<LocationOptionsResponse> GetPhonePlanLocationOptions(string countryCode, string phonePlanGroupId, string phonePlanId, string? locale = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetPhonePlanLocationOptions)}");
             scope.Start();
             try
             {
@@ -522,7 +522,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{PhoneNumberRelease}"/>. </returns>
         public virtual async Task<Response<PhoneNumberRelease>> GetReleaseByIdAsync(string releaseId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
             scope.Start();
             try
             {
@@ -541,7 +541,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{PhoneNumberRelease}"/>. </returns>
         public virtual Response<PhoneNumberRelease> GetReleaseById(string releaseId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReleaseById)}");
             scope.Start();
             try
             {
@@ -560,7 +560,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
         public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumbersAsync(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -584,7 +584,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="ReleasePhoneNumberOperation"/>. </returns>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReleasePhoneNumbers)}");
             scope.Start();
             try
             {
@@ -607,7 +607,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberEntity> GetAllReleasesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
             scope.Start();
             try
             {
@@ -629,7 +629,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
         public virtual Pageable<PhoneNumberEntity> GetAllReleases(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReleases)}");
             scope.Start();
             try
             {
@@ -649,7 +649,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{PhoneNumberReservation}"/>. </returns>
         public virtual async Task<Response<PhoneNumberReservation>> GetReservationByIdAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
             scope.Start();
             try
             {
@@ -668,7 +668,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{PhoneNumberReservation}"/>. </returns>
         public virtual Response<PhoneNumberReservation> GetReservationById(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetReservationById)}");
             scope.Start();
             try
             {
@@ -687,7 +687,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response{PhoneNumberReservationOperation}"/>. </returns>
         public virtual async Task<PhoneNumberReservationOperation> StartReservationAsync(CreateReservationOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
             scope.Start();
             try
             {
@@ -711,7 +711,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="PhoneNumberReservationOperation"/>. </returns>
         public virtual PhoneNumberReservationOperation StartReservation(CreateReservationOptions body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartReservation)}");
             scope.Start();
             try
             {
@@ -734,7 +734,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="AsyncPageable{PhoneNumberEntity}"/>. </returns>
         public virtual AsyncPageable<PhoneNumberEntity> GetAllReservationsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
             scope.Start();
             try
             {
@@ -756,7 +756,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Pageable{PhoneNumberEntity}"/>. </returns>
         public virtual Pageable<PhoneNumberEntity> GetAllReservations(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(GetAllReservations)}");
             scope.Start();
             try
             {
@@ -776,7 +776,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual async Task<Response> CancelReservationAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
             scope.Start();
             try
             {
@@ -795,7 +795,7 @@ namespace Azure.Communication.Administration
         /// <returns> A <see cref="Response"/>. </returns>
         public virtual Response CancelReservation(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(CancelReservation)}");
             scope.Start();
             try
             {
@@ -808,13 +808,13 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts purchases the phone number reservation. </summary>
+        /// <summary> Starts purchase the phone number reservation. </summary>
         /// <param name="reservationId"> The reservation id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="PhoneNumberReservationPurchaseOperation"/>. </returns>
         public virtual async Task<PhoneNumberReservationPurchaseOperation> StartPurchaseReservationAsync(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {
@@ -832,13 +832,13 @@ namespace Azure.Communication.Administration
             }
         }
 
-        /// <summary> Starts purchases the phone number reservation. </summary>
+        /// <summary> Starts purchase the phone number reservation. </summary>
         /// <param name="reservationId"> The reservation id to be purchased. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A <see cref="PhoneNumberReservationPurchaseOperation"/>. </returns>
         public virtual PhoneNumberReservationPurchaseOperation StartPurchaseReservation(string reservationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(PhoneNumberAdministrationClient)}.{nameof(StartPurchaseReservation)}");
             scope.Start();
             try
             {

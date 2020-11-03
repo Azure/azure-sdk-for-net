@@ -125,7 +125,7 @@ namespace Azure.Communication.Administration.Models
                 ? await _client.GetReleaseByIdAsync(releaseId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
                 : _client.GetReleaseById(releaseId: Id, cancellationToken: cancellationToken);
 
-            var terminateStatuses = new ReleaseStatus[]
+            var terminateStatuses = new[]
             {
                 ReleaseStatus.Complete,
                 ReleaseStatus.Failed,
@@ -135,7 +135,7 @@ namespace Azure.Communication.Administration.Models
             Response response = update.GetRawResponse();
             _rawResponse = response;
 
-            if (update.Value.Status.HasValue && terminateStatuses.Contains(update.Value.Status.Value))
+            if (update.Value?.Status != null && terminateStatuses.Contains(update.Value.Status.Value))
             {
                 lock (_lockObject)
                 {
