@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        internal const string DetectionConfigurationId = "59f26a57-55f7-41eb-8899-a7268d125557";
+        internal const string DetectionConfigurationId = "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c";
         internal const string IncidentId = "013c34456c5aed901c66ca1dff0714aa-174995c5800";
         internal const string AlertConfigurationId = "08318302-6006-4019-9afc-975bc63ee566";
         internal const string AlertId = "174995c5800";
