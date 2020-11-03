@@ -69,7 +69,18 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// utilization in the usage time (day or month). E.g. if usage record
         /// corresponds to 12/10/2017 and on that for hour 4 and 5, utilization
         /// was 100%, this field will return 100% for that day.</param>
-        public ReservationSummary(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationOrderId = default(string), string reservationId = default(string), string skuName = default(string), decimal? reservedHours = default(decimal?), System.DateTime? usageDate = default(System.DateTime?), decimal? usedHours = default(decimal?), decimal? minUtilizationPercentage = default(decimal?), decimal? avgUtilizationPercentage = default(decimal?), decimal? maxUtilizationPercentage = default(decimal?))
+        /// <param name="kind">The reservation kind.</param>
+        /// <param name="purchasedQuantity">This is the purchased quantity for
+        /// the reservationId.</param>
+        /// <param name="remainingQuantity">This is the remaining quantity for
+        /// the reservationId.</param>
+        /// <param name="totalReservedQuantity">This is the total count of
+        /// instances that are reserved for the reservationId.</param>
+        /// <param name="usedQuantity">This is the used quantity for the
+        /// reservationId.</param>
+        /// <param name="utilizedPercentage">This is the utilized percentage
+        /// for the reservation Id.</param>
+        public ReservationSummary(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationOrderId = default(string), string reservationId = default(string), string skuName = default(string), decimal? reservedHours = default(decimal?), System.DateTime? usageDate = default(System.DateTime?), decimal? usedHours = default(decimal?), decimal? minUtilizationPercentage = default(decimal?), decimal? avgUtilizationPercentage = default(decimal?), decimal? maxUtilizationPercentage = default(decimal?), string kind = default(string), decimal? purchasedQuantity = default(decimal?), decimal? remainingQuantity = default(decimal?), decimal? totalReservedQuantity = default(decimal?), decimal? usedQuantity = default(decimal?), decimal? utilizedPercentage = default(decimal?))
             : base(id, name, type, tags)
         {
             ReservationOrderId = reservationOrderId;
@@ -81,6 +92,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
             MinUtilizationPercentage = minUtilizationPercentage;
             AvgUtilizationPercentage = avgUtilizationPercentage;
             MaxUtilizationPercentage = maxUtilizationPercentage;
+            Kind = kind;
+            PurchasedQuantity = purchasedQuantity;
+            RemainingQuantity = remainingQuantity;
+            TotalReservedQuantity = totalReservedQuantity;
+            UsedQuantity = usedQuantity;
+            UtilizedPercentage = utilizedPercentage;
             CustomInit();
         }
 
@@ -160,6 +177,43 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxUtilizationPercentage")]
         public decimal? MaxUtilizationPercentage { get; private set; }
+
+        /// <summary>
+        /// Gets the reservation kind.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kind")]
+        public string Kind { get; private set; }
+
+        /// <summary>
+        /// Gets this is the purchased quantity for the reservationId.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purchasedQuantity")]
+        public decimal? PurchasedQuantity { get; private set; }
+
+        /// <summary>
+        /// Gets this is the remaining quantity for the reservationId.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.remainingQuantity")]
+        public decimal? RemainingQuantity { get; private set; }
+
+        /// <summary>
+        /// Gets this is the total count of instances that are reserved for the
+        /// reservationId.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.totalReservedQuantity")]
+        public decimal? TotalReservedQuantity { get; private set; }
+
+        /// <summary>
+        /// Gets this is the used quantity for the reservationId.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.usedQuantity")]
+        public decimal? UsedQuantity { get; private set; }
+
+        /// <summary>
+        /// Gets this is the utilized percentage for the reservation Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.utilizedPercentage")]
+        public decimal? UtilizedPercentage { get; private set; }
 
     }
 }

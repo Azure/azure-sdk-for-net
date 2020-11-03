@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for CategoryType.
+    /// Defines values for LotSource.
     /// </summary>
-    public static class CategoryType
+    public static class LotSource
     {
-        public const string Cost = "Cost";
-        public const string Usage = "Usage";
+        public const string PurchasedCredit = "PurchasedCredit";
+        public const string PromotionalCredit = "PromotionalCredit";
     }
 }
