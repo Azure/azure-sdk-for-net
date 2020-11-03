@@ -158,6 +158,8 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "SizeInBytes":
                     case "UpdatedAt":
                     case "CountDetails":
+                    case "EntityAvailabilityStatus":
+                    case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
                         break;
