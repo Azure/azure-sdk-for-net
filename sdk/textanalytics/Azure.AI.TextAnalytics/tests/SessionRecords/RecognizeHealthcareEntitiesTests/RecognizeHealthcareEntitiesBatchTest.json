@@ -11,7 +11,7 @@
         "Content-Length": "223",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-85dcb1379c656541886cc2f88bb1d049-1f31dfe4e9f71d44-00",
+        "traceparent": "00-71c2d9fb38812943af57866982b5b729-51c859dce1d3b64b-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
@@ -35,18 +35,18 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "9dd1d6ec-72cd-40f4-b56b-a66b21513f96",
-        "Date": "Tue, 03 Nov 2020 19:54:40 GMT",
-        "operation-location": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037",
+        "apim-request-id": "87091d36-b045-4781-9572-3127de0d9028",
+        "Date": "Tue, 03 Nov 2020 20:16:45 GMT",
+        "operation-location": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "94"
+        "x-envoy-upstream-service-time": "99"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -64,25 +64,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fec8af00-7469-4d1d-bdc7-16e960466395",
+        "apim-request-id": "662192e6-9937-460f-b052-5ca49ded23e4",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:40 GMT",
+        "Date": "Tue, 03 Nov 2020 20:16:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "5"
       },
       "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:40Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
+        "jobId": "d59bd359-781e-4362-9d83-b59c4ee3e61d",
+        "lastUpdateDateTime": "2020-11-03T20:16:45Z",
+        "createdDateTime": "2020-11-03T20:16:45Z",
+        "expirationDateTime": "2020-11-04T20:16:45Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -100,25 +100,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a3506cc3-3a69-463a-bb22-d92d7924b045",
+        "apim-request-id": "c63cf99c-1cf9-4d4f-81cc-bdb590de394a",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:41 GMT",
+        "Date": "Tue, 03 Nov 2020 20:16:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:40Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
+        "jobId": "d59bd359-781e-4362-9d83-b59c4ee3e61d",
+        "lastUpdateDateTime": "2020-11-03T20:16:45Z",
+        "createdDateTime": "2020-11-03T20:16:45Z",
+        "expirationDateTime": "2020-11-04T20:16:45Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -136,25 +136,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b626601a-66fc-4039-9d11-bbdea9db997b",
+        "apim-request-id": "5d3b6b53-a536-477b-8ed3-657d13f84c78",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:42 GMT",
+        "Date": "Tue, 03 Nov 2020 20:16:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:40Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
+        "jobId": "d59bd359-781e-4362-9d83-b59c4ee3e61d",
+        "lastUpdateDateTime": "2020-11-03T20:16:45Z",
+        "createdDateTime": "2020-11-03T20:16:45Z",
+        "expirationDateTime": "2020-11-04T20:16:45Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -172,25 +172,25 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4b5a8da3-fb8c-4e2a-b7ba-7bbf4dd9c8e3",
+        "apim-request-id": "480249b0-24d1-4679-9654-9ef156fcf704",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:43 GMT",
+        "Date": "Tue, 03 Nov 2020 20:16:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:40Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
+        "jobId": "d59bd359-781e-4362-9d83-b59c4ee3e61d",
+        "lastUpdateDateTime": "2020-11-03T20:16:45Z",
+        "createdDateTime": "2020-11-03T20:16:45Z",
+        "expirationDateTime": "2020-11-04T20:16:45Z",
         "status": "notStarted",
         "errors": []
       }
     },
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/d59bd359-781e-4362-9d83-b59c4ee3e61d?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -208,55 +208,19 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e0b9f97c-3add-45de-9967-83381631cf3b",
+        "apim-request-id": "e569323b-584a-4c7e-a83a-70be9994996f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:44 GMT",
+        "Date": "Tue, 03 Nov 2020 20:16:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "6"
+        "x-envoy-upstream-service-time": "40"
       },
       "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:40Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
-        "status": "notStarted",
-        "errors": []
-      }
-    },
-    {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/85425913-6953-4309-8df7-c1ee9d4a6037?showStats=false",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "a97e27cc4a5bb1f5f37f4feb2184a817",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ffb68b4c-b9df-4182-86dc-0cc93f385ffd",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Nov 2020 19:54:45 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "52"
-      },
-      "ResponseBody": {
-        "jobId": "85425913-6953-4309-8df7-c1ee9d4a6037",
-        "lastUpdateDateTime": "2020-11-03T19:54:44Z",
-        "createdDateTime": "2020-11-03T19:54:40Z",
-        "expirationDateTime": "2020-11-04T19:54:40Z",
+        "jobId": "d59bd359-781e-4362-9d83-b59c4ee3e61d",
+        "lastUpdateDateTime": "2020-11-03T20:16:49Z",
+        "createdDateTime": "2020-11-03T20:16:45Z",
+        "expirationDateTime": "2020-11-04T20:16:45Z",
         "status": "succeeded",
         "errors": [],
         "results": {
