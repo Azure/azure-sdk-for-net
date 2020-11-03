@@ -212,7 +212,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -2661,7 +2661,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn));
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = ShareName,
+                FilePath = Path
+            });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
@@ -2689,8 +2693,6 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.ShareName = string.IsNullOrEmpty(builder.ShareName) ? ShareName : builder.ShareName;
-            builder.FilePath = string.IsNullOrEmpty(builder.FilePath) ? Name : builder.FilePath;
             if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

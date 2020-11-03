@@ -2317,7 +2317,12 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public override Uri GenerateSasUri(DataLakeSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn) { IsDirectory = true });
+            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = FileSystemName,
+                Path = Path,
+                IsDirectory = true
+            });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(DataLakeSasBuilder)"/> returns a <see cref="Uri"/>
@@ -2345,8 +2350,6 @@ namespace Azure.Storage.Files.DataLake
         public override Uri GenerateSasUri(DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.FileSystemName = string.IsNullOrEmpty(builder.FileSystemName) ? FileSystemName : builder.FileSystemName;
-            builder.Path = string.IsNullOrEmpty(builder.Path) ? Path : builder.Path;
             if (!builder.IsDirectory.GetValueOrDefault(false))
             {
                 throw Errors.SasIncorrectResourceType(
@@ -2357,10 +2360,6 @@ namespace Azure.Storage.Files.DataLake
             }
             if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.InvariantCulture))
             {
-                // TODO: throw proper exception for non-matching builder name
-                // e.g. containerName doesn't match or leave the containerName in builder
-                // should be left empty. Or should we always default to the client's ContainerName
-                // and chug along if they don't match?
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.FileSystemName),
                     nameof(DataLakeSasBuilder),
@@ -2368,10 +2367,6 @@ namespace Azure.Storage.Files.DataLake
             }
             if (!builder.Path.Equals(Path, StringComparison.InvariantCulture))
             {
-                // TODO: throw proper exception for non-matching builder name
-                // e.g. containerName doesn't match or leave the containerName in builder
-                // should be left empty. Or should we always default to the client's ContainerName
-                // and chug along if they don't match?
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.Path),
                     nameof(DataLakeSasBuilder),

@@ -3257,7 +3257,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public virtual Uri GenerateSasUri(DataLakeSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn));
+            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = FileSystemName,
+                Path = Path
+            });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(DataLakeSasBuilder)"/> returns a <see cref="Uri"/>
@@ -3285,8 +3289,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual Uri GenerateSasUri(DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.FileSystemName = string.IsNullOrEmpty(builder.FileSystemName) ? FileSystemName : builder.FileSystemName;
-            builder.Path = string.IsNullOrEmpty(builder.Path) ? Path : builder.Path;
             if (builder.IsDirectory.GetValueOrDefault(false))
             {
                 throw Errors.SasIncorrectResourceType(

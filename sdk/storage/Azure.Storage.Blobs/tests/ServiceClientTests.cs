@@ -699,26 +699,26 @@ namespace Azure.Storage.Blobs.Test
             // Act - BlobServiceClient(string connectionString)
             BlobServiceClient container = new BlobServiceClient(
                 connectionString);
-            Assert.IsTrue(container.CanGenerateSasUri);
+            Assert.IsTrue(container.CanGenerateAccountSasUri);
 
             // Act - BlobServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
             BlobServiceClient container2 = new BlobServiceClient(
                 connectionString,
                 GetOptions());
-            Assert.IsTrue(container2.CanGenerateSasUri);
+            Assert.IsTrue(container2.CanGenerateAccountSasUri);
 
             // Act - BlobServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
             BlobServiceClient container3 = new BlobServiceClient(
                 blobEndpoint,
                 GetOptions());
-            Assert.IsFalse(container3.CanGenerateSasUri);
+            Assert.IsFalse(container3.CanGenerateAccountSasUri);
 
             // Act - BlobServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             BlobServiceClient container4 = new BlobServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(container4.CanGenerateSasUri);
+            Assert.IsTrue(container4.CanGenerateAccountSasUri);
 
             // Act - BlobServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -726,7 +726,7 @@ namespace Azure.Storage.Blobs.Test
                 blobEndpoint,
                 tokenCredentials,
                 GetOptions());
-            Assert.IsFalse(container5.CanGenerateSasUri);
+            Assert.IsFalse(container5.CanGenerateAccountSasUri);
         }
 
         [Test]

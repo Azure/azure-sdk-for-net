@@ -248,7 +248,7 @@ namespace Azure.Storage.Blobs.Specialized
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
-            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -351,8 +351,15 @@ namespace Azure.Storage.Blobs.Specialized
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
             {
-                _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
-                _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
+                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
+                {
+                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                }
+                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
+                {
+                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                }
             }
             _pipeline = options.Build(authentication);
             _version = options.Version;
@@ -471,6 +478,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
+            _blobVersionId = versionId;
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
                 VersionId = versionId
@@ -4173,6 +4181,8 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
+                BlobContainerName = BlobContainerName,
+                BlobName = Name,
                 Snapshot = _snapshot,
                 BlobVersionId = _blobVersionId
             });
@@ -4203,8 +4213,6 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.BlobContainerName = string.IsNullOrEmpty(builder.BlobContainerName) ? BlobContainerName : builder.BlobContainerName;
-            builder.BlobName = string.IsNullOrEmpty(builder.BlobName) ? Name : builder.BlobName;
             if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

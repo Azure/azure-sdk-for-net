@@ -391,26 +391,26 @@ namespace Azure.Storage.Files.Shares.Test
             // Act - ShareServiceClient(string connectionString)
             ShareServiceClient share = new ShareServiceClient(
                 connectionString);
-            Assert.IsTrue(share.CanGenerateSasUri);
+            Assert.IsTrue(share.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
             ShareServiceClient share2 = new ShareServiceClient(
                 connectionString,
                 GetOptions());
-            Assert.IsTrue(share2.CanGenerateSasUri);
+            Assert.IsTrue(share2.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
             ShareServiceClient share3 = new ShareServiceClient(
                 blobEndpoint,
                 GetOptions());
-            Assert.IsFalse(share3.CanGenerateSasUri);
+            Assert.IsFalse(share3.CanGenerateAccountSasUri);
 
             // Act - ShareServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             ShareServiceClient share4 = new ShareServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(share4.CanGenerateSasUri);
+            Assert.IsTrue(share4.CanGenerateAccountSasUri);
         }
 
         [Test]

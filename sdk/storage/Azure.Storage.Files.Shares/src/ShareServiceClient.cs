@@ -94,7 +94,7 @@ namespace Azure.Storage.Files.Shares
         /// Determines whether the client is able to generate a SAS.
         /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -1176,7 +1176,7 @@ namespace Azure.Storage.Files.Shares
         /// shared key credential of the client.
         ///
         /// To check if the client is able to sign a Service Sas see
-        /// <see cref="CanGenerateSasUri"/>.
+        /// <see cref="CanGenerateAccountSasUri"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
@@ -1218,7 +1218,7 @@ namespace Azure.Storage.Files.Shares
         /// shared key credential of the client.
         ///
         /// To check if the client is able to sign a Service Sas see
-        /// <see cref="CanGenerateSasUri"/>.
+        /// <see cref="CanGenerateAccountSasUri"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">

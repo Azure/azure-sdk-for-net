@@ -267,14 +267,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient serviceClient = new DataLakeServiceClient(
                 uriEndpoint,
                 GetOptions());
-            Assert.IsFalse(serviceClient.CanGenerateSasUri);
+            Assert.IsFalse(serviceClient.CanGenerateAccountSasUri);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             DataLakeServiceClient serviceClient2 = new DataLakeServiceClient(
                 uriEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(serviceClient2.CanGenerateSasUri);
+            Assert.IsTrue(serviceClient2.CanGenerateAccountSasUri);
 
             // Act - DataLakeServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             var tokenCredentials = new DefaultAzureCredential();
@@ -282,7 +282,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 uriEndpoint,
                 tokenCredentials,
                 GetOptions());
-            Assert.IsFalse(serviceClient3.CanGenerateSasUri);
+            Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
         }
 
         [Test]

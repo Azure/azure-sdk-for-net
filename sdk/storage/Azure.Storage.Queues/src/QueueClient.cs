@@ -198,11 +198,10 @@ namespace Azure.Storage.Queues
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
-                new QueueUriBuilder(conn.QueueEndpoint)
-                {
-                    QueueName = queueName
-                };
+            var builder = new QueueUriBuilder(conn.QueueEndpoint)
+            {
+                QueueName = queueName
+            };
             _uri = builder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
@@ -210,7 +209,7 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
-            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -2470,7 +2469,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
-            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn));
+            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
@@ -2494,7 +2493,6 @@ namespace Azure.Storage.Queues
             QueueSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.QueueName = string.IsNullOrEmpty(builder.QueueName) ? Name : builder.QueueName;
             if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
             {
                 // TODO: throw proper exception for non-matching builder name

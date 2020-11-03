@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
-            _storageSharedKeyCredential = StorageSharedKeyCredential.ParseConnectionString(connectionString);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -2919,7 +2919,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         public virtual Uri GenerateSasUri(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn) =>
-            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn));
+            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name });
 
         /// <summary>
         /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
@@ -2946,7 +2946,6 @@ namespace Azure.Storage.Blobs
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-            builder.BlobContainerName = string.IsNullOrEmpty(builder.BlobContainerName) ? Name : builder.BlobContainerName;
             if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

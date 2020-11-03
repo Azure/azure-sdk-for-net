@@ -343,26 +343,26 @@ namespace Azure.Storage.Queues.Test
             // Act - QueueServiceClient(string connectionString)
             QueueServiceClient share = new QueueServiceClient(
                 connectionString);
-            Assert.IsTrue(share.CanGenerateSasUri);
+            Assert.IsTrue(share.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
             QueueServiceClient share2 = new QueueServiceClient(
                 connectionString,
                 GetOptions());
-            Assert.IsTrue(share2.CanGenerateSasUri);
+            Assert.IsTrue(share2.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
             QueueServiceClient share3 = new QueueServiceClient(
                 blobEndpoint,
                 GetOptions());
-            Assert.IsFalse(share3.CanGenerateSasUri);
+            Assert.IsFalse(share3.CanGenerateAccountSasUri);
 
             // Act - QueueServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             QueueServiceClient share4 = new QueueServiceClient(
                 blobEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions());
-            Assert.IsTrue(share4.CanGenerateSasUri);
+            Assert.IsTrue(share4.CanGenerateAccountSasUri);
         }
 
         [Test]
