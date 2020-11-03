@@ -12,26 +12,16 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 {
 
     /// <summary>
-    /// Defines values for KeyPermissions.
+    /// Defines values for JsonWebKeyOperation.
     /// </summary>
-    public static class KeyPermissions
+    public static class JsonWebKeyOperation
     {
-        public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
-        public const string WrapKey = "wrapKey";
-        public const string UnwrapKey = "unwrapKey";
         public const string Sign = "sign";
         public const string Verify = "verify";
-        public const string Get = "get";
-        public const string List = "list";
-        public const string Create = "create";
-        public const string Update = "update";
+        public const string WrapKey = "wrapKey";
+        public const string UnwrapKey = "unwrapKey";
         public const string Import = "import";
-        public const string Delete = "delete";
-        public const string Backup = "backup";
-        public const string Restore = "restore";
-        public const string Recover = "recover";
-        public const string Purge = "purge";
     }
 }
