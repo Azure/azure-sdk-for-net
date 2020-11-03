@@ -41,16 +41,23 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">Properties of Sku</param>
+        /// <param name="sku">Properties of SKU</param>
         /// <param name="provisioningState">Provisioning state of the
         /// namespace.</param>
-        /// <param name="createdAt">The time the namespace was created.</param>
+        /// <param name="createdAt">The time the namespace was created</param>
         /// <param name="updatedAt">The time the namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+        /// <param name="zoneRedundant">Enabling this property creates a
+        /// Premium Service Bus Namespace in regions supported availability
+        /// zones.</param>
+        /// <param name="encryption">Properties of BYOK Encryption
+        /// description</param>
+        /// <param name="identity">Properties of BYOK Identity
+        /// description</param>
+        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), Identity identity = default(Identity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -59,6 +66,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
+            ZoneRedundant = zoneRedundant;
+            Encryption = encryption;
+            Identity = identity;
             CustomInit();
         }
 
@@ -68,7 +78,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of Sku
+        /// Gets or sets properties of SKU
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public SBSku Sku { get; set; }
@@ -80,7 +90,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the time the namespace was created.
+        /// Gets the time the namespace was created
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
@@ -102,6 +112,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets enabling this property creates a Premium Service Bus
+        /// Namespace in regions supported availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Encryption description
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of BYOK Identity description
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.
