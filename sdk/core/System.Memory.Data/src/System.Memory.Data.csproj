@@ -7,15 +7,11 @@
     <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>DotNetPackageIcon.png</PackageIcon>
+    <PackageIconPath>..\$(PackageIconUrl)</PackageIconPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\DotNetPackageIcon.png">
-      <Pack>True</Pack>
-    </None>
   </ItemGroup>
 </Project>
