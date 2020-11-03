@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource like RouteTable, ExpressRouteConnection,
         /// HubVirtualNetworkConnection, VpnConnection and
         /// P2SConnection.</param>
-        public EffectiveRoutesParameters(Resource resourceId = default(Resource), string virtualWanResourceType = default(string))
+        public EffectiveRoutesParameters(string resourceId = default(string), string virtualWanResourceType = default(string))
         {
             ResourceId = resourceId;
             VirtualWanResourceType = virtualWanResourceType;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// requested.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
-        public Resource ResourceId { get; set; }
+        public string ResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the specified resource like RouteTable,
