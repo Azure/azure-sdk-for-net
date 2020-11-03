@@ -21,9 +21,6 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
-  <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
   <!-- TEMP: Use a project reference to Data; remove when published"-->
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\System.Memory.Data\src\System.Memory.Data.csproj" />
