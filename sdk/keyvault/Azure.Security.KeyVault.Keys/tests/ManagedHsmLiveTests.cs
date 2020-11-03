@@ -6,6 +6,8 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    // BUGBUG: run manually until we can resolve https://github.com/Azure/azure-sdk-for-net/issues/16531
+    [RunFrequency(RunTestFrequency.Manually)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
