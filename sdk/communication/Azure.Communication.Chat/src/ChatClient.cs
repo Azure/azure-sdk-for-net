@@ -21,7 +21,9 @@ namespace Azure.Communication.Chat
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
         private readonly Uri _endpointUrl;
-        private readonly CommunicationUserCredential _communicationUserCredential;
+        private readonly CommunicationUserCredential? _communicationUserCredential;
+        private readonly TokenCredential? _bearerTokenCredential;
+        private readonly String? _bearerScope;
         private readonly ChatClientOptions _chatClientOptions;
         private const string MultiStatusThreadResourceType = "THREAD";
 
@@ -38,6 +40,22 @@ namespace Azure.Communication.Chat
             _endpointUrl = endpointUrl;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationUserCredential);
+            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
+        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public ChatClient(Uri endpointUrl, TokenCredential credential, String scope, ChatClientOptions? options = default)
+        {
+            _chatClientOptions = options ?? new ChatClientOptions();
+            _endpointUrl = endpointUrl;
+            _bearerTokenCredential = credential;
+            _bearerScope = scope;
+            _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
+            HttpPipeline pipeline = CreatePipelineFromBearer(_chatClientOptions, credential, scope);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
@@ -105,7 +123,16 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
+                if (_communicationUserCredential != null)
+                {
+                    return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
+                }
+                else
+                {
+                    Argument.AssertNotNull(_bearerTokenCredential, nameof(_bearerTokenCredential));
+                    Argument.AssertNotNull(_bearerScope, nameof(_bearerScope));
+                    return new ChatThreadClient(threadId, _endpointUrl, _bearerTokenCredential, _bearerScope, _chatClientOptions);
+                }
             }
             catch (Exception ex)
             {
@@ -283,6 +310,13 @@ namespace Azure.Communication.Chat
         {
             var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+            return httpPipeline;
+        }
+
+        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, TokenCredential credential, String scope)
+        {
+            var pipelinePolicy = new BearerTokenAuthenticationPolicy(credential, scope);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, pipelinePolicy);
             return httpPipeline;
         }
     }

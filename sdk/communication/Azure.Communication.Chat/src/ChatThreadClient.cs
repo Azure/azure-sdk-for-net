@@ -44,6 +44,21 @@ namespace Azure.Communication.Chat
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChatThreadClient"/>.</summary>
+        /// <param name="threadId"></param>
+        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        internal ChatThreadClient(string threadId, Uri endpointUrl, TokenCredential credential, String scope, ChatClientOptions? options = default)
+        {
+            options ??= new ChatClientOptions();
+            Id = threadId;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            HttpPipeline pipeline = CreatePipelineFromBearer(options, credential, scope);
+            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
+        }
+
         /// <summary>Initializes a new instance of <see cref="ChatThreadClient"/> for mocking.</summary>
         protected ChatThreadClient()
         {
@@ -590,6 +605,13 @@ namespace Azure.Communication.Chat
         {
             var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+            return httpPipeline;
+        }
+
+        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, TokenCredential credential, String scope)
+        {
+            var pipelinePolicy = new BearerTokenAuthenticationPolicy(credential, scope);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, pipelinePolicy);
             return httpPipeline;
         }
     }
