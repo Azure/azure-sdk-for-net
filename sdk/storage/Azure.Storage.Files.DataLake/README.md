@@ -231,6 +231,7 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
 
 <!-- LINKS -->
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/samples
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.datalake
