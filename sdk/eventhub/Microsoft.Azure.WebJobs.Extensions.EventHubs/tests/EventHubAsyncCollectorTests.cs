@@ -8,16 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Producer;
-using Moq;
-using NUnit.Framework.Internal.Execution;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
     public class EventHubAsyncCollectorTests
     {
-        [Fact]
+        [Test]
         public void NullArgumentCheck()
         {
             Assert.Throws<ArgumentNullException>(() => new EventHubAsyncCollector(null));
@@ -29,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             return data;
         }
 
-        [Fact]
+        [Test]
         public async Task SendMultiplePartitions()
         {
             var client = new TestEventHubProducerClient();
@@ -39,20 +36,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.AddAsync(CreateEvent(new byte[] { 2 }, "pk2"));
 
             // Not physically sent yet since we haven't flushed
-            Assert.Empty(client.SentBatches);
+            Assert.IsEmpty(client.SentBatches);
 
             await collector.FlushAsync();
 
             // Partitions aren't flushed in a specific order.
-            Assert.Equal(2, client.SentBatches.Count);
+            Assert.AreEqual(2, client.SentBatches.Count);
             var batches = client.SentBatches;
 
             var item0 = batches[0].Events[0].Body.ToArray();
             var item1 = batches[1].Events[0].Body.ToArray();
-            Assert.Equal(3, item0[0] + item1[0]); // either order.
+            Assert.AreEqual(3, item0[0] + item1[0]); // either order.
         }
 
-        [Fact]
+        [Test]
         public async Task NotSentUntilFlushed()
         {
             var client = new TestEventHubProducerClient();
@@ -65,24 +62,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             await collector.AddAsync(e1);
 
             // Not physically sent yet since we haven't flushed
-            Assert.Empty(client.SentBatches);
+            Assert.IsEmpty(client.SentBatches);
 
             await collector.FlushAsync();
-            Assert.Single(client.SentBatches);
-            Assert.Equal(payload, client.SentBatches[0].GetEventPayload(0));
+            Assert.AreEqual(1, client.SentBatches.Count);
+            Assert.AreEqual(payload, client.SentBatches[0].GetEventPayload(0));
         }
 
         // If we send enough events, that will eventually tip over and flush.
-        [Fact]
+        [Test]
         public async Task FlushAfterLotsOfSmallEvents()
         {
-            var client = new TestEventHubProducerClient();
+            var client = new TestEventHubProducerClient(30000);
             var collector = new EventHubAsyncCollector(client);
 
             // Sending a bunch of little events
             for (int i = 0; i < 150; i++)
             {
-                var e1 = new EventData(new byte[] { 1, 2, 3 });
+                var e1 = new EventData(new byte[] { 1, 2, 3, 4, 5, 6 });
                 await collector.AddAsync(e1);
             }
 
@@ -90,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         // If we send enough events, that will eventually tip over and flush.
-        [Fact]
+        [Test]
         public async Task FlushAfterSizeThreshold()
         {
             var client = new TestEventHubProducerClient();
@@ -104,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             }
 
             // Not yet
-            Assert.Empty(client.SentBatches);
+            Assert.IsEmpty(client.SentBatches);
 
             // This will push it over the theshold
             for (int i = 0; i < 60; i++)
@@ -116,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.True(client.SentBatches.Count > 0);
         }
 
-        [Fact]
+        [Test]
         public async Task CantSentGiantEvent()
         {
             var client = new TestEventHubProducerClient();
@@ -134,26 +131,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             catch (InvalidOperationException e)
             {
                 // Exact error message (and serialization byte size) is subject to change.
-                Assert.Contains("Event is too large", e.Message);
+                StringAssert.Contains("Event is too large", e.Message);
             }
 
             // Verify we didn't queue anything
             await collector.FlushAsync();
-            Assert.Empty(client.SentBatches);
+            Assert.IsEmpty(client.SentBatches.Single().Events);
         }
 
-        [Fact]
-        public async Task CantSendNullEvent()
+        [Test]
+        public void CantSendNullEvent()
         {
             var client = new TestEventHubProducerClient();
             var collector = new EventHubAsyncCollector(client);
 
-            await Assert.ThrowsAsync<ArgumentNullException>(
+            Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await collector.AddAsync(null));
         }
 
         // Send lots of events from multiple threads and ensure that all events are precisely accounted for.
-        [Fact]
+        [Test]
         public async Task SendLotsOfEvents()
         {
             var client = new TestEventHubProducerClient();
@@ -199,7 +196,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Add more events to trip flushing of the original batch without calling Flush()
             const string ignore = "ignore";
             byte[] ignoreBytes = Encoding.UTF8.GetBytes(ignore);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 500; i++)
             {
                 await collector.AddAsync(new EventData(ignoreBytes));
             }
@@ -225,17 +222,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             }
 
-            Assert.Empty(expected); // Some events where missed.
+            Assert.IsEmpty(expected); // Some events where missed.
         }
 
         internal class TestEventHubProducerClient : IEventHubProducerClient
         {
+            private readonly long _batchSize;
+
+            public TestEventHubProducerClient(long batchSize = 1024 * 1024)
+            {
+                _batchSize = batchSize;
+            }
+
             public List<TestEventDataBatch> CreatedBatches { get; } = new List<TestEventDataBatch>();
             public List<TestEventDataBatch> SentBatches { get; } = new List<TestEventDataBatch>();
 
             public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
             {
-                var batch = new TestEventDataBatch();
+                var batch = new TestEventDataBatch(_batchSize);
 
                 lock (this)
                 {
@@ -259,16 +263,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             internal class TestEventDataBatch: IEventDataBatch
             {
-                public long CurrentSizeInBytes { get; }
+                private readonly long _batchSize;
+
+                public TestEventDataBatch(long batchSize)
+                {
+                    _batchSize = batchSize;
+                }
+
+                public long CurrentSizeInBytes { get; private set; }
                 public List<EventData> Events { get; } = new List<EventData>();
                 public int Count => Events.Count;
-                public long MaximumSizeInBytes => 1024 * 500;
+                public long MaximumSizeInBytes => _batchSize;
 
                 public byte[] GetEventPayload(int i) => Events[i].Body.ToArray();
 
                 public bool TryAdd(EventData eventData)
                 {
-                    var size = eventData.Body.Length + 200; // 200 for headers
+                    var size = eventData.Body.Length + 400; // Reserve a somewhat random amount for protocol overhead.
                     lock (this)
                     {
                         if (size + CurrentSizeInBytes > MaximumSizeInBytes)
@@ -277,9 +288,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                         }
 
                         Events.Add(eventData);
+                        CurrentSizeInBytes += size;
+
                         // Assert they all have the same partition key (could be null)
                         var partitionKey = Events.First().PartitionKey;
-                        Assert.Equal(partitionKey, eventData.PartitionKey);
+                        Assert.AreEqual(partitionKey, eventData.PartitionKey);
 
                         return true;
                     }

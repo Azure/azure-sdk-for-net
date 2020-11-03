@@ -5,6 +5,7 @@ using Azure.Messaging.EventHubs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -97,22 +98,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// <param name="cancellationToken">a cancellation token</param>
         public async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            while (true)
-            {
-                await _batchSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            await _batchSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
-                try
+            try
+            {
+                foreach (var eventDataBatch in _batches.ToArray())
                 {
-                    foreach (var eventDataBatch in _batches)
-                    {
-                        await _client.SendAsync(eventDataBatch.Value, cancellationToken).ConfigureAwait(false);
-                        _batches.Remove(eventDataBatch.Key);
-                    }
+                    await _client.SendAsync(eventDataBatch.Value, cancellationToken).ConfigureAwait(false);
+                    _batches.Remove(eventDataBatch.Key);
                 }
-                finally
-                {
-                    _batchSemaphore.Release();
-                }
+            }
+            finally
+            {
+                _batchSemaphore.Release();
             }
         }
 
