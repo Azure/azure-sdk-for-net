@@ -29,6 +29,8 @@ namespace Azure.Data.Tables
         internal Guid _changesetGuid = default;
         internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
+        private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
+        private bool _submitted = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
@@ -190,30 +192,9 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default)
-        {
-            var messageList = BuildOrderedBatchRequests();
-
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
-            scope.Start();
-            try
-            {
-                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-                var response = await _tableOperations.SendBatchRequestAsync(request, messageList, cancellationToken).ConfigureAwait(false);
-
-                for (int i = 0; i < response.Value.Count; i++)
-                {
-                    messageList[i].HttpMessage.Response = response.Value[i];
-                }
-
-                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default) =>
+            await SubmitBatchAsyncInternal(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Submits the batch transaction to the service for execution.
@@ -222,20 +203,41 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        public virtual Response<TableBatchResponse> SubmitBatch(CancellationToken cancellationToken = default)
+        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        public virtual Response<TableBatchResponse> SubmitBatch(CancellationToken cancellationToken = default) =>
+            SubmitBatchAsyncInternal(false, cancellationToken).EnsureCompleted();
+
+        internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(bool async, CancellationToken cancellationToken = default)
         {
-            var messageList = BuildOrderedBatchRequests();
+            if (_submitted)
+            {
+                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
+            }
+            else
+            {
+                _submitted = true;
+            }
+
+            _submittedMessageList = BuildOrderedBatchRequests();
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-                var response = _tableOperations.SendBatchRequest(request, messageList, cancellationToken);
+                Response<List<Response>> response = null;
+                if (async)
+                {
+                    response = await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    response = _tableOperations.SendBatchRequest(request, cancellationToken);
+                }
 
                 for (int i = 0; i < response.Value.Count; i++)
                 {
-                    messageList[i].HttpMessage.Response = response.Value[i];
+                    _submittedMessageList[i].HttpMessage.Response = response.Value[i];
                 }
 
                 return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
@@ -253,17 +255,18 @@ namespace Azure.Data.Tables
         /// <param name="exception">The exception thrown from <see cref="TableTransactionalBatch.SubmitBatch(CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(CancellationToken)"/>.</param>
         /// <param name="failedEntity">If the return value is <c>true</c>, contains the <see cref="ITableEntity"/> that caused the batch operation to fail.</param>
         /// <returns><c>true</c> if the failed entity was retrieved from the exception, else <c>false</c>.</returns>
-        public static bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
+        public bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
         {
             failedEntity = null;
 
-            if (exception.Data.Contains(TableConstants.ExceptionData.FailedEntity))
+            if (exception.Data.Contains(TableConstants.ExceptionData.FailedEntityIndex))
             {
                 try
                 {
-                    var entityJson = exception.Data[TableConstants.ExceptionData.FailedEntity] as string;
-                    Type entityType = exception.Data[TableConstants.ExceptionData.EntityType] as Type;
-                    failedEntity = JsonSerializer.Deserialize(entityJson, entityType) as ITableEntity;
+                    if (int.TryParse(exception.Data[TableConstants.ExceptionData.FailedEntityIndex] as string, out int index))
+                    {
+                        failedEntity = _submittedMessageList[index].entity;
+                    }
                 }
                 catch
                 {
@@ -280,6 +283,10 @@ namespace Azure.Data.Tables
         /// <returns><c>true</c>if the add succeeded, else <c>false</c>.</returns>
         private bool AddMessage(ITableEntity entity, HttpMessage message, RequestType requestType)
         {
+            if (_submitted)
+            {
+                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
+            }
             if (_requestLookup.TryAdd(entity.RowKey, (message, requestType)))
             {
                 _requestMessages.Enqueue((entity, message));

@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -56,10 +57,9 @@ namespace Azure.Data.Tables
 
         /// <summary> Submits a batch operation to a table. </summary>
         /// <param name="message">The message to send.</param>
-        /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, List<(ITableEntity Entity, HttpMessage HttpMessage)> messageList, CancellationToken cancellationToken = default)
+        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -95,8 +95,7 @@ namespace Azure.Data.Tables
                                 var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
 
                                 // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
-                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = JsonSerializer.Serialize(messageList[failedEntityIndex].Entity);
-                                rfe.Data[TableConstants.ExceptionData.EntityType] = messageList[failedEntityIndex].Entity.GetType();
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex.ToString(CultureInfo.InvariantCulture);
                                 throw rfe;
                             }
                             else
@@ -114,10 +113,9 @@ namespace Azure.Data.Tables
 
         /// <summary> Submits a batch operation to a table. </summary>
         /// <param name="message">The message to send.</param>
-        /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, List<(ITableEntity Entity, HttpMessage HttpMessage)> messageList, CancellationToken cancellationToken = default)
+        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -154,8 +152,7 @@ namespace Azure.Data.Tables
                                 var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
 
                                 // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
-                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = JsonSerializer.Serialize(messageList[failedEntityIndex].Entity);
-                                rfe.Data[TableConstants.ExceptionData.EntityType] = messageList[failedEntityIndex].Entity.GetType();
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex.ToString(CultureInfo.InvariantCulture);
                                 throw rfe;
                             }
                             else
