@@ -14,6 +14,13 @@ Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
 dotnet install Azure.Security.KeyVault.Secrets
 ```
 
+You also need to install the Azure Identity library for .NET using [NuGet][nuget]:
+```PowerShell
+dotnet install Azure.Identity
+```
+
+The Azure.Identity library provides the authentication functionality to the SecretClient.
+
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
