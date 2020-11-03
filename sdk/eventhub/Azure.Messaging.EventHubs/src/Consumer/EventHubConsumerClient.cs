@@ -536,7 +536,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
-        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions compete to publish
         ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
         ///   bias for a given partition or subset of partitions.
         ///
@@ -567,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
-        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions compete to publish
         ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
         ///   bias for a given partition or subset of partitions.
         ///
