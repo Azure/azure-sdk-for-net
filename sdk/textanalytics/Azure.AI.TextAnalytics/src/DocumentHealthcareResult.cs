@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
         internal DocumentHealthcareResult(DocumentHealthcareEntitiesInternal documentHealthcareEntities)
         {
             Entities = documentHealthcareEntities.Entities;
-            Relations = ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations);
+            Relations = documentHealthcareEntities.Relations != null ? ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations) : null;
             Id = documentHealthcareEntities.Id;
             Warnings = documentHealthcareEntities.Warnings != null ? Transforms.ConvertToWarnings(documentHealthcareEntities.Warnings) : null;
         }

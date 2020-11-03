@@ -1,0 +1,440 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Content-Length": "100",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-727a7de2c803724aa23a19bae1186378-7109c0f5764d4c4d-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e51cbf87a321df02032925de5e6708b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "Subject is taking 100mg of ibuprofen twice daily",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "e7d5c967-f64e-4458-b47b-4a64dd9a3336",
+        "Date": "Tue, 03 Nov 2020 19:54:54 GMT",
+        "operation-location": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "74"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2cdb69530701f208f175aa6a97e2593b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "671a4734-829e-4512-9e5b-e05e7cc4920f",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:54:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:55Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a701cb20bb11a529608aebe12f36a48e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "72254b00-7f2e-4122-aee1-fed3c3e230d3",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:54:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:55Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "03c09e10ea8d7fc1b629f4abf8984821",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8ffee12e-cea2-4b34-b6c6-ea29056228dc",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:54:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:55Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "93bde9d0616598a24035cb771c26c3ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9314a623-9c68-479f-bbbf-992c2d04e542",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:54:58 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:55Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f8591cd0562136ad0a82f0e8c77dacc7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4378a807-4936-44d5-879e-45182a565158",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:54:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:55Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/2b33d234-2aaa-4569-b060-d2b49f6084ee",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201103.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4511ca421179ae28fc28c2571f4a628f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f4ced011-ea6c-474c-ab64-061d727bc1b3",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 03 Nov 2020 19:55:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34"
+      },
+      "ResponseBody": {
+        "jobId": "2b33d234-2aaa-4569-b060-d2b49f6084ee",
+        "lastUpdateDateTime": "2020-11-03T19:54:59Z",
+        "createdDateTime": "2020-11-03T19:54:55Z",
+        "expirationDateTime": "2020-11-04T19:54:55Z",
+        "status": "succeeded",
+        "errors": [],
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "statistics": {
+                "charactersCount": 48,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 18,
+                  "length": 5,
+                  "text": "100mg",
+                  "category": "Dosage",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 27,
+                  "length": 9,
+                  "text": "ibuprofen",
+                  "category": "MedicationName",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0020740"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000019879"
+                    },
+                    {
+                      "dataSource": "ATC",
+                      "id": "M01AE01"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0046165"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000006519"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "2270-2077"
+                    },
+                    {
+                      "dataSource": "DRUGBANK",
+                      "id": "DB01050"
+                    },
+                    {
+                      "dataSource": "GS",
+                      "id": "1611"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh97005926"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP16165-0"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "40458"
+                    },
+                    {
+                      "dataSource": "MMSL",
+                      "id": "d00015"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D007052"
+                    },
+                    {
+                      "dataSource": "MTHSPL",
+                      "id": "WK2XYI10QM"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C561"
+                    },
+                    {
+                      "dataSource": "NCI_CTRP",
+                      "id": "C561"
+                    },
+                    {
+                      "dataSource": "NCI_DCP",
+                      "id": "00803"
+                    },
+                    {
+                      "dataSource": "NCI_DTP",
+                      "id": "NSC0256857"
+                    },
+                    {
+                      "dataSource": "NCI_FDA",
+                      "id": "WK2XYI10QM"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000613511"
+                    },
+                    {
+                      "dataSource": "NDDF",
+                      "id": "002377"
+                    },
+                    {
+                      "dataSource": "PDQ",
+                      "id": "CDR0000040475"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "x02MO"
+                    },
+                    {
+                      "dataSource": "RXNORM",
+                      "id": "5640"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "E-7772"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "C-603C0"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "387207008"
+                    },
+                    {
+                      "dataSource": "USP",
+                      "id": "m39860"
+                    },
+                    {
+                      "dataSource": "USPMG",
+                      "id": "MTHU000060"
+                    },
+                    {
+                      "dataSource": "VANDF",
+                      "id": "4017840"
+                    }
+                  ]
+                },
+                {
+                  "offset": 37,
+                  "length": 11,
+                  "text": "twice daily",
+                  "category": "Frequency",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "DosageOfMedication",
+                  "bidirectional": false,
+                  "source": "#/results/documents/0/entities/0",
+                  "target": "#/results/documents/0/entities/1"
+                },
+                {
+                  "relationType": "FrequencyOfMedication",
+                  "bidirectional": false,
+                  "source": "#/results/documents/0/entities/2",
+                  "target": "#/results/documents/0/entities/1"
+                }
+              ]
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2020-09-03"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1686725774",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+  }
+}

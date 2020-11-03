@@ -2096,7 +2096,24 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await StartHealthcareBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareAsync)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
+
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -2121,7 +2138,23 @@ namespace Azure.AI.TextAnalytics
 
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return StartHealthcareBatch(documentInputs, options, cancellationToken);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(documentInputs, options.ModelVersion, _stringCodeUnit, cancellationToken);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
+
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -2206,7 +2239,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<TextDocumentInput> documents, HealthcareOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -2221,7 +2254,7 @@ namespace Azure.AI.TextAnalytics
         {
             options ??= new HealthcareOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatch)}");
             scope.Start();
 
             try
@@ -2231,7 +2264,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2244,7 +2277,7 @@ namespace Azure.AI.TextAnalytics
         {
             options ??= new HealthcareOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcare)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartHealthcareBatchAsync)}");
             scope.Start();
 
             try
