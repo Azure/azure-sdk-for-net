@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The EntitiesTaskParameters. </summary>
     public partial class EntitiesTaskParameters
