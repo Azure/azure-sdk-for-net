@@ -4104,7 +4104,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion
 
-        #region GetBlobContainerClientCore
+        #region GetParentBlobContainerClientCore
 
         private BlobContainerClient _parentBlobContainerClient;
 
@@ -4115,7 +4115,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobBaseClient"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
-        protected internal virtual BlobContainerClient GetBlobContainerClientCore()
+        protected internal virtual BlobContainerClient GetParentBlobContainerClientCore()
         {
             if (_parentBlobContainerClient == null)
             {
@@ -4156,9 +4156,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The <see cref="BlobBaseClient"/>.</param>
         /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
-        public static BlobContainerClient GetBlobContainerClient(this BlobBaseClient client)
+        public static BlobContainerClient GetParentBlobContainerClient(this BlobBaseClient client)
         {
-            return client.GetBlobContainerClientCore();
+            return client.GetParentBlobContainerClientCore();
         }
 
         /// <summary>

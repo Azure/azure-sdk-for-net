@@ -5845,7 +5845,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
 
             // Act
-            var containerClient = blobClient.GetBlobContainerClient();
+            var containerClient = blobClient.GetParentBlobContainerClient();
             // make sure that client is functional
             BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
 
@@ -5863,7 +5863,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName())).WithVersion(Recording.Random.NewGuid().ToString());
 
             // Act
-            var containerClient = blobClient.GetBlobContainerClient();
+            var containerClient = blobClient.GetParentBlobContainerClient();
             // make sure that client is functional
             BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
 
@@ -5885,7 +5885,7 @@ namespace Azure.Storage.Blobs.Test
                 .GetBlobClient(blobName));
 
             // Act
-            var containerClient = blobClient.GetBlobContainerClient();
+            var containerClient = blobClient.GetParentBlobContainerClient();
             // make sure that client is functional
             BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
 
@@ -5907,7 +5907,7 @@ namespace Azure.Storage.Blobs.Test
                 .GetBlobClient(blobName));
 
             // Act
-            var containerClient = blobClient.GetBlobContainerClient();
+            var containerClient = blobClient.GetParentBlobContainerClient();
             // make sure that client is functional
             var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
 
@@ -5923,10 +5923,10 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             Mock<BlobBaseClient> blobBaseClientMock = new Mock<BlobBaseClient>();
             Mock<BlobContainerClient> blobContainerClientMock = new Mock<BlobContainerClient>();
-            blobBaseClientMock.Protected().Setup<BlobContainerClient>("GetBlobContainerClientCore").Returns(blobContainerClientMock.Object);
+            blobBaseClientMock.Protected().Setup<BlobContainerClient>("GetParentBlobContainerClientCore").Returns(blobContainerClientMock.Object);
 
             // Act
-            var blobContainerClient = blobBaseClientMock.Object.GetBlobContainerClient();
+            var blobContainerClient = blobBaseClientMock.Object.GetParentBlobContainerClient();
 
             // Assert
             Assert.IsNotNull(blobContainerClient);

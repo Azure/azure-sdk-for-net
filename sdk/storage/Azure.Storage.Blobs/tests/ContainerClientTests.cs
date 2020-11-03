@@ -2632,10 +2632,10 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             Mock<BlobContainerClient> containerClientMock = new Mock<BlobContainerClient>();
             Mock<BlobServiceClient> blobServiceClientMock = new Mock<BlobServiceClient>();
-            containerClientMock.Protected().Setup<BlobServiceClient>("GetBlobServiceClientCore").Returns(blobServiceClientMock.Object);
+            containerClientMock.Protected().Setup<BlobServiceClient>("GetParentBlobServiceClientCore").Returns(blobServiceClientMock.Object);
 
             // Act
-            var blobServiceClient = containerClientMock.Object.GetBlobServiceClient();
+            var blobServiceClient = containerClientMock.Object.GetParentBlobServiceClient();
 
             // Assert
             Assert.IsNotNull(blobServiceClient);
@@ -2649,7 +2649,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(GetServiceClient_SharedKey().GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            BlobServiceClient service = container.GetBlobServiceClient();
+            BlobServiceClient service = container.GetParentBlobServiceClient();
             //make sure it's functional
             var containers = await service.GetBlobContainersAsync().ToListAsync();
 
@@ -2668,7 +2668,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(GetServiceClient_AccountSas().GetBlobContainerClient(GetNewContainerName()));
 
             // Act
-            BlobServiceClient service = container.GetBlobServiceClient();
+            BlobServiceClient service = container.GetParentBlobServiceClient();
             //make sure it's functional
             var containers = await service.GetBlobContainersAsync().ToListAsync();
 

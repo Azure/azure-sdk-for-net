@@ -2878,7 +2878,7 @@ namespace Azure.Storage.Blobs
 
         #endregion DeleteBlob
 
-        #region GetBlobServiceClientCore
+        #region GetParentBlobServiceClientCore
 
         private BlobServiceClient _parentBlobServiceClient;
 
@@ -2889,7 +2889,7 @@ namespace Azure.Storage.Blobs
         /// <see cref="BlobContainerClient"/>.
         /// </summary>
         /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
-        protected internal virtual BlobServiceClient GetBlobServiceClientCore()
+        protected internal virtual BlobServiceClient GetParentBlobServiceClientCore()
         {
             if (_parentBlobServiceClient == null)
             {
@@ -2933,9 +2933,9 @@ namespace Azure.Storage.Blobs
             /// <see cref="BlobContainerClient"/>.
             /// </summary>
             /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
-            public static BlobServiceClient GetBlobServiceClient(this BlobContainerClient client)
+            public static BlobServiceClient GetParentBlobServiceClient(this BlobContainerClient client)
             {
-                return client.GetBlobServiceClientCore();
+                return client.GetParentBlobServiceClientCore();
             }
         }
     }
