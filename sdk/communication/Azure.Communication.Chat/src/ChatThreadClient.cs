@@ -47,15 +47,14 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of <see cref="ChatThreadClient"/>.</summary>
         /// <param name="threadId"></param>
         /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
-        /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="policy">The bearer authentication policy to be used for authentication.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        internal ChatThreadClient(string threadId, Uri endpointUrl, TokenCredential credential, String scope, ChatClientOptions? options = default)
+        internal ChatThreadClient(string threadId, Uri endpointUrl, BearerTokenAuthenticationPolicy policy, ChatClientOptions? options = default)
         {
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = CreatePipelineFromBearer(options, credential, scope);
+            HttpPipeline pipeline = CreatePipelineFromBearer(options, policy);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
         }
 
@@ -362,7 +361,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
+                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -608,10 +607,9 @@ namespace Azure.Communication.Chat
             return httpPipeline;
         }
 
-        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, TokenCredential credential, String scope)
+        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, BearerTokenAuthenticationPolicy policy)
         {
-            var pipelinePolicy = new BearerTokenAuthenticationPolicy(credential, scope);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, pipelinePolicy);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
             return httpPipeline;
         }
     }

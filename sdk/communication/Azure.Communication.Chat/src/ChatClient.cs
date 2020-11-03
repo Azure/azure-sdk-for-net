@@ -22,8 +22,7 @@ namespace Azure.Communication.Chat
         private readonly ChatRestClient _chatRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationUserCredential? _communicationUserCredential;
-        private readonly TokenCredential? _bearerTokenCredential;
-        private readonly String? _bearerScope;
+        private readonly BearerTokenAuthenticationPolicy? _bearerTokenAuthPolicy;
         private readonly ChatClientOptions _chatClientOptions;
         private const string MultiStatusThreadResourceType = "THREAD";
 
@@ -52,10 +51,9 @@ namespace Azure.Communication.Chat
         {
             _chatClientOptions = options ?? new ChatClientOptions();
             _endpointUrl = endpointUrl;
-            _bearerTokenCredential = credential;
-            _bearerScope = scope;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
-            HttpPipeline pipeline = CreatePipelineFromBearer(_chatClientOptions, credential, scope);
+            _bearerTokenAuthPolicy = new BearerTokenAuthenticationPolicy(credential, scope);
+            HttpPipeline pipeline = CreatePipelineFromBearer(_chatClientOptions, _bearerTokenAuthPolicy);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
@@ -129,9 +127,8 @@ namespace Azure.Communication.Chat
                 }
                 else
                 {
-                    Argument.AssertNotNull(_bearerTokenCredential, nameof(_bearerTokenCredential));
-                    Argument.AssertNotNull(_bearerScope, nameof(_bearerScope));
-                    return new ChatThreadClient(threadId, _endpointUrl, _bearerTokenCredential, _bearerScope, _chatClientOptions);
+                    Argument.AssertNotNull(_bearerTokenAuthPolicy, nameof(_bearerTokenAuthPolicy));
+                    return new ChatThreadClient(threadId, _endpointUrl, _bearerTokenAuthPolicy, _chatClientOptions);
                 }
             }
             catch (Exception ex)
@@ -313,10 +310,9 @@ namespace Azure.Communication.Chat
             return httpPipeline;
         }
 
-        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, TokenCredential credential, String scope)
+        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, BearerTokenAuthenticationPolicy policy)
         {
-            var pipelinePolicy = new BearerTokenAuthenticationPolicy(credential, scope);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, pipelinePolicy);
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
             return httpPipeline;
         }
     }
