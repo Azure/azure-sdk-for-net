@@ -1254,6 +1254,345 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #endregion
 
+        #region StartRecognizeInvoices
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeInvoicesPopulatesExtractedPdf(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeInvoicesOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeInvoicesAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoicePdf);
+                operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the invoice. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:invoice", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("VendorName"));
+            Assert.True(form.Fields.ContainsKey("CustomerAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("VendorAddress"));
+            Assert.True(form.Fields.ContainsKey("CustomerAddress"));
+            Assert.True(form.Fields.ContainsKey("InvoiceId"));
+            Assert.True(form.Fields.ContainsKey("InvoiceDate"));
+            Assert.True(form.Fields.ContainsKey("DueDate"));
+            Assert.True(form.Fields.ContainsKey("InvoiceTotal"));
+            Assert.True(form.Fields.ContainsKey("CustomerName"));
+
+            Assert.AreEqual("Contoso", form.Fields["VendorName"].Value.AsString());
+            Assert.AreEqual("Microsoft", form.Fields["CustomerAddressRecipient"].Value.AsString());
+            Assert.AreEqual("1 Redmond way Suite 6000 Redmond, WA 99243", form.Fields["VendorAddress"].Value.AsString());
+            Assert.AreEqual("1020 Enterprise Way Sunnayvale, CA 87659", form.Fields["CustomerAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft", form.Fields["CustomerName"].Value.AsString());
+
+            Assert.That(form.Fields["InvoiceTotal"].Value.AsFloat(), Is.EqualTo(56651.49f).Within(0.0001));
+
+            var invoiceDate = form.Fields["InvoiceDate"].Value.AsDate();
+            Assert.AreEqual(18, invoiceDate.Day);
+            Assert.AreEqual(6, invoiceDate.Month);
+            Assert.AreEqual(2017, invoiceDate.Year);
+
+            var dueDate = form.Fields["DueDate"].Value.AsDate();
+            Assert.AreEqual(24, dueDate.Day);
+            Assert.AreEqual(6, dueDate.Month);
+            Assert.AreEqual(2017, dueDate.Year);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeInvoicesPopulatesExtractedTiff(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeInvoicesOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeInvoicesAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceLeTiff);
+                operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: false,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the invoice. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:invoice", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("VendorName"));
+            Assert.True(form.Fields.ContainsKey("CustomerAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("VendorAddress"));
+            Assert.True(form.Fields.ContainsKey("CustomerAddress"));
+            Assert.True(form.Fields.ContainsKey("InvoiceId"));
+            Assert.True(form.Fields.ContainsKey("InvoiceDate"));
+            Assert.True(form.Fields.ContainsKey("DueDate"));
+            Assert.True(form.Fields.ContainsKey("InvoiceTotal"));
+            Assert.True(form.Fields.ContainsKey("CustomerName"));
+
+            Assert.AreEqual("Contoso", form.Fields["VendorName"].Value.AsString());
+            Assert.AreEqual("Microsoft", form.Fields["CustomerAddressRecipient"].Value.AsString());
+            Assert.AreEqual("1 Redmond way Suite 6000 Redmond, WA 99243", form.Fields["VendorAddress"].Value.AsString());
+            Assert.AreEqual("1020 Enterprise Way Sunnayvale, CA 87659", form.Fields["CustomerAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft", form.Fields["CustomerName"].Value.AsString());
+
+            Assert.That(form.Fields["InvoiceTotal"].Value.AsFloat(), Is.EqualTo(56651.49f).Within(0.0001));
+
+            var invoiceDate = form.Fields["InvoiceDate"].Value.AsDate();
+            Assert.AreEqual(18, invoiceDate.Day);
+            Assert.AreEqual(6, invoiceDate.Month);
+            Assert.AreEqual(2017, invoiceDate.Year);
+
+            var dueDate = form.Fields["DueDate"].Value.AsDate();
+            Assert.AreEqual(24, dueDate.Day);
+            Assert.AreEqual(6, dueDate.Month);
+            Assert.AreEqual(2017, dueDate.Year);
+        }
+
+        [Test]
+        public async Task StartRecognizeInvoicesIncludeFieldElements()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeInvoicesOptions() { IncludeFieldElements = true };
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var invoicesform = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                invoicesform,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
+        [Test]
+        public async Task StartRecognizeInvoicesCanParseBlankPage()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var blankForm = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                blankForm,
+                includeFieldElements: false,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.AreEqual(0, blankForm.Fields.Count);
+
+            var blankPage = blankForm.Pages.Single();
+
+            Assert.AreEqual(0, blankPage.Lines.Count);
+            Assert.AreEqual(0, blankPage.Tables.Count);
+            Assert.AreEqual(0, blankPage.SelectionMarks.Count);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeInvoicesCanParseMultipageForm(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeInvoicesOptions() { IncludeFieldElements = true };
+            RecognizeInvoicesOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeInvoicesAsync(stream, options);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
+                operation = await client.StartRecognizeInvoicesFromUriAsync(uri, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var form = recognizedForms.Single();
+
+            Assert.NotNull(form);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the invoice. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:invoice", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(2, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("VendorName"));
+            Assert.True(form.Fields.ContainsKey("RemittanceAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("RemittanceAddress"));
+
+            FormField vendorName = form.Fields["VendorName"];
+            Assert.AreEqual(2, vendorName.ValueData.PageNumber);
+            Assert.AreEqual("Southridge Video", vendorName.Value.AsString());
+
+            FormField addressRecepient = form.Fields["RemittanceAddressRecipient"];
+            Assert.AreEqual(1, addressRecepient.ValueData.PageNumber);
+            Assert.AreEqual("Contoso Ltd.", addressRecepient.Value.AsString());
+
+            FormField address = form.Fields["RemittanceAddress"];
+            Assert.AreEqual(1, address.ValueData.PageNumber);
+            Assert.AreEqual("2345 Dogwood Lane Birch, Kansas 98123", address.Value.AsString());
+
+            // Disabled until issue is fixed: https://app.zenhub.com/workspaces/azure-sdk-team-5bdca72c4b5806bc2bf0aab2/issues/azure/azure-sdk-for-net/16514
+            //ValidatePrebuiltForm(
+            //    form,
+            //    includeFieldElements: false,
+            //    expectedFirstPageNumber: 1,
+            //    expectedLastPageNumber: 2);
+        }
+
+        [Test]
+        public void StartRecognizeInvoicesThrowsForDamagedFile()
+        {
+            var client = CreateFormRecognizerClient();
+
+            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
+
+            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
+            using var stream = new MemoryStream(damagedFile);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream));
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and handle returned errors.
+        /// </summary>
+        [Test]
+        public void StartRecognizeInvoicesFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateFormRecognizerClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+        }
+
+        [Test]
+        [TestCase("en-US")]
+        [TestCase("")]
+        public async Task StartRecognizeInvoicesWithSupportedLocale(string locale)
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeInvoicesOptions()
+            {
+                IncludeFieldElements = true,
+                Locale = locale
+            };
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var invoice = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                invoice,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.Greater(invoice.Fields.Count, 0);
+
+            var receiptPage = invoice.Pages.Single();
+
+            Assert.Greater(receiptPage.Lines.Count, 0);
+            Assert.AreEqual(0, receiptPage.SelectionMarks.Count);
+            Assert.AreEqual(1, receiptPage.Tables.Count);
+        }
+
+        [Test]
+        public void StartRecognizeInvoicesWithWrongLocale()
+        {
+            var client = CreateFormRecognizerClient();
+
+            var receiptUri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(receiptUri, new RecognizeInvoicesOptions() { Locale = "not-locale" }));
+            Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+        }
+
+        #endregion
+
         #region StartRecognizeCustomForms
 
         /// <summary>

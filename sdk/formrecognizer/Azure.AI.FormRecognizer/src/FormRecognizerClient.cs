@@ -524,6 +524,144 @@ namespace Azure.AI.FormRecognizer
 
         #endregion
 
+        #region Invoices
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesAsync(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoice, nameof(invoice));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoices)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
+
+                Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(contentType, invoice, recognizeInvoicesOptions.IncludeFieldElements, recognizeInvoicesOptions.Locale, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual RecognizeInvoicesOperation StartRecognizeInvoices(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoice, nameof(invoice));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoices)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeInvoicesOptions.ContentType ?? DetectContentType(invoice, nameof(invoice));
+
+                Response response = ServiceClient.AnalyzeInvoiceAsync(contentType, invoice, recognizeInvoicesOptions.IncludeFieldElements, recognizeInvoicesOptions.Locale, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesFromUriAsync(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoiceUri, nameof(invoiceUri));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoicesFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = invoiceUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(includeTextDetails: recognizeInvoicesOptions.IncludeFieldElements, locale: recognizeInvoicesOptions.Locale, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more invoices.
+        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// </summary>
+        /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
+        /// completion will contain the extracted invoices.</returns>
+        public virtual RecognizeInvoicesOperation StartRecognizeInvoicesFromUri(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(invoiceUri, nameof(invoiceUri));
+
+            recognizeInvoicesOptions ??= new RecognizeInvoicesOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeInvoicesFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = invoiceUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeInvoiceAsync(includeTextDetails: recognizeInvoicesOptions.IncludeFieldElements, locale: recognizeInvoicesOptions.Locale, fileStream: sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeInvoicesOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        #endregion
+
+
         #region Custom Forms
 
         /// <summary>
