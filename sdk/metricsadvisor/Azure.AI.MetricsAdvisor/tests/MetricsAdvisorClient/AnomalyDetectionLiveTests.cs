@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
@@ -49,6 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
             {
+                Assert.That(anomaly, Is.Not.Null);
                 Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
@@ -117,6 +119,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
             {
+                Assert.That(incident, Is.Not.Null);
                 Assert.That(incident.DetectionConfigurationId, Is.Null);
                 Assert.That(incident.MetricId, Is.Null);
 
@@ -125,7 +128,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.LastTime, Is.LessThanOrEqualTo(endTime));
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
-
                 Assert.That(incident.DimensionKey, Is.Not.Null);
 
                 Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
@@ -165,6 +167,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId))
             {
+                Assert.That(rootCause, Is.Not.Null);
                 Assert.That(rootCause.Description, Is.Not.Null.And.Not.Empty);
                 Assert.That(rootCause.Score, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
 
@@ -227,6 +230,62 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
 
             Assert.That(valueCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichedSeriesData(bool populateOptionalMembers)
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var startTime = DateTimeOffset.Parse("2020-10-01T00:00:00Z");
+            var endTime = DateTimeOffset.Parse("2020-10-31T00:00:00Z");
+
+            var seriesKey1 = new DimensionKey();
+            seriesKey1.AddDimensionColumn("city", "Delhi");
+            seriesKey1.AddDimensionColumn("category", "Handmade");
+
+            var seriesKey2 = new DimensionKey();
+            seriesKey2.AddDimensionColumn("city", "Koltaka");
+            seriesKey2.AddDimensionColumn("category", "__SUM__");
+
+            var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
+            var returnedKeys = new List<DimensionKey>();
+
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, startTime, endTime))
+            {
+                Assert.That(seriesData, Is.Not.Null);
+                Assert.That(seriesData.SeriesKey, Is.Not.Null);
+                Assert.That(seriesData.Timestamps, Is.Not.Null);
+                Assert.That(seriesData.Values, Is.Not.Null);
+                Assert.That(seriesData.ExpectedValues, Is.Not.Null);
+                Assert.That(seriesData.IsAnomaly, Is.Not.Null);
+                Assert.That(seriesData.Periods, Is.Not.Null);
+                Assert.That(seriesData.LowerBoundaries, Is.Not.Null);
+                Assert.That(seriesData.UpperBoundaries, Is.Not.Null);
+
+                int pointsCount = seriesData.Timestamps.Count;
+
+                Assert.That(seriesData.Values.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.ExpectedValues.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.IsAnomaly.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.Periods.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.LowerBoundaries.Count, Is.EqualTo(pointsCount));
+                Assert.That(seriesData.UpperBoundaries.Count, Is.EqualTo(pointsCount));
+
+                for (int i = 0; i < pointsCount; i++)
+                {
+                    Assert.That(seriesData.Timestamps[i], Is.InRange(startTime, endTime));
+                }
+
+                returnedKeys.Add(seriesData.SeriesKey);
+            }
+
+            IEnumerable<List<KeyValuePair<string, string>>> expectedKvps = seriesKeys.Select(key => key.AsDictionary().ToList());
+            IEnumerable<List<KeyValuePair<string, string>>> returnedKvps = returnedKeys.Select(key => key.AsDictionary().ToList());
+
+            Assert.That(returnedKvps, Is.EquivalentTo(expectedKvps));
         }
     }
 }

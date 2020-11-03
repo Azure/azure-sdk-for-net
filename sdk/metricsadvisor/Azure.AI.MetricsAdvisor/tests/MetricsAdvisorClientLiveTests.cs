@@ -164,39 +164,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricEnrichedSeriesData()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            IEnumerable<DimensionKey> seriesKeys = new List<DimensionKey>()
-            {
-                new DimensionKey(new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Dim1", "Common Lime"),
-                    new KeyValuePair<string, string>("Dim2", "Amphibian"),
-                }),
-                new DimensionKey(new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Dim1", "Common Beech"),
-                    new KeyValuePair<string, string>("Dim2", "Ant"),
-                })
-            };
-
-            int pages = 0;
-
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, Recording.UtcNow.AddMonths(-5), Recording.UtcNow))
-            {
-                Assert.That(seriesData, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
         public async Task GetEnrichmentStatus()
         {
             var client = GetMetricsAdvisorClient();
