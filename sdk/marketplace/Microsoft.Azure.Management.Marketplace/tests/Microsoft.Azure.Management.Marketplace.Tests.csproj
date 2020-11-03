@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Marketplace.csproj" />
   </ItemGroup>
-
+ 
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
