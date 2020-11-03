@@ -6220,19 +6220,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
         }
 
-        private async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
-        {
-            blobName ??= GetNewBlobName();
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
-
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            return blob;
-        }
-
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {
