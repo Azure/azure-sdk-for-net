@@ -30,68 +30,81 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             ActivitySource.AddActivityListener(listener);
         }
 
+        public AzureMonitorConverterTests()
+        {
+            AzureMonitorConverter.RoleName = null;
+            AzureMonitorConverter.RoleInstance = null;
+        }
+
         [Fact]
         public void ExtractRoleInfo_NullResource()
         {
-            AzureMonitorConverter.ExtractRoleInfo(null, out var roleName, out var roleInstance);
-            Assert.Null(roleName);
-            Assert.Null(roleInstance);
+            AzureMonitorConverter.ExtractRoleInfo(null);
+
+            Assert.Null(AzureMonitorConverter.RoleName);
+            Assert.Null(AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
         public void ExtractRoleInfo_Empty()
         {
-            var resource = Resources.CreateServiceResource(null);
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Null(roleName);
-            Assert.Null(roleInstance);
+            using var activity = new Activity("ExtractRoleInfo_Empty");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null));
+
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+            Assert.Null(AzureMonitorConverter.RoleName);
+            Assert.Null(AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
         public void ExtractRoleInfo_ServiceName()
         {
-            var resource = Resources.CreateServiceResource("my-service");
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Equal("my-service", roleName);
-            Assert.True(Guid.TryParse(roleInstance, out var guid));
+            using var activity = new Activity("ExtractRoleInfo_ServiceName");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service"));
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+            Assert.Equal("my-service", AzureMonitorConverter.RoleName);
+            Assert.True(Guid.TryParse(AzureMonitorConverter.RoleInstance, out var guid));
         }
 
         [Fact]
         public void ExtractRoleInfo_ServiceInstance()
         {
-            var resource = Resources.CreateServiceResource(null, "roleInstance_1");
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Empty(resource.Attributes);
-            Assert.Null(roleName);
-            Assert.Null(roleInstance);
+            using var activity = new Activity("ExtractRoleInfo_ServiceName");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, "roleInstance_1"));
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+
+            Assert.Null(AzureMonitorConverter.RoleName);
+            Assert.Null(AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
         public void ExtractRoleInfo_ServiceNamespace()
         {
-            var resource = Resources.CreateServiceResource(null, null, "my-namespace");
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Empty(resource.Attributes);
-            Assert.Null(roleName);
-            Assert.Null(roleInstance);
+            using var activity = new Activity("ExtractRoleInfo_ServiceName");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, null, "my-namespace"));
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+            Assert.Null(AzureMonitorConverter.RoleName);
+            Assert.Null(AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
         public void ExtractRoleInfo_ServiceNameAndInstance()
         {
-            var resource = Resources.CreateServiceResource("my-service", "roleInstance_1");
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Equal("my-service", roleName);
-            Assert.Equal("roleInstance_1", roleInstance);
+            using var activity = new Activity("ExtractRoleInfo_ServiceName");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1"));
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+            Assert.Equal("my-service", AzureMonitorConverter.RoleName);
+            Assert.Equal("roleInstance_1", AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
         public void ExtractRoleInfo_ServiceNameAndInstanceAndNamespace()
         {
-            var resource = Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace");
-            AzureMonitorConverter.ExtractRoleInfo(resource, out var roleName, out var roleInstance);
-            Assert.Equal("my-namespace.my-service", roleName);
-            Assert.Equal("roleInstance_1", roleInstance);
+            using var activity = new Activity("ExtractRoleInfo_ServiceName");
+            activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace"));
+            AzureMonitorConverter.ExtractRoleInfo(activity);
+            Assert.Equal("my-namespace.my-service", AzureMonitorConverter.RoleName);
+            Assert.Equal("roleInstance_1", AzureMonitorConverter.RoleInstance);
         }
 
         [Fact]
