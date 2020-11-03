@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

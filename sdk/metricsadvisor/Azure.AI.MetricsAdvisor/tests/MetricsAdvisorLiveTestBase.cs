@@ -40,14 +40,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             _dataFeedDescription = "my feed description";
         }
 
-        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClientAad()
-        {
-            return InstrumentClient(new MetricsAdvisorAdministrationClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
-        }
-
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
         {
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
