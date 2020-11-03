@@ -189,13 +189,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 BlobClient blockBlob = BlobContainer.GetBlobClient(prefix);
                 BlobProperties properties = await blockBlob.GetPropertiesAsync().ConfigureAwait(false);
 
-                if (properties.Metadata.ContainsKey(SequenceNumberMetadataName) && properties.Metadata.ContainsKey(OffsetMetadataName))
+                if (properties.Metadata.TryGetValue(SequenceNumberMetadataName, out string sequenceNumberString))
                 {
-                    blobParitionCheckpoint = new BlobParitionCheckpoint();
-                    blobParitionCheckpoint.SequenceNumber = long.Parse(properties.Metadata["SequenceNumber"], CultureInfo.InvariantCulture);
-                    blobParitionCheckpoint.Offset = long.Parse(properties.Metadata["Offset"], CultureInfo.InvariantCulture);
+                    blobParitionCheckpoint ??= new BlobParitionCheckpoint();
+                    blobParitionCheckpoint.SequenceNumber = long.Parse(sequenceNumberString, CultureInfo.InvariantCulture);
                 }
-                else
+
+                if (properties.Metadata.TryGetValue(OffsetMetadataName, out string offsetString))
+                {
+                    blobParitionCheckpoint ??= new BlobParitionCheckpoint();
+                    blobParitionCheckpoint.Offset = long.Parse(offsetString, CultureInfo.InvariantCulture);
+                }
+
+                if (blobParitionCheckpoint == null)
                 {
                     errorMsg = $"Checkpoint file did not contain required metadata on Partition: '{partitionId}', " +
                         $"EventHub: '{_eventHubName}', '{_consumerGroup}'.";

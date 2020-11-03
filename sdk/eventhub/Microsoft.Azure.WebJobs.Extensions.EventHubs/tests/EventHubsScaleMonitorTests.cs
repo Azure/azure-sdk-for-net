@@ -26,13 +26,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
     public class EventHubsScaleMonitorTests
     {
         private readonly string _functionId = "EventHubsTriggerFunction";
-        private readonly string _eventHubContainerName = "azure-webjobs-eventhub";
         private readonly string _eventHubName = "TestEventHubName";
         private readonly string _consumerGroup = "TestConsumerGroup";
         private readonly string _eventHubConnectionString = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private readonly string _storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net";
 
-        private readonly Uri _storageUri = new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/");
         private readonly EventHubsScaleMonitor _scaleMonitor;
         private readonly Mock<BlobContainerClient> _mockBlobContainer;
         private readonly TestLoggerProvider _loggerProvider;
@@ -40,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         public EventHubsScaleMonitorTests()
         {
-            _mockBlobContainer = new Mock<BlobContainerClient>(MockBehavior.Strict, new Uri(_storageUri, _eventHubContainerName));
+            _mockBlobContainer = new Mock<BlobContainerClient>(MockBehavior.Strict);
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
             string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/0";
 
-            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
+            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict);
 
             _mockBlobContainer
                 .Setup(c => c.GetBlobClient(prefix))
@@ -130,7 +128,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
             string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/";
 
-            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict, new Uri(_storageUri, $"{_eventHubContainerName}/{prefix}"));
+            var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict);
 
             _mockBlobContainer
                 .Setup(c => c.GetBlobClient(IsAny<string>()))
@@ -197,7 +195,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // StorageException
             _mockBlobContainer
                 .Setup(c => c.GetBlobClient(IsAny<string>()))
-                .Throws(new RequestFailedException(404, "Not found"));
+                .Throws(new RequestFailedException(404, "Uh oh"));
 
             var partitionInfo = new List<PartitionProperties>
             {
@@ -212,31 +210,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Extensions.Logging.LogLevel.Warning);
             var expectedWarning = $"Function '{_functionId}': Unable to deserialize partition or lease info with the following errors: " +
-                                    $"Lease file data could not be found for blob on Partition: '0', EventHub: '{_eventHubName}', " +
+                                    $"Checkpoint file data could not be found for blob on Partition: '0', EventHub: '{_eventHubName}', " +
                                     $"'{_consumerGroup}'. Error: Uh oh";
-            Assert.Equal(expectedWarning, warning.FormattedMessage);
-            _loggerProvider.ClearAllLogMessages();
-
-            // JsonSerializationException
-            _mockBlobContainer
-                .Setup(c => c.GetBlobClient(IsAny<string>()))
-                .Throws(new JsonSerializationException("Uh oh"));
-
-            partitionInfo = new List<PartitionProperties>
-            {
-                new TestPartitionProperties()
-            };
-
-            metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo, true);
-
-            Assert.Equal(1, metrics.PartitionCount);
-            Assert.Equal(0, metrics.EventCount);
-            Assert.NotEqual(default(DateTime), metrics.Timestamp);
-
-            warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Extensions.Logging.LogLevel.Warning);
-            expectedWarning = $"Function '{_functionId}': Unable to deserialize partition or lease info with the following errors: " +
-                                $"Could not deserialize blob lease info for blob on Partition: '0', EventHub: '{_eventHubName}', " +
-                                $"Consumer Group: '{_consumerGroup}'. Error: Uh oh";
             Assert.Equal(expectedWarning, warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
 
