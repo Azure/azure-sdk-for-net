@@ -4,7 +4,7 @@
 
 This is the first preview of the next generation of `Microsoft.Azure.WebJobs.Extension.Storage` which has been integrated with latest Azure Storage SDK that follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
-The `Microsoft.Azure.WebJobs.Extension.Storage.Queues` offers drop-in replacement for scenarios where `Queue` and `QueueTrigger` were bound to BCL types or user defined POCOs. Advanced scenarios like binding to Azure Storage Queues SDK types or using `QueueProcessor` may require code changes.
+The `Microsoft.Azure.WebJobs.Extension.Storage.Queues` offers drop-in replacement for scenarios where `Queue` and `QueueTrigger` attributes were bound to BCL types or user defined POCOs. Advanced scenarios like binding to Azure Storage Queues SDK types or using `QueueProcessor` may require code changes.
 
 This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
