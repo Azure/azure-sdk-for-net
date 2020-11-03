@@ -93,22 +93,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentRootCauses()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            bool isResponseEmpty = true;
-
-            await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId))
-            {
-                isResponseEmpty = false;
-                break;
-            }
-
-            Assert.That(isResponseEmpty, Is.False);
-        }
-
-        [RecordedTest]
         public async Task GetValuesOfDimensionWithAnomalies()
         {
             var client = GetMetricsAdvisorClient();

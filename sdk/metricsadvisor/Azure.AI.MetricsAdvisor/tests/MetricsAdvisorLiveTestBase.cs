@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         internal const string DetectionConfigurationId = "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c";
-        internal const string IncidentId = "013c34456c5aed901c66ca1dff0714aa-174995c5800";
+        internal const string IncidentId = "736eed64368bb6a372e855322a15a736-174e1756000";
         internal const string AlertConfigurationId = "08318302-6006-4019-9afc-975bc63ee566";
         internal const string AlertId = "174995c5800";
         internal const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";

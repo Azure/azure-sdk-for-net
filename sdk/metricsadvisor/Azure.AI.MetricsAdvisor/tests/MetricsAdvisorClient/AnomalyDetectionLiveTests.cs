@@ -153,5 +153,44 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(incidentCount, Is.GreaterThan(0));
         }
+
+        [RecordedTest]
+        public async Task GetIncidentRootCauses()
+        {
+            const int maximumRootCauseSamples = 10;
+
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var rootCauseCount = 0;
+
+            await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId))
+            {
+                Assert.That(rootCause.Description, Is.Not.Null.And.Not.Empty);
+                Assert.That(rootCause.Score, Is.GreaterThan(0.0).And.LessThanOrEqualTo(1.0));
+
+                foreach (string path in rootCause.Paths)
+                {
+                    Assert.That(path, Is.Not.Null.And.Not.Empty);
+                }
+
+                Assert.That(rootCause.DimensionKey, Is.Not.Null);
+
+                Dictionary<string, string> dimensionColumns = rootCause.DimensionKey.AsDictionary();
+
+                Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+                Assert.That(dimensionColumns.ContainsKey("city"));
+                Assert.That(dimensionColumns.ContainsKey("category"));
+
+                Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
+                Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
+
+                if (++rootCauseCount >= maximumRootCauseSamples)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(rootCauseCount, Is.GreaterThan(0));
+        }
     }
 }
