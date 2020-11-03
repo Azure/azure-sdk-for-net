@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             ValidateConnectionOptions(options);
 
-            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            var connectionStringProperties = ServiceBusConnectionStringProperties.Parse(connectionString);
             ValidateConnectionStringProperties(connectionStringProperties, nameof(connectionString));
 
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
@@ -212,10 +212,9 @@ namespace Azure.Messaging.ServiceBus
 
         internal virtual TransportSender CreateTransportSender(
             string entityPath,
-            string viaEntityPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier) =>
-            _innerClient.CreateSender(entityPath, viaEntityPath, retryPolicy, identifier);
+            _innerClient.CreateSender(entityPath, retryPolicy, identifier);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
@@ -376,7 +375,7 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ArgumentException">In the case that the properties violate an invariant or otherwise represent a combination that is not permissible, an appropriate exception will be thrown.</exception>
         ///
         private static void ValidateConnectionStringProperties(
-            ConnectionStringProperties connectionStringProperties,
+            ServiceBusConnectionStringProperties connectionStringProperties,
             string connectionStringArgumentName)
         {
             var hasSharedKey = ((!string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)) && (!string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey)));

@@ -35,13 +35,18 @@ namespace Azure.DigitalTwins.Core.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected DigitalTwinsClient GetClient()
+        protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)
         {
+            if (options == null)
+            {
+                options = new DigitalTwinsClientOptions();
+            }
+
             return InstrumentClient(
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(options)));
         }
 
         protected DigitalTwinsClient GetFakeClient()

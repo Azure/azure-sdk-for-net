@@ -1,6 +1,12 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.1.0-beta.1 (2020-10-30)
+
+### Added
+
+- The `AzureComponentFactory` class that allows creating `TokenCredential`, `ClientOptions` and client instances from configuration.
+- The `AzureEventSourceLogForwarder` class that allows manual control over the log forwarding.
+- The `AddAzureClientsCore` extension method.
 
 ## 1.0.0
 

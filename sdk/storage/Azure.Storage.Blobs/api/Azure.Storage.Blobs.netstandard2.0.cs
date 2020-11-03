@@ -1463,6 +1463,8 @@ namespace Azure.Storage.Sas
         List = 32,
         Tag = 64,
         DeleteBlobVersion = 128,
+        Move = 256,
+        Execute = 512,
     }
     public partial class BlobSasBuilder
     {

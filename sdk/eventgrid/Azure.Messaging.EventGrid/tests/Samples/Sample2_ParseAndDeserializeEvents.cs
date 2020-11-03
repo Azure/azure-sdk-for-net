@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
 
         // This sample demonstrates how to parse EventGridEvents from JSON and access event data using GetData()
         [Test]
-        public async Task NonGenericReceiveAndDeserializeEventGridEvents()
+        public void NonGenericReceiveAndDeserializeEventGridEvents()
         {
             #region Snippet:EGEventParseJson
             // Parse the JSON payload into a list of events using EventGridEvent.Parse
@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
                         if (egEvent.EventType == "MyApp.Models.CustomEventType")
                         {
                             // You can use BinaryData methods to deserialize the payload
-                            TestPayload deserializedEventData = await unknownType.ToObjectAsync<TestPayload>();
+                            TestPayload deserializedEventData = unknownType.ToObjectFromJson<TestPayload>();
                             Console.WriteLine(deserializedEventData.Name);
                         }
                         break;

@@ -10,7 +10,7 @@ using System;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Stack frame information. </summary>
-    public partial class StackFrame
+    internal partial class StackFrame
     {
         /// <summary> Initializes a new instance of StackFrame. </summary>
         /// <param name="level"> . </param>
