@@ -154,6 +154,8 @@ namespace Microsoft.Azure.ServiceBus.Management
                     case "UpdatedAt":
                     case "CountDetails":
                     case "DefaultRuleDescription":
+                    case "EntityAvailabilityStatus":
+                    case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
                         break;
