@@ -195,6 +195,61 @@ namespace Azure.Storage.Sas
         private int? _directoryDepth;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="DataLakeSasBuilder(DataLakeSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DataLakeSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public DataLakeSasBuilder(DataLakeSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public DataLakeSasBuilder(DataLakeFileSystemSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
         /// Sets the permissions for a file SAS.
         /// </summary>
         /// <param name="permissions">
@@ -513,7 +568,7 @@ namespace Azure.Storage.Sas
             base.ToString();
 
         /// <summary>
-        /// Check if two BlobSasBuilder instances are equal.
+        /// Check if two DataLakeSasBuilder instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -522,9 +577,9 @@ namespace Azure.Storage.Sas
             => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the BlobSasBuilder.
+        /// Get a hash code for the DataLakeSasBuilder.
         /// </summary>
-        /// <returns>Hash code for the BlobSasBuilder.</returns>
+        /// <returns>Hash code for the DataLakeSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
     }

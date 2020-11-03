@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -61,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
         /// file.
         /// </param>
         public DataLakeFileClient(Uri fileUri)
-            : this(fileUri, (HttpPipelinePolicy)null, null)
+            : this(fileUri, (HttpPipelinePolicy)null, null, null)
         {
         }
 
@@ -79,7 +80,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, DataLakeClientOptions options)
-            : this(fileUri, (HttpPipelinePolicy)null, options)
+            : this(fileUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -95,7 +96,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, StorageSharedKeyCredential credential)
-            : this(fileUri, credential.AsPolicy(), null)
+            : this(fileUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -116,7 +117,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(), options)
+            : this(fileUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -132,7 +133,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(), null)
+            : this(fileUri, credential.AsPolicy(), null, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -154,7 +155,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(), options)
+            : this(fileUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -176,8 +177,15 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakeFileClient(Uri fileUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
-            : base(fileUri, authentication, options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
+            : base(fileUri, authentication, options, storageSharedKeyCredential)
         {
         }
 

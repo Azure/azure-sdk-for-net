@@ -4,6 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -116,5 +118,213 @@ namespace Azure.Storage.Files.DataLake.Tests
             await pathClient.GetPropertiesAsync();
             await pathClient.GetAccessControlAsync();
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - DataLakePathClient(Uri blobContainerUri, BlobClientOptions options = default)
+            DataLakePathClient blob3 = new DataLakePathClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(blob3.CanGenerateSasUri);
+
+            // Act - DataLakePathClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            DataLakePathClient blob4 = new DataLakePathClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(blob4.CanGenerateSasUri);
+
+            // Act - DataLakePathClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            DataLakePathClient blob5 = new DataLakePathClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            Assert.IsFalse(blob5.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
+            DataLakePathClient pathClient = new DataLakePathClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            // Act
+            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path
+            };
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint)
+            {
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            string fileSystemName = GetNewFileSystemName();
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "/" + fileSystemName + "/" + path);
+            DataLakePathClient pathClient = new DataLakePathClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = pathClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
+            DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = path,
+                StartsOn = startsOn
+            };
+            expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongFileSystemName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string path = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewFileSystemName() + "/" + path;
+            DataLakePathClient pathClient = new DataLakePathClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = GetNewFileSystemName(), // different filesystem name
+                Path = path,
+            };
+
+            // Act
+            try
+            {
+                pathClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakePathClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongPath()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + GetNewFileName();
+            DataLakePathClient containerClient = new DataLakePathClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = GetNewFileName(), // different path
+            };
+
+            // Act
+            try
+            {
+                containerClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakePathClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateSas_BuilderIsDirectoryError()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + fileSystemName + "/" + fileName;
+            DataLakePathClient containerClient = new DataLakePathClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = fileSystemName,
+                Path = fileName,
+                IsDirectory = true,
+            };
+
+            // Act
+            try
+            {
+                containerClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("DataLakeFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
     }
 }

@@ -215,6 +215,57 @@ namespace Azure.Storage.Files.Shares.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
+        [Test]
+        public void ShareUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1/sharename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", fileUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", fileUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.ShareName);
+            Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(10000, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void ShareUriBuilder_CustomUri_AccountShareFileTest()
+        {
+            // Arrange
+            var uriString = "https://www.mycustomname.com/sharename/filename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new ShareUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("www.mycustomname.com", fileUriBuilder.Host);
+            Assert.AreEqual(String.Empty, fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.ShareName);
+            Assert.AreEqual("filename", fileUriBuilder.DirectoryOrFilePath);
+            Assert.AreEqual("", fileUriBuilder.Snapshot);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
         private ShareSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath, TestConstants constants, string shareName, string filePath)
         {
             var fileSasBuilder = new ShareSasBuilder

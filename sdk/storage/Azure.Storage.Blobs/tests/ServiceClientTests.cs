@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -683,5 +684,139 @@ namespace Azure.Storage.Blobs.Test
                 service.UndeleteBlobContainerAsync(GetNewBlobName(), "01D60F8BB59A4652"),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - BlobServiceClient(string connectionString)
+            BlobServiceClient container = new BlobServiceClient(
+                connectionString);
+            Assert.IsTrue(container.CanGenerateAccountSasUri);
+
+            // Act - BlobServiceClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            BlobServiceClient container2 = new BlobServiceClient(
+                connectionString,
+                GetOptions());
+            Assert.IsTrue(container2.CanGenerateAccountSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, BlobClientOptions options = default)
+            BlobServiceClient container3 = new BlobServiceClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(container3.CanGenerateAccountSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            BlobServiceClient container4 = new BlobServiceClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(container4.CanGenerateAccountSasUri);
+
+            // Act - BlobServiceClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
+            var tokenCredentials = new DefaultAzureCredential();
+            BlobServiceClient container5 = new BlobServiceClient(
+                blobEndpoint,
+                tokenCredentials,
+                GetOptions());
+            Assert.IsFalse(container5.CanGenerateAccountSasUri);
+        }
+
+        [Test]
+        public void GenerateAccountSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(
+                permissions: permissions,
+                expiresOn: expiresOn,
+                resourceTypes: resourceTypes);
+
+            // Assert
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Blobs, resourceTypes);
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasServices services = AccountSasServices.Blobs;
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
+            // Act
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+            // Assert
+            UriBuilder expectedUri = new UriBuilder(blobEndpoint);
+            expectedUri.Query += sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString();
+            Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateAccountSas_WrongService_Service()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            AccountSasServices services = AccountSasServices.Files; // Wrong Service
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All;
+            BlobServiceClient serviceClient = new BlobServiceClient(connectionString, GetOptions());
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes)
+            {
+                IPRange = new SasIPRange(System.Net.IPAddress.None, System.Net.IPAddress.None),
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
+
+            // Act
+            try
+            {
+                Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+
+                Assert.Fail("BlobContainerClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                // the correct exception came back
+            }
+        }
+        #endregion
     }
 }

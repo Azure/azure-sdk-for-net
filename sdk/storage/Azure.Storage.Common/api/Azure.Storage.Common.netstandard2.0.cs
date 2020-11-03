@@ -45,7 +45,9 @@ namespace Azure.Storage.Sas
 {
     public partial class AccountSasBuilder
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AccountSasBuilder() { }
+        public AccountSasBuilder(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasServices services, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
         public string Permissions { get { throw null; } }

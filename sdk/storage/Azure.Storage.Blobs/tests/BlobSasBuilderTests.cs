@@ -262,7 +262,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(resource, sasQueryParameters.Resource);
-            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
         [Test]
