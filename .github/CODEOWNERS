@@ -553,11 +553,14 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # PRLabel: %Storage
 /sdk/storage/                                   @tg-msft
 
-# ServiceLabel: %Storage %Service Attention
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @xgithubtriage
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft
 
-# PRLabel: %Functions
+# PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
+
+# ServiceLabel: %Storage %Service Attention
+/sdk/storage/                                   @xgithubtriage
 
 # ServiceLabel: %Storsimple %Service Attention
 /sdk/storsimple/Microsoft.Azure.Management.StorSimple/           @anoobbacker @ganzee @manuaery @patelkunal
