@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -91,6 +92,18 @@ namespace Azure.DigitalTwins.Core.Tests
         protected string GetRandom()
         {
             return Recording.GenerateId();
+        }
+
+        protected async Task createAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
+        {
+            await client.CreateModelsAsync(lists).ConfigureAwait(false);
+
+            // list the models
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"{model.Id}");
+            }
         }
     }
 }
