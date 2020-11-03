@@ -93,30 +93,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetIncidentsForDetectionConfiguration()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            int pages = 0;
-
-            await foreach (var incident in client.GetIncidentsAsync(
-                 DetectionConfigurationId,
-                 new GetIncidentsForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
-            {
-                Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.Id, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
         public async Task GetIncidentRootCauses()
         {
             var client = GetMetricsAdvisorClient();

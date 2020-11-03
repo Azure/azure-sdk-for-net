@@ -85,5 +85,73 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(anomalyCount, Is.GreaterThan(0));
         }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetIncidents(bool populateOptionalMembers)
+        {
+            const int maximumIncidentSamples = 10;
+
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var startTime = DateTimeOffset.Parse("2020-10-01T00:00:00Z");
+            var endTime = DateTimeOffset.Parse("2020-10-31T00:00:00Z");
+
+            var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime);
+
+            if (populateOptionalMembers)
+            {
+                var groupKey1 = new DimensionKey();
+                groupKey1.AddDimensionColumn("city", "Delhi");
+                groupKey1.AddDimensionColumn("category", "Handmade");
+
+                var groupKey2 = new DimensionKey();
+                groupKey2.AddDimensionColumn("city", "Kolkata");
+
+                options.DimensionsToFilter.Add(groupKey1);
+                options.DimensionsToFilter.Add(groupKey2);
+            }
+
+            var incidentCount = 0;
+
+            await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
+            {
+                Assert.That(incident.DetectionConfigurationId, Is.Null);
+                Assert.That(incident.MetricId, Is.Null);
+
+                Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(incident.StartTime, Is.GreaterThanOrEqualTo(startTime));
+                Assert.That(incident.LastTime, Is.LessThanOrEqualTo(endTime));
+                Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
+                Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
+
+                Assert.That(incident.DimensionKey, Is.Not.Null);
+
+                Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
+
+                Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+                Assert.That(dimensionColumns.ContainsKey("city"));
+                Assert.That(dimensionColumns.ContainsKey("category"));
+
+                string city = dimensionColumns["city"];
+                string category = dimensionColumns["category"];
+
+                Assert.That(city, Is.Not.Null.And.Not.Empty);
+                Assert.That(category, Is.Not.Null.And.Not.Empty);
+
+                if (populateOptionalMembers)
+                {
+                    Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
+                }
+
+                if (++incidentCount >= maximumIncidentSamples)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(incidentCount, Is.GreaterThan(0));
+        }
     }
 }
