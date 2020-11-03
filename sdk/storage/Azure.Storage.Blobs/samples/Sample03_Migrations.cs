@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Samples
             var container = new BlobContainerClient(ConnectionString, containerName);
 
             try
-            {            
+            {
                 container.Create();
                 container.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes("hello world")));
 
@@ -190,7 +190,7 @@ namespace Azure.Storage.Blobs.Samples
                 await containerClient.DeleteIfExistsAsync();
             }
         }
-        
+
         [Test]
         public async Task CreateContainer()
         {
@@ -255,7 +255,8 @@ namespace Azure.Storage.Blobs.Samples
 
                 string localFilePath = this.CreateTempPath();
                 FileStream fs = File.OpenWrite(localFilePath);
-                await fs.WriteAsync(Encoding.UTF8.GetBytes(data));
+                var bytes = Encoding.UTF8.GetBytes(data);
+                await fs.WriteAsync(bytes, 0, bytes.Length);
                 await fs.FlushAsync();
                 fs.Close();
 
@@ -288,7 +289,7 @@ namespace Azure.Storage.Blobs.Samples
             string downloadFilePath = this.CreateTempPath();
 
             try
-            {            
+            {
                 containerClient.Create();
                 containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
 
@@ -320,7 +321,7 @@ namespace Azure.Storage.Blobs.Samples
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
 
             try
-            {            
+            {
                 containerClient.Create();
                 containerClient.GetBlobClient(blobName).Upload(new MemoryStream(Encoding.UTF8.GetBytes(data)));
 
@@ -356,10 +357,10 @@ namespace Azure.Storage.Blobs.Samples
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
 
             try
-            {            
+            {
                 containerClient.Create();
                 HashSet<string> blobNames = new HashSet<string>();
-                
+
                 foreach (var _ in Enumerable.Range(0, 10))
                 {
                     string blobName = Randomize("sample-blob");
@@ -398,10 +399,10 @@ namespace Azure.Storage.Blobs.Samples
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
 
             try
-            {            
+            {
                 containerClient.Create();
                 HashSet<string> blobNames = new HashSet<string>();
-                
+
                 foreach (var _ in Enumerable.Range(0, 10))
                 {
                     string blobName = Randomize("sample-blob");
@@ -456,7 +457,7 @@ namespace Azure.Storage.Blobs.Samples
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
 
             try
-            {            
+            {
                 containerClient.Create();
 
                 foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "/fizz.txt", virtualDirName + "/buzz.txt" })
@@ -508,7 +509,7 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-            
+
             // setup blob
             var container = new BlobContainerClient(ConnectionString, containerName);
 
@@ -556,7 +557,7 @@ namespace Azure.Storage.Blobs.Samples
             string containerName = Randomize("sample-container");
             string blobName = Randomize("sample-blob");
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-            
+
             // setup blob
             var container = new BlobContainerClient(ConnectionString, containerName);
 
