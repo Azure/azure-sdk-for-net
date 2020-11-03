@@ -87,8 +87,7 @@ CloudBlob blob = new CloudBlob(blobLocation, credentials);
 ```
 
 ```csharp
-Uri blobLocationWithSAS; // self-authenticating SAS URI to a blob
-CloudBlob blob = new CloudBlob(blobLocationWithSAS);
+CloudBlob blob = new CloudBlob(new Uri(blobLocationWithSAS));
 ```
 
 v12
@@ -96,7 +95,7 @@ v12
 The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, a new client instance with a new SAS must be created in order to rotate a SAS.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasUri
-BlobServiceClient client = new BlobServiceClient(new Uri(accountUriWithSas));
+BlobClient blob = new BlobClient(new Uri(blobLocationWithSas));
 ```
 
 #### Connection string
@@ -105,7 +104,6 @@ The following code assumes you have acquired your connection string (you can do 
 
 Legacy (v11)
 ```csharp
-string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
 // Create a client that can authenticate with a connection string, using a try pattern.
 CloudStorageAccount storageAccount;
 if (!CloudStorageAccount.TryParse(storageConnectionString, out storageAccount))
@@ -113,26 +111,16 @@ if (!CloudStorageAccount.TryParse(storageConnectionString, out storageAccount))
     // handle failure
 }
 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-// Make a service request to verify we've successfully authenticated
-await blobClient.GetServicePropertiesAsync();
 ```
 
 v12
 ```C# Snippet:SampleSnippetsBlobMigration_ConnectionString
-string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
-// Create a client that can authenticate with a connection string
 BlobServiceClient service = new BlobServiceClient(connectionString);
-// Make a service request to verify we've successfully authenticated
-await service.GetPropertiesAsync();
 ```
 
 You can also directly get a blob client with your connection string, instead of going through a service and container client to get to your desired blob. You just need to provide the container and blob names alongside the connection string.
 
 ```C# Snippet:SampleSnippetsBlobMigration_ConnectionStringDirectBlob
-string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING");
-string containerName; // name of the container the desired blob exists in
-string blobName; // name of the desired blob
-
 BlobClient blob = new BlobClient(connectionString, containerName, blobName);
 ```
 
@@ -146,26 +134,14 @@ Note that the URI to your storage account can generally be derived from the acco
 
 Legacy (v11)
 ```csharp
-string accountName; // your storage account name.
-Uri blobServiceUri = new Uri(accountName + ".blob.core.windows.net");
-string accountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SHARED_KEY");
-
 StorageCredentials credentials = new StorageCredentials(accountName, accountKey);
-CloudBlobClient blobClient = new CloudBlobClient(blobServiceUri)
-// Make a service request to verify we've successfully authenticated
-await blobClient.GetServicePropertiesAsync();
+CloudBlobClient blobClient = new CloudBlobClient(new Uri(blobServiceUri), credentials);
 ```
 
 v12
 ```C# Snippet:SampleSnippetsBlobMigration_SharedKey
-string accountName; // your storage account name.
-Uri blobServiceUri = new Uri(accountName + ".blob.core.windows.net");
-string accountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SHARED_KEY");
-
 StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
-BlobServiceClient service = new BlobServiceClient(blobServiceUri, credential);
-// Make a service request to verify we've successfully authenticated
-await service.GetPropertiesAsync();
+BlobServiceClient service = new BlobServiceClient(new Uri(blobServiceUri), credential);
 ```
 
 If you wish to rotate the key within your `BlobServiceClient` (and any derived clients), you must retain a reference to the `StorageSharedKeyCredential`, which has the instance method `SetAccountKey(string accountKey)`.
@@ -176,68 +152,42 @@ To learn more, visit our article [Create a Stored Access Policy with .NET](https
 
 v11
 ```csharp
-private static async Task CreateStoredAccessPolicyAsync(CloudBlobContainer container, string policyName)
+// Create a new stored access policy and define its constraints.
+// The access policy provides create, write, read, list, and delete permissions.
+SharedAccessBlobPolicy sharedPolicy = new SharedAccessBlobPolicy()
 {
-    // Create a new stored access policy and define its constraints.
-    // The access policy provides create, write, read, list, and delete permissions.
-    SharedAccessBlobPolicy sharedPolicy = new SharedAccessBlobPolicy()
-    {
-        // When the start time for the SAS is omitted, the start time is assumed to be the time when Azure Storage receives the request.
-        SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
-        Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.List |
-            SharedAccessBlobPermissions.Write
-    };
+    // When the start time for the SAS is omitted, the start time is assumed to be the time when Azure Storage receives the request.
+    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.List |
+        SharedAccessBlobPermissions.Write
+};
 
-    // Get the container's existing permissions.
-    BlobContainerPermissions permissions = await container.GetPermissionsAsync();
+// Get the container's existing permissions.
+BlobContainerPermissions permissions = await container.GetPermissionsAsync();
 
-    // Add the new policy to the container's permissions, and set the container's permissions.
-    permissions.SharedAccessPolicies.Add(policyName, sharedPolicy);
-    await container.SetPermissionsAsync(permissions);
-}
+// Add the new policy to the container's permissions, and set the container's permissions.
+permissions.SharedAccessPolicies.Add(policyName, sharedPolicy);
+await container.SetPermissionsAsync(permissions);
 ```
 
 v12
 ````C# Snippet:SampleSnippetsBlobMigration_SharedAccessPolicy
-async static Task CreateStoredAccessPolicyAsync(string containerName)
+// Create one or more stored access policies.
+List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
 {
-    string connectionString = "";
-
-    // Use the connection string to authorize the operation to create the access policy.
-    // Azure AD does not support the Set Container ACL operation that creates the policy.
-    BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);
-
-    try
+    new BlobSignedIdentifier
     {
-        await containerClient.CreateIfNotExistsAsync();
-
-        // Create one or more stored access policies.
-        List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
+        Id = "mysignedidentifier",
+        AccessPolicy = new BlobAccessPolicy
         {
-            new BlobSignedIdentifier
-            {
-                Id = "mysignedidentifier",
-                AccessPolicy = new BlobAccessPolicy
-                {
-                    StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
-                    ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
-                    Permissions = "rw"
-                }
-            }
-        };
-        // Set the container's access policy.
-        await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
+            StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+            ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
+            Permissions = "rw"
+        }
     }
-    catch (RequestFailedException e)
-    {
-        Console.WriteLine(e.ErrorCode);
-        Console.WriteLine(e.Message);
-    }
-    finally
-    {
-        await containerClient.DeleteAsync();
-    }
-}
+};
+// Set the container's access policy.
+await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
 ```
 
 ### Client Structure
@@ -294,18 +244,16 @@ await cloudBlobContainer.CreateAsync();
 v12
 
 ```C# Snippet:SampleSnippetsBlobMigration_CreateContainer
-// Create a BlobServiceClient object which will be used to create a container client
 BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("yourcontainer");
-await containerClient.CreateAsync()
+BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+await containerClient.CreateAsync();
 ```
 
 Or you can skip a step by using the `BlobServiceClient.CreateBlobContainerAsync()` method.
 
 ```C# Snippet:SampleSnippetsBlobMigration_CreateContainerShortcut
-// Create a BlobServiceClient object which will be used to create a container client
 BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync("yourcontainer");
+BlobContainerClient containerClient = await blobServiceClient.CreateBlobContainerAsync(containerName);
 ```
 
 
@@ -313,22 +261,13 @@ BlobContainerClient containerClient = await blobServiceClient.CreateBlobContaine
 
 v11
 ```csharp
-// Assumes cloudBlobContainer already contains a reference to the container.
-// filename is the intended blob name as a string
-// localFilePath should be the path to the local file you want to upload
-// Get a reference to the blob address, then upload the file to the blob.
-CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(filename);
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
 await cloudBlockBlob.UploadFromFileAsync(localFilePath);
 ```
 
 v12
 ```C# Snippet:SampleSnippetsBlobMigration_UploadBlob
-// Assumes container already exists on the service.
-// blobName is desired name of new blob in the service
-// localFilePath should be the path to the local file you want to upload
-// Get a reference to a blob
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-// choose the file to upload
 await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
@@ -338,9 +277,6 @@ This example uploads from given file paths, but note that v12 also conatins an o
 
 v11
 ```csharp
-// Assumes container and blob already exist on the service.
-// blobName should be the name of the blob on the service
-// downloadFilePath should be the path to the intended file to download the blob to
 CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
 await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 ```
@@ -348,11 +284,8 @@ await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 v12
 
 ```C# Snippet:SampleSnippetsBlobMigration_DownloadBlob
-// Assumes container and blob already exist on the service.
-// blobName should be the name of the blob on the service
-// downloadFilePath should be the path to the intended file to download the blob to
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-await blobClient.DownloadTo(downloadFilePath);
+await blobClient.DownloadToAsync(downloadFilePath);
 ```
 
 This example uploads from given file paths, but note that v12 also conatins an overloads for downloading to a writable `Stream` instance.
@@ -360,11 +293,11 @@ This example uploads from given file paths, but note that v12 also conatins an o
 v12 also contains overloads for reading the download stream directly, with smart retries abstracted into the stream implementation. Remember to dispose of your stream when finished, either through `Stream.Close()` or (as in this example) through a disposable pattern. Note that this is the only mechanism in v12 to download a specific range of a blob instead of the whole blob.
 
 ```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
-// assume you already have your properly configured BlobClient
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
 BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
-using (Stream downloadStream = download.Content)
+using (Stream downloadStream = downloadResponse.Content)
 {
-    // consume stream
+    await MyConsumeStreamFunc(downloadStream);
 }
 ```
 
@@ -378,7 +311,6 @@ Azure Blob Storage lists blobs in a container as a paged response. Both the mode
 
 v11 lazy enumerable
 ```csharp
-CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
 IEnumerable<IListBlobItem> results = cloudBlobContainer.ListBlobs();
 foreach (IListBlobItem item in results)
 {
@@ -389,7 +321,6 @@ Note there is no asynchronous overload of a lazy enumerator in v11. Users desiri
 
 v11 manual interation
 ```csharp
-CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
 // set this to already existing continuation token to pick up where you previously left off
 BlobContinuationToken blobContinuationToken = null;
 do
@@ -405,11 +336,10 @@ do
 
 v12 lazy enumerable
 ```C# Snippet:SampleSnippetsBlobMigration_ListBlobs
-BlobContainerClient containerClient; // properly configured client to an existing container
 IAsyncEnumerable<BlobItem> results = containerClient.GetBlobsAsync();
 await foreach (BlobItem item in results)
 {
-    // process blob listing
+    MyConsumeBlobItemFunc(item);
 }
 ```
 
@@ -418,10 +348,9 @@ v12 manual iteration
 The result we declared an `IAsyncEnumerable<T>` in the previous example was actually an `AsyncPagable<T>`, an implementation provided by the Azure.Core package. This class contains the method `AsPages()`, which returns an `IAsyncEnumerable<Page<T>>`. This is how you can go page by page in the modern Storage SDK.
 
 ```C# Snippet:SampleSnippetsBlobMigration_ListBlobsManual
-BlobContainerClient containerClient; // properly configured client to an existing container
 // set this to already existing continuation token to pick up where you previously left off
 string initialContinuationToken = null;
-AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync());
+AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync();
 IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationToken);
 
 // the foreach loop requests the next page of results every loop
@@ -431,10 +360,9 @@ IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationTok
 await foreach (Page<BlobItem> page in pages)
 {
     // process page
-
     foreach (BlobItem item in page.Values)
     {
-        // process blob listing
+        MyConsumeBlobItemFunc(item);
     }
 
     // access continuation token if desired
@@ -452,8 +380,6 @@ v11
 
 `ListBlobs()` and `ListBlobsSegmented()` that were used in a flat listing contain overloads with a string parameter `prefix`, which results in a flat listing when `null`. Provide a value to perform a hierarchical listing with that prefix.
 ```csharp
-CloudBlobContainer cloudBlobContainer; // properly configured reference to an existing container
-string blobPrefix; // prefix to list on
 IEnumerable<IListBlobItem> results = cloudBlobContainer.ListBlobs(prefix: blobPrefix);
 foreach (IListBlobItem item in results)
 {
@@ -465,12 +391,10 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-BlobContainerClient containerClient; // properly configured client to an existing container
-string blobPrefix; // prefix to list on
 IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
 await foreach (BlobHierarchyItem item in results)
 {
-    // process blob listing
+    MyConsumeBlobItemFunc(item);
 }
 ```
 
@@ -507,7 +431,6 @@ return blob.Uri + sasBlobToken;
 You could also make a SAS using a predefined policy stored on the service, instead of defining it in code.
 
 ```csharp
-string policyId; // the id of the stored policy
 sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
 ```
 
@@ -516,35 +439,34 @@ v12
 The modern SDK uses a builder pattern for constructing a SAS token. Clients are not involved in the process.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
-Uri resourceUri; // URI to the resource we want to scope the SAS to
-StorageSharedKeyCredential credential; // key used to sign the SAS
-
 // Create BlobSasBuilder and specify parameters
 BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
     // with no url in a client to read from, container and blob name must be provided if applicable
     BlobContainerName = containerName,
     BlobName = blobName,
-    ExpiresOn = new DateTimeOffset
+    ExpiresOn = DateTimeOffset.Now.AddHours(1)
 };
 // permissions applied separately, using the appropriate enum to the scope of your SAS
 sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
 // Create full, self-authenticating URI to the resource
-BlobUriBuilder uriBuilder = new BlobUriBuilder(resourceUri)
+BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
 {
-    Sas = sasBuilder.ToSasQueryParameters(credential)
+    BlobContainerName = containerName,
+    BlobName = blobName,
+    Sas = sasBuilder.ToSasQueryParameters(sharedKeyCredential)
 };
-Uri sasUri = uriBuilder.ToUri()
+Uri sasUri = uriBuilder.ToUri();
 ```
 
 If using a stored access policy, construct your `BlobSasBuilder` from the example above as follows:
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilderIdentifier
-string identifier; // ID of the stored access policy
+// Create BlobSasBuilder and specify parameters
 BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
-    Identifier = identifier
+    Identifier = "mysignedidentifier"
 };
 ```
 

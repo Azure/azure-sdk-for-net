@@ -480,8 +480,11 @@ namespace Azure.Storage.Blobs.Samples
                     }
                 }
 
+                // show in snippet where the prefix goes, but our test doesn't want a prefix for its data set
+                string blobPrefix = null;
+
                 #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync();
+                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
                 await foreach (BlobHierarchyItem item in results)
                 {
                     MyConsumeBlobItemFunc(item);
