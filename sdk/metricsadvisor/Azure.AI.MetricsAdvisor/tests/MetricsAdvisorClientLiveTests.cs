@@ -93,30 +93,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomalies()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            int pages = 0;
-
-            await foreach (var value in client.GetValuesOfDimensionWithAnomaliesAsync(
-                DetectionConfigurationId,
-                "city",
-                new GetValuesOfDimensionWithAnomaliesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
-            {
-                Assert.That(value, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
         public async Task GetAlerts()
         {
             var client = GetMetricsAdvisorClient();

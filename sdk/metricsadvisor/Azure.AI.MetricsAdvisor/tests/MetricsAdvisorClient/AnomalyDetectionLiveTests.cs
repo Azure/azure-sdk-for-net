@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task GetAnomalies(bool populateOptionalMembers)
         {
-            const int maximumAnomalySamples = 10;
+            const int maximumSamplesCount = 10;
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
                 }
 
-                if (++anomalyCount >= maximumAnomalySamples)
+                if (++anomalyCount >= maximumSamplesCount)
                 {
                     break;
                 }
@@ -91,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [TestCase(false)]
         public async Task GetIncidents(bool populateOptionalMembers)
         {
-            const int maximumIncidentSamples = 10;
+            const int maximumSamplesCount = 10;
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -145,7 +145,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
                 }
 
-                if (++incidentCount >= maximumIncidentSamples)
+                if (++incidentCount >= maximumSamplesCount)
                 {
                     break;
                 }
@@ -157,7 +157,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetIncidentRootCauses()
         {
-            const int maximumRootCauseSamples = 10;
+            const int maximumSamplesCount = 10;
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -184,13 +184,49 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
                 Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
 
-                if (++rootCauseCount >= maximumRootCauseSamples)
+                if (++rootCauseCount >= maximumSamplesCount)
                 {
                     break;
                 }
             }
 
             Assert.That(rootCauseCount, Is.GreaterThan(0));
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetValuesOfDimensionWithAnomalies(bool populateOptionalMembers)
+        {
+            const int maximumSamplesCount = 10;
+            const string dimensionName = "city";
+
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            var startTime = DateTimeOffset.Parse("2020-10-01T00:00:00Z");
+            var endTime = DateTimeOffset.Parse("2020-10-31T00:00:00Z");
+
+            var options = new GetValuesOfDimensionWithAnomaliesOptions(startTime, endTime);
+
+            if (populateOptionalMembers)
+            {
+                options.DimensionToFilter = new DimensionKey();
+                options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
+            }
+
+            var valueCount = 0;
+
+            await foreach (string value in client.GetValuesOfDimensionWithAnomaliesAsync(DetectionConfigurationId, dimensionName, options))
+            {
+                Assert.That(value, Is.Not.Null.And.Not.Empty);
+
+                if (++valueCount >= maximumSamplesCount)
+                {
+                    break;
+                }
+            }
+
+            Assert.That(valueCount, Is.GreaterThan(0));
         }
     }
 }
