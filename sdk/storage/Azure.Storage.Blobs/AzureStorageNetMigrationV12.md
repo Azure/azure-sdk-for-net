@@ -66,8 +66,7 @@ v12
 A `TokenCredential` abstract class (different API surface than v11) exists in the Azure.Core package that all libraries of the new Azure SDK family depend on, and can be used to construct Storage clients. Implementations of this class can be found separately in the [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) package. [`DefaultAzureCredential`](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) is a good starting point, with code as simple as the following:
 
 ```C# Snippet:SampleSnippetsBlobMigration_TokenCredential
-Uri myAccountUri = new Uri("<account_url>"); // url to your storage account
-BlobServiceClient client = new BlobServiceClient(myAccountUri, new DefaultAzureCredential());
+BlobServiceClient client = new BlobServiceClient(new Uri(accountUri), new DefaultAzureCredential());
 ```
 
 You can view more [Identity samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#examples) for how to authenticate with the Identity package.
@@ -97,8 +96,7 @@ v12
 The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, a new client instance with a new SAS must be created in order to rotate a SAS.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasUri
-Uri blobLocationWithSAS; // self-authenticating SAS URI to a blob
-BlobClient blob = new BlobClient(blobLocationWithSAS);
+BlobServiceClient client = new BlobServiceClient(new Uri(accountUriWithSas));
 ```
 
 #### Connection string
@@ -200,7 +198,7 @@ private static async Task CreateStoredAccessPolicyAsync(CloudBlobContainer conta
 ```
 
 v12
-````C# Snippet:SampleSnippetsBlobMigration_SharedAccesPolicy
+````C# Snippet:SampleSnippetsBlobMigration_SharedAccessPolicy
 async static Task CreateStoredAccessPolicyAsync(string containerName)
 {
     string connectionString = "";
@@ -408,7 +406,7 @@ do
 v12 lazy enumerable
 ```C# Snippet:SampleSnippetsBlobMigration_ListBlobs
 BlobContainerClient containerClient; // properly configured client to an existing container
-IAsyncEnumerable<BlobItem> results = containerClient.GetBlobsAsync());
+IAsyncEnumerable<BlobItem> results = containerClient.GetBlobsAsync();
 await foreach (BlobItem item in results)
 {
     // process blob listing
