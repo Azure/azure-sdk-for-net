@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -37,8 +38,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> that detected
         /// this <see cref="AnomalyIncident"/>. This property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// </summary>
         [CodeGenMember("AnomalyDetectionConfigurationId")]
         public string DetectionConfigurationId { get; }
@@ -46,8 +47,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of the <see cref="DataFeedMetric"/> of the time series in which this
         /// <see cref="AnomalyIncident"/> has been detected. This property is only populated when calling
-        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlert"/> or
-        /// <see cref="MetricsAdvisorClient.GetIncidentsForAlertAsync"/>.
+        /// <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/> or
+        /// <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>.
         /// </summary>
         public string MetricId { get; }
 
@@ -59,14 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DimensionKey DimensionKey { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> started. Corresponds to
-        /// the time when the first associated <see cref="DataAnomaly"/> occurred.
+        /// Corresponds to the time, in UTC, when the first associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// The date and time, in UTC, in which this <see cref="AnomalyIncident"/> last occurred. Corresponds
-        /// to the time when the last associated <see cref="DataAnomaly"/> occurred.
+        /// Corresponds to the time, in UTC, when the last associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
         public DateTimeOffset LastTime { get; }
 
@@ -79,6 +78,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The current status of this <see cref="AnomalyIncident"/>.
         /// </summary>
         [CodeGenMember("IncidentStatus")]
-        public IncidentStatus? Status { get; }
+        public AnomalyIncidentStatus Status { get; }
     }
 }

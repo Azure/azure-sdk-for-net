@@ -18,7 +18,7 @@ namespace QnAMaker.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerKnowledgebasePreviewCrud");
-                IQnAMakerClient client = GetQnAMakerPreviewClient(HttpMockServer.CreateInstance());
+                IQnAMakerClient client = GetQnAMakerClient(HttpMockServer.CreateInstance());
 
                 // Create
                 var createOp = client.Knowledgebase.CreateAsync(new CreateKbDTO { Name = "testqna", QnaList = new List<QnADTO> { new QnADTO { Questions = new List<string> { "hi" }, Answer = "hello" } } }).Result;
@@ -26,7 +26,7 @@ namespace QnAMaker.Tests
                 // Loop while operation is success
                 createOp = OperationHelper.MonitorOperation(createOp, client);
 
-                Assert.Equal(createOp.OperationState, OperationStateType.Succeeded);
+                Assert.Equal(OperationStateType.Succeeded, createOp.OperationState);
 
                 var kbid = createOp.ResourceLocation.Replace("/knowledgebases/", string.Empty);
                 Assert.NotEmpty(kbid);

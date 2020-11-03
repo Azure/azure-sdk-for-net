@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -75,10 +76,15 @@ namespace Azure.Core.TestFramework
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
                 null;
 
-            string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+            // Use the current class name instead of the name of the class that declared a test.
+            // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
+            string className = GetType().Name;
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+
+            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+
+            return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);

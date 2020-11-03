@@ -86,4 +86,4 @@ steps:
       -UserReviewers "${{ parameters.GHReviewersVariable }}"
       -TeamReviewers "${{ parameters.GHTeamReviewersVariable }}"
       -Assignees "${{ parameters.GHAssignessVariable }}"
-      -CloseAfterOpenForTesting $${{ parameters.CloseAfterOpenForTesting }}
+      -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}

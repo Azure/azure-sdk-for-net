@@ -22,15 +22,12 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Spatial" />
   </ItemGroup>
 

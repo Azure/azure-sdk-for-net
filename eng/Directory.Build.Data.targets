@@ -119,12 +119,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-    <!-- Find all Azure projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
     <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
     <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
 
     <!-- Remove PackageReferences -->

@@ -56,9 +56,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var metricId in feed.MetricIds)
             {
-                foreach (MetricDimension dimension in feed.Schema.DimensionColumns)
+                foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
-                    await foreach (string value in client.GetMetricDimensionValuesAsync(metricId, dimension.DimensionName))
+                    await foreach (string value in client.GetDimensionValuesAsync(metricId, dimension.DimensionName))
                     {
                         Assert.That(!string.IsNullOrEmpty(value));
                     }
@@ -71,25 +71,25 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            var seriesList = await client.GetMetricSeriesDataAsync(
-                MetricId,
-                new GetMetricSeriesDataOptions(
-                        new List<DimensionKey>()
-                        {
-                            new DimensionKey(new List<KeyValuePair<string, string>> {
-                                new KeyValuePair<string, string>("Dim1", "*"),
-                                new KeyValuePair<string, string>("Dim2", "*"),
-                            }) },
-                        Recording.UtcNow.AddYears(-5),
-                        Recording.UtcNow)
-                ).ConfigureAwait(false);
+            var options = new GetMetricSeriesDataOptions(
+                new List<DimensionKey>()
+                {
+                    new DimensionKey(new List<KeyValuePair<string, string>> {
+                        new KeyValuePair<string, string>("Dim1", "*"),
+                        new KeyValuePair<string, string>("Dim2", "*"),
+                    }) },
+                Recording.UtcNow.AddYears(-5),
+                Recording.UtcNow);
 
-            Assert.That(seriesList.Value, Is.Not.Empty);
+            bool isResponseEmpty = true;
 
-            foreach (MetricSeriesData seriesData in seriesList.Value)
+            await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
+                isResponseEmpty = false;
                 Assert.That(seriesData, Is.Not.Null);
             }
+
+            Assert.That(isResponseEmpty, Is.False);
         }
 
         [RecordedTest]
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            List<DataAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
+            List<DataPointAnomaly> anomalies = await client.GetAnomaliesAsync(
                 DetectionConfigurationId,
                 new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
             ).ToEnumerableAsync().ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForDetectionConfigurationAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                  DetectionConfigurationId,
                  new GetIncidentsForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
             {
@@ -134,12 +134,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            var rootCauses = await client.GetIncidentRootCausesAsync(
-                DetectionConfigurationId,
-                IncidentId
-            ).ConfigureAwait(false);
+            bool isResponseEmpty = true;
 
-            Assert.That(rootCauses.Value, Is.Not.Empty);
+            await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId))
+            {
+                isResponseEmpty = false;
+                break;
+            }
+
+            Assert.That(isResponseEmpty, Is.False);
         }
 
         [RecordedTest]
@@ -175,7 +178,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             await foreach (var alert in client.GetAlertsAsync(
                 AlertConfigurationId,
-                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, TimeMode.CreatedTime) { TopCount = 1 }))
+                new GetAlertsOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow, AlertQueryTimeMode.CreatedTime) { TopCount = 1 }))
             {
                 Assert.That(alert.Id, Is.Not.Null);
 
@@ -196,7 +199,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var anomaly in client.GetAnomaliesForAlertAsync(
+            await foreach (var anomaly in client.GetAnomaliesAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetAnomaliesForAlertOptions() { TopCount = 1 }))
@@ -220,7 +223,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForAlertAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetIncidentsForAlertOptions() { TopCount = 1 }))
@@ -242,26 +245,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
+            IEnumerable<DimensionKey> seriesKeys = new List<DimensionKey>()
+            {
+                new DimensionKey(new List<KeyValuePair<string, string>> {
+                    new KeyValuePair<string, string>("Dim1", "Common Lime"),
+                    new KeyValuePair<string, string>("Dim2", "Amphibian"),
+                }),
+                new DimensionKey(new List<KeyValuePair<string, string>> {
+                    new KeyValuePair<string, string>("Dim1", "Common Beech"),
+                    new KeyValuePair<string, string>("Dim2", "Ant"),
+                })
+            };
+
             int pages = 0;
 
-            var series = await client.GetMetricEnrichedSeriesDataAsync(
-                new List<DimensionKey>()
-                {
-                    new DimensionKey(new List<KeyValuePair<string, string>> {
-                        new KeyValuePair<string, string>("Dim1", "Common Lime"),
-                        new KeyValuePair<string, string>("Dim2", "Amphibian"),
-                    }),
-                    new DimensionKey(new List<KeyValuePair<string, string>> {
-                        new KeyValuePair<string, string>("Dim1", "Common Beech"),
-                        new KeyValuePair<string, string>("Dim2", "Ant"),
-                    })
-                },
-                DetectionConfigurationId,
-                Recording.UtcNow.AddMonths(-5),
-                Recording.UtcNow
-            ).ConfigureAwait(false);
-
-            foreach (var seriesData in series.Value)
+            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, Recording.UtcNow.AddMonths(-5), Recording.UtcNow))
             {
                 Assert.That(seriesData, Is.Not.Null);
 
@@ -303,7 +301,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions() { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetAllMetricFeedbackAsync(MetricId, new GetAllMetricFeedbackOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
@@ -365,14 +363,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var feedback in feedbacks)
             {
-                MetricFeedback createdFeedback = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
+                string createdFeedbackId = await client.AddMetricFeedbackAsync(feedback).ConfigureAwait(false);
 
-                Assert.That(createdFeedback.MetricId, Is.EqualTo(MetricId));
-                Assert.That(createdFeedback.Id, Is.Not.Null);
+                Assert.That(createdFeedbackId, Is.Not.Null);
 
-                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedback.Id).ConfigureAwait(false);
+                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedbackId).ConfigureAwait(false);
 
-                Assert.That(getFeedback.Id, Is.EqualTo(createdFeedback.Id));
+                Assert.That(getFeedback.Id, Is.EqualTo(createdFeedbackId));
             }
         }
     }

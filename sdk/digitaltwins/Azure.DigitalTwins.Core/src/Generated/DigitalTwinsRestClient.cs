@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,16 +55,76 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetByIdOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsGetByIdOptions.Traceparent);
-            }
-            if (digitalTwinsGetByIdOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsGetByIdOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<Stream>> GetByIdAsync(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<Stream> GetById(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateDeleteRequest(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
@@ -77,14 +138,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsDeleteOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsDeleteOptions.Traceparent);
-            }
-            if (digitalTwinsDeleteOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsDeleteOptions.Tracestate);
-            }
             if (digitalTwinsDeleteOptions?.IfMatch != null)
             {
                 request.Headers.Add("If-Match", digitalTwinsDeleteOptions.IfMatch);
@@ -172,14 +225,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsUpdateOptions.Traceparent);
-            }
-            if (digitalTwinsUpdateOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsUpdateOptions.Tracestate);
-            }
             if (digitalTwinsUpdateOptions?.IfMatch != null)
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateOptions.IfMatch);
@@ -210,19 +255,91 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetRelationshipByIdOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsGetRelationshipByIdOptions.Traceparent);
-            }
-            if (digitalTwinsGetRelationshipByIdOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsGetRelationshipByIdOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateRelationshipOptions digitalTwinsAddRelationshipOptions)
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public async Task<Response<Stream>> GetRelationshipByIdAsync(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public Response<Stream> GetRelationshipById(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,15 +352,10 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsAddRelationshipOptions?.Traceparent != null)
+            if (digitalTwinsAddRelationshipOptions?.IfNoneMatch != null)
             {
-                request.Headers.Add("traceparent", digitalTwinsAddRelationshipOptions.Traceparent);
+                request.Headers.Add("If-None-Match", digitalTwinsAddRelationshipOptions.IfNoneMatch);
             }
-            if (digitalTwinsAddRelationshipOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsAddRelationshipOptions.Tracestate);
-            }
-            request.Headers.Add("If-None-Match", "*");
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -265,14 +377,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsDeleteRelationshipOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsDeleteRelationshipOptions.Traceparent);
-            }
-            if (digitalTwinsDeleteRelationshipOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsDeleteRelationshipOptions.Tracestate);
-            }
             if (digitalTwinsDeleteRelationshipOptions?.IfMatch != null)
             {
                 request.Headers.Add("If-Match", digitalTwinsDeleteRelationshipOptions.IfMatch);
@@ -372,14 +476,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(relationshipId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateRelationshipOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsUpdateRelationshipOptions.Traceparent);
-            }
-            if (digitalTwinsUpdateRelationshipOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsUpdateRelationshipOptions.Tracestate);
-            }
             if (digitalTwinsUpdateRelationshipOptions?.IfMatch != null)
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateRelationshipOptions.IfMatch);
@@ -413,90 +509,8 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsListRelationshipsOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.Traceparent);
-            }
-            if (digitalTwinsListRelationshipsOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        /// <summary>
-        /// Retrieves the relationships from a digital twin.
-        /// Status codes:
-        /// * 200 OK
-        /// * 400 Bad Request
-        ///   * InvalidArgument - The digital twin id is invalid.
-        /// * 404 Not Found
-        ///   * DigitalTwinNotFound - The digital twin was not found.
-        /// </summary>
-        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
-        /// <param name="relationshipName"> The name of the relationship. </param>
-        /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<RelationshipCollection>> ListRelationshipsAsync(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateListRelationshipsRequest(id, relationshipName, digitalTwinsListRelationshipsOptions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the relationships from a digital twin.
-        /// Status codes:
-        /// * 200 OK
-        /// * 400 Bad Request
-        ///   * InvalidArgument - The digital twin id is invalid.
-        /// * 404 Not Found
-        ///   * DigitalTwinNotFound - The digital twin was not found.
-        /// </summary>
-        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
-        /// <param name="relationshipName"> The name of the relationship. </param>
-        /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<RelationshipCollection> ListRelationships(string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateListRelationshipsRequest(id, relationshipName, digitalTwinsListRelationshipsOptions);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateListIncomingRelationshipsRequest(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
@@ -511,14 +525,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/incomingrelationships", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsListIncomingRelationshipsOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.Traceparent);
-            }
-            if (digitalTwinsListIncomingRelationshipsOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -607,14 +613,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendTelemetryOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsSendTelemetryOptions.Traceparent);
-            }
-            if (digitalTwinsSendTelemetryOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsSendTelemetryOptions.Tracestate);
-            }
             request.Headers.Add("Message-Id", messageId);
             if (telemetrySourceTime != null)
             {
@@ -642,14 +640,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/telemetry", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsSendComponentTelemetryOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsSendComponentTelemetryOptions.Traceparent);
-            }
-            if (digitalTwinsSendComponentTelemetryOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsSendComponentTelemetryOptions.Tracestate);
-            }
             request.Headers.Add("Message-Id", messageId);
             if (telemetrySourceTime != null)
             {
@@ -676,16 +666,88 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsGetComponentOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsGetComponentOptions.Traceparent);
-            }
-            if (digitalTwinsGetComponentOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsGetComponentOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public async Task<Response<Stream>> GetComponentAsync(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public Response<Stream> GetComponent(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
@@ -701,14 +763,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(componentPath, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinsUpdateComponentOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsUpdateComponentOptions.Traceparent);
-            }
-            if (digitalTwinsUpdateComponentOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsUpdateComponentOptions.Tracestate);
-            }
             if (digitalTwinsUpdateComponentOptions?.IfMatch != null)
             {
                 request.Headers.Add("If-Match", digitalTwinsUpdateComponentOptions.IfMatch);
@@ -735,100 +789,8 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinsListRelationshipsOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsListRelationshipsOptions.Traceparent);
-            }
-            if (digitalTwinsListRelationshipsOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsListRelationshipsOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        /// <summary>
-        /// Retrieves the relationships from a digital twin.
-        /// Status codes:
-        /// * 200 OK
-        /// * 400 Bad Request
-        ///   * InvalidArgument - The digital twin id is invalid.
-        /// * 404 Not Found
-        ///   * DigitalTwinNotFound - The digital twin was not found.
-        /// </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
-        /// <param name="relationshipName"> The name of the relationship. </param>
-        /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public async Task<Response<RelationshipCollection>> ListRelationshipsNextPageAsync(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateListRelationshipsNextPageRequest(nextLink, id, relationshipName, digitalTwinsListRelationshipsOptions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the relationships from a digital twin.
-        /// Status codes:
-        /// * 200 OK
-        /// * 400 Bad Request
-        ///   * InvalidArgument - The digital twin id is invalid.
-        /// * 404 Not Found
-        ///   * DigitalTwinNotFound - The digital twin was not found.
-        /// </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
-        /// <param name="relationshipName"> The name of the relationship. </param>
-        /// <param name="digitalTwinsListRelationshipsOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="id"/> is null. </exception>
-        public Response<RelationshipCollection> ListRelationshipsNextPage(string nextLink, string id, string relationshipName = null, GetRelationshipsOptions digitalTwinsListRelationshipsOptions = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateListRelationshipsNextPageRequest(nextLink, id, relationshipName, digitalTwinsListRelationshipsOptions);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RelationshipCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RelationshipCollection.DeserializeRelationshipCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateListIncomingRelationshipsNextPageRequest(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
@@ -840,14 +802,6 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinsListIncomingRelationshipsOptions?.Traceparent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinsListIncomingRelationshipsOptions.Traceparent);
-            }
-            if (digitalTwinsListIncomingRelationshipsOptions?.Tracestate != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinsListIncomingRelationshipsOptions.Tracestate);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }

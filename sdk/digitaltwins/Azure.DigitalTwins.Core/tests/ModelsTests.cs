@@ -44,7 +44,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // GET one created model
                 Response<DigitalTwinsModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
-                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.Model}");
+                Console.WriteLine($"Got {buildingModelId} as {buildingModel.Value.DtdlModel}");
 
                 // LIST all models
                 AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
@@ -98,8 +98,8 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // assert
 
-            wardModel.Value.DisplayName.Count.Should().Be(1, "Should have 1 entry for display name");
-            wardModel.Value.DisplayName.Keys.First().Should().Be("en");
+            wardModel.Value.LanguageDisplayNames.Count.Should().Be(1, "Should have 1 entry for display name");
+            wardModel.Value.LanguageDisplayNames.Keys.First().Should().Be("en");
         }
 
         [Test]

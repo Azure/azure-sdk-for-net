@@ -325,11 +325,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -435,7 +435,7 @@ namespace Azure.Data.Tables.Tests
             // Fetch the created entity from the service.
 
             var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
-            var staleEtag = new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string);
+            var staleEtag = originalEntity.ETag;
 
             // Use a wildcard ETag to delete unconditionally.
 
@@ -461,7 +461,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a matching ETag.
 
-            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string)).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity.ETag).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -563,11 +563,11 @@ namespace Azure.Data.Tables.Tests
             // Create an entity.
 
             await client.AddEntityAsync(entityToCreate).ConfigureAwait(false);
-            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.PartitionKey) }).ConfigureAwait(false);
+            TableEntity entity = await client.GetEntityAsync<TableEntity>(entityToCreate.PartitionKey, entityToCreate.RowKey, new[] { nameof(entityToCreate.Timestamp) }).ConfigureAwait(false);
 
-            Assert.That(entity.PartitionKey, Is.EqualTo(entityToCreate.PartitionKey), "The entity property should be equal");
+            Assert.That(entity.PartitionKey, Is.Null, "The entity property should be null");
             Assert.That(entity.RowKey, Is.Null, "The entity property should be null");
-            Assert.That(entity.Timestamp, Is.Null, "The entity property should be null");
+            Assert.That(entity.Timestamp, Is.Not.Null, "The entity property should not be null");
             Assert.That(entity.TryGetValue(StringTypePropertyName, out _), Is.False, "The entity property should not exist");
             Assert.That(entity.TryGetValue(DateTypePropertyName, out _), Is.False, "The entity property should not exist");
             Assert.That(entity.TryGetValue(GuidTypePropertyName, out _), Is.False, "The entity property should not exist");
@@ -722,11 +722,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Replace).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -783,11 +783,11 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.UpdateEntityAsync(updatedEntity, new ETag(updatedEntity[TableConstants.PropertyNames.EtagOdata] as string), TableUpdateMode.Merge).ConfigureAwait(false);
+            await client.UpdateEntityAsync(updatedEntity, updatedEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false);
 
             // Fetch the newly updated entity from the service.
 
@@ -820,7 +820,7 @@ namespace Azure.Data.Tables.Tests
             // Fetch the created entity from the service.
 
             var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
-            var staleEtag = new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string);
+            var staleEtag = originalEntity.ETag;
 
             // Use a wildcard ETag to delete unconditionally.
 
@@ -846,7 +846,7 @@ namespace Azure.Data.Tables.Tests
 
             // Use a matching ETag.
 
-            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, new ETag(originalEntity[TableConstants.PropertyNames.EtagOdata] as string)).ConfigureAwait(false);
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, originalEntity.ETag).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
@@ -1012,30 +1012,38 @@ namespace Azure.Data.Tables.Tests
         {
             const string updatedString = "the string was updated!";
 
-            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
-            // Add just the first two entities
+            // Add just the first three entities
             await client.AddEntityAsync(entitiesToCreate[0]).ConfigureAwait(false);
             await client.AddEntityAsync(entitiesToCreate[1]).ConfigureAwait(false);
+            await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
             TableTransactionalBatch batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
-            // Add all but the first two entities
-            batch.AddEntities(entitiesToCreate.Skip(2));
-
             // Add a Merge operation to the entity we are adding.
             var updatedEntity = entitiesToCreate[0];
             updatedEntity.StringTypeProperty = updatedString;
-
             batch.UpdateEntity(updatedEntity, ETag.All, TableUpdateMode.Merge);
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
             batch.DeleteEntity(entityToDelete.PartitionKey, entityToDelete.RowKey, ETag.All);
 
+            // Add an Upsert operation to replace the entity with an updated value.
+            entitiesToCreate[2].StringTypeProperty = updatedString;
+            batch.UpsertEntity(entitiesToCreate[2], TableUpdateMode.Replace);
+
+            // Add an Upsert operation to add an entity.
+            batch.UpsertEntity(entitiesToCreate[3], TableUpdateMode.Replace);
+
+            // Add the last entity.
+            batch.AddEntity(entitiesToCreate.Last());
+
+            // Submit the batch.
             TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
@@ -1050,7 +1058,39 @@ namespace Azure.Data.Tables.Tests
             var entityResults = await client.QueryAsync<TestEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count - 1), "The entity result count should match the created count minus the deleted count.");
-            Assert.That(entityResults[0].StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[0].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+            Assert.That(entityResults.Single(e => e.RowKey == entitiesToCreate[2].RowKey).StringTypeProperty, Is.EqualTo(updatedString), "The entity result property should have been updated.");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task BatchError()
+        {
+            var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
+
+            // Create the batch.
+            var batch = client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey);
+
+            batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Add the last entity to the table prior to adding it as part of the batch to cause a batch failure.
+            await client.AddEntityAsync(entitiesToCreate.Last());
+
+            // Add the entities to the batch
+            batch.AddEntities(entitiesToCreate);
+
+            try
+            {
+                TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
+                Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
+                Assert.That(ex.Message.Contains(entitiesToCreate.Last().RowKey), $"Exception message should have contained {entitiesToCreate.Last().RowKey}.\n\n Actual: {ex.Message}");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
   Import our Directory.Build.props and /eng infrastructure
   -->
   <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs'))">
+    <IsClientLibrary>true</IsClientLibrary>
     <IsWebjobsProject>true</IsWebjobsProject>
     <SupportsNetStandard20>true</SupportsNetStandard20>
   </PropertyGroup>
@@ -53,8 +54,6 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <Import Condition="'$(IsClientLibrary)' == 'true' AND '$(IsMgmtClientLibrary)' != 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
-
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
@@ -78,8 +77,8 @@
   <!--Add shared storage properties-->
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
-    <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
-    <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Webjobs.Extensions.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
+    <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
+    <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
     <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>
   </PropertyGroup>
 </Project>

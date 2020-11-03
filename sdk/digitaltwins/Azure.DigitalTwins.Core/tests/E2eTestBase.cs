@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -37,13 +35,18 @@ namespace Azure.DigitalTwins.Core.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected DigitalTwinsClient GetClient()
+        protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)
         {
+            if (options == null)
+            {
+                options = new DigitalTwinsClientOptions();
+            }
+
             return InstrumentClient(
                 new DigitalTwinsClient(
                     new Uri(TestEnvironment.DigitalTwinHostname),
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new DigitalTwinsClientOptions())));
+                    InstrumentClientOptions(options)));
         }
 
         protected DigitalTwinsClient GetFakeClient()
@@ -62,7 +65,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
         public async Task<string> GetUniqueTwinIdAsync(DigitalTwinsClient dtClient, string baseName)
         {
-            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync(twinId)).ConfigureAwait(false);
+            return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<BasicDigitalTwin>(twinId)).ConfigureAwait(false);
         }
 
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)

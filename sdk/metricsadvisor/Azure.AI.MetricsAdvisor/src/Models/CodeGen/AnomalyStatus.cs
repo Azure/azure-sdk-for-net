@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The current status of the issue that caused a <see cref="DataAnomaly"/>.
+    /// The current status of the issue that caused a <see cref="DataPointAnomaly"/>.
     /// </summary>
     [CodeGenModel("AnomalyPropertyAnomalyStatus")]
     public readonly partial struct AnomalyStatus

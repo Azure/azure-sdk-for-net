@@ -8,10 +8,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "165",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201028.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "394c2288da7de3e1c90e57db9bfda7ed",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,7 +19,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 06 Oct 2020 19:15:48 GMT",
+        "Date": "Wed, 28 Oct 2020 18:17:58 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -33,10 +30,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201028.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "d0d372de6f45b7f008294ce1d3eeae23",
         "x-ms-return-client-request-id": "true"
       },
@@ -45,7 +39,7 @@
       "ResponseHeaders": {
         "Content-Length": "180",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Oct 2020 19:15:48 GMT",
+        "Date": "Wed, 28 Oct 2020 18:17:58 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -60,10 +54,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201028.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "1980b8996a4097cfe58f1797c214fe2c",
         "x-ms-return-client-request-id": "true"
       },
@@ -72,7 +63,7 @@
       "ResponseHeaders": {
         "Content-Length": "208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Oct 2020 19:15:48 GMT",
+        "Date": "Wed, 28 Oct 2020 18:17:58 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -92,10 +83,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201028.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "6d79e5b7654019aa319530538d0010db",
         "x-ms-return-client-request-id": "true"
       },
@@ -103,7 +91,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 06 Oct 2020 19:15:48 GMT",
+        "Date": "Wed, 28 Oct 2020 18:17:58 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": []
@@ -114,10 +102,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201028.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e241335f8e7c74aca23ceab65859f4f4",
         "x-ms-return-client-request-id": "true"
       },
@@ -126,7 +111,7 @@
       "ResponseHeaders": {
         "Content-Length": "222",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Oct 2020 19:15:48 GMT",
+        "Date": "Wed, 28 Oct 2020 18:17:59 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {

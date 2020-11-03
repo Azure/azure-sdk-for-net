@@ -33,5 +33,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public string HookId => Environment.GetEnvironmentVariable("METRICSADVISOR_HOOK_ID");
         public string DetectionConfigurationId => Environment.GetEnvironmentVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
         public string AlertConfigurationId => Environment.GetEnvironmentVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
+        public string AlertId => Environment.GetEnvironmentVariable("METRICSADVISOR_ALERT_ID");
+        public string IncidentId => Environment.GetEnvironmentVariable("METRICSADVISOR_INCIDENT_ID");
+        public string FeedbackId => Environment.GetEnvironmentVariable("METRICSADVISOR_FEEDBACK_ID");
     }
 }

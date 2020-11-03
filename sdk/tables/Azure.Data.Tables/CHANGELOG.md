@@ -2,6 +2,10 @@
 
 ## 3.0.0-beta.3 (Unreleased)
 
+### Added
+
+- Added support for Upsert batch operations.
+- Added support for some numeric type coercion for TableEntity properties.
 
 ## 3.0.0-beta.2 (2020-10-06)
 
