@@ -48,14 +48,7 @@ namespace Azure.AI.TextAnalytics
         {
             get
             {
-                if (HasCompleted && !HasValue)
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw _requestFailedException;
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                else
-                {
-                    return OperationHelpers.GetValue(ref _value);
-                }
+                return OperationHelpers.GetValue(ref _value);
             }
         }
 
@@ -66,8 +59,6 @@ namespace Azure.AI.TextAnalytics
         /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
-
-        private RequestFailedException _requestFailedException;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
@@ -203,21 +194,11 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
 
-                    if (update.Value.Status == JobStatus.Succeeded)
-                    {
-                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
+                    // we need to first assign a value and then mark the operation as completed to avoid race conditions
+                    _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
 
-                        NextLink = update.Value.NextLink;
-                        _hasCompleted = true;
-                    }
-                    else if (update.Value.Status == JobStatus.Failed)
-                    {
-                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Results.Errors)
-                            .ConfigureAwait(false);
-                        _hasCompleted = true;
-                        throw _requestFailedException;
-                    }
+                    NextLink = update.Value.NextLink;
+                    _hasCompleted = true;
                 }
                 catch (Exception e)
                 {
