@@ -121,6 +121,11 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IWebCategoriesOperations.
+        /// </summary>
+        IWebCategoriesOperations WebCategories { get; }
+
+        /// <summary>
         /// Gets the IBastionHostsOperations.
         /// </summary>
         IBastionHostsOperations BastionHosts { get; }
