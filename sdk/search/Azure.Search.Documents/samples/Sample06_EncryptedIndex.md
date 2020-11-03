@@ -20,7 +20,7 @@ az ad sp create-for-rbac -n "<app-name>" --skip-assignment
 
 The last command will provide output like the following:
 
-```text
+```json
 {
     "appId": "<random-app-ID>",
     "displayName": "<app-name>",
