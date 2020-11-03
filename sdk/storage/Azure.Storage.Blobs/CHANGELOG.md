@@ -9,6 +9,7 @@
 - Added CanGenerateSasUri property, GenerateSasUri() to BlobBaseClient, BlobClient, BlockBlobClient, AppendBlobClient, PageBlobClient and BlobContainerClient.
 - Added CanAccountGenerateSasUri property, GenerateAccountSasUri() to BlobServiceClient.
 - Deprecated property BlobSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
+- Added ability to get parent BlobContainerClient from BlobBaseClient and to get parent BlobServiceClient from BlobContainerClient.
 
 ## 12.7.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

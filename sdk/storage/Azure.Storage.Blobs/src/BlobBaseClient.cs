@@ -4246,6 +4246,43 @@ namespace Azure.Storage.Blobs.Specialized
             return sasUri.ToUri();
         }
         #endregion
+
+        #region GetParentBlobContainerClientCore
+
+        private BlobContainerClient _parentBlobContainerClient;
+
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlobContainerClient GetParentBlobContainerClientCore()
+        {
+            if (_parentBlobContainerClient == null)
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
+
+                _parentBlobContainerClient = new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope);
+            }
+
+            return _parentBlobContainerClient;
+        }
+        #endregion
     }
 
     /// <summary>
@@ -4254,6 +4291,19 @@ namespace Azure.Storage.Blobs.Specialized
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobBaseClient"/>.</param>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public static BlobContainerClient GetParentBlobContainerClient(this BlobBaseClient client)
+        {
+            return client.GetParentBlobContainerClientCore();
+        }
+
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by concatenating
         /// <paramref name="blobName"/> to the end of the

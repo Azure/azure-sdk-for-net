@@ -6124,6 +6124,102 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreSame(blobLeaseClientMock.Object, blobLeaseClient);
         }
 
+        [Test]
+        public async Task CanGetParentContainerClient()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            var containerClient = blobClient.GetParentBlobContainerClient();
+            // make sure that client is functional
+            BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(blobClient.BlobContainerName, containerClient.Name);
+            Assert.AreEqual(blobClient.AccountName, containerClient.AccountName);
+            Assert.IsNotNull(containerProperties);
+        }
+
+        [Test]
+        public async Task CanGetParentContainerClient_FromBlobClientThatHasExtraQueryParameters()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName())).WithVersion(Recording.Random.NewGuid().ToString());
+
+            // Act
+            var containerClient = blobClient.GetParentBlobContainerClient();
+            // make sure that client is functional
+            BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(blobClient.BlobContainerName, containerClient.Name);
+            Assert.AreEqual(blobClient.AccountName, containerClient.AccountName);
+            Assert.IsNotNull(containerProperties);
+        }
+
+        [Test]
+        public async Task CanGetParentContainerClient_WithAccountSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var blobName = GetNewBlobName();
+            BlobBaseClient blobClient = InstrumentClient(
+                GetServiceClient_AccountSas()
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            // Act
+            var containerClient = blobClient.GetParentBlobContainerClient();
+            // make sure that client is functional
+            BlobContainerProperties containerProperties = await containerClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(blobClient.BlobContainerName, containerClient.Name);
+            Assert.AreEqual(blobClient.AccountName, containerClient.AccountName);
+            Assert.IsNotNull(containerProperties);
+        }
+
+        [Test]
+        public async Task CanGetParentContainerClient_WithContainerSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var blobName = GetNewBlobName();
+            BlobBaseClient blobClient = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Container(test.Container.Name)
+                .GetBlobContainerClient(test.Container.Name)
+                .GetBlobClient(blobName));
+
+            // Act
+            var containerClient = blobClient.GetParentBlobContainerClient();
+            // make sure that client is functional
+            var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(blobClient.BlobContainerName, containerClient.Name);
+            Assert.AreEqual(blobClient.AccountName, containerClient.AccountName);
+            Assert.IsNotNull(blobItems);
+        }
+
+        [Test]
+        public void CanMockParentContainerClientRetrieval()
+        {
+            // Arrange
+            Mock<BlobBaseClient> blobBaseClientMock = new Mock<BlobBaseClient>();
+            Mock<BlobContainerClient> blobContainerClientMock = new Mock<BlobContainerClient>();
+            blobBaseClientMock.Protected().Setup<BlobContainerClient>("GetParentBlobContainerClientCore").Returns(blobContainerClientMock.Object);
+
+            // Act
+            var blobContainerClient = blobBaseClientMock.Object.GetParentBlobContainerClient();
+
+            // Assert
+            Assert.IsNotNull(blobContainerClient);
+            Assert.AreSame(blobContainerClientMock.Object, blobContainerClient);
+        }
+
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {

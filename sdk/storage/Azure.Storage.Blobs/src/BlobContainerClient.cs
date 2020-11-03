@@ -15,6 +15,8 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Blobs
 {
     /// <summary>
@@ -2967,5 +2969,66 @@ namespace Azure.Storage.Blobs
             return sasUri.ToUri();
         }
         #endregion
+
+        #region GetParentBlobServiceClientCore
+
+        private BlobServiceClient _parentBlobServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="BlobServiceClient"/> that pointing to this <see cref="BlobContainerClient"/>'s blob service.
+        /// The new <see cref="BlobServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
+        protected internal virtual BlobServiceClient GetParentBlobServiceClientCore()
+        {
+            if (_parentBlobServiceClient == null)
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to service
+                    BlobContainerName = null,
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
+
+                _parentBlobServiceClient = new BlobServiceClient(
+                    blobUriBuilder.ToUri(),
+                    null,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope,
+                    Pipeline);
+            }
+
+            return _parentBlobServiceClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
+        /// creating <see cref="BlobServiceClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedBlobExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="BlobServiceClient"/> that pointing to this <see cref="BlobContainerClient"/>'s blob service.
+            /// The new <see cref="BlobServiceClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="BlobContainerClient"/>.
+            /// </summary>
+            /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
+            public static BlobServiceClient GetParentBlobServiceClient(this BlobContainerClient client)
+            {
+                return client.GetParentBlobServiceClientCore();
+            }
+        }
     }
 }
