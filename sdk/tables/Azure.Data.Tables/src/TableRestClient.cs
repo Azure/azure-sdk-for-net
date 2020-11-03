@@ -4,12 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,8 +90,10 @@ namespace Azure.Data.Tables
                             if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
                             {
                                 // create a new exception with the additional info populated.
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
-                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = messageList[failedEntityIndex].Entity;
+                                throw rfe;
                             }
                             else
                             {
@@ -148,8 +146,10 @@ namespace Azure.Data.Tables
                             {
                                 // create a new exception with the additional info populated.
                                 // reset the response stream position so we can read it again
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
-                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                rfe.Data[TableConstants.ExceptionData.FailedEntity] = messageList[failedEntityIndex].Entity;
+                                throw rfe;
                             }
                             else
                             {
@@ -164,9 +164,9 @@ namespace Azure.Data.Tables
             }
         }
 
-        private static string AppendEntityInfoToMessage(string messsage, ITableEntity entity)
+        private static string AppendEntityInfoToMessage(string messsage)
         {
-            return messsage += $"\nRowKey={entity.RowKey}.";
+            return messsage += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionalBatch.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
         }
     }
 }

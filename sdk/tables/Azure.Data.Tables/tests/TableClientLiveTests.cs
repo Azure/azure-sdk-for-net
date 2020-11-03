@@ -1089,7 +1089,9 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
                 Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-                Assert.That(ex.Message.Contains(entitiesToCreate.Last().RowKey), $"Exception message should have contained {entitiesToCreate.Last().RowKey}.\n\n Actual: {ex.Message}");
+                Assert.That(TableTransactionalBatch.TryGetFailedEntityFromException(ex, out ITableEntity failedEntity), Is.True);
+                Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
+                Assert.That(ex.Message.Contains(TableConstants.ExceptionData.FailedEntity));
             }
         }
     }

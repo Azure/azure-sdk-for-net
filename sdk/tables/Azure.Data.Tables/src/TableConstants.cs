@@ -60,6 +60,11 @@ namespace Azure.Data.Tables
             internal const string MissingRowKey = "The entity must contain a RowKey value";
         }
 
+        internal static class ExceptionData
+        {
+            internal const string FailedEntity = "FailedEntity";
+        }
+
         /// <summary>
         /// Sas constant values.
         /// </summary>

@@ -192,7 +192,7 @@ namespace Azure.Data.Tables
         {
             var messageList = BuildOrderedBatchRequests();
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.Data.Tables
         {
             var messageList = BuildOrderedBatchRequests();
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitBatch)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
@@ -243,6 +243,24 @@ namespace Azure.Data.Tables
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Tries to get the entity that caused the batch operation failure from the <see cref="RequestFailedException"/>.
+        /// </summary>
+        /// <param name="exception">The exception thrown from <see cref="TableTransactionalBatch.SubmitBatch(CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(CancellationToken)"/>.</param>
+        /// <param name="failedEntity">If the return value is <c>true</c>, contains the <see cref="ITableEntity"/> that caused the batch operation to fail.</param>
+        /// <returns><c>true</c> if the failed entity was retrieved from the exception, else <c>false</c>.</returns>
+        public static bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
+        {
+            failedEntity = null;
+
+            if (exception.Data.Contains(TableConstants.ExceptionData.FailedEntity))
+            {
+                failedEntity = exception.Data[TableConstants.ExceptionData.FailedEntity] as ITableEntity;
+            }
+
+            return failedEntity != null;
         }
 
         /// <summary>
