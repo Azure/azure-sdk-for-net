@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for recognizing values from business cards.
+    /// Tracks the status of a long-running operation for recognizing values from invoices.
     /// </summary>
     public class RecognizeInvoicesOperation : Operation<RecognizedFormCollection>
     {
