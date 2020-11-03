@@ -17,7 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public partial class RbacScopeAssignment : AccessControlTestBase
     {
-        public RbacScopeAssignment(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, change this argument to RecordedTestMode.Record */)
+        public RbacScopeAssignment(bool isAsync)
+            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
@@ -52,9 +53,12 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             RegisterForCleanup(keysScopedAssignment);
 
+            // Make sure we have a key to secure.
             KeyClient keyClient = KeyClient;
-            List<KeyProperties> keyProperties = await keyClient.GetPropertiesOfKeysAsync().ToEnumerableAsync().ConfigureAwait(false);
-            string keyName = keyProperties.First().Name;
+            KeyVaultKey createdKey = await keyClient.CreateKeyAsync(Recording.GenerateId(), KeyType.Oct);
+            string keyName = createdKey.Name;
+
+            RegisterKeyForCleanup(keyName);
 
             #region Snippet:CreateRoleAssignmentKeyScope
             //@@string keyName = "<your-key-name>";

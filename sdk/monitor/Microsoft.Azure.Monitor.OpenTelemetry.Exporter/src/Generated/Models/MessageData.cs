@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Instances of Message represent printf-like trace statements that are text-searched. Log4Net, NLog and other text-based log file entries are translated into instances of this type. The message does not have measurements. </summary>
-    public partial class MessageData : MonitorDomain
+    internal partial class MessageData : MonitorDomain
     {
         /// <summary> Initializes a new instance of MessageData. </summary>
         /// <param name="version"> Schema version. </param>

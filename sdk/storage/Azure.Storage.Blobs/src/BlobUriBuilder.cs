@@ -35,12 +35,6 @@ namespace Azure.Storage.Blobs
         private readonly bool _isPathStyleUri;
 
         /// <summary>
-        /// List of ports used for path style addressing.
-        /// Copied from Microsoft.Azure.Storage.Core.Util
-        /// </summary>
-        private static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
-
-        /// <summary>
         /// Gets or sets the scheme name of the URI.
         /// Example: "https"
         /// </summary>
@@ -193,9 +187,9 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                _isPathStyleUri = uri.IsHostIPEndPointStyle() || PathStylePorts.Contains(uri.Port);
-                if (_isPathStyleUri)
+                if (uri.IsHostIPEndPointStyle())
                 {
+                    _isPathStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    public partial class TrackResponse
+    internal partial class TrackResponse
     {
         internal static TrackResponse DeserializeTrackResponse(JsonElement element)
         {

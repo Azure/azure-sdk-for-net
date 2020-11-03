@@ -153,7 +153,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     completionSources[setIndex].SetResult(true);
                     sessions.TryRemove(args.SessionId, out byte[] state);
                     BinaryData getState = await args.GetSessionStateAsync();
-                    Assert.AreEqual(state, getState.ToBytes().ToArray());
+                    Assert.AreEqual(state, getState.ToArray());
                 }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -220,7 +220,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 List<string> receivedMessages = new List<string>();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 processor.ProcessMessageAsync += ProcessMessage;
-                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.ProcessErrorAsync += args =>
+                {
+                    var exception = (ServiceBusException)args.Exception;
+                    if (!(args.Exception is ServiceBusException sbEx) ||
+                    sbEx.Reason != ServiceBusFailureReason.SessionLockLost)
+                    {
+                        Assert.Fail(args.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                };
 
                 await processor.StartProcessingAsync();
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
