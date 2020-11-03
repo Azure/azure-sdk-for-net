@@ -556,7 +556,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ServiceLabel: %Storage %Service Attention
 /sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @xgithubtriage
 
-# ServiceLabel: %Functions %Service Attention
+# PRLabel: %Functions
 /sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storsimple %Service Attention
