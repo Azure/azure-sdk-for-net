@@ -283,7 +283,7 @@
 
 # ServiceLabel: %Event Grid %Service Attention
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                 @Kishp01 @ahamad-MS @jfggdl
+/sdk/eventgrid/                                 @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                  @serkantkaraca @jsquire
