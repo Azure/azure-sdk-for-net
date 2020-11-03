@@ -306,6 +306,31 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public void QueueUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10001/devstoreaccount1/queuename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var queueUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = queueUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", queueUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", queueUriBuilder.Host);
+            Assert.AreEqual(10001, queueUriBuilder.Port);
+            Assert.AreEqual("devstoreaccount1", queueUriBuilder.AccountName);
+            Assert.AreEqual("queuename", queueUriBuilder.QueueName);
+            Assert.AreEqual("", queueUriBuilder.MessageId);
+            Assert.IsNull(queueUriBuilder.Sas);
+            Assert.AreEqual("", queueUriBuilder.Query);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_AccountOnlyTest()
         {
             // Arrange
