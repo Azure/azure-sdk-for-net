@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal async Task<string> CreateDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
         {
             DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
-            AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());
+            AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First().Value);
 
             return await adminClient.CreateDetectionConfigurationAsync(config).ConfigureAwait(false);
         }
