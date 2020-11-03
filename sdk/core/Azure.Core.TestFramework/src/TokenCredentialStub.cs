@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     public class TokenCredentialStub : TokenCredential
     {

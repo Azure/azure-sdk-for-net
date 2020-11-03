@@ -61,9 +61,9 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2),
                 new ChatThreadMember(user3)
             };
-            ChatClient chatClient = CreateInstrumentedChatClient(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
-            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
+            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
+            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
+            ChatClient chatClient3 = CreateInstrumentedChatWithBearer(token3);
 
             //act
             #region Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
@@ -134,7 +134,7 @@ namespace Azure.Communication.Chat.Tests
             var expectedPageSize = 2;
             var messagesCounterTotal = 0;
             var messagesCounter = 0;
-            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken,2))
+            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken, 2))
             {
                 messagesCounter = 0;
                 foreach (ChatMessage messagePage in messagesPage.Values)
@@ -237,7 +237,7 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user1),
                 new ChatThreadMember(user2)
             };
-            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
             ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
 
             //act
@@ -295,9 +295,9 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2),
                 new ChatThreadMember(user3)
             };
-            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
             ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
-            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
+            ChatClient chatClient3 = CreateInstrumentedChatWithBearer(token3);
 
             //act
             ChatThreadClient chatThreadClient = await CreateInstrumentedChatThreadClientAsync(chatClient, topic, members);
@@ -441,7 +441,7 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2)
             };
             ChatClient chatClient = CreateInstrumentedChatClient(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
+            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
 
             //act
             ChatThreadClient chatThreadClient = await CreateInstrumentedChatThreadClientAsync(chatClient, "Thread topic - ReadReceipts Async Test", members);

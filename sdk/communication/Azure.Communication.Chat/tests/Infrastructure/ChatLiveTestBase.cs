@@ -2,19 +2,29 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Identity;
+<<<<<<< HEAD
 using Azure.Communication.Pipeline;
+=======
+using Azure.Core;
+>>>>>>> ccb17c57c0 ([ChatClientsTest] Using new ChatClient to test init with bearer authentication)
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
+<<<<<<< HEAD
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
            => Sanitizer = new ChatRecordedTestSanitizer();
+=======
+        public ChatLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+            => Sanitizer = new ChatRecordedTestSanitizer();
+>>>>>>> ccb17c57c0 ([ChatClientsTest] Using new ChatClient to test init with bearer authentication)
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
