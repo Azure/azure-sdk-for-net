@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.Avs.Models
     using System.Linq;
 
     /// <summary>
-    /// Api error.
+    /// Extra Operation properties
     /// </summary>
-    public partial class ApiErrorBase
+    public partial class OperationProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ApiErrorBase class.
+        /// Initializes a new instance of the OperationProperties class.
         /// </summary>
-        public ApiErrorBase()
+        public OperationProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiErrorBase class.
+        /// Initializes a new instance of the OperationProperties class.
         /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Error message</param>
-        public ApiErrorBase(string code = default(string), string message = default(string))
+        /// <param name="serviceSpecification">Service specifications of the
+        /// operation</param>
+        public OperationProperties(ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
-            Code = code;
-            Message = message;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -44,16 +43,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code
+        /// Gets or sets service specifications of the operation
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "serviceSpecification")]
+        public ServiceSpecification ServiceSpecification { get; set; }
 
     }
 }
