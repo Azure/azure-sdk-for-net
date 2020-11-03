@@ -98,9 +98,9 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     $DocOutDir = "${RepoRoot}/docfx_project"
 
     LogDebug "Initializing Default DocFx Site..."
-    #& $($DocFx) init -q -o "${DocOutDir}"
+    & $($DocFx) init -q -o "${DocOutDir}"
     # The line below is used for testing in local
-    docfx init -q -o "${DocOutDir}"
+    #docfx init -q -o "${DocOutDir}"
     LogDebug "Copying template and configuration..."
     New-Item -Path "${DocOutDir}" -Name "templates" -ItemType "directory" -Force
     Copy-Item "${DocGenDir}/templates/*" -Destination "${DocOutDir}/templates" -Force -Recurse
@@ -134,13 +134,13 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     Copy-Item "$($RepoRoot)/CONTRIBUTING.md" -Destination "${DocOutDir}/api/CONTRIBUTING.md" -Force
 
     LogDebug "Building site..."
-    #& $($DocFx) build "${DocOutDir}/docfx.json"
+    & $($DocFx) build "${DocOutDir}/docfx.json"
     # The line below is used for testing in local
-    docfx build "${DocOutDir}/docfx.json"
+    #docfx build "${DocOutDir}/docfx.json"
     Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force    
 }
 
-if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetGithubIoDocIndexFn  }).Count -gt 0)
+if (Test-Path "function:$GetGithubIoDocIndexFn")
 {
     &$GetGithubIoDocIndexFn
 }
