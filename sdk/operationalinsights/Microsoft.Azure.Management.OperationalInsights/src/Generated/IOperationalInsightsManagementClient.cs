@@ -164,5 +164,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// </summary>
         IWorkspacePurgeOperations WorkspacePurge { get; }
 
+        /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        ITablesOperations Tables { get; }
+
     }
 }
