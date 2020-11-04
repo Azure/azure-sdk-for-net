@@ -4,11 +4,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -59,10 +57,9 @@ namespace Azure.Data.Tables
 
         /// <summary> Submits a batch operation to a table. </summary>
         /// <param name="message">The message to send.</param>
-        /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, List<(ITableEntity Entity, HttpMessage HttpMessage)> messageList, CancellationToken cancellationToken = default)
+        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -94,8 +91,12 @@ namespace Azure.Data.Tables
                             if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
                             {
                                 // create a new exception with the additional info populated.
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
-                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
+                                throw rfe;
                             }
                             else
                             {
@@ -112,10 +113,9 @@ namespace Azure.Data.Tables
 
         /// <summary> Submits a batch operation to a table. </summary>
         /// <param name="message">The message to send.</param>
-        /// <param name="messageList">TRhe ordered list of messages and entities.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, List<(ITableEntity Entity, HttpMessage HttpMessage)> messageList, CancellationToken cancellationToken = default)
+        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -148,8 +148,12 @@ namespace Azure.Data.Tables
                             {
                                 // create a new exception with the additional info populated.
                                 // reset the response stream position so we can read it again
-                                var appendedMessage = AppendEntityInfoToMessage(ex.Message, messageList[failedEntityIndex].Entity);
-                                throw new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
+                                throw rfe;
                             }
                             else
                             {
@@ -164,9 +168,9 @@ namespace Azure.Data.Tables
             }
         }
 
-        private static string AppendEntityInfoToMessage(string messsage, ITableEntity entity)
+        private static string AppendEntityInfoToMessage(string messsage)
         {
-            return messsage += $"\nRowKey={entity.RowKey}.";
+            return messsage += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionalBatch.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
         }
     }
 }
