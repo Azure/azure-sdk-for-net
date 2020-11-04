@@ -20,7 +20,7 @@ namespace Azure.Identity.Tests.Mock
             _vscAdapter = vscAdapter;
         }
 
-        public Func<IManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public override TokenCredential CreateEnvironmentCredential()
             => new EnvironmentCredential(Pipeline);

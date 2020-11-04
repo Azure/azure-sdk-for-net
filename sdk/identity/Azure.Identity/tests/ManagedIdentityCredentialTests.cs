@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
 
                 ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
 
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
 
                 ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
 
