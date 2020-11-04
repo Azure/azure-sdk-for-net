@@ -48,7 +48,10 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Replace(SamplesConstants.RelationshipName, "containedIn");
 
             await client.CreateModelsAsync(new[] { floorModelPayload });
-            Console.WriteLine($"Created model '{sampleFloorModelId}'");
+
+            // Get the model we just created
+            Response<DigitalTwinsModelData> getFloorModelResponse = await client.GetModelAsync(sampleFloorModelId).ConfigureAwait(false);
+            Console.WriteLine($"Created model '{getFloorModelResponse.Value.Id}'");
 
             // Create a building digital twin.
             var buildingDigitalTwin = new BasicDigitalTwin

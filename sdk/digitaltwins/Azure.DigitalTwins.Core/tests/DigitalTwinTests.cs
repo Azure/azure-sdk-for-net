@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -65,6 +65,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -139,7 +143,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // create room model
             string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-            await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
             // act
 
@@ -169,7 +173,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // arrange
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -187,6 +191,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 // assert
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -219,7 +227,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // arrange
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -233,6 +241,10 @@ namespace Azure.DigitalTwins.Core.Tests
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.PreconditionFailed)
             {
                 throw new AssertionException("CreateOrReplaceDigitalTwin should not fail with PreconditionFailed when ifNoneMatch header wasn't set", ex);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -266,7 +278,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -296,6 +308,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -329,7 +345,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -360,6 +376,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     throw new AssertionException("UpdateDigitalTwin should not have thrown PreconditionFailed because the ETag was up to date", ex);
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -393,7 +413,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -421,6 +441,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -454,7 +478,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -482,6 +506,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 {
                     throw new AssertionException("UpdateRelationship should not have thrown PreconditionFailed because the ETag was up to date", ex);
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {

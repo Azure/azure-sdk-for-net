@@ -115,7 +115,7 @@ namespace Azure.DigitalTwins.Core.Tests
             string roomWithWifiModel = TestAssetsHelper.GetRoomWithWifiModelPayload(roomWithWifiModelId, wifiModelId, wifiComponentName);
 
             // Create the room and WiFi models.
-            await client.CreateModelsAsync(new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, new List<string> { roomWithWifiModel, wifiModel }).ConfigureAwait(false);
 
             // Generate the payload needed to create the room with WiFi twin.
             BasicDigitalTwin roomWithWifiTwin = TestAssetsHelper.GetRoomWithWifiTwinPayload(roomWithWifiModelId, wifiComponentName);

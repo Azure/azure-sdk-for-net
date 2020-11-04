@@ -39,7 +39,13 @@ namespace Azure.DigitalTwins.Core.Samples
                     newComponentModelPayload,
                     newModelPayload
                 });
-            Console.WriteLine($"Created models {componentModelId} and {modelId}.");
+
+            // Get the models we just created
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"Created model {model.Id}.");
+            }
 
             #region Snippet:DigitalTwinsSampleCreateBasicTwin
 
