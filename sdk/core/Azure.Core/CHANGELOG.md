@@ -2,6 +2,8 @@
 
 ## 1.7.0-beta.1 (Unreleased)
 
+### Added
+- `System.Text.Json.JsonConverter` implementation for the `ETag`
 
 ## 1.6.0 (2020-10-28)
 

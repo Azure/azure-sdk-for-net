@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -27,10 +29,21 @@ namespace Azure.Core.Serialization
         private readonly JsonSerializer _serializer;
 
         /// <summary>
-        /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/>.
+        /// Initializes new instance of <see cref="NewtonsoftJsonObjectSerializer"/>. Uses setting returned by <see cref="CreateJsonSerializerSettings"/>.
         /// </summary>
-        public NewtonsoftJsonObjectSerializer() : this(new JsonSerializerSettings())
+        public NewtonsoftJsonObjectSerializer() : this(CreateJsonSerializerSettings())
         {
+        }
+
+        /// <summary>
+        /// Returns a <see cref="JsonSerializerSettings"/> that's used when initializing the <see cref="NewtonsoftJsonObjectSerializer"/> using the parameterless constructor.
+        /// The settings have default converters added.
+        /// </summary>
+        public static JsonSerializerSettings CreateJsonSerializerSettings()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new NewtonsoftJsonETagConverter());
+            return settings;
         }
 
         /// <summary>
