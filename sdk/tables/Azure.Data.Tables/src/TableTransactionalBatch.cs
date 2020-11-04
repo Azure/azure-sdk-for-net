@@ -263,10 +263,7 @@ namespace Azure.Data.Tables
             {
                 try
                 {
-                    if (int.TryParse(exception.Data[TableConstants.ExceptionData.FailedEntityIndex] as string, out int index))
-                    {
-                        failedEntity = _submittedMessageList[index].entity;
-                    }
+                    failedEntity = _submittedMessageList[(int)exception.Data[TableConstants.ExceptionData.FailedEntityIndex]].entity;
                 }
                 catch
                 {

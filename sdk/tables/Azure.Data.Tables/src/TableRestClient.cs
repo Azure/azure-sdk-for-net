@@ -95,7 +95,7 @@ namespace Azure.Data.Tables
                                 var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
 
                                 // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
-                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex.ToString(CultureInfo.InvariantCulture);
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
                                 throw rfe;
                             }
                             else
