@@ -9,8 +9,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
-        private static readonly Uri s_localhost = new Uri("http://localhost");
-
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -19,17 +17,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public override Uri Uri =>
             Uri.TryCreate(TestEnvironment.ManagedHsmUrl, UriKind.Absolute, out Uri uri)
                 ? uri
-                : s_localhost; // Won't be used for skip tests anyway.
-
-        [SetUp]
-        public void CheckEnvironment()
-        {
-            // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
-            // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
-            if (string.IsNullOrEmpty(TestEnvironment.ManagedHsmUrl))
-            {
-                throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
-            }
-        }
+                // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
+                // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
     }
 }
