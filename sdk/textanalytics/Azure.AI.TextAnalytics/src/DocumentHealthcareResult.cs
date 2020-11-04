@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentStatistics? Statistics { get; }
 
         /// <summary> TextAnalyticsError. </summary>
-        public TextAnalyticsError TextAnalyticsError { get; }
+        public TextAnalyticsError TextAnalyticsError { get; } = new TextAnalyticsError();
 
         private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 

@@ -27,6 +27,7 @@ namespace Azure.AI.TextAnalytics
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private IDictionary<string, int> _idToIndexMap;
 
         // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
         private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
@@ -2264,9 +2265,9 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2287,9 +2288,9 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
-                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2379,31 +2380,49 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    int top = 1;
-                    int skip = 1;
+                    int top = default;
+                    int skip = default;
+
+                    // Extracting Job ID and parameters from the URL.
+                    // TODO - Update with Regex for cleaner implementation
+                    // nextLink - https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0
+
                     string[] nextLinkSplit = nextLink.Split('/');
+                    // nextLinkSplit = [ 'https:', '', 'cognitiveusw2dev.azure-api.net', 'text', ..., '8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0']
 
                     string[] jobIdParams = nextLinkSplit.Last().Split('?');
+                    // jobIdParams = ['8002878d-2e43-4675-ad20-455fe004641b', '$skip=20&$top=0']
 
+                    if (jobIdParams.Count() != 2)
+                    {
+                        throw new InvalidOperationException($"Failed to parse element reference: {nextLink}");
+                    }
+
+                    // The Id for the Job i.e. the first index of the list
                     string jobId = jobIdParams[0];
+                    // '8002878d-2e43-4675-ad20-455fe004641b'
 
+                    // Extracting Top and Skip parameter values
                     string[] parameters = jobIdParams[1].Split('&');
+                    // '$skip=20&$top=0'
 
                     foreach (string paramater in parameters)
                     {
                         if (paramater.Contains("top"))
                         {
                             _ = int.TryParse(paramater.Split('=')[1], out top);
+                            // 0
                         }
                         if (paramater.Contains("skip"))
                         {
                             _ = int.TryParse(paramater.Split('=')[1], out skip);
+                            // 20
                         }
                     }
 
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, operation.ShowStats).ConfigureAwait(false);
 
-                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results);
+                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception e)

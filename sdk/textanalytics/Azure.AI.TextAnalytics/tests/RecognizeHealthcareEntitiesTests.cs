@@ -146,6 +146,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
+            Assert.IsNotNull(resultCollection[0].TextAnalyticsError);
             Assert.IsNotNull(resultCollection[0].Warnings);
             Assert.AreEqual(1, resultCollection.Count);
             Assert.AreEqual(6, resultCollection[0].Entities.Count);
@@ -172,10 +173,10 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.IsNotNull(resultCollection[0].Id);
-            Assert.IsNotNull(resultCollection[0].TextAnalyticsError);
-            Assert.AreEqual("Document text is empty.", resultCollection[0].TextAnalyticsError.Message);
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[0].TextAnalyticsError.ErrorCode.ToString());
+            Assert.IsNotNull(resultCollection[2].Id);
+            Assert.IsNotNull(resultCollection[2].TextAnalyticsError);
+            Assert.AreEqual("Document text is empty.", resultCollection[2].TextAnalyticsError.Message);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[2].TextAnalyticsError.ErrorCode.ToString());
         }
 
         [Test]
@@ -190,7 +191,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.AreEqual(resultCollection.Count, 2);
+            Assert.AreEqual(2, resultCollection.Count);
         }
 
         [Test]
@@ -234,7 +235,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.GreaterOrEqual(resultCollection.Count, 2);
+            Assert.AreEqual(2, resultCollection.Count);
         }
 
         [Test]
@@ -254,9 +255,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.GreaterOrEqual(resultCollection.Count, 2);
+            Assert.AreEqual(2, resultCollection.Count);
 
-            Assert.Greater(resultCollection.Statistics.DocumentCount, 0);
             Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
             Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
             Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
@@ -285,7 +285,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 resultCount += 1;
             }
 
-            Assert.AreEqual(resultCount, 23);
+            Assert.AreEqual(23, resultCount);
         }
     }
 }
