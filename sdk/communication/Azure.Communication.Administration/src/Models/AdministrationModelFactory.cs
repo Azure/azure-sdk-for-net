@@ -254,6 +254,15 @@ namespace Azure.Communication.Administration.Models
             => new ReleasePhoneNumberOperation(client, releaseId);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PhoneNumberReservationPurchaseOperation"/> class.
+        /// </summary>
+        /// <param name="reservationId"> The reservation id of a created reservation. </param>
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <returns>A new <see cref="PhoneNumberReservationPurchaseOperation"/> instance for mocking.</returns>
+        public static PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(PhoneNumberAdministrationClient client, string reservationId)
+            => new PhoneNumberReservationPurchaseOperation(client, reservationId);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateNumberCapabilitiesResponse"/> class.
         /// </summary>
         /// <param name="capabilitiesUpdateId"> The capabilities id. </param>

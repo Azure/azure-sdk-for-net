@@ -141,7 +141,6 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.AreaCodes AreaCodes(System.Collections.Generic.IReadOnlyList<string> primaryAreaCodes, System.Collections.Generic.IReadOnlyList<string> secondaryAreaCodes, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.CarrierDetails CarrierDetails(string name, string localizedName) { throw null; }
         public static Azure.Communication.Administration.Models.CommunicationUserToken CommunicationUserToken(string id, string token, System.DateTimeOffset expiresOn) { throw null; }
-        public static Azure.Communication.Administration.Models.CreateSearchResponse CreateSearchResponse(string searchId) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptions LocationOptions(string labelId, string labelName, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptionsDetails> options) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptionsDetails LocationOptionsDetails(string name, string value, System.Collections.Generic.IList<Azure.Communication.Administration.Models.LocationOptions> locationOptions) { throw null; }
         public static Azure.Communication.Administration.Models.LocationOptionsResponse LocationOptionsResponse(Azure.Communication.Administration.Models.LocationOptions locationOptions) { throw null; }
@@ -153,13 +152,15 @@ namespace Azure.Communication.Administration.Models
         public static Azure.Communication.Administration.Models.PhoneNumberEntity PhoneNumberEntity(string id, System.DateTimeOffset? createdAt, string displayName, int? quantity, int? quantityObtained, string status, System.DateTimeOffset? focDate) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberRelease PhoneNumberRelease(string releaseId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.ReleaseStatus? status, string errorMessage, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.PhoneNumberReleaseDetails> phoneNumberReleaseStatusDetails) { throw null; }
         public static Azure.Communication.Administration.Models.PhoneNumberReleaseDetails PhoneNumberReleaseDetails(Azure.Communication.Administration.Models.PhoneNumberReleaseStatus? status, int? errorCode) { throw null; }
-        public static Azure.Communication.Administration.Models.PhoneNumberSearch PhoneNumberSearch(string searchId, string displayName, System.DateTimeOffset? createdAt, string description, System.Collections.Generic.IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.LocationOptionsDetails> locationOptions, Azure.Communication.Administration.Models.SearchStatus? status, System.Collections.Generic.IReadOnlyList<string> phoneNumbers, System.DateTimeOffset? reservationExpiryDate, int? errorCode) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservation PhoneNumberReservation(string reservationId, string displayName, System.DateTimeOffset? createdAt, string description, System.Collections.Generic.IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.LocationOptionsDetails> locationOptions, Azure.Communication.Administration.Models.ReservationStatus? status, System.Collections.Generic.IReadOnlyList<string> phoneNumbers, System.DateTimeOffset? reservationExpiryDate, int? errorCode) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservationOperation PhoneNumberReservationOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
+        public static Azure.Communication.Administration.Models.PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string reservationId) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlan PhonePlan(string phonePlanId, string localizedName, Azure.Communication.Administration.Models.LocationType locationType) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlanGroup PhonePlanGroup(string phonePlanGroupId, string localizedName, string localizedDescription) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlanGroups PhonePlanGroups(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlanGroup> phonePlanGroupsValue, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.PhonePlansResponse PhonePlansResponse(System.Collections.Generic.IReadOnlyList<Azure.Communication.Administration.Models.PhonePlan> phonePlans, string nextLink) { throw null; }
         public static Azure.Communication.Administration.Models.RateInformation RateInformation(double? monthlyRate, Azure.Communication.Administration.Models.CurrencyType? currencyType, string rateErrorMessage) { throw null; }
-        public static Azure.Communication.Administration.Models.ReleaseResponse ReleaseResponse(string releaseId) { throw null; }
+        public static Azure.Communication.Administration.Models.ReleasePhoneNumberOperation ReleasePhoneNumberOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string releaseId) { throw null; }
         public static Azure.Communication.Administration.Models.UpdateNumberCapabilitiesResponse UpdateNumberCapabilitiesResponse(string capabilitiesUpdateId) { throw null; }
         public static Azure.Communication.Administration.Models.UpdatePhoneNumberCapabilitiesResponse UpdatePhoneNumberCapabilitiesResponse(string capabilitiesUpdateId, System.DateTimeOffset? createdAt, Azure.Communication.Administration.Models.CapabilitiesUpdateStatus? capabilitiesUpdateStatus, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.Administration.Models.NumberUpdateCapabilities> phoneNumberCapabilitiesUpdates) { throw null; }
     }
@@ -440,18 +441,18 @@ namespace Azure.Communication.Administration.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class PhoneNumberReservationPurchaseOperation : Azure.Operation<Azure.Communication.Administration.Models.PhoneNumberReservation>
+    public partial class PhoneNumberReservationPurchaseOperation : Azure.Operation<Azure.Communication.Administration.Models.ReservationStatus>
     {
         public PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.Communication.Administration.Models.PhoneNumberReservation Value { get { throw null; } }
+        public override Azure.Communication.Administration.Models.ReservationStatus Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.PhoneNumberReservation>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.Administration.Models.ReservationStatus>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberType : System.IEquatable<Azure.Communication.Administration.Models.PhoneNumberType>
