@@ -38,6 +38,10 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             [TelemetryType.Event] = "Event",
         };
 
+        internal static string RoleName { get; set; } = null;
+
+        internal static string RoleInstance { get; set; } = null;
+
         internal static List<TelemetryItem> Convert(Batch<Activity> batchActivity, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
@@ -57,9 +61,9 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
         internal static TelemetryItem GeneratePartAEnvelope(Activity activity)
         {
             TelemetryItem telemetryItem = new TelemetryItem(PartA_Name_Mapping[activity.GetTelemetryType()], activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture));
-            ExtractRoleInfo(activity.GetResource(), out var roleName, out var roleInstance);
-            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = roleName;
-            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance;
+            InitRoleInfo(activity);
+            telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
+            telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
             telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
             if (activity.Parent != null)
             {
@@ -71,18 +75,22 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
             return telemetryItem;
         }
 
-        internal static void ExtractRoleInfo(Resource resource, out string roleName, out string roleInstance)
+        internal static void InitRoleInfo(Activity activity)
         {
+            if (RoleName != null || RoleInstance != null)
+            {
+                return;
+            }
+
+            var resource = activity.GetResource();
+
             if (resource == null)
             {
-                roleName = null;
-                roleInstance = null;
                 return;
             }
 
             string serviceName = null;
             string serviceNamespace = null;
-            roleInstance = null;
 
             foreach (var attribute in resource.Attributes)
             {
@@ -96,17 +104,17 @@ namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter
                 }
                 else if (attribute.Key == Resource.ServiceInstanceIdKey && attribute.Value is string)
                 {
-                    roleInstance = attribute.Value.ToString();
+                    RoleInstance = attribute.Value.ToString();
                 }
             }
 
             if (serviceName != null && serviceNamespace != null)
             {
-                roleName = string.Concat(serviceNamespace, ".", serviceName);
+                RoleName = string.Concat(serviceNamespace, ".", serviceName);
             }
             else
             {
-                roleName = serviceName;
+                RoleName = serviceName;
             }
         }
 
