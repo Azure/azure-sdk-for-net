@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -94,6 +95,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
                     new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
                     new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
+        }
+
+        protected void ValidateDimensionKey(DimensionKey dimensionKey)
+        {
+            Assert.That(dimensionKey, Is.Not.Null);
+
+            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+            Assert.That(dimensionColumns.ContainsKey("city"));
+            Assert.That(dimensionColumns.ContainsKey("category"));
+
+            Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
+            Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
         }
 
         internal string _blobFeedName;
