@@ -30,7 +30,10 @@ param(
     [string] $RemoteName = "azure-sdk-fork",
 
     [Parameter(Mandatory = $false)]
-    [boolean] $SkipCommit = $false
+    [boolean] $SkipCommit = $false,
+
+    [Parameter(Mandatory = $false)]
+    [boolean] $AmendCommit = $false
 )
 
 # This is necessay because of the janky git command output writing to stderr.
@@ -66,8 +69,14 @@ if ($LASTEXITCODE -ne 0)
 }
 
 if (!$SkipCommit) {
-    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit --amend -am `"$($CommitMsg)`""
-    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit --amend -am "$($CommitMsg)"
+    if ($AmendCommit) {
+        $amendOption = "--amend"
+    }
+    else {
+        $amendOption = ""
+    }
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$($CommitMsg)`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$($CommitMsg)"
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
