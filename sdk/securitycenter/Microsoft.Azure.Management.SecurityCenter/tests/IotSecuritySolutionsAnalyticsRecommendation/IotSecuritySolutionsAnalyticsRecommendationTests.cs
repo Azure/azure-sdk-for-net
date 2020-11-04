@@ -18,8 +18,8 @@ namespace SecurityCenter.Tests
         #region Test setup
 
         private static readonly string AggregatedRecommendationName = "IoT_OpenPorts";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string SolutionName = "IotHub-CUS";
+        private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
+        private static readonly string SolutionName = "securitySolution";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 

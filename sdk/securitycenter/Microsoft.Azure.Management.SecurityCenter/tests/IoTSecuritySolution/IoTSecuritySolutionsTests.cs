@@ -21,6 +21,7 @@ namespace SecurityCenter.Tests
         private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
         private static readonly string IotHubName = "SDK-IotHub-CUS";
         private static readonly string SolutionName = "securitySolution";
+        private static readonly string SolutionNameToDelete = "securitySolutionToDelete";
         private static readonly string WorkspaceName = "SDK-IotHub-LA-CUS";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
@@ -93,7 +94,11 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var lst = securityCenterClient.IotSecuritySolution.ListByResourceGroup(ResourceGroupName);
-                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionName);
+                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionNameToDelete);
+                Assert.Throws<CloudException>(() =>
+                {
+                    securityCenterClient.IotSecuritySolution.Get(ResourceGroupName, SolutionNameToDelete);
+                });
             }
         }
 
