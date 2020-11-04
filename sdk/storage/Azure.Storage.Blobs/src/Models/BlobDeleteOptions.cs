@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         public DeleteSnapshotsOption? SnapshotsOption { get; set; }
 
         /// <summary>
-        /// Optional.  Specifies options for deleting blob snapshots.
+        /// Optional.  Specifies conditions for deleting blobs.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
