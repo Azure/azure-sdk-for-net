@@ -139,7 +139,7 @@ namespace Azure.Storage.Test.Shared
             return options;
         }
 
-        private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
+        public BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
             InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),

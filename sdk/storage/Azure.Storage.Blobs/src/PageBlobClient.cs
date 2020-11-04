@@ -2300,8 +2300,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
         /// <see cref="BlobBaseClient.GetProperties"/>,
-        /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
-        /// and <see cref="BlobBaseClient.Delete"/>.  The copied snapshots may
+        /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
+        /// and <see cref="BlobBaseClient.DeleteAsync(BlobDeleteOptions, CancellationToken)"/>.  The copied snapshots may
         /// be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and
@@ -2410,7 +2410,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// directly.  The only supported operations are
         /// <see cref="BlobBaseClient.GetPropertiesAsync"/>,
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
-        /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
+        /// and  <see cref="BlobBaseClient.DeleteAsync(BlobDeleteOptions, CancellationToken)"/>.  The copied
         /// snapshots may be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and
@@ -2523,7 +2523,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// directly.  The only supported operations are
         /// <see cref="BlobBaseClient.GetPropertiesAsync"/>,
         /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
-        /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
+        /// and  <see cref="BlobBaseClient.DeleteAsync(BlobDeleteOptions, CancellationToken)"/>.  The copied
         /// snapshots may be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and

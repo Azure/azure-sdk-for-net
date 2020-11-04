@@ -2650,8 +2650,13 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
             await blob.CreateSnapshotAsync();
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                SnapshotsOption = DeleteSnapshotsOption.OnlySnapshots
+            };
+
             // Act
-            await blob.DeleteAsync(snapshotsOption: DeleteSnapshotsOption.OnlySnapshots);
+            await blob.DeleteAsync(options);
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
@@ -2675,8 +2680,13 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
+                BlobDeleteOptions options = new BlobDeleteOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Response response = await blob.DeleteAsync(conditions: accessConditions);
+                Response response = await blob.DeleteAsync(options);
 
                 // Assert
                 Assert.IsNotNull(response.Headers.RequestId);
@@ -2699,9 +2709,14 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
+                BlobDeleteOptions options = new BlobDeleteOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    blob.DeleteAsync(conditions: accessConditions),
+                    blob.DeleteAsync(options),
                     e => { });
             }
         }
@@ -2724,8 +2739,13 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
-            Response response = await blob.DeleteAsync(conditions: conditions);
+            Response response = await blob.DeleteAsync(options);
 
             // Assert
             bool exists = await blob.ExistsAsync();
@@ -2745,9 +2765,14 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.DeleteAsync(conditions: conditions),
+                blob.DeleteAsync(options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -3046,6 +3071,343 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task DeleteAsync_PermanentDeleteSnapshot()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await blobSnapshot.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobSasPermissions.PermanentlyDeleteBlobVersionOrSnapshot)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteSnapshotDelete_BlobSas(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            BlobSasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                new StorageSharedKeyCredential(TestConfigSoftDelete.AccountName, TestConfigSoftDelete.AccountKey));
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobSnapshot.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasSnapshotBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await sasSnapshotBlob.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobSasPermissions.PermanentlyDeleteBlobVersionOrSnapshot)]
+        [TestCase(BlobSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteSnapshotDelete_BlobIdentitySas(BlobSasPermissions blobSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClientFromOauthConfig(TestConfigSoftDelete);
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            Response<UserDelegationKey> userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                blobSasPermissions,
+                userDelegationKey,
+                serviceClient.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobSnapshot.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasSnapshotBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await sasSnapshotBlob.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobContainerSasPermissions.PermanentlyDeleteBlobVersionOrSnapshot)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteSnapshotDelete_ContainerSas(BlobContainerSasPermissions containerSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            BlobSasQueryParameters sasQueryParameters = GetContainerSas(
+                test.Container.Name,
+                containerSasPermissions,
+                new StorageSharedKeyCredential(TestConfigSoftDelete.AccountName, TestConfigSoftDelete.AccountKey));
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobSnapshot.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasSnapshotBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await sasSnapshotBlob.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobContainerSasPermissions.PermanentlyDeleteBlobVersionOrSnapshot)]
+        [TestCase(BlobContainerSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteSnapshotDelete_ContainerIdentitySas(BlobContainerSasPermissions containerSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClientFromOauthConfig(TestConfigSoftDelete);
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            Response<UserDelegationKey> userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                containerSasPermissions,
+                userDelegationKey,
+                serviceClient.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobSnapshot.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            AppendBlobClient sasSnapshotBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await sasSnapshotBlob.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(AccountSasPermissions.PermanentlyDeleteVersionOrSnapshot)]
+        [TestCase(AccountSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteSnapshotDelete_AccountSas(AccountSasPermissions accountSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+            AppendBlobClient blobSnapshot = InstrumentClient(blob.WithSnapshot(snapshotResponse.Value.Snapshot));
+
+            // Delete snapshot
+            await blobSnapshot.DeleteAsync();
+
+            SasQueryParameters sasQueryParameters = GetNewAccountSas(
+                resourceTypes: AccountSasResourceTypes.All,
+                permissions: accountSasPermissions,
+                sharedKeyCredentials: new StorageSharedKeyCredential(TestConfigSoftDelete.AccountName, TestConfigSoftDelete.AccountKey));
+            BlobBaseClient sasSnapshotBlob = new BlobBaseClient(
+                new Uri($"{blobSnapshot.Uri}&{sasQueryParameters}"), GetOptions());
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await sasSnapshotBlob.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task DeleteAsync_PermanentDeleteVersion()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient blobVersion = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Delete blob version
+            await blobVersion.DeleteAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            // Act - permanently delete the snapshot
+            await blobVersion.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobVersionSasPermissions.PermanentlyDelete)]
+        [TestCase(BlobVersionSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteVersion_VersionSas(BlobVersionSasPermissions versionSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient blobVersion = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Delete blob version
+            await blobVersion.DeleteAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            BlobSasQueryParameters sasQueryParameters = GetBlobVersionSas(
+                test.Container.Name,
+                blob.Name,
+                createResponse.Value.VersionId,
+                versionSasPermissions,
+                sharedKeyCredential: new StorageSharedKeyCredential(TestConfigSoftDelete.AccountName, TestConfigSoftDelete.AccountKey));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobVersion.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            BlobBaseClient sasBlobVersion = InstrumentClient(new BlobBaseClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act - permanently delete the version
+            await sasBlobVersion.DeleteAsync(options);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [TestCase(BlobVersionSasPermissions.PermanentlyDelete)]
+        [TestCase(BlobVersionSasPermissions.All)]
+        public async Task DeleteAsync_PermanentDeleteVersion_VersionIdentitySas(BlobVersionSasPermissions versionSasPermissions)
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClientFromOauthConfig(TestConfigSoftDelete);
+            await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient blobVersion = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Delete blob version
+            await blobVersion.DeleteAsync();
+
+            BlobDeleteOptions options = new BlobDeleteOptions
+            {
+                DeleteType = BlobDeleteType.Permanent
+            };
+
+            Response<UserDelegationKey> userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasQueryParameters sasQueryParameters = GetBlobVersionIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                createResponse.Value.VersionId,
+                versionSasPermissions,
+                userDelegationKey,
+                serviceClient.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobVersion.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            BlobBaseClient sasBlobVersion = InstrumentClient(new BlobBaseClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            // Act - permanently delete the version
+            await sasBlobVersion.DeleteAsync(options);
         }
 
         [Test]
