@@ -39,10 +39,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
 
             // Wait for completion of the BackupOperation.
-            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value;
+            Uri backupFolderUri = backupResult.Value.backupFolderUri;
             #endregion
 
             Assert.That(backupFolderUri, Is.Not.Null);

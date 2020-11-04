@@ -36,10 +36,10 @@ UriBuilder builder = new UriBuilder(blobStorageUrl)
 BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
 // Wait for completion of the BackupOperation.
-Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupFolderUri = backupResult.Value;
+Uri backupFolderUri = backupResult.Value.backupFolderUri;
 ```
 
 ## Performing a full key restore

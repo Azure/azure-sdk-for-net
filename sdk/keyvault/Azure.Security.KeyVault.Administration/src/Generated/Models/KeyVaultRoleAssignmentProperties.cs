@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties. </summary>
     public partial class KeyVaultRoleAssignmentProperties

@@ -38,12 +38,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             await WaitForOperationAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value;
+            Uri backupFolderUri = backupResult.Value.backupFolderUri;
 
             Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
