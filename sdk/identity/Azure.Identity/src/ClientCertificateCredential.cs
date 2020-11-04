@@ -125,7 +125,7 @@ namespace Azure.Identity
 
         internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider certificateProvider, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
-            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 

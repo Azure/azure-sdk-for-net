@@ -11,6 +11,8 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
+        private string _tenantId = null;
+
         /// <summary>
         /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync"/> in the case that
         /// user interaction is necessary. The application is responsible for handling this exception, and calling <see cref="InteractiveBrowserCredential.Authenticate(CancellationToken)"/> or <see cref="InteractiveBrowserCredential.AuthenticateAsync(CancellationToken)"/> to authenticate the user interactively.
@@ -20,7 +22,11 @@ namespace Azure.Identity
         /// <summary>
         /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to the home tenant.
         /// </summary>
-        public string TenantId { get; set; }
+        public string TenantId
+        {
+            get { return _tenantId; }
+            set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
+        }
 
         /// <summary>
         /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.

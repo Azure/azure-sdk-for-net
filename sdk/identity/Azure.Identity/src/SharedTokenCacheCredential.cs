@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core.Pipeline;
+using System.ComponentModel;
 
 namespace Azure.Identity
 {
@@ -53,6 +54,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
             : this(null, username, options, null, null)
         {

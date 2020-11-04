@@ -86,7 +86,7 @@ namespace Azure.Identity
 
             _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            if (tenantId == null) throw new ArgumentNullException(nameof(tenantId));
+            Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
