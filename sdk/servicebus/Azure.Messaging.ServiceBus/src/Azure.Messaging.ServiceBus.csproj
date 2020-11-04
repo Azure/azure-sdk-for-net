@@ -14,7 +14,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <!--This can be removed once this dependency is added to Core in the next release.-->
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
@@ -33,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">

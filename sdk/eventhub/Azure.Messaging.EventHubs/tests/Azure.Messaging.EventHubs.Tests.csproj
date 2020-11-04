@@ -31,12 +31,6 @@
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
 
-  <!-- TEMP: Use a project reference to Data; remove when published"-->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.Memory.Data\src\System.Memory.Data.csproj" />
-  </ItemGroup>
-  <!-- END TEMP-->
-
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
 
