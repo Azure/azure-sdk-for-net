@@ -26,11 +26,11 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotActions))
+            if (Optional.IsCollectionDefined(DenyActions))
             {
                 writer.WritePropertyName("notActions");
                 writer.WriteStartArray();
-                foreach (var item in NotActions)
+                foreach (var item in DenyActions)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -46,11 +46,11 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (Optional.IsCollectionDefined(DenyDataActions))
             {
                 writer.WritePropertyName("notDataActions");
                 writer.WriteStartArray();
-                foreach (var item in NotDataActions)
+                foreach (var item in DenyDataActions)
                 {
                     writer.WriteStringValue(item);
                 }

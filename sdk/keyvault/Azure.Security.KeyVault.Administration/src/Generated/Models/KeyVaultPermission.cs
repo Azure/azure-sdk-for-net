@@ -17,31 +17,27 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultPermission()
         {
             Actions = new ChangeTrackingList<string>();
-            NotActions = new ChangeTrackingList<string>();
+            DenyActions = new ChangeTrackingList<string>();
             DataActions = new ChangeTrackingList<string>();
-            NotDataActions = new ChangeTrackingList<string>();
+            DenyDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         /// <param name="actions"> Allowed actions. </param>
-        /// <param name="notActions"> Denied actions. </param>
+        /// <param name="denyActions"> Denied actions. </param>
         /// <param name="dataActions"> Allowed Data actions. </param>
-        /// <param name="notDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions)
+        /// <param name="denyDataActions"> Denied Data actions. </param>
+        internal KeyVaultPermission(IList<string> actions, IList<string> denyActions, IList<string> dataActions, IList<string> denyDataActions)
         {
             Actions = actions;
-            NotActions = notActions;
+            DenyActions = denyActions;
             DataActions = dataActions;
-            NotDataActions = notDataActions;
+            DenyDataActions = denyDataActions;
         }
 
         /// <summary> Allowed actions. </summary>
         public IList<string> Actions { get; }
-        /// <summary> Denied actions. </summary>
-        public IList<string> NotActions { get; }
         /// <summary> Allowed Data actions. </summary>
         public IList<string> DataActions { get; }
-        /// <summary> Denied Data actions. </summary>
-        public IList<string> NotDataActions { get; }
     }
 }
