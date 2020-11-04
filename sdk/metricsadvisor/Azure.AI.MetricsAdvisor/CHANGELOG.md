@@ -26,7 +26,7 @@
 - Updated `DataFeed.MetricIds` to a `Dictionary<string, string>` that maps a metric name to its ID.
 - In `DataFeedIngestionStatus`, made `Timestamp` and `Status` non-nullables.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.
-- Made `AnomalyIncident.State` non-nullable.
+- Made `AnomalyIncident.Status` non-nullable.
 - Made `EnrichmentStatus.Timestamp` non-nullable.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
 - Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
