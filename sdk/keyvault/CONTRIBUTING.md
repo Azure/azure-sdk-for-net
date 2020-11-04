@@ -57,12 +57,11 @@ Before running or recording live tests you need to create [live test resources][
 
 ```powershell
 eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
   -ServiceDirectory 'keyvault' `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText) `
   -AdditionalParameters @{
-    enableSoftDelete = $false # Enable or disable soft delete. Default is $true (enabled).
+    # Enable Managed HSM provisioning and testing.
+    # Disabled by default due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+    enableHsm = $true
   }
 ```
 
