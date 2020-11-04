@@ -4093,6 +4093,7 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
                         cancellationToken: cancellationToken)
@@ -4256,6 +4257,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
                         cancellationToken: cancellationToken)

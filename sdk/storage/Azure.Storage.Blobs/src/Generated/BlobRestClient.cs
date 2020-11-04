@@ -8944,6 +8944,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -8958,6 +8959,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 string versionId = default,
                 string ifTags = default,
+                string leaseId = default,
                 bool async = true,
                 string operationName = "BlobClient.GetTags",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8975,7 +8977,8 @@ namespace Azure.Storage.Blobs
                         requestId,
                         snapshot,
                         versionId,
-                        ifTags))
+                        ifTags,
+                        leaseId))
                     {
                         if (async)
                         {
@@ -9015,6 +9018,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Blob.GetTagsAsync Message.</returns>
             internal static Azure.Core.HttpMessage GetTagsAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -9024,7 +9028,8 @@ namespace Azure.Storage.Blobs
                 string requestId = default,
                 string snapshot = default,
                 string versionId = default,
-                string ifTags = default)
+                string ifTags = default,
+                string leaseId = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -9052,6 +9057,7 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-version", version);
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -9108,6 +9114,7 @@ namespace Azure.Storage.Blobs
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="tags">Blob tags</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -9124,6 +9131,7 @@ namespace Azure.Storage.Blobs
                 byte[] transactionalContentCrc64 = default,
                 string requestId = default,
                 string ifTags = default,
+                string leaseId = default,
                 Azure.Storage.Blobs.Models.BlobTags tags = default,
                 bool async = true,
                 string operationName = "BlobClient.SetTags",
@@ -9144,6 +9152,7 @@ namespace Azure.Storage.Blobs
                         transactionalContentCrc64,
                         requestId,
                         ifTags,
+                        leaseId,
                         tags))
                     {
                         if (async)
@@ -9185,6 +9194,7 @@ namespace Azure.Storage.Blobs
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="tags">Blob tags</param>
             /// <returns>The Blob.SetTagsAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetTagsAsync_CreateMessage(
@@ -9197,6 +9207,7 @@ namespace Azure.Storage.Blobs
                 byte[] transactionalContentCrc64 = default,
                 string requestId = default,
                 string ifTags = default,
+                string leaseId = default,
                 Azure.Storage.Blobs.Models.BlobTags tags = default)
             {
                 // Validation
@@ -9226,6 +9237,7 @@ namespace Azure.Storage.Blobs
                 if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (ifTags != null) { _request.Headers.SetValue("x-ms-if-tags", ifTags); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 // Create the body
                 if (tags != null)
@@ -21187,10 +21199,29 @@ namespace Azure.Storage.Blobs.Models
         public string BlobContainerName { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of FilterBlobItem instances.
-        /// You can use BlobsModelFactory.FilterBlobItem instead.
+        /// Blob tags
         /// </summary>
-        internal FilterBlobItem() { }
+        public Azure.Storage.Blobs.Models.BlobTags Tags { get; internal set; }
+
+        /// <summary>
+        /// Creates a new FilterBlobItem instance
+        /// </summary>
+        public FilterBlobItem()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new FilterBlobItem instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal FilterBlobItem(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Tags = new Azure.Storage.Blobs.Models.BlobTags();
+            }
+        }
 
         /// <summary>
         /// Deserializes XML into a new FilterBlobItem instance.
@@ -21201,7 +21232,7 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem();
+            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
@@ -21211,6 +21242,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.BlobContainerName = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Tags", ""));
+            if (_child != null)
+            {
+                _value.Tags = Azure.Storage.Blobs.Models.BlobTags.FromXml(_child);
             }
             CustomizeFromXml(element, _value);
             return _value;
