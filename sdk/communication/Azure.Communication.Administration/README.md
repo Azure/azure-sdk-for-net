@@ -206,7 +206,7 @@ Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, St
 var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
 await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
-Console.WriteLine($"Purchase status: {reservationPurchaseOperation.Value.Status}, AreaCode: {reservationPurchaseOperation.Value.AreaCode}, DisplayName: {reservationPurchaseOperation.Value.DisplayName}");
+Console.WriteLine($"Purchase status: {reservationPurchaseOperation.Value}");
 ```
 
 ### Configure phone number
