@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -263,7 +264,10 @@ namespace Azure.Data.Tables
             {
                 try
                 {
-                    failedEntity = _submittedMessageList[(int)exception.Data[TableConstants.ExceptionData.FailedEntityIndex]].entity;
+                    if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is int index)
+                    {
+                        failedEntity = _submittedMessageList[index].entity;
+                    }
                 }
                 catch
                 {
