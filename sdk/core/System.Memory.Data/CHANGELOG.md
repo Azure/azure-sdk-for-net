@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0 (2020-11-03)
+- GA release. 
+
 ## 1.0.0-beta.2 (2020-11-03)
 - Update package icon.
 
