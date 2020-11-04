@@ -294,11 +294,6 @@ namespace HealthcareApis.Tests
                 { 
                     // prepare account properties
                     string accountName = TestUtilities.GenerateName("hca");
-                    ServicesResource parameters = new ServicesResource
-                    {
-                        Location = "westus",
-                        Properties = new ServicesProperties(),
-                    };
 
                     var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
