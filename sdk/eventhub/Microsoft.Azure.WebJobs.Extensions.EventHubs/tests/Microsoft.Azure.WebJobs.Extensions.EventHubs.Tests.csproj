@@ -24,6 +24,5 @@
     <Compile Remove="EventHubConfigurationTests.cs" />
     <Compile Remove="EventHubEndToEndTests.cs" />
     <Compile Remove="EventHubListenerTests.cs" />
-    <Compile Remove="EventHubTests.cs" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
@@ -51,9 +52,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             contract.Add("PartitionContext", typeof(PartitionContext));
 
             AddBindingContractMember(contract, "PartitionKey", typeof(string), isSingleDispatch);
-            AddBindingContractMember(contract, "Offset", typeof(long), isSingleDispatch);
+            AddBindingContractMember(contract, "Offset", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "SequenceNumber", typeof(long), isSingleDispatch);
-            AddBindingContractMember(contract, "EnqueuedTime", typeof(DateTime), isSingleDispatch);
+            AddBindingContractMember(contract, "EnqueuedTimeUtc", typeof(DateTime), isSingleDispatch);
             AddBindingContractMember(contract, "Properties", typeof(IDictionary<string, object>), isSingleDispatch);
             AddBindingContractMember(contract, "SystemProperties", typeof(IDictionary<string, object>), isSingleDispatch);
 
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             int length = events.Length;
             var partitionKeys = new string[length];
-            var offsets = new long[length];
+            var offsets = new string[length];
             var sequenceNumbers = new long[length];
             var enqueuedTimesUtc = new DateTimeOffset[length];
             var properties = new IDictionary<string, object>[length];
@@ -111,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             for (int i = 0; i < events.Length; i++)
             {
                 partitionKeys[i] = events[i].PartitionKey;
-                offsets[i] = events[i].Offset;
+                offsets[i] = events[i].Offset.ToString(CultureInfo.InvariantCulture);
                 sequenceNumbers[i] = events[i].SequenceNumber;
                 enqueuedTimesUtc[i] = events[i].EnqueuedTime;
                 properties[i] = events[i].Properties;
@@ -121,12 +122,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         private static void AddBindingData(Dictionary<string, object> bindingData, EventData eventData)
         {
-            SafeAddValue(() => bindingData.Add(nameof(eventData.PartitionKey), eventData.PartitionKey));
-            SafeAddValue(() => bindingData.Add(nameof(eventData.Offset), eventData.Offset));
-            SafeAddValue(() => bindingData.Add(nameof(eventData.SequenceNumber), eventData.SequenceNumber));
-            SafeAddValue(() => bindingData.Add(nameof(eventData.EnqueuedTime), eventData.EnqueuedTime));
-            SafeAddValue(() => bindingData.Add(nameof(eventData.Properties), eventData.Properties));
-            SafeAddValue(() => bindingData.Add(nameof(eventData.SystemProperties), GetSystemPropertiesForBinding(eventData)));
+            SafeAddValue(() => bindingData.Add("PartitionKey", eventData.PartitionKey));
+            SafeAddValue(() => bindingData.Add("Offset", eventData.Offset));
+            SafeAddValue(() => bindingData.Add("SequenceNumber", eventData.SequenceNumber));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", eventData.EnqueuedTime));
+            SafeAddValue(() => bindingData.Add("Properties", eventData.Properties));
+            SafeAddValue(() => bindingData.Add("SystemProperties", GetSystemPropertiesForBinding(eventData)));
         }
 
         private static void SafeAddValue(Action addValue)
@@ -154,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             modifiedDictionary["SequenceNumber"] = eventData.SequenceNumber;
             modifiedDictionary["Offset"] = eventData.Offset;
             modifiedDictionary["PartitionKey"] = eventData.PartitionKey;
-            modifiedDictionary["EnqueuedTime"] = eventData.EnqueuedTime;
+            modifiedDictionary["EnqueuedTimeUtc"] = eventData.EnqueuedTime;
             return modifiedDictionary;
         }
     }
