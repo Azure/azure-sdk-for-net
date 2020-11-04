@@ -293,7 +293,7 @@ namespace HealthcareApis.Tests
 
                 { 
                     // prepare account properties
-                    string accountName = TestUtilities.GenerateName("hca");
+                    string accountName = TestUtilities.GenerateName("hca1234");
 
                     var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
@@ -301,7 +301,7 @@ namespace HealthcareApis.Tests
                     var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
 
                     // Create private link resource
-                    var plResouces = healthCareApisMgmtClient.PrivateLinkResources.List(rgname, accountName);
+                    var plResouces = healthCareApisMgmtClient.PrivateLinkResources.ListByService(rgname, accountName);
 
                     PrivateEndpointConnection pec = null;
                     try
@@ -313,11 +313,11 @@ namespace HealthcareApis.Tests
                     // verify
                     Assert.NotNull(plResouces);
                     Assert.True(plResouces.Value.Count == 1);
-                    Assert.Equal("fhir", plResouces.Value[0].Properties?.GroupId);
+                    Assert.Equal("fhir", plResouces.Value[0].GroupId);
                     Assert.Null(pec);
 
-                    var plConnections = healthCareApisMgmtClient.PrivateEndpointConnections.List(rgname, accountName);
-                    Assert.True(plConnections.Value.Count == 0);
+                    var plConnections = healthCareApisMgmtClient.PrivateEndpointConnections.ListByService(rgname, accountName);
+                    Assert.True(plConnections.ToList().Count == 0);
                 }
             }
         }
