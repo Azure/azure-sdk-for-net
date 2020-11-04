@@ -450,8 +450,6 @@ namespace Azure.Search.Documents.Tests
         {
             // Testing: https://github.com/Azure/azure-sdk-for-net/issues/16570
 
-            SaveDebugRecordingsOnFailure = true;
-
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
             string indexName = Recording.Random.GetName();
