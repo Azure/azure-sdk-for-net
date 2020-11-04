@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets the URI to Managed HSM.
         /// </summary>
-        public string ManagedHsmUrl => GetRecordedVariable("AZURE_MANAGEDHSM_URL");
+        public string ManagedHsmUrl => GetRecordedOptionalVariable("AZURE_MANAGEDHSM_URL");
 
         /// <summary>
         /// Gets an OID for the client within the tenant.

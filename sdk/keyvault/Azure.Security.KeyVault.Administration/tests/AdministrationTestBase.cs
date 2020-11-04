@@ -94,6 +94,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             base.StartTestRecording();
 
+            // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
+            // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+            if (string.IsNullOrEmpty(TestEnvironment.ManagedHsmUrl))
+            {
+                throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
+            }
+
             // Clear the challenge cache to force a challenge response.
             // This results in consistent results when recording or playing back recorded tests.
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
