@@ -59,7 +59,10 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
-    [hashtable] $AdditionalParameters,
+    [hashtable] $ArmTemplateParameters,
+
+    [Parameter()]
+    [hashtable] $EnvironmentVariables,
 
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
@@ -322,11 +325,11 @@ if ($TenantId) {
 if ($TestApplicationSecret) {
     $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
 }
-if ($AdditionalParameters) {
-    $templateParameters += $AdditionalParameters
+if ($ArmTemplateParameters) {
+    $templateParameters += $ArmTemplateParameters
 }
 
-# Include environment-specific parameters only if not already provided as part of the "AdditionalParameters"
+# Include environment-specific parameters only if not already provided as part of the "ArmTemplateParameters"
 if (($context.Environment.StorageEndpointSuffix) -and (-not ($templateParameters.ContainsKey('storageEndpointSuffix')))) {
     $templateParameters.Add('storageEndpointSuffix', $context.Environment.StorageEndpointSuffix)
 }
@@ -570,8 +573,11 @@ is based on the cloud to which the template is being deployed:
 Name of the cloud environment. The default is the Azure Public Cloud
 ('AzureCloud')
 
-.PARAMETER AdditionalParameters
+.PARAMETER ArmTemplateParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER EnvironmentVariables
+Optional key-value pairs of parameters to set as environment variables to the shell.
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous

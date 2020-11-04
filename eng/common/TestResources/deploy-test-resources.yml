@@ -1,9 +1,11 @@
 parameters:
   ServiceDirectory: not-set
-  ArmTemplateParameters: '@{}'
+  ArmTemplateParameters: '$subscriptionConfiguration.ArmTemplateParameters'
+  PlatformArmTemplateParameters: ''
   DeleteAfterHours: 24
   Location: ''
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  Platform: ''
 
 # SubscriptionConfiguration will be splat into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -38,35 +40,40 @@ steps:
   - pwsh: |
       eng/common/TestResources/Import-AzModules.ps1
 
-      $subscriptionConfiguration = @"
+      $subscriptionConfiguration = @'
         ${{ parameters.SubscriptionConfiguration }}
-      "@ | ConvertFrom-Json -AsHashtable;
+      '@ | ConvertFrom-Json -AsHashtable;
 
-      if ($subscriptionConfiguration.ArmTemplateParameters) {
-        # Handle subscription configuration containing arm template parameters
-        $armTemplateParameters = $subscriptionConfiguration.ArmTemplateParameters
-      } else {
-        # Handle legacy subscription configuration, with arm template params passed in by templates
-        $armTemplateParameters = ${{ parameters.ArmTemplateParameters }}
-      }
+      # Support legacy ArmTemplateParameters passed in directly as a hashmap, otherwise default to subscriptionConfiguration JSON.
+      #   Example legacy input: @{ 'param1' = 'foo' ; 'param2' = 'bar' }
+      $subscriptionConfiguration.ArmTemplateParameters = ${{ parameters.ArmTemplateParameters }} ? ${{ parameters.ArmTemplateParameters }} : @{}
 
-      $accessParameters = @{
-        "SubscriptionId" = $subscriptionConfiguration.SubscriptionId;
-        "TenantId" = $subscriptionConfiguration.TenantId;
-        "TestApplicationId" = $subscriptionConfiguration.TestApplicationId;
-        "TestApplicationSecret" = $subscriptionConfiguration.TestApplicationSecret;
-        "ProvisionerApplicationId" = $subscriptionConfiguration.ProvisionerApplicationId;
-        "ProvisionerApplicationSecret" = $subscriptionConfiguration.ProvisionerApplicationSecret;
-        "Environment" = $subscriptionConfiguration.Environment
+      # Support additional sdk pipeline and/or platform specific arm template parameters:
+      #   EnableHsm:
+      #     Value: true
+      #     Platforms:
+      #       - Linux_NetCore_Keyring
+      #   TestGlobalParam:
+      #     Value: global foo
+      # For duplicate keys, prefer the template/script parameter.
+      $platformArmTemplateParameters = @'
+        ${{ parameters.PlatformArmTemplateParameters }}
+      '@ | ConvertFrom-Json -AsHashtable;
+
+      if ($platformArmTemplateParameters) {
+        foreach ($p in $platformArmTemplateParameters.GetEnumerator()) {
+          if (!$p.Value.Platforms -or '${{ parameters.Platform }}' -in $p.Value.Platforms) {
+            $subscriptionConfiguration.ArmTemplateParameters[$p.Name] = $p.Value.Value
+          }
+        }
       }
 
       eng/common/TestResources/New-TestResources.ps1 `
         -BaseName 'Generated' `
-        -ServiceDirectory ${{ parameters.ServiceDirectory }} `
+        -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
         -Location '${{ parameters.Location }}' `
-        -DeleteAfterHours ${{ parameters.DeleteAfterHours }} `
-        -AdditionalParameters $armTemplateParameters `
-        @accessParameters `
+        -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
+        @subscriptionConfiguration `
         -CI `
         -Force `
         -Verbose | Out-Null
