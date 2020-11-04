@@ -40,7 +40,7 @@ namespace Azure.Communication.Chat
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationUserCredential, endpointUrl);
+            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationUserCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
         }
 
