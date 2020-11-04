@@ -586,7 +586,7 @@ namespace Azure.Communication.Chat
         }
         #endregion
 
-        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential, Uri endpointUrl)
+        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
         {
             var token = new CommunicationTokenCredential(communicationUserCredential);
             var policy = new BearerTokenAuthenticationPolicy(token, "");
