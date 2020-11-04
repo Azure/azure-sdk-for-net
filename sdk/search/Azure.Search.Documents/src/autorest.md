@@ -104,6 +104,7 @@ directive:
   where: $.definitions.ScoringProfile
   transform: >
     $.properties.text["x-nullable"] = true;
+    $.properties.functionAggregation["x-nullable"] = true;
 ```
 
 ``` yaml
