@@ -46,12 +46,43 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, resultCollection.Count);
 
+            DocumentHealthcareResult result = resultCollection.Single();
+
             var entitiesList = new List<string> { "100mg", "ibuprofen", "twice daily" };
-            foreach (DocumentHealthcareResult result in resultCollection)
+
+            Assert.AreEqual(3, result.Entities.Count);
+            Assert.IsNotNull(result.Id);
+            Assert.AreEqual("0", result.Id);
+
+            foreach (HealthcareEntity entity in result.Entities)
             {
-                foreach (HealthcareEntity entity in result.Entities)
+                Assert.IsTrue(entitiesList.Contains(entity.Text));
+
+                if (entity.Text == "ibuprofen")
                 {
-                    Assert.IsTrue(entitiesList.Contains(entity.Text));
+                    var linksList = new List<string> { "UMLS", "AOD", "ATC", "CCPSS", "CHV", "CSP", "DRUGBANK", "GS", "LCH_NW", "LNC", "MEDCIN", "MMSL", "MSH", "MTHSPL", "NCI", "NCI_CTRP", "NCI_DCP", "NCI_DTP", "NCI_FDA", "NCI_NCI-GLOSS", "NDDF", "PDQ", "RCD", "RXNORM", "SNM", "SNMI", "SNOMEDCT_US", "USP", "USPMG", "VANDF" };
+
+                    foreach (HealthcareEntityLink link in entity.Links)
+                        Assert.IsTrue(linksList.Contains(link.DataSource));
+                }
+            }
+
+            foreach (HealthcareRelation relation in result.Relations)
+            {
+                if (relation.RelationType == "DosageOfMedication")
+                {
+                    Assert.AreEqual(relation.Source.Text, "100mg");
+                    Assert.AreEqual(relation.Source.Category, "Dosage");
+                    Assert.AreEqual(relation.Source.ConfidenceScore, 1);
+                    Assert.AreEqual(relation.Source.Length, 5);
+                    Assert.AreEqual(relation.Source.Offset, 18);
+
+
+                    Assert.AreEqual(relation.Target.Text, "ibuprofen");
+                    Assert.AreEqual(relation.Target.Category, "MedicationName");
+                    Assert.AreEqual(relation.Target.ConfidenceScore, 1);
+                    Assert.AreEqual(relation.Target.Length, 9);
+                    Assert.AreEqual(relation.Target.Offset, 27);
                 }
             }
         }
@@ -82,9 +113,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             HealthcareOptions options = new HealthcareOptions()
             {
-                Top = 1,
-                Skip = 0,
-                IncludeStatistics = true
+                Top = 1
             };
 
             HealthcareOperation operation = await client.StartHealthcareBatchAsync(batchDocuments, options);
@@ -96,6 +125,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, resultCollection.Count);
             Assert.AreEqual(3, resultCollection[0].Entities.Count);
             Assert.IsNotNull(resultCollection[0].Id);
+            Assert.AreEqual("1", resultCollection[0].Id);
             Assert.AreEqual("100mg", resultCollection[0].Entities.FirstOrDefault().Text);
             Assert.AreEqual("Dosage", resultCollection[0].Entities.FirstOrDefault().Category);
         }
@@ -116,9 +146,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
+            Assert.IsNotNull(resultCollection[0].Warnings);
             Assert.AreEqual(1, resultCollection.Count);
             Assert.AreEqual(6, resultCollection[0].Entities.Count);
             Assert.IsNotNull(resultCollection[0].Id);
+            Assert.AreEqual("2", resultCollection[0].Id);
             Assert.AreEqual("rapid", resultCollection[0].Entities.FirstOrDefault().Text);
             Assert.AreEqual("SymptomOrSign", resultCollection[0].Entities.FirstOrDefault().Category);
         }
@@ -158,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.AreEqual(resultCollection.Count(), 2);
+            Assert.AreEqual(resultCollection.Count, 2);
         }
 
         [Test]
@@ -178,12 +210,16 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.GreaterOrEqual(resultCollection.Count(), 2);
+            Assert.AreEqual(documents.Count, resultCollection.Statistics.DocumentCount);
+
+            Assert.AreEqual(48, resultCollection[0].Statistics.Value.CharacterCount);
+            Assert.AreEqual(1, resultCollection[0].Statistics.Value.TransactionCount);
 
             Assert.Greater(resultCollection.Statistics.DocumentCount, 0);
             Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
             Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
             Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
+            Assert.AreEqual(2, resultCollection.Statistics.ValidDocumentCount);
         }
 
         [Test]
@@ -198,7 +234,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.GreaterOrEqual(resultCollection.Count(), 2);
+            Assert.GreaterOrEqual(resultCollection.Count, 2);
         }
 
         [Test]
@@ -218,12 +254,38 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RecognizeHealthcareEntitiesResultCollection resultCollection = operation.Value;
 
-            Assert.GreaterOrEqual(resultCollection.Count(), 2);
+            Assert.GreaterOrEqual(resultCollection.Count, 2);
 
             Assert.Greater(resultCollection.Statistics.DocumentCount, 0);
             Assert.AreEqual(2, resultCollection.Statistics.DocumentCount);
             Assert.AreEqual(2, resultCollection.Statistics.TransactionCount);
             Assert.AreEqual(0, resultCollection.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task RecognizeHealthcareEntitiesBatchWithPagination()
+        {
+            TextAnalyticsClient client = GetClient();
+            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.";
+
+            var list = new List<string>();
+
+            for (int i = 0; i < 23; i++)
+            {
+                list.Add(document);
+            };
+
+            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list);
+
+            AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
+
+            int resultCount = 0;
+            await foreach (DocumentHealthcareResult result in results)
+            {
+                resultCount += 1;
+            }
+
+            Assert.AreEqual(resultCount, 23);
         }
     }
 }

@@ -7,7 +7,9 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -2300,11 +2302,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="operation"> operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         // Look for other alternatives of operation cancellation
-        #pragma warning disable AZC0003 // DO make service methods virtual.
         #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
-        #pragma warning restore AZC0003 // DO make service methods virtual.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
             scope.Start();
@@ -2326,11 +2326,9 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Cancel healthcare prediction job. </summary>
         /// <param name="operation"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        #pragma warning disable AZC0003 // DO make service methods virtual.
         #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
-        #pragma warning restore AZC0003 // DO make service methods virtual.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartCancelHealthJobAsync)}");
             scope.Start();
@@ -2381,10 +2379,32 @@ namespace Azure.AI.TextAnalytics
 
                 try
                 {
-                    Response<RecognizeHealthcareEntitiesResultCollection> response = await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                    int top = 1;
+                    int skip = 1;
+                    string[] nextLinkSplit = nextLink.Split('/');
 
-                    RecognizeHealthcareEntitiesResultCollection result = operation.Value;
-                    return Page.FromValues(result.AsEnumerable(), operation.NextLink, response.GetRawResponse());
+                    string[] jobIdParams = nextLinkSplit.Last().Split('?');
+
+                    string jobId = jobIdParams[0];
+
+                    string[] parameters = jobIdParams[1].Split('&');
+
+                    foreach (string paramater in parameters)
+                    {
+                        if (paramater.Contains("top"))
+                        {
+                            _ = int.TryParse(paramater.Split('=')[1], out top);
+                        }
+                        if (paramater.Contains("skip"))
+                        {
+                            _ = int.TryParse(paramater.Split('=')[1], out skip);
+                        }
+                    }
+
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip).ConfigureAwait(false);
+
+                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results);
+                    return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -1670,10 +1670,16 @@
           "properties": {
             "results": {
               "$ref": "#/definitions/HealthcareResult"
+						},
+						"errors": {
+              "items": {
+                "$ref": "#/definitions/TextAnalyticsError"
+              },
+              "type": "array"
             }
           },
           "type": "object"
-        },
+				},
         {
           "$ref": "#/definitions/Pagination"
         }

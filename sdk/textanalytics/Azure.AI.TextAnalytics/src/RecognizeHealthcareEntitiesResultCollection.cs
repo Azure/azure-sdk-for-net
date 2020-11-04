@@ -8,7 +8,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="RecognizeHealthcareEntititesResult"/> objects corresponding
+    /// Collection of <see cref="DocumentHealthcareResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
     public class RecognizeHealthcareEntitiesResultCollection : ReadOnlyCollection<DocumentHealthcareResult>

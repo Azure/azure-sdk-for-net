@@ -33,8 +33,6 @@ namespace Azure.AI.TextAnalytics.Samples
 
             HealthcareOptions options = new HealthcareOptions()
             {
-                Top = 1,
-                Skip = 0,
                 IncludeStatistics = true
             };
 
@@ -72,6 +70,12 @@ namespace Azure.AI.TextAnalytics.Samples
                 Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
                 Console.WriteLine("");
             }
+            Console.WriteLine($"Request statistics:");
+            Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
+            Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
+            Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
+            Console.WriteLine("");
         }
 
         #endregion

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -20,6 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="status"> . </param>
         internal HealthcareJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
+            Errors = new ChangeTrackingList<TextAnalyticsErrorInternal>();
         }
 
         /// <summary> Initializes a new instance of HealthcareJobState. </summary>
@@ -30,14 +33,17 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
+        /// <param name="errors"> . </param>
         /// <param name="nextLink"> . </param>
-        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareResult results, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal HealthcareJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, HealthcareResult results, IReadOnlyList<TextAnalyticsErrorInternal> errors, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Results = results;
+            Errors = errors;
             NextLink = nextLink;
         }
 
         public HealthcareResult Results { get; }
+        public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         public string NextLink { get; }
     }
 }

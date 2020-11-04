@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// StringIndexType
         /// </summary>
-        public StringIndexType? StringIndexType { get; set; }
+        internal StringIndexType? StringIndexType { get; set; }
 
     }
 }

@@ -48,7 +48,14 @@ namespace Azure.AI.TextAnalytics
         {
             get
             {
-                return OperationHelpers.GetValue(ref _value);
+                if (HasCompleted && !HasValue)
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw _requestFailedException;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                else
+                {
+                    return OperationHelpers.GetValue(ref _value);
+                }
             }
         }
 
@@ -59,6 +66,8 @@ namespace Azure.AI.TextAnalytics
         /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
+
+        private RequestFailedException _requestFailedException;
 
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
@@ -194,11 +203,20 @@ namespace Azure.AI.TextAnalytics
 
                     _response = update.GetRawResponse();
 
-                    // we need to first assign a value and then mark the operation as completed to avoid race conditions
-                    _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
+                    if (update.Value.Status == JobStatus.Succeeded)
+                    {
+                        // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
+                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
 
-                    NextLink = update.Value.NextLink;
-                    _hasCompleted = true;
+                        NextLink = update.Value.NextLink;
+                        _hasCompleted = true;
+                    }
+                    else if (update.Value.Status == JobStatus.Failed)
+                    {
+                        _hasCompleted = true;
+                        _requestFailedException = new RequestFailedException("Request Failed Exception:" + update.Value.Results.Errors.ToString());
+                        throw _requestFailedException;
+                    }
                 }
                 catch (Exception e)
                 {

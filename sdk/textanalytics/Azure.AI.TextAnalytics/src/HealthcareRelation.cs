@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareRelation
     {
         /// <summary> Initializes a new instance of HealthcareRelation. </summary>
-        /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
+        /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or `FrequencyOfMedication`, etc. </param>
         /// <param name="bidirectional"> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </param>
         /// <param name="source"> Reference link to the source entity. </param>
         /// <param name="target"> Reference link to the target entity. </param>

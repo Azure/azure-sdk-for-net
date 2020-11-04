@@ -1,0 +1,3253 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Content-Length": "3202",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-31e4ed013b24644e8defb009b1762197-d2f0c837fa4ad947-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "3d690e65097214462e3994d44b026896",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "1",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "2",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "3",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "4",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "5",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "6",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "7",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "8",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "9",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "10",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "11",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "12",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "13",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "14",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "15",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "16",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "17",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "18",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "19",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "20",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "21",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          },
+          {
+            "id": "22",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "38fb7746-79f7-461b-876b-7ea024840559",
+        "Date": "Wed, 04 Nov 2020 13:53:56 GMT",
+        "operation-location": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "382"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "60014c42eec829d6c5965295103c077f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "30fa34db-bb45-4839-915b-056fa39a0d5c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:53:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:53:57Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e6e71e1943fddaaba6e9191ddcfc8d38",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a9495b0e-0157-46bd-a94e-5cfc70a486d9",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:53:58 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:53:57Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "6bedcd03a2427620384078dbb7b003f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ec729b1c-16e3-4753-b974-37d2705f9f06",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:53:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:53:57Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2cba1531821bff99a027b9ded5b94dc9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b9e16146-ae7e-4915-a7f3-b689468eaed0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:54:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:53:57Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "439219099c4e763dfe70aebdcbcf23f6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c5132152-59bb-41ab-bcb2-5654832c4b57",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:54:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:54:01Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "c6eb26e66141811d33eeca1ae941a17e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a30e0e5f-1812-4466-9481-7f14dfb8be85",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:54:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "170"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:54:02Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "succeeded",
+        "errors": [],
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/0/entities/0",
+                  "target": "#/results/documents/0/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "1",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/1/entities/0",
+                  "target": "#/results/documents/1/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "2",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/2/entities/0",
+                  "target": "#/results/documents/2/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/3/entities/0",
+                  "target": "#/results/documents/3/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "4",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/4/entities/0",
+                  "target": "#/results/documents/4/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "5",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/5/entities/0",
+                  "target": "#/results/documents/5/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "6",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/6/entities/0",
+                  "target": "#/results/documents/6/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "7",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/7/entities/0",
+                  "target": "#/results/documents/7/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "8",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/8/entities/0",
+                  "target": "#/results/documents/8/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "9",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/9/entities/0",
+                  "target": "#/results/documents/9/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "10",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/10/entities/0",
+                  "target": "#/results/documents/10/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "11",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/11/entities/0",
+                  "target": "#/results/documents/11/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "12",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/12/entities/0",
+                  "target": "#/results/documents/12/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "13",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/13/entities/0",
+                  "target": "#/results/documents/13/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "14",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/14/entities/0",
+                  "target": "#/results/documents/14/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "15",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/15/entities/0",
+                  "target": "#/results/documents/15/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "16",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/16/entities/0",
+                  "target": "#/results/documents/16/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "17",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/17/entities/0",
+                  "target": "#/results/documents/17/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "18",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/18/entities/0",
+                  "target": "#/results/documents/18/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "19",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/19/entities/0",
+                  "target": "#/results/documents/19/entities/1"
+                }
+              ]
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2020-09-03"
+        },
+        "@nextLink": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?$skip=20\u0026$top=3"
+      }
+    },
+    {
+      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/18a55557-4615-4e61-83ec-3bd176879f7c?$top=3\u0026$skip=20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9dd2aef2c01e95a3d8442daad3dc33d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "10e10433-0118-404b-80b4-9307c9f1856d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 04 Nov 2020 13:54:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "jobId": "18a55557-4615-4e61-83ec-3bd176879f7c",
+        "lastUpdateDateTime": "2020-11-04T13:54:02Z",
+        "createdDateTime": "2020-11-04T13:53:56Z",
+        "expirationDateTime": "2020-11-05T13:53:56Z",
+        "status": "succeeded",
+        "errors": [],
+        "results": {
+          "documents": [
+            {
+              "id": "20",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/0/entities/0",
+                  "target": "#/results/documents/0/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "21",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/1/entities/0",
+                  "target": "#/results/documents/1/entities/1"
+                }
+              ]
+            },
+            {
+              "id": "22",
+              "statistics": {
+                "charactersCount": 101,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "offset": 63,
+                  "length": 11,
+                  "text": "12:00:00 AM",
+                  "category": "Time",
+                  "confidenceScore": 1.0,
+                  "isNegated": false
+                },
+                {
+                  "offset": 77,
+                  "length": 23,
+                  "text": "CORONARY ARTERY DISEASE",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "isNegated": false,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C1956346"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005327"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00010"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0037465"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3397"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "CORONARY ART DIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000871"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001677"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU019520"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K76003"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP90122-0"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10011078"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35988"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "1276"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003324"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C26732"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000439400"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002067"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE2uV"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-13000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "414024009"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0426"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "TimeOfCondition",
+                  "bidirectional": false,
+                  "source": "#/results/documents/2/entities/0",
+                  "target": "#/results/documents/2/entities/1"
+                }
+              ]
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2020-09-03"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1357450788",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+  }
+}

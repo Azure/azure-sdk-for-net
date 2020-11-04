@@ -18,9 +18,10 @@ namespace Azure.AI.TextAnalytics
         internal DocumentHealthcareResult(DocumentHealthcareEntitiesInternal documentHealthcareEntities)
         {
             Entities = documentHealthcareEntities.Entities;
-            Relations = documentHealthcareEntities.Relations != null ? ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations) : null;
+            Relations = ResolveHealthcareRelations(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations);
             Id = documentHealthcareEntities.Id;
-            Warnings = documentHealthcareEntities.Warnings != null ? Transforms.ConvertToWarnings(documentHealthcareEntities.Warnings) : null;
+            Warnings = Transforms.ConvertToWarnings(documentHealthcareEntities.Warnings);
+            Statistics = documentHealthcareEntities.Statistics;
         }
 
         /// <summary>
@@ -37,6 +38,12 @@ namespace Azure.AI.TextAnalytics
         internal static IReadOnlyList<HealthcareRelation> ResolveHealthcareRelations(IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelationInternal> relations)
         {
             List<HealthcareRelation> list = new List<HealthcareRelation>();
+
+            if (relations == null)
+            {
+                return list;
+            }
+
             foreach (HealthcareRelationInternal relation in relations)
             {
                 list.Add(new HealthcareRelation(relation.RelationType,
@@ -53,10 +60,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary> Healthcare entities. </summary>
         public IReadOnlyList<HealthcareEntity> Entities { get; }
         /// <summary> Healthcare entity relations. </summary>
-        public IReadOnlyList<HealthcareRelation> Relations { get; }
+        public IReadOnlyList<HealthcareRelation> Relations { get; } = new List<HealthcareRelation>();
         /// <summary> Warnings encountered while processing document. </summary>
-        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; }
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        public IReadOnlyList<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+        /// <summary> if IncludeStatistics=true was specified in the request this field will contain information about the document payload. </summary>
         public TextDocumentStatistics? Statistics { get; }
 
         /// <summary> TextAnalyticsError. </summary>

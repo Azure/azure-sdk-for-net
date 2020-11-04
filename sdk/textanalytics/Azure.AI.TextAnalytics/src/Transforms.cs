@@ -30,6 +30,12 @@ namespace Azure.AI.TextAnalytics
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
+
+            if (internalWarnings == null)
+            {
+                return warnings;
+            }
+
             foreach (TextAnalyticsWarningInternal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
@@ -227,16 +233,15 @@ namespace Azure.AI.TextAnalytics
             var healthcareEntititesResults = new List<DocumentHealthcareResult>();
 
             //Read errors
-            foreach (DocumentError error in results.Errors)
+            foreach (DocumentError error in results?.Errors)
             {
                 healthcareEntititesResults.Add(new DocumentHealthcareResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read entities
-            foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
+            foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results?.Documents)
             {
-                healthcareEntititesResults.Add(
-               new DocumentHealthcareResult(documentHealthcareEntities));
+                healthcareEntititesResults.Add(new DocumentHealthcareResult(documentHealthcareEntities));
             }
 
             return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);

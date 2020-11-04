@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
@@ -17,6 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static HealthcareJobState DeserializeHealthcareJobState(JsonElement element)
         {
             Optional<HealthcareResult> results = default;
+            Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
             Optional<string> nextLink = default;
             DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
@@ -34,6 +36,21 @@ namespace Azure.AI.TextAnalytics.Models
                         continue;
                     }
                     results = HealthcareResult.DeserializeHealthcareResult(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("errors"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TextAnalyticsErrorInternal> array = new List<TextAnalyticsErrorInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(item));
+                    }
+                    errors = array;
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))
@@ -77,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareJobState(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, nextLink.Value);
+            return new HealthcareJobState(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, results.Value, Optional.ToList(errors), nextLink.Value);
         }
     }
 }
