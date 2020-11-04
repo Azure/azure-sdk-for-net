@@ -10,14 +10,12 @@ namespace Azure.Communication.Pipeline
 {
     internal class CommunicationTokenCredential : TokenCredential
     {
-        private readonly AccessToken _token;
+        private readonly CommunicationUserCredential _credential;
 
-        public CommunicationTokenCredential(CommunicationUserCredential userCredential) {
-            _token = userCredential.GetToken();
-        }
+        public CommunicationTokenCredential(CommunicationUserCredential credential) => _credential = credential;
 
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => _token;
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => new ValueTask<AccessToken>(_token);
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetToken();
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetTokenAsync();
 
     }
 }
