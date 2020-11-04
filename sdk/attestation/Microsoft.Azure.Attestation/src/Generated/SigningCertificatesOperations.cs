@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Attestation
         public AttestationClient Client { get; private set; }
 
         /// <summary>
-        /// Retrieves the OpenID Configuration data for the Azure Attestation Service
+        /// Retrieves the attestation signing keys in use by the attestation service
         /// </summary>
         /// <remarks>
-        /// Retrieves attestation signing keys in use by the attestation service
+        /// Retrieves metadata signing certificates in use by the attestation service
         /// </remarks>
         /// <param name='tenantBaseUrl'>
         /// The tenant name, for example https://mytenant.attest.azure.net.

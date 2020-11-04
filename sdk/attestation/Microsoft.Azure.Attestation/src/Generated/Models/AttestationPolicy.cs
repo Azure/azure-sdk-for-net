@@ -26,8 +26,8 @@ namespace Microsoft.Azure.Attestation.Models
         /// <summary>
         /// Initializes a new instance of the AttestationPolicy class.
         /// </summary>
-        /// <param name="policy">String-encoded attestation policy
-        /// document.</param>
+        /// <param name="policy">JSON Web Token whose body is an
+        /// AttestationPolicyRequest definition.</param>
         public AttestationPolicy(string policy = default(string))
         {
             Policy = policy;
@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Attestation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets string-encoded attestation policy document.
+        /// Gets or sets JSON Web Token whose body is an
+        /// AttestationPolicyRequest definition.
         /// </summary>
         [JsonProperty(PropertyName = "policy")]
         public string Policy { get; set; }

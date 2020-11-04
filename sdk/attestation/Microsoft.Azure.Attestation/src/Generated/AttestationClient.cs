@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Attestation
             SigningCertificates = new SigningCertificatesOperations(this);
             MetadataConfiguration = new MetadataConfigurationOperations(this);
             BaseUri = "{tenantBaseUrl}";
-            ApiVersion = "2018-09-01-preview";
+            ApiVersion = "2018-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
