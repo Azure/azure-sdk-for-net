@@ -93,83 +93,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetAnomaliesForDetectionConfiguration()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            List<DataPointAnomaly> anomalies = await client.GetAnomaliesAsync(
-                DetectionConfigurationId,
-                new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
-            ).ToEnumerableAsync().ConfigureAwait(false);
-
-            Assert.That(anomalies, Is.Not.Null);
-        }
-
-        [RecordedTest]
-        public async Task GetIncidentsForDetectionConfiguration()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            int pages = 0;
-
-            await foreach (var incident in client.GetIncidentsAsync(
-                 DetectionConfigurationId,
-                 new GetIncidentsForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
-            {
-                Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.Id, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
-        public async Task GetIncidentRootCauses()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            bool isResponseEmpty = true;
-
-            await foreach (IncidentRootCause rootCause in client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId))
-            {
-                isResponseEmpty = false;
-                break;
-            }
-
-            Assert.That(isResponseEmpty, Is.False);
-        }
-
-        [RecordedTest]
-        public async Task GetValuesOfDimensionWithAnomalies()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            int pages = 0;
-
-            await foreach (var value in client.GetValuesOfDimensionWithAnomaliesAsync(
-                DetectionConfigurationId,
-                "city",
-                new GetValuesOfDimensionWithAnomaliesOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
-            {
-                Assert.That(value, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
         public async Task GetAlerts()
         {
             var client = GetMetricsAdvisorClient();
@@ -229,39 +152,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 new GetIncidentsForAlertOptions() { TopCount = 1 }))
             {
                 Assert.That(incident, Is.Not.Null);
-
-                // Just fetch 2 pages
-                if (++pages > 2)
-                {
-                    break;
-                }
-            }
-
-            Assert.That(pages, Is.GreaterThan(0));
-        }
-
-        [RecordedTest]
-        public async Task GetMetricEnrichedSeriesData()
-        {
-            var client = GetMetricsAdvisorClient();
-
-            IEnumerable<DimensionKey> seriesKeys = new List<DimensionKey>()
-            {
-                new DimensionKey(new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Dim1", "Common Lime"),
-                    new KeyValuePair<string, string>("Dim2", "Amphibian"),
-                }),
-                new DimensionKey(new List<KeyValuePair<string, string>> {
-                    new KeyValuePair<string, string>("Dim1", "Common Beech"),
-                    new KeyValuePair<string, string>("Dim2", "Ant"),
-                })
-            };
-
-            int pages = 0;
-
-            await foreach (MetricEnrichedSeriesData seriesData in client.GetMetricEnrichedSeriesDataAsync(seriesKeys, DetectionConfigurationId, Recording.UtcNow.AddMonths(-5), Recording.UtcNow))
-            {
-                Assert.That(seriesData, Is.Not.Null);
 
                 // Just fetch 2 pages
                 if (++pages > 2)
