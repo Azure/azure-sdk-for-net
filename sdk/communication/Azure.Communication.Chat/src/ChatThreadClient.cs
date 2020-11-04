@@ -40,21 +40,7 @@ namespace Azure.Communication.Chat
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationUserCredential);
-            _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatThreadClient"/>.</summary>
-        /// <param name="threadId"></param>
-        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
-        /// <param name="policy">The bearer authentication policy to be used for authentication.</param>
-        /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        internal ChatThreadClient(string threadId, Uri endpointUrl, BearerTokenAuthenticationPolicy policy, ChatClientOptions? options = default)
-        {
-            options ??= new ChatClientOptions();
-            Id = threadId;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = CreatePipelineFromBearer(options, policy);
+            HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationUserCredential, endpointUrl);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
         }
 
@@ -600,15 +586,10 @@ namespace Azure.Communication.Chat
         }
         #endregion
 
-        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
+        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential, Uri endpointUrl)
         {
-            var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            return httpPipeline;
-        }
-
-        private static HttpPipeline CreatePipelineFromBearer(ChatClientOptions options, BearerTokenAuthenticationPolicy policy)
-        {
+            var token = new StaticTokenCredential(communicationUserCredential.GetToken());
+            var policy = new BearerTokenAuthenticationPolicy(token, endpointUrl.AbsoluteUri);
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
             return httpPipeline;
         }

@@ -61,9 +61,9 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2),
                 new ChatThreadMember(user3)
             };
-            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
-            ChatClient chatClient3 = CreateInstrumentedChatWithBearer(token3);
+            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
+            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
             //act
             #region Snippet:Azure_Communication_Chat_Tests_E2E_InitializeChatThreadClient
@@ -237,8 +237,8 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user1),
                 new ChatThreadMember(user2)
             };
-            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
+            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
 
             //act
             ChatThreadClient chatThreadClient = CreateInstrumentedChatThreadClient(chatClient, "Thread topic - ReadReceipts Test", members);
@@ -295,9 +295,9 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2),
                 new ChatThreadMember(user3)
             };
-            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
-            ChatClient chatClient3 = CreateInstrumentedChatWithBearer(token3);
+            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
+            ChatClient chatClient3 = CreateInstrumentedChatClient(token3);
 
             //act
             ChatThreadClient chatThreadClient = await CreateInstrumentedChatThreadClientAsync(chatClient, topic, members);
@@ -440,8 +440,8 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user1),
                 new ChatThreadMember(user2)
             };
-            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
+            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
 
             //act
             ChatThreadClient chatThreadClient = await CreateInstrumentedChatThreadClientAsync(chatClient, "Thread topic - ReadReceipts Async Test", members);
