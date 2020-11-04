@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public HealthcareEntity Target { get; }
 
-        /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
+        /// <summary> Type of relation. Examples include: `DosageOfMedication` or `FrequencyOfMedication`, etc. </summary>
         public string RelationType { get; }
         /// <summary> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </summary>
         public bool Bidirectional { get; }
