@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Identity;
 using Azure.Communication.Pipeline;
+using Azure.Communication.Identity;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -37,7 +37,7 @@ namespace Azure.Communication.Chat
             _communicationUserCredential = communicationUserCredential;
             _endpointUrl = endpointUrl;
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
-            HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationUserCredential, endpointUrl);
+            HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationUserCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, _chatClientOptions.ApiVersion);
         }
 
@@ -279,10 +279,10 @@ namespace Azure.Communication.Chat
 
         #endregion
 
-        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential, Uri endpointUrl)
+        private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
         {
-            var token = new StaticTokenCredential(communicationUserCredential.GetToken());
-            var policy = new BearerTokenAuthenticationPolicy(token, endpointUrl.AbsoluteUri);
+            var token = new CommunicationTokenCredential(communicationUserCredential);
+            var policy = new BearerTokenAuthenticationPolicy(token, "");
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
             return httpPipeline;
         }

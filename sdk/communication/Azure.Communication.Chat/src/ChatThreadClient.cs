@@ -588,7 +588,7 @@ namespace Azure.Communication.Chat
 
         private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential, Uri endpointUrl)
         {
-            var token = new StaticTokenCredential(communicationUserCredential.GetToken());
+            var token = new CommunicationTokenCredential(communicationUserCredential);
             var policy = new BearerTokenAuthenticationPolicy(token, endpointUrl.AbsoluteUri);
             HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
             return httpPipeline;
