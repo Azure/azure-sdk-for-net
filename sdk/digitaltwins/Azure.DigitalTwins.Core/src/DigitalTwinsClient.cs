@@ -21,6 +21,13 @@ namespace Azure.DigitalTwins.Core
     {
         private const bool IncludeModelDefinition = true;
 
+        // Vanity representation for azure digital twin app Id "0b07f429-9f4b-4714-9392-cc5e8e80c8b0" in the public cloud
+        // and shared by other clouds.
+        private const string AdtDefaultAppId = "https://digitaltwins.azure.net";
+
+        private const string DefaultPermissionConsent = "/.default";
+        private static readonly string[] AdtDefaultScopes = new[] { AdtDefaultAppId + DefaultPermissionConsent };
+
         private readonly HttpPipeline _httpPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
@@ -86,7 +93,7 @@ namespace Azure.DigitalTwins.Core
 
             _objectSerializer = options.Serializer ?? new JsonObjectSerializer();
 
-            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes(endpoint)), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new BearerTokenAuthenticationPolicy(credential, GetAuthorizationScopes()), HttpPipelinePosition.PerCall);
             _httpPipeline = HttpPipelineBuilder.Build(options);
 
             string versionString = options.GetVersionString();
@@ -2185,26 +2192,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Gets the scope for authentication/authorization policy.
         /// </summary>
-        /// <param name="endpoint">Azure digital twins instance Uri.</param>
         /// <returns>List of scopes for the specified endpoint.</returns>
-        internal static string[] GetAuthorizationScopes(Uri endpoint)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(endpoint.AbsoluteUri, nameof(endpoint.AbsoluteUri));
-
-            // Uri representation for azure digital twin app Id "0b07f429-9f4b-4714-9392-cc5e8e80c8b0" in the public cloud.
-            const string adtPublicCloudAppId = "https://digitaltwins.azure.net";
-            const string defaultPermissionConsent = "/.default";
-
-            // If the endpoint is in Azure public cloud, the suffix will have "azure.net" or "ppe.net".
-            // Once ADT becomes available in other clouds, their corresponding scope has to be matched and set.
-            if (endpoint.AbsoluteUri.IndexOf("azure.net", StringComparison.OrdinalIgnoreCase) > 0
-                || endpoint.AbsoluteUri.IndexOf("ppe.net", StringComparison.OrdinalIgnoreCase) > 0)
-            {
-                return new[] { adtPublicCloudAppId + defaultPermissionConsent };
-            }
-
-            throw new InvalidOperationException($"Azure digital twins instance endpoint '{endpoint.AbsoluteUri}' is not valid.");
-        }
+        internal static string[] GetAuthorizationScopes() => AdtDefaultScopes;
     }
 }

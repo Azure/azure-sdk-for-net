@@ -42,6 +42,7 @@ Note that these breaking changes are only breaking changes from the preview vers
 ### Fixes and improvements
 
 - Fixed bug where `CreateDigitalTwin` and `CreateRelationship` APIs always sent ifNoneMatch header with value "*" making it impossible to replace an existing entity.
+- Fixed authentication scope for ADT instances that don't match the public cloud domain name pattern.
 
 ## 1.0.0-preview.3 (2020-07-13)
 
