@@ -238,7 +238,7 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user2)
             };
             ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
+            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
 
             //act
             ChatThreadClient chatThreadClient = CreateInstrumentedChatThreadClient(chatClient, "Thread topic - ReadReceipts Test", members);
@@ -296,7 +296,7 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user3)
             };
             ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
-            ChatClient chatClient2 = CreateInstrumentedChatClient(token2);
+            ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
             ChatClient chatClient3 = CreateInstrumentedChatWithBearer(token3);
 
             //act
@@ -440,7 +440,7 @@ namespace Azure.Communication.Chat.Tests
                 new ChatThreadMember(user1),
                 new ChatThreadMember(user2)
             };
-            ChatClient chatClient = CreateInstrumentedChatClient(token1);
+            ChatClient chatClient = CreateInstrumentedChatWithBearer(token1);
             ChatClient chatClient2 = CreateInstrumentedChatWithBearer(token2);
 
             //act
