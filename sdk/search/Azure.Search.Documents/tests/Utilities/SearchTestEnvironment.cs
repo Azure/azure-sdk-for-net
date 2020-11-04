@@ -11,6 +11,11 @@ namespace Azure.Search.Documents.Tests
     public class SearchTestEnvironment: TestEnvironment
     {
         /// <summary>
+        /// The name of the variable for <see cref="RecordedClientSecret"/>.
+        /// </summary>
+        public const string ClientSecretVariableName = "CLIENT_SECRET";
+
+        /// <summary>
         /// The name of the variable for <see cref="SearchAdminKey"/>.
         /// </summary>
         public const string SearchAdminKeyVariableName = "SEARCH_ADMIN_API_KEY";
@@ -66,5 +71,15 @@ namespace Azure.Search.Documents.Tests
         /// Gets the Cognitive Services key for skillsets.
         /// </summary>
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
+
+        /// <summary>
+        /// Gets the optional Key Vault URL used for double-encrypted indexes.
+        /// </summary>
+        public string KeyVaultUrl => GetRecordedOptionalVariable("SEARCH_KEYVAULT_URL");
+
+        /// <summary>
+        /// Gets the recorded value for the CLIENT_ID, which gets sanitized as part of the payload.
+        /// </summary>
+        public string RecordedClientSecret => GetRecordedVariable(ClientSecretVariableName);
     }
 }
