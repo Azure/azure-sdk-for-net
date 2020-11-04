@@ -55,11 +55,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+            RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
-            Assert.That(restoreResult, Is.Not.Null);
             Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
 
             await WaitForOperationAsync();
         }

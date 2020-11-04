@@ -53,7 +53,7 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->

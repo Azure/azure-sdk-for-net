@@ -80,8 +80,18 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="backupFolderUri">The location of the backup.</param>
         /// <param name="startTime">The start time of the backup operation.</param>
         /// <param name="endTime">The end time of the backup operation.</param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
         public static BackupResult BackupResult(Uri backupFolderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
             new BackupResult(backupFolderUri, startTime, endTime);
+
+
+        /// <summary>
+        /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="startTime">The start time of the restore operation.</param>
+        /// <param name="endTime">The end time of the restore operation.</param>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        public static RestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new RestoreResult(startTime, endTime);
     }
 }

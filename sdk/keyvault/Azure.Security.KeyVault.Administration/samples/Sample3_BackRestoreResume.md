@@ -39,7 +39,7 @@ KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->
