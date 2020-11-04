@@ -106,7 +106,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             var loadedSecret = await secretLoader.WaitForAll().ConfigureAwait(false);
             foreach (var secretBundle in loadedSecret)
             {
-                newLoadedSecrets.Add(secretBundle.Value.Name, new LoadedSecret(_manager.GetKey(secretBundle), secretBundle.Value.Value, secretBundle.Value.Properties.UpdatedOn));
+                newLoadedSecrets.Add(secretBundle.Value.Name, new LoadedSecret(_manager.GetKeys(secretBundle), secretBundle.Value.Value, secretBundle.Value.Properties.UpdatedOn));
             }
 
             _loadedSecrets = newLoadedSecrets;
@@ -130,7 +130,10 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             var data = new Dictionary<string, string>(loadedSecrets.Count, StringComparer.OrdinalIgnoreCase);
             foreach (var secretItem in loadedSecrets)
             {
-                data.Add(secretItem.Value.Key, secretItem.Value.Value);
+                foreach (var secretKey in secretItem.Value.Keys)
+                {
+                    data.Add(secretKey, secretItem.Value.Value);
+                }
             }
 
             Data = data;
@@ -148,14 +151,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 
         private readonly struct LoadedSecret
         {
-            public LoadedSecret(string key, string value, DateTimeOffset? updated)
+            public LoadedSecret(IEnumerable<string> keys, string value, DateTimeOffset? updated)
             {
-                Key = key;
+                Keys = keys.ToArray();
                 Value = value;
                 Updated = updated;
             }
 
-            public string Key { get; }
+            public string[] Keys { get; }
             public string Value { get; }
             public DateTimeOffset? Updated { get; }
 

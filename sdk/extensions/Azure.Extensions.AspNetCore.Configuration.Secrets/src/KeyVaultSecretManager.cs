@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
@@ -23,6 +24,16 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         public virtual string GetKey(KeyVaultSecret secret)
         {
             return secret.Name.Replace("--", ConfigurationPath.KeyDelimiter);
+        }
+
+        /// <summary>
+        /// Maps secret to a set configuration keys.
+        /// </summary>
+        /// <param name="secret">The <see cref="KeyVaultSecret"/> instance.</param>
+        /// <returns>Configuration key names to store secret value.</returns>
+        public virtual IEnumerable<string> GetKeys(KeyVaultSecret secret)
+        {
+            yield return GetKey(secret);
         }
 
         /// <summary>

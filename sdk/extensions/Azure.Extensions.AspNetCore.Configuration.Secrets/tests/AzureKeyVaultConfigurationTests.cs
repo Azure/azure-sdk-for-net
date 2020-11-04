@@ -132,6 +132,30 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         }
 
         [Test]
+        public void LoadMultipleInstancesOfSecrets()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Secret1", "Value1")
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new MultiKeyKeyVaultSecretManager()))
+            {
+                provider.Load();
+
+                // Assert
+                var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
+                Assert.AreEqual(new[] { "a", "x" }, childKeys);
+                Assert.AreEqual("Value1", provider.Get("a:b:c"));
+                Assert.AreEqual("Value1", provider.Get("x:y:z"));
+            }
+        }
+
+        [Test]
         public void DoesNotLoadDisabledItems()
         {
             var client = new Mock<SecretClient>();
@@ -534,6 +558,15 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             public override bool Load(SecretProperties secret)
             {
                 return secret.Name.EndsWith("1");
+            }
+        }
+
+        private class MultiKeyKeyVaultSecretManager : KeyVaultSecretManager
+        {
+            public override IEnumerable<string> GetKeys(KeyVaultSecret secret)
+            {
+                yield return "a:b:c";
+                yield return "x:y:z";
             }
         }
 
