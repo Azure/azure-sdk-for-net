@@ -11,19 +11,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class VisualStudioCodeCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class VisualStudioCodeCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public VisualStudioCodeCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [Test]

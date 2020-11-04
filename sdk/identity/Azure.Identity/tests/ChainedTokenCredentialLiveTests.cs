@@ -12,19 +12,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ChainedTokenCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ChainedTokenCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public ChainedTokenCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
