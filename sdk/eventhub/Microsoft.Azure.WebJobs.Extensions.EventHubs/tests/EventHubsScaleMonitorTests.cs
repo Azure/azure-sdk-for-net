@@ -17,6 +17,7 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Moq.Language;
 using Newtonsoft.Json;
 using Xunit;
 using static Moq.It;
@@ -63,15 +64,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public async void CreateTriggerMetrics_ReturnsExpectedResult()
         {
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
-            string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/0";
+            string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/checkpoint/0";
 
             var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict);
+            var sequence = mockBlobReference.SetupSequence(m => m.GetPropertiesAsync(IsAny<BlobRequestConditions>(), IsAny<CancellationToken>()));
 
             _mockBlobContainer
                 .Setup(c => c.GetBlobClient(prefix))
                 .Returns(mockBlobReference.Object);
 
-            SetupBlobMock(mockBlobReference, 0, 0);
+            SetupBlobMock(sequence, 0, 0);
 
             var partitionInfo = new List<PartitionProperties>
             {
@@ -85,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Partition got its first message (Offset == null, LastEnqueued == 0)
-            SetupBlobMock(mockBlobReference, null, 0);
+            SetupBlobMock(sequence, null, 0);
 
             metrics = await _scaleMonitor.CreateTriggerMetrics(partitionInfo);
 
@@ -94,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // No instances assigned to process events on partition (Offset == null, LastEnqueued > 0)
-            SetupBlobMock(mockBlobReference, null, 0);
+            SetupBlobMock(sequence, null, 0);
 
             partitionInfo = new List<PartitionProperties>
             {
@@ -108,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Checkpointing is ahead of partition info (SequenceNumber > LastEnqueued)
-            SetupBlobMock(mockBlobReference, 25, 11);
+            SetupBlobMock(sequence, 25, 11);
 
             partitionInfo = new List<PartitionProperties>
             {
@@ -126,18 +128,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public async void CreateTriggerMetrics_MultiplePartitions_ReturnsExpectedResult()
         {
             EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(_eventHubConnectionString);
-            string prefix = $"{sb.Endpoint.Host}/{_eventHubName.ToLower()}/{_consumerGroup}/";
 
             var mockBlobReference = new Mock<BlobClient>(MockBehavior.Strict);
+            var sequence = mockBlobReference.SetupSequence(m => m.GetPropertiesAsync(IsAny<BlobRequestConditions>(), IsAny<CancellationToken>()));
 
             _mockBlobContainer
                 .Setup(c => c.GetBlobClient(IsAny<string>()))
                 .Returns(mockBlobReference.Object);
 
             // No messages processed, no messages in queue
-            SetupBlobMock(mockBlobReference, 0, 0);
-            SetupBlobMock(mockBlobReference, 0, 0);
-            SetupBlobMock(mockBlobReference, 0, 0);
+            SetupBlobMock(sequence, 0, 0);
+            SetupBlobMock(sequence, 0, 0);
+            SetupBlobMock(sequence, 0, 0);
 
             var partitionInfo = new List<PartitionProperties>
             {
@@ -153,9 +155,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // Messages processed, Messages in queue
-            SetupBlobMock(mockBlobReference, 0, 2);
-            SetupBlobMock(mockBlobReference, 0, 3);
-            SetupBlobMock(mockBlobReference, 0, 4);
+            SetupBlobMock(sequence, 0, 2);
+            SetupBlobMock(sequence, 0, 3);
+            SetupBlobMock(sequence, 0, 4);
 
             partitionInfo = new List<PartitionProperties>
             {
@@ -171,9 +173,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.NotEqual(default(DateTime), metrics.Timestamp);
 
             // One invalid sample
-            SetupBlobMock(mockBlobReference, 0, 2);
-            SetupBlobMock(mockBlobReference, 0, 3);
-            SetupBlobMock(mockBlobReference, 0, 4);
+            SetupBlobMock(sequence, 0, 2);
+            SetupBlobMock(sequence, 0, 3);
+            SetupBlobMock(sequence, 0, 4);
 
             partitionInfo = new List<PartitionProperties>
             {
@@ -444,7 +446,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.Equal($"EventHubs entity '{_eventHubName}' is steady.", log.FormattedMessage);
         }
 
-        private static void SetupBlobMock(Mock<BlobClient> mock, int? offset, int? sequencenumber)
+        private static void SetupBlobMock(ISetupSequentialResult<Task<Response<BlobProperties>>> mock, int? offset, int? sequencenumber)
         {
             var metadata = new Dictionary<string, string>();
             if (offset != null)
@@ -459,10 +461,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var response = Response.FromValue(BlobsModelFactory.BlobProperties(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, metadata, default, default, default, default), Mock.Of<Response>());
 
-            // No messages processed, no messages in queue
-            mock
-                .Setup(m => m.GetPropertiesAsync(IsAny<BlobRequestConditions>(), IsAny<CancellationToken>()))
-                .ReturnsAsync(response);
+            mock.ReturnsAsync(response);
         }
     }
 }
