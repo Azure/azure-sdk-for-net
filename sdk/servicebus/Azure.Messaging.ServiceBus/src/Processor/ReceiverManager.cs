@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.Complete;
                     // don't pass the processor cancellation token
-                    // as we want in flight autocompletion to be able
+                    // as we want in flight auto-completion to be able
                     // to finish
                     await Receiver.CompleteMessageAsync(
                         message.LockToken,

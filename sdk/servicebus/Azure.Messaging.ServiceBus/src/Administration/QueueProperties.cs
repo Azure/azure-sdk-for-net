@@ -268,7 +268,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnablePartitioning { get; internal set; }
 
         /// <summary>
-        /// Custom metdata that user can associate with the description.
+        /// Custom metadata that user can associate with the description.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata

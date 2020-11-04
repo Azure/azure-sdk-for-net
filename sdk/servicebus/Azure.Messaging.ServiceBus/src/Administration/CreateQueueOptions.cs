@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnablePartitioning { get; set; } = false;
 
         /// <summary>
-        /// Custom metdata that user can associate with the queue.
+        /// Custom metadata that user can associate with the queue.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata

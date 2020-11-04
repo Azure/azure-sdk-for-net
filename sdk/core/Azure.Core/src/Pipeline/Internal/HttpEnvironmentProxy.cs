@@ -210,7 +210,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (s[0] == '.')
                     {
-                        // This should match either domain it self or any subdomain or host
+                        // This should match either domain it self or any sub-domain or host
                         // .foo.com will match foo.com it self or *.foo.com
                         if ((s.Length - 1) == input.Host.Length &&
                             string.Compare(s, 1, input.Host, 0, input.Host.Length, StringComparison.OrdinalIgnoreCase) == 0)

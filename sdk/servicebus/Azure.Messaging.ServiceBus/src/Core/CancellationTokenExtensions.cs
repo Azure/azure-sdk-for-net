@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   of the <paramref name="instance" />.
         /// </summary>
         ///
-        /// <typeparam name="T">The type of exception to throw; the type must have a parameterless constructor.</typeparam>
+        /// <typeparam name="T">The type of exception to throw; the type must have a parameter-less constructor.</typeparam>
         ///
         /// <param name="instance">The instance that this method was invoked on.</param>
         ///

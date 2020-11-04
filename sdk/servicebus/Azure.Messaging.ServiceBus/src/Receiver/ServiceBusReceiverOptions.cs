@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
-        /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
+        /// Gets or sets the sub-queue to connect the receiver to. By default, the receiver will not connect to a sub-queue.
         /// </summary>
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
