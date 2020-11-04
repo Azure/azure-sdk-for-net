@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -272,7 +272,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -400,7 +400,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -499,7 +499,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -600,7 +600,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -713,7 +713,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -836,7 +836,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -946,7 +946,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);

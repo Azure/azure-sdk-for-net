@@ -94,7 +94,11 @@ namespace Azure.DigitalTwins.Core.Tests
             return Recording.GenerateId();
         }
 
-        protected async Task createAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
+        // This method is used as a helper method to accommodate for the lag on the service side between creating a new
+        // model and creating a digital twin that implements this model. The work around is to list the model(s) after
+        // creating them in order to accommodate for that lag. Once service side investigates and comes up with a solution,
+        // there is no need to list the models after creating them.
+        protected async Task CreateAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
         {
             await client.CreateModelsAsync(lists).ConfigureAwait(false);
 

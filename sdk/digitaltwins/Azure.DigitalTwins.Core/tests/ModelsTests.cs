@@ -39,7 +39,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // CREATE models
                 var modelsList = new List<string> { modelBuilding, modelHvac, modelWard };
-                await createAndListModelsAsync(client, modelsList).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, modelsList).ConfigureAwait(false);
 
                 // GET one created model
                 Response<DigitalTwinsModelData> buildingModel = await client.GetModelAsync(buildingModelId).ConfigureAwait(false);
@@ -93,7 +93,7 @@ namespace Azure.DigitalTwins.Core.Tests
             // add a model with a single value for displayName and for description, neither of which were defined as a map
             string modelWard = TestAssetsHelper.GetWardModelPayload(wardModelId);
 
-            await createAndListModelsAsync(client, new List<string> { modelWard }).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, new List<string> { modelWard }).ConfigureAwait(false);
 
             // act
             // should not throw on deserialization
@@ -147,7 +147,7 @@ namespace Azure.DigitalTwins.Core.Tests
             var modelsList = new List<string> { modelWard };
 
             // Create model once
-            await createAndListModelsAsync(client, modelsList).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, modelsList).ConfigureAwait(false);
 
             // act
             Func<Task> act = async () => await client.CreateModelsAsync(modelsList).ConfigureAwait(false);

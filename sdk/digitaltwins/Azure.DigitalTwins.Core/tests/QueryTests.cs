@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // Create a room twin, with property "IsOccupied": true
                 string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
@@ -85,7 +85,7 @@ namespace Azure.DigitalTwins.Core.Tests
             {
                 // Create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // Create a room twin, with property "IsOccupied": true
                 BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);

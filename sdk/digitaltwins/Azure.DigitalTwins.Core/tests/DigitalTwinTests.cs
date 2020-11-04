@@ -35,7 +35,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -143,7 +143,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // create room model
             string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-            await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+            await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
             // act
 
@@ -173,7 +173,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // arrange
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -227,7 +227,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 // arrange
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -278,7 +278,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -345,7 +345,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -413,7 +413,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
@@ -478,7 +478,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await createAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // act
 
