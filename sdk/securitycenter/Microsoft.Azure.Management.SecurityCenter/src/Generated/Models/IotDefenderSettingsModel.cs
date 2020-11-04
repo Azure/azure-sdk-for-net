@@ -10,12 +10,17 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// IoT Defender settings
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class IotDefenderSettingsModel : Resource
     {
         /// <summary>
@@ -29,14 +34,19 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the IotDefenderSettingsModel class.
         /// </summary>
+        /// <param name="deviceQuota">Size of the device quota (as a opposed to
+        /// a Pay as You Go billing model). Value is required to be in
+        /// multiples of 1000.</param>
+        /// <param name="sentinelWorkspaceResourceIds">Sentinel Workspace
+        /// Resource Ids</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="properties">IoT Defender settings properties</param>
-        public IotDefenderSettingsModel(string id = default(string), string name = default(string), string type = default(string), object properties = default(object))
+        public IotDefenderSettingsModel(int deviceQuota, IList<string> sentinelWorkspaceResourceIds, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
-            Properties = properties;
+            DeviceQuota = deviceQuota;
+            SentinelWorkspaceResourceIds = sentinelWorkspaceResourceIds;
             CustomInit();
         }
 
@@ -46,10 +56,34 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets ioT Defender settings properties
+        /// Gets or sets size of the device quota (as a opposed to a Pay as You
+        /// Go billing model). Value is required to be in multiples of 1000.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.deviceQuota")]
+        public int DeviceQuota { get; set; }
 
+        /// <summary>
+        /// Gets or sets sentinel Workspace Resource Ids
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sentinelWorkspaceResourceIds")]
+        public IList<string> SentinelWorkspaceResourceIds { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SentinelWorkspaceResourceIds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SentinelWorkspaceResourceIds");
+            }
+            if (DeviceQuota < 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "DeviceQuota", 1000);
+            }
+        }
     }
 }

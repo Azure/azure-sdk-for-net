@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -28,9 +29,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             public static IotSensorsList List(this IIotSensorsOperations operations, string scope)
             {
@@ -44,9 +43,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -66,9 +63,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -85,9 +80,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -110,9 +103,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -129,9 +120,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -154,9 +143,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -173,9 +160,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -195,16 +180,14 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
             /// </param>
-            public static void DownloadActivation(this IIotSensorsOperations operations, string scope, string iotSensorName)
+            public static Stream DownloadActivation(this IIotSensorsOperations operations, string scope, string iotSensorName)
             {
-                operations.DownloadActivationAsync(scope, iotSensorName).GetAwaiter().GetResult();
+                return operations.DownloadActivationAsync(scope, iotSensorName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,9 +197,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Scope of the query, can be subscription
-            /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-            /// (/providers/Microsoft.Devices/iotHubs/myHub)
+            /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
             /// </param>
             /// <param name='iotSensorName'>
             /// Name of the IoT sensor
@@ -224,9 +205,11 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DownloadActivationAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> DownloadActivationAsync(this IIotSensorsOperations operations, string scope, string iotSensorName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DownloadActivationWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                var _result = await operations.DownloadActivationWithHttpMessagesAsync(scope, iotSensorName, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
     }

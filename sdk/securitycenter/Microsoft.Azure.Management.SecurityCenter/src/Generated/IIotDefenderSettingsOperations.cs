@@ -64,6 +64,13 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Create or update IoT Defender settings
         /// </summary>
+        /// <param name='deviceQuota'>
+        /// Size of the device quota (as a opposed to a Pay as You Go billing
+        /// model). Value is required to be in multiples of 1000.
+        /// </param>
+        /// <param name='sentinelWorkspaceResourceIds'>
+        /// Sentinel Workspace Resource Ids
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -79,7 +86,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotDefenderSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotDefenderSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(int deviceQuota, IList<string> sentinelWorkspaceResourceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete IoT Defender settings
         /// </summary>

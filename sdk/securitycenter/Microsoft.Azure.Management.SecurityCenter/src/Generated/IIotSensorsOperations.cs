@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Security
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -27,9 +28,8 @@ namespace Microsoft.Azure.Management.Security
         /// List IoT sensors
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,9 +51,8 @@ namespace Microsoft.Azure.Management.Security
         /// Get IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -78,9 +77,8 @@ namespace Microsoft.Azure.Management.Security
         /// Create or update IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -105,9 +103,8 @@ namespace Microsoft.Azure.Management.Security
         /// Delete IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -129,9 +126,8 @@ namespace Microsoft.Azure.Management.Security
         /// Download sensor activation file
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub,
+        /// /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -145,9 +141,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DownloadActivationWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Stream>> DownloadActivationWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

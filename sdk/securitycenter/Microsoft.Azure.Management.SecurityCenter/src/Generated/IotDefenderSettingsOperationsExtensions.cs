@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -83,9 +85,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IotDefenderSettingsModel CreateOrUpdate(this IIotDefenderSettingsOperations operations)
+            /// <param name='deviceQuota'>
+            /// Size of the device quota (as a opposed to a Pay as You Go billing model).
+            /// Value is required to be in multiples of 1000.
+            /// </param>
+            /// <param name='sentinelWorkspaceResourceIds'>
+            /// Sentinel Workspace Resource Ids
+            /// </param>
+            public static IotDefenderSettingsModel CreateOrUpdate(this IIotDefenderSettingsOperations operations, int deviceQuota, IList<string> sentinelWorkspaceResourceIds)
             {
-                return operations.CreateOrUpdateAsync().GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(deviceQuota, sentinelWorkspaceResourceIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -94,12 +103,19 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceQuota'>
+            /// Size of the device quota (as a opposed to a Pay as You Go billing model).
+            /// Value is required to be in multiples of 1000.
+            /// </param>
+            /// <param name='sentinelWorkspaceResourceIds'>
+            /// Sentinel Workspace Resource Ids
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotDefenderSettingsModel> CreateOrUpdateAsync(this IIotDefenderSettingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IotDefenderSettingsModel> CreateOrUpdateAsync(this IIotDefenderSettingsOperations operations, int deviceQuota, IList<string> sentinelWorkspaceResourceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(deviceQuota, sentinelWorkspaceResourceIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

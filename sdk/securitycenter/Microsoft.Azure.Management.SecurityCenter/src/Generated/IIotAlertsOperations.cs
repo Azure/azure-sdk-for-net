@@ -99,6 +99,79 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// List IoT alerts
         /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query: Subscription (i.e.
+        /// /subscriptions/{subscriptionId}) or IoT Hub (i.e.
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+        /// </param>
+        /// <param name='minStartTimeUtc'>
+        /// Filter by minimum startTimeUtc (ISO 8601 format)
+        /// </param>
+        /// <param name='maxStartTimeUtc'>
+        /// Filter by maximum startTimeUtc (ISO 8601 format)
+        /// </param>
+        /// <param name='alertType'>
+        /// Filter by alert type
+        /// </param>
+        /// <param name='deviceManagementType'>
+        /// Get devices only from specific type, Managed or Unmanaged. Possible
+        /// values include: 'Managed', 'Unmanaged'
+        /// </param>
+        /// <param name='compromisedEntity'>
+        /// Filter by compromised device
+        /// </param>
+        /// <param name='limit'>
+        /// Limit the number of items returned in a single page
+        /// </param>
+        /// <param name='skipToken'>
+        /// Skip token used for pagination
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<IotAlertModel>>> List1WithHttpMessagesAsync(string scope, string minStartTimeUtc = default(string), string maxStartTimeUtc = default(string), string alertType = default(string), string deviceManagementType = default(string), string compromisedEntity = default(string), int? limit = default(int?), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get IoT alert
+        /// </summary>
+        /// <param name='scope'>
+        /// Scope of the query: Subscription (i.e.
+        /// /subscriptions/{subscriptionId}) or IoT Hub (i.e.
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+        /// </param>
+        /// <param name='iotAlertId'>
+        /// Id of the alert
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IotAlertModel>> Get1WithHttpMessagesAsync(string scope, string iotAlertId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List IoT alerts
+        /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -118,5 +191,27 @@ namespace Microsoft.Azure.Management.Security
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<IotAlert>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List IoT alerts
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<IotAlertModel>>> List1NextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Security
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -54,9 +55,7 @@ namespace Microsoft.Azure.Management.Security
         /// List IoT sensors
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -236,9 +235,7 @@ namespace Microsoft.Azure.Management.Security
         /// Get IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -427,9 +424,7 @@ namespace Microsoft.Azure.Management.Security
         /// Create or update IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -636,9 +631,7 @@ namespace Microsoft.Azure.Management.Security
         /// Delete IoT sensor
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -806,9 +799,7 @@ namespace Microsoft.Azure.Management.Security
         /// Download sensor activation file
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/326b1ffa-8ac7-4034-8437-69bef733dede) or IoT Hub
-        /// (/providers/Microsoft.Devices/iotHubs/myHub)
+        /// Scope of the query (IoT Hub, /providers/Microsoft.Devices/iotHubs/myHub)
         /// </param>
         /// <param name='iotSensorName'>
         /// Name of the IoT sensor
@@ -822,6 +813,9 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -831,7 +825,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DownloadActivationWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Stream>> DownloadActivationWithHttpMessagesAsync(string scope, string iotSensorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -915,7 +909,7 @@ namespace Microsoft.Azure.Management.Security
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
                 ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
@@ -958,12 +952,17 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<Stream>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
             if (_shouldTrace)
             {

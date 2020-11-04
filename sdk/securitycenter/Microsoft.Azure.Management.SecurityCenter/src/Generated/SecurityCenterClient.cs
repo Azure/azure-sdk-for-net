@@ -297,6 +297,21 @@ namespace Microsoft.Azure.Management.Security
         public virtual IConnectorsOperations Connectors { get; private set; }
 
         /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; private set; }
+
+        /// <summary>
         /// Gets the IIotDefenderSettingsOperations.
         /// </summary>
         public virtual IIotDefenderSettingsOperations IotDefenderSettings { get; private set; }
@@ -305,6 +320,26 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IIotSensorsOperations.
         /// </summary>
         public virtual IIotSensorsOperations IotSensors { get; private set; }
+
+        /// <summary>
+        /// Gets the IDevicesForSubscriptionOperations.
+        /// </summary>
+        public virtual IDevicesForSubscriptionOperations DevicesForSubscription { get; private set; }
+
+        /// <summary>
+        /// Gets the IDevicesForHubOperations.
+        /// </summary>
+        public virtual IDevicesForHubOperations DevicesForHub { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeviceOperations.
+        /// </summary>
+        public virtual IDeviceOperations Device { get; private set; }
+
+        /// <summary>
+        /// Gets the IOnPremiseIotSensorsOperations.
+        /// </summary>
+        public virtual IOnPremiseIotSensorsOperations OnPremiseIotSensors { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -591,8 +626,15 @@ namespace Microsoft.Azure.Management.Security
             SecureScoreControlDefinitions = new SecureScoreControlDefinitionsOperations(this);
             SecuritySolutions = new SecuritySolutionsOperations(this);
             Connectors = new ConnectorsOperations(this);
+            SqlVulnerabilityAssessmentScans = new SqlVulnerabilityAssessmentScansOperations(this);
+            SqlVulnerabilityAssessmentScanResults = new SqlVulnerabilityAssessmentScanResultsOperations(this);
+            SqlVulnerabilityAssessmentBaselineRules = new SqlVulnerabilityAssessmentBaselineRulesOperations(this);
             IotDefenderSettings = new IotDefenderSettingsOperations(this);
             IotSensors = new IotSensorsOperations(this);
+            DevicesForSubscription = new DevicesForSubscriptionOperations(this);
+            DevicesForHub = new DevicesForHubOperations(this);
+            Device = new DeviceOperations(this);
+            OnPremiseIotSensors = new OnPremiseIotSensorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

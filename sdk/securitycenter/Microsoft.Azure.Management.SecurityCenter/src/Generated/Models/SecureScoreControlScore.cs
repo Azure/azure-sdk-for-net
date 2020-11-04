@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="current">Actual score for the control = (achieved
         /// points / total points) * max score. if total points is zeroed, the
         /// return number is 0.00</param>
-        public SecureScoreControlScore(int? max = default(int?), double? current = default(double?))
+        /// <param name="percentage">Ratio of the current score divided by the
+        /// maximum. Rounded to 4 digits after the decimal point</param>
+        public SecureScoreControlScore(int? max = default(int?), double? current = default(double?), double? percentage = default(double?))
         {
             Max = max;
             Current = current;
+            Percentage = percentage;
             CustomInit();
         }
 
@@ -61,6 +64,13 @@ namespace Microsoft.Azure.Management.Security.Models
         public double? Current { get; private set; }
 
         /// <summary>
+        /// Gets ratio of the current score divided by the maximum. Rounded to
+        /// 4 digits after the decimal point
+        /// </summary>
+        [JsonProperty(PropertyName = "percentage")]
+        public double? Percentage { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -68,21 +78,38 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Max > 10)
+            if (Max != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Max", 10);
+                if (Max > 10)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Max", 10);
+                }
+                if (Max < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                }
             }
-            if (Max < 0)
+            if (Current != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Max", 0);
+                if (Current > 10)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Current", 10);
+                }
+                if (Current < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                }
             }
-            if (Current > 10)
+            if (Percentage != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Current", 10);
-            }
-            if (Current < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Current", 0);
+                if (Percentage > 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Percentage", 1);
+                }
+                if (Percentage < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Percentage", 0);
+                }
             }
         }
     }

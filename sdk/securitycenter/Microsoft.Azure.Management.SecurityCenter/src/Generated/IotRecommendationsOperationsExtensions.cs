@@ -141,6 +141,112 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='recommendationType'>
+            /// Filter by recommendation type
+            /// </param>
+            /// <param name='deviceId'>
+            /// Filter by device id
+            /// </param>
+            /// <param name='limit'>
+            /// Limit the number of items returned in a single page
+            /// </param>
+            /// <param name='skipToken'>
+            /// Skip token used for pagination
+            /// </param>
+            public static IPage<IotRecommendationModel> List1(this IIotRecommendationsOperations operations, string scope, string recommendationType = default(string), string deviceId = default(string), int? limit = default(int?), string skipToken = default(string))
+            {
+                return operations.List1Async(scope, recommendationType, deviceId, limit, skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List IoT recommendations
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='recommendationType'>
+            /// Filter by recommendation type
+            /// </param>
+            /// <param name='deviceId'>
+            /// Filter by device id
+            /// </param>
+            /// <param name='limit'>
+            /// Limit the number of items returned in a single page
+            /// </param>
+            /// <param name='skipToken'>
+            /// Skip token used for pagination
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IotRecommendationModel>> List1Async(this IIotRecommendationsOperations operations, string scope, string recommendationType = default(string), string deviceId = default(string), int? limit = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.List1WithHttpMessagesAsync(scope, recommendationType, deviceId, limit, skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get IoT recommendation
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='iotRecommendationId'>
+            /// Id of the recommendation
+            /// </param>
+            public static IotRecommendationModel Get1(this IIotRecommendationsOperations operations, string scope, string iotRecommendationId)
+            {
+                return operations.Get1Async(scope, iotRecommendationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get IoT recommendation
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='iotRecommendationId'>
+            /// Id of the recommendation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IotRecommendationModel> Get1Async(this IIotRecommendationsOperations operations, string scope, string iotRecommendationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.Get1WithHttpMessagesAsync(scope, iotRecommendationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List IoT recommendations
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -164,6 +270,40 @@ namespace Microsoft.Azure.Management.Security
             public static async Task<IPage<IotRecommendation>> ListNextAsync(this IIotRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List IoT recommendations
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<IotRecommendationModel> List1Next(this IIotRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.List1NextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List IoT recommendations
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IotRecommendationModel>> List1NextAsync(this IIotRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.List1NextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

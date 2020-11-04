@@ -419,6 +419,13 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Create or update IoT Defender settings
         /// </summary>
+        /// <param name='deviceQuota'>
+        /// Size of the device quota (as a opposed to a Pay as You Go billing model).
+        /// Value is required to be in multiples of 1000.
+        /// </param>
+        /// <param name='sentinelWorkspaceResourceIds'>
+        /// Sentinel Workspace Resource Ids
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -440,7 +447,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotDefenderSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotDefenderSettingsModel>> CreateOrUpdateWithHttpMessagesAsync(int deviceQuota, IList<string> sentinelWorkspaceResourceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -453,7 +460,21 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
+            if (deviceQuota < 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "deviceQuota", 1000);
+            }
+            if (sentinelWorkspaceResourceIds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sentinelWorkspaceResourceIds");
+            }
             string apiVersion = "2020-08-06-preview";
+            IotDefenderSettingsModel iotDefenderSettingsModel = new IotDefenderSettingsModel();
+            if (sentinelWorkspaceResourceIds != null)
+            {
+                iotDefenderSettingsModel.DeviceQuota = deviceQuota;
+                iotDefenderSettingsModel.SentinelWorkspaceResourceIds = sentinelWorkspaceResourceIds;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -462,6 +483,7 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("iotDefenderSettingsModel", iotDefenderSettingsModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -512,6 +534,12 @@ namespace Microsoft.Azure.Management.Security
 
             // Serialize Request
             string _requestContent = null;
+            if(iotDefenderSettingsModel != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(iotDefenderSettingsModel, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

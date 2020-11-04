@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the ServicePrincipalProperties class.
         /// </summary>
-        /// <param name="applicationId">Application id of service
+        /// <param name="applicationId">Application ID of service
         /// principal.</param>
         /// <param name="secret">A secret string that the application uses to
         /// prove its identity, also can be referred to as application password
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets application id of service principal.
+        /// Gets or sets application ID of service principal.
         /// </summary>
         [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }

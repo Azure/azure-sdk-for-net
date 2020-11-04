@@ -92,9 +92,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Alert> ListSubscriptionLevelByRegion(this IAlertsOperations operations)
+            public static IPage<Alert> ListSubscriptionLevelAlertsByRegion(this IAlertsOperations operations)
             {
-                return operations.ListSubscriptionLevelByRegionAsync().GetAwaiter().GetResult();
+                return operations.ListSubscriptionLevelAlertsByRegionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListSubscriptionLevelByRegionAsync(this IAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListSubscriptionLevelAlertsByRegionAsync(this IAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSubscriptionLevelByRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSubscriptionLevelAlertsByRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static IPage<Alert> ListResourceGroupLevelByRegion(this IAlertsOperations operations, string resourceGroupName)
+            public static IPage<Alert> ListResourceGroupLevelAlertsByRegion(this IAlertsOperations operations, string resourceGroupName)
             {
-                return operations.ListResourceGroupLevelByRegionAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListResourceGroupLevelAlertsByRegionAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,9 +145,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListResourceGroupLevelByRegionAsync(this IAlertsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListResourceGroupLevelAlertsByRegionAsync(this IAlertsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListResourceGroupLevelByRegionWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceGroupLevelAlertsByRegionWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -162,9 +162,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static Alert GetSubscriptionLevel(this IAlertsOperations operations, string alertName)
+            public static Alert GetSubscriptionLevelAlert(this IAlertsOperations operations, string alertName)
             {
-                return operations.GetSubscriptionLevelAsync(alertName).GetAwaiter().GetResult();
+                return operations.GetSubscriptionLevelAlertAsync(alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -179,9 +179,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> GetSubscriptionLevelAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> GetSubscriptionLevelAlertAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSubscriptionLevelWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSubscriptionLevelAlertWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -201,9 +201,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static Alert GetResourceGroupLevel(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static Alert GetResourceGroupLevelAlerts(this IAlertsOperations operations, string alertName, string resourceGroupName)
             {
-                return operations.GetResourceGroupLevelAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,9 +223,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Alert> GetResourceGroupLevelAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Alert> GetResourceGroupLevelAlertsAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetResourceGroupLevelWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetResourceGroupLevelAlertsWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -240,9 +240,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static void UpdateSubscriptionLevelStateToDismiss(this IAlertsOperations operations, string alertName)
+            public static void UpdateSubscriptionLevelAlertStateToDismiss(this IAlertsOperations operations, string alertName)
             {
-                operations.UpdateSubscriptionLevelStateToDismissAsync(alertName).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelAlertStateToDismissAsync(alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -257,9 +257,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelStateToDismissAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelAlertStateToDismissAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelAlertStateToDismissWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -302,9 +302,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='alertName'>
             /// Name of the alert object
             /// </param>
-            public static void UpdateSubscriptionLevelStateToActivate(this IAlertsOperations operations, string alertName)
+            public static void UpdateSubscriptionLevelAlertStateToReactivate(this IAlertsOperations operations, string alertName)
             {
-                operations.UpdateSubscriptionLevelStateToActivateAsync(alertName).GetAwaiter().GetResult();
+                operations.UpdateSubscriptionLevelAlertStateToReactivateAsync(alertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -319,9 +319,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateSubscriptionLevelStateToActivateAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateSubscriptionLevelAlertStateToReactivateAsync(this IAlertsOperations operations, string alertName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateSubscriptionLevelAlertStateToReactivateWithHttpMessagesAsync(alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -376,9 +376,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToDismiss(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static void UpdateResourceGroupLevelAlertStateToDismiss(this IAlertsOperations operations, string alertName, string resourceGroupName)
             {
-                operations.UpdateResourceGroupLevelStateToDismissAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelAlertStateToDismissAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -397,9 +397,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToDismissAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelAlertStateToDismissAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelAlertStateToDismissWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -415,9 +415,9 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static void UpdateResourceGroupLevelStateToActivate(this IAlertsOperations operations, string alertName, string resourceGroupName)
+            public static void UpdateResourceGroupLevelAlertStateToReactivate(this IAlertsOperations operations, string alertName, string resourceGroupName)
             {
-                operations.UpdateResourceGroupLevelStateToActivateAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
+                operations.UpdateResourceGroupLevelAlertStateToReactivateAsync(alertName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -436,9 +436,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateResourceGroupLevelStateToActivateAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateResourceGroupLevelAlertStateToReactivateAsync(this IAlertsOperations operations, string alertName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateResourceGroupLevelAlertStateToReactivateWithHttpMessagesAsync(alertName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -519,9 +519,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Alert> ListSubscriptionLevelByRegionNext(this IAlertsOperations operations, string nextPageLink)
+            public static IPage<Alert> ListSubscriptionLevelAlertsByRegionNext(this IAlertsOperations operations, string nextPageLink)
             {
-                return operations.ListSubscriptionLevelByRegionNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListSubscriptionLevelAlertsByRegionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -537,9 +537,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListSubscriptionLevelByRegionNextAsync(this IAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListSubscriptionLevelAlertsByRegionNextAsync(this IAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSubscriptionLevelByRegionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSubscriptionLevelAlertsByRegionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -555,9 +555,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Alert> ListResourceGroupLevelByRegionNext(this IAlertsOperations operations, string nextPageLink)
+            public static IPage<Alert> ListResourceGroupLevelAlertsByRegionNext(this IAlertsOperations operations, string nextPageLink)
             {
-                return operations.ListResourceGroupLevelByRegionNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListResourceGroupLevelAlertsByRegionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -573,9 +573,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Alert>> ListResourceGroupLevelByRegionNextAsync(this IAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Alert>> ListResourceGroupLevelAlertsByRegionNextAsync(this IAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListResourceGroupLevelByRegionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListResourceGroupLevelAlertsByRegionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
