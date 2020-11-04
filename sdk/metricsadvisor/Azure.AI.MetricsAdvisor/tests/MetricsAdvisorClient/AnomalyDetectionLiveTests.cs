@@ -120,10 +120,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (AnomalyIncident incident in client.GetIncidentsAsync(DetectionConfigurationId, options))
             {
                 Assert.That(incident, Is.Not.Null);
-                Assert.That(incident.DetectionConfigurationId, Is.Null);
                 Assert.That(incident.MetricId, Is.Null);
 
                 Assert.That(incident.Id, Is.Not.Null.And.Not.Empty);
+                Assert.That(incident.DetectionConfigurationId, Is.EqualTo(DetectionConfigurationId));
                 Assert.That(incident.StartTime, Is.GreaterThanOrEqualTo(startTime));
                 Assert.That(incident.LastTime, Is.LessThanOrEqualTo(endTime));
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
