@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
@@ -42,7 +39,13 @@ namespace Azure.DigitalTwins.Core.Samples
                     newComponentModelPayload,
                     newModelPayload
                 });
-            Console.WriteLine($"Created models {componentModelId} and {modelId}.");
+
+            // Get the models we just created
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"Created model {model.Id}.");
+            }
 
             #region Snippet:DigitalTwinsSampleCreateBasicTwin
 

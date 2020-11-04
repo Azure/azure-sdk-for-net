@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
-                    await foreach (string value in client.GetMetricDimensionValuesAsync(metricId, dimension.DimensionName))
+                    await foreach (string value in client.GetDimensionValuesAsync(metricId, dimension.DimensionName))
                     {
                         Assert.That(!string.IsNullOrEmpty(value));
                     }
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var client = GetMetricsAdvisorClient();
 
-            List<DataPointAnomaly> anomalies = await client.GetAnomaliesForDetectionConfigurationAsync(
+            List<DataPointAnomaly> anomalies = await client.GetAnomaliesAsync(
                 DetectionConfigurationId,
                 new GetAnomaliesForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow)
             ).ToEnumerableAsync().ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForDetectionConfigurationAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                  DetectionConfigurationId,
                  new GetIncidentsForDetectionConfigurationOptions(Recording.UtcNow.AddYears(-5), Recording.UtcNow) { TopCount = 1 }))
             {
@@ -199,7 +199,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var anomaly in client.GetAnomaliesForAlertAsync(
+            await foreach (var anomaly in client.GetAnomaliesAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetAnomaliesForAlertOptions() { TopCount = 1 }))
@@ -223,7 +223,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (var incident in client.GetIncidentsForAlertAsync(
+            await foreach (var incident in client.GetIncidentsAsync(
                 AlertConfigurationId,
                 AlertId,
                 new GetIncidentsForAlertOptions() { TopCount = 1 }))
@@ -301,7 +301,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetMetricFeedbacksAsync(MetricId, new GetMetricFeedbacksOptions() { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetAllMetricFeedbackAsync(MetricId, new GetAllMetricFeedbackOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
@@ -363,7 +363,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var feedback in feedbacks)
             {
-                string createdFeedbackId = await client.CreateMetricFeedbackAsync(feedback).ConfigureAwait(false);
+                string createdFeedbackId = await client.AddMetricFeedbackAsync(feedback).ConfigureAwait(false);
 
                 Assert.That(createdFeedbackId, Is.Not.Null);
 

@@ -8,6 +8,8 @@
 - Removed ability to create a ShareLeaseClient for a Share or Share Snapshot.  This feature has been rescheduled for future release.
 - Fixed bug where File Share SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 - Added ability to set Position on streams created with ShareFileClient.OpenRead().
+- Added CanGenerateSasUri property and GenerateSasUri() to ShareFileClient, ShareDirectoryClient and ShareClient.
+- Added CanGenerateSasUri property and GenerateAccountSasUri() to ShareServiceClient.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

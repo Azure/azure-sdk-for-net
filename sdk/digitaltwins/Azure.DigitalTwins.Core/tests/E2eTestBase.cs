@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -91,6 +92,22 @@ namespace Azure.DigitalTwins.Core.Tests
         protected string GetRandom()
         {
             return Recording.GenerateId();
+        }
+
+        // This method is used as a helper method to accommodate for the lag on the service side between creating a new
+        // model and creating a digital twin that implements this model. The work around is to list the model(s) after
+        // creating them in order to accommodate for that lag. Once service side investigates and comes up with a solution,
+        // there is no need to list the models after creating them.
+        protected async Task CreateAndListModelsAsync(DigitalTwinsClient client, List<string> lists)
+        {
+            await client.CreateModelsAsync(lists).ConfigureAwait(false);
+
+            // list the models
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"{model.Id}");
+            }
         }
     }
 }

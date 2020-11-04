@@ -97,8 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
-                var msg = new ServiceBusMessage();
-                msg.Body = new BinaryData(GetRandomBuffer(100));
+                var msg = new ServiceBusMessage(new BinaryData(GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
                 msg.CorrelationId = "correlationid";
                 msg.Subject = "label";
@@ -196,24 +195,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
                 var amqp = new AmqpAnnotatedMessage(
-                    new BinaryData[]
+                    new ReadOnlyMemory<byte>[]
                     {
-                        new BinaryData(GetRandomBuffer(100)),
-                        new BinaryData(GetRandomBuffer(100))
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
                     });
-                var msg = new ServiceBusMessage()
-                {
-                    AmqpMessage = amqp
-                };
+                msg.AmqpMessage = amqp;
 
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var bodyEnum = ((AmqpDataMessageBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                var receivedData = ((AmqpDataMessageBody)received.GetRawMessage().Body).Data;
+                var bodyEnum = receivedData.GetEnumerator();
                 int ct = 0;
-                foreach (BinaryData data in ((AmqpDataMessageBody)msg.AmqpMessage.Body).Data)
+                var sentData = ((AmqpDataMessageBody)msg.GetRawMessage().Body).Data;
+
+                foreach (ReadOnlyMemory<byte> data in sentData)
                 {
                     bodyEnum.MoveNext();
                     var bytes = data.ToArray();
@@ -229,6 +230,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 }
             }
         }
+
+        [Test]
+        public async Task CanSetMessageId()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var msg = new ServiceBusMessage();
+                msg.GetRawMessage().Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[]
+                    {
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
+                    });
+                Guid guid = Guid.NewGuid();
+                msg.GetRawMessage().Properties.MessageId = new AmqpMessageId(guid.ToString());
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(guid.ToString(), received.MessageId);
+            }
+        }
+
+
 
         private class TestBody
         {

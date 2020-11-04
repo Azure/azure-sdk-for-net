@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfiguration"/> and
-    /// <see cref="MetricsAdvisorClient.GetAnomaliesForDetectionConfigurationAsync"/> operations.
+    /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomalies(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> and
+    /// <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> operations.
     /// </summary>
     public class GetAnomaliesForDetectionConfigurationFilter
     {

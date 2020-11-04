@@ -15,6 +15,8 @@ using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402  // File may only contain a single type
+
 namespace Azure.Storage.Blobs
 {
     /// <summary>
@@ -148,6 +150,17 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
@@ -210,6 +223,7 @@ namespace Azure.Storage.Blobs
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -229,7 +243,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
-            : this(blobContainerUri, (HttpPipelinePolicy)null,  options)
+            : this(blobContainerUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -253,6 +267,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobContainerUri, credential.AsPolicy(), options)
         {
+            _storageSharedKeyCredential = credential;
         }
 
         /// <summary>
@@ -2875,5 +2890,145 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
         #endregion DeleteBlob
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobContainerSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Blob Container Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="BlobContainerSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Container Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and builder passed. The SAS is signed by
+        /// the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(BlobSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (!string.IsNullOrEmpty(builder.BlobName))
+            {
+                throw Errors.SasBuilderEmptyParam(
+                    nameof(builder),
+                    nameof(builder.BlobName),
+                    nameof(Constants.Blob.Container.Name));
+            }
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region GetParentBlobServiceClientCore
+
+        private BlobServiceClient _parentBlobServiceClient;
+
+        /// <summary>
+        /// Create a new <see cref="BlobServiceClient"/> that pointing to this <see cref="BlobContainerClient"/>'s blob service.
+        /// The new <see cref="BlobServiceClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
+        protected internal virtual BlobServiceClient GetParentBlobServiceClientCore()
+        {
+            if (_parentBlobServiceClient == null)
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to service
+                    BlobContainerName = null,
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
+
+                _parentBlobServiceClient = new BlobServiceClient(
+                    blobUriBuilder.ToUri(),
+                    null,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope,
+                    Pipeline);
+            }
+
+            return _parentBlobServiceClient;
+        }
+        #endregion
+    }
+
+    namespace Specialized
+    {
+        /// <summary>
+        /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
+        /// creating <see cref="BlobServiceClient"/> instances.
+        /// </summary>
+        public static partial class SpecializedBlobExtensions
+        {
+            /// <summary>
+            /// Create a new <see cref="BlobServiceClient"/> that pointing to this <see cref="BlobContainerClient"/>'s blob service.
+            /// The new <see cref="BlobServiceClient"/>
+            /// uses the same request policy pipeline as the
+            /// <see cref="BlobContainerClient"/>.
+            /// </summary>
+            /// <returns>A new <see cref="BlobServiceClient"/> instance.</returns>
+            public static BlobServiceClient GetParentBlobServiceClient(this BlobContainerClient client)
+            {
+                return client.GetParentBlobServiceClientCore();
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             public static void Delete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='expand'>
             /// Expands referenced resources.
@@ -440,7 +440,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             public static void BeginDelete(this IPublicIPAddressesOperations operations, string resourceGroupName, string publicIpAddressName)
             {
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='publicIpAddressName'>
-            /// The name of the subnet.
+            /// The name of the public IP address.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
