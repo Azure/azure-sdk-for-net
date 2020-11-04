@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The StringIndexType. </summary>
-    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 
