@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -18,10 +17,16 @@ namespace Azure.Data.Tables.Models
             _requestLookup = requestLookup;
         }
 
-        public bool IsBatchSuccessful => _requestLookup.Values.Any(r => r.Message.Response.Status >= 400);
-
+        /// <summary>
+        /// The number of batch sub-responses contained in this <see cref="TableBatchResponse"/>.
+        /// </summary>
         public int ResponseCount => _requestLookup.Keys.Count;
 
+        /// <summary>
+        /// Gets the batch sub-response for the batch sub-request associated with the entity with the specified <paramref name="rowKey"/>.
+        /// </summary>
+        /// <param name="rowKey">The <see cref="ITableEntity.RowKey"/> value of the entity related to the batch sub-request.</param>
+        /// <returns></returns>
         public Response GetResponseForEntity(string rowKey)
         {
             if (!_requestLookup.TryGetValue(rowKey, out (HttpMessage Message, RequestType RequestType) tuple))

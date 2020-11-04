@@ -8,7 +8,7 @@
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Data struct to contain only C section with custom fields. </summary>
-    public partial class MonitorBase
+    internal partial class MonitorBase
     {
         /// <summary> Initializes a new instance of MonitorBase. </summary>
         public MonitorBase()

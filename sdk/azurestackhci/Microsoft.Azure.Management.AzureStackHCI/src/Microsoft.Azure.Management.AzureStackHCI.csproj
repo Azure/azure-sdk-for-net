@@ -5,11 +5,11 @@
 
   <PropertyGroup>
     <Description>Microsoft Azure Stack HCI Management Library</Description>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.AzureStackHCI</AssemblyName>
     <PackageId>Microsoft.Azure.Management.AzureStackHCI</PackageId>
     <PackageTags>Microsoft Azure Stack HCI Management;AzureStackHCI;AzSHCI;</PackageTags>
-    <PackageReleaseNotes>This is the first major version of the Azure Stack HCI .NET SDK, based on version 2020-03-01-preview of the Azure Stack HCI REST APIs. It allows for management operations on cluster resource.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is the first stable version of the Azure Stack HCI .NET SDK, based on version 2020-10-01 of the Azure Stack HCI REST APIs. It allows for management operations on cluster resource. This version adds timestamps for cluster sync and updates cluster status values.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -12,8 +12,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" /><!-- This package will be removed when v5.3.0 is released for GA -->
+  <ItemGroup><!-- This package will be removed when v5.3.0 is released for GA -->
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
@@ -24,6 +23,12 @@
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
+  <!-- TEMP: Use a project reference to Data; remove when published"-->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\System.Memory.Data\src\System.Memory.Data.csproj" />
+  </ItemGroup>
+  <!-- END TEMP-->
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />

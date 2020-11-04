@@ -6,14 +6,14 @@
     <PackageTags>Microsoft Azure AMQP</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
   </ItemGroup>
 </Project>
