@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
@@ -13,6 +14,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
         }
 
-        public override Uri Uri => new Uri(TestEnvironment.ManagedHsmUrl);
+        public override Uri Uri =>
+            Uri.TryCreate(TestEnvironment.ManagedHsmUrl, UriKind.Absolute, out Uri uri)
+                ? uri
+                // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
+                // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
     }
 }

@@ -93,7 +93,7 @@ $wrappingFiles = foreach ($i in 0..2) {
 
 # TODO: Use Az module when available; for now, assumes Azure CLI is installed and in $Env:PATH.
 Log "Logging '$username' into the Azure CLI"
-az login --service-principal --tenant $tenant --username $username --password $password
+az login --service-principal --tenant "$tenant" --username "$username" --password="$password"
 
 Log "Downloading security domain from '$hsmUrl'"
 

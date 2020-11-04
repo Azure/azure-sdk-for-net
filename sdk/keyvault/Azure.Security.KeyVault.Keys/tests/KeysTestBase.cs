@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ? TimeSpan.Zero
             : TimeSpan.FromSeconds(2);
 
-        public KeyClient Client { get; set; }
+        public KeyClient Client { get; private set; }
 
         public virtual Uri Uri => new Uri(TestEnvironment.KeyVaultUrl);
 
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private KeyVaultTestEventListener _listener;
 
         protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment() /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
         }

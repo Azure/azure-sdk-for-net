@@ -29,8 +29,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
                 ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
             }
         }
