@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The KeyPhrasesTaskParameters. </summary>
     public partial class KeyPhrasesTaskParameters

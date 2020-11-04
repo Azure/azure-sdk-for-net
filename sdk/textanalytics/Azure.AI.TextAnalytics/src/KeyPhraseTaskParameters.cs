@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     [CodeGenModel("KeyPhrasesTaskParameters")]
     public partial class KeyPhrasesTaskParameters
