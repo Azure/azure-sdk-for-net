@@ -3,9 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -13,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Moq;
 using NUnit.Framework;
 using Xunit;
 using Assert = NUnit.Framework.Assert;
@@ -244,10 +249,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Assert.AreEqual(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
         }
 
-        internal static PartitionContext GetPartitionContext(string partitionId = "0", string eventHubPath = null,
-            string consumerGroupName = null, string owner = null)
+        internal static ProcessorPartitionContext GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
+            string consumerGroupName = "group", string owner = null)
         {
-            return new ProcessorPartitionContext(partitionId, null, null);
+            var processor = new EventProcessorHost.Processor(Int32.MaxValue,
+                consumerGroupName,
+                "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
+                "",
+                eventHubPath,
+                new EventProcessorOptions(),
+                null,
+                false,
+                null,
+                Mock.Of<BlobContainerClient>());
+            return new ProcessorPartitionContext(partitionId, processor, s => default);
         }
     }
 }

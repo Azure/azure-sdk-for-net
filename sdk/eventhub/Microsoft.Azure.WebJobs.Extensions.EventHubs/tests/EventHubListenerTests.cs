@@ -9,15 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
-using Microsoft.Azure.EventHubs;
-using Microsoft.Azure.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Moq;
 using Xunit;
 
@@ -136,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, loggerMock.Object, true, checkpointer.Object);
 
-            await eventProcessor.CloseAsync(partitionContext, CloseReason.Shutdown);
+            await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
 
             checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Never);
         }
@@ -155,7 +153,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, ex);
             var msg = testLogger.GetLogMessages().Single();
-            Assert.Equal("Processing error (Partition Id: '123', Owner: 'def', EventHubPath: 'abc').", msg.FormattedMessage);
+            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\).", msg.FormattedMessage);
             Assert.IsType<InvalidOperationException>(msg.Exception);
             Assert.Equal(LogLevel.Error, msg.Level);
         }
@@ -170,27 +168,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var testLogger = new TestLogger("Test");
             var eventProcessor = new EventHubListener.EventProcessor(options, executor.Object, testLogger, true, checkpointer.Object);
 
-            // ctor is private
-            var constructor = typeof(ReceiverDisconnectedException)
-                .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string) }, null);
-            ReceiverDisconnectedException disconnectedEx = (ReceiverDisconnectedException)constructor.Invoke(new[] { "My ReceiverDisconnectedException!" });
+            var disconnectedEx = new EventHubsException(true, "My ReceiverDisconnectedException!", EventHubsException.FailureReason.ConsumerDisconnected);
 
             await eventProcessor.ProcessErrorAsync(partitionContext, disconnectedEx);
             var msg = testLogger.GetLogMessages().Single();
-            Assert.Equal("Processing error (Partition Id: '123', Owner: 'def', EventHubPath: 'abc'). An exception of type 'ReceiverDisconnectedException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
+            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
             Assert.Equal(LogLevel.Information, msg.Level);
 
             testLogger.ClearLogMessages();
 
-            // ctor is private
-            constructor = typeof(LeaseLostException)
-                .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string), typeof(Exception) }, null);
-            LeaseLostException leaseLostEx = (LeaseLostException)constructor.Invoke(new object[] { "My LeaseLostException!", new Exception() });
+            var leaseLostEx = new EventHubsException(true, "My LeaseLostException!", EventHubsException.FailureReason.ConsumerDisconnected);
 
             await eventProcessor.ProcessErrorAsync(partitionContext, leaseLostEx);
             msg = testLogger.GetLogMessages().Single();
-            Assert.Equal("Processing error (Partition Id: '123', Owner: 'def', EventHubPath: 'abc'). An exception of type 'LeaseLostException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
+            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
             Assert.Equal(LogLevel.Information, msg.Level);
         }
@@ -214,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     false,
                                     new EventHubOptions(),
                                     testLogger,
-                                    new Mock<BlobContainerClient>(MockBehavior.Strict, new Uri("https://eventhubsteststorageaccount.blob.core.windows.net/azure-webjobs-eventhub")).Object);
+                                    new Mock<BlobContainerClient>(MockBehavior.Strict).Object);
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 
