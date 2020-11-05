@@ -40,6 +40,7 @@
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+- In `DataFeedGranularityType`, renamed `Minutely` and `Secondly` to `PerMinute` and `PerSecond`, respectively.
 - In `ElasticsearchDataFeedSource`, renamed the constructor parameter `authHeader` to `authorizationHeader`.
 
 ### Key Bug Fixes
