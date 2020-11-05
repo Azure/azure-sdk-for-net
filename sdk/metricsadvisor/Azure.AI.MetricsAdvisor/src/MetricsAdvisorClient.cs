@@ -996,7 +996,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="incidentId">The unique identifier of the <see cref="AnomalyIncident"/>.</param>
@@ -1032,7 +1032,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
         /// <param name="detectionConfigurationId">The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/>.</param>
         /// <param name="incidentId">The unique identifier of the <see cref="AnomalyIncident"/>.</param>
@@ -1068,7 +1068,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
         /// <param name="incident">The <see cref="AnomalyIncident"/> from which root causes will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1102,7 +1102,7 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// Gets the suggestions for likely root causes of an incident.
         /// </summary>
         /// <param name="incident">The <see cref="AnomalyIncident"/> from which root causes will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

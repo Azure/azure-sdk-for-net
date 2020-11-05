@@ -64,6 +64,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [Test]
+        public void GetIncidentRootCausesForIncidentValidatesArguments()
+        {
+            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+
+            Assert.That(() => client.GetIncidentRootCausesAsync(null), Throws.InstanceOf<ArgumentNullException>());
+
+            Assert.That(() => client.GetIncidentRootCauses(null), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
         public void GetValuesOfDimensionsWithAnomaliesValidatesArguments()
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
