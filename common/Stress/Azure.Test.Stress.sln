@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "..\..\sdk\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Sample.Stress", "Azure.Sample.Stress\Azure.Sample.Stress.csproj", "{29C9D6CF-DE90-42FD-B58F-3C254334D2C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29C9D6CF-DE90-42FD-B58F-3C254334D2C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29C9D6CF-DE90-42FD-B58F-3C254334D2C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29C9D6CF-DE90-42FD-B58F-3C254334D2C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29C9D6CF-DE90-42FD-B58F-3C254334D2C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
