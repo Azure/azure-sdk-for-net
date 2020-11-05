@@ -75,12 +75,6 @@ namespace Azure.Storage.Sas
         DeleteVersion = 1024,
 
         /// <summary>
-        /// Indicates that permanently deleting a BlobVersion or Snapshot is permitted.
-        /// Blob Service only.
-        /// </summary>
-        PermanentlyDeleteVersionOrSnapshot = 2048,
-
-        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -117,10 +111,6 @@ namespace Azure.Storage
             if ((permissions & AccountSasPermissions.DeleteVersion) == AccountSasPermissions.DeleteVersion)
             {
                 sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
-            }
-            if ((permissions & AccountSasPermissions.PermanentlyDeleteVersionOrSnapshot) == AccountSasPermissions.PermanentlyDeleteVersionOrSnapshot)
-            {
-                sb.Append(Constants.Sas.Permissions.PermanentlyDeleteBlobVersionOrSnapshot);
             }
             if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
             {
