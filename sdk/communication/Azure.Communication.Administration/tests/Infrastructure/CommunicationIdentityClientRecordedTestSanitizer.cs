@@ -17,6 +17,8 @@ namespace Azure.Communication.Administration.Tests
         {
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..id");
+            // TODO: Remove when re-recording
+            LegacyConvertJsonDateTokens = true;
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)

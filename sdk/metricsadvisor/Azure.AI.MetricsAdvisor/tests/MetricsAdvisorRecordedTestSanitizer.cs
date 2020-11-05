@@ -18,6 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             JsonPathSanitizers.Add("$..accountKey");
             JsonPathSanitizers.Add("$..authHeader");
             JsonPathSanitizers.Add("$..httpHeader");
+            // TODO: Remove when re-recording
+            LegacyConvertJsonDateTokens = true;
         }
 
         public override string SanitizeTextBody(string contentType, string body)
