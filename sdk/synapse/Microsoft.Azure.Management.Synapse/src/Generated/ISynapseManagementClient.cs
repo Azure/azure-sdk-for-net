@@ -185,6 +185,26 @@ namespace Microsoft.Azure.Management.Synapse
         ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; }
 
         /// <summary>
+        /// Gets the IExtendedSqlPoolBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedSqlPoolBlobAuditingPoliciesOperations ExtendedSqlPoolBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDataMaskingPoliciesOperations.
+        /// </summary>
+        IDataMaskingPoliciesOperations DataMaskingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDataMaskingRulesOperations.
+        /// </summary>
+        IDataMaskingRulesOperations DataMaskingRules { get; }
+
+        /// <summary>
+        /// Gets the ISqlPoolColumnsOperations.
+        /// </summary>
+        ISqlPoolColumnsOperations SqlPoolColumns { get; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         IWorkspacesOperations Workspaces { get; }
@@ -195,9 +215,19 @@ namespace Microsoft.Azure.Management.Synapse
         IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; }
 
         /// <summary>
+        /// Gets the IWorkspaceSqlAadAdminsOperations.
+        /// </summary>
+        IWorkspaceSqlAadAdminsOperations WorkspaceSqlAadAdmins { get; }
+
+        /// <summary>
         /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
         /// </summary>
         IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedSqlPoolsOperations.
+        /// </summary>
+        IRestorableDroppedSqlPoolsOperations RestorableDroppedSqlPools { get; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
@@ -258,6 +288,16 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the IPrivateLinkHubsOperations.
         /// </summary>
         IPrivateLinkHubsOperations PrivateLinkHubs { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsPrivateLinkHubOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsPrivateLinkHubOperations PrivateEndpointConnectionsPrivateLinkHub { get; }
+
+        /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
 
     }
 }
