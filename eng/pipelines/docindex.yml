@@ -38,7 +38,7 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Move eng/common to Tool Directory 
 
-      - template: $(toolPath)/common/pipelines/templates/steps/mashup-doc-index.yml
+      - template: eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
           SourceDirectory: $(Build.ArtifactStagingDirectory)
 
