@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,7 +20,6 @@ namespace Azure.Identity
 
         private readonly string _clientId;
         private readonly Uri _endpoint;
-        private string _authHeaderValue = null;
 
         public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
         {
@@ -59,14 +59,8 @@ namespace Azure.Identity
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
 
-            if (_authHeaderValue != null)
-            {
-                request.Headers.Add("Authorization", _authHeaderValue);
-            }
-
             request.Uri.Reset(_endpoint);
             request.Uri.AppendQuery("api-version", ArchApiVersion);
-
 
             request.Uri.AppendQuery("resource", resource);
 
@@ -77,33 +71,34 @@ namespace Azure.Identity
 
             return request;
         }
+
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
             if (response.Status == 401)
             {
-                if (response.Headers.TryGetValue("WWW-Authenticate", out string challenge))
-                {
-                    var splitChallenge = challenge.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (splitChallenge.Length != 2)
-                    {
-                        throw new AuthenticationFailedException(InvalidChallangeErrorMessage);
-                    }
-
-                    _authHeaderValue = "Basic " + File.ReadAllText(splitChallenge[1]);
-
-                    using Request request = CreateRequest(context.Scopes);
-
-                    response = async
-                        ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                        : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
-
-                    return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
-                }
-                else
+                if (!response.Headers.TryGetValue("WWW-Authenticate", out string challenge))
                 {
                     throw new AuthenticationFailedException(NoChallengeErrorMessage);
                 }
+
+                var splitChallenge = challenge.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (splitChallenge.Length != 2)
+                {
+                    throw new AuthenticationFailedException(InvalidChallangeErrorMessage);
+                }
+
+                var authHeaderValue = "Basic " + File.ReadAllText(splitChallenge[1]);
+
+                using Request request = CreateRequest(context.Scopes);
+
+                request.Headers.Add("Authorization", authHeaderValue);
+
+                response = async
+                    ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                    : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
+
+                return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
             }
 
             return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
