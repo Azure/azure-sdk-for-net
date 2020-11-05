@@ -3,7 +3,8 @@
 Param (
     $DocFx,
     $RepoRoot,
-    $DocGenDir
+    $DocGenDir,
+    $DocOutDir = "${RepoRoot}/docfx_project"
 )
 . "${PSScriptRoot}\..\..\eng\common\scripts\common.ps1"
 $GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
@@ -95,7 +96,6 @@ function Get-TocMapping {
 
 function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     LogDebug "Start generating the docfx toc and build docfx site..."
-    $DocOutDir = "${RepoRoot}/docfx_project"
 
     LogDebug "Initializing Default DocFx Site..."
     & $($DocFx) init -q -o "${DocOutDir}"
