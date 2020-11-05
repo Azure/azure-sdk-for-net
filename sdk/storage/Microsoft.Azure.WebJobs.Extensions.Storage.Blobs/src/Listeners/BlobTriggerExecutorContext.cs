@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal class BlobTriggerExecutorContext
     {

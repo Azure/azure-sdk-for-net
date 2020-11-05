@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
-using Microsoft.Azure.WebJobs.Host.Queues.Config;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
-using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

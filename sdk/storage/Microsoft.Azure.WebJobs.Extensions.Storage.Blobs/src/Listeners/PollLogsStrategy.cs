@@ -7,20 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
 using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
-using Azure;
-using Azure.Storage.Blobs.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     // A hybrid strategy that begins with a full container scan and then does incremental updates via log polling.
     internal sealed partial class PollLogsStrategy : IBlobListenerStrategy

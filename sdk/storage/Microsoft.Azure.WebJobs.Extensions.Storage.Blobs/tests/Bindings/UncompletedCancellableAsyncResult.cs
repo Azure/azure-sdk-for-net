@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     internal sealed class UncompletedCancellableAsyncResult : IAsyncResult, IDisposable
     {

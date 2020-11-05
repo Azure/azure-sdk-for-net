@@ -6,28 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core.TestFramework;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Queues;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using Azure;
-using Azure.Core.TestFramework;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Queues;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueListenerTests : LiveTestBase<WebJobsTestEnvironment>
     {

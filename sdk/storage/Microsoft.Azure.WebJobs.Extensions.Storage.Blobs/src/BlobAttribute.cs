@@ -9,6 +9,7 @@ using System.IO;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 
 namespace Microsoft.Azure.WebJobs
 {

@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Storage.Queues;
 
-namespace Azure.WebJobs.Extensions.Storage.Queues.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     internal class FakeQueueServiceClientProvider : QueueServiceClientProvider
     {

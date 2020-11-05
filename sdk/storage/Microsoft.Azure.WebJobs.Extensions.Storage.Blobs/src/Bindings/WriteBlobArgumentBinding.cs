@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Azure.Storage.Blobs.Specialized;
-using System.IO;
-using Azure.Storage.Blobs.Models;
 using System.Collections.Generic;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
+using System.IO;
+using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Host.Bindings;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     internal static class WriteBlobArgumentBinding
     {

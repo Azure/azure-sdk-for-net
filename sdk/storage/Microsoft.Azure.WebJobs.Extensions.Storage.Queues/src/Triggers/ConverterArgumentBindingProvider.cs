@@ -10,7 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class ConverterArgumentBindingProvider<T> : IQueueTriggerArgumentBindingProvider
     {

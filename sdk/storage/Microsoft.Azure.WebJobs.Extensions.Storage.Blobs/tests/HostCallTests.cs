@@ -6,17 +6,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.WebJobs.Host.Config;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using Azure.Storage.Blobs;
-using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     // Some tests in this class aren't as targeted as most other tests in this project.
     // (Look elsewhere for better examples to use as templates for new tests.)

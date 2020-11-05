@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.TestDoubles
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     internal class FakeQueuesOptionsSetup : IConfigureOptions<QueuesOptions>
     {

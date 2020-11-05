@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueTests
     {

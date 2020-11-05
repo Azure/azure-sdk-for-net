@@ -3,15 +3,13 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class HostStopTests
     {

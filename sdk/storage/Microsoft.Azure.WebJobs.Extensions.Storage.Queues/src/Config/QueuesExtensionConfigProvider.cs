@@ -2,21 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using System.Text;
+using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Azure.WebJobs.Extensions.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Bindings;
+using Microsoft.Azure.WebJobs.Host.Config;
+using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Config
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
 {
     [Extension("AzureStorageQueues", "Queues")]
     internal class QueuesExtensionConfigProvider : IExtensionConfigProvider

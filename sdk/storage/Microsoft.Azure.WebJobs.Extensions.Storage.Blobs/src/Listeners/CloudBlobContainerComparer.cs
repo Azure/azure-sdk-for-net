@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Storage.Blobs;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     // IStorageBlobContainers are flyweights; distinct references do not equate to distinct containers.
     internal class CloudBlobContainerComparer : IEqualityComparer<BlobContainerClient>

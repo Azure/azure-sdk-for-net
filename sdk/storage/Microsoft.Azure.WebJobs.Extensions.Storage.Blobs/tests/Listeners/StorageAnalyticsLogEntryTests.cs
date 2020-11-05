@@ -3,11 +3,9 @@
 
 using System;
 using System.Globalization;
-using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class StorageAnalyticsLogEntryTests
     {

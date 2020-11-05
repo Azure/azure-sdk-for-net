@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Queues;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueCausalityManagerTests
     {

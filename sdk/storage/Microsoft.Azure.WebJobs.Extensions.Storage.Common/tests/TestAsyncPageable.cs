@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class TestAsyncPageable<T> : AsyncPageable<T>
     {

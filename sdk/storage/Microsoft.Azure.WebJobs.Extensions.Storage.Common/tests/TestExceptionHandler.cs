@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class TestExceptionHandler : IWebJobsExceptionHandler
     {

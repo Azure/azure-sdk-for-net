@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
+using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     /// <summary>
     /// Tracks causality via JSON formatted queue message content.

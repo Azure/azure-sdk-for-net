@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Azure.WebJobs.Host.Protocols
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     /// <summary>Provides well-known blob metadata keys.</summary>
     internal static class BlobMetadataKeys

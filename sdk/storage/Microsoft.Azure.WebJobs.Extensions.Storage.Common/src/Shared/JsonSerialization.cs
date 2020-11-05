@@ -6,7 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.WebJobs.Host.Protocols
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
 {
     /// <summary>Provides the standard <see cref="JsonSerializerSettings"/> used by protocol data.</summary>
     internal static class JsonSerialization

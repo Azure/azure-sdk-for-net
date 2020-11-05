@@ -3,10 +3,9 @@
 
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class IWebJobsBuilderExtensions
     {

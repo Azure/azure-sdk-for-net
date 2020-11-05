@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Description;
-using Azure.Storage.Blobs.Specialized;
-using System.Threading.Tasks;
-using System.Threading;
-using Azure.Storage.Blobs.Models;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
-namespace Microsoft.Azure.WebJobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class BlobClientExtensions
     {

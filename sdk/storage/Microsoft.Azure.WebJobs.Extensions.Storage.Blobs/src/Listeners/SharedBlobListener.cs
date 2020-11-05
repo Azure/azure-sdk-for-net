@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Host.Timers;
+using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal sealed class SharedBlobListener : ISharedListener
     {

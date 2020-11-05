@@ -7,18 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Azure.WebJobs.Extensions.Storage.Blobs;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 {
     [Extension("AzureStorageBlobs", "Blobs")]
     internal class BlobsExtensionConfigProvider : IExtensionConfigProvider,

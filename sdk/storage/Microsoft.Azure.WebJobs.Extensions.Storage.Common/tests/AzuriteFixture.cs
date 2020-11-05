@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     /// <summary>
     /// This class manages Azurite Lifecycle for a test class.

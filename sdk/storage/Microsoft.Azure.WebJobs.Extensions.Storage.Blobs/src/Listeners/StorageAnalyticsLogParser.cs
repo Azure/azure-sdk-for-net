@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     /// <summary>
     /// Implements parsing of Storage Analytics Log file.

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.Azure.WebJobs.Description
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     /// <summary>
     /// DataAnnotation attribute to validate a Blob Path against Azure Storage rules.

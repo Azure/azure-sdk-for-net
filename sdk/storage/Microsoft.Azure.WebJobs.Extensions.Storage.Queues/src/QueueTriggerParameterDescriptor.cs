@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Azure.WebJobs.Host.Protocols;
 
-namespace Microsoft.Azure.WebJobs.Host.Protocols
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     /// <summary>Represents a parameter triggered on a queue in Azure Storage.</summary>
     internal class QueueTriggerParameterDescriptor : TriggerParameterDescriptor

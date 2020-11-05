@@ -12,11 +12,10 @@ using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using BlobRequestConditions = Azure.Storage.Blobs.Models.BlobRequestConditions;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal class BlobReceiptManager : IBlobReceiptManager
     {

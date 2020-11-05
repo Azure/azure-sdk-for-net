@@ -4,16 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
 using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobTriggerTests
     {

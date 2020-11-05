@@ -5,9 +5,8 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal sealed class TaskAsyncResult : IAsyncResult, IDisposable
     {

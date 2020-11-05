@@ -6,7 +6,7 @@ using System.Threading;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Models;
 
-namespace Microsoft.Azure.WebJobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class BlobBaseClientExtensions
     {

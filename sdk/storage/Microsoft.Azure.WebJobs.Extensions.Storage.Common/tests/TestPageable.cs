@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using Azure;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class TestPageable<T> : Pageable<T>
     {

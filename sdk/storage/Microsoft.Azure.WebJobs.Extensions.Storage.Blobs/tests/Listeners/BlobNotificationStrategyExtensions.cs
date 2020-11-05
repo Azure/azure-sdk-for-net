@@ -6,9 +6,8 @@ using System.Threading;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal static class BlobNotificationStrategyExtensions
     {

@@ -5,12 +5,12 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues;
-using Azure;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
 namespace Microsoft.Azure.WebJobs.Host.Queues
 {

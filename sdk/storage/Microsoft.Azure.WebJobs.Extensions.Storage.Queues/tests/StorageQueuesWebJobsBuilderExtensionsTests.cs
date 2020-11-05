@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class StorageQueuesWebJobsBuilderExtensionsTests
     {

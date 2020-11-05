@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     /// <summary>
     /// Represents an entry of the Storage Analytics Log.

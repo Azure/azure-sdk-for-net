@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
-using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.UnitTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class BlobListenerTests
     {

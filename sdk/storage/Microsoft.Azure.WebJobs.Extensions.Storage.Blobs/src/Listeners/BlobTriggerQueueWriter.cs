@@ -5,12 +5,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Newtonsoft.Json;
 using QueueClient = Azure.Storage.Queues.QueueClient;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal class BlobTriggerQueueWriter : IBlobTriggerQueueWriter
     {

@@ -5,7 +5,7 @@ using System;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class StringToStorageQueueMessageConverter : IConverter<string, QueueMessage>
     {

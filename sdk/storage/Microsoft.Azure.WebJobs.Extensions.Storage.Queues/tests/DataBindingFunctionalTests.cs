@@ -4,14 +4,13 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Bindings.Data
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class DataBindingFunctionalTests
     {

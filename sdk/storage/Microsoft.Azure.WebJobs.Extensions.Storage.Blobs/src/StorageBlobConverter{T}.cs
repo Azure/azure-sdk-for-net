@@ -4,7 +4,7 @@
 using System;
 using Azure.Storage.Blobs.Specialized;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class StorageBlobConverter<T> : IConverter<BlobBaseClient, T> where T : BlobBaseClient
     {

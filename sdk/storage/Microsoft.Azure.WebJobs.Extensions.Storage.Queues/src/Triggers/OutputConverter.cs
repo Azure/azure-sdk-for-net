@@ -4,7 +4,7 @@
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Converters;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class OutputConverter<TInput> : IObjectToTypeConverter<QueueMessage>
         where TInput : class
