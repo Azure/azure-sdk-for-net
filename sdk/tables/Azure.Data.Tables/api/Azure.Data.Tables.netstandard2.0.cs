@@ -52,7 +52,7 @@ namespace Azure.Data.Tables
             V2019_02_02 = 1,
         }
     }
-    public partial class TableEntity : Azure.Data.Tables.ITableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
+    public sealed partial class TableEntity : Azure.Data.Tables.ITableEntity, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public TableEntity() { }
         public TableEntity(System.Collections.Generic.IDictionary<string, object> values) { }
@@ -72,6 +72,7 @@ namespace Azure.Data.Tables
         public byte[] GetBinary(string key) { throw null; }
         public bool? GetBoolean(string key) { throw null; }
         public System.DateTime? GetDateTime(string key) { throw null; }
+        public System.DateTimeOffset? GetDateTimeOffset(string key) { throw null; }
         public double? GetDouble(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
         public System.Guid? GetGuid(string key) { throw null; }
@@ -129,9 +130,11 @@ namespace Azure.Data.Tables
         public virtual void AddEntities<T>(System.Collections.Generic.IEnumerable<T> entities) where T : class, Azure.Data.Tables.ITableEntity, new() { }
         public virtual void AddEntity<T>(T entity) where T : class, Azure.Data.Tables.ITableEntity, new() { }
         public virtual void DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
+        public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch<T>(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
         public virtual void UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
+        public virtual void UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
     }
     public enum TableUpdateMode
     {
@@ -172,7 +175,6 @@ namespace Azure.Data.Tables.Models
     public partial class TableBatchResponse
     {
         internal TableBatchResponse() { }
-        public bool IsBatchSuccessful { get { throw null; } }
         public int ResponseCount { get { throw null; } }
         public Azure.Response GetResponseForEntity(string rowKey) { throw null; }
     }

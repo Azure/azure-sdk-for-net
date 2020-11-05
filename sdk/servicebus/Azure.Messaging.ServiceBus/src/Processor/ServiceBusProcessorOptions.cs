@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus
         /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
         /// </summary>
-        public TimeSpan? MaxReceiveWaitTime
+        internal TimeSpan? MaxReceiveWaitTime
         {
             get => _maxReceiveWaitTime;
 

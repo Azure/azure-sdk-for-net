@@ -5,8 +5,20 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// State of a selection mark. i.e. Selected or Unselected.
+    /// </summary>
     [CodeGenModel("SelectionMarkState")]
-    internal readonly partial struct SelectionMarkState
+    public enum SelectionMarkState
     {
+        /// <summary>
+        /// Value is selected.
+        /// </summary>
+        Selected,
+
+        /// <summary>
+        /// Value is unselected.
+        /// </summary>
+        Unselected
     }
 }

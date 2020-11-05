@@ -458,7 +458,7 @@ directive:
     $.QueueServiceProperties.properties.MinuteMetrics.xml = { "name": "MinuteMetrics"};
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
-    $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
+    $.QueueServiceProperties.properties.Cors.xml.name = "Cors";
     $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
     $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```

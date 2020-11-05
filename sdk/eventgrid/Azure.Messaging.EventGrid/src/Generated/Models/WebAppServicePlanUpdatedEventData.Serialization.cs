@@ -26,11 +26,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appServicePlanEventTypeDetail"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(property.Value);
                     continue;
                 }

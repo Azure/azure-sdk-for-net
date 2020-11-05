@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTime = property.Value.GetObject();
                     continue;
                 }
@@ -69,6 +74,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("protocol"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocol = new BastionConnectProtocol(property.Value.GetString());
                     continue;
                 }
@@ -79,6 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("sessionDurationInMins"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sessionDurationInMins = property.Value.GetSingle();
                     continue;
                 }

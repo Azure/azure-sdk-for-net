@@ -72,6 +72,57 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         }
 
         [Test]
+        public async Task AlertRulesDeleteTest()
+        {
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            await insightsClient.AlertRules.DeleteAsync("rg1", "rule1");
+        }
+
+        [Test]
+        public async Task AlertRulesGetTest()
+        {
+            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var content = @"{
+                    'namePropertiesName': 'name1',
+                    'id': null,
+                    'name': 'name1',
+                    'type': null,
+                    'location': 'location',
+                    'tags': {
+                                'key1': 'val1'
+                    },
+                    'properties': {
+                        'description': 'description',
+                        'isEnabled': true,
+                        'condition': {
+                                        'dataSource': {
+                                                        'resourceUri': 'resourceUri'
+                                                      }
+                                     },
+                        'actions': [
+                            {
+                                'odata.type':'Microsoft.Azure.Management.Insights.Models.RuleEmailAction',
+                                'sendToServiceOwners': true,
+                                'customEmails': [
+                                    'emailid1'
+                                ]
+                    }
+                        ],
+                        'lastUpdatedTime': '2020-09-22T07:43:19.9383848+00:00'
+                    }
+                }
+            ".Replace("'", "\"");
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var result = (await insightsClient.AlertRules.GetAsync("rg1","rule1")).Value;
+            AreEqual(expectedParameters, result);
+        }
+
+        [Test]
         public async Task GetIncidentTest()
         {
             var expectedIncident = GetIncidents().First();
@@ -181,7 +232,7 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
         }
 
         [Test]
-        public async Task ListRulesTest()
+        public async Task AlertRulesListByResourceGroupTest()
         {
             var expResponse = GetRuleResourceCollection();
             var mockResponse = new MockResponse((int)HttpStatusCode.OK);
@@ -225,6 +276,52 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
 
             var actualResponse = await insightsClient.AlertRules.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
 
+            AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
+        }
+
+        [Test]
+        public async Task AlertRulesListBySubscriptionTest()
+        {
+            var expResponse = GetRuleResourceCollection();
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var content = @"{
+                            'value': [
+                                {
+                                    'namePropertiesName': 'name1',
+                                    'id': 'id1',
+                                    'name': 'name1',
+                                    'type': null,
+                                    'location': 'location1',
+                                    'tags': {
+                                            'key1': 'val1'
+                                    },
+                                    'properties': {
+                                            'description': 'description1',
+                                        'isEnabled': true,
+                                        'condition': {
+                                                'dataSource': {
+                                                    'resourceUri': 'resourceUri'
+                                                }
+                                            },
+                                        'actions': [
+                                            {
+                                                'odata.type':'Microsoft.Azure.Management.Insights.Models.RuleEmailAction',
+                                                'sendToServiceOwners': true,
+                                                'customEmails': [
+                                                    'eamil1'
+                                                ]
+                            }
+                                        ],
+                                        'lastUpdatedTime': '2020-09-22T09:16:06.5637048+00:00'
+                                    }
+                                }
+                            ]
+                        }
+            ".Replace("'", "\"");
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var actualResponse = await insightsClient.AlertRules.ListBySubscriptionAsync().ToEnumerableAsync();
             AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 

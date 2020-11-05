@@ -72,11 +72,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("bigDataPool"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sessionProperties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
                     continue;
                 }

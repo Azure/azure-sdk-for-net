@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.HealthcareApis.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,12 +31,12 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Initializes a new instance of the ServicesProperties class.
         /// </summary>
-        /// <param name="accessPolicies">The access policies of the service
-        /// instance.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Deleting', 'Succeeded', 'Creating', 'Accepted',
         /// 'Verifying', 'Updating', 'Failed', 'Canceled',
         /// 'Deprovisioned'</param>
+        /// <param name="accessPolicies">The access policies of the service
+        /// instance.</param>
         /// <param name="cosmosDbConfiguration">The settings for the Cosmos DB
         /// database backing the service.</param>
         /// <param name="authenticationConfiguration">The authentication
@@ -46,7 +45,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// configuration of the service instance.</param>
         /// <param name="exportConfiguration">The settings for the export
         /// operation of the service instance.</param>
-        public ServicesProperties(IList<ServiceAccessPolicyEntry> accessPolicies, string provisioningState = default(string), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo))
+        public ServicesProperties(string provisioningState = default(string), IList<ServiceAccessPolicyEntry> accessPolicies = default(IList<ServiceAccessPolicyEntry>), ServiceCosmosDbConfigurationInfo cosmosDbConfiguration = default(ServiceCosmosDbConfigurationInfo), ServiceAuthenticationConfigurationInfo authenticationConfiguration = default(ServiceAuthenticationConfigurationInfo), ServiceCorsConfigurationInfo corsConfiguration = default(ServiceCorsConfigurationInfo), ServiceExportConfigurationInfo exportConfiguration = default(ServiceExportConfigurationInfo))
         {
             ProvisioningState = provisioningState;
             AccessPolicies = accessPolicies;
@@ -107,15 +106,11 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (AccessPolicies == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessPolicies");
-            }
             if (AccessPolicies != null)
             {
                 foreach (var element in AccessPolicies)

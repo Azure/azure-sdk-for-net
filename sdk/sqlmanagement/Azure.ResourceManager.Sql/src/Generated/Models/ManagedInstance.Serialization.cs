@@ -165,11 +165,21 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("identity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
@@ -180,6 +190,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -205,15 +220,30 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ManagedInstancePropertiesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managedInstanceCreateMode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             managedInstanceCreateMode = new ManagedServerCreateMode(property0.Value.GetString());
                             continue;
                         }
@@ -244,16 +274,31 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("licenseType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             licenseType = new ManagedInstanceLicenseType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vCores"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             vCores = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("storageSizeInGB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             storageSizeInGB = property0.Value.GetInt32();
                             continue;
                         }
@@ -274,6 +319,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("publicDataEndpointEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             publicDataEndpointEnabled = property0.Value.GetBoolean();
                             continue;
                         }
@@ -284,11 +334,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("restorePointInTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("proxyOverride"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             proxyOverride = new ManagedInstanceProxyOverride(property0.Value.GetString());
                             continue;
                         }

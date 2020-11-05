@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +23,8 @@ namespace Azure.Data.Tables
         internal readonly bool _isPremiumEndpoint;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
+        /// token credential. See <see cref="TableClient.GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -35,7 +35,7 @@ namespace Azure.Data.Tables
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified connection string.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -51,7 +51,8 @@ namespace Azure.Data.Tables
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
+        /// token credential. See <see cref="TableClient.GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -70,7 +71,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified table service <see cref="Uri" /> and <see cref="TableSharedKeyCredential" />.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -84,7 +85,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified table service <see cref="Uri" /> and <see cref="TableSharedKeyCredential" />.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
@@ -101,7 +102,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableServiceClient"/>.
+        /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified connection string.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -208,32 +209,36 @@ namespace Azure.Data.Tables
         /// Gets a list of tables from the storage account.
         /// </summary>
         /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
+        /// <param name="maxPerPage">
+        /// The maximum number of tables that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
         public virtual AsyncPageable<TableItem> GetTablesAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
             scope.Start();
             try
             {
-                return PageableHelpers.CreateAsyncEnumerable(async _ =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                    null,
-                    null,
-                    new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                    cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, async (nextLink, _) =>
-            {
-                var response = await _tableOperations.QueryAsync(
-                       null,
-                       nextTableName: nextLink,
-                       new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                       cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            });
+                return PageableHelpers.CreateAsyncEnumerable(
+                    async pageSizeHint =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            null,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    async (nextLink, pageSizeHint) =>
+                    {
+                        var response = await _tableOperations.QueryAsync(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    },
+                    maxPerPage);
             }
             catch (Exception ex)
             {
@@ -245,56 +250,60 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Gets a list of tables from the storage account.
         /// </summary>
-        /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
-        /// <param name="maxPerPage">The maximum number of tables that will be returned per page.</param>
+        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="maxPerPage">
+        /// The maximum number tables that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
         public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
 
-            return PageableHelpers.CreateEnumerable(_ =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
+            return PageableHelpers.CreateEnumerable(
+                pageSizeHint =>
                 {
-                    var response = _tableOperations.Query(
-                            null,
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                (nextLink, pageSizeHint) =>
+                {
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    scope.Start();
+                    try
+                    {
+                        var response = _tableOperations.Query(
+                            nextTableName: nextLink,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }, (nextLink, _) =>
-            {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
-                scope.Start();
-                try
-                {
-                    var response = _tableOperations.Query(
-                        null,
-                        nextTableName: nextLink,
-                        new QueryOptions() { Filter = filter, Select = null, Top = maxPerPage, Format = _format },
-                        cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                },
+                maxPerPage);
         }
 
         /// <summary>
-        /// Creates a table in the storage account.
+        /// Creates a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table.</returns>
         public virtual Response<TableItem> CreateTable(string tableName, CancellationToken cancellationToken = default)
@@ -315,9 +324,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates a table in the storage account.
+        /// Creates a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table.</returns>
         public virtual async Task<Response<TableItem>> CreateTableAsync(string tableName, CancellationToken cancellationToken = default)
@@ -338,9 +347,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates a table in the storage account.
+        /// Creates a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
         public virtual Response<TableItem> CreateTableIfNotExists(string tableName, CancellationToken cancellationToken = default)
@@ -365,9 +374,9 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates a table in the storage account.
+        /// Creates a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
         public virtual async Task<Response<TableItem>> CreateTableIfNotExistsAsync(string tableName, CancellationToken cancellationToken = default)
@@ -392,18 +401,18 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes a table in the storage account.
+        /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
             scope.Start();
             try
             {
-                return _tableOperations.Delete(tableName, null, cancellationToken: cancellationToken);
+                return _tableOperations.Delete(tableName, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -413,18 +422,18 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes a table in the storage account.
+        /// Deletes a table on the service.
         /// </summary>
-        /// <param name="tableName">The table name to create.</param>
+        /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -435,7 +444,8 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="properties"> The Table Service properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response SetProperties(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -453,7 +463,8 @@ namespace Azure.Data.Tables
 
         /// <summary> Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="properties"> The Table Service properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -470,7 +481,8 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response{TableServiceProperties}"/> indicating the result of the operation.</returns>
         public virtual Response<TableServiceProperties> GetProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
@@ -488,7 +500,8 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response{TableServiceProperties}"/> indicating the result of the operation.</returns>
         public virtual async Task<Response<TableServiceProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetProperties)}");
@@ -506,7 +519,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<TableServiceStatistics>> GetStatisticsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetStatistics)}");
@@ -524,7 +537,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary> Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<TableServiceStatistics> GetStatistics(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetStatistics)}");

@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,14 +25,24 @@ namespace Azure.Storage.Files.DataLake
     public class DataLakePathClient
     {
         /// <summary>
-        /// A <see cref="BlockBlobClient"/> associated with the path;
+        /// A <see cref="BlockBlobClient"/> associated with the path.
         /// </summary>
         internal readonly BlockBlobClient _blockBlobClient;
 
         /// <summary>
-        /// BlobClient
+        /// A <see cref="BlockBlobClient"/> associated with the path.
         /// </summary>
         internal virtual BlockBlobClient BlobClient => _blockBlobClient;
+
+        /// <summary>
+        /// A <see cref="DataLakeFileSystemClient"/> associated with Directory's parent File System.
+        /// </summary>
+        internal readonly DataLakeFileSystemClient _fileSystemClient;
+
+        /// <summary>
+        /// A <see cref="DataLakeFileSystemClient"/> associated with Directory's parent File System.
+        /// </summary>
+        internal virtual DataLakeFileSystemClient FileSystemClient => _fileSystemClient;
 
         /// <summary>
         /// The paths's primary <see cref="Uri"/> endpoint.
@@ -164,6 +176,17 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -183,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         /// resource.
         /// </param>
         public DataLakePathClient(Uri pathUri)
-            : this(pathUri, (HttpPipelinePolicy)null, null)
+            : this(pathUri, (HttpPipelinePolicy)null, null, null)
         {
         }
 
@@ -202,7 +225,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, DataLakeClientOptions options)
-            : this(pathUri, (HttpPipelinePolicy)null, options)
+            : this(pathUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -219,7 +242,7 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential)
-            : this(pathUri, credential.AsPolicy(), null)
+            : this(pathUri, credential.AsPolicy(), null, credential)
         {
         }
 
@@ -241,7 +264,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options)
+            : this(pathUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -258,7 +281,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
-            : this(pathUri, credential.AsPolicy(), null)
+            : this(pathUri, credential.AsPolicy(), null, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -281,7 +304,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(), options)
+            : this(pathUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -317,7 +340,14 @@ namespace Azure.Storage.Files.DataLake
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakePathClient(
+            Uri pathUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
@@ -327,6 +357,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
@@ -358,6 +389,13 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _pipeline,
+                Version,
+                ClientDiagnostics);
         }
 
         /// <summary>
@@ -397,6 +435,13 @@ namespace Azure.Storage.Files.DataLake
                 _pipeline,
                 Version.AsBlobsVersion(),
                 _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                pipeline,
+                version,
+                clientDiagnostics);
         }
 
         internal DataLakePathClient(
@@ -421,6 +466,13 @@ namespace Azure.Storage.Files.DataLake
                 _pipeline,
                 Version.AsBlobsVersion(),
                 _clientDiagnostics);
+
+            uriBuilder.DirectoryOrFilePath = null;
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                pipeline,
+                version,
+                clientDiagnostics);
         }
 
         /// <summary>
@@ -2112,6 +2164,491 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Access Control
 
+        #region Set Access Control Recursive
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursive"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Set,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursiveAsync"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Set,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateAccessControlRecursive"/> operation modifies the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Modify,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateAccessControlRecursiveAsync"/> operation modifies the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Modify,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlRecursive"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
+            IList<RemovePathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Remove,
+                continuationToken,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlRecursiveAsync"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
+            IList<RemovePathAccessControlItem> accessControlList,
+            string continuationToken = default,
+            AccessControlChangeOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                PathSetAccessControlRecursiveMode.Remove,
+                continuationToken,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="operationName">
+        /// The operation name for diagnostic purpose.
+        /// </param>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="mode">
+        /// Mode \"set\" sets POSIX access control rights on files and directories,
+        /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
+        /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation token that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlChangeResult}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="DataLakeAclChangeFailedException"/> will be thrown if a request to
+        /// storage throws a <see cref="RequestFailedException"/> or <see cref="Exception"/>.
+        ///
+        /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
+        /// type will be thrown if a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
+            string operationName,
+            string accessControlList,
+            PathSetAccessControlRecursiveMode mode,
+            string continuationToken,
+            AccessControlChangeOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
+
+            try
+            {
+                scope.Start();
+                using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+                {
+                    Pipeline.LogMethodEnter(
+                        nameof(DataLakePathClient),
+                        message:
+                        $"{nameof(Uri)}: {Uri}\n" +
+                        $"{nameof(accessControlList)}: {accessControlList}\n" +
+                        $"{nameof(mode)}: {mode}\n" +
+                        $"batchSize: {options.BatchSize}");
+                    try
+                    {
+                        Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
+                        string lastContinuationToken = null;
+
+                        int directoriesSuccessfulCount = 0;
+                        int filesSuccessfulCount = 0;
+                        int failureCount = 0;
+                        int batchesCount = 0;
+                        AccessControlChangeFailure[] batchFailures = default;
+
+                        do
+                        {
+                            try
+                            {
+                                jsonResponse =
+                                    await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                        clientDiagnostics: ClientDiagnostics,
+                                        pipeline: Pipeline,
+                                        resourceUri: DfsUri,
+                                        mode: mode,
+                                        maxRecords: options?.BatchSize,
+                                        version: Version.ToVersionString(),
+                                        acl: accessControlList,
+                                        async: async,
+                                        continuation: continuationToken,
+                                        forceFlag: options?.ContinueOnFailure,
+                                        cancellationToken: cancellationToken)
+                                    .ConfigureAwait(false);
+                            }
+                            catch (RequestFailedException exception)
+                            {
+                                throw DataLakeErrors.ChangeAclRequestFailed(exception, continuationToken);
+                            }
+                            catch (Exception exception)
+                            {
+                                throw DataLakeErrors.ChangeAclFailed(exception, continuationToken);
+                            }
+                            continuationToken = jsonResponse.Value.Continuation;
+
+                            if (!string.IsNullOrEmpty(continuationToken))
+                            {
+                                lastContinuationToken = continuationToken;
+                            }
+
+                            using (JsonDocument document = JsonDocument.Parse(jsonResponse.Value.Body))
+                            {
+                                SetAccessControlRecursiveResponse response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+
+                                int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
+                                int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
+                                int currentFailureCount = response.FailureCount ?? 0;
+
+                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                                filesSuccessfulCount += currentFilesSuccessfulCount;
+                                failureCount += currentFailureCount;
+
+                                if ((currentFailureCount > 0) && (batchFailures == default))
+                                {
+                                    batchFailures = response.FailedEntries
+                                    .Select(failedEntry => new AccessControlChangeFailure()
+                                    {
+                                        Name = failedEntry.Name,
+                                        IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                        ErrorMessage = failedEntry.ErrorMessage,
+                                    }).ToArray();
+                                }
+                                if (options?.ProgressHandler != null)
+                                {
+                                    var failedEntries = response.FailedEntries
+                                        .Select(failedEntry => new AccessControlChangeFailure()
+                                        {
+                                            Name = failedEntry.Name,
+                                            IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                            ErrorMessage = failedEntry.ErrorMessage,
+                                        }).ToList();
+
+                                    options.ProgressHandler.Report(
+                                        Response.FromValue(
+                                            new AccessControlChanges()
+                                            {
+                                                BatchCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                                    ChangedFilesCount = currentFilesSuccessfulCount,
+                                                    FailedChangesCount = currentFailureCount,
+                                                },
+                                                AggregateCounters = new AccessControlChangeCounters()
+                                                {
+                                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                                    ChangedFilesCount = filesSuccessfulCount,
+                                                    FailedChangesCount = failureCount,
+                                                },
+                                                BatchFailures = failedEntries.ToArray(),
+                                                ContinuationToken = lastContinuationToken,
+                                            },
+                                            jsonResponse.GetRawResponse()));
+                                }
+                            }
+                            batchesCount++;
+
+                        } while (!string.IsNullOrEmpty(continuationToken)
+                            && (!options.MaxBatches.HasValue || batchesCount < options.MaxBatches.Value));
+
+                        return Response.FromValue(
+                            new AccessControlChangeResult()
+                            {
+                                Counters = new AccessControlChangeCounters()
+                                {
+                                    ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                    ChangedFilesCount = filesSuccessfulCount,
+                                    FailedChangesCount = failureCount,
+                                },
+                                ContinuationToken =
+                                    (failureCount > 0) && !(options?.ContinueOnFailure == true)
+                                        ? lastContinuationToken
+                                        : continuationToken,
+                                BatchFailures = batchFailures
+                            },
+                            jsonResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        Pipeline.LogException(ex);
+                        throw;
+                    }
+                    finally
+                    {
+                        Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Set Access Control Recursive
+
         #region Set Permissions
         /// <summary>
         /// The <see cref="SetPermissions"/> operation sets the
@@ -2689,5 +3226,97 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Set Metadata
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(DataLakeSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a DataLake Path Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="DataLakeSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(DataLakeSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = FileSystemName,
+                Path = Path
+            });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(DataLakeSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a DataLake File Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and and builder. The SAS is signed
+        /// by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(DataLakeSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (builder.IsDirectory.GetValueOrDefault(false))
+            {
+                throw Errors.SasIncorrectResourceType(
+                    nameof(builder),
+                    nameof(builder.IsDirectory),
+                    nameof(Constants.FalseName),
+                    nameof(this.GetType));
+            }
+            if (!builder.FileSystemName.Equals(FileSystemName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FileSystemName),
+                    nameof(DataLakeSasBuilder),
+                    nameof(FileSystemName));
+            }
+            if (!builder.Path.Equals(Path, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Path),
+                    nameof(DataLakeSasBuilder),
+                    nameof(Path));
+            }
+            DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
     }
 }

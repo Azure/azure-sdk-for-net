@@ -11,6 +11,12 @@ jobs:
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
+        Linux (AzureCloud Canary):
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+          Location: "eastus2euap"
         Windows_NetCoreApp (AzureCloud):
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1

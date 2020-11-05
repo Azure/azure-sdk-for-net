@@ -12,19 +12,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ChainedTokenCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ChainedTokenCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public ChainedTokenCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -64,7 +57,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService(new TestProcess { Error = "Error" });
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
@@ -96,7 +89,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);

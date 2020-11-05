@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.Serialization;
+
 namespace Azure.Data.Tables
 {
     internal static class TableConstants
@@ -37,7 +39,8 @@ namespace Azure.Data.Tables
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
             public const string EtagOdata = "odata.etag";
-            public const string ETag = nameof(ITableEntity.ETag);
+            public const string ETag = "ETag";
+            public const string OdataMetadata = "odata.metadata";
         }
 
         internal static class Odata
@@ -57,6 +60,12 @@ namespace Azure.Data.Tables
         {
             internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
             internal const string MissingRowKey = "The entity must contain a RowKey value";
+            internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
+        }
+
+        internal static class ExceptionData
+        {
+            internal const string FailedEntityIndex = "FailedEntity";
         }
 
         /// <summary>

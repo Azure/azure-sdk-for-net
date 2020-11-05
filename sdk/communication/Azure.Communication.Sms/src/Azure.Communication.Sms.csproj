@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This client library enables working with the Microsoft Azure Communication Sms service</Description>
+    <Description>
+      This client library enables working with the Microsoft Azure Communication Sms service.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/CHANGELOG.md.
+      Microsoft Azure Communication Sms quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
+    </Description>
     <AssemblyTitle>Azure Communication Sms Service</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CA1812;AZC0001</NoWarn>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
-  <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />

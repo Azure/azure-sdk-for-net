@@ -48,16 +48,31 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("maxTokenLength"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("isSearchTokenizer"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("language"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     language = property.Value.GetString().ToMicrosoftStemmingTokenizerLanguage();
                     continue;
                 }

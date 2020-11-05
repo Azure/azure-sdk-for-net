@@ -28,12 +28,9 @@ Please ensure all tests pass with any changes and additional tests are added to
 exercise any new features that you've added.
 
 ### Frameworks
-We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
+We use [NUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
-[Azure.Core's testing framework](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework) is
-copied into our projects' `/TestFramework` folders by the build.  _(Please be
-sure to run all of the unit tests in [Azure.Core.All.sln](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/Azure.Core.All.sln)
-if you make any changes here.)_
+[Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
 ### Sync/Async testing
 We expose all of our APIs with both sync and async variants.  To avoid writing
@@ -84,3 +81,6 @@ date and working correctly.  These tests make minimal use of test infrastructure
 to keep them easy to read.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FCONTRIBUTING.png)
+
+<!-- LINKS -->
+[core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework

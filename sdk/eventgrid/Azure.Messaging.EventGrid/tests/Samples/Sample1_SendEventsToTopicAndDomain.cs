@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             #region Snippet:CreateClientWithOptions
             EventGridPublisherClientOptions clientOptions = new EventGridPublisherClientOptions()
             {
-                DataSerializer = myCustomDataSerializer
+                Serializer = myCustomDataSerializer
             };
 
             EventGridPublisherClient client = new EventGridPublisherClient(

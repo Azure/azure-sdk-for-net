@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Azure;
 using Azure.Messaging.EventGrid;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -42,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         // default constructor
         public EventGridExtensionConfigProvider(ILoggerFactory loggerFactory)
         {
-            _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new EventGridSharedAccessSignatureCredential(attr.TopicKeySetting))));
+            _converter = (attr => new EventGridAsyncCollector(new EventGridPublisherClient(new Uri(attr.TopicEndpointUri), new AzureKeyCredential(attr.TopicKeySetting))));
             _loggerFactory = loggerFactory;
         }
 

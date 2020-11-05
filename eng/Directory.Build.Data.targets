@@ -66,7 +66,7 @@
 
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
-    <None Include="$(RepoEngPath)/images/pkgicon.png" Pack="true" PackagePath=""/>
+    <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
@@ -119,12 +119,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-    <!-- Find all Azure projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
     <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
     <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
 
     <!-- Remove PackageReferences -->
@@ -180,7 +181,7 @@
   </PropertyGroup>
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" />
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
   </ItemGroup>
  
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">

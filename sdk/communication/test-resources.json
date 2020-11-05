@@ -9,71 +9,50 @@
                 "description": "The base resource name."
             }
         },
-        "location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "The location of the resource. By default, this is the same as the resource group."
-            }
-        },	
         "endpointPrefix": {
             "defaultValue": "communication",
             "type": "string"
-        },
-        "endpointSuffix": {
-          "defaultValue": ".communications.azure.net",
-          "type": "string"
         },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }
-        },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
         }
     },
     "variables": {
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
         "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "resources": [
         {
             "type": "Microsoft.Communication/CommunicationServices",
-            "apiVersion": "2019-10-10-preview",
+            "apiVersion": "2020-08-20-preview",
             "name": "[variables('uniqueSubDomainName')]",
-            "location":"[parameters('location')]"
+            "location": "global",
+            "properties": {
+                "dataLocation": "UnitedStates"
+            }
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
             "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
             "properties": {
-              "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
-              "principalId": "[parameters('testApplicationOid')]",
-              "scope": "[resourceGroup().id]"
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
             }
         }
     ],
     "outputs": {
         "COMMUNICATION_CONNECTION_STRING": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2019-10-10-preview').primaryConnectionString]"
+            "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
         },
         "RESOURCE_GROUP_NAME": {
             "type": "string",
             "value": "[resourceGroup().Name]"
-	    }
-	}
+        }
+    }
 }

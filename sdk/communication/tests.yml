@@ -4,6 +4,5 @@ extends:
   template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: communication
-
-    # Remove the SubscriptionConfiguration to test agains the public cloud
-    SubscriptionConfiguration: $(sub-config-azure-cloud-dogfood-test-resources)
+    EnvVars:
+      AZURE_COMMUNICATION_TEST_MODE: Record

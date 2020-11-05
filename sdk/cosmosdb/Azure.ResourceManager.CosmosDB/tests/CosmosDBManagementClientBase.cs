@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             return CreateClient<CosmosDBManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new CosmosDBManagementClientOptions()));
+                InstrumentClientOptions(new CosmosDBManagementClientOptions()));
         }
 
         protected void initNewRecord()

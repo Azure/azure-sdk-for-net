@@ -99,14 +99,13 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of ChatThreadClient. <see cref="ChatThreadClient"/>.</summary>
         /// <param name="threadId"> The thread id for the ChatThreadClient instance. </param>
-        /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public virtual ChatThreadClient GetChatThreadClient(string threadId, ChatClientOptions? options = default)
+        public virtual ChatThreadClient GetChatThreadClient(string threadId)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadClient)}");
             scope.Start();
             try
             {
-                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, options);
+                return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
             }
             catch (Exception ex)
             {

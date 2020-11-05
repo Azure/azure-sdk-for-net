@@ -1,3 +1,4 @@
+# This Files has been retired
 # Helper functions for retireving useful information from azure-sdk-for-* repo
 # Example Use : Import-Module .\eng\common\scripts\modules
 class PackageProps

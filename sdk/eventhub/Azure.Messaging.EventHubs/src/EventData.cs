@@ -18,45 +18,20 @@ namespace Azure.Messaging.EventHubs
     public class EventData
     {
         /// <summary>
-        ///   The data associated with the event.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   If the means for deserializing the raw data is not apparent to consumers, a
-        ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
-        ///   as an aid to consumers who wish to deserialize the binary data.
-        /// </remarks>
-        ///
-        /// <seealso cref="EventData.Properties" />
-        ///
-        public ReadOnlyMemory<byte> Body => BodyAsBinaryData.ToBytes();
-
-        /// <summary>
-        ///   The <see cref="Body" /> data associated with the event, in <see cref="BinaryData" /> form, providing support
+        ///   The data associated with the event, in <see cref="BinaryData" /> form, providing support
         ///   for a variety of data transformations and <see cref="ObjectSerializer" /> integration.
         /// </summary>
         ///
-        public BinaryData BodyAsBinaryData { get; }
-
-        /// <summary>
-        ///   The data associated with the event, in stream form.
-        /// </summary>
-        ///
-        /// <value>
-        ///   A <see cref="Stream" /> containing the raw data representing the <see cref="Body" />
-        ///   of the event.  The caller is assumed to have ownership of the stream, including responsibility
-        ///   for managing its lifespan and ensuring proper disposal.
-        /// </value>
-        ///
         /// <remarks>
-        ///   If the means for deserializing the raw data is not apparent to consumers, a
+        ///   <para>If the means for deserializing the raw data is not apparent to consumers, a
         ///   common technique is to make use of <see cref="EventData.Properties" /> to associate serialization hints
-        ///   as an aid to consumers who wish to deserialize the binary data.
+        ///   as an aid to consumers who wish to deserialize the binary data.</para>
         /// </remarks>
         ///
+        /// <seealso cref="BinaryData" />
         /// <seealso cref="EventData.Properties" />
         ///
-        public Stream BodyAsStream => BodyAsBinaryData.ToStream();
+        public BinaryData EventBody { get; }
 
         /// <summary>
         ///   The set of free-form event properties which may be used for passing metadata associated with the event body
@@ -64,7 +39,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints for the <see cref="EventData.Body" />
+        ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints for the <see cref="EventData.EventBody" />
         ///   as an aid to consumers who wish to deserialize the binary data.
         /// </remarks>
         ///
@@ -149,6 +124,43 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public string PartitionKey { get; }
+
+        /// <summary>
+        ///   The data associated with the event.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This member exists only to preserve backward compatibility.  It is recommended to
+        ///   prefer the <see cref="EventBody" /> where possible in order to take advantage of
+        ///   additional functionality and improved usability for common scenarios.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventData.EventBody" />
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ReadOnlyMemory<byte> Body => EventBody.ToMemory();
+
+        /// <summary>
+        ///   The data associated with the event, in stream form.
+        /// </summary>
+        ///
+        /// <value>
+        ///   A <see cref="Stream" /> containing the raw data representing the <see cref="EventBody" />
+        ///   of the event.  The caller is assumed to have ownership of the stream, including responsibility
+        ///   for managing its lifespan and ensuring proper disposal.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   This member exists only to preserve backward compatibility.  It is recommended to
+        ///   prefer the <see cref="EventBody" /> where possible in order to take advantage of
+        ///   additional functionality and improved usability for common scenarios.
+        /// </remarks>
+        ///
+        /// <seealso cref="BinaryData.ToStream" />
+        /// <seealso cref="EventData.EventBody" />
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Stream BodyAsStream => EventBody.ToStream();
 
         /// <summary>
         ///   The sequence number of the event that was last enqueued into the Event Hub partition from which this
@@ -342,7 +354,7 @@ namespace Azure.Messaging.EventHubs
                            long? pendingProducerGroupId = null,
                            short? pendingOwnerLevel = null)
         {
-            BodyAsBinaryData = eventBody;
+            EventBody = eventBody;
             Properties = properties ?? new Dictionary<string, object>();
             SystemProperties = systemProperties ?? new Dictionary<string, object>();
             SequenceNumber = sequenceNumber;
@@ -371,13 +383,36 @@ namespace Azure.Messaging.EventHubs
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         ///
-        protected EventData(ReadOnlyMemory<byte> eventBody,
+        protected EventData(BinaryData eventBody,
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The raw data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected EventData(ReadOnlyMemory<byte> eventBody,
+                            IDictionary<string, object> properties = null,
+                            IReadOnlyDictionary<string, object> systemProperties = null,
+                            long sequenceNumber = long.MinValue,
+                            long offset = long.MinValue,
+                            DateTimeOffset enqueuedTime = default,
+                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 
@@ -440,7 +475,7 @@ namespace Azure.Messaging.EventHubs
         internal EventData Clone() =>
             new EventData
             (
-                BodyAsBinaryData,
+                EventBody,
                 new Dictionary<string, object>(Properties),
                 SystemProperties,
                 SequenceNumber,

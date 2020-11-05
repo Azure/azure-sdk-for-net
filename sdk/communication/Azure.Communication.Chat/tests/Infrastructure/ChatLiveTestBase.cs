@@ -26,7 +26,7 @@ namespace Azure.Communication.Chat.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.ConnectionString,
-                    Recording.InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of
@@ -42,12 +42,17 @@ namespace Azure.Communication.Chat.Tests
 
             CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);
             return InstrumentClient(new ChatClient(new Uri(TestEnvironment.ChatApiUrl()), communicationUserCredential,
-                Recording.InstrumentClientOptions(new ChatClientOptions())));
+                InstrumentClientOptions(new ChatClientOptions())));
         }
 
         protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
         {
             return InstrumentClient(chatClient.CreateChatThread(topic, members));
+        }
+
+        protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
+        {
+            return InstrumentClient(chatClient.GetChatThreadClient(threadId));
         }
 
         protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)

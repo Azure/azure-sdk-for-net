@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -83,6 +85,17 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateAccountSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareServiceClient"/>
@@ -136,6 +149,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -151,7 +165,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareServiceClient(Uri serviceUri, ShareClientOptions options = default)
-            : this(serviceUri, (HttpPipelinePolicy)null, options)
+            : this(serviceUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -171,7 +185,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options)
+            : this(serviceUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -190,13 +204,21 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new ShareClientOptions();
             _uri = serviceUri;
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
         #endregion ctors
 
@@ -645,8 +667,8 @@ namespace Azure.Storage.Files.Shares
 
         #region CreateShare
         /// <summary>
-        /// The <see cref="CreateShare"/> operation creates a new share
-        /// under the specified account. If a share with the same name
+        /// The <see cref="CreateShare(string, ShareCreateOptions, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -656,11 +678,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareName">
         /// The name of the share to create.
         /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this share.
-        /// </param>
-        /// <param name="quotaInGB">
-        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -676,15 +695,15 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareClient> CreateShare(
             string shareName,
-            IDictionary<string, string> metadata = default,
-            int? quotaInGB = default,
+            ShareCreateOptions options,
             CancellationToken cancellationToken = default)
         {
             ShareClient share = GetShareClient(shareName);
 
             Response<ShareInfo> response = share.CreateInternal(
-                metadata,
-                quotaInGB,
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -694,8 +713,54 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// The <see cref="CreateShareAsync"/> operation creates a new share
-        /// under the specified account. If a share with the same name
+        /// The <see cref="CreateShare(string, ShareCreateOptions, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareClient}"/> referencing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareClient>> CreateShareAsync(
+            string shareName,
+            ShareCreateOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClient share = GetShareClient(shareName);
+
+            Response<ShareInfo> response = await share.CreateInternal(
+                options?.Metadata,
+                options?.QuotaInGB,
+                options?.AccessTier,
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
+                .ConfigureAwait(false);
+
+            return Response.FromValue(share, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateShare(string, IDictionary{string, string}, int?, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see
@@ -723,6 +788,58 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareClient> CreateShare(
+            string shareName,
+            IDictionary<string, string> metadata = default,
+            int? quotaInGB = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClient share = GetShareClient(shareName);
+
+            Response<ShareInfo> response = share.CreateInternal(
+                metadata,
+                quotaInGB,
+                accessTier: default,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
+                .EnsureCompleted();
+
+            return Response.FromValue(share, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The <see cref="CreateShareAsync(string, IDictionary{string, string}, int?, CancellationToken)"/>
+        /// operation creates a new share under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-share">
+        /// Create Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareClient}"/> referencing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareClient>> CreateShareAsync(
             string shareName,
             IDictionary<string, string> metadata = default,
@@ -734,6 +851,7 @@ namespace Azure.Storage.Files.Shares
             Response<ShareInfo> response = await share.CreateInternal(
                 metadata,
                 quotaInGB,
+                accessTier: default,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -744,6 +862,88 @@ namespace Azure.Storage.Files.Shares
         #endregion CreateShare
 
         #region DeleteShare
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// Currently, this method will always delete snapshots.
+        /// There's no way to specify a separate value for x-ms-delete-snapshots.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DeleteShare(
+            string shareName,
+            ShareDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetShareClient(shareName).DeleteInternal(
+                includeSnapshots: default,
+                shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
+                conditions: options?.Conditions,
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        ///
+        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share">
+        /// Delete Share</see>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteShareAsync(
+            string shareName,
+            ShareDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetShareClient(shareName)
+                .DeleteInternal(
+                    includeSnapshots: default,
+                    shareSnapshotsDeleteOption: options?.ShareSnapshotsDeleteOption,
+                    conditions: options?.Conditions,
+                    async: true,
+                    cancellationToken,
+                    operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
+                .ConfigureAwait(false);
+
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
@@ -773,12 +973,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteShare(
             string shareName,
             bool includeSnapshots = true,
             CancellationToken cancellationToken = default) =>
             GetShareClient(shareName).DeleteInternal(
                 includeSnapshots,
+                shareSnapshotsDeleteOption: default,
+                conditions: default,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
@@ -812,6 +1015,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteShareAsync(
             string shareName,
             bool includeSnapshots = true,
@@ -819,6 +1023,8 @@ namespace Azure.Storage.Files.Shares
             await GetShareClient(shareName)
                 .DeleteInternal(
                     includeSnapshots,
+                    shareSnapshotsDeleteOption: default,
+                    conditions: default,
                     async: true,
                     cancellationToken,
                     operationName: $"{nameof(ShareServiceClient)}.{nameof(DeleteShare)}")
@@ -958,6 +1164,89 @@ namespace Azure.Storage.Files.Shares
                     Pipeline.LogMethodExit(nameof(ShareServiceClient));
                 }
             }
+        }
+        #endregion
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="AccountSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. The time at which the shared access signature becomes invalid.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Files,
+                resourceTypes));
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and builder passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="ShareSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public Uri GenerateAccountSasUri(AccountSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.Services.HasFlag(AccountSasServices.Files))
+            {
+                throw Errors.SasServiceNotMatching(
+                    nameof(builder.Services),
+                    nameof(builder),
+                    nameof(AccountSasServices.Files));
+            }
+            UriBuilder sasUri = new UriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.Uri;
         }
         #endregion
     }

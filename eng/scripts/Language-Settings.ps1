@@ -3,6 +3,7 @@ $LanguageShort = "net"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
+$BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
@@ -110,9 +111,20 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
   Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
   $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
 
-  Write-Host "Start Upload for $($pkgProperties.Tag)"
+  Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
   Write-Host "DocDir $($DocsStagingDir)"
   Write-Host "PkgName $($pkgProperties.PackageId)"
   Write-Host "DocVersion $($pkgProperties.PackageVersion)"
-  Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.Tag
+  Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.ReleaseTag
+}
+
+function Get-dotnet-GithubIoDocIndex() {
+  # Fetch out all package metadata from csv file.
+  $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
+  # Get the artifacts name from blob storage
+  $artifacts =  Get-BlobStorage-Artifacts -blobStorageUrl $BlobStorageUrl -blobDirectoryRegex "^dotnet/(.*)/$" -blobArtifactsReplacement '$1'
+  # Build up the artifact to service name mapping for GithubIo toc.
+  $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
+  # Generate yml/md toc files and build site.
+  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
 }

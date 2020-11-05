@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("negationConditon"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     negationConditon = property.Value.GetBoolean();
                     continue;
                 }
@@ -91,6 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("transforms"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<WebApplicationFirewallTransform> array = new List<WebApplicationFirewallTransform>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

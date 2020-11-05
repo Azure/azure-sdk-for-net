@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message represented as bytes.</param>
         internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
-            : this(new AmqpAnnotatedMessage(new BinaryData[] { BinaryData.FromBytes(body) }))
+            : this(new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { body }))
         {
         }
 
@@ -44,11 +44,19 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSettled { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that was transmitted over the wire.
         /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; internal set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that was transmitted over the wire.
+        /// This can be used to enable scenarios that require reading AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the body of the message.
@@ -57,14 +65,7 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
-                {
-                    return dataBody.Data.ConvertAndFlattenData();
-                }
-                else
-                {
-                    return default;
-                }
+                return AmqpMessage.GetBody();
             }
         }
 
@@ -79,7 +80,7 @@ namespace Azure.Messaging.ServiceBus
         ///    feature identifies and removes second and further submissions of messages with the
         ///    same MessageId.
         /// </remarks>
-        public string MessageId => AmqpMessage.Properties.MessageId;
+        public string MessageId => AmqpMessage.Properties.MessageId?.ToString();
 
         /// <summary>Gets a partition key for sending a message to a partitioned entity.</summary>
         /// <value>The partition key. Maximum length is 128 characters.</value>
@@ -141,7 +142,7 @@ namespace Azure.Messaging.ServiceBus
         ///    for example reflecting the MessageId of a message that is being replied to.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
         /// </remarks>
-        public string CorrelationId => AmqpMessage.Properties.CorrelationId;
+        public string CorrelationId => AmqpMessage.Properties.CorrelationId?.ToString();
 
         /// <summary>Gets an application specific label.</summary>
         /// <value>The application specific label</value>
@@ -159,7 +160,7 @@ namespace Azure.Messaging.ServiceBus
         ///     <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</a> scenarios to indicate the
         ///     intended logical destination of the message.
         /// </remarks>
-        public string To => AmqpMessage.Properties.To;
+        public string To => AmqpMessage.Properties.To?.ToString();
 
         /// <summary>Gets the content type descriptor.</summary>
         /// <value>RFC2045 Content-Type descriptor.</value>
@@ -177,7 +178,7 @@ namespace Azure.Messaging.ServiceBus
         ///    absolute or relative path of the queue or topic it expects the reply to be sent to.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
         /// </remarks>
-        public string ReplyTo => AmqpMessage.Properties.ReplyTo;
+        public string ReplyTo => AmqpMessage.Properties.ReplyTo?.ToString();
 
         /// <summary>Gets the date and time in UTC at which the message will be enqueued. This
         /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
@@ -196,16 +197,6 @@ namespace Azure.Messaging.ServiceBus
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
         public IReadOnlyDictionary<string, object> ApplicationProperties => new ReadOnlyDictionary<string, object>(AmqpMessage.ApplicationProperties);
-
-        /// <summary>
-        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterReasonHeader = "DeadLetterReason";
-
-        /// <summary>
-        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
 
         /// <summary>
         /// Gets the lock token for the current message.
@@ -390,13 +381,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets the dead letter reason for the message.
         /// </summary>
         public string DeadLetterReason
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterReasonHeader, out object reason))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterReasonHeader, out object reason))
                 {
                     return reason as string;
                 }
@@ -405,13 +396,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets the dead letter error description for the message.
         /// </summary>
         public string DeadLetterErrorDescription
         {
             get
             {
-                if (ApplicationProperties.TryGetValue(DeadLetterErrorDescriptionHeader, out object description))
+                if (ApplicationProperties.TryGetValue(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, out object description))
                 {
                     return description as string;
                 }

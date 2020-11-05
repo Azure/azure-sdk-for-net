@@ -60,26 +60,51 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("delimiter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     delimiter = property.Value.GetChar();
                     continue;
                 }
                 if (property.NameEquals("replacement"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     replacement = property.Value.GetChar();
                     continue;
                 }
                 if (property.NameEquals("maxTokenLength"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("reverse"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reverse = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("skip"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skip = property.Value.GetInt32();
                     continue;
                 }

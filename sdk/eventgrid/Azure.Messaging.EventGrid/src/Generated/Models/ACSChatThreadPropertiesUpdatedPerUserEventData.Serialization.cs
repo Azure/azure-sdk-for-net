@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> editTime = default;
             Optional<IReadOnlyDictionary<string, object>> properties = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<int> version = default;
+            Optional<long> version = default;
             Optional<string> recipientId = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
@@ -33,11 +33,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("editTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     editTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -48,12 +58,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("createTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("version"))
                 {
-                    version = property.Value.GetInt32();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    version = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("recipientId"))

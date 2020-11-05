@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.Chat
 {
     /// <summary> The ChatThread. </summary>
-    public partial class ChatThreadInternal
+    internal partial class ChatThreadInternal
     {
         /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
         internal ChatThreadInternal()

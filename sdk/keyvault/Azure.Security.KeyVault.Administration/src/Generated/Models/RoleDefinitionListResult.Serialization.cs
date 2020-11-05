@@ -21,6 +21,11 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => claimOwnershipDelegated = true)
                 .Returns(Task.FromResult(default(IEnumerable<EventProcessorPartitionOwnership>)));
 
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
+            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
             Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
 
             await storageManager.ListCheckpointsAsync("na", "na", "na", CancellationToken.None);
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "cg";
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
-            var storageManager = mockProcessor.Object.CreateStorageManager(mockProcessor.Object);
+            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
             Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
 
             Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(Array.Empty<byte>()), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
@@ -241,6 +241,31 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Protected()
                 .Verify<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ClaimOwnershipAsync", Times.Once(), ItExpr.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ProcessorLoadBalancerIsConfiguredUsingOptions()
+        {
+            var options = new EventProcessorOptions
+            {
+                LoadBalancingUpdateInterval = TimeSpan.FromDays(99),
+                PartitionOwnershipExpirationInterval = TimeSpan.FromMilliseconds(5)
+            };
+
+            var fqNamespace = "fqns";
+            var eventHub = "eh";
+            var consumerGroup = "cg";
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), options) { CallBase = true };
+            var loadBalancer = GetLoadBalancer(mockProcessor.Object);
+
+            Assert.That(loadBalancer, Is.Not.Null, "The load balancer should have been created.");
+            Assert.That(loadBalancer.LoadBalanceInterval, Is.EqualTo(options.LoadBalancingUpdateInterval), "The load balancing interval was incorrect.");
+            Assert.That(loadBalancer.OwnershipExpirationInterval, Is.EqualTo(options.PartitionOwnershipExpirationInterval), "The ownership expiration interval is incorrect.");
         }
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -100,6 +101,13 @@ namespace Azure.Storage.Test.Shared
         public TenantConfiguration TestConfigSoftDelete => GetTestConfig(
                 "Storage_TestConfigSoftDelete",
                 () => TestConfigurations.DefaultTargetSoftDeleteTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests premium files.
+        /// </summary>
+        public TenantConfiguration TestConfigPremiumFile => GetTestConfig(
+                "Storage_TestConfigPremiumFile",
+                () => TestConfigurations.DefaultPremiumFileTenant);
 
         /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
@@ -475,8 +483,8 @@ namespace Azure.Storage.Test.Shared
             return stream;
         }
 
-    private class StorageTestTokenCredential : TokenCredential
-    {
+        private class StorageTestTokenCredential : TokenCredential
+        {
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
@@ -486,6 +494,56 @@ namespace Azure.Storage.Test.Shared
             {
                 return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
             }
+        }
+
+        public string AccountSasPermissionsToPermissionsString(AccountSasPermissions permissions)
+        {
+            var sb = new StringBuilder();
+            if ((permissions & AccountSasPermissions.Read) == AccountSasPermissions.Read)
+            {
+                sb.Append(Constants.Sas.Permissions.Read);
+            }
+            if ((permissions & AccountSasPermissions.Write) == AccountSasPermissions.Write)
+            {
+                sb.Append(Constants.Sas.Permissions.Write);
+            }
+            if ((permissions & AccountSasPermissions.Delete) == AccountSasPermissions.Delete)
+            {
+                sb.Append(Constants.Sas.Permissions.Delete);
+            }
+            if ((permissions & AccountSasPermissions.DeleteVersion) == AccountSasPermissions.DeleteVersion)
+            {
+                sb.Append(Constants.Sas.Permissions.DeleteBlobVersion);
+            }
+            if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
+            {
+                sb.Append(Constants.Sas.Permissions.List);
+            }
+            if ((permissions & AccountSasPermissions.Add) == AccountSasPermissions.Add)
+            {
+                sb.Append(Constants.Sas.Permissions.Add);
+            }
+            if ((permissions & AccountSasPermissions.Create) == AccountSasPermissions.Create)
+            {
+                sb.Append(Constants.Sas.Permissions.Create);
+            }
+            if ((permissions & AccountSasPermissions.Update) == AccountSasPermissions.Update)
+            {
+                sb.Append(Constants.Sas.Permissions.Update);
+            }
+            if ((permissions & AccountSasPermissions.Process) == AccountSasPermissions.Process)
+            {
+                sb.Append(Constants.Sas.Permissions.Process);
+            }
+            if ((permissions & AccountSasPermissions.Tag) == AccountSasPermissions.Tag)
+            {
+                sb.Append(Constants.Sas.Permissions.Tag);
+            }
+            if ((permissions & AccountSasPermissions.Filter) == AccountSasPermissions.Filter)
+            {
+                sb.Append(Constants.Sas.Permissions.FilterByTags);
+            }
+            return sb.ToString();
         }
     }
 }

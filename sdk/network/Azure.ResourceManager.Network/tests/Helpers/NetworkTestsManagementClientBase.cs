@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Compute;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ProvidersOperations ProvidersOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
-        public ServiceOperations ServiceOperations { get; set; }
+        public NetworkManagementOperations ServiceOperations { get; set; }
         public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
 
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ProvidersOperations = ResourceManagementClient.Providers;
             ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
             ResourcesOperations = ResourceManagementClient.Resources;
-            ServiceOperations = NetworkManagementClient.Service;
+            ServiceOperations = NetworkManagementClient.NetworkManagement;
             PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new StorageManagementClientOptions())));
+                 InstrumentClientOptions(new StorageManagementClientOptions())));
         }
 
         private ComputeManagementClient GetComputeManagementClient()
         {
             return InstrumentClient(new ComputeManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new ComputeManagementClientOptions())));
+                 InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
         private NetworkManagementClient GetNetworkManagementClient()
         {
             return InstrumentClient(new NetworkManagementClient(TestEnvironment.SubscriptionId,
                  TestEnvironment.Credential,
-                 Recording.InstrumentClientOptions(new NetworkManagementClientOptions())));
+                 InstrumentClientOptions(new NetworkManagementClientOptions())));
         }
 
         public async Task CreateVm(

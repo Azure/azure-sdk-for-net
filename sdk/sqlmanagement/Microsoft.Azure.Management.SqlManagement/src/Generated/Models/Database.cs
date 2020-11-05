@@ -166,8 +166,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// connection string may be routed to a readonly secondary replica in
         /// the same region. Possible values include: 'Enabled',
         /// 'Disabled'</param>
-        /// <param name="readReplicaCount">The number of readonly secondary
-        /// replicas associated with the database.</param>
+        /// <param name="highAvailabilityReplicaCount">The number of secondary
+        /// replicas associated with the database that are used to provide high
+        /// availability.</param>
+        /// <param name="secondaryType">The secondary type of the database if
+        /// it is a secondary.  Valid values are Geo and Named. Possible values
+        /// include: 'Geo', 'Named'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
@@ -184,7 +188,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="resumedDate">The date when database was resumed by
         /// user action or database login (ISO8601 format). Null if the
         /// database is paused.</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? readReplicaCount = default(int?), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string storageAccountType = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?))
+        /// <param name="maintenanceConfigurationId">Maintenance configuration
+        /// id assigned to the database. This configuration defines the period
+        /// when the maintenance updates will be rolled out.</param>
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string storageAccountType = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -215,13 +222,15 @@ namespace Microsoft.Azure.Management.Sql.Models
             MaxLogSizeBytes = maxLogSizeBytes;
             EarliestRestoreDate = earliestRestoreDate;
             ReadScale = readScale;
-            ReadReplicaCount = readReplicaCount;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
+            SecondaryType = secondaryType;
             CurrentSku = currentSku;
             AutoPauseDelay = autoPauseDelay;
             StorageAccountType = storageAccountType;
             MinCapacity = minCapacity;
             PausedDate = pausedDate;
             ResumedDate = resumedDate;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             CustomInit();
         }
 
@@ -480,11 +489,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string ReadScale { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of readonly secondary replicas associated
-        /// with the database.
+        /// Gets or sets the number of secondary replicas associated with the
+        /// database that are used to provide high availability.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.readReplicaCount")]
-        public int? ReadReplicaCount { get; set; }
+        [JsonProperty(PropertyName = "properties.highAvailabilityReplicaCount")]
+        public int? HighAvailabilityReplicaCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary type of the database if it is a
+        /// secondary.  Valid values are Geo and Named. Possible values
+        /// include: 'Geo', 'Named'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.secondaryType")]
+        public string SecondaryType { get; set; }
 
         /// <summary>
         /// Gets the name and tier of the SKU.
@@ -527,6 +544,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resumedDate")]
         public System.DateTime? ResumedDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets maintenance configuration id assigned to the database.
+        /// This configuration defines the period when the maintenance updates
+        /// will be rolled out.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Validate the object.

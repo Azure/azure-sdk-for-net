@@ -82,8 +82,8 @@ namespace Azure.Storage.Queues.Test
             try
             {
                 // Act
-                await queueClient1.CreateAsync();
-                await queueClient2.CreateAsync();
+                await queueClient1.CreateIfNotExistsAsync();
+                await queueClient2.CreateIfNotExistsAsync();
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -97,8 +97,8 @@ namespace Azure.Storage.Queues.Test
             finally
             {
                 // Clean up
-                await queueClient1.DeleteAsync();
-                await queueClient2.DeleteAsync();
+                await queueClient1.DeleteIfExistsAsync();
+                await queueClient2.DeleteIfExistsAsync();
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Storage.Queues.Test
             {
                 if (!pass)
                 {
-                    await queue.DeleteAsync();
+                    await queue.DeleteIfExistsAsync();
                 }
             }
         }
@@ -254,7 +254,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -277,7 +277,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response response = await queue.CreateIfNotExistsAsync();
@@ -296,7 +296,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -307,7 +307,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
-            await queue.CreateAsync(BuildMetadata());
+            await queue.CreateIfNotExistsAsync(BuildMetadata());
 
             // Act
             Response response = await queue.CreateIfNotExistsAsync();
@@ -316,7 +316,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await queue.ExistsAsync();
@@ -350,7 +350,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(response.Value);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -390,7 +390,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await queue.DeleteIfExistsAsync();
@@ -462,7 +462,7 @@ namespace Azure.Storage.Queues.Test
         public async Task GetPropertiesAsync_SecondaryStorage()
         {
             QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
-            await queueClient.CreateAsync();
+            await queueClient.CreateIfNotExistsAsync();
             Response<QueueProperties> properties = await EnsurePropagatedAsync(
                 async () => await queueClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
@@ -470,7 +470,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(properties);
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
-            await queueClient.DeleteAsync();
+            await queueClient.DeleteIfExistsAsync();
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
         #endregion
@@ -590,7 +590,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response result = await queue.DeleteAsync();
@@ -740,6 +740,25 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.NotNull(response.Value);
+        }
+
+        [Test]
+        public async Task SendMessageAsync_ExtendedExceptionMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.SendMessageAsync(
+                    messageText: string.Empty,
+                    visibilityTimeout: TimeSpan.FromSeconds(10),
+                    timeToLive: TimeSpan.FromSeconds(7)),
+                e =>
+                {
+                    Assert.AreEqual(QueueErrorCode.InvalidQueryParameterValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}QueryParameterName: visibilitytimeout{Environment.NewLine}QueryParameterValue: 10{Environment.NewLine}Reason: messagettl must be greater than visibilitytimeout"));
+                });
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
@@ -1190,5 +1209,144 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(enqueuedMessage.MessageId, receivedMessage.MessageId);
             Assert.AreEqual(message, receivedMessage.MessageText);
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - QueueClient(string connectionString, string blobContainerName)
+            QueueClient container = new QueueClient(
+                connectionString,
+                GetNewQueueName());
+            Assert.IsTrue(container.CanGenerateSasUri);
+
+            // Act - QueueClient(string connectionString, string blobContainerName, BlobClientOptions options)
+            QueueClient container2 = new QueueClient(
+                connectionString,
+                GetNewQueueName(),
+                GetOptions());
+            Assert.IsTrue(container2.CanGenerateSasUri);
+
+            // Act - QueueClient(Uri blobContainerUri, BlobClientOptions options = default)
+            QueueClient container3 = new QueueClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(container3.CanGenerateSasUri);
+
+            // Act - QueueClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            QueueClient container4 = new QueueClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(container4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+
+            // Act
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string queueName = GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(connectionString, queueName, GetOptions());
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = queueName,
+                StartsOn = startsOn
+            };
+            QueueUriBuilder expectedUri = new QueueUriBuilder(blobEndpoint)
+            {
+                QueueName = queueName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewQueueName();
+            QueueSasPermissions permissions = QueueSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            QueueClient queueClient = new QueueClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = GetNewQueueName() //different queueName
+            };
+
+            // Act
+            try
+            {
+                queueClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("QueueClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
     }
 }

@@ -15,7 +15,6 @@ namespace ComputerVisionSDK.Tests
         private static Lazy<string> TestBaseUrl = new Lazy<string>(() =>
         {
             string user = "Azure";
-            const string branch = "psSdkJson6";
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
@@ -47,7 +46,7 @@ namespace ComputerVisionSDK.Tests
                 }
             }
 
-            return $"https://raw.githubusercontent.com/{user}/azure-sdk-for-net/{branch}/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/";
+            return $"https://raw.githubusercontent.com/{user}/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/";
         });
 
         static BaseTests()

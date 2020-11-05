@@ -22,7 +22,9 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - **Azure Storage account with blob storage:** To persist checkpoints as blobs in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
 
-- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.  Visual Studio users wishing to take advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).
+- **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.   
+
+  Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
 
   You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
   
@@ -70,13 +72,13 @@ For more concepts and deeper discussion, see: [Event Hubs Features](https://docs
 
 Since the `EventProcessorClient` has a dependency on Azure Storage blobs for persistence of its state, you'll need to provide a `BlobContainerClient` for the processor, which has been configured for the storage account and container that should be used.
 
-```csharp
-string storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-string blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+```C# Snippet:EventHubs_Processor_ReadMe_Create
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
 
-string eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-string eventHubName = "<< NAME OF THE EVENT HUB >>";
-string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
 
@@ -93,9 +95,10 @@ EventProcessorClient processor = new EventProcessorClient
 
 In order to use the `EventProcessorClient`, handlers for event processing and errors must be provided.  These handlers are considered self-contained and developers are responsible for ensuring that exceptions within the handler code are accounted for.
 
-```csharp
+```C# Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
 var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
 var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+
 var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
@@ -104,7 +107,8 @@ async Task processEventHandler(ProcessEventArgs eventArgs)
 {
     try
     {
-        // Perform the application-specific processing for an event
+        // Perform the application-specific processing for an event.  This method
+        // is intended for illustration and is not defined in this snippet.
         await DoSomethingWithTheEvent(eventArgs.Partition, eventArgs.Data);
     }
     catch
@@ -117,13 +121,14 @@ async Task processErrorHandler(ProcessErrorEventArgs eventArgs)
 {
     try
     {
-        // Perform the application-specific processing for an error
+        // Perform the application-specific processing for an error.  This method
+        // is intended for illustration and is not defined in this snippet.
         await DoSomethingWithTheError(eventArgs.Exception);
     }
     catch
     {
         // Handle the exception from handler code
-    }   
+    }
 }
 
 var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
@@ -137,41 +142,48 @@ processor.ProcessErrorAsync += processErrorHandler;
 
 The `EventProcessorClient` will perform its processing in the background once it has been explicitly started and continue doing so until it has been explicitly stopped.  While this allows the application code to perform other tasks, it also places the responsibility of ensuring that the process does not terminate during processing if there are no other tasks being performed.
 
-```csharp
-private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
+```C# Snippet:EventHubs_Processor_ReadMe_ProcessUntilCanceled
+var cancellationSource = new CancellationTokenSource();
+cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+
+var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
+Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
+
+var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
+
+processor.ProcessEventAsync += processEventHandler;
+processor.ProcessErrorAsync += processErrorHandler;
+
+await processor.StartProcessingAsync();
+
+try
 {
-    var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-    var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
-    var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-    var eventHubName = "<< NAME OF THE EVENT HUB >>";
-    var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+    // The processor performs its work in the background; block until cancellation
+    // to allow processing to take place.
+    await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+}
+catch (TaskCanceledException)
+{
+    // This is expected when the delay is canceled.
+}
 
-    Task processEventHandler(ProcessEventArgs eventArgs) => Task.CompletedTask;
-    Task processErrorHandler(ProcessErrorEventArgs eventArgs) => Task.CompletedTask;
-
-    var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
-    var processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
-
-    processor.ProcessEventAsync += processEventHandler;
-    processor.ProcessErrorAsync += processErrorHandler;
-    
-    await processor.StartProcessingAsync();
-    
-    try
-    {
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(1));
-        }
-        
-        await processor.StopProcessingAsync();
-    }
-    finally
-    {
-        // To prevent leaks, the handlers should be removed when processing is complete
-        processor.ProcessEventAsync -= processEventHandler;
-        processor.ProcessErrorAsync -= processErrorHandler;
-    }
+try
+{
+    await processor.StopProcessingAsync();
+}
+finally
+{
+    // To prevent leaks, the handlers should be removed when processing is complete.
+    processor.ProcessEventAsync -= processEventHandler;
+    processor.ProcessErrorAsync -= processErrorHandler;
 }
 ```
 
@@ -183,15 +195,15 @@ To make use of an Active Directory principal, one of the available identity toke
 
 To make use of an Active Directory principal with Azure Storage blob containers, the fully qualified URL to the container must be provided when creating the storage client.  Details about the valid URI formats for accessing Blob storage may be found in [Naming and Referencing Containers, Blobs, and Metadata](https://docs.microsoft.com/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata#resource-uri-syntax).  
 
-```csharp
-Uri blobStorageUrl = new Uri("<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>");
-
-string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
-string eventHubName = "<< NAME OF THE EVENT HUB >>";
-string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-
+```C# Snippet:EventHubs_Processor_ReadMe_CreateWithIdentity
 TokenCredential credential = new DefaultAzureCredential();
-BlobContainerClient storageClient = new BlobContainerClient(blobStorageUrl, credential);
+
+string blobStorageUrl ="<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>";
+BlobContainerClient storageClient = new BlobContainerClient(new Uri(blobStorageUrl), credential);
+
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
 EventProcessorClient processor = new EventProcessorClient
 (

@@ -125,7 +125,7 @@ namespace Azure.Identity
 
         internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider certificateProvider, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
-            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
@@ -133,11 +133,11 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.IncludeX5CCliamHeader ?? false, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.SendCertificateChain ?? false, options as ITokenCacheOptions);
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -159,7 +159,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

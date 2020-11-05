@@ -22,18 +22,14 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Azure.Identity" />
-
-    <!-- TODO: Remove this when https://github.com/Azure/azure-sdk-for-net/issues/10592 is resolved. -->	
-    <PackageReference Condition="'$(UseAzureCoreExperimentalSpatial)' != 'true'" Include="Microsoft.Spatial" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="Microsoft.Spatial" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,4 +40,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <!-- Pull in Microsoft.Azure.Core.Spatial -->
+  <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
 </Project>

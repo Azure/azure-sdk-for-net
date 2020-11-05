@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
+        ///   The maximum amount of time to wait for events to become available from a given partition before emitting
         ///   an empty batch of events.
         /// </summary>
         ///
@@ -170,6 +170,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The desired amount of time to allow between load balancing verification attempts.
         /// </summary>
         ///
+        /// <value>If not specified, a load balancing interval of 10 seconds will be assumed.</value>
+        ///
         /// <remarks>
         ///   Because load balancing holds less priority than processing events, this interval
         ///   should be considered the minimum time that will elapse between verification attempts; operations
@@ -189,9 +191,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>
         ///   The desired amount of time to consider a partition owned by a specific event processor
-        ///   instance before the ownership is considered stale and the partition eligible to be requested
-        ///   by another event processor that wishes to assume responsibility for processing it.
+        ///   instance before the ownership is considered stale and the partition becomes eligible to be
+        ///   requested by another event processor that wishes to assume responsibility for processing it.
         /// </summary>
+        ///
+        /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
         ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {

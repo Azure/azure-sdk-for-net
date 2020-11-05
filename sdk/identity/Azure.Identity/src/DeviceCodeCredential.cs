@@ -67,7 +67,7 @@ namespace Azure.Identity
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId,  TokenCredentialOptions options = default)
-            : this(deviceCodeCallback, tenantId, clientId, options, null)
+            : this(deviceCodeCallback, Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull:true), clientId, options, null)
         {
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
-        public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
+        internal virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -109,7 +109,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution if persistent caching was enabled via <see cref="DeviceCodeCredentialOptions.EnablePersistentCache"/> when credential was instantiated.</returns>
-        public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -123,7 +123,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        internal virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
@@ -134,13 +134,13 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -151,7 +151,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains a token for a user account, authenticating them through the device code authentication flow. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -198,7 +198,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)Record, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, Record, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }

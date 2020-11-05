@@ -254,7 +254,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         private static async Task<string> AquireManagementTokenAsync()
         {
-            ManagementToken token = s_managementToken;
+            var token = s_managementToken;
+            var authority = new Uri(new Uri(ServiceBusTestEnvironment.Instance.AuthorityHostUrl), ServiceBusTestEnvironment.Instance.TenantId).ToString();
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
@@ -263,8 +264,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
+                var context = new AuthenticationContext(authority);
                 var credential = new ClientCredential(ServiceBusTestEnvironment.Instance.ClientId, ServiceBusTestEnvironment.Instance.ClientSecret);
-                var context = new AuthenticationContext($"{ ServiceBusTestEnvironment.Instance.AuthorityHostUrl }{ ServiceBusTestEnvironment.Instance.TenantId }");
                 var result = await context.AcquireTokenAsync(ServiceBusTestEnvironment.Instance.ServiceManagementUrl, credential);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))

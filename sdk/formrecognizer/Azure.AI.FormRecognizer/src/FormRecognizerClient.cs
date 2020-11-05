@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClient
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        internal readonly ServiceRestClient ServiceClient;
+        internal readonly FormRecognizerRestClient ServiceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         internal readonly ClientDiagnostics Diagnostics;
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new ServiceRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="diagnostics">Provides tools for exception creation in case of failure.</param>
         /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
-        internal FormRecognizerClient(ClientDiagnostics diagnostics, ServiceRestClient serviceClient)
+        internal FormRecognizerClient(ClientDiagnostics diagnostics, FormRecognizerRestClient serviceClient)
         {
             Diagnostics = diagnostics;
             ServiceClient = serviceClient;
@@ -252,6 +252,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
+        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
@@ -271,7 +272,7 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, default, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(contentType, receipt, recognizeReceiptsOptions.IncludeFieldElements, recognizeReceiptsOptions.Locale, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -285,6 +286,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
+        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
@@ -304,7 +306,7 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType contentType = recognizeReceiptsOptions.ContentType ?? DetectContentType(receipt, nameof(receipt));
 
-                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, default, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(contentType, receipt, recognizeReceiptsOptions.IncludeFieldElements, recognizeReceiptsOptions.Locale, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -318,6 +320,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
+        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
@@ -336,7 +339,7 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale:default, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: recognizeReceiptsOptions.Locale, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
@@ -350,6 +353,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
+        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request.</param>
@@ -368,10 +372,148 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = receiptUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: default, fileStream:sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: recognizeReceiptsOptions.IncludeFieldElements, locale: recognizeReceiptsOptions.Locale, fileStream:sourcePath, cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeReceiptsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Business Cards
+
+        /// <summary>
+        /// Recognizes values from one or more business cards.
+        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// </summary>
+        /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
+        /// completion will contain the extracted business cards.</returns>
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(businessCard, nameof(businessCard));
+
+            recognizeBusinessCardsOptions ??= new RecognizeBusinessCardsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeBusinessCards)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
+
+                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(contentType, businessCard, recognizeBusinessCardsOptions.IncludeFieldElements, recognizeBusinessCardsOptions.Locale, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more business cards.
+        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// </summary>
+        /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
+        /// completion will contain the extracted business cards.</returns>
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(businessCard, nameof(businessCard));
+
+            recognizeBusinessCardsOptions ??= new RecognizeBusinessCardsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeBusinessCards)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType contentType = recognizeBusinessCardsOptions.ContentType ?? DetectContentType(businessCard, nameof(businessCard));
+
+                Response response = ServiceClient.AnalyzeBusinessCardAsync(contentType, businessCard, recognizeBusinessCardsOptions.IncludeFieldElements, recognizeBusinessCardsOptions.Locale, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more business cards.
+        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// </summary>
+        /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
+        /// completion will contain the extracted business cards.</returns>
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsFromUriAsync(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(businessCardUri, nameof(businessCardUri));
+
+            recognizeBusinessCardsOptions ??= new RecognizeBusinessCardsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeBusinessCardsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = businessCardUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(includeTextDetails: recognizeBusinessCardsOptions.IncludeFieldElements, locale: recognizeBusinessCardsOptions.Locale, fileStream: sourcePath, cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more business cards.
+        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// </summary>
+        /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
+        /// completion will contain the extracted business cards.</returns>
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCardsFromUri(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(businessCardUri, nameof(businessCardUri));
+
+            recognizeBusinessCardsOptions ??= new RecognizeBusinessCardsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeBusinessCardsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = businessCardUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeBusinessCardAsync(includeTextDetails: recognizeBusinessCardsOptions.IncludeFieldElements, locale: recognizeBusinessCardsOptions.Locale, fileStream: sourcePath, cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeBusinessCardsOperation(ServiceClient, Diagnostics, location);
             }
             catch (Exception e)
             {

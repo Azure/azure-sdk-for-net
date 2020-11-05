@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="createdBy"> The MRI of the creator of the thread. </param>
         /// <param name="properties"> The thread properties. </param>
         /// <param name="members"> The list of properties of users who are part of the thread. </param>
-        internal ACSChatThreadCreatedWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, int? version, string createdBy, IReadOnlyDictionary<string, object> properties, IReadOnlyList<ACSChatThreadMemberProperties> members) : base(recipientId, transactionId, threadId, createTime, version)
+        internal ACSChatThreadCreatedWithUserEventData(string recipientId, string transactionId, string threadId, DateTimeOffset? createTime, long? version, string createdBy, IReadOnlyDictionary<string, object> properties, IReadOnlyList<ACSChatThreadMemberProperties> members) : base(recipientId, transactionId, threadId, createTime, version)
         {
             CreatedBy = createdBy;
             Properties = properties;

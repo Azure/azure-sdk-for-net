@@ -1,6 +1,21 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
+
+### Added
+- `System.Text.Json.JsonConverter` implementation for the `ETag`
+
+## 1.6.0 (2020-10-28)
+
+### Added
+- The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `JsonPatchDocument` type.
+
+### Fixed
+- The race condition in `AzureEventSourceListener` class that sometimes resulted in a `NullReferenceException` in the `EventSource`.
+- The overflow exception when content length is larger than `int.MaxValue`.
+
+## 1.5.1 (2020-10-01)
 
 ### Changed
 - `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints. 
@@ -17,7 +32,7 @@
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
-  </ItemGroup>
+  </ItemGroup> 
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.

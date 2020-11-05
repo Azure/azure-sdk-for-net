@@ -1,6 +1,6 @@
 # Azure Storage Files Data Lake client library for .NET
 
-> Server Version: 2019-12-12, 2019-07-07, and 2019-02-02
+> Server Version: 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
 Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
 and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
@@ -231,6 +231,7 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2FREADME.png)
 
 <!-- LINKS -->
+[samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/samples
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.datalake

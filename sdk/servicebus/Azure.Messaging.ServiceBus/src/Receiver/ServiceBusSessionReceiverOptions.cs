@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets or sets an optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
         /// the next available session returned from the service will be used.
         /// </summary>
-        public string SessionId { get; set; }
+        internal string SessionId { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

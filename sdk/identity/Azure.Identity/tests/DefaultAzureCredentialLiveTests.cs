@@ -13,19 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class DefaultAzureCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class DefaultAzureCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public DefaultAzureCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -33,7 +26,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task DefaultAzureCredential_UseVisualStudioCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -68,7 +61,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -104,7 +97,7 @@ namespace Azure.Identity.Tests
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -139,7 +132,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -175,7 +168,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -209,7 +202,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -239,7 +232,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,
@@ -266,7 +259,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
-            var options = Recording.InstrumentClientOptions(new DefaultAzureCredentialOptions
+            var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = true,
                 ExcludeInteractiveBrowserCredential = true,

@@ -40,11 +40,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("hasError"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     hasError = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isPrimaryKey"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isPrimaryKey = property.Value.GetBoolean();
                     continue;
                 }

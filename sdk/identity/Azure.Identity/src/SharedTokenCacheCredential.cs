@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using Azure.Core.Pipeline;
+using System.ComponentModel;
 
 namespace Azure.Identity
 {
@@ -53,6 +54,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="username">The username of the user to authenticate</param>
         /// <param name="options">The client options for the newly created <see cref="SharedTokenCacheCredential"/></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SharedTokenCacheCredential(string username, TokenCredentialOptions options = default)
             : this(null, username, options, null, null)
         {
@@ -79,7 +81,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
@@ -90,7 +92,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated to another Microsoft application participating in SSO through a shared MSAL cache. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>

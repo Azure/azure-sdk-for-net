@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 using System.Runtime.CompilerServices;
 
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Compute.Tests
             osProfile.Secrets.Add(
                     new VaultSecretGroup
                     {
-                         SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
-                         VaultCertificates = {
+                        SourceVault = SecretVaultHelper.GetVaultId(m_subId, rgName, keyVaultName).Result,
+                        VaultCertificates = {
                              new VaultCertificate
                              {
                                  CertificateStore = "My",

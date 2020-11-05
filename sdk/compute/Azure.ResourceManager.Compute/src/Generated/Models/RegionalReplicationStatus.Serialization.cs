@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new ReplicationState(property.Value.GetString());
                     continue;
                 }
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("progress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     progress = property.Value.GetInt32();
                     continue;
                 }

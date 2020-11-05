@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.CognitiveServices
     public static partial class PrivateEndpointConnectionsOperationsExtensions
     {
             /// <summary>
+            /// Gets the private endpoint connections associated with the Cognitive
+            /// Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            public static PrivateEndpointConnectionListResult List(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.ListAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private endpoint connections associated with the Cognitive
+            /// Services account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnectionListResult> ListAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the specified private endpoint connection associated with the
             /// Cognitive Services account.
             /// </summary>

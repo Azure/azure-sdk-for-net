@@ -172,6 +172,174 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
             AreEqual(expResponse, actualResponse);
         }
 
+        [Test]
+        public async Task AutoscaleSettingsDeleteTest()
+        {
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            await insightsClient.AutoscaleSettings.DeleteAsync("rg1", "AutoscaleSettings1");
+        }
+
+        [Test]
+        public async Task AutoscaleSettingsListByResourceGroupTest()
+        {
+            var AutoscaleSettingResourceList = new List<AutoscaleSettingResource>()
+            {
+                CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage")
+            };
+            var content = @"{
+'value':[{'properties': {
+        'profiles': [
+            {
+                'name': 'Profile2',
+                'capacity': {
+                    'minimum': '1',
+                    'maximum': '100',
+                    'default': '1'
+                },
+                'rules': [
+                    {
+                        'metricTrigger': {
+                            'metricName': 'CpuPercentage',
+                            'metricNamespace': null,
+                            'metricResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
+                            'timeGrain': 'PT1M',
+                            'statistic': 'Average',
+                            'timeWindow': 'PT1H',
+                            'timeAggregation': 'Maximum',
+                            'operator': 'Equals',
+                            'threshold': 80.0,
+                            'dimensions': []
+                        },
+                        'scaleAction': {
+                            'direction': 'Increase',
+                            'type': 'ChangeCount',
+                            'value': '10',
+                            'cooldown': 'PT20M'
+                        }
+                    }
+                ],
+                'fixedDate': {
+                    'timeZone': null,
+                    'start': '2014-04-15T21:06:11.7882792+00:00',
+                    'end': '2014-04-16T21:06:11.7882792+00:00'
+                },
+                'recurrence': {
+                    'frequency': 'Week',
+                    'schedule': {
+                        'timeZone': 'UTC-11',
+                        'days': [
+                            'Monday'
+                        ],
+                        'hours': [
+                            0
+                        ],
+                        'minutes': [
+                            10
+                        ]
+                    }
+                }
+            }
+        ],
+        'notifications': [],
+        'enabled': true,
+        'targetResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm'
+    },
+    'id': null,
+    'name': 'setting1',
+    'type': null,
+    'location': '',
+    'tags': {}}]
+}
+            ".Replace("'", "\"");
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var result = await insightsClient.AutoscaleSettings.ListByResourceGroupAsync("rg1").ToEnumerableAsync();
+            AreEqual(AutoscaleSettingResourceList, result);
+        }
+
+        [Test]
+        public async Task AutoscaleSettingsListBySubscriptionTest()
+        {
+            var AutoscaleSettingResourceList = new List<AutoscaleSettingResource>()
+            {
+                CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage")
+            };
+            var content = @"{
+'value':[{'properties': {
+        'profiles': [
+            {
+                'name': 'Profile2',
+                'capacity': {
+                    'minimum': '1',
+                    'maximum': '100',
+                    'default': '1'
+                },
+                'rules': [
+                    {
+                        'metricTrigger': {
+                            'metricName': 'CpuPercentage',
+                            'metricNamespace': null,
+                            'metricResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm',
+                            'timeGrain': 'PT1M',
+                            'statistic': 'Average',
+                            'timeWindow': 'PT1H',
+                            'timeAggregation': 'Maximum',
+                            'operator': 'Equals',
+                            'threshold': 80.0,
+                            'dimensions': []
+                        },
+                        'scaleAction': {
+                            'direction': 'Increase',
+                            'type': 'ChangeCount',
+                            'value': '10',
+                            'cooldown': 'PT20M'
+                        }
+                    }
+                ],
+                'fixedDate': {
+                    'timeZone': null,
+                    'start': '2014-04-15T21:06:11.7882792+00:00',
+                    'end': '2014-04-16T21:06:11.7882792+00:00'
+                },
+                'recurrence': {
+                    'frequency': 'Week',
+                    'schedule': {
+                        'timeZone': 'UTC-11',
+                        'days': [
+                            'Monday'
+                        ],
+                        'hours': [
+                            0
+                        ],
+                        'minutes': [
+                            10
+                        ]
+                    }
+                }
+            }
+        ],
+        'notifications': [],
+        'enabled': true,
+        'targetResourceUri': '/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm'
+    },
+    'id': null,
+    'name': 'setting1',
+    'type': null,
+    'location': '',
+    'tags': {}}]
+}
+            ".Replace("'", "\"");
+            var mockResponse = new MockResponse((int)HttpStatusCode.OK);
+            mockResponse.SetContent(content);
+            var mockTransport = new MockTransport(mockResponse);
+            var insightsClient = GetInsightsManagementClient(mockTransport);
+            var result = await insightsClient.AutoscaleSettings.ListBySubscriptionAsync().ToEnumerableAsync();
+            AreEqual(AutoscaleSettingResourceList, result);
+        }
 
         private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
         {
@@ -198,6 +366,15 @@ namespace Azure.ResourceManager.Insights.Tests.BasicTests
                     },new List<AutoscaleNotification>(), true, "setting1", resourceUri);
             return setting;
         }
+
+        private void AreEqual(List<AutoscaleSettingResource> exp, IList<AutoscaleSettingResource> act)
+        {
+            for (int i = 0; i < exp.Count; i++)
+            {
+                AreEqual(exp[i], act[i]);
+            }
+        }
+
         private static void AreEqual(AutoscaleSettingResource exp, AutoscaleSettingResource act)
         {
             if (exp != null)

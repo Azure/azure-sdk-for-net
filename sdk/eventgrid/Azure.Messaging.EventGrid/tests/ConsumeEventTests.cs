@@ -17,6 +17,21 @@ namespace Azure.Messaging.EventGrid.Tests
 
         #region Miscellaneous tests
         [Test]
+        public void ParsesEventGridEnvelope()
+        {
+            string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"mySubject\",  \"data\": {    \"validationCode\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"validationUrl\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Microsoft.EventGrid.SubscriptionValidationEvent\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = EventGridEvent.Parse(requestContent);
+            var egEvent = events[0];
+            Assert.AreEqual("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", egEvent.Topic);
+            Assert.AreEqual("2d1781af-3a4c-4d7c-bd0c-e34b19da4e66", egEvent.Id);
+            Assert.AreEqual("mySubject", egEvent.Subject);
+            Assert.AreEqual("Microsoft.EventGrid.SubscriptionValidationEvent", egEvent.EventType);
+            Assert.AreEqual(DateTimeOffset.Parse("2018-01-25T22:12:19.4556811Z"), egEvent.EventTime);
+            Assert.AreEqual("1", egEvent.DataVersion);
+        }
+
+        [Test]
         public void ConsumeStorageBlobDeletedEventWithExtraProperty()
         {
             string requestContent = "[{  \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testfile.txt\",  \"eventType\": \"Microsoft.Storage.BlobDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",    \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"\",  \"metadataVersion\": \"1\"}]";
@@ -31,6 +46,7 @@ namespace Azure.Messaging.EventGrid.Tests
                     case "Microsoft.Storage.BlobDeleted":
                         StorageBlobDeletedEventData blobDeleted = (StorageBlobDeletedEventData)egEvent.GetData();
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
+                        Assert.AreEqual("/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount", egEvent.Topic);
                         break;
                 }
             }
@@ -125,7 +141,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             if (egEvent.GetData() is BinaryData binaryEventData)
             {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObject<ContosoItemReceivedEventData>();
+                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
@@ -204,7 +220,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
                     BinaryData binaryEventData = (BinaryData)egEvent.GetData();
-                    Assert.True(binaryEventData.ToObject<bool>());
+                    Assert.True(binaryEventData.ToObjectFromJson<bool>());
                 }
             }
         }
@@ -223,7 +239,7 @@ namespace Azure.Messaging.EventGrid.Tests
                 if (egEvent.EventType == "Contoso.Items.ItemReceived")
                 {
                     BinaryData binaryEventData = (BinaryData)egEvent.GetData();
-                    Assert.AreEqual("stringdata", binaryEventData.ToObject<string>());
+                    Assert.AreEqual("stringdata", binaryEventData.ToObjectFromJson<string>());
                 }
             }
         }
@@ -377,12 +393,17 @@ namespace Azure.Messaging.EventGrid.Tests
         #endregion
 
         #region EventGrid events
+
         [Test]
         public void ConsumeEventGridSubscriptionValidationEvent()
         {
-            string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"\",  \"data\": {    \"validationCode\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"validationUrl\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Microsoft.EventGrid.SubscriptionValidationEvent\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
+            string requestContent = "[{  \"id\": \"2d1781af-3a4c-4d7c-bd0c-e34b19da4e66\",  \"topic\": \"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",  \"subject\": \"mySubject\",  \"data\": {    \"validationCode\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"validationUrl\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"eventType\": \"Microsoft.EventGrid.SubscriptionValidationEvent\",  \"eventTime\": \"2018-01-25T22:12:19.4556811Z\",  \"metadataVersion\": \"1\",  \"dataVersion\": \"1\"}]";
 
             EventGridEvent[] events = EventGridEvent.Parse(requestContent);
+            var egEvent = events[0];
+            Assert.AreEqual("/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", egEvent.Topic);
+            Assert.AreEqual("2d1781af-3a4c-4d7c-bd0c-e34b19da4e66", egEvent.Id);
+            Assert.AreEqual("mySubject", egEvent.Subject);
 
             Assert.NotNull(events);
             Assert.True(events[0].GetData() is SubscriptionValidationEventData);
@@ -1370,6 +1391,28 @@ namespace Azure.Messaging.EventGrid.Tests
         #region CloudEvent tests
 
         #region Miscellaneous tests
+
+        [Test]
+        public void ParsesCloudEventEnvelope()
+        {
+            string requestContent = "[{\"key\": \"value\",  \"id\":\"994bc3f8-c90c-6fc3-9e83-6783db2221d5\",\"source\":\"Subject-0\",  \"data\": {    \"api\": \"DeleteBlob\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"contentType\": \"text/plain\",    \"blobType\": \"BlockBlob\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testfile.txt\",   \"sequencer\": \"0000000000000281000000000002F5CA\",   \"brandNewProperty\": \"0000000000000281000000000002F5CA\", \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  }, \"type\":\"Microsoft.Storage.BlobDeleted\",\"specversion\":\"1.0\", \"dataschema\":\"1.0\", \"subject\":\"subject\", \"datacontenttype\": \"text/plain\", \"time\": \"2017-08-16T01:57:26.005121Z\"}]";
+
+            CloudEvent[] events = CloudEvent.Parse(requestContent);
+
+            Assert.NotNull(events);
+            var cloudEvent = events[0];
+
+            Assert.AreEqual("994bc3f8-c90c-6fc3-9e83-6783db2221d5", cloudEvent.Id);
+            Assert.AreEqual("Subject-0", cloudEvent.Source);
+            Assert.AreEqual("Microsoft.Storage.BlobDeleted", cloudEvent.Type);
+            Assert.AreEqual("text/plain", cloudEvent.DataContentType);
+            Assert.AreEqual("subject", cloudEvent.Subject);
+            Assert.AreEqual("1.0", cloudEvent.DataSchema);
+            Assert.AreEqual(DateTimeOffset.Parse("2017-08-16T01:57:26.005121Z"), cloudEvent.Time);
+            cloudEvent.ExtensionAttributes.TryGetValue("key", out var value);
+            Assert.AreEqual("value", value);
+        }
+
         [Test]
         public void ConsumeCloudEventsWithAdditionalProperties()
         {
@@ -1451,7 +1494,7 @@ namespace Azure.Messaging.EventGrid.Tests
                         Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testfile.txt", blobDeleted.Url);
                         break;
                     case (BinaryData binaryData, "BinaryDataType"):
-                        Assert.AreEqual(Convert.ToBase64String(binaryData.ToBytes().ToArray()), "ZGF0YQ==");
+                        Assert.AreEqual(Convert.ToBase64String(binaryData.ToArray()), "ZGF0YQ==");
                         break;
                     case (_, "Contoso.Items.ItemReceived"):
                         ContosoItemReceivedEventData itemReceived = cloudEvent.GetData<ContosoItemReceivedEventData>(camelCaseSerializer);
@@ -1485,19 +1528,22 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             if (cloudEvent.GetData() is BinaryData binaryEventData)
             {
-                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObject<ContosoItemReceivedEventData>();
+                ContosoItemReceivedEventData eventData2 = binaryEventData.ToObjectFromJson<ContosoItemReceivedEventData>();
                 Assert.AreEqual("512d38b6-c7b8-40c8-89fe-f46f9e9622b6", eventData1.ItemSku);
             }
         }
 
         [Test]
-        public void CloudEventParseThrowsIfMissingRequiredProperties()
+        public void CloudEventParseDoesNotThrowIfMissingRequiredProperties()
         {
-            // missing Id and Source
-            string requestContent = "[{ \"subject\": \"\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  },  \"type\": \"Contoso.Items.ItemReceived\"}]";
-
-            Assert.That(() => CloudEvent.Parse(requestContent),
-                Throws.InstanceOf<ArgumentNullException>());
+            // missing Id, Source, SpecVersion, and Type
+            string requestContent = "[{ \"subject\": \"Subject-0\",  \"data\": {    \"itemSku\": \"512d38b6-c7b8-40c8-89fe-f46f9e9622b6\",    \"itemUri\": \"https://rp-eastus2.eventgrid.azure.net:553/eventsubscriptions/estest/validate?id=B2E34264-7D71-453A-B5FB-B62D0FDC85EE&t=2018-04-26T20:30:54.4538837Z&apiVersion=2018-05-01-preview&token=1BNqCxBBSSE9OnNSfZM4%2b5H9zDegKMY6uJ%2fO2DFRkwQ%3d\"  }}]";
+            CloudEvent[] events = CloudEvent.Parse(requestContent);
+            var cloudEvent = events[0];
+            Assert.IsNull(cloudEvent.Id);
+            Assert.IsNull(cloudEvent.Source);
+            Assert.IsNull(cloudEvent.Type);
+            Assert.AreEqual("Subject-0", cloudEvent.Subject);
         }
         #endregion
 
@@ -1566,7 +1612,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.AreEqual(events[0].Type, "");
+            Assert.IsNull(events[0].Type);
         }
 
         [Test]
@@ -1580,7 +1626,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(eventData1, null);
             Assert.AreEqual(eventData2, null);
-            Assert.AreEqual(events[0].Type, "");
+            Assert.IsNull(events[0].Type);
         }
         #endregion
 
@@ -1594,7 +1640,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             BinaryData binaryEventData = (BinaryData)events[0].GetData();
-            bool eventData = binaryEventData.ToObject<bool>();
+            bool eventData = binaryEventData.ToObjectFromJson<bool>();
             Assert.True(eventData);
         }
 
@@ -1606,7 +1652,7 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.NotNull(events);
             BinaryData binaryEventData = (BinaryData)events[0].GetData();
-            string eventData = binaryEventData.ToObject<string>();
+            string eventData = binaryEventData.ToObjectFromJson<string>();
             Assert.AreEqual("stringdata", eventData);
         }
         #endregion
@@ -2614,7 +2660,6 @@ namespace Azure.Messaging.EventGrid.Tests
             string requestContent = $"[{{\"source\": \"/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/testrg/providers/Microsoft.Web/sites/testSite01\", \"subject\": \"/Microsoft.Web/sites/testSite01\",\"type\": \"Microsoft.Web.BackupOperationFailed\", \"time\": \"2017-08-16T01:57:26.005121Z\",\"id\": \"602a88ef-0001-00e6-1233-1646070610ea\",\"data\": {{ \"appEventTypeDetail\": {{ \"action\": \"Restarted\"}},\"name\": \"{siteName}\",\"clientRequestId\": \"ce636635-2b81-4981-a9d4-cec28fb5b014\",\"correlationRequestId\": \"61baa426-c91f-4e58-b9c6-d3852c4d88d\",\"requestId\": \"0a4d5b5e-7147-482f-8e21-4219aaacf62a\",\"address\": \"/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/egcanarytest/providers/Microsoft.Web/sites/egtestapp/restart?api-version=2016-03-01\",\"verb\": \"POST\"}},\"dataVersion\": \"2\",\"metadataVersion\": \"1\"}}]";
 
             CloudEvent[] events = CloudEvent.Parse(requestContent);
-
             Assert.NotNull(events);
             Assert.True(events[0].GetData() is WebBackupOperationFailedEventData);
             WebBackupOperationFailedEventData eventData = (WebBackupOperationFailedEventData)events[0].GetData();

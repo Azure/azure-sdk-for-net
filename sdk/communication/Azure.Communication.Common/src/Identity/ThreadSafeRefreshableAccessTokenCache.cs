@@ -17,7 +17,7 @@ namespace Azure.Communication.Identity
     /// <remarks>
     /// Proactive refreshing does not retry if it fails.
     /// </remarks>
-    internal class ThreadSafeRefreshableAccessTokenCache : IDisposable
+    internal sealed class ThreadSafeRefreshableAccessTokenCache : IDisposable
     {
         internal const int ProactiveRefreshIntervalInMinutes = 10;
         internal const int OnDemandRefreshIntervalInMinutes = 2;
@@ -78,9 +78,9 @@ namespace Azure.Communication.Identity
 
             if (refreshProactively)
             {
-                var dueTime = IsCurrentTokenInRefreshZone()
+                TimeSpan dueTime = IsCurrentTokenInRefreshZone()
                        ? TimeSpan.Zero
-                       : _currentToken.ExpiresOn - this.UtcNow() - _proactiveRefreshingInterval;
+                       : _currentToken.ExpiresOn - UtcNow() - _proactiveRefreshingInterval;
                 _scheduledProactiveRefreshing = ScheduleProactiveRefreshing(dueTime);
             }
         }
@@ -179,7 +179,8 @@ namespace Azure.Communication.Identity
         private bool IsCurrentTokenInRefreshZone()
            => !_valueIsInitialized || UtcNow() >= _currentToken.ExpiresOn - _proactiveRefreshingInterval;
 
-        public void Dispose() => _scheduledProactiveRefreshing?.Dispose();
+        public void Dispose()
+            => _scheduledProactiveRefreshing?.Dispose();
 
         internal interface IScheduledAction : IDisposable { }
 

@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.6.0-beta.1</Version>
-    <ApiCompatVersion>1.5.0</ApiCompatVersion>
+    <Version>1.7.0-beta.1</Version>
+    <ApiCompatVersion>1.6.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
@@ -36,4 +36,5 @@
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
+
 </Project>

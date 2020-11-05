@@ -54,26 +54,51 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("state"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     state = new WebApplicationFirewallEnabledState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     mode = new WebApplicationFirewallMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requestBodyCheck"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("maxRequestBodySizeInKb"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("fileUploadLimitInMb"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }

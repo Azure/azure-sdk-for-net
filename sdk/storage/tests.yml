@@ -5,7 +5,7 @@ extends:
   parameters:
     ServiceDirectory: storage
     BuildInParallel: false
-    TimeoutInMinutes: 300
+    TimeoutInMinutes: 360
     Location: canadacentral
     SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     TestSetupSteps:
