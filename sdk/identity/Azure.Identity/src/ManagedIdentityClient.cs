@@ -51,6 +51,7 @@ namespace Azure.Identity
             ManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
                                                     CloudShellManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
                                                     AzureArcManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
+                                                    ServiceFabricManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
                                                     await ImdsManagedIdentitySource.TryCreateAsync(_pipeline, ClientId, async, cancellationToken).ConfigureAwait(false);
 
             asyncLock.SetValue(identitySource);
