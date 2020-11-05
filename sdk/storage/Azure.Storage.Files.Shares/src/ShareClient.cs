@@ -888,7 +888,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    Response<ShareProperties> response = await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1648,7 +1648,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1658,6 +1658,10 @@ namespace Azure.Storage.Files.Shares
                         operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value.ToShareProperties(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

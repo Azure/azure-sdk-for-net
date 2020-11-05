@@ -325,7 +325,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
-            Assert.AreEqual("NFS", shareItem.Properties.EnabledProtocols);
+            Assert.AreEqual(ShareEnabledProtocols.Nfs, shareItem.Properties.EnabledProtocols);
             Assert.AreEqual(ShareRootSquash.AllSquash, shareItem.Properties.RootSquash);
         }
 

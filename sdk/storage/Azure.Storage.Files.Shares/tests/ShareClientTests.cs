@@ -334,7 +334,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual("NFS", response.Value.EnabledProtocols);
+                Assert.AreEqual(ShareEnabledProtocols.Nfs, response.Value.EnabledProtocols);
                 Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
             }
             finally
@@ -624,7 +624,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual("NFS", propertiesResponse.Value.EnabledProtocols);
+            Assert.AreEqual(ShareEnabledProtocols.Nfs, propertiesResponse.Value.EnabledProtocols);
             Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
         }
 

@@ -378,10 +378,10 @@ namespace Azure.Storage.Files.Shares
                         .ConfigureAwait(false);
                     if ((traits & ShareTraits.Metadata) != ShareTraits.Metadata)
                     {
-                        IEnumerable<ShareItem> shareItems = response.Value.ShareItems;
-                        foreach (ShareItem shareItem in shareItems)
+                        IEnumerable<ShareItemInternal> shareItemInternals = response.Value.ShareItems;
+                        foreach (ShareItemInternal shareItemInternal in shareItemInternals)
                         {
-                            shareItem.Properties.Metadata = null;
+                            shareItemInternal.Properties.Metadata = null;
                         }
                     }
                     return response;
