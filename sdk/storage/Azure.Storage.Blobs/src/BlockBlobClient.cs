@@ -2192,11 +2192,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> PutBlobFromUrl(
+        public virtual Response<BlobContentInfo> UploadFromUri(
             Uri copySource,
-            BlobPutBlobFromUrlOptions options = default,
+            BlobUploadFromUriOptions options = default,
             CancellationToken cancellationToken = default)
-            => PutBlobFromUrlInternal(
+            => UploadFromUriInternal(
                 copySource,
                 options,
                 async: false,
@@ -2234,11 +2234,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> PutBlobFromUrlAsync(
+        public virtual async Task<Response<BlobContentInfo>> UploadFromUriAsync(
             Uri copySource,
-            BlobPutBlobFromUrlOptions options = default,
+            BlobUploadFromUriOptions options = default,
             CancellationToken cancellationToken = default)
-            => await PutBlobFromUrlInternal(
+            => await UploadFromUriInternal(
                 copySource,
                 options,
                 async: true,
@@ -2279,9 +2279,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<BlobContentInfo>> PutBlobFromUrlInternal(
+        internal virtual async Task<Response<BlobContentInfo>> UploadFromUriInternal(
             Uri copySource,
-            BlobPutBlobFromUrlOptions options,
+            BlobUploadFromUriOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2332,7 +2332,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blobTagsString: options?.Tags?.ToTagsString(),
                         copySourceBlobProperties: options?.CopySourceBlobPropertiesOption == BlobCopySourceBlobPropertiesOption.Overwrite ? false : true,
                         async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(PutBlobFromUrl)}",
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(UploadFromUri)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

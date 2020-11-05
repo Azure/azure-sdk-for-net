@@ -6,7 +6,7 @@ using Azure.Storage.Blobs.Specialized;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// The copy source blob properties behavior for <see cref="BlockBlobClient.PutBlobFromUrl"/>.
+    /// The copy source blob properties behavior for <see cref="BlockBlobClient.UploadFromUri"/>.
     /// </summary>
     public enum BlobCopySourceBlobPropertiesOption
     {

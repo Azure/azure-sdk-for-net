@@ -2722,7 +2722,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync()
+        public async Task UploadFromUriAsync()
         {
             // Arrange
             var constants = new TestConstants(this);
@@ -2754,7 +2754,7 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream, uploadOptions);
 
             // Act
-            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri);
+            await destBlob.UploadFromUriAsync(sourceBlob.Uri);
 
             // Assert
 
@@ -2777,7 +2777,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_Error()
+        public async Task UploadFromUriAsync_Error()
         {
             // Arrange
             var constants = new TestConstants(this);
@@ -2787,13 +2787,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.PutBlobFromUrlAsync(sourceBlob.Uri),
+                destBlob.UploadFromUriAsync(sourceBlob.Uri),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_OverwiteSourceBlobProperties()
+        public async Task UploadFromUriAsync_OverwiteSourceBlobProperties()
         {
             // Arrange
             var constants = new TestConstants(this);
@@ -2808,7 +2808,7 @@ namespace Azure.Storage.Blobs.Test
 
             Metadata metadata = BuildMetadata();
             Tags tags = BuildTags();
-            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
             {
                 CopySourceBlobPropertiesOption = BlobCopySourceBlobPropertiesOption.Overwrite,
                 HttpHeaders = new BlobHttpHeaders
@@ -2826,7 +2826,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+            await destBlob.UploadFromUriAsync(sourceBlob.Uri, options);
 
             // Assert
 
@@ -2852,7 +2852,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_DestinationAccessConditions()
+        public async Task UploadFromUriAsync_DestinationAccessConditions()
         {
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
             {
@@ -2870,13 +2870,13 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfMatch = await SetupBlobMatchCondition(destBlob, parameters.SourceIfMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
                 {
                     DestinationConditions = accessConditions
                 };
 
                 // Act
-                await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+                await destBlob.UploadFromUriAsync(sourceBlob.Uri, options);
 
                 // Assert
 
@@ -2891,7 +2891,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_DestinationAccessConditionsFailed()
+        public async Task UploadFromUriAsync_DestinationAccessConditionsFailed()
         {
             foreach (AccessConditionParameters parameters in AccessConditionsFail_Data)
             {
@@ -2909,14 +2909,14 @@ namespace Azure.Storage.Blobs.Test
 
                 await sourceBlob.UploadAsync(stream);
 
-                BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
                 {
                     DestinationConditions = accessConditions
                 };
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options),
+                    destBlob.UploadFromUriAsync(sourceBlob.Uri, options),
                     e => Assert.IsTrue(BlobErrorCode.TargetConditionNotMet.ToString() == e.ErrorCode
                         || BlobErrorCode.ConditionNotMet.ToString() == e.ErrorCode));
             }
@@ -2924,7 +2924,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_SourceAccessConditions()
+        public async Task UploadFromUriAsync_SourceAccessConditions()
         {
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
             {
@@ -2941,13 +2941,13 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
                 {
                     SourceConditions = accessConditions
                 };
 
                 // Act
-                await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+                await destBlob.UploadFromUriAsync(sourceBlob.Uri, options);
 
                 // Assert
 
@@ -2962,7 +2962,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_SourceAccessConditions_Failed()
+        public async Task UploadFromUriAsync_SourceAccessConditions_Failed()
         {
             foreach (AccessConditionParameters parameters in AccessConditionsFail_Data)
             {
@@ -2978,14 +2978,14 @@ namespace Azure.Storage.Blobs.Test
                 parameters.SourceIfNoneMatch = await SetupBlobMatchCondition(sourceBlob, parameters.SourceIfNoneMatch);
                 BlobRequestConditions accessConditions = BuildBlobRequestConditions(parameters);
 
-                BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+                BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
                 {
                     SourceConditions = accessConditions
                 };
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options),
+                    destBlob.UploadFromUriAsync(sourceBlob.Uri, options),
                     e => Assert.IsTrue(BlobErrorCode.CannotVerifyCopySource.ToString() == e.ErrorCode
                         || BlobErrorCode.SourceConditionNotMet.ToString() == e.ErrorCode));
             }
@@ -2993,7 +2993,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_IfTags()
+        public async Task UploadFromUriAsync_IfTags()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3020,13 +3020,13 @@ namespace Azure.Storage.Blobs.Test
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
-            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
             {
                 DestinationConditions = conditions
             };
 
             // Act
-            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+            await destBlob.UploadFromUriAsync(sourceBlob.Uri, options);
 
             // Assert
 
@@ -3040,7 +3040,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_IfTagsFailed()
+        public async Task UploadFromUriAsync_IfTagsFailed()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3058,20 +3058,20 @@ namespace Azure.Storage.Blobs.Test
             {
                 TagConditions = "\"coolTag\" = 'true'"
             };
-            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
             {
                 DestinationConditions = conditions
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options),
+                destBlob.UploadFromUriAsync(sourceBlob.Uri, options),
                 e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_Lease()
+        public async Task UploadFromUriAsync_Lease()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3089,7 +3089,7 @@ namespace Azure.Storage.Blobs.Test
             using Stream stream = new MemoryStream(data);
             await sourceBlob.UploadAsync(stream);
 
-            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
             {
                 DestinationConditions = new BlobRequestConditions
                 {
@@ -3098,7 +3098,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options);
+            await destBlob.UploadFromUriAsync(sourceBlob.Uri, options);
 
             // Assert
 
@@ -3112,7 +3112,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task PutBlobFromUrlAsync_LeaseFailed()
+        public async Task UploadFromUriAsync_LeaseFailed()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3126,7 +3126,7 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream);
 
             string leaseId = Recording.Random.NewGuid().ToString();
-            BlobPutBlobFromUrlOptions options = new BlobPutBlobFromUrlOptions
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
             {
                 DestinationConditions = new BlobRequestConditions
                 {
@@ -3136,7 +3136,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.PutBlobFromUrlAsync(sourceBlob.Uri, options),
+                destBlob.UploadFromUriAsync(sourceBlob.Uri, options),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithBlobOperation.ToString(), e.ErrorCode));
         }
 

@@ -9,9 +9,9 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="BlockBlobClient.PutBlobFromUrl"/>.
+    /// Optional parameters for <see cref="BlockBlobClient.UploadFromUri"/>.
     /// </summary>
-    public class BlobPutBlobFromUrlOptions
+    public class BlobUploadFromUriOptions
     {
         /// <summary>
         /// The copy source blob properties behavior.
