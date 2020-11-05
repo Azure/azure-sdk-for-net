@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Communication.Pipeline
 {
-    // This file lovingly copied from https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/src/AuthenticationPolicy.cs
     internal class HMACAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly byte[] _secret;
