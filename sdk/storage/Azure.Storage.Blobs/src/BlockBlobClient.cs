@@ -2160,7 +2160,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion OpenWrite
 
-        #region PutBlobFromUrl
+        #region UploadFromUri
         /// <summary>
         /// The Put Blob from URL operation creates a new Block Blob where the contents of the
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
@@ -2347,7 +2347,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion PutBlobFromUrl
+        #endregion UploadFromUri
 
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
