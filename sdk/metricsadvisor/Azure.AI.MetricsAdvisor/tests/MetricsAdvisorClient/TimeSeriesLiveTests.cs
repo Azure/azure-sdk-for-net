@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
-    public class MetricsLiveTests : MetricsAdvisorLiveTestBase
+    public class TimeSeriesLiveTests : MetricsAdvisorLiveTestBase
     {
-        public MetricsLiveTests(bool isAsync) : base(isAsync)
+        public TimeSeriesLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
