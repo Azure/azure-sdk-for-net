@@ -77,7 +77,11 @@ namespace Azure.AI.TextAnalytics
 
         private int? _top { get; }
         private int? _skip { get; }
-        private bool? _showStats { get; }
+
+        /// <summary>
+        /// For showing Statistics for request as well as document.
+        /// </summary>
+        public bool? ShowStats { get; }
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
@@ -115,7 +119,7 @@ namespace Azure.AI.TextAnalytics
             _idToIndexMap = idToIndexMap;
             _top = top;
             _skip = skip;
-            _showStats = showStats;
+            ShowStats = showStats;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -198,23 +202,25 @@ namespace Azure.AI.TextAnalytics
                 try
                 {
                     Response<HealthcareJobState> update = async
-                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, _showStats, cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, _showStats, cancellationToken);
+                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, ShowStats, cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, ShowStats, cancellationToken);
 
                     _response = update.GetRawResponse();
 
                     if (update.Value.Status == JobStatus.Succeeded)
                     {
+
                         // we need to first assign a vaue and then mark the operation as completed to avoid race conditions
-                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results);
+                        _value = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(update.Value.Results, _idToIndexMap);
 
                         NextLink = update.Value.NextLink;
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == JobStatus.Failed)
                     {
+                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
+                            .ConfigureAwait(false);
                         _hasCompleted = true;
-                        _requestFailedException = new RequestFailedException("Request Failed Exception:" + update.Value.Results.Errors.ToString());
                         throw _requestFailedException;
                     }
                 }

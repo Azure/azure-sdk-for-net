@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/sentiment?showStats=false\u0026opinionMining=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/sentiment?showStats=false\u0026opinionMining=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "85",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-784a5e38b1213f4fa1e121f4d68113a3-72eab3515c277b48-00",
+        "traceparent": "00-6ef801a7b71dbc409c29841b1f5a74ee-4061d2159b11ff42-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201102.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "03ba29d245db7d4660e70538d783a159",
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0b5ffac3-1c78-41a2-a05c-58d7e2852eae",
+        "apim-request-id": "e0b57cd7-8d8a-4e91-84a6-56ac285b65ee",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Mon, 02 Nov 2020 19:19:16 GMT",
+        "Date": "Wed, 04 Nov 2020 22:26:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "83"
+        "x-envoy-upstream-service-time": "103"
       },
       "ResponseBody": {
         "documents": [
@@ -73,6 +73,6 @@
   "Variables": {
     "RandomSeed": "9060464",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }
 }

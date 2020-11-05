@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "297",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6cb82497f0fbb44ba05ffeaea696a484-21ed098384d3dd4b-00",
+        "traceparent": "00-12a8da2333f59d439503218c450a0f73-cdee7ff8441cee4c-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201102.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "28b544e5b9a5cf3535ddef0fb0fd1d43",
@@ -55,13 +55,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "89362a5f-8ea6-4fe6-bd6d-d3168b198c12",
+        "apim-request-id": "db25c04a-8854-415f-9794-806251c1c4a9",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 19:19:20 GMT",
+        "Date": "Wed, 04 Nov 2020 22:27:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "5"
+        "x-envoy-upstream-service-time": "10"
       },
       "ResponseBody": {
         "error": {
@@ -78,6 +78,6 @@
   "Variables": {
     "RandomSeed": "467834574",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }
 }

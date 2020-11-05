@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/languages?model-version=2019-10-01\u0026showStats=false",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/languages?model-version=2019-10-01\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -11,9 +11,9 @@
         "Content-Length": "67",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-737a7466d1db4042ab8761f83c5d3797-18ef4e158a519e4a-00",
+        "traceparent": "00-5dc61821167dab478dfe2d527f281d7b-4c29a990d8c32f47-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201102.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201104.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "b23c80179f571f450cf30413f8966972",
@@ -30,13 +30,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "5422c14f-f9fa-43d4-aee9-feca5e060e6e",
+        "apim-request-id": "0da74946-78dd-4f4c-bd90-f2e276d40d51",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 19:19:17 GMT",
+        "Date": "Wed, 04 Nov 2020 22:26:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
         "error": {
@@ -53,6 +53,6 @@
   "Variables": {
     "RandomSeed": "1421275547",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://cognitiveusw2dev.azure-api.net"
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
   }
 }
