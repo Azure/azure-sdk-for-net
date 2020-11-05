@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             int totalcount = 0;
             foreach (DataFeed feed in feeds)
             {
-                foreach (var metricId in feed.MetricIds)
+                foreach (var metricId in feed.MetricIds.Values)
                 {
                     await foreach (MetricSeriesDefinition metricDef in client.GetMetricSeriesDefinitionsAsync(
                         metricId,
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             DataFeed feed = await GetFirstDataFeed(adminClient);
 
-            foreach (var metricId in feed.MetricIds)
+            foreach (var metricId in feed.MetricIds.Values)
             {
                 foreach (DataFeedDimension dimension in feed.Schema.DimensionColumns)
                 {
