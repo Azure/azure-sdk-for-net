@@ -6,7 +6,7 @@ using System.Globalization;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal sealed partial class ScanBlobScanLogHybridPollingStrategy
     {
