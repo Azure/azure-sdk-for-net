@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public MetricsAdvisorClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
-        [Test]
+        [RecordedTest]
         public async Task GetMetricFeedbacks()
         {
             var client = GetMetricsAdvisorClient();
@@ -63,8 +63,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 new DimensionKey(
                     new Dictionary<string, string>
                     {
-                        {"Dim1", "Common Lime"},
-                        {"Dim2", "Ant"}
+                        {"city", "Los Angeles"}
                     }));
             DateTimeOffset start = Recording.UtcNow.AddMonths(-4);
             DateTimeOffset end = Recording.UtcNow;
