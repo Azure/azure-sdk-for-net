@@ -14,11 +14,11 @@ using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
+    [Category("Live")]
     public class EventHubEndToEndTests
     {
         private const string TestHubName = "webjobstesthub";
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             _eventWait = new ManualResetEvent(initialState: false);
         }
 
-        [Fact]
+        [Test]
         public async Task EventHub_PocoBinding()
         {
             var tuple = BuildHost<EventHubTestBindToPocoJobs>();
@@ -48,11 +48,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = tuple.Item2.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
 
-                Assert.Contains($"PocoValues(foo,{_testId})", logs);
+                CollectionAssert.Contains($"PocoValues(foo,{_testId})", logs);
             }
         }
 
-        [Fact]
+        [Test]
         public async Task EventHub_StringBinding()
         {
             var tuple = BuildHost<EventHubTestBindToStringJobs>();
@@ -66,11 +66,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = tuple.Item2.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
 
-                Assert.Contains($"Input({_testId})", logs);
+                CollectionAssert.Contains($"Input({_testId})", logs);
             }
         }
 
-        [Fact]
+        [Test]
         public async Task EventHub_SingleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestSingleDispatchJobs>();
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 IEnumerable<LogMessage> logMessages = tuple.Item2.GetTestLoggerProvider()
                     .GetAllLogMessages();
 
-                Assert.Equal(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                Assert.AreEqual(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
                     && x.FormattedMessage.Contains("Trigger Details:")
                     && x.FormattedMessage.Contains("Offset:")).Count(), 1);
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task EventHub_MultipleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestMultipleDispatchJobs>();
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task EventHub_PartitionKey()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubPartitionKeyTestJobs>();
@@ -174,8 +174,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     Assert.True((DateTime.Now - enqueuedTimeUtc).TotalSeconds < 30);
 
-                    Assert.Equal("value1", properties["TestProp1"]);
-                    Assert.Equal("value2", properties["TestProp2"]);
+                    Assert.AreEqual("value1", properties["TestProp1"]);
+                    Assert.AreEqual("value2", properties["TestProp2"]);
 
                     _eventWait.Set();
                 }
@@ -193,8 +193,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 if (value == _testId)
                 {
-                    Assert.Equal(input.Value, value);
-                    Assert.Equal(input.Name, name);
+                    Assert.AreEqual(input.Value, value);
+                    Assert.AreEqual(input.Name, name);
                     logger.LogInformation($"PocoValues({name},{value})");
                     _eventWait.Set();
                 }
@@ -237,14 +237,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string[] partitionKeyArray, DateTime[] enqueuedTimeUtcArray, IDictionary<string, object>[] propertiesArray,
                 IDictionary<string, object>[] systemPropertiesArray)
             {
-                Assert.Equal(events.Length, partitionKeyArray.Length);
-                Assert.Equal(events.Length, enqueuedTimeUtcArray.Length);
-                Assert.Equal(events.Length, propertiesArray.Length);
-                Assert.Equal(events.Length, systemPropertiesArray.Length);
+                Assert.AreEqual(events.Length, partitionKeyArray.Length);
+                Assert.AreEqual(events.Length, enqueuedTimeUtcArray.Length);
+                Assert.AreEqual(events.Length, propertiesArray.Length);
+                Assert.AreEqual(events.Length, systemPropertiesArray.Length);
 
                 for (int i = 0; i < events.Length; i++)
                 {
-                    Assert.Equal(i, propertiesArray[i]["TestIndex"]);
+                    Assert.AreEqual(i, propertiesArray[i]["TestIndex"]);
                 }
 
                 // filter for the ID the current test is using
@@ -266,13 +266,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 EventData evt = new EventData(Encoding.UTF8.GetBytes(input));
 
                 // Send event without PK
-                await client.SendAsync(new [] { evt });
+                await client.SendAsync(new[] { evt });
 
                 // Send event with different PKs
                 for (int i = 0; i < 5; i++)
                 {
                     evt = new EventData(Encoding.UTF8.GetBytes(input));
-                    await client.SendAsync(new [] { evt }, new SendEventOptions() { PartitionKey =  "test_pk" + i });
+                    await client.SendAsync(new[] { evt }, new SendEventOptions() { PartitionKey =  "test_pk" + i });
                 }
             }
 

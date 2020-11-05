@@ -9,8 +9,6 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.14" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
@@ -21,6 +19,11 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
+    <!-- TODO: https://github.com/Azure/azure-sdk-for-net/issues/16635 -->
     <Compile Remove="EventHubConfigurationTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties" />
   </ItemGroup>
 </Project>

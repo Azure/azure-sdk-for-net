@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -19,8 +17,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using Xunit;
-using Assert = NUnit.Framework.Assert;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
@@ -242,9 +238,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = host.Services.GetService<IOptions<EventHubOptions>>().Value;
 
             var eventProcessorOptions = options.EventProcessorOptions;
-            // Assert.AreEqual(100, eventProcessorOptions.MaxBatchSize);
             Assert.AreEqual(200, eventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/16636
+            // Assert.AreEqual(100, eventProcessorOptions.MaxBatchSize);
             // Assert.AreEqual(31, options.PartitionManagerOptions.LeaseDuration.TotalSeconds);
             // Assert.AreEqual(21, options.PartitionManagerOptions.RenewInterval.TotalSeconds);
         }

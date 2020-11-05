@@ -17,18 +17,17 @@ using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 {
     public class EventHubListenerTests
     {
-        [Theory]
-        [InlineData(1, 100)]
-        [InlineData(4, 25)]
-        [InlineData(8, 12)]
-        [InlineData(32, 3)]
-        [InlineData(128, 0)]
+        [TestCase(1, 100)]
+        [TestCase(4, 25)]
+        [TestCase(8, 12)]
+        [TestCase(32, 3)]
+        [TestCase(128, 0)]
         public async Task ProcessEvents_SingleDispatch_CheckpointsCorrectly(int batchCheckpointFrequency, int expected)
         {
             var partitionContext = EventHubTests.GetPartitionContext();
@@ -53,15 +52,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
-            Assert.Equal(expected, checkpoints);
+            Assert.AreEqual(expected, checkpoints);
         }
 
-        [Theory]
-        [InlineData(1, 100)]
-        [InlineData(4, 25)]
-        [InlineData(8, 12)]
-        [InlineData(32, 3)]
-        [InlineData(128, 0)]
+        [TestCase(1, 100)]
+        [TestCase(4, 25)]
+        [TestCase(8, 12)]
+        [TestCase(32, 3)]
+        [TestCase(128, 0)]
         public async Task ProcessEvents_MultipleDispatch_CheckpointsCorrectly(int batchCheckpointFrequency, int expected)
         {
             var partitionContext = EventHubTests.GetPartitionContext();
@@ -90,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         /// is the responsiblity of user function code.
         /// </summary>
         /// <returns></returns>
-        [Fact]
+        [Test]
         public async Task ProcessEvents_Failure_Checkpoints()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
@@ -124,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Once);
         }
 
-        [Fact]
+        [Test]
         public async Task CloseAsync_Shutdown_DoesNotCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
@@ -139,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             checkpointer.Verify(p => p.CheckpointAsync(partitionContext), Times.Never);
         }
 
-        [Fact]
+        [Test]
         public async Task ProcessErrorsAsync_LoggedAsError()
         {
             var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
@@ -153,12 +151,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, ex);
             var msg = testLogger.GetLogMessages().Single();
-            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\).", msg.FormattedMessage);
-            Assert.IsType<InvalidOperationException>(msg.Exception);
-            Assert.Equal(LogLevel.Error, msg.Level);
+            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\).", msg.FormattedMessage);
+            Assert.IsInstanceOf<InvalidOperationException>(msg.Exception);
+            Assert.AreEqual(LogLevel.Error, msg.Level);
         }
 
-        [Fact]
+        [Test]
         public async Task ProcessErrorsAsync_RebalancingExceptions_LoggedAsInformation()
         {
             var partitionContext = EventHubTests.GetPartitionContext(partitionId: "123", eventHubPath: "abc", owner: "def");
@@ -172,9 +170,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, disconnectedEx);
             var msg = testLogger.GetLogMessages().Single();
-            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
+            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
-            Assert.Equal(LogLevel.Information, msg.Level);
+            Assert.AreEqual(LogLevel.Information, msg.Level);
 
             testLogger.ClearLogMessages();
 
@@ -182,12 +180,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             await eventProcessor.ProcessErrorAsync(partitionContext, leaseLostEx);
             msg = testLogger.GetLogMessages().Single();
-            Assert.Matches("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
+            StringAssert.IsMatch("Processing error \\(Partition Id: '123', Owner: '[\\w\\d-]+', EventHubPath: 'abc'\\). An exception of type 'EventHubsException' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.", msg.FormattedMessage);
             Assert.NotNull(msg.Exception);
-            Assert.Equal(LogLevel.Information, msg.Level);
+            Assert.AreEqual(LogLevel.Information, msg.Level);
         }
 
-        [Fact]
+        [Test]
         public void GetMonitor_ReturnsExpectedValue()
         {
             var functionId = "FunctionId";
@@ -210,12 +208,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 
-            Assert.Equal(typeof(EventHubsScaleMonitor), scaleMonitor.GetType());
-            Assert.Equal($"{functionId}-EventHubTrigger-{eventHubName}-{consumerGroup}".ToLower(), scaleMonitor.Descriptor.Id);
+            Assert.AreEqual(typeof(EventHubsScaleMonitor), scaleMonitor.GetType());
+            Assert.AreEqual($"{functionId}-EventHubTrigger-{eventHubName}-{consumerGroup}".ToLower(), scaleMonitor.Descriptor.Id);
 
             var scaleMonitor2 = listener.GetMonitor();
 
-            Assert.Same(scaleMonitor, scaleMonitor2);
+            Assert.AreSame(scaleMonitor, scaleMonitor2);
         }
     }
 }
