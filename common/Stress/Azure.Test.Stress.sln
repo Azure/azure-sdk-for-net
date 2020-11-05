@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29325.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Stress", "Azure.Test.Stress\Azure.Test.Stress.csproj", "{A0CCD9EF-D7C7-409B-9D28-19E3C4BD1948}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Stress", "..\..\sdk\servicebus\Azure.Messaging.ServiceBus\stress\Azure.Messaging.ServiceBus.Stress.csproj", "{1BC8C23B-2AB6-423C-81D9-02DBC308D703}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "..\..\sdk\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A0CCD9EF-D7C7-409B-9D28-19E3C4BD1948}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0CCD9EF-D7C7-409B-9D28-19E3C4BD1948}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0CCD9EF-D7C7-409B-9D28-19E3C4BD1948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC8C23B-2AB6-423C-81D9-02DBC308D703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC8C23B-2AB6-423C-81D9-02DBC308D703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC8C23B-2AB6-423C-81D9-02DBC308D703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC8C23B-2AB6-423C-81D9-02DBC308D703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FE675E-FC2C-46BF-A4D8-48EBB87A098D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Messaging.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\..\common\Stress\Azure.Test.Stress\Azure.Test.Stress.csproj" />
+  </ItemGroup>
+
+</Project>
