@@ -16,14 +16,14 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Download and Extract DocFX
       - task: PowerShell@2
-        displayName: "Generate Doc Index"
+        displayName: 'Generate Doc Index'
         inputs:
           pwsh: true
-          filePath: $(Build.SourcesDirectory)/eng/ApiDocGeneration/Generate-DocIndex.ps1
+          filePath: $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-DocIndex.ps1
           arguments: >
             -Docfx $(docfxPath)
             -RepoRoot $(Build.SourcesDirectory)
-            -DocGenDir "$(Build.SourcesDirectory)/eng/ApiDocGeneration"
+            -DocGenDir "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
             -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
             -verbose
             
