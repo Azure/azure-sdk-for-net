@@ -7,6 +7,6 @@ namespace Azure.Security.KeyVault.Administration
 {
     /// <inheritdoc/>>
     [CodeGenModel("RoleAssignmentProperties")]
-    public partial class KeyVaultRoleAssignmentProperties
+    internal partial class KeyVaultRoleAssignmentProperties
     { }
 }

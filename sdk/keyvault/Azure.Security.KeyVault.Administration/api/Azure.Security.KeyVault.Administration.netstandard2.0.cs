@@ -27,8 +27,8 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultAccessControlClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> CreateRoleAssignment(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties, System.Guid? name = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties, System.Guid? name = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> CreateRoleAssignment(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, System.Guid? name = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, System.Guid? name = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> DeleteRoleAssignment(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>> DeleteRoleAssignmentAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> GetRoleAssignment(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -74,8 +74,8 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultPermission() { }
         public System.Collections.Generic.IList<string> Actions { get { throw null; } }
         public System.Collections.Generic.IList<string> DataActions { get { throw null; } }
-        public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
-        public System.Collections.Generic.IList<string> NotDataActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> DenyActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> DenyDataActions { get { throw null; } }
     }
     public partial class KeyVaultRoleAssignment
     {
@@ -83,13 +83,7 @@ namespace Azure.Security.KeyVault.Administration
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentPropertiesWithScope Properties { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
-    public partial class KeyVaultRoleAssignmentProperties
-    {
-        public KeyVaultRoleAssignmentProperties(string roleDefinitionId, string principalId) { }
-        public string PrincipalId { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
+        public string RoleAssignmentType { get { throw null; } }
     }
     public partial class KeyVaultRoleAssignmentPropertiesWithScope
     {

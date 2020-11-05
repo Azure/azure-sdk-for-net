@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    public partial class KeyVaultRoleAssignmentProperties : IUtf8JsonSerializable
+    internal partial class KeyVaultRoleAssignmentProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
