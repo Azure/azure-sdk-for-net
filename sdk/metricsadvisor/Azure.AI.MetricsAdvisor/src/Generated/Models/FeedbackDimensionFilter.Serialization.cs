@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Models
 {
     public partial class FeedbackDimensionFilter : IUtf8JsonSerializable
     {

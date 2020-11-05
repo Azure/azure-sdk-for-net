@@ -3,15 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// Filters the result of feedback-related operations.
     /// </summary>
-    [CodeGenModel("FeedbackDimensionFilter")]
     public partial class FeedbackDimensionFilter
     {
         /// <summary>
