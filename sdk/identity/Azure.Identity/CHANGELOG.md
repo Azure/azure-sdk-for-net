@@ -3,6 +3,7 @@
 
 ### Breaking Changes
 - Rename property `IncludeX5CClaimHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
+- Update the default value of `ExcludeSharedTokenCacheCredential` on `DefaultAzureCredentialsOptions` to true, to exclude the `SharedTokenCacheCredential` from the `DefaultAzureCredential` by default.
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.4.0-beta.1.
   - Removed class `AuthenticationRecord`
   - Removed class `AuthenticationRequiredException`
