@@ -32,15 +32,15 @@ jobs:
         inputs:
           versionSpec: '3.6'
 
+      - template: eng/common/pipelines/templates/steps/mashup-doc-index.yml
+        parameters:
+          SourceDirectory: $(Build.ArtifactStagingDirectory)
+
       - pwsh: |
           Copy-Item -Path $(Build.SourcesDirectory)/eng/* -Destination ./ -Recurse -Force
           echo "##vso[task.setvariable variable=toolPath]$(Build.BinariesDirectory)"
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Move eng/common to Tool Directory 
-
-      - template: eng/common/pipelines/templates/steps/mashup-doc-index.yml
-        parameters:
-          SourceDirectory: $(Build.ArtifactStagingDirectory)
 
       - task: PublishPipelineArtifact@0
         condition: succeeded()
