@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B146669278?includeModelDefinition=true\u0026api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B154155931?includeModelDefinition=true\u0026api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "d7a05f3056ab6d9ce5baf1181124ec17",
+        "x-ms-client-request-id": "ac0f6915d98a6eac399b05f47a3f8c01",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -15,11 +15,11 @@
       "ResponseHeaders": {
         "Content-Length": "613",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "id": "dtmi:example:Ward;146669278",
+        "id": "dtmi:example:Ward;154155931",
         "description": {
           "en": "A separate partition in a building, made of rooms and hallways."
         },
@@ -27,9 +27,9 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-11-04T19:47:22.5677363\u002B00:00",
+        "uploadTime": "2020-11-05T07:43:37.1259066\u002B00:00",
         "model": {
-          "@id": "dtmi:example:Ward;146669278",
+          "@id": "dtmi:example:Ward;154155931",
           "@type": "Interface",
           "displayName": "Ward",
           "description": "A separate partition in a building, made of rooms and hallways.",
@@ -56,68 +56,13 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B128297135?includeModelDefinition=true\u0026api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B115328933?includeModelDefinition=true\u0026api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "4ccd783656941fcc8a7588c79ccff361",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Length": "613",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
-      },
-      "ResponseBody": {
-        "id": "dtmi:example:Ward;128297135",
-        "description": {
-          "en": "A separate partition in a building, made of rooms and hallways."
-        },
-        "displayName": {
-          "en": "Ward"
-        },
-        "decommissioned": false,
-        "uploadTime": "2020-11-04T19:48:25.2542624\u002B00:00",
-        "model": {
-          "@id": "dtmi:example:Ward;128297135",
-          "@type": "Interface",
-          "displayName": "Ward",
-          "description": "A separate partition in a building, made of rooms and hallways.",
-          "contents": [
-            {
-              "@type": "Property",
-              "name": "VisitorCount",
-              "schema": "double"
-            },
-            {
-              "@type": "Property",
-              "name": "HandWashPercentage",
-              "schema": "double"
-            },
-            {
-              "@type": "Relationship",
-              "name": "managedRooms"
-            }
-          ],
-          "@context": [
-            "dtmi:dtdl:context;2"
-          ]
-        }
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B115400309?includeModelDefinition=true\u0026api-version=2020-10-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "558a28ff04aec39947cf65c04d9bfe87",
+        "x-ms-client-request-id": "d4e3142c4aec98782c9c94d941f1e67c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -125,13 +70,13 @@
       "ResponseHeaders": {
         "Content-Length": "212",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
         "error": {
           "code": "ModelNotFound",
-          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:Ward;115400309. Check that the Model ID provided is valid by doing a Model_List API call."
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:Ward;115328933. Check that the Model ID provided is valid by doing a Model_List API call."
         }
       }
     },
@@ -144,18 +89,18 @@
         "Content-Length": "567",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "50bad1279c61d408b820e114a648eafd",
+        "x-ms-client-request-id": "fd214ce4a63e71bd4145e85a29637677",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:Ward;115400309\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Ward\u0022,    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022VisitorCount\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022HandWashPercentage\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022managedRooms\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
+      "RequestBody": "[{    \u0022@id\u0022: \u0022dtmi:example:Ward;115328933\u0022,    \u0022@type\u0022: \u0022Interface\u0022,    \u0022displayName\u0022: \u0022Ward\u0022,    \u0022description\u0022: \u0022A separate partition in a building, made of rooms and hallways.\u0022,    \u0022contents\u0022: [        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022VisitorCount\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Property\u0022,            \u0022name\u0022: \u0022HandWashPercentage\u0022,            \u0022schema\u0022: \u0022double\u0022        },        {            \u0022@type\u0022: \u0022Relationship\u0022,            \u0022name\u0022: \u0022managedRooms\u0022        }    ],    \u0022@context\u0022: \u0022dtmi:dtdl:context;2\u0022}]",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "225",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
-      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Ward;115400309\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-11-04T19:49:04.7605933\u002B00:00\u0022}]"
+      "ResponseBody": "[{\u0022id\u0022:\u0022dtmi:example:Ward;115328933\u0022,\u0022description\u0022:{\u0022en\u0022:\u0022A separate partition in a building, made of rooms and hallways.\u0022},\u0022displayName\u0022:{\u0022en\u0022:\u0022Ward\u0022},\u0022decommissioned\u0022:false,\u0022uploadTime\u0022:\u00222020-11-05T07:44:22.219142\u002B00:00\u0022}]"
     },
     {
       "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?includeModelDefinition=false\u0026api-version=2020-10-31",
@@ -164,7 +109,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c42508b7858d748733894c87675e3cda",
+        "x-ms-client-request-id": "e64b14d83bec1f2996145d3d1894f7a9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -172,7 +117,7 @@
       "ResponseHeaders": {
         "Content-Length": "20858",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -1258,7 +1203,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "fd753f8a103962a71fb59d8d22851dff",
+        "x-ms-client-request-id": "f396781f046b8674567293a6611e6ec8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1266,7 +1211,7 @@
       "ResponseHeaders": {
         "Content-Length": "21648",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -2376,15 +2321,15 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "450967e43976a2fa49451cd84f816d59",
+        "x-ms-client-request-id": "2d011c25ffa6a98f2202672a488059ad",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "14737",
+        "Content-Length": "20047",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
@@ -3017,57 +2962,6 @@
             "uploadTime": "2020-11-04T19:48:38.5667872\u002B00:00"
           },
           {
-            "id": "dtmi:example:floor;12051573",
-            "description": {
-              "en": "A building story."
-            },
-            "displayName": {
-              "en": "Floor"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.6423136\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:room;135694115",
-            "description": {
-              "en": "An enclosure inside a building."
-            },
-            "displayName": {
-              "en": "Room"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.6424373\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:hvac;127859729",
-            "description": {
-              "en": "A heating, ventilation, and air conditioning unit."
-            },
-            "displayName": {
-              "en": "HVAC"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.6425703\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:wifiroom;12062",
-            "description": {},
-            "displayName": {
-              "en": "RoomWithWifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.6774681\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:wifi;113443253",
-            "description": {},
-            "displayName": {
-              "en": "Wifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.6776137\u002B00:00"
-          },
-          {
             "id": "dtmi:example:Ward;115400309",
             "description": {
               "en": "A separate partition in a building, made of rooms and hallways."
@@ -3077,24 +2971,6 @@
             },
             "decommissioned": false,
             "uploadTime": "2020-11-04T19:49:04.7605933\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:wifiroom;11735",
-            "description": {},
-            "displayName": {
-              "en": "RoomWithWifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.7832998\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:wifi;165416256",
-            "description": {},
-            "displayName": {
-              "en": "Wifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.7834725\u002B00:00"
           },
           {
             "id": "dtmi:example:Ward;111560959",
@@ -3119,24 +2995,6 @@
             "uploadTime": "2020-11-04T19:49:04.8386405\u002B00:00"
           },
           {
-            "id": "dtmi:example:wifiroom;11545",
-            "description": {},
-            "displayName": {
-              "en": "RoomWithWifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.8452213\u002B00:00"
-          },
-          {
-            "id": "dtmi:example:wifi;110434642",
-            "description": {},
-            "displayName": {
-              "en": "Wifi"
-            },
-            "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.8453477\u002B00:00"
-          },
-          {
             "id": "dtmi:example:room;119099845",
             "description": {
               "en": "An enclosure inside a building."
@@ -3148,47 +3006,402 @@
             "uploadTime": "2020-11-04T19:49:04.8492957\u002B00:00"
           },
           {
-            "id": "dtmi:example:wifiroom;15175",
+            "id": "dtmi:example:Ward;135577577",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-04T19:49:08.2484123\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;198610860",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-04T19:49:08.4501065\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;113831005",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:45.6509782\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;110820472",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:45.6604101\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;145114350",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:45.6945801\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;121114811",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:45.9354819\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;118496344",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:47.1767574\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;180919980",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:32:47.614856\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;113686300",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:00.8961194\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;140567583",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:00.9821615\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;111859854",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:11.1710574\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;147356028",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:13.2621349\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;128306832",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:44.0906617\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;164982554",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:44.0920068\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;121048550",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:49.1427667\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;119587102",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:35:49.4751853\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;111892730",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:36.9418801\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;154155931",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:37.1259066\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;133999852",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:37.2253802\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;145613168",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:37.2849354\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;118112199",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:52.3663855\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;181053342",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:43:52.384977\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;121250289",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.160943\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:wifiroom;16751",
             "description": {},
             "displayName": {
               "en": "RoomWithWifi"
             },
             "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.8739962\u002B00:00"
+            "uploadTime": "2020-11-05T07:44:22.1901741\u002B00:00"
           },
           {
-            "id": "dtmi:example:wifi;121152462",
+            "id": "dtmi:example:wifi;120613794",
             "description": {},
             "displayName": {
               "en": "Wifi"
             },
             "decommissioned": false,
-            "uploadTime": "2020-11-04T19:49:04.8741239\u002B00:00"
+            "uploadTime": "2020-11-05T07:44:22.1902949\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:wifiroom;13467",
+            "description": {},
+            "displayName": {
+              "en": "RoomWithWifi"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.2113696\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:wifi;139962287",
+            "description": {},
+            "displayName": {
+              "en": "Wifi"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.2115047\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;115328933",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.219142\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;112105035",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.2314938\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;121217931",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.234937\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:wifiroom;12094",
+            "description": {},
+            "displayName": {
+              "en": "RoomWithWifi"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.3047664\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:wifi;197564804",
+            "description": {},
+            "displayName": {
+              "en": "Wifi"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.3049069\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:floor;11986865",
+            "description": {
+              "en": "A building story."
+            },
+            "displayName": {
+              "en": "Floor"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.3295988\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:room;167007792",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.329875\u002B00:00"
+          },
+          {
+            "id": "dtmi:example:hvac;142185728",
+            "description": {
+              "en": "A heating, ventilation, and air conditioning unit."
+            },
+            "displayName": {
+              "en": "HVAC"
+            },
+            "decommissioned": false,
+            "uploadTime": "2020-11-05T07:44:22.3300147\u002B00:00"
           }
         ],
         "nextLink": null
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B115400309?includeModelDefinition=true\u0026api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3AWard%3B115328933?includeModelDefinition=true\u0026api-version=2020-10-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "678907e4ecd2a6c460c2a4d7e7fa52ad",
+        "x-ms-client-request-id": "b13a3e4e83cdd40c9fc58f7aa882bd78",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "613",
+        "Content-Length": "612",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 19:49:04 GMT",
+        "Date": "Thu, 05 Nov 2020 07:44:22 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {
-        "id": "dtmi:example:Ward;115400309",
+        "id": "dtmi:example:Ward;115328933",
         "description": {
           "en": "A separate partition in a building, made of rooms and hallways."
         },
@@ -3196,9 +3409,9 @@
           "en": "Ward"
         },
         "decommissioned": false,
-        "uploadTime": "2020-11-04T19:49:04.7605933\u002B00:00",
+        "uploadTime": "2020-11-05T07:44:22.219142\u002B00:00",
         "model": {
-          "@id": "dtmi:example:Ward;115400309",
+          "@id": "dtmi:example:Ward;115328933",
           "@type": "Interface",
           "displayName": "Ward",
           "description": "A separate partition in a building, made of rooms and hallways.",
@@ -3227,6 +3440,6 @@
   ],
   "Variables": {
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1421576069"
+    "RandomSeed": "274823843"
   }
 }

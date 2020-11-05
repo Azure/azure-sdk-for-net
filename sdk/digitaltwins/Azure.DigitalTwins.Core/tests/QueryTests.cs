@@ -14,8 +14,8 @@ namespace Azure.DigitalTwins.Core.Tests
 {
     public class QueryTests : E2eTestBase
     {
-        private const int RetryCount = 10;
-        private const int DelayInSeconds = 2;
+        private static readonly int s_retryCount = 10;
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(2);
 
         public QueryTests(bool isAsync)
             : base(isAsync)
@@ -45,10 +45,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
                 // call will get all twins with the same model id but that implement any version higher than the provided version
-                string queryString = $"SELECT * FROM digitaltwins where " +
-                                    $"IS_OF_MODEL('{roomModelId}', EXACT) " +
-                                    $"AND " +
-                                    $"IsOccupied = true";
+                string queryString = $"SELECT * FROM digitaltwins WHERE IS_OF_MODEL('{roomModelId}', EXACT) AND IsOccupied = true";
 
                 // act
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(queryString);
@@ -62,17 +59,18 @@ namespace Azure.DigitalTwins.Core.Tests
                     await foreach (BasicDigitalTwin response in asyncPageableResponse)
                     {
                         digitalTwinFound = true;
-                        string isOccupied = response.Contents["IsOccupied"].ToString();
-                        isOccupied.Should().Be("True");
+                        bool isOccupied = ((JsonElement)response.Contents["IsOccupied"]).GetBoolean();
+                        isOccupied.Should().BeTrue();
+                        break;
                     }
 
                     if (!digitalTwinFound)
                     {
-                        throw new Exception($"Digital twin based on model ID {roomModelId} not found");
+                        throw new Exception($"Digital twin based on model Id {roomModelId} not found");
                     }
 
                     return null;
-                }, RetryCount, TimeSpan.FromSeconds(DelayInSeconds));
+                }, s_retryCount, s_retryDelay);
 
                 digitalTwinFound.Should().BeTrue();
             }
@@ -203,10 +201,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Construct a query string to find the twins with the EXACT model id and provided version. If EXACT is not specified, the query
                 // call will get all twins with the same model id but that implement any version higher than the provided version
-                string queryString = $"SELECT COUNT() FROM digitaltwins where " +
-                    $"IS_OF_MODEL('{roomModelId}', EXACT) " +
-                    $"AND " +
-                    $"IsOccupied = true";
+                string queryString = $"SELECT COUNT() FROM digitaltwins WHERE IS_OF_MODEL('{roomModelId}', EXACT) AND IsOccupied = true";
 
                 // act
                 AsyncPageable<JsonElement> asyncPageableResponse = client.QueryAsync<JsonElement>(queryString);
@@ -221,18 +216,19 @@ namespace Azure.DigitalTwins.Core.Tests
                     {
                         string currentCountStr = response.GetRawText();
                         IDictionary<string, int> currentCountDictionary = JsonSerializer.Deserialize<IDictionary<string, int>>(currentCountStr);
+                        currentCountDictionary.ContainsKey("COUNT").Should().BeTrue();
                         currentCount = currentCountDictionary["COUNT"];
                     }
 
                     if (currentCount == 0)
                     {
-                        throw new Exception($"Digital twin based on model ID {roomModelId} not found");
+                        throw new Exception($"Digital twin based on model Id {roomModelId} not found");
                     }
 
                     return null;
-                }, RetryCount, TimeSpan.FromSeconds(DelayInSeconds));
+                }, s_retryCount, s_retryDelay);
 
-                currentCount.Should().BeGreaterOrEqualTo(1);
+                currentCount.Should().Be(1);
             }
             catch (Exception ex)
             {
