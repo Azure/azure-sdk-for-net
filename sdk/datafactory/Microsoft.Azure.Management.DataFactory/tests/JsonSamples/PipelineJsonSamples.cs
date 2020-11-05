@@ -6444,6 +6444,50 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string ExecuteDataFlowActivity_ComputeWithExpression = @"
+{
+    name: ""ExecuteDataFlowActivity_ComputeWithExpression"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteDataFlow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: {
+                            ""value"": ""@trim('MemoryOptimized')"",
+                            ""type"": ""Expression""
+                        },
+                        coreCount: {
+                            ""value"": ""@int('8')"",
+                            ""type"": ""Expression""
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_GoogleCloudStorage = @"{
   ""properties"": {
     ""activities"": [
