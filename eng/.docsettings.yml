@@ -8,6 +8,7 @@ omitted_paths:
   - sdk/*/*.Management.*/*
   - samples/*
   - common/SmokeTests/*
+  - common/Stress/*
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
