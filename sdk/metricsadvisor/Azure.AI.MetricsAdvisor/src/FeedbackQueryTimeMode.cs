@@ -1,13 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.MetricsAdvisor.Models
+using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
+
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Specifies which time property of an <see cref="MetricFeedback"/> will be used to filter results
+    /// Specifies which time property of a <see cref="MetricFeedback"/> will be used to filter results
     /// in the <see cref="MetricsAdvisorClient.GetAllMetricFeedback"/> and the <see cref="MetricsAdvisorClient.GetAllMetricFeedbackAsync"/>
     /// operations.
     /// </summary>
+    [CodeGenModel("FeedbackQueryTimeMode")]
     public readonly partial struct FeedbackQueryTimeMode
     {
         /// <summary>
