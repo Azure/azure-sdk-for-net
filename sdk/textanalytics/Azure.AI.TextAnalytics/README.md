@@ -6,6 +6,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Named Entity Recognition
 * Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
+* Healthcare Recognition
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -131,6 +132,7 @@ The following section provides several code snippets using the `client` [created
 ### Async examples
 * [Detect Language Asynchronously](#detect-language-asynchronously)
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
+* [Recognize Healthcare Entities Asyncronously](#recognize-entities-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -279,6 +281,45 @@ foreach (CategorizedEntity entity in entities)
 }
 ```
 
+### Recognize Healthcare Entities Asynchronously
+Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
+
+```C# Snippet:RecognizeHealthcareEntitiesAsync
+string document = "Subject is taking 100mg of ibuprofen twice daily.";
+
+HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+
+await healthOperation.WaitForCompletionAsync();
+
+RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+
+Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
+Console.WriteLine("");
+
+foreach (DocumentHealthcareResult result in results)
+{
+		Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+		foreach (HealthcareEntity entity in result.Entities)
+		{
+				Console.WriteLine($"    Entity: {entity.Text}");
+				Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+				Console.WriteLine($"    Offset: {entity.Offset}");
+				Console.WriteLine($"    Length: {entity.Length}");
+				Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+				Console.WriteLine($"    Links:");
+
+				foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+				{
+						Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+						Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+				}
+		}
+		Console.WriteLine("");
+}
+```
+For samples on using the production recommended options `DocumentHealthcareResult` see [here][recognize_healthcare_sample].
+
 ## Troubleshooting
 
 ### General
@@ -340,6 +381,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize Entities][recognize_entities_sample]
 - [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
+- [Recognize Healthcare Entities][recognize_healthcare_sample]
 
 ### Advanced samples
 - [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
@@ -367,6 +409,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
+[recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+[healthcare]: https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
 [key_phrase_extraction]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
