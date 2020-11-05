@@ -16,9 +16,6 @@ namespace Azure.Analytics.Synapse.Tests.AccessControl
 
         protected AccessControlClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()
