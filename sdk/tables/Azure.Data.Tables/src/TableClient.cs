@@ -21,12 +21,13 @@ namespace Azure.Data.Tables
     public class TableClient
     {
         private readonly string _table;
-        private readonly OdataMetadataFormat _format;
+        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
+        private readonly QueryOptions _defaultQueryOptions= new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata};
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
@@ -140,9 +141,9 @@ namespace Azure.Data.Tables
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
-            _diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString);
             _version = options.VersionString;
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _table = tableName;
             _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
@@ -156,9 +157,9 @@ namespace Azure.Data.Tables
             options ??= new TableClientOptions();
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
-            _diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString());
             _version = options.VersionString;
+            _diagnostics = new ClientDiagnostics(options);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString(), _version);
             _table = tableName;
             _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
@@ -222,7 +223,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -244,7 +245,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -266,7 +267,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -292,7 +293,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: new QueryOptions() { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -367,7 +368,7 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.InsertEntityAsync(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     responsePreference: _returnNoContent,
-                    queryOptions: new QueryOptions() { Format = _format },
+                     queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return response.GetRawResponse();
@@ -399,7 +400,7 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.InsertEntity(_table,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     responsePreference: _returnNoContent,
-                    queryOptions: new QueryOptions() { Format = _format },
+                     queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken);
 
                 return response.GetRawResponse();
@@ -513,7 +514,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else if (mode == TableUpdateMode.Merge)
@@ -522,7 +523,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
@@ -561,7 +562,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
                 else if (mode == TableUpdateMode.Merge)
@@ -570,7 +571,7 @@ namespace Azure.Data.Tables
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
                 else
@@ -622,7 +623,7 @@ namespace Azure.Data.Tables
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else if (mode == TableUpdateMode.Merge)
@@ -632,7 +633,7 @@ namespace Azure.Data.Tables
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
@@ -684,7 +685,7 @@ namespace Azure.Data.Tables
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
                 else if (mode == TableUpdateMode.Merge)
@@ -694,7 +695,7 @@ namespace Azure.Data.Tables
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         ifMatch: ifMatch.ToString(),
-                        queryOptions: new QueryOptions() { Format = _format },
+                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
                 else
@@ -944,7 +945,7 @@ namespace Azure.Data.Tables
                     partitionKey,
                     rowKey,
                     ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                    queryOptions: new QueryOptions() { Format = _format },
+                     queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -980,7 +981,7 @@ namespace Azure.Data.Tables
                     partitionKey,
                     rowKey,
                     ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                    queryOptions: new QueryOptions() { Format = _format },
+                     queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
