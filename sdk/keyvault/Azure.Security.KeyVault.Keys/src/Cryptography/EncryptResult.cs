@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets additional data that is authenticated during decryption but not encrypted.
         /// </summary>
-        public byte[] AdditionalAuthenticatedData { get; set; }
+        public byte[] AdditionalAuthenticatedData { get; internal set; }
 
         /// <summary>
         /// Gets the <see cref="EncryptionAlgorithm"/> used for encryption. This must be stored alongside the <see cref="Ciphertext"/> as the same algorithm must be used to decrypt it.

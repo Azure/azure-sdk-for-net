@@ -27,7 +27,9 @@ namespace Azure.Security.KeyVault.Keys
     }
     public static partial class CryptographyModelFactory
     {
+        public static Azure.Security.KeyVault.Keys.Cryptography.DecryptOptions DecryptOptions(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv = null, byte[] authenticationTag = null) { throw null; }
         public static Azure.Security.KeyVault.Keys.Cryptography.DecryptResult DecryptResult(string keyId = null, byte[] plaintext = null, Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm = default(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm)) { throw null; }
+        public static Azure.Security.KeyVault.Keys.Cryptography.EncryptOptions EncryptOptions(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptResult EncryptResult(string keyId, byte[] ciphertext, Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm) { throw null; }
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptResult EncryptResult(string keyId = null, byte[] ciphertext = null, Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm = default(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm), byte[] iv = null, byte[] authenticatedTag = null, byte[] additionalAuthenticatedData = null) { throw null; }
@@ -393,7 +395,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public partial class EncryptResult
     {
         internal EncryptResult() { }
-        public byte[] AdditionalAuthenticatedData { get { throw null; } set { } }
+        public byte[] AdditionalAuthenticatedData { get { throw null; } }
         public Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm Algorithm { get { throw null; } }
         public byte[] AuthenticationTag { get { throw null; } }
         public byte[] Ciphertext { get { throw null; } }
