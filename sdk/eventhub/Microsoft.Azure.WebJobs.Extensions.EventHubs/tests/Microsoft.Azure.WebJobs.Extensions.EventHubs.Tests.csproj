@@ -22,6 +22,5 @@
   <ItemGroup>
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
     <Compile Remove="EventHubConfigurationTests.cs" />
-    <Compile Remove="EventHubEndToEndTests.cs" />
   </ItemGroup>
 </Project>

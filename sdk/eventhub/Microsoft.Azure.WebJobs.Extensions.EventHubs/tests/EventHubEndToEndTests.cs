@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -259,19 +260,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             public static async Task SendEvents_TestHub(
                 string input,
-                [EventHub(TestHubName)] EventHubClient client)
+                [EventHub(TestHubName)] EventHubProducerClient client)
             {
                 List<EventData> list = new List<EventData>();
                 EventData evt = new EventData(Encoding.UTF8.GetBytes(input));
 
                 // Send event without PK
-                await client.SendAsync(evt);
+                await client.SendAsync(new [] { evt });
 
                 // Send event with different PKs
                 for (int i = 0; i < 5; i++)
                 {
                     evt = new EventData(Encoding.UTF8.GetBytes(input));
-                    await client.SendAsync(evt, "test_pk" + i);
+                    await client.SendAsync(new [] { evt }, new SendEventOptions() { PartitionKey =  "test_pk" + i });
                 }
             }
 
@@ -279,12 +280,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 foreach (EventData eventData in events)
                 {
-                    string message = Encoding.UTF8.GetString(eventData.Body);
+                    string message = Encoding.UTF8.GetString(eventData.Body.ToArray());
 
                     // filter for the ID the current test is using
                     if (message == _testId)
                     {
-                        _results.Add(eventData.SystemProperties.PartitionKey);
+                        _results.Add(eventData.PartitionKey);
                         _results.Sort();
 
                         if (_results.Count == 6 && _results[5] == "test_pk4")
@@ -314,7 +315,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     b.AddEventHubs(options =>
                     {
-                        options.EventProcessorOptions.EnableReceiverRuntimeMetric = true;
+                        // TODO: alternative?
+                        //options.EventProcessorOptions.EnableReceiverRuntimeMetric = true;
                         options.AddSender(TestHubName, connection);
                         options.AddReceiver(TestHubName, connection);
                     });
