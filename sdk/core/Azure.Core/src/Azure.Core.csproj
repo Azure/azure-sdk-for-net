@@ -37,7 +37,4 @@
     <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\System.Memory.Data\src\System.Memory.Data.csproj" />
-  </ItemGroup>
 </Project>

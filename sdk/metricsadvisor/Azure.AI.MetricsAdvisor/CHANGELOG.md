@@ -3,6 +3,7 @@
 ## 1.0.0-beta.2 (Unreleased)
 
 ### New Features
+- Added new sync and async `GetIncidentRootCauses` overloads to `MetricsAdvisorClient` to list root causes for a given `AnomalyIncident` instance.
 - Added a public constructor to `DataFeed`.
 - Added the `DataSource` property to `DataFeed`.
 - All `DataSource`s now have public properties exposing the associated parameters used to get the data, such as endpoints, connection strings, and query strings.
@@ -15,16 +16,18 @@
 - In `MetricsAdvisorClient`, renamed sync and async `GetMetricDimensionValues` methods to `GetDimensionValues`.
 - In `MetricsAdvisorClient`, changed return types of sync and async `CreateMetricFeedback` methods to a `Response<string>` containing the ID of the created feedback.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
+- In `MetricsAdvisorClient`, updated sync and async `GetIncidentsForDetectionConfiguration` methods to always populate the `DetectionConfigurationId` of returned incidents.
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `AnomalyAlertConfiguration` CRUD methods, removing the `Anomaly` word from their names (e.g., `GetAnomalyAlertConfiguration` became `GetAlertConfiguration`).
 - In `MetricsAdvisorAdministrationClient`, renamed the sync and async `MetricAnomalyDetectionConfiguration` CRUD methods, removing the `MetricAnomaly` term from their names (e.g., `GetMetricAnomalyDetectionConfiguration` became `GetDetectionConfiguration`).
 - In `MetricsAdvisorAdministrationClient`, updated `CreateDataFeed` and `CreateDataFeedAsync` to take a whole `DataFeed` object as a parameter.
 - In `MetricsAdvisorAdministrationClient`, changed return types of sync and async `Create` methods (e.g., `CreateDataFeed`) to a `Response<string>` containing the ID of the created resource.
 - In `MetricsAdvisorAdministrationClient`, changed return types of sync and async methods `GetAnomalyAlertConfigurations` and `GetMetricAnomalyDetectionConfigurations` to pageables.
 - In `MetricsAdvisorAdministrationClient`, renamed parameter `alertConfigurationId` to `detectionConfigurationId` in sync and async `GetAnomalyAlertConfigurations` methods.
+- Updated `DataFeed.MetricIds` to a `Dictionary<string, string>` that maps a metric name to its ID.
 - In `DataFeedIngestionStatus`, made `Timestamp` and `Status` non-nullables.
-- In `AnomalyIncident`, made `Status` non-nullable.
-- In `EnrichmentStatus`, made `Timestamp` non-nullable.
 - In `MetricEnrichedSeriesData`, made elements of `ExpectedValues`, `Periods`, `IsAnomaly`, `LowerBoundaries` and `UpperBoundaries` nullables.
+- Made `AnomalyIncident.Status` non-nullable.
+- Made `EnrichmentStatus.Timestamp` non-nullable.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
 - Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
 - Renamed `GetMetricFeedbacksOptions` to `GetAllMetricFeedbackOptions`.

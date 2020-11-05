@@ -56,37 +56,6 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the service.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the service.</param>
-        /// <param name="options">A set of options to apply when configuring the client.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new MetricsAdvisorClientsOptions();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorClient"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
@@ -934,6 +903,7 @@ namespace Azure.AI.MetricsAdvisor
                 try
                 {
                     Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, queryOptions, top, cancellationToken).ConfigureAwait(false);
+                    PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -951,6 +921,7 @@ namespace Azure.AI.MetricsAdvisor
                 try
                 {
                     Response<IncidentResultList> response = await _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(nextLink, detectionConfigurationGuid, queryOptions, top, cancellationToken).ConfigureAwait(false);
+                    PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -993,6 +964,7 @@ namespace Azure.AI.MetricsAdvisor
                 try
                 {
                     Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfiguration(detectionConfigurationGuid, queryOptions, top, cancellationToken);
+                    PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1010,6 +982,7 @@ namespace Azure.AI.MetricsAdvisor
                 try
                 {
                     Response<IncidentResultList> response = _serviceRestClient.GetIncidentsByAnomalyDetectionConfigurationNextPage(nextLink, detectionConfigurationGuid, queryOptions, top, cancellationToken);
+                    PopulateDetectionConfigurationIds(response.Value.Value, detectionConfigurationId);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1073,6 +1046,74 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
+
+            Page<IncidentRootCause> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetIncidentRootCauses)}");
+                scope.Start();
+
+                try
+                {
+                    Response<RootCauseList> response = _serviceRestClient.GetRootCauseOfIncidentByAnomalyDetectionConfiguration(detectionConfigurationGuid, incidentId, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// </summary>
+        /// <param name="incident">The <see cref="AnomalyIncident"/> from which root causes will be returned.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="IncidentRootCause"/>s.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="incident"/> is null.</exception>
+        public virtual AsyncPageable<IncidentRootCause> GetIncidentRootCausesAsync(AnomalyIncident incident, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(incident, nameof(incident));
+
+            Guid detectionConfigurationGuid = new Guid(incident.DetectionConfigurationId);
+            string incidentId = incident.Id;
+
+            async Task<Page<IncidentRootCause>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetIncidentRootCauses)}");
+                scope.Start();
+
+                try
+                {
+                    Response<RootCauseList> response = await _serviceRestClient.GetRootCauseOfIncidentByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, incidentId, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Gets the automatic suggestions for likely root causes of an incident.
+        /// </summary>
+        /// <param name="incident">The <see cref="AnomalyIncident"/> from which root causes will be returned.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="IncidentRootCause"/>s.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="incident"/> is null.</exception>
+        public virtual Pageable<IncidentRootCause> GetIncidentRootCauses(AnomalyIncident incident, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(incident, nameof(incident));
+
+            Guid detectionConfigurationGuid = new Guid(incident.DetectionConfigurationId);
+            string incidentId = incident.Id;
 
             Page<IncidentRootCause> FirstPageFunc(int? pageSizeHint)
             {
@@ -1296,6 +1337,14 @@ namespace Azure.AI.MetricsAdvisor
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        private static void PopulateDetectionConfigurationIds(IEnumerable<AnomalyIncident> incidents, string detectionConfigurationId)
+        {
+            foreach (AnomalyIncident incident in incidents)
+            {
+                incident.DetectionConfigurationId = detectionConfigurationId;
+            }
         }
 
         #endregion AnomalyDetection

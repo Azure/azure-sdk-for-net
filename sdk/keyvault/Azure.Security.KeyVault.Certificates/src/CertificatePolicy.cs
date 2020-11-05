@@ -226,6 +226,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the actions to be executed at specified times in the certificates lifetime.
+        /// Currently, only a single <see cref="LifetimeAction"/> is allowed.
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
