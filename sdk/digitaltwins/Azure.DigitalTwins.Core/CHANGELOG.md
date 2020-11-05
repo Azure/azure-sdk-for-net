@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### New Features
-
-### Breaking changes
+## 1.0.1 (2020-11-04)
 
 ### Fixes and improvements
 
 - Improved deserialization and error reporting for `BasicDigitalTwin` for `DigitalTwinMetadata`.
+- Removed logic to determine authorization scope based on digital twins instance URI.
 
 ## 1.0.0 (2020-10-30)
 
