@@ -32,7 +32,7 @@ jobs:
         inputs:
           versionSpec: '3.6'
 
-      - template: eng/common/pipelines/templates/steps/mashup-doc-index.yml
+      - template: /eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
           SourceDirectory: $(Build.ArtifactStagingDirectory)
 
