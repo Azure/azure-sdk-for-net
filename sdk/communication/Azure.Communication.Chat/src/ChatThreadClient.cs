@@ -588,10 +588,9 @@ namespace Azure.Communication.Chat
 
         private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
         {
-            var token = new CommunicationTokenCredential(communicationUserCredential);
-            var policy = new BearerTokenAuthenticationPolicy(token, "");
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, policy);
-            return httpPipeline;
+            var tokenCredential = new CommunicationTokenCredential(communicationUserCredential);
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "");
+            return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
     }
 }
