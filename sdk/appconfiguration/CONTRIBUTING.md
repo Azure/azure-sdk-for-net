@@ -30,7 +30,7 @@ To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after 
 
 ### Frameworks
 
-We use [nUnit 3][nunit] as our testing framework.
+We use [NUnit 3][nunit] as our testing framework.
 
 [Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
