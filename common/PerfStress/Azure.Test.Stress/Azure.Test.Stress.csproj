@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTestSupportProject>true</IsTestSupportProject>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     
