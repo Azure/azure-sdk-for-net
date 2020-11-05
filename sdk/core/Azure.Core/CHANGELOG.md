@@ -4,6 +4,11 @@
 
 ### Added
 - The `HttpClientTransport(HttpMessageHandler)` constructor overload.
+- The `JsonPatchDocument` type.
+
+### Fixed
+- The race condition in `AzureEventSourceListener` class that sometimes resulted in a `NullReferenceException` in the `EventSource`.
+- The overflow exception when content length is larger than `int.MaxValue`.
 
 ## 1.5.1 (2020-10-01)
 

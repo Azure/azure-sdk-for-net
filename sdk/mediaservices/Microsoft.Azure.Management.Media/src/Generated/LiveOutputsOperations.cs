@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Media
         /// List Live Outputs
         /// </summary>
         /// <remarks>
-        /// Lists the Live Outputs in the Live Event.
+        /// Lists the live outputs of a live event.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Media
         /// Get Live Output
         /// </summary>
         /// <remarks>
-        /// Gets a Live Output.
+        /// Gets a live output.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -281,10 +281,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='liveOutputName'>
-        /// The name of the Live Output.
+        /// The name of the live output.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Output
         /// </summary>
         /// <remarks>
-        /// Creates a Live Output.
+        /// Creates a new live output.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -523,10 +523,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='liveOutputName'>
-        /// The name of the Live Output.
+        /// The name of the live output.
         /// </param>
         /// <param name='parameters'>
         /// Live Output properties needed for creation.
@@ -548,7 +548,8 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Output
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Output.
+        /// Deletes a live output. Deleting a live output does not delete the asset the
+        /// live output is writing to.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -557,10 +558,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='liveOutputName'>
-        /// The name of the Live Output.
+        /// The name of the live output.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -579,7 +580,7 @@ namespace Microsoft.Azure.Management.Media
         /// Create Live Output
         /// </summary>
         /// <remarks>
-        /// Creates a Live Output.
+        /// Creates a new live output.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -588,10 +589,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='liveOutputName'>
-        /// The name of the Live Output.
+        /// The name of the live output.
         /// </param>
         /// <param name='parameters'>
         /// Live Output properties needed for creation.
@@ -773,7 +774,7 @@ namespace Microsoft.Azure.Management.Media
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new ApiErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -829,7 +830,7 @@ namespace Microsoft.Azure.Management.Media
                 }
             }
             // Deserialize Response
-            if ((int)_statusCode == 202)
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -857,7 +858,8 @@ namespace Microsoft.Azure.Management.Media
         /// Delete Live Output
         /// </summary>
         /// <remarks>
-        /// Deletes a Live Output.
+        /// Deletes a live output. Deleting a live output does not delete the asset the
+        /// live output is writing to.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the Azure subscription.
@@ -866,10 +868,10 @@ namespace Microsoft.Azure.Management.Media
         /// The Media Services account name.
         /// </param>
         /// <param name='liveEventName'>
-        /// The name of the Live Event.
+        /// The name of the live event, maximum length is 32.
         /// </param>
         /// <param name='liveOutputName'>
-        /// The name of the Live Output.
+        /// The name of the live output.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1078,7 +1080,7 @@ namespace Microsoft.Azure.Management.Media
         /// List Live Outputs
         /// </summary>
         /// <remarks>
-        /// Lists the Live Outputs in the Live Event.
+        /// Lists the live outputs of a live event.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

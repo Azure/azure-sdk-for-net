@@ -47,8 +47,10 @@ namespace Azure.DigitalTwins.Samples
             string twinPayload = SamplesConstants.TemporaryTwinPayload
                 .Replace(SamplesConstants.ModelId, modelId);
 
-            await client.CreateDigitalTwinAsync(twinId, twinPayload);
-            Console.WriteLine($"Created digital twin '{twinId}'.");
+            BasicDigitalTwin basicDigitalTwin = JsonSerializer.Deserialize<BasicDigitalTwin>(twinPayload);
+
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync<BasicDigitalTwin>(twinId, basicDigitalTwin);
+            Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             try
             {

@@ -159,6 +159,9 @@
   <data name="UnknownConnectionType" xml:space="preserve">
     <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
   </data>
+  <data name="InvalidEndpointAddress" xml:space="preserve">
+    <value>The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme.</value>
+  </data>
   <data name="InvalidSharedAccessSignature" xml:space="preserve">
     <value>The shared access signature could not be parsed; it was either malformed or incorrectly encoded.</value>
   </data>

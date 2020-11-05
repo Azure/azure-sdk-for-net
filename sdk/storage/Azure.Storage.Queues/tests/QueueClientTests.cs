@@ -742,6 +742,25 @@ namespace Azure.Storage.Queues.Test
             Assert.NotNull(response.Value);
         }
 
+        [Test]
+        public async Task SendMessageAsync_ExtendedExceptionMessage()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                test.Queue.SendMessageAsync(
+                    messageText: string.Empty,
+                    visibilityTimeout: TimeSpan.FromSeconds(10),
+                    timeToLive: TimeSpan.FromSeconds(7)),
+                e =>
+                {
+                    Assert.AreEqual(QueueErrorCode.InvalidQueryParameterValue.ToString(), e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains($"Additional Information:{Environment.NewLine}QueryParameterName: visibilitytimeout{Environment.NewLine}QueryParameterValue: 10{Environment.NewLine}Reason: messagettl must be greater than visibilitytimeout"));
+                });
+        }
+
         // Note that this test intentionally does not call queue.CreateAsync()
         [Test]
         public async Task SendMessageAsync_Error()

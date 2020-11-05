@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.DigitalTwins
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DigitalTwins", "DigitalTwins", "2020-03-01-preview"),
-                new Tuple<string, string, string>("DigitalTwins", "DigitalTwinsEndpoint", "2020-03-01-preview"),
-                new Tuple<string, string, string>("DigitalTwins", "Operations", "2020-03-01-preview"),
+                new Tuple<string, string, string>("DigitalTwins", "DigitalTwins", "2020-10-31"),
+                new Tuple<string, string, string>("DigitalTwins", "DigitalTwinsEndpoint", "2020-10-31"),
+                new Tuple<string, string, string>("DigitalTwins", "Operations", "2020-10-31"),
               }.AsEnumerable();
           }
       }

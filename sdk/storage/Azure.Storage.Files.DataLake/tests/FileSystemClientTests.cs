@@ -541,6 +541,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -552,11 +555,21 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(recursive: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                recursive: true);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(PathNames.Length, paths.Count);
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("baz/bar", paths[2].Name);
+            Assert.AreEqual("baz/bar/foo", paths[3].Name);
+            Assert.AreEqual("baz/foo", paths[4].Name);
+            Assert.AreEqual("baz/foo/bar", paths[5].Name);
+            Assert.AreEqual("foo", paths[6].Name);
+            Assert.AreEqual("foo/bar", paths[7].Name);
+            Assert.AreEqual("foo/foo", paths[8].Name);
         }
 
         [Test]
@@ -568,11 +581,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(userPrincipalName: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                userPrincipalName: true);
+            ;
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(3, paths.Count);
+            Assert.IsNotNull(paths[0].Group);
+            Assert.IsNotNull(paths[0].Owner);
+
+            Assert.AreEqual("bar", paths[0].Name);
+            Assert.AreEqual("baz", paths[1].Name);
+            Assert.AreEqual("foo", paths[2].Name);
         }
 
         [Test]
@@ -584,11 +605,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             await SetUpFileSystemForListing(test.FileSystem);
 
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(path: "foo");
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
+                path: "foo");
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(2, paths.Count);
+            Assert.AreEqual("foo/bar", paths[0].Name);
+            Assert.AreEqual("foo/foo", paths[1].Name);
         }
 
         [Test]
@@ -605,6 +629,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual("bar", page.Values[0].Name);
+            Assert.AreEqual("baz", page.Values[1].Name);
         }
 
         [Test]
@@ -2001,10 +2027,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task SetUpFileSystemForListing(DataLakeFileSystemClient fileSystem)
         {
-            var pathNames = PathNames;
-            var directories = new DataLakeDirectoryClient[pathNames.Length];
+            string[] pathNames = PathNames;
+            DataLakeDirectoryClient[] directories = new DataLakeDirectoryClient[pathNames.Length];
 
-            // Upload Blobs
+            // Upload directories
             for (var i = 0; i < pathNames.Length; i++)
             {
                 DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(pathNames[i]));
@@ -2012,19 +2038,5 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await directory.CreateIfNotExistsAsync();
             }
         }
-
-        private string[] PathNames
-            => new[]
-                {
-                    "foo",
-                    "bar",
-                    "baz",
-                    "baz/bar",
-                    "foo/foo",
-                    "foo/bar",
-                    "baz/foo",
-                    "baz/foo/bar",
-                    "baz/bar/foo"
-                };
-            }
+    }
 }

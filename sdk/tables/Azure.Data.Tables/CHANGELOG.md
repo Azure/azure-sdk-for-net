@@ -2,6 +2,9 @@
 
 ## 3.0.0-beta.3 (Unreleased)
 
+### Added
+
+- Added support for Upsert batch operations.
 
 ## 3.0.0-beta.2 (2020-10-06)
 

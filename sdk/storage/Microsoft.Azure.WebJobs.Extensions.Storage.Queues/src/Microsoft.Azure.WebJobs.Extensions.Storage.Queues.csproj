@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>5.0.0-beta.1</Version>
+    <Description>This extension adds bindings for Storage</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.1.0-alpha.20201021.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- TODO (kasobol-msft) change this to PackageReference when stable -->
+    <ProjectReference Include="..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR</DefineConstants>
+  </PropertyGroup>
+</Project>

@@ -24,7 +24,7 @@ param (
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 # Regex of the locale keywords.
 $locale = "/en-us/"
-$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+$emptyLinkMessage = "There is at least one empty link in the page. Please replace with absolute link. Check here for more information: https://aka.ms/azsdk/guideline/links"
 function NormalizeUrl([string]$url){
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
@@ -137,7 +137,7 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 function CheckLink ([System.Uri]$linkUri)
 {
   if(!$linkUri.ToString().Trim()) {
-    LogWarning "Found Empty link. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+    LogWarning "Found Empty link. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
     return $false
   }
   if ($checkedLinks.ContainsKey($linkUri)) { 
@@ -156,7 +156,7 @@ function CheckLink ([System.Uri]$linkUri)
       $linkValid = $false
     }
   }
-  else {
+  elseif ($linkUri.IsAbsoluteUri) {
     try {
       $headRequestSucceeded = $true
       try {
@@ -200,9 +200,19 @@ function CheckLink ([System.Uri]$linkUri)
   }
   
   if ($checkLinkGuidance) {
+    if ($linkUri.Scheme -eq 'http') {
+      LogWarning "DO NOT use 'http' in $linkUri. Please use secure link with https instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+    $link = $linkUri.ToString()
     # Check if the url is relative links, suppress the archor link validation.
-    if (!$linkUri.IsAbsoluteUri -and !$linkUri.ToString().StartsWith("#")) {
-      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more infomation: https://aka.ms/azsdk/guideline/links"
+    if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
+      LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
+      $linkValid = $false
+    }
+    # Check if the url is anchor link has any uppercase.
+    if ($link -cmatch '#[^?]*[A-Z]') {
+      LogWarning "Please lower case your anchor tags (i.e. anything after '#' in your link '$linkUri'. Check here for more information: https://aka.ms/azsdk/guideline/links"
       $linkValid = $false
     }
      # Check if link uri includes locale info.

@@ -900,26 +900,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<AnomalyDetectionConfiguration>>> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
-            scope.Start();
+            async Task<Page<AnomalyDetectionConfiguration>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = await _serviceRestClient.GetAnomalyDetectionConfigurationsByMetricAsync(metricGuid, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -928,26 +933,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="metricId">Filters the result. The unique identifier of the metric to which the returned <see cref="AnomalyDetectionConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyDetectionConfiguration"/> items.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
-            scope.Start();
+            Page<AnomalyDetectionConfiguration> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyDetectionConfigurationList> response = _serviceRestClient.GetAnomalyDetectionConfigurationsByMetric(metricGuid, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -1208,56 +1218,66 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<IReadOnlyList<AnomalyAlertConfiguration>>> GetAnomalyAlertConfigurationsAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
-            scope.Start();
+            async Task<Page<AnomalyAlertConfiguration>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = await _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationAsync(detectionConfigurationGuid, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
         /// Gets a collection of items describing the existing <see cref="AnomalyAlertConfiguration"/>s in this Metrics
         /// Advisor resource.
         /// </summary>
-        /// <param name="alertConfigurationId">Filters the result. The unique identifier of the <see cref="MetricAnomalyAlertConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
+        /// <param name="detectionConfigurationId">Filters the result. The unique identifier of the <see cref="AnomalyDetectionConfiguration"/> to which the returned <see cref="AnomalyAlertConfiguration"/>s apply.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="AnomalyAlertConfiguration"/> items.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<IReadOnlyList<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurations(string alertConfigurationId, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
+        public virtual Pageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
-            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
+            Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
-            scope.Start();
+            Page<AnomalyAlertConfiguration> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                scope.Start();
 
-            try
-            {
-                Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                try
+                {
+                    Response<AnomalyAlertingConfigurationList> response = _serviceRestClient.GetAnomalyAlertingConfigurationsByAnomalyDetectionConfiguration(detectionConfigurationGuid, cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -1321,23 +1341,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Hook
 
         /// <summary>
-        /// Creates an <see cref="AlertingHook"/> and assigns it a unique ID.
+        /// Creates a <see cref="NotificationHook"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
+        /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
         /// containing the ID of the newly created hook.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual async Task<Response<AlertingHook>> CreateHookAsync(AlertingHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
+        public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailHook emailHook)
+            if (hook is EmailNotificationHook emailHook)
             {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
@@ -1358,23 +1378,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates an <see cref="AlertingHook"/> and assigns it a unique ID.
+        /// Creates a <see cref="NotificationHook"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="hook">Specifies how the created <see cref="AlertingHook"/> should be configured.</param>
+        /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
         /// containing the ID of the newly created hook.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual Response<AlertingHook> CreateHook(AlertingHook hook, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
+        public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailHook emailHook)
+            if (hook is EmailNotificationHook emailHook)
             {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateHook)}");
@@ -1395,24 +1415,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AlertingHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="AlertingHook"/> to update.</param>
-        /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
+        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
+        /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateHookAsync(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateHookAsync(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailHook emailHook)
+            if (hook is EmailNotificationHook emailHook)
             {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
@@ -1420,7 +1440,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
+                HookInfoPatch patch = NotificationHook.GetPatchModel(hook);
 
                 return await _serviceRestClient.UpdateHookAsync(hookGuid, patch, cancellationToken).ConfigureAwait(false);
             }
@@ -1432,24 +1452,24 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="AlertingHook"/>.
+        /// Updates an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The ID of the existing <see cref="AlertingHook"/> to update.</param>
-        /// <param name="hook">The <see cref="AlertingHook"/> model containing the updates to be applied.</param>
+        /// <param name="hookId">The ID of the existing <see cref="NotificationHook"/> to update.</param>
+        /// <param name="hook">The <see cref="NotificationHook"/> model containing the updates to be applied.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hookId"/> or <paramref name="hook"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateHook(string hookId, AlertingHook hook, CancellationToken cancellationToken = default)
+        public virtual Response UpdateHook(string hookId, NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
             Argument.AssertNotNull(hook, nameof(hook));
 
-            if (hook is EmailHook emailHook)
+            if (hook is EmailNotificationHook emailHook)
             {
-                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailHook.EmailsToAlert));
+                Argument.AssertNotNullOrEmpty(emailHook.EmailsToAlert, nameof(EmailNotificationHook.EmailsToAlert));
             }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateHook)}");
@@ -1457,7 +1477,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             try
             {
-                HookInfoPatch patch = AlertingHook.GetPatchModel(hook);
+                HookInfoPatch patch = NotificationHook.GetPatchModel(hook);
 
                 return _serviceRestClient.UpdateHook(hookGuid, patch, cancellationToken);
             }
@@ -1469,17 +1489,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="AlertingHook"/>.
+        /// Gets an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
+        /// <param name="hookId">The unique identifier of the <see cref="NotificationHook"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<AlertingHook>> GetHookAsync(string hookId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHook>> GetHookAsync(string hookId, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
@@ -1498,17 +1518,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="AlertingHook"/>.
+        /// Gets an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/>.</param>
+        /// <param name="hookId">The unique identifier of the <see cref="NotificationHook"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AlertingHook"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hookId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hookId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<AlertingHook> GetHook(string hookId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHook> GetHook(string hookId, CancellationToken cancellationToken = default)
         {
             Guid hookGuid = ClientCommon.ValidateGuid(hookId, nameof(hookId));
 
@@ -1527,9 +1547,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="AlertingHook"/>.
+        /// Deletes an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/> to be deleted.</param>
+        /// <param name="hookId">The unique identifier of the <see cref="NotificationHook"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -1555,9 +1575,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="AlertingHook"/>.
+        /// Deletes an existing <see cref="NotificationHook"/>.
         /// </summary>
-        /// <param name="hookId">The unique identifier of the <see cref="AlertingHook"/> to be deleted.</param>
+        /// <param name="hookId">The unique identifier of the <see cref="NotificationHook"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -1583,14 +1603,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
+        /// Gets a collection of items describing the existing <see cref="NotificationHook"/>s in this resource.
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AlertingHook"/>s.</returns>
-        public virtual AsyncPageable<AlertingHook> GetHooksAsync(GetHooksOptions options = default, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="NotificationHook"/>s.</returns>
+        public virtual AsyncPageable<NotificationHook> GetHooksAsync(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AlertingHook>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NotificationHook>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHooks)}");
                 scope.Start();
@@ -1607,7 +1627,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            async Task<Page<AlertingHook>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NotificationHook>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHooks)}");
                 scope.Start();
@@ -1628,14 +1648,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets a collection of items describing the existing <see cref="AlertingHook"/>s in this resource.
+        /// Gets a collection of items describing the existing <see cref="NotificationHook"/>s in this resource.
         /// </summary>
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AlertingHook"/>s.</returns>
-        public virtual Pageable<AlertingHook> GetHooks(GetHooksOptions options = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="NotificationHook"/>s.</returns>
+        public virtual Pageable<NotificationHook> GetHooks(GetHooksOptions options = default, CancellationToken cancellationToken = default)
         {
-            Page<AlertingHook> FirstPageFunc(int? pageSizeHint)
+            Page<NotificationHook> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHooks)}");
                 scope.Start();
@@ -1652,7 +1672,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
 
-            Page<AlertingHook> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NotificationHook> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetHooks)}");
                 scope.Start();

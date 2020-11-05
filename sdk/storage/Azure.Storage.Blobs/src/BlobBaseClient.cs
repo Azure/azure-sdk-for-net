@@ -2542,7 +2542,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> Returns true if blob exists and was
+        /// deleted, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2584,7 +2585,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> on successfully deleting.
+        /// A <see cref="Response"/> Returns true if blob exists and was
+        /// deleted, return false otherwise.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3921,6 +3923,7 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(GetTags)}",
                         cancellationToken: cancellationToken)
@@ -4084,6 +4087,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         tags: tags.ToBlobTags(),
                         ifTags: conditions?.TagConditions,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",
                         cancellationToken: cancellationToken)

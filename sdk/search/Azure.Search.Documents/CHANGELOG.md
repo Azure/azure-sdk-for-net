@@ -2,6 +2,9 @@
 
 ## 11.2.0-beta.2 (Unreleased)
 
+### Fixed
+
+- Fixed issue calling `SearchIndexClient.GetIndexNames` that threw an exception ([#15590](https://github.com/Azure/azure-sdk-for-net/issues/15590))
 
 ## 11.2.0-beta.1 (2020-10-09)
 

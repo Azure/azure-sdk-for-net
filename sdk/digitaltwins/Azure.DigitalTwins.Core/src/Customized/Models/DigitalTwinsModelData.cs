@@ -2,22 +2,32 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
+    /// <inheritdoc />
     [CodeGenModel("DigitalTwinsModelData")]
     public partial class DigitalTwinsModelData
     {
-        // This class declaration makes the generated class of the same name declare Model as a **string** rather than an **object**.
-        // It also changes the namespace and renames the type from "ModelData" to "DigitalTwinsModelData"
+        // This class declaration:
+        // - Changes the namespace and renames the type from "ModelData" to "DigitalTwinsModelData"
+        // - Makes the generated class of the same name declare Model as a **string** rather than an **object**.
+        // - Renames Model to DtdlModel.
         // Do not remove.
 
         /// <summary>
-        /// The model definition.
+        /// The model definition that conforms to Digital Twins Definition Language (DTDL) v2.
         /// </summary>
-        public string Model { get; }
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models"/>
+        [CodeGenMember("Model")]
+        public string DtdlModel { get; }
+
+        /// <summary>
+        /// The date and time the model was uploaded to the service.
+        /// </summary>
+        [CodeGenMember("UploadTime")]
+        public DateTimeOffset? UploadedOn { get; }
 
         #region null overrides
 

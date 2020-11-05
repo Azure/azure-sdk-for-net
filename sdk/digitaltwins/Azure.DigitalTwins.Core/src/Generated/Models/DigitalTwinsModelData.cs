@@ -19,17 +19,17 @@ namespace Azure.DigitalTwins.Core
         /// <param name="displayName"> A language map that contains the localized display names as specified in the model definition. </param>
         /// <param name="description"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
-        /// <param name="uploadTime"> The time the model was uploaded to the service. </param>
+        /// <param name="uploadedOn"> The time the model was uploaded to the service. </param>
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
-        /// <param name="model"> The model definition. </param>
-        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, string id, DateTimeOffset? uploadTime, bool? decommissioned, string model)
+        /// <param name="dtdlModel"> The model definition. </param>
+        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> displayName, IReadOnlyDictionary<string, string> description, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
         {
             DisplayName = displayName;
             Description = description;
             Id = id;
-            UploadTime = uploadTime;
+            UploadedOn = uploadedOn;
             Decommissioned = decommissioned;
-            Model = model;
+            DtdlModel = dtdlModel;
         }
 
         /// <summary> A language map that contains the localized display names as specified in the model definition. </summary>
@@ -38,8 +38,6 @@ namespace Azure.DigitalTwins.Core
         public IReadOnlyDictionary<string, string> Description { get; }
         /// <summary> The id of the model as specified in the model definition. </summary>
         public string Id { get; }
-        /// <summary> The time the model was uploaded to the service. </summary>
-        public DateTimeOffset? UploadTime { get; }
         /// <summary> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </summary>
         public bool? Decommissioned { get; }
     }
