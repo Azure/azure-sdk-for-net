@@ -214,11 +214,11 @@ if ($releasing)
         }
         elseif ($parsedNewVersion.Patch -ne $parsedVersion.Patch)
         {
-            $releaseType = "Bugfix"
+            $releaseType = "Patch"
         }
         elseif ($parsedNewVersion.IsPrerelease)
         {
-            $releaseType = "Bugfix"
+            $releaseType = "Patch"
         }
     }
     else
