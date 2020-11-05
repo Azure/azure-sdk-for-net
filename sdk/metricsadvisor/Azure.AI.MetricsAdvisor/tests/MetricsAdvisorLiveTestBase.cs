@@ -23,8 +23,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
         }
 
-        internal const string DetectionConfigurationId = "59f26a57-55f7-41eb-8899-a7268d125557";
-        internal const string IncidentId = "013c34456c5aed901c66ca1dff0714aa-174995c5800";
+        internal const string DetectionConfigurationId = "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c";
+        internal const string IncidentId = "736eed64368bb6a372e855322a15a736-174e1756000";
         internal const string AlertConfigurationId = "08318302-6006-4019-9afc-975bc63ee566";
         internal const string AlertId = "174995c5800";
         internal const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";
@@ -37,15 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             _dailyGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
             _dataFeedSchema = new DataFeedSchema(new List<DataFeedMetric> { new DataFeedMetric("someMetricId", "someMetricName", "someMetricDisplayName", "someDescription") });
             _dataFeedIngestionSettings = new DataFeedIngestionSettings(new DateTimeOffset(Recording.UtcNow.Year, Recording.UtcNow.Month, Recording.UtcNow.Day, 0, 0, 0, TimeSpan.Zero));
-            _dataFeedOptions = new DataFeedOptions() { Description = "my feed description" };
-        }
-
-        public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClientAad()
-        {
-            return InstrumentClient(new MetricsAdvisorAdministrationClient(
-                new Uri(TestEnvironment.MetricsAdvisorUri),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+            _dataFeedDescription = "my feed description";
         }
 
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient()
@@ -53,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorAdministrationClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
         }
 
         public MetricsAdvisorClient GetMetricsAdvisorClient()
@@ -61,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return InstrumentClient(new MetricsAdvisorClient(
                 new Uri(TestEnvironment.MetricsAdvisorUri),
                 new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey),
-                InstrumentClientOptions(new MetricsAdvisorClientOptions())));
+                InstrumentClientOptions(new MetricsAdvisorClientsOptions())));
         }
 
         internal static async Task<DataFeed> GetFirstDataFeed(MetricsAdvisorAdministrationClient adminClient)
@@ -78,12 +70,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             return feed;
         }
 
-        internal async Task<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
+        internal async Task<string> CreateDetectionConfiguration(MetricsAdvisorAdministrationClient adminClient)
         {
             DataFeed feed = await GetFirstDataFeed(adminClient).ConfigureAwait(false);
             AnomalyDetectionConfiguration config = PopulateMetricAnomalyDetectionConfiguration(feed.MetricIds.First());
 
-            return await adminClient.CreateMetricAnomalyDetectionConfigurationAsync(config).ConfigureAwait(false);
+            return await adminClient.CreateDetectionConfigurationAsync(config).ConfigureAwait(false);
         }
 
         public AnomalyDetectionConfiguration PopulateMetricAnomalyDetectionConfiguration(string metricId)
@@ -103,6 +95,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal DataFeedGranularity _dailyGranularity;
         internal DataFeedSchema _dataFeedSchema;
         internal DataFeedIngestionSettings _dataFeedIngestionSettings;
-        internal DataFeedOptions _dataFeedOptions;
+        internal string _dataFeedDescription;
     }
 }

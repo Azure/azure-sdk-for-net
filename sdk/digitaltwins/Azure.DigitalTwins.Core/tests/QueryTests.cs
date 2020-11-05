@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // Create a room twin, with property "IsOccupied": true
                 string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
@@ -50,6 +50,10 @@ namespace Azure.DigitalTwins.Core.Tests
                     JsonElement isOccupied = response.GetProperty("IsOccupied");
                     isOccupied.GetRawText().Should().Be("true");
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {
@@ -81,7 +85,7 @@ namespace Azure.DigitalTwins.Core.Tests
             {
                 // Create room model
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { roomModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { roomModel }).ConfigureAwait(false);
 
                 // Create a room twin, with property "IsOccupied": true
                 BasicDigitalTwin roomTwin = TestAssetsHelper.GetRoomTwinPayload(roomModelId);
@@ -129,6 +133,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 }
 
                 pageCount.Should().BeGreaterThan(1, "Expected more than one page of query results");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {

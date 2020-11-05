@@ -6,10 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.0.0-alpha.20201006.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.17134 )"
-        ],
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201103.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "30bb565e9e3428c863a85b16f06d6996",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,7 +15,7 @@
       "ResponseHeaders": {
         "Content-Length": "198",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Oct 2020 19:07:51 GMT",
+        "Date": "Tue, 03 Nov 2020 23:54:29 GMT",
         "Strict-Transport-Security": "max-age=2592000"
       },
       "ResponseBody": {

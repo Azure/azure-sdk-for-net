@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="System.Text.Json" />
+    <!--This can be removed once this dependency is added to Core in the next release.-->
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>

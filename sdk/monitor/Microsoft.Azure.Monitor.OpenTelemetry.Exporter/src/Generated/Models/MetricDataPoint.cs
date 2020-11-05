@@ -10,7 +10,7 @@ using System;
 namespace Microsoft.Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> Metric data single measurement. </summary>
-    public partial class MetricDataPoint
+    internal partial class MetricDataPoint
     {
         /// <summary> Initializes a new instance of MetricDataPoint. </summary>
         /// <param name="name"> Name of the metric. </param>
