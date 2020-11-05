@@ -28,7 +28,7 @@ Please ensure all tests pass with any changes and additional tests are added to
 exercise any new features that you've added.
 
 ### Frameworks
-We use [nUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
+We use [NUnit 3](https://github.com/nunit/docs/wiki) as our testing framework.
 
 [Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
