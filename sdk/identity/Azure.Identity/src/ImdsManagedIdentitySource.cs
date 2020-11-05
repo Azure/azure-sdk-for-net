@@ -102,7 +102,7 @@ namespace Azure.Identity
             return request;
         }
 
-        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, Response response, CancellationToken cancellationToken)
+        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
             if (response.Status == 400)
             {
@@ -114,7 +114,7 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(message);
             }
 
-            return await base.HandleResponseAsync(async, response, cancellationToken).ConfigureAwait(false);
+            return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
         }
     }
 }

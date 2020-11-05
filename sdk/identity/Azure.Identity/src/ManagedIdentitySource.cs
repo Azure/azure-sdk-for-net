@@ -22,17 +22,17 @@ namespace Azure.Identity
         protected internal CredentialPipeline Pipeline { get; }
         protected internal string ClientId { get; }
 
-        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
+        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            using Request request = CreateRequest(scopes);
+            using Request request = CreateRequest(context.Scopes);
             Response response = async
                 ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
                 : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
-            return await HandleResponseAsync(async, response, cancellationToken).ConfigureAwait(false);
+            return await HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, Response response, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
         {
             if (response.Status == 200)
             {

@@ -27,7 +27,7 @@ namespace Azure.Identity
 
         protected string ClientId { get; }
 
-        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
+        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             ManagedIdentitySource identitySource = await GetManagedIdentitySourceAsync(async, cancellationToken).ConfigureAwait(false);
 
@@ -37,7 +37,7 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(MsiUnavailableError);
             }
 
-            return await identitySource.AuthenticateAsync(async, scopes, cancellationToken).ConfigureAwait(false);
+            return await identitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
         }
 
         private protected virtual async ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
@@ -50,6 +50,7 @@ namespace Azure.Identity
 
             ManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
                                                     CloudShellManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
+                                                    AzureArcManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
                                                     await ImdsManagedIdentitySource.TryCreateAsync(_pipeline, ClientId, async, cancellationToken).ConfigureAwait(false);
 
             asyncLock.SetValue(identitySource);
