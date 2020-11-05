@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string IncidentId = "736eed64368bb6a372e855322a15a736-174e1756000";
         internal const string AlertConfigurationId = "204a211a-c5f4-45f3-a30e-512fb25d1d2c";
         internal const string AlertId = "17571a77000";
-        internal const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";
+        internal const string MetricId = "27e3015f-04fd-44ba-a20b-bc529a0aebae";
         internal const string DataFeedId = "0072a752-1476-4cfa-8cf0-f226995201a0";
 
         protected int MaximumSamplesCount => 10;

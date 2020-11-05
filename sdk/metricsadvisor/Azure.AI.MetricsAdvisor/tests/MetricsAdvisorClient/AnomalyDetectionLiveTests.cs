@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -303,9 +304,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(seriesData.LowerBoundaries.Count, Is.EqualTo(pointsCount));
                 Assert.That(seriesData.UpperBoundaries.Count, Is.EqualTo(pointsCount));
 
-                for (int i = 0; i < pointsCount; i++)
+                foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
-                    Assert.That(seriesData.Timestamps[i], Is.InRange(SamplingStartTime, SamplingEndTime));
+                    Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
                 returnedKeys.Add(seriesData.SeriesKey);
