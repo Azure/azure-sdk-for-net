@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,31 +46,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(DetectionConfigurationId, options))
             {
                 Assert.That(anomaly, Is.Not.Null);
-                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.MetricId, Is.Null);
+                Assert.That(anomaly.AnomalyDetectionConfigurationId, Is.Null);
                 Assert.That(anomaly.CreatedTime, Is.Null);
                 Assert.That(anomaly.ModifiedTime, Is.Null);
                 Assert.That(anomaly.Status, Is.Null);
 
                 Assert.That(anomaly.Timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 Assert.That(anomaly.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
-                Assert.That(anomaly.SeriesKey, Is.Not.Null);
 
-                Dictionary<string, string> dimensionColumns = anomaly.SeriesKey.AsDictionary();
-
-                Assert.That(dimensionColumns.Count, Is.EqualTo(2));
-                Assert.That(dimensionColumns.ContainsKey("city"));
-                Assert.That(dimensionColumns.ContainsKey("category"));
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
-
-                Assert.That(city, Is.Not.Null.And.Not.Empty);
-                Assert.That(category, Is.Not.Null.And.Not.Empty);
+                ValidateDimensionKey(anomaly.SeriesKey);
 
                 if (populateOptionalMembers)
                 {
                     Assert.That(anomaly.Severity, Is.EqualTo(AnomalySeverity.Medium));
+
+                    Dictionary<string, string> dimensionColumns = anomaly.SeriesKey.AsDictionary();
+
+                    string city = dimensionColumns["city"];
+                    string category = dimensionColumns["category"];
+
                     Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
                 }
 
@@ -117,22 +113,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(incident.LastTime, Is.LessThanOrEqualTo(SamplingEndTime));
                 Assert.That(incident.Status, Is.Not.EqualTo(default(AnomalyIncidentStatus)));
                 Assert.That(incident.Severity, Is.Not.EqualTo(default(AnomalySeverity)));
-                Assert.That(incident.DimensionKey, Is.Not.Null);
 
-                Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
-
-                Assert.That(dimensionColumns.Count, Is.EqualTo(2));
-                Assert.That(dimensionColumns.ContainsKey("city"));
-                Assert.That(dimensionColumns.ContainsKey("category"));
-
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
-
-                Assert.That(city, Is.Not.Null.And.Not.Empty);
-                Assert.That(category, Is.Not.Null.And.Not.Empty);
+                ValidateDimensionKey(incident.DimensionKey);
 
                 if (populateOptionalMembers)
                 {
+                    Dictionary<string, string> dimensionColumns = incident.DimensionKey.AsDictionary();
+
+                    string city = dimensionColumns["city"];
+                    string category = dimensionColumns["category"];
+
                     Assert.That((city == "Delhi" && category == "Handmade") || city == "Kolkata");
                 }
 
@@ -314,9 +304,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(seriesData.LowerBoundaries.Count, Is.EqualTo(pointsCount));
                 Assert.That(seriesData.UpperBoundaries.Count, Is.EqualTo(pointsCount));
 
-                for (int i = 0; i < pointsCount; i++)
+                foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
-                    Assert.That(seriesData.Timestamps[i], Is.InRange(SamplingStartTime, SamplingEndTime));
+                    Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
                 returnedKeys.Add(seriesData.SeriesKey);
@@ -339,16 +329,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(path, Is.Not.Null.And.Not.Empty);
             }
 
-            Assert.That(rootCause.DimensionKey, Is.Not.Null);
-
-            Dictionary<string, string> dimensionColumns = rootCause.DimensionKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
-            Assert.That(dimensionColumns.ContainsKey("city"));
-            Assert.That(dimensionColumns.ContainsKey("category"));
-
-            Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
-            Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
+            ValidateDimensionKey(rootCause.DimensionKey);
         }
     }
 }

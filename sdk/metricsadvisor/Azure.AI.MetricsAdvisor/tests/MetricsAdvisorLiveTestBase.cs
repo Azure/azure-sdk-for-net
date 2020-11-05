@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         internal const string IncidentId = "736eed64368bb6a372e855322a15a736-174e1756000";
         internal const string AlertConfigurationId = "204a211a-c5f4-45f3-a30e-512fb25d1d2c";
         internal const string AlertId = "17571a77000";
-        internal const string MetricId = "3d48ed3e-6e6e-4391-b78f-b00dfee1e6f5";
+        internal const string MetricId = "27e3015f-04fd-44ba-a20b-bc529a0aebae";
         internal const string DataFeedId = "0072a752-1476-4cfa-8cf0-f226995201a0";
 
         protected int MaximumSamplesCount => 10;
@@ -94,6 +95,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     new SmartDetectionCondition(42, AnomalyDetectorDirection.Both, new SuppressCondition(1, 67)),
                     new HardThresholdCondition(23, 45, AnomalyDetectorDirection.Both, new SuppressCondition(1, 50)),
                     new ChangeThresholdCondition(12, 5, true, AnomalyDetectorDirection.Both, new SuppressCondition(1, 1))));
+        }
+
+        protected void ValidateDimensionKey(DimensionKey dimensionKey)
+        {
+            Assert.That(dimensionKey, Is.Not.Null);
+
+            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
+
+            Assert.That(dimensionColumns.Count, Is.EqualTo(2));
+            Assert.That(dimensionColumns.ContainsKey("city"));
+            Assert.That(dimensionColumns.ContainsKey("category"));
+
+            Assert.That(dimensionColumns["city"], Is.Not.Null.And.Not.Empty);
+            Assert.That(dimensionColumns["category"], Is.Not.Null.And.Not.Empty);
         }
 
         internal string _blobFeedName;
