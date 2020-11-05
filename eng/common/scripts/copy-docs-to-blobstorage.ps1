@@ -231,7 +231,7 @@ function Upload-Blobs
 }
 
 
-if (Test-Path Function:PublishGithubIODocsFn)
+if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $PublishGithubIODocsFn }).Count -gt 0)
 {
     &$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
 }
