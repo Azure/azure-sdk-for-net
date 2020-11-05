@@ -171,7 +171,7 @@ await container.SetPermissionsAsync(permissions);
 ```
 
 v12
-````C# Snippet:SampleSnippetsBlobMigration_SharedAccessPolicy
+```C# Snippet:SampleSnippetsBlobMigration_SharedAccessPolicy
 // Create one or more stored access policies.
 List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
 {
