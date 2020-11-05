@@ -1,4 +1,4 @@
-# Azure WebJobs EventHubs client library for .NET
+# Azure WebJobs Event Hubs client library for .NET
 
 TODO
 
@@ -34,7 +34,7 @@ TODO
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 

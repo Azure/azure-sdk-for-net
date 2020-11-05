@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     [Extension("EventHubs", configurationSection: "EventHubs")]
     internal class EventHubExtensionConfigProvider : IExtensionConfigProvider
     {
-        public IConfiguration _config;
+        private IConfiguration _config;
         private readonly IOptions<EventHubOptions> _options;
         private readonly ILoggerFactory _loggerFactory;
         private readonly IConverterManager _converterManager;
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             _configuration.ConfigurationSection.Bind(_options);
 
             context
-                .AddConverter<string, EventData>(ConvertString2EventData)
-                .AddConverter<EventData, string>(ConvertEventData2String)
+                .AddConverter<string, EventData>(ConvertStringToEventData)
+                .AddConverter<EventData, string>(ConvertEventDataToString)
                 .AddConverter<byte[], EventData>(ConvertBytes2EventData)
-                .AddConverter<EventData, byte[]>(ConvertEventData2Bytes)
+                .AddConverter<EventData, byte[]>(ConvertEventDataToBytes)
                 .AddOpenConverter<OpenType.Poco, EventData>(ConvertPocoToEventData);
 
             // register our trigger binding provider
@@ -116,21 +116,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             return new EventHubAsyncCollector(new EventHubProducerClientImpl(client));
         }
 
-        private static string ConvertEventData2String(EventData x)
-            => Encoding.UTF8.GetString(ConvertEventData2Bytes(x));
+        private static string ConvertEventDataToString(EventData x)
+            => Encoding.UTF8.GetString(ConvertEventDataToBytes(x));
 
         private static EventData ConvertBytes2EventData(byte[] input)
             => new EventData(input);
 
-        private static byte[] ConvertEventData2Bytes(EventData input)
+        private static byte[] ConvertEventDataToBytes(EventData input)
             => input.Body.ToArray();
 
-        private static EventData ConvertString2EventData(string input)
+        private static EventData ConvertStringToEventData(string input)
             => ConvertBytes2EventData(Encoding.UTF8.GetBytes(input));
 
         private static Task<object> ConvertPocoToEventData(object arg, Attribute attrResolved, ValueBindingContext context)
         {
-            return Task.FromResult<object>(ConvertString2EventData(JsonConvert.SerializeObject(arg)));
+            return Task.FromResult<object>(ConvertStringToEventData(JsonConvert.SerializeObject(arg)));
         }
     }
 }
