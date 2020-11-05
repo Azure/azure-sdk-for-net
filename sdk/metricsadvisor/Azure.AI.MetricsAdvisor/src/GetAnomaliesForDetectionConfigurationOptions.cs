@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
     /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/>
