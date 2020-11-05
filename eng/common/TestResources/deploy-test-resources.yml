@@ -49,12 +49,13 @@ steps:
       $subscriptionConfiguration.ArmTemplateParameters = ${{ parameters.ArmTemplateParameters }} ? ${{ parameters.ArmTemplateParameters }} : @{}
 
       # Support additional sdk pipeline and/or platform specific arm template parameters:
-      #   EnableHsm:
-      #     Value: true
-      #     Platforms:
-      #       - Linux_NetCore_Keyring
-      #   TestGlobalParam:
-      #     Value: global foo
+      #   ArmTemplateParameters:
+      #     EnableHsm:
+      #       Value: true
+      #       Platforms:
+      #         - Linux_NetCore_Keyring
+      #     TestGlobalParam:
+      #       Value: global foo
       # For duplicate keys, prefer the template/script parameter.
       $platformArmTemplateParameters = @'
         ${{ parameters.PlatformArmTemplateParameters }}
