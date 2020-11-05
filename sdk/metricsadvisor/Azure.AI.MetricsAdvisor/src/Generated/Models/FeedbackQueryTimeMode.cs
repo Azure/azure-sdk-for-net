@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> time mode to filter feedback. </summary>
     public readonly partial struct FeedbackQueryTimeMode : IEquatable<FeedbackQueryTimeMode>

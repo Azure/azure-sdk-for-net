@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The GetEnrichmentStatusesOptions. </summary>
     public class GetMetricEnrichmentStatusesOptions
@@ -19,6 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> the start point of time range to query anomaly detection status. </summary>
         public DateTimeOffset StartTime { get; }
+
         /// <summary> the end point of time range to query anomaly detection status. </summary>
         public DateTimeOffset EndTime { get; }
 

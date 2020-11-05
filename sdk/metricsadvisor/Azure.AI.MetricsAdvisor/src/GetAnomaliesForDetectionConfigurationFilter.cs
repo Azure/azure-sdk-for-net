@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
     /// Filters the result of the <see cref="MetricsAdvisorClient.GetAnomalies(string, GetAnomaliesForDetectionConfigurationOptions, CancellationToken)"/> and

@@ -1,20 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.MetricsAdvisor.Administration;
+using System.Threading;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorAdministrationClient.GetHooks"/> or
-    /// <see cref="MetricsAdvisorAdministrationClient.GetHooksAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetIncidents(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetIncidentsAsync(string, string, GetIncidentsForAlertOptions, CancellationToken)"/>
+    /// to configure the behavior of the request.
     /// </summary>
-    public class GetHooksOptions
+    public class GetIncidentsForAlertOptions
     {
         /// <summary>
-        /// The name of the hook to filter on.
+        /// Initializes a new instance of the <see cref="GetIncidentsForAlertOptions"/> class.
         /// </summary>
-        public string HookNameFilter { get; set; }
+        public GetIncidentsForAlertOptions()
+        {
+        }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

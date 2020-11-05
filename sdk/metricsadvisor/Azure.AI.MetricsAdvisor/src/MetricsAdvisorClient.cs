@@ -63,7 +63,7 @@ namespace Azure.AI.MetricsAdvisor
         {
         }
 
-        #region Metrics
+        #region TimeSeries
 
         /// <summary>
         /// Gets the possible values a <see cref="DataFeedDimension"/> can assume for a specified <see cref="DataFeedMetric"/>.
@@ -499,7 +499,7 @@ namespace Azure.AI.MetricsAdvisor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #endregion Metrics
+        #endregion TimeSeries
 
         #region MetricFeedback
 
@@ -1349,7 +1349,7 @@ namespace Azure.AI.MetricsAdvisor
 
         #endregion AnomalyDetection
 
-        #region AlertDetection
+        #region AlertTriggering
 
         /// <summary>
         /// Gets a collection of items describing the alerts triggered by a given <see cref="AnomalyAlertConfiguration"/>.
@@ -1691,6 +1691,6 @@ namespace Azure.AI.MetricsAdvisor
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #endregion AlertDetection
+        #endregion AlertTriggering
     }
 }

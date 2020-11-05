@@ -965,7 +965,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         #endregion AnomalyDetectionConfiguration
 
-        #region AnomalyAlertingConfiguration
+        #region AnomalyAlertConfiguration
 
         /// <summary>
         /// Creates an <see cref="AnomalyAlertConfiguration"/> and assigns it a unique ID.
@@ -1283,9 +1283,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        #endregion AnomalyAlertingConfiguration
+        #endregion AnomalyAlertConfiguration
 
-        #region Hook
+        #region NotificationHook
 
         /// <summary>
         /// Creates a <see cref="NotificationHook"/> and assigns it a unique ID.
@@ -1639,6 +1639,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #endregion Hook
+        #endregion NotificationHook
     }
 }

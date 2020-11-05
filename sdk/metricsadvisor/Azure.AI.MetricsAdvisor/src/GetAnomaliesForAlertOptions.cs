@@ -1,25 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.MetricsAdvisor.Models
+using System.Threading;
+
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetDimensionValues"/>
-    /// or <see cref="MetricsAdvisorClient.GetDimensionValuesAsync"/> to configure the behavior of the request.
+    /// The set of options that can be specified when calling <see cref="MetricsAdvisorClient.GetAnomalies(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>
+    /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/> to configure the behavior of the request.
     /// </summary>
-    public class GetDimensionValuesOptions
+    public class GetAnomaliesForAlertOptions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetDimensionValuesOptions"/> class.
+        /// Initializes a new instance of the <see cref="GetAnomaliesForAlertOptions"/> class.
         /// </summary>
-        public GetDimensionValuesOptions()
+        public GetAnomaliesForAlertOptions()
         {
         }
-
-        /// <summary>
-        /// The dimension value to be filtered.
-        /// </summary>
-        public string DimensionValueToFilter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to
