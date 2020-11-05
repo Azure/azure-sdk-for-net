@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,7 +9,7 @@ namespace Azure.Test.Stress
 {
     public abstract class StressTest<TOptions, TMetrics> : IStressTest where TOptions : StressOptions where TMetrics : StressMetrics
     {
-        protected TOptions Options { get; private set; }        
+        protected TOptions Options { get; private set; }
         protected TMetrics Metrics { get; private set; }
 
         // Convenient source of randomness for base classes
