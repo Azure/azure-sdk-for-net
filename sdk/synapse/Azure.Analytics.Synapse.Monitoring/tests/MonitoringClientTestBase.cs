@@ -16,9 +16,6 @@ namespace Azure.Analytics.Synapse.Tests.Monitoring
 
         protected MonitoringClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()

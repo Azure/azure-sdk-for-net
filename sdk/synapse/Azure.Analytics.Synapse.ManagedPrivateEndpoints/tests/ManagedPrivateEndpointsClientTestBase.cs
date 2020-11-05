@@ -16,9 +16,6 @@ namespace Azure.Analytics.Synapse.Tests.ManagedPrivateEndpoints
 
         protected ManagedPrivateEndpointsClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()

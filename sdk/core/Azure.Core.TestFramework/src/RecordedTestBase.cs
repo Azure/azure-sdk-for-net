@@ -34,16 +34,27 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-#if DEBUG
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
         /// and debug/re-run at the point of failure without re-running
         /// potentially lengthy live tests.  This should never be checked in
-        /// and will be compiled out of release builds to help make that easier
+        /// and will throw an exception from CI builds to help make that easier
         /// to spot.
         /// </summary>
-        public bool SaveDebugRecordingsOnFailure { get; set; } = false;
-#endif
+        public bool SaveDebugRecordingsOnFailure
+        {
+            get => _saveDebugRecordingsOnFailure;
+            set
+            {
+                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
+                {
+                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
+                }
+
+                _saveDebugRecordingsOnFailure = value;
+            }
+        }
+        private bool _saveDebugRecordingsOnFailure;
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {

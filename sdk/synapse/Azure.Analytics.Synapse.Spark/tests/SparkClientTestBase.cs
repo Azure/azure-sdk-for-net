@@ -19,9 +19,6 @@ namespace Azure.Analytics.Synapse.Spark.Tests
 
         protected SparkClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()

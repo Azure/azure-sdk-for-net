@@ -26,9 +26,6 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
 
         protected ArtifactsClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()
