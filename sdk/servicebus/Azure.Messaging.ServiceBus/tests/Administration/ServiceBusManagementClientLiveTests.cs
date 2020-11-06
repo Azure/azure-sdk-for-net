@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -33,14 +34,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     GetConnectionString(),
-                    Recording.InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
 
         private ServiceBusAdministrationClient GetAADClient() =>
             InstrumentClient(
                 new ServiceBusAdministrationClient(
                     TestEnvironment.FullyQualifiedNamespace,
                     GetTokenCredential(),
-                    Recording.InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+
+        private ServiceBusAdministrationClient GetSharedKeyTokenClient()
+        {
+            var properties = ServiceBusConnectionStringProperties.Parse(GetConnectionString());
+            var credential = new ServiceBusSharedAccessKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+
+            return InstrumentClient(
+                new ServiceBusAdministrationClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    credential,
+                    InstrumentClientOptions(new ServiceBusAdministrationClientOptions())));
+        }
 
         [Test]
         public async Task BasicQueueCrudOperations()
@@ -313,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 SessionId = "sessionId",
                 To = "to"
             };
-            correlationRuleFilter.Properties.Add("customKey", "customValue");
+            correlationRuleFilter.ApplicationProperties.Add("customKey", "customValue");
             var rule3 = new CreateRuleOptions()
             {
                 Name = "rule3",
@@ -745,15 +758,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
             var filter = new CorrelationRuleFilter();
-            filter.Properties.Add("stringKey", "stringVal");
-            filter.Properties.Add("intKey", 5);
-            filter.Properties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            filter.ApplicationProperties.Add("stringKey", "stringVal");
+            filter.ApplicationProperties.Add("intKey", 5);
+            filter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
 
             RuleProperties rule = await client.CreateRuleAsync(
                 topicName,
                 subscriptionName,
                 new CreateRuleOptions("rule1", filter));
-            Assert.True(filter.Properties.Count == 3);
+            Assert.True(filter.ApplicationProperties.Count == 3);
             Assert.AreEqual(filter, rule.Filter);
 
             await client.DeleteTopicAsync(topicName);
@@ -776,6 +789,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = GetAADClient();
+
+            var queueOptions = new CreateQueueOptions(queueName);
+            QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
+
+            Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+
+            var topicOptions = new CreateTopicOptions(topicName);
+            TopicProperties createdTopic = await client.CreateTopicAsync(topicOptions);
+
+            Assert.AreEqual(topicOptions, new CreateTopicOptions(createdTopic));
+
+            await client.DeleteQueueAsync(queueName);
+            await client.DeleteTopicAsync(topicName);
+        }
+
+        [Test]
+        public async Task AuthenticateWithSharedKeyCredential()
+        {
+            var queueName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var topicName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
+            var client = GetSharedKeyTokenClient();
 
             var queueOptions = new CreateQueueOptions(queueName);
             QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = TagCount.DeserializeTagCount(property.Value);
                     continue;
                 }

@@ -28,7 +28,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
-        /// <param name="certificate">The PFX or ASCII PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
+        /// <param name="certificate">The PFX or ASCII PEM-formatted value of the certificate containing both the X.509 certificates and the private key.</param>
+        /// <remarks>
+        /// If importing an ASCII PEM-formatted certificate, you must also create a <see cref="CertificatePolicy"/> with <see cref="CertificatePolicy.ContentType"/>
+        /// set to <see cref="CertificateContentType.Pem"/>, and set the <see cref="Policy"/> property. If the <see cref="Policy"/> property or
+        /// <see cref="CertificatePolicy.ContentType"/> property is not set, <see cref="CertificateContentType.Pkcs12"/> is assumed and the import will fail.
+        /// </remarks>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
         public ImportCertificateOptions(string name, byte[] certificate)
@@ -46,13 +51,16 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { get; }
 
         /// <summary>
-        /// Gets the PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.
+        /// Gets the PFX or ASCII PEM-formatted value of the certificate containing both the X.509 certificates and the private key.
         /// </summary>
         public byte[] Certificate { get; }
 
         /// <summary>
-        /// Gets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
+        /// Gets or sets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
         /// </summary>
+        /// <remarks>
+        /// If setting the policy, <see cref="CertificatePolicy.ContentType"/> must be set to a valid <see cref="CertificateContentType"/> value.
+        /// </remarks>
         public CertificatePolicy Policy { get; set; }
 
         /// <summary>

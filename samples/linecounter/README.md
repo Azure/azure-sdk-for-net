@@ -18,7 +18,7 @@ The Event Hubs Processor receives the event, and then the app downloads the blob
 
 # Configuration
 
-To run the sample set the following configuration properties using manage user secrets command in VS or user secrets command line https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows#set-a-secret
+To run the sample set the following configuration properties using manage user secrets command in VS or user secrets command line https://docs.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=windows#set-a-secret
 
 ``` json
 {

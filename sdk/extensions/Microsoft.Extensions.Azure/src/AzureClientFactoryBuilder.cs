@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -23,9 +25,6 @@ namespace Microsoft.Extensions.Azure
         internal AzureClientFactoryBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection;
-            _serviceCollection.AddOptions();
-            _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
-            _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<>), typeof(FallbackAzureClientFactory<>));
         }
 
         IAzureClientBuilder<TClient, TOptions> IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
@@ -128,18 +127,5 @@ namespace Microsoft.Extensions.Azure
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.CredentialFactory = tokenCredentialFactory);
             return this;
         }
-
-        /// <summary>
-        /// Sets the configuration instance that is used to resolve clients that were not explicitly registered.
-        /// </summary>
-        /// <param name="configurationProvider">The delegate that returns a configuration instance that's used to resolve client configuration from.</param>
-        /// <returns>This instance.</returns>
-        public AzureClientFactoryBuilder UseConfiguration(Func<IServiceProvider, IConfiguration> configurationProvider)
-        {
-            _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigurationRootResolver = configurationProvider);
-
-            return this;
-        }
-
     }
 }

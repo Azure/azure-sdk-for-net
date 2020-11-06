@@ -41,20 +41,6 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
-        ///
-        internal CreateBatchOptions Clone() =>
-            new CreateBatchOptions
-            {
-                PartitionId = PartitionId,
-                PartitionKey = PartitionKey,
-                _maximumSizeInBytes = MaximumSizeInBytes
-            };
-
-        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -82,5 +68,19 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
+        ///
+        internal new CreateBatchOptions Clone() =>
+            new CreateBatchOptions
+            {
+                PartitionId = PartitionId,
+                PartitionKey = PartitionKey,
+                _maximumSizeInBytes = _maximumSizeInBytes
+            };
     }
 }

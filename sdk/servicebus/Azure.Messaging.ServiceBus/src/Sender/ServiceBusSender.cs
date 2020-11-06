@@ -65,11 +65,6 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
 
         /// <summary>
-        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
-        /// </summary>
-        public string ViaEntityPath { get; }
-
-        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
@@ -122,13 +117,11 @@ namespace Azure.Messaging.ServiceBus
 
                 options = options?.Clone() ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
-                ViaEntityPath = options.ViaQueueOrTopicName;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
-                    ViaEntityPath,
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
@@ -350,6 +343,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            if (messageBatch.Count == 0)
+            {
+                return;
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(

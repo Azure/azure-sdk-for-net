@@ -12,19 +12,12 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ChainedTokenCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ChainedTokenCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
         public ChainedTokenCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
             TestDiagnostics = false;
         }
 
@@ -57,14 +50,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task ChainedTokenCredential_UseVisualStudioCodeCredential()
         {
             var cloudName = Guid.NewGuid().ToString();
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService(new TestProcess { Error = "Error" });
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
@@ -89,14 +82,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore2_keyring" })]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task ChainedTokenCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
             var cloudName = Guid.NewGuid().ToString();
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment, cloudName);
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
-            var vscOptions = Recording.InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
+            var vscOptions = InstrumentClientOptions(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId });
 
             var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
             var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
@@ -209,7 +202,35 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ChainedTokenCredential_AllCredentialsHaveFailed_AuthenticationFailedException()
+        [NonParallelizable]
+        public void ChainedTokenCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
+        {
+            using var endpoint = new TestEnvVar("MSI_ENDPOINT", "abc");
+
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var fileSystem = new TestFileSystemService();
+            var processService = new TestProcessService(new TestProcess {Error = "Error"});
+
+            var miCredential = new ManagedIdentityCredential(EnvironmentVariables.ClientId);
+            var vsCredential = new VisualStudioCredential(default, default, fileSystem, processService);
+            var vscCredential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = TestEnvironment.TestTenantId }, default, default, fileSystem, vscAdapter);
+            var azureCliCredential = new AzureCliCredential(CredentialPipeline.GetInstance(null), processService);
+
+            var credential = InstrumentClient(new ChainedTokenCredential(miCredential, vsCredential, vscCredential, azureCliCredential));
+
+            List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
+            using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
+            {
+                Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {"https://vault.azure.net/.default"}), CancellationToken.None));
+                scopes = diagnosticListener.Scopes;
+            }
+
+            Assert.AreEqual(1, scopes.Count);
+            Assert.AreEqual($"{nameof(ManagedIdentityCredential)}.{nameof(ManagedIdentityCredential.GetToken)}", scopes[0].Name);
+        }
+
+        [Test]
+        public void ChainedTokenCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
             var fileSystem = new TestFileSystemService();

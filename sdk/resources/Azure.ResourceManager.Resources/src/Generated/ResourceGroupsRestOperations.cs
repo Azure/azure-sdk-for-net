@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -74,9 +75,16 @@ namespace Azure.ResourceManager.Resources
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -86,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group to check. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<bool> CheckExistence(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -97,9 +105,16 @@ namespace Azure.ResourceManager.Resources
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -119,6 +134,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -204,6 +220,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -266,6 +283,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(resourceGroupName, true);
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -337,6 +355,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -422,6 +441,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -504,6 +524,7 @@ namespace Azure.ResourceManager.Resources
             }
             uri.AppendQuery("api-version", "2019-10-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -560,6 +581,7 @@ namespace Azure.ResourceManager.Resources
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

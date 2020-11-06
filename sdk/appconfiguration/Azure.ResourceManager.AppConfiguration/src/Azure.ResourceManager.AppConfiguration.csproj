@@ -8,6 +8,5 @@
     </Description>
     <PackageTags>azure;management;appconfiguration</PackageTags>
     <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
-    <TemporaryUsePreviousGeneratorVersion>true</TemporaryUsePreviousGeneratorVersion>
   </PropertyGroup>
 </Project>

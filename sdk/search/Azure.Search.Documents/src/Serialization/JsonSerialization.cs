@@ -10,11 +10,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 #if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
+using Azure.Core.GeoJson;
 #endif
 using Azure.Search.Documents.Models;
 
@@ -44,7 +42,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
 #if EXPERIMENTAL_SPATIAL
-            options.Converters.Add(new GeometryJsonConverter());
+            options.Converters.Add(new GeoJsonConverter());
 #endif
             return options;
         }
@@ -164,8 +162,8 @@ namespace Azure.Search.Documents
                         double longitude = coords[0];
                         double latitude = coords[1];
                         double? altitude = coords.Length == 3 ? (double?)coords[2] : null;
-                        // TODO: Should we also pull in other PointGeometry properties?
-                        return new PointGeometry(new GeometryPosition(longitude, latitude, altitude));
+                        // TODO: Should we also pull in other PointGeography properties?
+                        return new GeoPoint(new GeoPosition(longitude, latitude, altitude));
                     }
 #endif
                     return dictionary;
@@ -256,8 +254,8 @@ namespace Azure.Search.Documents
                         Utf8JsonReader clone = reader;
                         try
                         {
-                            GeometryJsonConverter converter = new GeometryJsonConverter();
-                            PointGeometry point = converter.Read(ref clone, typeof(PointGeometry), options) as PointGeometry;
+                            GeoJsonConverter converter = new GeoJsonConverter();
+                            GeoPoint point = converter.Read(ref clone, typeof(GeoPoint), options) as GeoPoint;
                             if (point != null)
                             {
                                 reader = clone;
@@ -349,9 +347,7 @@ namespace Azure.Search.Documents
         /// <returns>A deserialized object.</returns>
         public static async Task<T> DeserializeAsync<T>(
             this Stream json,
-#if EXPERIMENTAL_SERIALIZER
             ObjectSerializer serializer,
-#endif
             bool async,
             CancellationToken cancellationToken)
         #pragma warning restore CS1572
@@ -360,14 +356,12 @@ namespace Azure.Search.Documents
             {
                 return default;
             }
-#if EXPERIMENTAL_SERIALIZER
             else if (serializer != null)
             {
                 return async ?
                     (T)await serializer.DeserializeAsync(json, typeof(T), cancellationToken).ConfigureAwait(false) :
                     (T)serializer.Deserialize(json, typeof(T), cancellationToken);
             }
-#endif
             else if (async)
             {
                 return await JsonSerializer.DeserializeAsync<T>(

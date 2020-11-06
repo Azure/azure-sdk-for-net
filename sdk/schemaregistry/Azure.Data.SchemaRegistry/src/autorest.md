@@ -1,7 +1,9 @@
 # Generated code configuration
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-require: https://github.com/Azure/azure-rest-api-specs/blob/a90b9146e543d3eec11381bd52d3b6ff271b1b78/specification/schemaregistry/data-plane/readme.md
+# From github.com/Azure/azure-rest-api-specs/tree/arerlend.sr.init
+# require: https://github.com/Azure/azure-rest-api-specs/blob/1e23d91e875e4464e57667639e06408cef99868d/specification/schemaregistry/data-plane/readme.md
+input-file: schemaregistry.json
 ```

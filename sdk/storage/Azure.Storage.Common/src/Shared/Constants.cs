@@ -11,6 +11,7 @@ namespace Azure.Storage
         public const int MB = KB * 1024;
         public const int GB = MB * 1024;
         public const long TB = GB * 1024L;
+        public const int Base16 = 16;
 
         public const int MaxReliabilityRetries = 5;
 
@@ -23,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2019-12-12";
+        public const string DefaultSasVersion = "2020-02-10";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -69,7 +70,10 @@ namespace Azure.Storage
 
         // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
         // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
-        public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormatSeconds = "yyyy-MM-ddTHH:mm:ssZ";
+        public const string SasTimeFormatSubSeconds = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+        public const string SasTimeFormatMinutes = "yyyy-MM-ddTHH:mmZ";
+        public const string SasTimeFormatDays = "yyyy-MM-dd";
 
         public const string SnapshotParameterName = "snapshot";
         public const string VersionIdParameterName = "versionid";
@@ -80,6 +84,9 @@ namespace Azure.Storage
 
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
+
+        public const string FalseName = "false";
+        public const string TrueName = "true";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -188,6 +195,7 @@ namespace Azure.Storage
 
             internal static class Container
             {
+                public const string Name = "Blob Container";
                 /// <summary>
                 /// The Azure Storage name used to identify a storage account's root container.
                 /// </summary>
@@ -233,7 +241,7 @@ namespace Azure.Storage
                 /// <summary>
                 /// Lease Duration is set as infinite when passed -1.
                 /// </summary>
-                public const int InfiniteLeaseDuration = -1;
+                public const long InfiniteLeaseDuration = -1;
             }
 
             internal static class Errors
@@ -243,6 +251,11 @@ namespace Azure.Storage
 
                 public const string LeaseNotPresentWithFileOperation =
                     "LeaseNotPresentWithFileOperation";
+            }
+
+            internal static class Share
+            {
+                public const string Name = "Share";
             }
         }
 
@@ -302,6 +315,8 @@ namespace Azure.Storage
             /// Metadata key for isFolder property.
             /// </summary>
             public const string IsDirectoryKey = "hdi_isFolder";
+
+            public const string FileSystemName = "FileSystem";
         }
 
         /// <summary>
@@ -394,11 +409,12 @@ namespace Azure.Storage
             public const string ErrorRecordName = "com.microsoft.azure.storage.queryBlobContents.error";
             public const string EndRecordName = "com.microsoft.azure.storage.queryBlobContents.end";
 
-            internal static class Errors
-            {
-                public const string InvalidTextConfigurationType
-                    = "Invalid text configuration type.  Must be CvsTextConfiguration or JsonTextConfiguration.";
-            }
+            public const string ArrowFieldTypeInt64 = "int64";
+            public const string ArrowFieldTypeBool = "bool";
+            public const string ArrowFieldTypeTimestamp = "timestamp[ms]";
+            public const string ArrowFieldTypeString = "string";
+            public const string ArrowFieldTypeDouble = "double";
+            public const string ArrowFieldTypeDecimal = "decimal";
         }
 
         /// <summary>
@@ -419,6 +435,10 @@ namespace Azure.Storage
                 public const char Create = 'c';
                 public const char Tag = 't';
                 public const char FilterByTags = 'f';
+                public const char Move = 'm';
+                public const char Execute = 'e';
+                public const char ManageOwnership = 'o';
+                public const char ManageAccessControl = 'p';
             }
 
             internal static class Parameters
@@ -467,6 +487,14 @@ namespace Azure.Storage
                 public const string ContentLanguageUpper = "RSCL";
                 public const string ContentType = "rsct";
                 public const string ContentTypeUpper = "RSCT";
+                public const string PreauthorizedAgentObjectId = "saoid";
+                public const string PreauthorizedAgentObjectIdUpper = "SAOID";
+                public const string AgentObjectId = "suoid";
+                public const string AgentObjectIdUpper = "SUOID";
+                public const string CorrelationId = "scid";
+                public const string CorrelationIdUpper = "SCID";
+                public const string DirectoryDepth = "sdd";
+                public const string DirectoryDepthUpper = "SDD";
             }
 
             internal static class Resource
@@ -477,6 +505,7 @@ namespace Azure.Storage
                 public const string Container = "c";
                 public const string File = "f";
                 public const string Share = "s";
+                public const string Directory = "d";
             }
 
             internal static class AccountServices
@@ -493,6 +522,29 @@ namespace Azure.Storage
                 public const char Container = 'c';
                 public const char Object = 'o';
             }
+
+            public static readonly List<char> ValidPermissionsInOrder = new List<char>
+            {
+                Sas.Permissions.Read,
+                Sas.Permissions.Add,
+                Sas.Permissions.Create,
+                Sas.Permissions.Write,
+                Sas.Permissions.Delete,
+                Sas.Permissions.DeleteBlobVersion,
+                Sas.Permissions.List,
+                Sas.Permissions.Tag,
+                Sas.Permissions.Update,
+                Sas.Permissions.Process,
+                Sas.Permissions.FilterByTags,
+                Sas.Permissions.Move,
+                Sas.Permissions.Execute
+            };
+
+            /// <summary>
+            /// List of ports used for path style addressing.
+            /// Copied from Microsoft.Azure.Storage.Core.Util
+            /// </summary>
+            internal static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
         }
 
         internal static class ClientSideEncryption

@@ -56,8 +56,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             Resource = eventHubResource;
 
             IsSharedAccessSignatureCredential =
-                (tokenCredential is EventHubSharedKeyCredential)
-                || (tokenCredential is SharedAccessSignatureCredential)
+                (tokenCredential is SharedAccessSignatureCredential)
                 || ((tokenCredential as EventHubTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 

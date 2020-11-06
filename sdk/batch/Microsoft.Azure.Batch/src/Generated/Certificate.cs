@@ -206,8 +206,8 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// This property is set when creating a new <see cref="Certificate"/> from .pfx format data (see <see cref="CertificateOperations.CreateCertificateFromPfx(byte[], 
-        /// string)"/> and <see cref="CertificateOperations.CreateCertificateFromPfx(string, string)"/>). It is not defined for 
-        /// certificates retrieved from the Batch service.
+        /// string)"/> and <see cref="CertificateOperations.CreateCertificateFromPfx(string, string)"/>). It is not defined 
+        /// for certificates retrieved from the Batch service.
         /// </remarks>
         public string Password
         {

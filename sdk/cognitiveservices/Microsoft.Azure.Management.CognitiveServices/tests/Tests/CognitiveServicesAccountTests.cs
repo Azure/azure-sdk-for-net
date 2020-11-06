@@ -964,6 +964,9 @@ namespace CognitiveServices.Tests
                     Assert.Equal("account", plResouces.Value[0].Properties?.GroupId);
                     Assert.Null(pec);
 
+                    var plConnections = cognitiveServicesMgmtClient.PrivateEndpointConnections.List(rgname, accountName);
+                    Assert.True(plConnections.Value.Count == 0);
+
                 }
             }
         }

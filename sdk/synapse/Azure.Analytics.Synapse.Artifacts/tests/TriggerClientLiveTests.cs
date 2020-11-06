@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using NUnit.Framework;
 
@@ -38,23 +39,23 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
         [Test]
         public async Task TestCreateTrigger()
         {
-            var operation = await TriggerClient.StartCreateOrUpdateTriggerAsync("MyTrigger", new TriggerResource(new Trigger()));
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual("MyTrigger", operation.Value.Name);
+            string triggerName = Recording.GenerateName("Trigger");
+            TriggerCreateOrUpdateTriggerOperation operation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new Trigger()));
+            TriggerResource trigger = await operation.WaitForCompletionAsync();
+            Assert.AreEqual(triggerName, trigger.Name);
         }
 
         [Test]
         public async Task TestDeleteTrigger()
         {
-            var operation = await TriggerClient.StartDeleteTriggerAsync("MyTrigger");
-            while (!operation.HasValue)
-            {
-                operation.UpdateStatus();
-            }
-            Assert.AreEqual(200, operation.Value.Status);
+            string triggerName = Recording.GenerateName("Trigger");
+
+            TriggerCreateOrUpdateTriggerOperation createOperation = await TriggerClient.StartCreateOrUpdateTriggerAsync(triggerName, new TriggerResource(new Trigger()));
+            await createOperation.WaitForCompletionAsync();
+
+            TriggerDeleteTriggerOperation deleteOperation = await TriggerClient.StartDeleteTriggerAsync(triggerName);
+            Response response = await deleteOperation.WaitForCompletionAsync();
+            Assert.AreEqual(200, response.Status);
         }
     }
 }

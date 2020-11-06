@@ -41,14 +41,11 @@ The simpliest way is to use the [Azure portal][azure_portal] and navigate to you
 
 Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
 
-```C# Snippet:CreateSchemaRegistryClient
-string endpoint = "<event_hubs_namespace_hostname>";
-var credentials = new ClientSecretCredential(
-    "<tenant_id>",
-    "<client_id>",
-    "<client_secret>"
-);
-var client = new SchemaRegistryClient(endpoint, credentials);
+```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
+// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
+// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
+// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+var client = new SchemaRegistryClient(endpoint: endpoint, credential: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -77,9 +74,8 @@ The following shows examples of what is available through the SchemaRegistryClie
 
 Register a schema to be stored in the Azure Schema Registry.
 
-```C# Snippet:RegisterSchema
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+```C# Snippet:SchemaRegistryRegisterSchema
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -100,9 +96,8 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, s
 
 Retrieve a previously registered schema ID from the Azure Schema Registry.
 
-```C# Snippet:RetrieveSchemaId
-string schemaName = "<schema_name>";
-string groupName = "<schema_group_name>";
+```C# Snippet:SchemaRegistryRetrieveSchemaId
+string schemaName = "employeeSample";
 SerializationType schemaType = SerializationType.Avro;
 // Example schema's content
 string schemaContent = @"
@@ -124,9 +119,7 @@ string schemaId = schemaProperties.Value.Id;
 
 Retrieve a previously registered schema's content from the Azure Schema Registry.
 
-```C# Snippet:RetrieveSchema
-string schemaId = "<schema_id>";
-
+```C# Snippet:SchemaRegistryRetrieveSchema
 Response<SchemaProperties> schemaProperties = client.GetSchema(schemaId);
 string schemaContent = schemaProperties.Value.Content;
 ```
@@ -151,13 +144,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/en-us/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://docs.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/master/doc/mgmt_preview_quickstart.md
-[schema_registry_client]: src/SchemaRegistryClient.cs
+[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
-[schema_properties]: src/SchemaProperties.cs
+[schema_properties]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaProperties.cs
 [azure_identity]: https://www.nuget.org/packages/Azure.Identity
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

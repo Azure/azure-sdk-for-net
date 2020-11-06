@@ -52,6 +52,11 @@ namespace Azure.Storage.Queues.Models
         /// A <see cref="RequestFailedException"/>.
         /// </returns>
         public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null, response.GetErrorCode(Code), AdditionalInformation);
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                response,
+                message: Message,
+                content: null,
+                response.GetErrorCode(Code),
+                AdditionalInformation);
     }
 }

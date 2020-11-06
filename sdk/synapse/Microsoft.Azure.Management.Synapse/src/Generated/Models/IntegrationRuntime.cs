@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// Azure Synapse nested object which serves as a compute resource for
     /// activities.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("IntegrationRuntime")]
     public partial class IntegrationRuntime
     {
         /// <summary>

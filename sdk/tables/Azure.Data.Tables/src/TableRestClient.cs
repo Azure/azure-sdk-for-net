@@ -5,7 +5,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +22,7 @@ namespace Azure.Data.Tables
         internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
         internal string endpoint => url;
         internal string clientVersion => version;
+        private static readonly Regex s_entityIndexRegex = new Regex(@"""value"":""(?<index>[\d]+):", RegexOptions.Compiled);
 
         internal HttpMessage CreateBatchRequest(MultipartContent content, string requestId, ResponseFormat? responsePreference)
         {
@@ -51,29 +55,8 @@ namespace Azure.Data.Tables
             return new MultipartContent("mixed", $"batch_{guid}");
         }
 
-        internal HttpMessage AddInsertEntityRequest(MultipartContent changeset, string table, int? timeout, string requestId, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
-        {
-            var message = CreateInsertEntityRequest(table, timeout, requestId, responsePreference, tableEntityProperties, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
-        internal HttpMessage AddUpdateEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, int? timeout, string requestId, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
-        {
-            var message = CreateUpdateEntityRequest(table, partitionKey, rowKey, timeout, requestId, ifMatch, tableEntityProperties, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
-        internal HttpMessage AddDeleteEntityRequest(MultipartContent changeset, string table, string partitionKey, string rowKey, string ifMatch, int? timeout, string requestId, QueryOptions queryOptions)
-        {
-            var message = CreateDeleteEntityRequest(table, partitionKey, rowKey, ifMatch, timeout, requestId, queryOptions);
-            changeset.AddContent(new RequestRequestContent(message.Request));
-            return message;
-        }
-
-        /// <summary> Insert entity in a table. </summary>
-        /// <param name="message"></param>
+        /// <summary> Submits a batch operation to a table. </summary>
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
@@ -91,8 +74,35 @@ namespace Azure.Data.Tables
                         var responses = await Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            true,
+                            expectBoundariesWithCRLF: false,
+                            async: true,
                             cancellationToken).ConfigureAwait(false);
+
+                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        {
+                            // Batch error messages should be formatted as follows:
+                            // "0:<some error message>"
+                            // where the number prefix is the index of the sub request that failed.
+                            var ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
+
+                            //Get the failed index
+                            var match = s_entityIndexRegex.Match(ex.Message);
+
+                            if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
+                            {
+                                // create a new exception with the additional info populated.
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
+                                throw rfe;
+                            }
+                            else
+                            {
+                                throw ex;
+                            }
+                        }
 
                         return Response.FromValue(responses.ToList(), message.Response);
                     }
@@ -101,8 +111,8 @@ namespace Azure.Data.Tables
             }
         }
 
-        /// <summary> Insert entity in a table. </summary>
-        /// <param name="message"></param>
+        /// <summary> Submits a batch operation to a table. </summary>
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
@@ -120,14 +130,47 @@ namespace Azure.Data.Tables
                         var responses = Multipart.ParseAsync(
                             message.Response.ContentStream,
                             message.Response.Headers.ContentType,
-                            false,
+                            expectBoundariesWithCRLF: false,
+                            async: false,
                             cancellationToken).EnsureCompleted();
+
+                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        {
+                            // Batch error messages should be formatted as follows:
+                            // "0:<some error message>"
+                            // where the number prefix is the index of the sub request that failed.
+                            var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+
+                            //Get the failed index
+                            var match = s_entityIndexRegex.Match(ex.Message);
+
+                            if (match.Success && int.TryParse(match.Groups["index"].Value, out int failedEntityIndex))
+                            {
+                                // create a new exception with the additional info populated.
+                                // reset the response stream position so we can read it again
+                                var appendedMessage = AppendEntityInfoToMessage(ex.Message);
+                                var rfe = new RequestFailedException(ex.Status, appendedMessage, ex.ErrorCode, ex.InnerException);
+
+                                // Serialization of the entity is necessary because .NET framework enforces types added to Data as being serializable.
+                                rfe.Data[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex;
+                                throw rfe;
+                            }
+                            else
+                            {
+                                throw ex;
+                            }
+                        }
 
                         return Response.FromValue(responses.ToList(), message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
+        }
+
+        private static string AppendEntityInfoToMessage(string messsage)
+        {
+            return messsage += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionalBatch.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
         }
     }
 }

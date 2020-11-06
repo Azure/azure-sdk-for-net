@@ -18,7 +18,7 @@ namespace Azure.Identity
     {
         private const string AggregateAllUnavailableErrorMessage = "The ChainedTokenCredential failed to retrieve a token from the included credentials.";
 
-        private const string AggregateCredentialFailedErrorMessage = "The ChainedTokenCredential failed due to an unhandled exception: ";
+        private const string AuthenticationFailedErrorMessage = "The ChainedTokenCredential failed due to an unhandled exception: ";
 
         private readonly TokenCredential[] _sources;
 
@@ -55,7 +55,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -64,7 +64,7 @@ namespace Azure.Identity
             => GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called automatically by Azure SDK client libraries. You may call this method directly, but you must also handle token caching and token refreshing.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -77,7 +77,7 @@ namespace Azure.Identity
             var groupScopeHandler = new ScopeGroupHandler(default);
             try
             {
-                List<Exception> exceptions = new List<Exception>();
+                List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
                 foreach (TokenCredential source in _sources)
                 {
                     try
@@ -88,18 +88,17 @@ namespace Azure.Identity
                         groupScopeHandler.Dispose(default, default);
                         return token;
                     }
-                    catch (AuthenticationFailedException e)
+                    catch (CredentialUnavailableException e)
                     {
                         exceptions.Add(e);
                     }
-                    catch (Exception e) when (!(e is OperationCanceledException))
+                    catch (Exception e) when (!cancellationToken.IsCancellationRequested)
                     {
-                        exceptions.Add(e);
-                        throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, exceptions);
+                        throw new AuthenticationFailedException(AuthenticationFailedErrorMessage + e.Message, e);
                     }
                 }
 
-                throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, exceptions);
+                throw CredentialUnavailableException.CreateAggregateException(AggregateAllUnavailableErrorMessage, exceptions);
             }
             catch (Exception exception)
             {

@@ -114,5 +114,18 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="SendEventOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="SendEventOptions" />.</returns>
+        ///
+        internal SendEventOptions Clone() =>
+            new SendEventOptions
+            {
+                PartitionId = PartitionId,
+                PartitionKey = PartitionKey
+            };
     }
 }

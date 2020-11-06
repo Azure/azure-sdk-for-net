@@ -14,13 +14,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         private readonly FieldValue_internal _fieldValue;
         private readonly IReadOnlyList<ReadResult> _readResults;
+        private readonly bool _isBusinessCard;
 
         internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults)
+            : this(fieldValue, readResults, false) { }
+
+        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult> readResults, bool isBusinessCard)
             : this()
         {
             ValueType = fieldValue.Type;
             _fieldValue = fieldValue;
             _readResults = readResults;
+            _isBusinessCard = isBusinessCard;
         }
 
         /// <summary>
@@ -102,6 +107,17 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        internal FieldValue(SelectionMarkState value)
+            : this()
+        {
+            ValueType = FieldValueType.SelectionMark;
+            ValueSelectionMark = value;
+        }
+
+        /// <summary>
         /// The data type of the field value.
         /// </summary>
         public FieldValueType ValueType { get; }
@@ -149,6 +165,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// used for mocking.
         /// </summary>
         private IReadOnlyDictionary<string, FormField> ValueDictionary { get; }
+
+        /// <summary>
+        /// The <see cref="FieldValueSelectionMark"/> value of this instance. Values are usually extracted from
+        /// <see cref="_fieldValue"/>, so this property is exclusively used for mocking.
+        /// </summary>
+        private SelectionMarkState ValueSelectionMark { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -317,7 +339,9 @@ namespace Azure.AI.FormRecognizer.Models
             List<FormField> fieldList = new List<FormField>();
             foreach (var fieldValue in _fieldValue.ValueArray)
             {
-                fieldList.Add(new FormField(null, fieldValue, _readResults));
+                // Business card has a special condition on how to calculate pages
+                // so we need to tell the FormField that it is from BusinessCards
+                fieldList.Add(new FormField(null, fieldValue, _readResults, _isBusinessCard));
             }
 
             return fieldList;
@@ -348,6 +372,31 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return fieldDictionary;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
+        public SelectionMarkState AsSelectionMarkState()
+        {
+            if (ValueType != FieldValueType.SelectionMark)
+            {
+                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
+            }
+
+            if (_fieldValue == null)
+            {
+                return ValueSelectionMark;
+            }
+
+            if (!_fieldValue.ValueSelectionMark.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueSelectionMark.Value;
         }
     }
 }

@@ -10,20 +10,19 @@ namespace Azure.AI.TextAnalytics
     /// Contains the related opinions, predicted sentiment,
     /// confidence scores and other information about an aspect of a product.
     /// An aspect of a product/service is a key component of that product/service.
-    /// For example in "The food at Hotel Foo is good", "food" is an aspect of
-    /// "Hotel Foo".
+    /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+    /// "Hotel Foo".</para>
     /// </summary>
     public readonly struct AspectSentiment
     {
         private const double _neutralValue = 0d;
 
-        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length)
+        internal AspectSentiment(TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset)
         {
             Sentiment = sentiment;
             Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, _neutralValue, negativeScore);
             Offset = offset;
-            Length = length;
         }
 
         internal AspectSentiment(SentenceAspect sentenceAspect)
@@ -34,7 +33,6 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScores = new SentimentConfidenceScores(sentenceAspect.ConfidenceScores.Positive, _neutralValue, sentenceAspect.ConfidenceScores.Negative);
             Sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentenceAspect.Sentiment, ignoreCase: true);
             Offset = sentenceAspect.Offset;
-            Length = sentenceAspect.Length;
         }
 
         /// <summary>
@@ -44,6 +42,9 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the aspect text.
+        /// <para>An aspect of a product/service is a key component of that product/service.</para>
+        /// <para>For example in "The food at Hotel Foo is good", "food" is an aspect of
+        /// "Hotel Foo".</para>
         /// </summary>
         public string Text { get; }
 
@@ -59,10 +60,5 @@ namespace Azure.AI.TextAnalytics
         /// Gets the starting position (in UTF-16 code units) for the aspect text.
         /// </summary>
         public int Offset { get; }
-
-        /// <summary>
-        /// Gets the length (in UTF-16 code units) of the aspect text.
-        /// </summary>
-        public int Length { get; }
     }
 }

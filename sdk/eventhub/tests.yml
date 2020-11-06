@@ -6,3 +6,4 @@ extends:
     MaxParallel: 6
     ServiceDirectory: eventhub
     TimeoutInMinutes: 120
+    TestCanary: true

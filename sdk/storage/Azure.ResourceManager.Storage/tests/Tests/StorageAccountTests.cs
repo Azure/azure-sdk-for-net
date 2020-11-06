@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             // Create storage account
             Sku sku = new Sku(SkuName.StandardRagrs);
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus2(stage)");
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "eastus2");
             StorageAccount account = await _CreateStorageAccountAsync(rgname, accountName, parameters);
             Assert.AreEqual(SkuName.StandardRagrs, account.Sku.Name);
             Assert.Null(account.GeoReplicationStats);
@@ -1711,7 +1711,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Sku sku = new Sku(SkuName.StandardLRS);
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku: sku, kind: Kind.StorageV2, location: "East US 2 EUAP")
             {
-                LargeFileSharesState = LargeFileSharesState.Enabled,
                 Encryption = new Encryption(keySource: KeySource.MicrosoftStorage)
                 {
                     Services = new EncryptionServices

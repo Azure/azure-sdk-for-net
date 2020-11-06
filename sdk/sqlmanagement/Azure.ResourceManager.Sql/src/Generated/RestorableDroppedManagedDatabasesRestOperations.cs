@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/restorableDroppedDatabases", false);
             uri.AppendQuery("api-version", "2017-03-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(restorableDroppedDatabaseId, true);
             uri.AppendQuery("api-version", "2017-03-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -229,6 +231,7 @@ namespace Azure.ResourceManager.Sql
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

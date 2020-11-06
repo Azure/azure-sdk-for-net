@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<bool?> KillJobOnCompletionProperty;
             public readonly PropertyAccessor<IList<OutputFile>> OutputFilesProperty;
+            public readonly PropertyAccessor<int?> RequiredSlotsProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
             public readonly PropertyAccessor<bool?> RunExclusiveProperty;
             public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.Batch
                 this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>(nameof(KillJobOnCompletion), BindingAccess.Read | BindingAccess.Write);
                 this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>(nameof(OutputFiles), BindingAccess.Read | BindingAccess.Write);
+                this.RequiredSlotsProperty = this.CreatePropertyAccessor<int?>(nameof(RequiredSlots), BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>(nameof(RunExclusive), BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
@@ -112,6 +114,10 @@ namespace Microsoft.Azure.Batch
                     OutputFile.ConvertFromProtocolCollection(protocolObject.OutputFiles),
                     nameof(OutputFiles),
                     BindingAccess.Read | BindingAccess.Write);
+                this.RequiredSlotsProperty = this.CreatePropertyAccessor(
+                    protocolObject.RequiredSlots,
+                    nameof(RequiredSlots),
+                    BindingAccess.Read);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
                     nameof(ResourceFiles),
@@ -290,6 +296,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the number of scheduling slots that the Task required to run.
+        /// </summary>
+        /// <remarks>
+        /// The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling 
+        /// slots available. For multi-instance Tasks, this must be 1.
+        /// </remarks>
+        public int? RequiredSlots
+        {
+            get { return this.propertyContainer.RequiredSlotsProperty.Value; }
+            set { this.propertyContainer.RequiredSlotsProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
@@ -365,6 +384,7 @@ namespace Microsoft.Azure.Batch
                 Id = this.Id,
                 KillJobOnCompletion = this.KillJobOnCompletion,
                 OutputFiles = UtilitiesInternal.ConvertToProtocolCollection(this.OutputFiles),
+                RequiredSlots = this.RequiredSlots,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
                 RunExclusive = this.RunExclusive,
                 UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),

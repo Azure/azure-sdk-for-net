@@ -70,31 +70,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("activityRunStart"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     activityRunStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("activityRunEnd"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     activityRunEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("durationInMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("input"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     input = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("output"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     output = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = property.Value.GetObject();
                     continue;
                 }

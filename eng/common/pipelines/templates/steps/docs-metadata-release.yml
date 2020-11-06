@@ -3,13 +3,14 @@ parameters:
   ArtifactLocation: 'not-specified'
   PackageRepository: 'not-specified'
   ReleaseSha: 'not-specified'
-  RepoId: 'not-specified'
+  RepoId: $(Build.Repository.Name)
   WorkingDirectory: ''
   ScriptDirectory: eng/common/scripts
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
-  PRBranchName: 'smoke-test-rdme'
-  SourceBranchName: 'smoke-test'
+  PRBranchName: 'master-rdme'
+  SourceBranchName: 'master'
+  PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
   DocRepoDestinationPath: '' #usually docs-ref-services/
@@ -17,6 +18,7 @@ parameters:
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
   OnboardingBranch: ''
+  CloseAfterOpenForTesting: false
 
 steps:
 - pwsh: |
@@ -81,6 +83,8 @@ steps:
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
     GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
     GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+    PRLabels: ${{ parameters.PRLabels }}
+    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -120,4 +124,5 @@ steps:
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
       GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
+      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
+      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}

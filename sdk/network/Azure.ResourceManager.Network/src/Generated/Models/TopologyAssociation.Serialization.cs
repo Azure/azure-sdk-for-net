@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("associationType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     associationType = new AssociationType(property.Value.GetString());
                     continue;
                 }

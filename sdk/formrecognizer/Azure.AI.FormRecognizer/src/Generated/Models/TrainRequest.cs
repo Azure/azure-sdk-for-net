@@ -32,5 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         public TrainingFileFilter SourceFilter { get; set; }
         /// <summary> Use label file for training a model. </summary>
         public bool? UseLabelFile { get; set; }
+        /// <summary> Optional user defined model name (max length: 1024). </summary>
+        public string ModelName { get; set; }
     }
 }

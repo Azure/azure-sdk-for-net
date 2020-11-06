@@ -3,14 +3,10 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Dns.Tests;
 using System.Collections.Generic;
-using System;
 using Azure.Core;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.Management.Dns.Tests
 {
@@ -61,7 +57,6 @@ namespace Azure.Management.Dns.Tests
                 this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
                 await Helper.TryRegisterResourceGroupAsync(ResourceGroupsOperations, this.location, this.resourceGroup);
                 var aZone = new Zone("Global");
-                aZone.ZoneType = ZoneType.Public;
                 await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, aZone);
                 setupRun = true;
 
@@ -122,7 +117,6 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
-            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocal2.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 
@@ -162,7 +156,6 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
-            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocaltoptest.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 
@@ -196,7 +189,6 @@ namespace Azure.Management.Dns.Tests
         {
             var namespaceName = Recording.GenerateAssetName("sdk-RecordSet");
             var aZone = new Zone("Global");
-            aZone.ZoneType = ZoneType.Public;
             var zoneName = "azure.ameredmondlocalNotoptest.dns";
             await ZonesOperations.CreateOrUpdateAsync(resourceGroup, zoneName, aZone);
 
@@ -205,7 +197,7 @@ namespace Azure.Management.Dns.Tests
                 new AaaaRecord {Ipv6Address = "1:1:1:1:1:ffff:783f:e6dc"},
                 new AaaaRecord {Ipv6Address = "0:0:0:0:0:ffff:403:201"},
             };
-            var recordName = "aaaa_record666";
+            var recordName = "aaaa_record66";
             var testARecordSet = new RecordSet("test_id1", recordName, "Aaaa", null, this.metadata, 3600, null, null, null, this.dummyARecords, AaaaRecords, this.dummyMxRecords,
                                                this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
 
@@ -309,7 +301,6 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task CreateGetPtr()
         {
-
             var ptrRecords = new ChangeTrackingList<PtrRecord>
             {
                 new PtrRecord {Ptrdname = "www1.scsfsm.com"},

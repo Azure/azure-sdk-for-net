@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void CreateLinkedService()
         {
             #region Snippet:CreateLinkedService
-            var operation = LinkedServiceClient.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
+            LinkedServiceCreateOrUpdateLinkedServiceOperation operation = LinkedServiceClient.StartCreateOrUpdateLinkedService("MyLinkedService", new LinkedServiceResource(new AzureDataLakeStoreLinkedService("adl://test.azuredatalakestore.net/")));
             LinkedServiceResource linkedService = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }

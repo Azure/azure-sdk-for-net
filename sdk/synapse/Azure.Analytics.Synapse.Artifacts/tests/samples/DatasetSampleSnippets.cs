@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
         public void CreateDataset()
         {
             #region Snippet:CreateDataset
-            var operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, "testsynapseworkspace-WorkspaceDefaultStorage"))));
+            DatasetCreateOrUpdateDatasetOperation operation = DatasetClient.StartCreateOrUpdateDataset("MyDataset", new DatasetResource(new Dataset(new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, TestEnvironment.WorkspaceName + "-WorkspaceDefaultStorage"))));
             DatasetResource dataset = operation.WaitForCompletionAsync().ConfigureAwait(true).GetAwaiter().GetResult();
             #endregion
         }

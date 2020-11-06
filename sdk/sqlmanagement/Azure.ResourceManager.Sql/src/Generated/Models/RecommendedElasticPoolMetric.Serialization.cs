@@ -22,16 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("dateTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("dtu"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dtu = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("sizeGB"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sizeGB = property.Value.GetDouble();
                     continue;
                 }

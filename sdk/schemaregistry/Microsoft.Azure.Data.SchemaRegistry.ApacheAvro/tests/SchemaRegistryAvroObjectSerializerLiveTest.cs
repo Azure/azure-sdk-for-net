@@ -23,17 +23,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
         private SchemaRegistryClient CreateClient() =>
             InstrumentClient(new SchemaRegistryClient(
-                TestEnvironment.SchemaRegistryUri,
+                TestEnvironment.SchemaRegistryEndpoint,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SchemaRegistryClientOptions())
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
         public async Task CanSerializeAndDeserialize()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             using var memoryStream = new MemoryStream();
@@ -48,12 +47,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, readEmployee.Age);
         }
 
-        [Ignore("The recording keeping the entire schema content string literally (including surround quotes and backslashes) causing playback to fail.")]
         [Test]
         public async Task CanSerializeAndDeserializeGenericRecord()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var record = new GenericRecord((RecordSchema)Employee._SCHEMA);
             record.Add("Name", "Caketown");
             record.Add("Age", 42);
@@ -74,7 +72,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
             var timeZoneInfo = TimeZoneInfo.Utc;
 
             using var memoryStream = new MemoryStream();
@@ -87,7 +85,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();
-            var groupName = "miyanni_srgroup";
+            var groupName = TestEnvironment.SchemaRegistryGroup;
 
             using var memoryStream = new MemoryStream();
             var serializer = new SchemaRegistryAvroObjectSerializer(client, groupName, new SchemaRegistryAvroObjectSerializerOptions { AutoRegisterSchemas = true });

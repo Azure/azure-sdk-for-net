@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
+using System.ComponentModel;
 
 namespace Azure.Core.TestFramework
 {
@@ -19,7 +20,9 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        private static readonly string RepositoryRoot;
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        public static string RepositoryRoot { get; }
+
         private readonly string _prefix;
 
         private TokenCredential _credential;
@@ -142,7 +145,7 @@ namespace Azure.Core.TestFramework
 
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    _credential = new TestCredential();
+                    _credential = new MockCredential();
                 }
                 else
                 {
@@ -229,13 +232,17 @@ namespace Azure.Core.TestFramework
         {
             var prefixedName = _prefix + name;
 
-            // Environment variables override the environment file
-            var value = Environment.GetEnvironmentVariable(prefixedName) ??
-                        Environment.GetEnvironmentVariable(name);
+            // Prefixed name overrides non-prefixed
+            var value = Environment.GetEnvironmentVariable(prefixedName);
 
             if (value == null)
             {
                 _environmentFile.TryGetValue(prefixedName, out value);
+            }
+
+            if (value == null)
+            {
+                value = Environment.GetEnvironmentVariable(name);
             }
 
             if (value == null)
@@ -282,19 +289,6 @@ namespace Azure.Core.TestFramework
             }
 
             return _recording.GetVariable(name, null);
-        }
-
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
         }
     }
 }

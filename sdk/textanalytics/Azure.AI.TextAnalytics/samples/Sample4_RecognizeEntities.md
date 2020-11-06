@@ -23,7 +23,7 @@ CategorizedEntityCollection entities = client.RecognizeEntities(document);
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}, Length (in UTF-16 code units): {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Offset (in UTF-16 code units): {entity.Offset}");
     Console.WriteLine($"Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```

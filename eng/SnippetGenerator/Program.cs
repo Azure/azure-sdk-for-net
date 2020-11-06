@@ -19,8 +19,7 @@ namespace SnippetGenerator
         public void OnExecuteAsync()
         {
             var baseDirectory = new DirectoryInfo(BasePath).Name;
-            var baseDirParent = Directory.GetParent(BasePath).Name;
-            if (baseDirectory.Equals("sdk") || baseDirParent.Equals("sdk"))
+            if (baseDirectory.Equals("sdk"))
             {
                 Parallel.ForEach(Directory.GetDirectories(BasePath), sdkDir => new DirectoryProcessor(sdkDir).Process());
             }
@@ -32,16 +31,23 @@ namespace SnippetGenerator
 
         public static int Main(string[] args)
         {
+            ConsoleColor foreground = Console.ForegroundColor;
+
             try
             {
                 return CommandLineApplication.Execute<Program>(args);
             }
             catch (Exception e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+
                 Console.Error.WriteLine(e.ToString());
                 return 1;
             }
-
+            finally
+            {
+                Console.ForegroundColor = foreground;
+            }
         }
     }
 }

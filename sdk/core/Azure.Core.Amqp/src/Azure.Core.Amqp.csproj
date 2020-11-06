@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure AMQP types</Description>
+    <AssemblyTitle>Microsoft Azure AMQP</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Microsoft Azure AMQP</PackageTags>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
+  </ItemGroup>
+</Project>

@@ -33,6 +33,25 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeLinkedService = @"
+{
+    name: ""Test-Windows-Azure-DatabricksDeltaLake-linkedService"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLake"",
+        typeProperties:
+        {
+          domain: ""https://westeurope.azuredatabricks.net/"",
+          clusterId: ""0714-063833-cleat653"",
+          accessToken: {
+             type: ""SecureString"",
+             value: ""mykey""
+          }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureStorageLinkedService = @"
 {
     name: ""Test-Windows-Azure-storage-account-linkedService"",
@@ -1366,6 +1385,30 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AmazonS3LinkedServiceWithTemporarySecurityCredentials = @"
+{
+    name: ""AmazonS3LinkedService"",
+    properties:
+    {
+        type: ""AmazonS3"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType : ""TemporarySecurityCredentials"",
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            },
+            sessionToken : {
+                value : ""fakeSessionToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureDataLakeStoreLinkedService = @"
 {
     name: ""AzureDataLakeStoreLinkedService"",
@@ -1670,6 +1713,30 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string ConcurLinkedServiceWithConnectionProperties = @"
+{
+    name: ""ConcurLinkedService"",
+    properties: {
+        type: ""Concur"",
+        typeProperties: {
+            connectionProperties: {
+                clientId : ""f145kn9Pcyq9pr4lvumdapfl4rive"",
+                username : ""jsmith"",
+                password : {
+                   type: ""SecureString"",
+                   value: ""some secret""
+                },
+                useEncryptedEndpoints : true,
+                useHostVerification : true,
+                usePeerVerification : true
+           }
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string CouchbaseLinkedService = @"
 {
@@ -2006,6 +2073,24 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string MongoDbAtlasLinkedService = @"
+{
+    name: ""MariaDBLinkedService"",
+    properties: {
+        type: ""MongoDbAtlas"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            database: ""ComponentTest""
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string AzureMariaDBLinkedService = @"
 {

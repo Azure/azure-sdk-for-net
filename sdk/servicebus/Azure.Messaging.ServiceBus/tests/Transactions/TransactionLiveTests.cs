@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -34,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ? await client.AcceptNextSessionAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -61,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
@@ -69,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.AreEqual(message1.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
 
-                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                receiver = await client.AcceptNextSessionAsync(scope.QueueName);
                 receivedMessage = await receiver.ReceiveMessageAsync();
 
                 Assert.NotNull(receivedMessage);
@@ -95,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    await GetNoRetryClient().AcceptNextSessionAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
             };
@@ -169,12 +168,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
 
                 ServiceBusReceiver receiver = sessionEnabled ?
-                    await client.CreateSessionReceiverAsync(
+                    await client.AcceptSessionAsync(
                         scope.QueueName,
-                        new ServiceBusSessionReceiverOptions
-                        {
-                            SessionId = "sessionId"
-                        })
+                        "sessionId")
                     : client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
@@ -201,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     partitioned ? "sessionId" : null);
                 await sender.SendMessageAsync(message);
 
-                ServiceBusReceiver receiver = sessionEnabled ? await client.CreateSessionReceiverAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
+                ServiceBusReceiver receiver = sessionEnabled ? await client.AcceptNextSessionAsync(scope.QueueName) : client.CreateReceiver(scope.QueueName);
 
                 var receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
@@ -420,79 +416,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
                 Assert.Null(receivedMessage);
             }
-        }
-
-        [Test]
-        public async Task TransactionalSendViaCommitTest()
-        {
-            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-            await using var intermediateQueue = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false);
-            await using var destination1 = await ServiceBusScope.CreateWithTopic(enablePartitioning: true, enableSession: false);
-            await using var destination2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false);
-            var intermediateSender = client.CreateSender(intermediateQueue.QueueName);
-            var intermediateReceiver = client.CreateReceiver(intermediateQueue.QueueName);
-            var destination1Sender = client.CreateSender(destination1.TopicName);
-            var destination1ViaSender = client.CreateSender(destination1.TopicName, new ServiceBusSenderOptions
-            {
-                ViaQueueOrTopicName = intermediateQueue.QueueName
-            });
-            var destination2ViaSender = client.CreateSender(destination2.QueueName, new ServiceBusSenderOptions
-            {
-                ViaQueueOrTopicName = intermediateQueue.QueueName
-            });
-            var destination1Receiver = client.CreateReceiver(destination1.TopicName, destination1.SubscriptionNames.First());
-            var destination2Receiver = client.CreateReceiver(destination2.QueueName);
-
-            var body = Encoding.Default.GetBytes(Guid.NewGuid().ToString("N"));
-            var message1 = new ServiceBusMessage(body) { MessageId = "1", PartitionKey = "pk1" };
-            var message2 = new ServiceBusMessage(body) { MessageId = "2", PartitionKey = "pk2", ViaPartitionKey = "pk1" };
-            var message3 = new ServiceBusMessage(body) { MessageId = "3", PartitionKey = "pk3", ViaPartitionKey = "pk1" };
-
-            await intermediateSender.SendMessageAsync(message1).ConfigureAwait(false);
-            var receivedMessage = await intermediateReceiver.ReceiveMessageAsync();
-            Assert.NotNull(receivedMessage);
-            Assert.AreEqual("pk1", receivedMessage.PartitionKey);
-
-            // If the transaction succeeds, then all the operations occurred on the same partition.
-            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
-                await intermediateReceiver.CompleteMessageAsync(receivedMessage);
-                await destination1ViaSender.SendMessageAsync(message2);
-                await destination2ViaSender.SendMessageAsync(message3);
-                ts.Complete();
-            }
-
-            // Assert that first message indeed completed.
-            receivedMessage = await intermediateReceiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
-            Assert.Null(receivedMessage);
-
-            // Assert that second message reached its destination.
-            var receivedMessage1 = await destination1Receiver.ReceiveMessageAsync();
-            Assert.NotNull(receivedMessage1);
-            Assert.AreEqual("pk2", receivedMessage1.PartitionKey);
-
-            // Assert destination1 message actually used partitionKey in the destination entity.
-            var destination1Message = new ServiceBusMessage(body)
-            {
-                PartitionKey = "pk2"
-            };
-            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
-                await destination1Receiver.CompleteMessageAsync(receivedMessage1);
-                await destination1Sender.SendMessageAsync(destination1Message);
-                ts.Complete();
-            }
-
-            // Assert that third message reached its destination.
-            var receivedMessage2 = await destination2Receiver.ReceiveMessageAsync();
-            Assert.NotNull(receivedMessage2);
-            Assert.AreEqual("pk3", receivedMessage2.PartitionKey);
-            await destination2Receiver.CompleteMessageAsync(receivedMessage2);
-
-            // Cleanup
-            receivedMessage1 = await destination1Receiver.ReceiveMessageAsync();
-            await destination1Receiver.CompleteMessageAsync(receivedMessage1);
-
         }
     }
 }

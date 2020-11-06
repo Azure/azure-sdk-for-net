@@ -81,7 +81,21 @@ namespace Azure.Messaging.EventGrid
             Source = source;
             Type = type;
             DataContentType = dataContentType;
-            DataBase64 = data.ToBytes().ToArray();
+            DataBase64 = data.ToArray();
+            ExtensionAttributes = new Dictionary<string, object>();
+        }
+
+        internal CloudEvent(string id, string source, string type, DateTimeOffset? time, string dataSchema, string dataContentType, string subject, JsonElement serializedData, byte[] dataBase64)
+        {
+            Id = id;
+            Source = source;
+            Type = type;
+            Time = time;
+            DataSchema = dataSchema;
+            DataContentType = dataContentType;
+            Subject = subject;
+            SerializedData = serializedData;
+            DataBase64 = dataBase64;
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
@@ -115,7 +129,7 @@ namespace Azure.Messaging.EventGrid
         internal object Data { get; set; }
 
         /// <summary> Serialized event data specific to the event type. </summary>
-        internal JsonElement? SerializedData { get; set; }
+        internal JsonElement SerializedData { get; set; }
 
         /// <summary> Event data specific to the event type, encoded as a base64 string. </summary>
         internal byte[] DataBase64 { get; set; }
@@ -156,24 +170,16 @@ namespace Azure.Messaging.EventGrid
 
             foreach (CloudEventInternal cloudEventInternal in cloudEventsInternal)
             {
-                // Case where Data and Type are null - cannot pass null Type into CloudEvent constructor
-                if (cloudEventInternal.Type == null)
-                {
-                    cloudEventInternal.Type = "";
-                }
-
                 CloudEvent cloudEvent = new CloudEvent(
+                    cloudEventInternal.Id,
                     cloudEventInternal.Source,
-                    cloudEventInternal.Type)
-                {
-                    Id = cloudEventInternal.Id,
-                    Time = cloudEventInternal.Time,
-                    DataBase64 = cloudEventInternal.DataBase64,
-                    DataSchema = cloudEventInternal.Dataschema,
-                    DataContentType = cloudEventInternal.Datacontenttype,
-                    Subject = cloudEventInternal.Subject,
-                    SerializedData = cloudEventInternal.Data
-                };
+                    cloudEventInternal.Type,
+                    cloudEventInternal.Time,
+                    cloudEventInternal.Dataschema,
+                    cloudEventInternal.Datacontenttype,
+                    cloudEventInternal.Subject,
+                    cloudEventInternal.Data,
+                    cloudEventInternal.DataBase64);
 
                 if (cloudEventInternal.AdditionalProperties != null)
                 {
@@ -246,12 +252,12 @@ namespace Azure.Messaging.EventGrid
             {
                 return (T)Data;
             }
-            else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+            else if (SerializedData.ValueKind != JsonValueKind.Null && SerializedData.ValueKind != JsonValueKind.Undefined)
             {
                 // Try to deserialize to system event
                 if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                 {
-                    return (T)systemDeserializationFunction(SerializedData.Value);
+                    return (T)systemDeserializationFunction(SerializedData);
                 }
                 else
                 {
@@ -291,12 +297,13 @@ namespace Azure.Messaging.EventGrid
                 {
                     return new BinaryData(DataBase64);
                 }
-                else if (SerializedData.HasValue && SerializedData.Value.ValueKind != JsonValueKind.Null)
+                else if (SerializedData.ValueKind != JsonValueKind.Null &&
+                         SerializedData.ValueKind != JsonValueKind.Undefined)
                 {
                     // Try to deserialize to system event
                     if (SystemEventTypeMappings.SystemEventDeserializers.TryGetValue(Type, out Func<JsonElement, object> systemDeserializationFunction))
                     {
-                        return systemDeserializationFunction(SerializedData.Value);
+                        return systemDeserializationFunction(SerializedData);
                     }
                     else
                     {

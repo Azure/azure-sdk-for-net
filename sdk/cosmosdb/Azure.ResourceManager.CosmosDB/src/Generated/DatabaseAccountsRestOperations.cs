@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(accountName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -141,6 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(updateParameters);
             request.Content = content;
@@ -227,6 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateParameters);
             request.Content = content;
@@ -472,6 +475,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -529,6 +533,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -602,6 +607,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -685,6 +691,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/listConnectionStrings", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -769,6 +776,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regionParameterForOffline);
             request.Content = content;
@@ -858,6 +866,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regionParameterForOnline);
             request.Content = content;
@@ -946,6 +955,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/readonlykeys", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1029,6 +1039,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/readonlykeys", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1203,7 +1214,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async Task<Response> CheckNameExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<bool>> CheckNameExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
@@ -1214,9 +1225,16 @@ namespace Azure.ResourceManager.CosmosDB
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -1226,7 +1244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public Response CheckNameExists(string accountName, CancellationToken cancellationToken = default)
+        public Response<bool> CheckNameExists(string accountName, CancellationToken cancellationToken = default)
         {
             if (accountName == null)
             {
@@ -1237,9 +1255,16 @@ namespace Azure.ResourceManager.CosmosDB
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                case 404:
-                    return message.Response;
+                case int s when s >= 200 && s < 300:
+                    {
+                        bool value = true;
+                        return Response.FromValue(value, message.Response);
+                    }
+                case int s when s >= 400 && s < 500:
+                    {
+                        bool value = false;
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -1262,6 +1287,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", "2020-04-01", true);
             uri.AppendQuery("$filter", filter, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1359,6 +1385,7 @@ namespace Azure.ResourceManager.CosmosDB
                 uri.AppendQuery("$filter", filter, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1444,6 +1471,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/metricDefinitions", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

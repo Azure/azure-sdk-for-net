@@ -54,8 +54,7 @@ az ad signed-in-user show --query objectId
 string definitionIdToAssign = "<roleDefinitionId>";
 string servicePrincipalObjectId = "<objectId>";
 
-KeyVaultRoleAssignmentProperties properties = new KeyVaultRoleAssignmentProperties(definitionIdToAssign, servicePrincipalObjectId);
-RoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, properties);
+KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
 ```
 
 ## Getting a Role Assignment
@@ -75,4 +74,4 @@ KeyVaultRoleAssignment deletedAssignment = await client.DeleteRoleAssignmentAsyn
 
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential

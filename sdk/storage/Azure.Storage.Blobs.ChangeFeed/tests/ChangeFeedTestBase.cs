@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingContainer> GetTestContainerAsync(

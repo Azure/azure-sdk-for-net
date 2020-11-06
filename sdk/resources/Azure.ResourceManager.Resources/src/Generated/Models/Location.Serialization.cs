@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("metadata"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
                     continue;
                 }

@@ -82,9 +82,6 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessor.FullyQualifiedNamespace"/>
         public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
 
-        /// <inheritdoc cref="ServiceBusProcessor.MaxReceiveWaitTime"/>
-        public TimeSpan? MaxReceiveWaitTime => _innerProcessor.MaxReceiveWaitTime;
-
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,

@@ -26,9 +26,6 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
 
         protected ArtifactsClientTestBase(bool isAsync) : base(isAsync)
         {
-#if DEBUG
-            SaveDebugRecordingsOnFailure = true;
-#endif
         }
 
         public override void StartTestRecording()
@@ -61,58 +58,52 @@ namespace Azure.Analytics.Synapse.Tests.Artifacts
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        internal PipelineClient CreatePipelineClient(TestRecording recording = null)
+        internal PipelineClient CreatePipelineClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new PipelineClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
 
-        internal NotebookClient CreateNotebookClient(TestRecording recording = null)
+        internal NotebookClient CreateNotebookClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new NotebookClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
 
-        internal TriggerClient CreateTriggerClient(TestRecording recording = null)
+        internal TriggerClient CreateTriggerClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new TriggerClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
 
-        internal LinkedServiceClient CreateLinkedServiceClient(TestRecording recording = null)
+        internal LinkedServiceClient CreateLinkedServiceClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new LinkedServiceClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
 
-        internal DatasetClient CreateDatasetClient(TestRecording recording = null)
+        internal DatasetClient CreateDatasetClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new DatasetClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
 
-        internal DataFlowClient CreateDataFlowClient(TestRecording recording = null)
+        internal DataFlowClient CreateDataFlowClient()
         {
-            recording ??= Recording;
             return InstrumentClient(new DataFlowClient(
                 new Uri(TestEnvironment.WorkspaceUrl),
                 TestEnvironment.Credential,
-                recording.InstrumentClientOptions(new ArtifactsClientOptions())));
+                InstrumentClientOptions(new ArtifactsClientOptions())));
         }
     }
 }

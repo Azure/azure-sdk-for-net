@@ -8,17 +8,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -35,7 +28,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = TestEnvironment.ServicePrincipalClientSecret;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
 
@@ -69,7 +62,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = "badsecret";
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
 

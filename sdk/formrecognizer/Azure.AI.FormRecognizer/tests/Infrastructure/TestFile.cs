@@ -16,11 +16,23 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
 
+        /// <summary>Form containing selection marks.</summary>
+        public const string FormSelectionMarks = "selectionMarkForm.pdf";
+
         /// <summary>An itemized en-US receipt.</summary>
         public const string ReceiptJpg = "contoso-receipt.jpg";
 
         /// <summary>An itemized en-US receipt.</summary>
         public const string ReceiptPng = "contoso-allinone.png";
+
+        /// <summary>A business card file.</summary>
+        public const string BusinessCardJpg = "businessCard.jpg";
+
+        /// <summary>A business card file.</summary>
+        public const string BusinessCardtPng = "businessCard.png";
+
+        /// <summary>A file with two business cards, one per page.</summary>
+        public const string BusinessMultipage = "multipleBusinessCards.pdf";
 
         /// <summary>A basic invoice file.</summary>
         public const string InvoicePdf = "Invoice_1.pdf";

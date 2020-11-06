@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Messaging.ServiceBus.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -85,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveMessageAsync();
                 await receiver.CompleteMessageAsync(receivedMaxSizeMessage.LockToken);
-                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToBytes().ToArray());
+                Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
             }
         }
 
@@ -96,8 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
-                var msg = new ServiceBusMessage();
-                msg.Body = new BinaryData(GetRandomBuffer(100));
+                var msg = new ServiceBusMessage(new BinaryData(GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
                 msg.CorrelationId = "correlationid";
                 msg.Subject = "label";
@@ -112,20 +112,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.To = "to";
                 await sender.SendMessageAsync(msg);
 
-                var receiver = await client.CreateSessionReceiverAsync(
-                    scope.QueueName,
-                    new ServiceBusSessionReceiverOptions
-                    {
-                        ReceiveMode = ReceiveMode.ReceiveAndDelete
-                    });
-                var received = await receiver.ReceiveMessageAsync();
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+                AmqpAnnotatedMessage rawReceived = received.GetRawMessage();
+                Assert.IsNotNull(rawReceived.Header.DeliveryCount);
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
+                Assert.IsTrue(rawReceived.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+
                 AssertMessagesEqual(msg, received);
                 var toSend = new ServiceBusMessage(received);
+                AmqpAnnotatedMessage rawSend = toSend.GetRawMessage();
+
+                // verify that all system set properties have been cleared out
+                Assert.IsNull(rawSend.Header.DeliveryCount);
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.LockedUntilName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.SequenceNumberName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueueSequenceNumberName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
                 {
-                    Assert.IsTrue(received.Body.ToBytes().ToArray().SequenceEqual(sentMessage.Body.ToBytes().ToArray()));
+                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
                     Assert.AreEqual(received.ContentType, sentMessage.ContentType);
                     Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
                     Assert.AreEqual(received.Subject, sentMessage.Subject);
@@ -140,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual(received.SessionId, sentMessage.SessionId);
                     Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
                     Assert.AreEqual(received.To, sentMessage.To);
-                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.ViaPartitionKey);
+                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.TransactionPartitionKey);
                 }
             }
         }
@@ -159,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     B = 5,
                     C = false
                 };
-                var body = BinaryData.FromObject(testBody, serializer);
+                var body = serializer.SerializeToBinaryData(testBody);
                 var msg = new ServiceBusMessage(body);
 
                 await sender.SendMessageAsync(msg);
@@ -180,39 +195,67 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
                 var amqp = new AmqpAnnotatedMessage(
-                    new BinaryData[]
+                    new ReadOnlyMemory<byte>[]
                     {
-                        new BinaryData(GetRandomBuffer(100)),
-                        new BinaryData(GetRandomBuffer(100))
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
                     });
-                var msg = new ServiceBusMessage()
-                {
-                    AmqpMessage = amqp
-                };
+                msg.AmqpMessage = amqp;
 
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var bodyEnum = ((AmqpDataBody)received.AmqpMessage.Body).Data.GetEnumerator();
+                var receivedData = ((AmqpDataMessageBody)received.GetRawMessage().Body).Data;
+                var bodyEnum = receivedData.GetEnumerator();
                 int ct = 0;
-                foreach (BinaryData data in ((AmqpDataBody)msg.AmqpMessage.Body).Data)
+                var sentData = ((AmqpDataMessageBody)msg.GetRawMessage().Body).Data;
+
+                foreach (ReadOnlyMemory<byte> data in sentData)
                 {
                     bodyEnum.MoveNext();
-                    var bytes = data.ToBytes().ToArray();
-                    Assert.AreEqual(bytes, bodyEnum.Current.ToBytes().ToArray());
+                    var bytes = data.ToArray();
+                    Assert.AreEqual(bytes, bodyEnum.Current.ToArray());
                     if (ct++ == 0)
                     {
-                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(0, 100).ToArray());
+                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(0, 100).ToArray());
                     }
                     else
                     {
-                        Assert.AreEqual(bytes, received.Body.ToBytes().Slice(100, 100).ToArray());
+                        Assert.AreEqual(bytes, received.Body.ToMemory().Slice(100, 100).ToArray());
                     }
                 }
             }
         }
+
+        [Test]
+        public async Task CanSetMessageId()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var msg = new ServiceBusMessage();
+                msg.GetRawMessage().Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[]
+                    {
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
+                        new ReadOnlyMemory<byte>(GetRandomBuffer(100))
+                    });
+                Guid guid = Guid.NewGuid();
+                msg.GetRawMessage().Properties.MessageId = new AmqpMessageId(guid.ToString());
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(guid.ToString(), received.MessageId);
+            }
+        }
+
+
 
         private class TestBody
         {

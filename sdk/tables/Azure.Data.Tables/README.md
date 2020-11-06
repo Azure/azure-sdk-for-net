@@ -44,14 +44,14 @@ Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyReso
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
-az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --subscription MySubscription
+az cosmosdb create --name MyCosmosDBDatabaseAccount --capabilities EnableTable --resource-group MyResourceGroup --subscription MySubscription
 
 az cosmosdb table create --name MyTableName --resource-group MyResourceGroup --account-name MyCosmosDBDatabaseAccount
 ```
 
 ### Authenticate the Client
 
-Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](samples/Sample0Auth.md)
+Learn more about options for authentication _(including Connection Strings, Shared Key, and Shared Key Signatures)_ [in our samples.](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples/Sample0Auth.md)
 
 ## Key concepts
 
@@ -186,6 +186,15 @@ foreach (TableEntity qEntity in queryResultsFilter)
 Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
+If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+
+```C# Snippet:TablesSample4QueryEntitiesExpression
+// Use the <see cref="TableClient"> to query the table using a filter expression.
+
+double priceCutOff = 6.00;
+Pageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.Query<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
+```
+
 ### Delete table entities
 
 If we no longer need our new table entity, it can be deleted.
@@ -264,7 +273,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [table_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.Tables
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/src
-[api_reference]: https://docs.microsoft.com/azure/cosmos-db/table-introduction
+[api_reference]: https://docs.microsoft.com/dotnet/api/overview/azure/data.tables-readme-pre?view=azure-dotnet-preview
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

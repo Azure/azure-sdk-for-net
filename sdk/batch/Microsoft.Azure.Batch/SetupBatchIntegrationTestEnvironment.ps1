@@ -49,8 +49,8 @@ Login-AzureRmAccount
 if ([String]::IsNullOrEmpty($subscriptionName))
 {
     $subs = Get-AzureRmSubscription
-    $sub = PromptSelect "subscription" $subs { Param($s) $s.SubscriptionName }
-    $subscriptionName = $sub.SubscriptionName
+    $sub = PromptSelect "subscription" $subs { Param($s) $s.Name }
+    $subscriptionName = $sub.Name
 }
 Select-AzureRmSubscription -SubscriptionName $subscriptionName
 

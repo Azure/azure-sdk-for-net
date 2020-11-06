@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                         CorrelationId = "correlationId",
                         Subject = "label",
                         MessageId = "messageId",
-                        Properties =
+                        ApplicationProperties =
                             {
                                 {"key1", "value1"}
                             },
@@ -78,8 +78,8 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 Assert.AreEqual("replyToSessionId", correlationRuleFilter.ReplyToSessionId);
                 Assert.AreEqual("sessionId", correlationRuleFilter.SessionId);
                 Assert.AreEqual("to", correlationRuleFilter.To);
-                Assert.NotNull(correlationRuleFilter.Properties);
-                Assert.AreEqual("value1", correlationRuleFilter.Properties["key1"]);
+                Assert.NotNull(correlationRuleFilter.ApplicationProperties);
+                Assert.AreEqual("value1", correlationRuleFilter.ApplicationProperties["key1"]);
 
                 await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
                 await ruleManager.RemoveRuleAsync(sqlRuleName);
@@ -269,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 await ruleManager.AddRuleAsync(new RuleProperties
                 {
-                    Filter = new CorrelationRuleFilter { Properties = { { "color", "red" } } },
+                    Filter = new CorrelationRuleFilter { ApplicationProperties = { { "color", "red" } } },
                     Name = "CorrelationUserPropertyRule"
                 });
 
@@ -305,7 +305,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 await ruleManager.AddRuleAsync(new RuleProperties
                 {
-                    Filter = new CorrelationRuleFilter { Properties = { { "Color", "blue" } } },
+                    Filter = new CorrelationRuleFilter { ApplicationProperties = { { "Color", "blue" } } },
                     Action = new SqlRuleAction("Set Priority = 'high'"),
                     Name = "CorrelationRuleWithAction"
                 });

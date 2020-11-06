@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
@@ -31,16 +34,27 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-#if DEBUG
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
         /// and debug/re-run at the point of failure without re-running
         /// potentially lengthy live tests.  This should never be checked in
-        /// and will be compiled out of release builds to help make that easier
+        /// and will throw an exception from CI builds to help make that easier
         /// to spot.
         /// </summary>
-        public bool SaveDebugRecordingsOnFailure { get; set; } = false;
-#endif
+        public bool SaveDebugRecordingsOnFailure
+        {
+            get => _saveDebugRecordingsOnFailure;
+            set
+            {
+                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
+                {
+                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
+                }
+
+                _saveDebugRecordingsOnFailure = value;
+            }
+        }
+        private bool _saveDebugRecordingsOnFailure;
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -53,6 +67,18 @@ namespace Azure.Core.TestFramework
             Mode = mode;
         }
 
+        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        {
+            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // Not making the timeout zero so retry code still goes async
+                clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
+                clientOptions.Retry.Mode = RetryMode.Fixed;
+            }
+            return clientOptions;
+        }
+
         private string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
@@ -62,10 +88,15 @@ namespace Azure.Core.TestFramework
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
                 null;
 
-            string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+            // Use the current class name instead of the name of the class that declared a test.
+            // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
+            string className = GetType().Name;
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+
+            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+
+            return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
@@ -117,7 +148,7 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
-            bool save = TestContext.CurrentContext.Result.FailCount == 0;
+            bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif

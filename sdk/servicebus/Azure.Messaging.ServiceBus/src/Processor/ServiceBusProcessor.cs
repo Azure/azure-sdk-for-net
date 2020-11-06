@@ -112,11 +112,6 @@ namespace Azure.Messaging.ServiceBus
         public int MaxConcurrentCalls { get; }
 
         /// <summary>
-        /// Gets the maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
-        /// </summary>
-        public TimeSpan? MaxReceiveWaitTime { get; }
-
-        /// <summary>
         /// Gets a value that indicates whether the processor should automatically
         /// complete messages after the message handler has completed processing. If the
         /// message handler triggers an exception, the message will not be automatically
@@ -223,7 +218,6 @@ namespace Azure.Messaging.ServiceBus
                 maxAcceptSessions,
                 maxAcceptSessions);
 
-            MaxReceiveWaitTime = _options.MaxReceiveWaitTime;
             AutoComplete = _options.AutoComplete;
 
             EntityPath = entityPath;

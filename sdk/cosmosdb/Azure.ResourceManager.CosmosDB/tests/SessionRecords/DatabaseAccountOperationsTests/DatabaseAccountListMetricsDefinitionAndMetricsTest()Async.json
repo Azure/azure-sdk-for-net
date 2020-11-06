@@ -1,0 +1,1122 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/metricDefinitions?api-version=2020-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "eed5d760763c934946274718229dad91",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "18092",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/metricDefinitions?api-version=2020-04-01",
+        "Content-Type": "application/json",
+        "Date": "Fri, 25 Sep 2020 01:33:07 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "47667357-0e80-4c13-b649-f7a041547f8b",
+        "x-ms-gatewayversion": "version=2.11.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "10268",
+        "x-ms-request-id": "47667357-0e80-4c13-b649-f7a041547f8b",
+        "x-ms-routing-request-id": "WESTUS2:20200925T013307Z:47667357-0e80-4c13-b649-f7a041547f8b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Data Size",
+              "localizedValue": "Data Size"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Index Size",
+              "localizedValue": "Index Size"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Storage Capacity",
+              "localizedValue": "Storage Capacity"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Bytes",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Available Storage",
+              "localizedValue": "Available Storage"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Last",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Document Count",
+              "localizedValue": "Document Count"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Milliseconds",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Observed Read Latency",
+              "localizedValue": "Observed Read Latency"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Milliseconds",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Observed Write Latency",
+              "localizedValue": "Observed Write Latency"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Total Requests",
+              "localizedValue": "Total Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Http 2xx",
+              "localizedValue": "Http 2xx"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Http 3xx",
+              "localizedValue": "Http 3xx"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Http 400",
+              "localizedValue": "Http 400"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Http 401",
+              "localizedValue": "Http 401"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Throttled Requests",
+              "localizedValue": "Throttled Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Internal Server Error",
+              "localizedValue": "Internal Server Error"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Service Unavailable",
+              "localizedValue": "Service Unavailable"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Total Request Units",
+              "localizedValue": "Total Request Units"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "CountPerSecond",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Average Requests per Second",
+              "localizedValue": "Average Requests per Second"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Maximum",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Max RUs Per Second",
+              "localizedValue": "Max RUs Per Second"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Maximum",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Max RUPM Consumed Per Minute",
+              "localizedValue": "Max RUPM Consumed Per Minute"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Query Request Charge",
+              "localizedValue": "Mongo Query Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Update Request Charge",
+              "localizedValue": "Mongo Update Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Delete Request Charge",
+              "localizedValue": "Mongo Delete Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Insert Request Charge",
+              "localizedValue": "Mongo Insert Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Count Request Charge",
+              "localizedValue": "Mongo Count Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Other Request Charge",
+              "localizedValue": "Mongo Other Request Charge"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Query Request Rate",
+              "localizedValue": "Mongo Query Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Update Request Rate",
+              "localizedValue": "Mongo Update Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Delete Request Rate",
+              "localizedValue": "Mongo Delete Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Insert Request Rate",
+              "localizedValue": "Mongo Insert Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Count Request Rate",
+              "localizedValue": "Mongo Count Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Other Request Rate",
+              "localizedValue": "Mongo Other Request Rate"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Query Failed Requests",
+              "localizedValue": "Mongo Query Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Update Failed Requests",
+              "localizedValue": "Mongo Update Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Delete Failed Requests",
+              "localizedValue": "Mongo Delete Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Insert Failed Requests",
+              "localizedValue": "Mongo Insert Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Count Failed Requests",
+              "localizedValue": "Mongo Count Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT5M",
+                "retention": "P2D"
+              },
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Total",
+            "unit": "Count",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Mongo Other Failed Requests",
+              "localizedValue": "Mongo Other Failed Requests"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Percent",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Service Availability",
+              "localizedValue": "Service Availability"
+            }
+          },
+          {
+            "metricAvailabilities": [
+              {
+                "timeGrain": "PT1H",
+                "retention": "P14D"
+              },
+              {
+                "timeGrain": "P1D",
+                "retention": "P60D"
+              }
+            ],
+            "primaryAggregationType": "Average",
+            "unit": "Percent",
+            "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937",
+            "name": {
+              "value": "Consistency Level",
+              "localizedValue": "Consistency Level"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/metrics?api-version=2020-04-01\u0026$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "0724be337d2aad391385a43c13c11913",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "12",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/metrics?api-version=2020-04-01\u0026$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+        "Content-Type": "application/json",
+        "Date": "Fri, 25 Sep 2020 01:33:07 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66c099fe-1eae-461a-aedc-86f7e1d4167e",
+        "x-ms-gatewayversion": "version=2.11.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "10267",
+        "x-ms-request-id": "66c099fe-1eae-461a-aedc-86f7e1d4167e",
+        "x-ms-routing-request-id": "WESTUS2:20200925T013307Z:66c099fe-1eae-461a-aedc-86f7e1d4167e"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/region/WEST%20US/metrics?api-version=2020-04-01\u0026$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "0c0f36bc74afc92aa151110c096ecc13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Content-Length": "12",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6664/providers/Microsoft.DocumentDB/databaseAccounts/db4937/region/WEST%20US/metrics?api-version=2020-04-01\u0026$filter=%28name.value%20eq%20%27Total%20Requests%27%29%20and%20timeGrain%20eq%20duration%27PT5M%27",
+        "Content-Type": "application/json",
+        "Date": "Fri, 25 Sep 2020 01:33:07 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6750a385-f344-4be3-a6af-be070bf1a927",
+        "x-ms-gatewayversion": "version=2.11.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "10266",
+        "x-ms-request-id": "6750a385-f344-4be3-a6af-be070bf1a927",
+        "x-ms-routing-request-id": "WESTUS2:20200925T013308Z:6750a385-f344-4be3-a6af-be070bf1a927"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "119969010"
+  }
+}

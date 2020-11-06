@@ -1965,8 +1965,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = querySqlExpression,
-                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(isInput: true),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
                     (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
                         clientDiagnostics: ClientDiagnostics,
@@ -2235,23 +2235,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new BlockBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetBlockBlobClientCore(blobName);
         }
     }
 }

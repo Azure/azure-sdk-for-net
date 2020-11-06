@@ -17,7 +17,7 @@ namespace Azure.Template
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal ServiceRestClient RestClient { get; }
+        internal TemplateRestClient RestClient { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MiniSecretClient"/>.
@@ -48,7 +48,7 @@ namespace Azure.Template
         /// <param name="apiVersion"> Api Version. </param>
         internal MiniSecretClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            RestClient = new ServiceRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
+            RestClient = new TemplateRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

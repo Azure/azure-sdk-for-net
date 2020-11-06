@@ -3,6 +3,7 @@ $LanguageShort = "net"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
+$BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
@@ -88,31 +89,42 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 }
 
 # Stage and Upload Docs to blob Storage
-function Publish-dotnet-GithubIODocs ()
+function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 {
-  $PublishedPkgs = Get-ChildItem "$($DocLocation)/packages" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
-  $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.StartsWith("Docs.")}
+  $PublishedPkgs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith(".nupkg") -and -not $_.Name.EndsWith(".symbols.nupkg")}
+  $PublishedDocs = Get-ChildItem "$($DocLocation)" | Where-Object -FilterScript {$_.Name.EndsWith("docs.zip")}
 
-  foreach ($Item in $PublishedDocs)
+  if (($PublishedPkgs.Count -gt 1) -or ($PublishedDoc.Count -gt 1))
   {
-    $PkgName = $Item.Name.Remove(0, 5)
-    $PkgFullName = $PublishedPkgs | Where-Object -FilterScript {$_.Name -match "$($PkgName).\d"}
-
-    if (($PkgFullName | Measure-Object).count -eq 1)
-    {
-      $DocVersion = $PkgFullName[0].BaseName.Remove(0, $PkgName.Length + 1)
-
-      Write-Host "Start Upload for $($PkgName)/$($DocVersion)"
-      Write-Host "DocDir $($Item)"
-      Write-Host "PkgName $($PkgName)"
-      Write-Host "DocVersion $($DocVersion)"
-      $releaseTag = RetrieveReleaseTag "Nuget" $PublicArtifactLocation 
-      Upload-Blobs -DocDir "$($Item)" -PkgName $PkgName -DocVersion $DocVersion -ReleaseTag $releaseTag
-    }
-    else
-    {
-      Write-Host "Package with the same name Exists. Upload Skipped"
-      continue
-    }
+      Write-Host "$($DocLocation) should contain only one (1) published package and docs"
+      Write-Host "No of Packages $($PublishedPkgs.Count)"
+      Write-Host "No of Docs $($PublishedDoc.Count)"
+      exit 1
   }
+
+  $DocsStagingDir = "$WorkingDirectory/docstaging"
+  $TempDir = "$WorkingDirectory/temp"
+
+  New-Item -ItemType directory -Path $DocsStagingDir
+  New-Item -ItemType directory -Path $TempDir
+
+  Expand-Archive -LiteralPath $PublishedDocs[0].FullName -DestinationPath $DocsStagingDir
+  $pkgProperties = ParseNugetPackage -pkg $PublishedPkgs[0].FullName -workingDirectory $TempDir
+
+  Write-Host "Start Upload for $($pkgProperties.ReleaseTag)"
+  Write-Host "DocDir $($DocsStagingDir)"
+  Write-Host "PkgName $($pkgProperties.PackageId)"
+  Write-Host "DocVersion $($pkgProperties.PackageVersion)"
+  Upload-Blobs -DocDir "$($DocsStagingDir)" -PkgName $pkgProperties.PackageId -DocVersion $pkgProperties.PackageVersion -ReleaseTag $pkgProperties.ReleaseTag
+}
+
+function Get-dotnet-GithubIoDocIndex() {
+  # Fetch out all package metadata from csv file.
+  $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
+  # Get the artifacts name from blob storage
+  $artifacts =  Get-BlobStorage-Artifacts -blobStorageUrl $BlobStorageUrl -blobDirectoryRegex "^dotnet/(.*)/$" -blobArtifactsReplacement '$1'
+  # Build up the artifact to service name mapping for GithubIo toc.
+  $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
+  # Generate yml/md toc files and build site.
+  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
 }
