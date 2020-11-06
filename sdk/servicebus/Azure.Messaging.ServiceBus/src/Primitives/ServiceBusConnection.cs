@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly TransportClient _innerClient;
 
         /// <summary>
-        /// Parameter-less constructor to allow mocking.
+        /// Parameterless constructor to allow mocking.
         /// </summary>
         internal ServiceBusConnection() { }
 

@@ -441,7 +441,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (exception is OperationCanceledException &&
                     receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
                 {
-                    // The link state is lost, We need to return a non-retrievable error.
+                    // The link state is lost, We need to return a non-retriable error.
                     ServiceBusEventSource.Log.LinkStateLost(
                         _identifier,
                         receiveLink.Name,
@@ -576,13 +576,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -611,12 +611,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the corresponding message to dead-letter.</param>
         /// <param name="timeout"></param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         internal virtual Task DeadLetterInternalAsync(

@@ -31,11 +31,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Formats the sub-queue path for either a queue, or a subscription.
+        /// Formats the subqueue path for either a queue, or a subscription.
         /// </summary>
         /// <param name="entityPath">The name of the queue, or path of the subscription.</param>
         /// <param name="subQueueName"></param>
-        /// <returns>The path as a string of the sub-queue entity.</returns>
+        /// <returns>The path as a string of the subqueue entity.</returns>
         public static string FormatSubQueuePath(string entityPath, string subQueueName)
         {
             return string.Concat(entityPath, EntityNameFormatter.PathDelimiter, subQueueName);

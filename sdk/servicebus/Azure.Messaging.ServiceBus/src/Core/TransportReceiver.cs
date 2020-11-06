@@ -146,13 +146,13 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>

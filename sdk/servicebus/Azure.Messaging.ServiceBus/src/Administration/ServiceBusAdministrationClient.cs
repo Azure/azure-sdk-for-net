@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private const string RulesPath = "{0}/Subscriptions/{1}/rules";
 
         /// <summary>
-        /// Parameter-less constructor to allow mocking.
+        /// Parameterless constructor to allow mocking.
         /// </summary>
         protected ServiceBusAdministrationClient() { }
 

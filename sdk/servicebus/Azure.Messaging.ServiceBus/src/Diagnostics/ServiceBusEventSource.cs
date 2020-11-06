@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
         }
 
-        // parameter-less constructor for mocking
+        // Parameterless constructor for mocking
         internal ServiceBusEventSource() { }
 
         #region event constants

@@ -603,11 +603,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -631,11 +631,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -656,7 +656,7 @@ namespace Azure.Messaging.ServiceBus
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
@@ -686,7 +686,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
@@ -713,7 +713,7 @@ namespace Azure.Messaging.ServiceBus
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Moves a message to the dead-letter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
         /// <param name="lockToken">The lock token <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>

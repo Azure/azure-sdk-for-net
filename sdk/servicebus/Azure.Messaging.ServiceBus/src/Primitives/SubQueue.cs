@@ -4,23 +4,23 @@
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents the possible system sub-queues that can be received from.
+    /// Represents the possible system subqueues that can be received from.
     /// </summary>
     public enum SubQueue
     {
         /// <summary>
-        /// No sub-queue, the queue itself will be received from.
+        /// No subqueue, the queue itself will be received from.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// The dead-letter sub-queue contains messages that have been dead-lettered.
+        /// The dead-letter subqueue contains messages that have been dead-lettered.
         /// <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues#moving-messages-to-the-dlq"/>
         /// </summary>
         DeadLetter = 1,
 
         /// <summary>
-        /// The transfer dead-letter sub-queue contains messages that have been dead-lettered when
+        /// The transfer dead-letter subqueue contains messages that have been dead-lettered when
         /// the following conditions apply:
         /// <list type="bullet">
         /// <item>

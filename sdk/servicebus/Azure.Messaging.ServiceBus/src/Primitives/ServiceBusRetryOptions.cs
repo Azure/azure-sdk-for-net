@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   The delay between retry attempts for a fixed approach or the delay
-        ///   on which to base calculations for a back-off-based approach.
+        ///   on which to base calculations for a backoff-based approach.
         /// </summary>
         ///
         public TimeSpan Delay
