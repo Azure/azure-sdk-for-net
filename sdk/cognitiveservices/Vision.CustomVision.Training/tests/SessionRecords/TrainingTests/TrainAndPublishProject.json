@@ -39,7 +39,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"3d704b83-6473-4893-86bf-067a4a8c7136\",\r\n  \"name\": \"Iteration 1\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2020-11-06T18:06:49.46Z\",\r\n  \"lastModified\": \"2020-11-06T18:12:16.238Z\",\r\n  \"trainedAt\": \"2020-11-06T18:12:15.082Z\",\r\n  \"projectId\": \"391fc408-69ec-4ec3-ac42-6f14bf71ed33\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": null,\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"trainingTimeInMinutes\": 1,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/f7b4a5ce-d3bd-4a03-84fe-8bcad772c8c1/resourceGroups/areddish-eastus/providers/Microsoft.CognitiveServices/accounts/areddisheast-Prediction\",\r\n  \"customBaseModelInfo\": null,\r\n  \"trainingErrorDetails\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"3d704b83-6473-4893-86bf-067a4a8c7136\",\r\n  \"name\": \"Iteration 1\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2020-11-06T18:06:49.46Z\",\r\n  \"lastModified\": \"2020-11-06T18:12:16.238Z\",\r\n  \"trainedAt\": \"2020-11-06T18:12:15.082Z\",\r\n  \"projectId\": \"391fc408-69ec-4ec3-ac42-6f14bf71ed33\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": null,\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"trainingTimeInMinutes\": 1,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\",\r\n  \"customBaseModelInfo\": null,\r\n  \"trainingErrorDetails\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -12343,46 +12343,46 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.4-preview/training/projects/391fc408-69ec-4ec3-ac42-6f14bf71ed33/iterations/d9a52359-76d9-4fcd-9a62-18919c58a741/publish?publishName=Training%20UnitTest%20Iteration&predictionId=%2Fsubscriptions%2Ff7b4a5ce-d3bd-4a03-84fe-8bcad772c8c1%2FresourceGroups%2Fareddish-eastus%2Fproviders%2FMicrosoft.CognitiveServices%2Faccounts%2Fareddisheast-Prediction",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL3Byb2plY3RzLzM5MWZjNDA4LTY5ZWMtNGVjMy1hYzQyLTZmMTRiZjcxZWQzMy9pdGVyYXRpb25zL2Q5YTUyMzU5LTc2ZDktNGZjZC05YTYyLTE4OTE5YzU4YTc0MS9wdWJsaXNoP3B1Ymxpc2hOYW1lPVRyYWluaW5nJTIwVW5pdFRlc3QlMjBJdGVyYXRpb24mcHJlZGljdGlvbklkPSUyRnN1YnNjcmlwdGlvbnMlMkZmN2I0YTVjZS1kM2JkLTRhMDMtODRmZS04YmNhZDc3MmM4YzElMkZyZXNvdXJjZUdyb3VwcyUyRmFyZWRkaXNoLWVhc3R1cyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcyUyRmFjY291bnRzJTJGYXJlZGRpc2hlYXN0LVByZWRpY3Rpb24=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Training-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29321.03",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Request-Id": [
-          "a2a5606b-480f-4513-9038-829cc142474a"
-        ],
-        "apim-request-id": [
-          "a2a5606b-480f-4513-9038-829cc142474a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Fri, 06 Nov 2020 18:17:16 GMT"
-        ],
-        "Content-Length": [
-          "4"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "true",
-      "StatusCode": 200
+        "RequestUri": "//customvision/v3.4-preview/training/projects/391fc408-69ec-4ec3-ac42-6f14bf71ed33/iterations/d9a52359-76d9-4fcd-9a62-18919c58a741/publish?publishName=Training%20UnitTest%20Iteration&predictionId=%2Fsubscriptions%2F%7BsubscriptionId%7D%2FresourceGroups%2F%7BresourceGroupName%7D%2Fproviders%2FMicrosoft.CognitiveServices%2Faccounts%2F%7BpredictionResourceProviderName%7D",
+        "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL3Byb2plY3RzLzM5MWZjNDA4LTY5ZWMtNGVjMy1hYzQyLTZmMTRiZjcxZWQzMy9pdGVyYXRpb25zL2Q5YTUyMzU5LTc2ZDktNGZjZC05YTYyLTE4OTE5YzU4YTc0MS9wdWJsaXNoP3B1Ymxpc2hOYW1lPVRyYWluaW5nJTIwVW5pdFRlc3QlMjBJdGVyYXRpb24mcHJlZGljdGlvbklkPSUyRnN1YnNjcmlwdGlvbnMlMkYlN0JzdWJzY3JpcHRpb25JZCU3RCUyRnJlc291cmNlR3JvdXBzJTJGJTdCcmVzb3VyY2VHcm91cE5hbWUlN0QlMkZwcm92aWRlcnMlMkZNaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMlMkZhY2NvdW50cyUyRiU3QnByZWRpY3Rpb25SZXNvdXJjZVByb3ZpZGVyTmFtZSU3RA==",
+        "RequestMethod": "POST",
+        "RequestBody": "",
+        "RequestHeaders": {
+            "Training-Key": [
+                ""
+            ],
+            "User-Agent": [
+                "FxVersion/4.6.29321.03",
+                "OSName/Windows",
+                "OSVersion/Microsoft.Windows.10.0.18363.",
+                "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
+            ]
+        },
+        "ResponseHeaders": {
+            "Request-Id": [
+                "a2a5606b-480f-4513-9038-829cc142474a"
+            ],
+            "apim-request-id": [
+                "a2a5606b-480f-4513-9038-829cc142474a"
+            ],
+            "Strict-Transport-Security": [
+                "max-age=31536000; includeSubDomains; preload"
+            ],
+            "X-Content-Type-Options": [
+                "nosniff"
+            ],
+            "Date": [
+                "Fri, 06 Nov 2020 18:17:16 GMT"
+            ],
+            "Content-Length": [
+                "4"
+            ],
+            "Content-Type": [
+                "application/json; charset=utf-8"
+            ]
+        },
+        "ResponseBody": "true",
+        "StatusCode": 200
     }
   ],
   "Names": {},
