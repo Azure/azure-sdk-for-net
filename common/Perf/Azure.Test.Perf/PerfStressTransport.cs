@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     public static class PerfStressTransport
     {

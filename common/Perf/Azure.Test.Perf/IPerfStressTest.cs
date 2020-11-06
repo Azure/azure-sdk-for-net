@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     internal interface IPerfStressTest: IDisposable, IAsyncDisposable
     {

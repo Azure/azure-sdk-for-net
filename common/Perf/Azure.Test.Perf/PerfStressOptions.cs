@@ -4,7 +4,7 @@
 using CommandLine;
 using System;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     public class PerfStressOptions
     {

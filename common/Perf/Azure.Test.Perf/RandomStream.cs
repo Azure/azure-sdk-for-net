@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     public static class RandomStream
     {

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     internal class BenchmarkMeasurement
     {

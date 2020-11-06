@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     internal class BenchmarkOutput
     {

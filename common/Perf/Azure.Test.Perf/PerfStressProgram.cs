@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Azure.Test.PerfStress
+namespace Azure.Test.Perf
 {
     public static class PerfStressProgram
     {
@@ -67,7 +67,7 @@ namespace Azure.Test.PerfStress
             Console.WriteLine($"Runtime: {Environment.Version}");
             var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
                 .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.Name.Equals("Azure.Test.PerfStress", StringComparison.OrdinalIgnoreCase))
+                .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.Name);
             foreach (var a in azureAssemblies)
             {
