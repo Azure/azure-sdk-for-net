@@ -343,8 +343,8 @@ namespace Azure.Search.Documents
             }
             catch
             {
-                // TODO: Log any exceptions raised from async events that we
-                // can't let bubble out because they'd tear down the process
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
             }
         }
 
@@ -368,8 +368,8 @@ namespace Azure.Search.Documents
             }
             catch
             {
-                // TODO: Log any exceptions raised from async events that we
-                // can't let bubble out because they'd tear down the process
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
             }
         }
 
@@ -395,8 +395,8 @@ namespace Azure.Search.Documents
             }
             catch
             {
-                // TODO: Log any exceptions raised from async events that we
-                // can't let bubble out because they'd tear down the process
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
             }
         }
 
@@ -424,8 +424,8 @@ namespace Azure.Search.Documents
             }
             catch
             {
-                // TODO: Log any exceptions raised from async events that we
-                // can't let bubble out because they'd tear down the process
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
             }
         }
         #endregion

@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Batching
             TimeSpan? autoFlushInterval,
             int? batchActionSize,
             int? batchPayloadSize,
-            int? maxRetries,
+            int maxRetries,
             TimeSpan retryDelay,
             TimeSpan maxRetryDelay,
             CancellationToken publisherCancellationToken)

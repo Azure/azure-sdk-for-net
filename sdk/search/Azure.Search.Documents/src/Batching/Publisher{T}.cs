@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Batching
             TimeSpan? autoFlushInterval,
             int? batchActionSize,
             int? batchPayloadSize,
-            int? maxRetries,
+            int maxRetries,
             TimeSpan retryDelay,
             TimeSpan maxRetryDelay,
             CancellationToken publisherCancellationToken)
@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Batching
             PublisherCancellationToken = publisherCancellationToken;
             BatchActionCount = batchActionSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultInitialBatchActionCount;
             BatchPayloadSize = batchPayloadSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultBatchPayloadSize;
-            MaxRetries = maxRetries ??  SearchIndexingBufferedSenderOptions<T>.DefaultMaxRetries;
+            MaxRetries = maxRetries;
 
             // Setup manual retries
             _manualRetries = new ManualRetryDelay { Delay = retryDelay, MaxDelay = maxRetryDelay };

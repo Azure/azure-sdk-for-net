@@ -63,16 +63,15 @@ namespace Azure.Search.Documents
         /// to control the number of attempts we will make to submit an indexing
         /// action.
         /// </summary>
-        public int? MaxRetries { get; set; } = DefaultMaxRetries;
-        internal const int DefaultMaxRetries = 3;
+        public int MaxRetries { get; set; } = 3;
 
         /// <summary>
-        /// The initial retry delay on which to base calculations for a
-        /// backoff-based approach.  Note that this is different than
-        /// <see cref="Azure.Core.RetryOptions.Delay"/> which will only delay
-        /// before resending the same request.  This property is used to add
-        /// delay between additional batch submissions when our requests are
-        /// being throttled by the service.
+        /// The initial retry delay. The delay will increase exponentially with
+        /// subsequent retries and add random jitter.  Note that this is
+        /// different than <see cref="Azure.Core.RetryOptions.Delay"/> which
+        /// will only delay before resending the same request.  This property
+        /// is used to add delay between additional batch submissions when our
+        /// requests are being throttled by the service.
         /// </summary>
         public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(0.8);
 
