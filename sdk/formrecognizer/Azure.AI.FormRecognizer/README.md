@@ -385,36 +385,35 @@ using (FileStream stream = new FileStream(invoicePath, FileMode.Open))
     // To see the list of the supported fields returned by service and its corresponding types, consult:
     // https://aka.ms/formrecognizer/invoicefields
 
-    foreach (RecognizedForm invoice in invoices)
+    RecognizedForm invoice = invoices.Single();
+
+    FormField vendorNameField;
+    if (invoice.Fields.TryGetValue("VendorName", out vendorNameField))
     {
-        FormField vendorNameField;
-        if (invoice.Fields.TryGetValue("VendorName", out vendorNameField))
+        if (vendorNameField.Value.ValueType == FieldValueType.String)
         {
-            if (vendorNameField.Value.ValueType == FieldValueType.String)
-            {
-                string vendorName = vendorNameField.Value.AsString();
-                Console.WriteLine($"    Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
-            }
+            string vendorName = vendorNameField.Value.AsString();
+            Console.WriteLine($"    Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
         }
+    }
 
-        FormField customerNameField;
-        if (invoice.Fields.TryGetValue("CustomerName", out customerNameField))
+    FormField customerNameField;
+    if (invoice.Fields.TryGetValue("CustomerName", out customerNameField))
+    {
+        if (customerNameField.Value.ValueType == FieldValueType.String)
         {
-            if (customerNameField.Value.ValueType == FieldValueType.String)
-            {
-                string customerName = customerNameField.Value.AsString();
-                Console.WriteLine($"    Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
-            }
+            string customerName = customerNameField.Value.AsString();
+            Console.WriteLine($"    Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
         }
+    }
 
-        FormField invoiceTotalField;
-        if (invoice.Fields.TryGetValue("InvoiceTotal", out invoiceTotalField))
+    FormField invoiceTotalField;
+    if (invoice.Fields.TryGetValue("InvoiceTotal", out invoiceTotalField))
+    {
+        if (invoiceTotalField.Value.ValueType == FieldValueType.Float)
         {
-            if (invoiceTotalField.Value.ValueType == FieldValueType.Float)
-            {
-                float invoiceTotal = invoiceTotalField.Value.AsFloat();
-                Console.WriteLine($"    Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
-            }
+            float invoiceTotal = invoiceTotalField.Value.AsFloat();
+            Console.WriteLine($"    Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
         }
     }
 }
