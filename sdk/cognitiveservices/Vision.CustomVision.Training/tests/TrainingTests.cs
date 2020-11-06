@@ -263,11 +263,24 @@
                     Assert.NotNull(foodDomain);
                     Assert.False(foodDomain.Exportable);
                     Assert.Contains("food", foodDomain.Name.ToLowerInvariant());
+                    Assert.Null(foodDomain.ModelInformation);
 
                     var generalDomain = client.GetDomainAsync(ProjectBuilderHelper.GeneralDomain).Result;
                     Assert.Equal(ProjectBuilderHelper.GeneralDomain, generalDomain.Id);
                     Assert.False(generalDomain.Exportable);
                     Assert.Contains("general", generalDomain.Name.ToLowerInvariant());
+                    Assert.Null(generalDomain.ModelInformation);
+
+                    // Verify exportable domains have model information
+                    foreach(var domain in domains)
+                    {
+                        if (domain.Exportable)
+                        {
+                            Assert.NotNull(domain.ModelInformation);
+                            Assert.NotEmpty(domain.ModelInformation.Description);
+                            Assert.True(domain.ModelInformation.EstimatedModelSizeInMegabytes > 0);
+                        }
+                    }
                 }
             }
         }
@@ -852,7 +865,7 @@
                     Assert.NotEqual(Guid.Empty, imageResult.Iteration);
                     Assert.Equal(project.ProjectId, imageResult.Project);
                     Assert.NotEqual(0, imageResult.Predictions.Count);
-                    Assert.InRange(imageResult.Predictions[0].Probability, 0.5, 1);
+                    Assert.InRange(imageResult.Predictions[0].Probability, 0.25, 1);
                     Assert.NotNull(imageResult.Predictions[0].BoundingBox);
                     Assert.InRange(imageResult.Predictions[0].BoundingBox.Left, 0, 1);
                     Assert.InRange(imageResult.Predictions[0].BoundingBox.Top, 0, 1);
@@ -1111,6 +1124,39 @@
                     Assert.Equal(metadata.Keys.Count, results.Images[0].Metadata.Keys.Count);
                     Assert.Equal(metadata["type"], results.Images[0].Metadata["type"]);
                     Assert.Equal(metadata["value"], results.Images[0].Metadata["value"]);
+                }
+            }
+        }
+
+        [Fact]
+        public async void TrainWithCustomBaseModelInfo()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "TrainWithCustomBaseModelInfo", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var trainingParams = new TrainingParameters()
+                    {
+                        CustomBaseModelInfo = new CustomBaseModelInfo()
+                        {
+                            ProjectId = project.ProjectId,
+                            IterationId = project.IterationId
+                        }
+                    };
+                    var newIteration = await client.TrainProjectAsync(project.ProjectId, "Regular", null, true, null, trainingParams);
+                    while (newIteration.Status != "Completed")
+                    {
+#if RECORD_MODE
+                        Thread.Sleep(1000);
+#endif
+                        newIteration = client.GetIteration(project.ProjectId, newIteration.Id);
+                    }
+                    Assert.NotNull(newIteration.CustomBaseModelInfo);
+                    Assert.Equal(newIteration.CustomBaseModelInfo.ProjectId, project.ProjectId);
+                    Assert.Equal(newIteration.CustomBaseModelInfo.IterationId, project.IterationId);
                 }
             }
         }
