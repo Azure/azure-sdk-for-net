@@ -6,6 +6,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// EntitiesTask.
+    /// </summary>
     [CodeGenModel("EntitiesTask")]
     public partial class EntitiesTask
     {

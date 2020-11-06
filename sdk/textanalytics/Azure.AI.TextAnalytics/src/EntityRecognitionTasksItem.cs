@@ -7,9 +7,15 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// EntityRecognitionTasksItem.
+    /// </summary>
     [CodeGenModel("TasksStateTasksEntityRecognitionTasksItem")]
     public partial class EntityRecognitionTasksItem
     {
+        /// <summary>
+        /// Results for EntityRecognitionTasksItem
+        /// </summary>
         internal EntitiesResult Results { get; }
     }
 }

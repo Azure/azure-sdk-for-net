@@ -17,7 +17,9 @@ namespace Azure.AI.MetricsAdvisor
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.DataPointAnomaly> GetAnomaliesAsync(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetAnomaliesForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetDimensionValues(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetDimensionValuesAsync(string metricId, string dimensionName, Azure.AI.MetricsAdvisor.Models.GetDimensionValuesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCauses(Azure.AI.MetricsAdvisor.Models.AnomalyIncident incident, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCauses(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCausesAsync(Azure.AI.MetricsAdvisor.Models.AnomalyIncident incident, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.MetricsAdvisor.Models.IncidentRootCause> GetIncidentRootCausesAsync(string detectionConfigurationId, string incidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string detectionConfigurationId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForDetectionConfigurationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.MetricsAdvisor.Models.AnomalyIncident> GetIncidents(string alertConfigurationId, string alertId, Azure.AI.MetricsAdvisor.Models.GetIncidentsForAlertOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -368,7 +370,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedIngestionSettings IngestionSettings { get { throw null; } }
         public bool? IsAdministrator { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> MetricIds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> MetricIds { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.DataFeedRollupSettings RollupSettings { get { throw null; } set { } }

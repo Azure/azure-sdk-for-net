@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,9 +21,14 @@ namespace Azure.Core.TestFramework
         //  when updating the JsonPathSanitizer logic to avoid changing date formats when deserializing requests.
         //  this property will be removed in the future.
         /// </summary>
-        public bool DoNotConvertJsonDateTokens { get; set; }
+        public bool LegacyConvertJsonDateTokens { get; set; }
 
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
+
+        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+        {
+            DateParseHandling = DateParseHandling.None
+        };
 
         public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
 
@@ -48,17 +54,12 @@ namespace Azure.Core.TestFramework
                 return body;
             try
             {
-                var settings = new JsonSerializerSettings
-                {
-                    DateParseHandling = DateParseHandling.None
-                };
-
                 JToken jsonO;
                 // Prevent default behavior where JSON.NET will convert DateTimeOffset
                 // into a DateTime.
-                if (DoNotConvertJsonDateTokens)
+                if (!LegacyConvertJsonDateTokens)
                 {
-                    jsonO = JsonConvert.DeserializeObject<JToken>(body, settings);
+                    jsonO = JsonConvert.DeserializeObject<JToken>(body, SerializerSettings);
                 }
                 else
                 {
@@ -72,7 +73,7 @@ namespace Azure.Core.TestFramework
                         token.Replace(JToken.FromObject(SanitizeValue));
                     }
                 }
-                return JsonConvert.SerializeObject(jsonO, settings);
+                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
             }
             catch
             {

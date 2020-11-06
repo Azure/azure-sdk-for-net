@@ -6,6 +6,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// TaskState.
+    /// </summary>
     [CodeGenModel("TaskState")]
     public partial class TaskState
     {

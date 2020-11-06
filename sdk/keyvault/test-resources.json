@@ -43,6 +43,13 @@
                 "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
             }
         },
+        "enableHsm": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Whether to enable deployment of Managed HSM. The default is false."
+            }
+        },
         "enableSoftDelete": {
             "type": "bool",
             "defaultValue": true,
@@ -165,6 +172,7 @@
             "type": "Microsoft.KeyVault/managedHSMs",
             "apiVersion": "[variables('hsmApiVersion')]",
             "name": "[variables('hsmName')]",
+            "condition": "[parameters('enableHsm')]",
             "location": "[parameters('hsmLocation')]",
             "sku": {
                 "family": "B",
@@ -236,6 +244,7 @@
         },
         "AZURE_MANAGEDHSM_URL": {
             "type": "string",
+            "condition": "[parameters('enableHsm')]",
             "value": "[reference(variables('hsmName')).hsmUri]"
         },
         "KEYVAULT_SKU": {

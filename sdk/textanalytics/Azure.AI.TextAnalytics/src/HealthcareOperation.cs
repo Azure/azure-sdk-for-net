@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Provides the input to be part of HealthcareOperation class
         /// </summary>
-        private readonly IDictionary<string, int> _idToIndexMap;
+        internal readonly IDictionary<string, int> _idToIndexMap;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// next link string for pagination
         /// </summary>
-        public string NextLink { get; set; }
+        internal string NextLink { get; set; }
 
         /// <summary>
         /// Final result of the long-running operation.
@@ -77,11 +77,7 @@ namespace Azure.AI.TextAnalytics
 
         private int? _top { get; }
         private int? _skip { get; }
-
-        /// <summary>
-        /// For showing Statistics for request as well as document.
-        /// </summary>
-        public bool? ShowStats { get; }
+        private bool? _showStats { get; }
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
@@ -119,7 +115,7 @@ namespace Azure.AI.TextAnalytics
             _idToIndexMap = idToIndexMap;
             _top = top;
             _skip = skip;
-            ShowStats = showStats;
+            _showStats = showStats;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -202,8 +198,8 @@ namespace Azure.AI.TextAnalytics
                 try
                 {
                     Response<HealthcareJobState> update = async
-                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, ShowStats, cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, ShowStats, cancellationToken);
+                        ? await _serviceClient.HealthStatusAsync(new Guid(Id), _top, _skip, _showStats, cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.HealthStatus(new Guid(Id), _top, _skip, _showStats, cancellationToken);
 
                     _response = update.GetRawResponse();
 

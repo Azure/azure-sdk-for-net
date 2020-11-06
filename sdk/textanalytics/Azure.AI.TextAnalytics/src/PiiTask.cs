@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// PiiTask.
+    /// </summary>
     [CodeGenModel("PiiTask")]
     public partial class PiiTask
     {

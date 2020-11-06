@@ -93,6 +93,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("@odata.etag");
                 writer.WriteStringValue(_etag);
             }
+            if (Optional.IsDefined(EncryptionKey))
+            {
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey");
+                    writer.WriteObjectValue(EncryptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -109,6 +121,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<FieldMapping>> outputFieldMappings = default;
             Optional<bool?> disabled = default;
             Optional<string> odataEtag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -201,8 +214,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     odataEtag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("encryptionKey"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        encryptionKey = null;
+                        continue;
+                    }
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
+                    continue;
+                }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value);
+            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value);
         }
     }
 }

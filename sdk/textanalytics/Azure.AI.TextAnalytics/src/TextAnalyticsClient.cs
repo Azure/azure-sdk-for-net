@@ -27,7 +27,6 @@ namespace Azure.AI.TextAnalytics
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private IDictionary<string, int> _idToIndexMap;
 
         // Specifies the method used to interpret string offsets. Default to <see cref="StringIndexType.Utf16CodeUnit"/>.
         private readonly StringIndexType _stringCodeUnit = StringIndexType.Utf16CodeUnit;
@@ -2078,16 +2077,20 @@ namespace Azure.AI.TextAnalytics
         #region Healthcare
 
         /// <summary>
-        /// <a href="https://aka.ms/tanerpii"/>.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<HealthcareOperation> StartHealthcareAsync(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
@@ -2109,7 +2112,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2120,16 +2123,20 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// <a href="https://aka.ms/tanerpii"/>.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual HealthcareOperation StartHealthcare(string document, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
@@ -2151,7 +2158,7 @@ namespace Azure.AI.TextAnalytics
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(documentInputs.Documents);
 
-                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap);
+                return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2161,16 +2168,20 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// <a href="https://aka.ms/tanerpii"/>.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="HealthcareOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<HealthcareOperation> StartHealthcareBatchAsync(IEnumerable<string> documents, string language = default, HealthcareOptions options = default, CancellationToken cancellationToken = default)
@@ -2183,13 +2194,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// StartHealthcare
-        /// For more information on available categories, see
-        /// <a href="https://aka.ms/tanerpii"/>.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2197,8 +2209,7 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
         /// where the language is explicitly set to "None".</param>
-        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
-        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -2216,10 +2227,17 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Recognizes health entities async.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
-        /// <param name="documents"></param>
-        /// <param name="options"></param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -2235,10 +2253,17 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Recognizes layout elements from one or more passed-in forms.
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
-        /// <param name="documents"></param>
-        /// <param name="options"></param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="HealthcareOperation"/> to wait on this long-running operation.  Its <see cref="HealthcareOperation.Value"/> upon successful
         /// completion will contain layout elements extracted from the form.</returns>
@@ -2265,7 +2290,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = _serviceRestClient.Health(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
-                _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
                 return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
@@ -2288,7 +2313,7 @@ namespace Azure.AI.TextAnalytics
                 ResponseWithHeaders<TextAnalyticsHealthHeaders> response = await _serviceRestClient.HealthAsync(batchInput, options.ModelVersion, _stringCodeUnit, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
-                _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+                var _idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
                 return new HealthcareOperation(_serviceRestClient, _clientDiagnostics, location, _idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
             }
@@ -2299,10 +2324,10 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        /// <summary> Cancel healthcare prediction job. </summary>
-        /// <param name="operation"> operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // Look for other alternatives of operation cancellation
+        /// <summary> Runs the cancel job for healthcare operation which was initialzed using <see cref="StartHealthcareBatchAsync(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcareAsync"/> </summary>
+        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
         #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<string> StartCancelHealthJobAsync(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2324,9 +2349,10 @@ namespace Azure.AI.TextAnalytics
 
         }
 
-        /// <summary> Cancel healthcare prediction job. </summary>
-        /// <param name="operation"> Job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Runs the cancel job for healthcare operation which was initialized using <see cref="StartHealthcareBatch(IEnumerable{string}, string, HealthcareOptions, CancellationToken)"/> or <see cref="StartHealthcare"/> </summary>
+        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A long running operation id once the operation is in calcelled state upon successful.</returns>
         #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual string StartCancelHealthJob(HealthcareOperation operation, CancellationToken cancellationToken = default)
         #pragma warning restore AZC0015 // Unexpected client method return type.
@@ -2349,10 +2375,12 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
+        /// This method is used if the number of documents are greater than 20
+        /// Otherwise, use the StartHealthcareAsync and StartHealthcareBatchAsync for less than 20 documents.
         /// </summary>
-        /// <param name="operation"></param>
+        /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="RecognizeHealthcareEntitiesResultCollection"/> items.</returns>
+        /// <returns>A collection of <see cref="DocumentHealthcareResult"/> items.</returns>
         public virtual AsyncPageable<DocumentHealthcareResult> GetHealthcareEntities(HealthcareOperation operation, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentHealthcareResult>> FirstPageFunc(int? pageSizeHint)
@@ -2382,10 +2410,11 @@ namespace Azure.AI.TextAnalytics
                 {
                     int top = default;
                     int skip = default;
+                    bool showStats = default;
 
                     // Extracting Job ID and parameters from the URL.
                     // TODO - Update with Regex for cleaner implementation
-                    // nextLink - https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0
+                    // nextLink - https://cognitiveusw2dev.azure-api.net/text/analytics/v3.1-preview.3/entities/health/jobs/8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0&showStats=true
 
                     string[] nextLinkSplit = nextLink.Split('/');
                     // nextLinkSplit = [ 'https:', '', 'cognitiveusw2dev.azure-api.net', 'text', ..., '8002878d-2e43-4675-ad20-455fe004641b?$skip=20&$top=0']
@@ -2404,7 +2433,7 @@ namespace Azure.AI.TextAnalytics
 
                     // Extracting Top and Skip parameter values
                     string[] parameters = jobIdParams[1].Split('&');
-                    // '$skip=20&$top=0'
+                    // '$skip=20', '$top=0', 'showStats=true'
 
                     foreach (string paramater in parameters)
                     {
@@ -2418,11 +2447,16 @@ namespace Azure.AI.TextAnalytics
                             _ = int.TryParse(paramater.Split('=')[1], out skip);
                             // 20
                         }
+                        if (paramater.Contains("showStats"))
+                        {
+                            _ = bool.TryParse(paramater.Split('=')[1], out showStats);
+                            // 20
+                        }
                     }
 
-                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, operation.ShowStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceRestClient.HealthStatusAsync(new Guid(jobId), top, skip, showStats).ConfigureAwait(false);
 
-                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+                    RecognizeHealthcareEntitiesResultCollection result = Transforms.ConvertToRecognizeHealthcareEntitiesResultCollection(jobState.Value.Results, operation._idToIndexMap);
                     return Page.FromValues(result.AsEnumerable(), jobState.Value.NextLink, jobState.GetRawResponse());
                 }
                 catch (Exception e)

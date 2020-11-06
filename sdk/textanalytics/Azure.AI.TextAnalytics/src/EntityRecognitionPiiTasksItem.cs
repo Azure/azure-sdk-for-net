@@ -6,6 +6,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// EntityRecognitionPiiTasksItem.
+    /// </summary>
     [CodeGenModel("TasksStateTasksEntityRecognitionPiiTasksItem")]
     public partial class EntityRecognitionPiiTasksItem
     {

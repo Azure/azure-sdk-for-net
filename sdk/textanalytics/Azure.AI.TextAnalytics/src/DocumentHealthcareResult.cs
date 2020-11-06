@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id"></param>
         /// <param name="textAnalyticsError"></param>
-        public DocumentHealthcareResult(string id, TextAnalyticsError textAnalyticsError)
+        internal DocumentHealthcareResult(string id, TextAnalyticsError textAnalyticsError)
         {
             Id = id;
             TextAnalyticsError = textAnalyticsError;
