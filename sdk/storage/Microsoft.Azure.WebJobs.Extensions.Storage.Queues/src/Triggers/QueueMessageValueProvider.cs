@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class QueueMessageValueProvider : IValueProvider
     {

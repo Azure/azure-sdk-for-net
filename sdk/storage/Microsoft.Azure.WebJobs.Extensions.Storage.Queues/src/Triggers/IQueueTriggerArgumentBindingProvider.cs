@@ -5,7 +5,7 @@ using System.Reflection;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal interface IQueueTriggerArgumentBindingProvider
     {

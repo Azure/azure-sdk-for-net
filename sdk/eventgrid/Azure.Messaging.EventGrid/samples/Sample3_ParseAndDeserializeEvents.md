@@ -72,7 +72,7 @@ foreach (EventGridEvent egEvent in egEvents)
             if (egEvent.EventType == "MyApp.Models.CustomEventType")
             {
                 // You can use BinaryData methods to deserialize the payload
-                TestPayload deserializedEventData = await unknownType.ToObjectAsync<TestPayload>();
+                TestPayload deserializedEventData = unknownType.ToObjectFromJson<TestPayload>();
                 Console.WriteLine(deserializedEventData.Name);
             }
             break;

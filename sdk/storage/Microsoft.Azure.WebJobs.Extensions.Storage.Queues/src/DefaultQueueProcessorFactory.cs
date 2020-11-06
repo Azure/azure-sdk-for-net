@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Queues;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     /// <summary>
     /// The default <see cref="IQueueProcessorFactory"/> implementation used by <see cref="QueuesOptions"/>.

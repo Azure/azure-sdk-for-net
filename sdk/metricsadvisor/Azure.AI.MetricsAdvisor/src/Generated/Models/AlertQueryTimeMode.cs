@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> time mode. </summary>
     public readonly partial struct AlertQueryTimeMode : IEquatable<AlertQueryTimeMode>

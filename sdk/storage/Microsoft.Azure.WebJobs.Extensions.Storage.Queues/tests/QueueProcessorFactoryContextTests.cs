@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueProcessorOptionsTests
     {

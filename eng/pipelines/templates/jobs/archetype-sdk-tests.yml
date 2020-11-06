@@ -142,7 +142,6 @@ jobs:
         OSVmImage: "windows-2019"
         TestMode: Record
         TestTargetFramework: netcoreapp2.1
-        AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
         PostSteps:
           - task: CopyFiles@2
             displayName: "Copy Test Recordings"

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 
 // This class is without namespace on purpose, to make sure it runs once per test assembly regardless of how tests are packaged.

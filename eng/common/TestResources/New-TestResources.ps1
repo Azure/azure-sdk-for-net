@@ -141,6 +141,9 @@ $UserName =  if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
 if (!$BaseName) {
     $BaseName = "$UserName$ServiceDirectory"
 
+    # Make sure pre- and post-scripts are passed formerly required arguments.
+    $PSBoundParameters['BaseName'] = $BaseName
+
     Log "BaseName was not set. Using default base name: '$BaseName'"
 }
 
@@ -167,8 +170,7 @@ if (!$Location) {
     Write-Verbose "Location was not set. Using default location for environment: '$Location'"
 }
 
-# If no test application ID is specified during an interactive session, create a new service principal.
-if (!$CI -and !$TestApplicationId) {
+if (!$CI) {
 
     # Make sure the user is logged in to create a service principal.
     $context = Get-AzContext;
@@ -177,13 +179,20 @@ if (!$CI -and !$TestApplicationId) {
         $context = (Connect-AzAccount -Subscription $defaultSubscription).Context
     }
 
-    Log "TestApplicationId was not specified; creating a new service principal"
-    $servicePrincipal = New-AzADServicePrincipal -Role Owner
+    # If no test application ID is specified during an interactive session, create a new service principal.
+    if (!$TestApplicationId) {
+        Log "TestApplicationId was not specified; creating a new service principal"
+        $servicePrincipal = New-AzADServicePrincipal -Role Owner
 
-    $TestApplicationId = $servicePrincipal.ApplicationId
-    $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
+        $TestApplicationId = $servicePrincipal.ApplicationId
+        $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
 
-    Log "Created service principal '$TestApplicationId'"
+        # Make sure pre- and post-scripts are passed formerly required arguments.
+        $PSBoundParameters['TestApplicationId'] = $TestApplicationId
+        $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
+
+        Log "Created service principal '$TestApplicationId'"
+    }
 
     if (!$ProvisionerApplicationId) {
         $ProvisionerApplicationId = $TestApplicationId
