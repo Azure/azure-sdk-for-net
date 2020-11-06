@@ -197,7 +197,7 @@
       <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
     </ItemGroup>
 
-    <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouln't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
+    <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
   <PropertyGroup>
