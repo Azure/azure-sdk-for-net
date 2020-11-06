@@ -2162,7 +2162,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region UploadFromUri
         /// <summary>
-        /// The Put Blob from URL operation creates a new Block Blob where the contents of the
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
@@ -2204,7 +2204,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The Put Blob from URL operation creates a new Block Blob where the contents of the
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
@@ -2246,7 +2246,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The Put Blob from URL operation creates a new Block Blob where the contents of the
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
