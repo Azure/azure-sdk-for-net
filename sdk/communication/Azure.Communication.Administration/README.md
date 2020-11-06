@@ -206,6 +206,13 @@ Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, St
 var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
 await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
+// Ensure purchase has completed successfuly
+if (!reservationPurchaseOperation.HasSucceeded)
+{ 
+    Console.WriteLine("Purchase failed");
+    Console.WriteLine(reservationPurchaseOperation.Error);
+}
+
 Console.WriteLine($"Purchase status: {reservationPurchaseOperation.Value}");
 ```
 

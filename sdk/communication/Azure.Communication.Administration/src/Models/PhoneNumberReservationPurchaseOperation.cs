@@ -17,12 +17,10 @@ namespace Azure.Communication.Administration.Models
     public class PhoneNumberReservationPurchaseOperation : Operation<ReservationStatus>
     {
         private bool _hasCompleted;
-        private readonly object _lockObject = new object();
         private readonly PhoneNumberAdministrationClient _client;
         private readonly CancellationToken _cancellationToken;
         private ReservationStatus? _value;
         private Response _rawResponse;
-        private Response _finalRawResponse;
         private readonly IReadOnlyList<ReservationStatus> _terminateStatuses;
 
         /// <summary>
@@ -62,7 +60,6 @@ namespace Azure.Communication.Administration.Models
             Id = id;
             _value = null;
             _rawResponse = initialResponse;
-            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -71,16 +68,43 @@ namespace Azure.Communication.Administration.Models
         public override string Id { get; }
 
         /// <inheritdocs />
-        public override ReservationStatus Value => OperationHelpers.GetValue(ref _value);
+        public override ReservationStatus Value
+        {
+            get
+            {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not completed yet.");
+                }
+                if (!HasSucceeded)
+                {
+                    throw new RequestFailedException(GetErrorMessage(_value));
+                }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+
+                return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdocs />
         public override bool HasCompleted => _hasCompleted;
 
-        /// <inheritdocs />
-        public override bool HasValue => _value != null;
+        /// <summary>
+        /// Returns true if the long-running operation completed successfully.
+        /// </summary>
+        public virtual bool HasSucceeded { get; protected set; }
+
+        /// <summary>
+        /// > The error if operation completed failed.
+        /// </summary>
+        public virtual string? Error { get; protected set; }
 
         /// <inheritdocs />
-        public override Response GetRawResponse() => HasCompleted ? _finalRawResponse : _rawResponse;
+        public override bool HasValue => HasSucceeded;
+
+        /// <inheritdocs />
+        public override Response GetRawResponse() => _rawResponse;
 
         /// <inheritdocs />
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
@@ -101,7 +125,7 @@ namespace Azure.Communication.Administration.Models
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(PhoneNumberReservationOperation)}.{nameof(UpdateStatus)}");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(PhoneNumberReservationPurchaseOperation)}.{nameof(UpdateStatus)}");
             scope.Start();
 
             try
@@ -120,20 +144,18 @@ namespace Azure.Communication.Administration.Models
                     ? await _client.GetReservationByIdAsync(reservationId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
                     : _client.GetReservationById(reservationId: Id, cancellationToken: cancellationToken);
 
-                var response = update.GetRawResponse();
-                _rawResponse = response;
+                if (!HasCompleted)
+                    _rawResponse = update.GetRawResponse();
 
-                if (IsOperationSucceeded(update))
+                if (IsOperationCompleted(update))
                 {
-                    lock (_lockObject)
-                    {
-                        _rawResponse = response;
-                        _value = update.Value.Status;
-                        _hasCompleted = true;
-                    }
+                    HasSucceeded = update.Value.Status == ReservationStatus.Success;
+                    Error = GetErrorMessage(update.Value.Status);
+                    _value = update.Value.Status;
+                    _hasCompleted = true;
                 }
 
-                return _rawResponse;
+                return GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -142,7 +164,7 @@ namespace Azure.Communication.Administration.Models
             }
         }
 
-        private bool IsOperationSucceeded(Response<PhoneNumberReservation> response)
+        private bool IsOperationCompleted(Response<PhoneNumberReservation> response)
         {
             if (response.Value?.Status == null)
                 return false;
@@ -157,5 +179,18 @@ namespace Azure.Communication.Administration.Models
         /// <inheritdocs />
         public override ValueTask<Response<ReservationStatus>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+
+
+        private static string GetErrorMessage(ReservationStatus? reservationStatus)
+        {
+            if (reservationStatus == ReservationStatus.Cancelled)
+                return "Reservation is cancelled.";
+            if (reservationStatus == ReservationStatus.Error)
+                return "Reservation error.";
+            if (reservationStatus == ReservationStatus.Expired)
+                return "Reservation is expired.";
+
+            return string.Empty;
+        }
     }
 }

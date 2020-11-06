@@ -15,13 +15,16 @@ namespace Azure.Communication.Administration.Models
     /// </summary>
     public class ReleasePhoneNumberOperation : Operation<PhoneNumberRelease>
     {
-        private readonly object _lockObject = new object();
         private readonly PhoneNumberAdministrationClient _client;
         private readonly CancellationToken _cancellationToken;
         private bool _hasCompleted;
         private PhoneNumberRelease? _value;
         private Response _rawResponse;
-        private Response _finalRawResponse;
+        private readonly ReleaseStatus[] _terminateStatuses = new[] {
+                ReleaseStatus.Complete,
+                ReleaseStatus.Failed,
+                ReleaseStatus.Expired
+        };
 
         /// <summary>
         /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
@@ -37,7 +40,6 @@ namespace Azure.Communication.Administration.Models
             Id = id;
             _value = null;
             _rawResponse = null!;
-            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -58,7 +60,6 @@ namespace Azure.Communication.Administration.Models
             Id = id;
             _value = null;
             _rawResponse = initialResponse;
-            _finalRawResponse = null!;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -67,16 +68,33 @@ namespace Azure.Communication.Administration.Models
         public override string Id { get; }
 
         /// <inheritdocs />
-        public override PhoneNumberRelease Value => OperationHelpers.GetValue(ref _value);
+        public override PhoneNumberRelease Value
+        {
+            get
+            {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                if (!HasCompleted)
+                {
+                    throw new InvalidOperationException("The operation is not completed yet.");
+                }
+                if (_value?.Status != ReleaseStatus.Complete)
+                {
+                    throw new RequestFailedException(GetErrorMessage(_value));
+                }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+
+                return OperationHelpers.GetValue(ref _value);
+            }
+        }
 
         /// <inheritdocs />
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdocs />
-        public override bool HasValue => (_rawResponse != null || _finalRawResponse != null) && _value != null;
+        public override bool HasValue => _value?.Status == ReleaseStatus.Complete;
 
         /// <inheritdocs />
-        public override Response GetRawResponse() => HasCompleted ? _finalRawResponse : _rawResponse;
+        public override Response GetRawResponse() => _rawResponse;
 
         /// <summary>
         /// Check for the latest status of the operation.
@@ -111,41 +129,46 @@ namespace Azure.Communication.Administration.Models
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            if (HasCompleted)
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(ReleasePhoneNumberOperation)}.{nameof(UpdateStatus)}");
+            scope.Start();
+
+            try
             {
-                return GetRawResponse();
-            }
-
-            if (cancellationToken == default)
-            {
-                cancellationToken = _cancellationToken;
-            }
-
-            Response<PhoneNumberRelease> update = async
-                ? await _client.GetReleaseByIdAsync(releaseId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _client.GetReleaseById(releaseId: Id, cancellationToken: cancellationToken);
-
-            var terminateStatuses = new[]
-            {
-                ReleaseStatus.Complete,
-                ReleaseStatus.Failed,
-                ReleaseStatus.Expired
-            };
-
-            Response response = update.GetRawResponse();
-            _rawResponse = response;
-
-            if (update.Value?.Status != null && terminateStatuses.Contains(update.Value.Status.Value))
-            {
-                lock (_lockObject)
+                if (HasCompleted)
                 {
-                    _finalRawResponse = response;
+                    return GetRawResponse();
+                }
+
+                if (cancellationToken == default)
+                {
+                    cancellationToken = _cancellationToken;
+                }
+
+                Response<PhoneNumberRelease> update = async
+                    ? await _client.GetReleaseByIdAsync(releaseId: Id, cancellationToken: cancellationToken).ConfigureAwait(false)
+                    : _client.GetReleaseById(releaseId: Id, cancellationToken: cancellationToken);
+
+                if (!HasCompleted)
+                    _rawResponse = update.GetRawResponse();
+
+                if (IsOperationCompleted(update))
+                {
                     _value = update.Value;
                     _hasCompleted = true;
                 }
-            }
 
-            return response;
+                return GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private bool IsOperationCompleted(Response<PhoneNumberRelease> update)
+        {
+            return update.Value?.Status != null && _terminateStatuses.Contains(update.Value.Status.Value);
         }
 
         /// <inheritdocs />
@@ -155,5 +178,17 @@ namespace Azure.Communication.Administration.Models
         /// <inheritdocs />
         public override ValueTask<Response<PhoneNumberRelease>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+
+        private static string GetErrorMessage(PhoneNumberRelease? release)
+        {
+            var status = release?.Status;
+
+            if (status == ReleaseStatus.Failed)
+                return "Phone number release failed.";
+            if (status == ReleaseStatus.Expired)
+                return "Phone number release is expired.";
+
+            throw new InvalidOperationException($"Unsupported status: {status}");
+        }
     }
 }
