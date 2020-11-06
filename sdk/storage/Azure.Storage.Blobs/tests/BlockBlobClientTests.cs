@@ -2754,9 +2754,11 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadAsync(stream, uploadOptions);
 
             // Act
-            await destBlob.UploadFromUriAsync(sourceBlob.Uri);
+            Response<BlobContentInfo> uploadResponse = await destBlob.UploadFromUriAsync(sourceBlob.Uri);
 
             // Assert
+            Assert.AreNotEqual(default(ETag), uploadResponse.Value.ETag);
+            Assert.AreNotEqual(DateTimeOffset.MinValue, uploadResponse.Value.LastModified);
 
             // Validate source and destination blob content matches
             Response<BlobDownloadInfo> result = await destBlob.DownloadAsync();

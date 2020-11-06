@@ -2166,12 +2166,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
-        /// overwritten with the content of the new blob.To perform partial updates to a block blob’s
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
         /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
         /// </summary>
         /// <param name="copySource">
-        /// Required.  Specifies the URL of the source blob.  he source blob may be of any type,
-        /// including a block blob, append blob, or page blob.The value may be a URL of up to 2
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
         /// in a request URI.  The source blob must either be public or must be authorized via a
         /// shared access signature.  If the source blob is public, no authorization is required
@@ -2208,12 +2208,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
-        /// overwritten with the content of the new blob.To perform partial updates to a block blob’s
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
         /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
         /// </summary>
         /// <param name="copySource">
-        /// Required.  Specifies the URL of the source blob.  he source blob may be of any type,
-        /// including a block blob, append blob, or page blob.The value may be a URL of up to 2
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
         /// in a request URI.  The source blob must either be public or must be authorized via a
         /// shared access signature.  If the source blob is public, no authorization is required
@@ -2250,12 +2250,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
         ///
         /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
-        /// overwritten with the content of the new blob.To perform partial updates to a block blob’s
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
         /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
         /// </summary>
         /// <param name="copySource">
-        /// Required.  Specifies the URL of the source blob.  he source blob may be of any type,
-        /// including a block blob, append blob, or page blob.The value may be a URL of up to 2
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
         /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
         /// in a request URI.  The source blob must either be public or must be authorized via a
         /// shared access signature.  If the source blob is public, no authorization is required
