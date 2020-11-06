@@ -10,6 +10,7 @@
 ### Added
 
 - Added `EncryptionKey` to `SearchIndexer`, `SearchIndexerDataSourceConnection`, and `SearchIndexerSkillset`.
+- Add configuration options to tune the performance of `SearchIndexingBufferedSender<T>`.
 
 ## 11.2.0-beta.1 (2020-10-09)
 
