@@ -8,18 +8,18 @@ namespace Azure.Storage.Queues
 {
     internal class QueueMessageCodec
     {
-        public static string EncodeMessageBody(BinaryData? binaryData, QueueMessageEncoding messageEncoding)
+        public static string EncodeMessageBody(BinaryData binaryData, QueueMessageEncoding messageEncoding)
         {
-            if (!binaryData.HasValue)
+            if (binaryData == null)
             {
                 return null;
             }
             switch (messageEncoding)
             {
                 case QueueMessageEncoding.UTF8:
-                    return binaryData.Value.ToString();
+                    return binaryData.ToString();
                 case QueueMessageEncoding.Base64:
-                    return Convert.ToBase64String(binaryData.Value.Bytes.ToArray());
+                    return Convert.ToBase64String(binaryData.ToArray());
                 default:
                     throw new ArgumentException($"Unsupported message encoding {messageEncoding}");
             }

@@ -1771,7 +1771,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
         private async Task<Response<SendReceipt>> SendMessageInternal(
-            BinaryData? message,
+            BinaryData message,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
@@ -1790,7 +1790,7 @@ namespace Azure.Storage.Queues
                     if (UsingClientSideEncryption)
                     {
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
 
                     Response<IEnumerable<SendReceipt>> messages =
@@ -2521,7 +2521,7 @@ namespace Azure.Storage.Queues
         public virtual Response<UpdateReceipt> UpdateMessage(
             string messageId,
             string popReceipt,
-            BinaryData? message,
+            BinaryData message,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
@@ -2601,7 +2601,7 @@ namespace Azure.Storage.Queues
         public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
             string messageId,
             string popReceipt,
-            BinaryData? message,
+            BinaryData message,
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
@@ -2642,7 +2642,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
-            BinaryData? message,
+            BinaryData message,
             string messageId,
             string popReceipt,
             TimeSpan visibilityTimeout,
@@ -2663,12 +2663,12 @@ namespace Azure.Storage.Queues
                     if (UsingClientSideEncryption)
                     {
                         message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(message.Value, async, cancellationToken).ConfigureAwait(false);
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
                     QueueSendMessage queueSendMessage = null;
-                    if (message.HasValue)
+                    if (message != null)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message.Value, _messageEncoding) };
+                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) };
                     }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
@@ -2765,11 +2765,11 @@ namespace Azure.Storage.Queues
         #endregion
 
         #region Encoding
-        private static BinaryData? ToBinaryData(string input)
+        private static BinaryData ToBinaryData(string input)
         {
             if (input == null)
             {
-                return default;
+                return null;
             } else
             {
                 return new BinaryData(input);

@@ -15,7 +15,7 @@ namespace Azure.Storage.Queues.Specialized.Models
         #region Serialize
         public static BinaryData Serialize(EncryptedMessage data)
         {
-            return BinaryData.FromMemory(SerializeEncryptedMessage(data));
+            return BinaryData.FromBytes(SerializeEncryptedMessage(data));
         }
 
         public static ReadOnlyMemory<byte> SerializeEncryptedMessage(EncryptedMessage message)
@@ -60,7 +60,7 @@ namespace Azure.Storage.Queues.Specialized.Models
 
         public static EncryptedMessage Deserialize(BinaryData serializedData)
         {
-            var reader = new Utf8JsonReader(serializedData.Bytes.Span);
+            var reader = new Utf8JsonReader(serializedData.ToArray());
             return DeserializeEncryptedMessage(ref reader);
         }
 

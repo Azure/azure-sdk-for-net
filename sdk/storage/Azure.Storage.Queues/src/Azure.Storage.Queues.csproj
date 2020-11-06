@@ -18,8 +18,8 @@
     </Description>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.Memory.Data"/>
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="Azure.Core.Experimental" VersionOverride="0.1.0-preview.4"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />

@@ -741,7 +741,7 @@ namespace Azure.Storage.Queues.Test
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
 
             // Act
-            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(message: BinaryData.FromMemory(content));
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(message: BinaryData.FromBytes(content));
 
             // Assert
             Assert.NotNull(response.Value);
@@ -750,7 +750,7 @@ namespace Azure.Storage.Queues.Test
             QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
 
             // Assert
-            CollectionAssert.AreEqual(content, receivedMessage.Body.Bytes.ToArray());
+            CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
         }
 
         [Test]

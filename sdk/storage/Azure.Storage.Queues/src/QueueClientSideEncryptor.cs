@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Queues.Specialized.Models;
@@ -23,7 +22,7 @@ namespace Azure.Storage.Queues
 
         public async Task<BinaryData> ClientSideEncryptInternal(BinaryData messageToUpload, bool async, CancellationToken cancellationToken)
         {
-            byte[] bytesToEncrypt = messageToUpload.Bytes.ToArray();
+            byte[] bytesToEncrypt = messageToUpload.ToArray();
             (byte[] ciphertext, EncryptionData encryptionData) = await _encryptor.BufferedEncryptInternal(
                 new MemoryStream(bytesToEncrypt),
                 async,
