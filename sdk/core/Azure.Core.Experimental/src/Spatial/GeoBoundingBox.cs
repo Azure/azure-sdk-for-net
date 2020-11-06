@@ -11,22 +11,22 @@ namespace Azure.Core.GeoJson
     public sealed class GeoBoundingBox : IEquatable<GeoBoundingBox>
     {
         /// <summary>
-        /// The west-most value of <see cref="GeoObject"/> coordinates.
+        /// The westmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double West { get; }
 
         /// <summary>
-        /// The south-most value of <see cref="GeoObject"/> coordinates.
+        /// The southmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double South { get; }
 
         /// <summary>
-        /// The east-most value of <see cref="GeoObject"/> coordinates.
+        /// The eastmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double East { get; }
 
         /// <summary>
-        /// The north-most value of <see cref="GeoObject"/> coordinates.
+        /// The northmost value of <see cref="GeoObject"/> coordinates.
         /// </summary>
         public double North { get; }
 
