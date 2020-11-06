@@ -11,7 +11,9 @@ namespace Azure.Sample.Perf
     // Measures the overhead of creating, throwing, and catching an exception (compared to NoOpTest)
     public class ExceptionTest : PerfTest<PerfOptions>
     {
-        public ExceptionTest(PerfOptions options) : base(options) { }
+        public ExceptionTest(PerfOptions options) : base(options)
+        {
+        }
 
         public override void Run(CancellationToken cancellationToken)
         {

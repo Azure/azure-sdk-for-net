@@ -16,7 +16,6 @@ namespace Azure.Sample.Perf
 
         public DelayTest(DelayTest.DelayOptions options) : base(options)
         {
-
             var instanceCount = Interlocked.Increment(ref _instanceCount) - 1;
 
             _delay = TimeSpan.FromMilliseconds(options.InitialDelayMs * Math.Pow(options.InstanceGrowthFactor, instanceCount));

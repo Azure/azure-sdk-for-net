@@ -10,7 +10,9 @@ namespace Azure.Sample.Perf
     // Used for measuring the overhead of the perf framework with the fastest possible test
     public class NoOpTest : PerfTest<PerfOptions>
     {
-        public NoOpTest(PerfOptions options) : base(options) { }
+        public NoOpTest(PerfOptions options) : base(options)
+        {
+        }
 
         public override void Run(CancellationToken cancellationToken)
         {
