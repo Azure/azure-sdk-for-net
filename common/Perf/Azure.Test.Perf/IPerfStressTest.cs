@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    internal interface IPerfStressTest: IDisposable, IAsyncDisposable
+    internal interface IPerfStressTest : IDisposable, IAsyncDisposable
     {
         Task GlobalSetupAsync();
         Task SetupAsync();

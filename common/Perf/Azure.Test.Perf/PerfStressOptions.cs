@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using CommandLine;
-using System;
 
 namespace Azure.Test.Perf
 {
