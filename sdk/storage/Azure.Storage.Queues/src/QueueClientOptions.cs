@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 
 namespace Azure.Storage.Queues
@@ -102,7 +103,8 @@ namespace Azure.Storage.Queues
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
-        /// TODO (kasobol-msft) add docs.
+        /// Gets or sets a message encoding that determines how <see cref="QueueMessage.Body"/> is represented in HTTP requests and responses.
+        /// The default is <see cref="QueueMessageEncoding.UTF8"/>.
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.UTF8;
 

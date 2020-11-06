@@ -60,7 +60,7 @@ namespace Azure.Storage.Queues.Specialized.Models
 
         public static EncryptedMessage Deserialize(BinaryData serializedData)
         {
-            var reader = new Utf8JsonReader(serializedData.ToArray());
+            var reader = new Utf8JsonReader(serializedData.ToMemory().Span);
             return DeserializeEncryptedMessage(ref reader);
         }
 
