@@ -153,6 +153,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
