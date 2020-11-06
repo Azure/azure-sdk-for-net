@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class DocumentHealthcareResult
     {
-        public DocumentHealthcareResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError textAnalyticsError) { }
+        internal DocumentHealthcareResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.HealthcareEntity> Entities { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.TextAnalytics.HealthcareRelation> Relations { get { throw null; } }
