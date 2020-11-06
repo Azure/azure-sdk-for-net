@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task ValidateImdsUserAssignedIdentity()
+        public void ValidateImdsUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))
             {
@@ -55,14 +55,6 @@ namespace Azure.Identity.Tests
             var cred = new ManagedIdentityCredential(clientId = Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
 
             Assert.Throws<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
-            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
-
-            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
-
-            KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
-
-            Assert.IsNotNull(secret);
         }
 
     }
