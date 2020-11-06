@@ -540,7 +540,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storage %Service Attention
-/sdk/storage/                                   @xgithubtriage
+#/<NotInRepo>/                                   @xgithubtriage
 
 # ServiceLabel: %Storsimple %Service Attention
 /sdk/storsimple/Microsoft.Azure.Management.StorSimple/           @anoobbacker @ganzee @manuaery @patelkunal
