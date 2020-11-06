@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
-        public async Task AddMetricFeedbackAsync()
+        public async Task AddFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetMetricFeedbackAsync()
+        public async Task GetFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetAllMetricFeedbackAsync()
+        public async Task GetAllFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
