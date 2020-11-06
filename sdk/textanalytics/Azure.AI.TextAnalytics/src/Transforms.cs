@@ -30,6 +30,12 @@ namespace Azure.AI.TextAnalytics
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
+
+            if (internalWarnings == null)
+            {
+                return warnings;
+            }
+
             foreach (TextAnalyticsWarningInternal warning in internalWarnings)
             {
                 warnings.Add(new TextAnalyticsWarning(warning));
@@ -216,6 +222,31 @@ namespace Azure.AI.TextAnalytics
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
 
             return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Healthcare
+
+        internal static RecognizeHealthcareEntitiesResultCollection ConvertToRecognizeHealthcareEntitiesResultCollection(HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var healthcareEntititesResults = new List<DocumentHealthcareResult>();
+
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                healthcareEntititesResults.Add(new DocumentHealthcareResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read entities
+            foreach (DocumentHealthcareEntitiesInternal documentHealthcareEntities in results.Documents)
+            {
+                healthcareEntititesResults.Add(new DocumentHealthcareResult(documentHealthcareEntities));
+            }
+
+            healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+
+            return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
         }
 
         #endregion
