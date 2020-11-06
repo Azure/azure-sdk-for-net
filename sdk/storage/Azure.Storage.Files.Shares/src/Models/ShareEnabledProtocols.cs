@@ -14,11 +14,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// SMB
         /// </summary>
-        Smb,
+        Smb = 1,
 
         /// <summary>
         /// NFS
         /// </summary>
-        Nfs
+        Nfs = 2
     }
 }
