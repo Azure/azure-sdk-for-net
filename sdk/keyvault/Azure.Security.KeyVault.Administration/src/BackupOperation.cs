@@ -76,6 +76,11 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         public DateTimeOffset? StartTime => _value?.StartTime;
 
+        /// <summary>
+        /// The end time of the backup operation.
+        /// </summary>
+        public DateTimeOffset? EndTime => _value?.EndTime;
+
         /// <inheritdoc/>
         public override string Id => _id;
 

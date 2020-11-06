@@ -20,17 +20,17 @@ namespace Azure.Security.KeyVault.Administration
             EndTime = endTime;
         }
         /// <summary>
-        /// The location of the full backup.
+        /// Gets the location of the full backup.
         /// </summary>
         public Uri BackupFolderUri { get; }
 
         /// <summary>
-        /// The start time of the backup operation.
+        /// Gets the start time of the backup operation.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// The end time of the backup operation.
+        /// Gets the end time of the backup operation.
         /// </summary>
         public DateTimeOffset EndTime { get; }
     }

@@ -18,12 +18,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// The start time of the restore operation.
+        /// Gets the start time of the restore operation.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// The end time of the restore operation.
+        /// Gets the end time of the restore operation.
         /// </summary>
         public DateTimeOffset EndTime { get; }
     }

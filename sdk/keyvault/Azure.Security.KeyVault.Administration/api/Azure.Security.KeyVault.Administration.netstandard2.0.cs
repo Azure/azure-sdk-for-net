@@ -3,6 +3,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class BackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.BackupResult>
     {
         public BackupOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -126,6 +127,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class RestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.RestoreResult>
     {
         public RestoreOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
