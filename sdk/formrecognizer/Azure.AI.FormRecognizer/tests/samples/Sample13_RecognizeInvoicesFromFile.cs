@@ -34,36 +34,6 @@ namespace Azure.AI.FormRecognizer.Samples
 
                 foreach (RecognizedForm invoice in invoices)
                 {
-                    FormField invoiceIdField;
-                    if (invoice.Fields.TryGetValue("InvoiceId", out invoiceIdField))
-                    {
-                        if (invoiceIdField.Value.ValueType == FieldValueType.String)
-                        {
-                            string invoiceId = invoiceIdField.Value.AsString();
-                            Console.WriteLine($"    Invoice Id: '{invoiceId}', with confidence {invoiceIdField.Confidence}");
-                        }
-                    }
-
-                    FormField invoiceDateField;
-                    if (invoice.Fields.TryGetValue("InvoiceDate", out invoiceDateField))
-                    {
-                        if (invoiceDateField.Value.ValueType == FieldValueType.Date)
-                        {
-                            DateTime invoiceDate = invoiceDateField.Value.AsDate();
-                            Console.WriteLine($"    Invoice Date: '{invoiceDate}', with confidence {invoiceDateField.Confidence}");
-                        }
-                    }
-
-                    FormField dueDateField;
-                    if (invoice.Fields.TryGetValue("DueDate", out dueDateField))
-                    {
-                        if (dueDateField.Value.ValueType == FieldValueType.Date)
-                        {
-                            DateTime dueDate = dueDateField.Value.AsDate();
-                            Console.WriteLine($"    Due Date: '{dueDate}', with confidence {dueDateField.Confidence}");
-                        }
-                    }
-
                     FormField vendorNameField;
                     if (invoice.Fields.TryGetValue("VendorName", out vendorNameField))
                     {
@@ -74,16 +44,6 @@ namespace Azure.AI.FormRecognizer.Samples
                         }
                     }
 
-                    FormField vendorAddressField;
-                    if (invoice.Fields.TryGetValue("VendorAddress", out vendorAddressField))
-                    {
-                        if (vendorAddressField.Value.ValueType == FieldValueType.String)
-                        {
-                            string vendorAddress = vendorAddressField.Value.AsString();
-                            Console.WriteLine($"    Vendor Address: '{vendorAddress}', with confidence {vendorAddressField.Confidence}");
-                        }
-                    }
-
                     FormField customerNameField;
                     if (invoice.Fields.TryGetValue("CustomerName", out customerNameField))
                     {
@@ -91,26 +51,6 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             string customerName = customerNameField.Value.AsString();
                             Console.WriteLine($"    Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
-                        }
-                    }
-
-                    FormField customerAddressField;
-                    if (invoice.Fields.TryGetValue("CustomerAddress", out customerAddressField))
-                    {
-                        if (customerAddressField.Value.ValueType == FieldValueType.String)
-                        {
-                            string customerAddress = customerAddressField.Value.AsString();
-                            Console.WriteLine($"    Customer Address: '{customerAddress}', with confidence {customerAddressField.Confidence}");
-                        }
-                    }
-
-                    FormField customerAddressRecipientField;
-                    if (invoice.Fields.TryGetValue("CustomerAddressRecipient", out customerAddressRecipientField))
-                    {
-                        if (customerAddressRecipientField.Value.ValueType == FieldValueType.String)
-                        {
-                            string customerAddressRecipient = customerAddressRecipientField.Value.AsString();
-                            Console.WriteLine($"    Customer address recipient: '{customerAddressRecipient}', with confidence {customerAddressRecipientField.Confidence}");
                         }
                     }
 
