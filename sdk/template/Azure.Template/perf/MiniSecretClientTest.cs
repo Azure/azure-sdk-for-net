@@ -12,13 +12,12 @@ namespace Azure.Template.Perf
 {
     public class MiniSecretClientTest : PerfTest<MiniSecretClientTest.MiniSecretClientOptions>
     {
-        private static readonly string _keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
-
         private readonly MiniSecretClient _miniSecretClient;
 
         public MiniSecretClientTest(MiniSecretClientOptions options) : base(options)
         {
-            _miniSecretClient = new MiniSecretClient(new Uri(_keyVaultUri), new DefaultAzureCredential());
+            var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
+            _miniSecretClient = new MiniSecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
         }
 
         public override void Run(CancellationToken cancellationToken)
