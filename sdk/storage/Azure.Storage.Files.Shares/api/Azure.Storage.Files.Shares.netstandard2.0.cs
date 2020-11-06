@@ -468,8 +468,8 @@ namespace Azure.Storage.Files.Shares.Models
     [System.FlagsAttribute]
     public enum ShareEnabledProtocols
     {
-        Smb = 0,
-        Nfs = 1,
+        Smb = 1,
+        Nfs = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareErrorCode : System.IEquatable<Azure.Storage.Files.Shares.Models.ShareErrorCode>
