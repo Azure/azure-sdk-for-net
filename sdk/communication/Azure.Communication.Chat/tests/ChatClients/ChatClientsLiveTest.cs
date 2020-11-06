@@ -25,13 +25,13 @@ namespace Azure.Communication.Chat.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class ChatClientsTest : ChatLiveTestBase
+    public class ChatClientsLiveTest : ChatLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public ChatClientsTest(bool isAsync) : base(isAsync)
+        public ChatClientsLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
