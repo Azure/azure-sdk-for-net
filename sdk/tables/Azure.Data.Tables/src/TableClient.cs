@@ -21,7 +21,6 @@ namespace Azure.Data.Tables
     public class TableClient
     {
         private readonly string _table;
-        private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
@@ -145,7 +144,6 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _table = tableName;
-            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
@@ -161,7 +159,6 @@ namespace Azure.Data.Tables
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString(), _version);
             _table = tableName;
-            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
         }
 
@@ -170,7 +167,6 @@ namespace Azure.Data.Tables
             _tableOperations = tableOperations;
             _version = version;
             _table = table;
-            _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
             _diagnostics = diagnostics;
             _isPremiumEndpoint = isPremiumEndpoint;
         }
@@ -438,7 +434,7 @@ namespace Azure.Data.Tables
                     _table,
                     partitionKey,
                     rowKey,
-                    queryOptions: new QueryOptions() { Format = _format, Select = selectArg },
+                    queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
                     cancellationToken: cancellationToken);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
@@ -477,7 +473,7 @@ namespace Azure.Data.Tables
                     _table,
                     partitionKey,
                     rowKey,
-                    queryOptions: new QueryOptions() { Format = _format, Select = selectArg },
+                    queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
@@ -810,7 +806,7 @@ namespace Azure.Data.Tables
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
@@ -823,7 +819,7 @@ namespace Azure.Data.Tables
 
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg },
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -872,7 +868,7 @@ namespace Azure.Data.Tables
                     scope.Start();
                     try
                     {
-                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+                        var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
                         var response = _tableOperations.QueryEntities(_table,
                             queryOptions: queryOptions,
@@ -897,7 +893,7 @@ namespace Azure.Data.Tables
                     {
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
-                        var queryOptions = new QueryOptions() { Format = _format, Top = pageSizeHint, Filter = filter, Select = selectArg };
+                        var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
                         var response = _tableOperations.QueryEntities(
                             _table,
@@ -1082,7 +1078,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, _tableOperations, _format);
+            return new TableTransactionalBatch(_table, _tableOperations, _defaultQueryOptions.Format.Value);
         }
 
         internal static string Bind(Expression expression)
