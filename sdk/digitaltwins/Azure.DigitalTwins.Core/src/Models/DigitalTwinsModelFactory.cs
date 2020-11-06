@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary>
-    /// Model factory that enables mocking of the models within the this Digital Twins library.
+    /// Model factory that enables mocking of the models within the Digital Twins library.
     /// These models cannot be created otherwise due to having only internal or private constructors.
     /// </summary>
     public static class DigitalTwinsModelFactory
