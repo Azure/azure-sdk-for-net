@@ -155,6 +155,10 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true'">
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+  </PropertyGroup>
+
   <!-- Code generation settings -->
   <PropertyGroup>
     <!-- Don't use code generator bundled Azure.Core shared source for code generation -->
