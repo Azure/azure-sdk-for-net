@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Azure.Identity
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
-        private const string ArchApiVersion = "2019-11-01";
+        private const string ArcApiVersion = "2019-11-01";
 
         private readonly string _clientId;
         private readonly Uri _endpoint;
@@ -54,15 +55,14 @@ namespace Azure.Identity
         protected override Request CreateRequest(string[] scopes)
         {
             // covert the scopes to a resource string
-            string resource = ScopeUtilities.ScopesToResource(scopes);
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
 
             request.Uri.Reset(_endpoint);
-            request.Uri.AppendQuery("api-version", ArchApiVersion);
+            request.Uri.AppendQuery("api-version", ArcApiVersion);
 
-            request.Uri.AppendQuery("resource", resource);
+            request.Uri.AppendQuery("resource", string.Join(" ", scopes));
 
             if (!string.IsNullOrEmpty(_clientId))
             {

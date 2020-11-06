@@ -66,7 +66,7 @@ namespace Azure.Identity
             Request request = Pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Get;
-            request.Headers.Add("X-IDENTITY-HEADER", _identityHeaderValue);
+            request.Headers.Add("secret", _identityHeaderValue);
             request.Uri.Reset(_endpoint);
             request.Uri.AppendQuery("api-version", ServiceFabricMsiApiVersion);
             request.Uri.AppendQuery("resource", resource);
