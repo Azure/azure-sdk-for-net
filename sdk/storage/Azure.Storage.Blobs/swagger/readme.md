@@ -1670,4 +1670,25 @@ directive:
     $.properties.ObjectReplicationMetadata.xml = { "name":  "OrMetadata" };
 ```
 
+### Rename BlockBlobPutBlobFromUrlResult
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?BlockBlob&fromUrl"]
+  transform: >
+    $.put.responses["201"]["x-az-response-name"] = "BlobContentInfo";
+    $.put.responses["201"].headers["x-ms-request-server-encrypted"] = {
+      "x-ms-client-name": "IsServerEncrypted",
+      "type": "boolean",
+      "x-az-demote-header": true,
+      "description": "The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise."
+    };
+    $.put.responses["304"] = {
+        "description": "The condition specified using HTTP conditional header(s) is not met.",
+        "x-az-response-name": "ConditionNotMetError",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)
