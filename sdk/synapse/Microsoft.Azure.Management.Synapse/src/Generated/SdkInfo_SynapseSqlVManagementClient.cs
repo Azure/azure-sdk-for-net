@@ -27,4 +27,3 @@ namespace Microsoft.Azure.Management.Synapse
       }
   }
 }
-
