@@ -1,5 +1,7 @@
-﻿using Azure.Test.PerfStress;
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Test.Perf;
 using System.Threading;
 using System.Threading.Tasks;
 
