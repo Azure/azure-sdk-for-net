@@ -45,16 +45,16 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
-        /// <param name="options"><see cref="KeyVaultBackupClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
+        /// <param name="options"><see cref="KeyVaultAdministrationClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
-        public KeyVaultBackupClient(Uri vaultUri, TokenCredential credential, KeyVaultBackupClientOptions options)
+        public KeyVaultBackupClient(Uri vaultUri, TokenCredential credential, KeyVaultAdministrationClientOptions options)
         {
             Argument.AssertNotNull(vaultUri, nameof(vaultUri));
             Argument.AssertNotNull(credential, nameof(credential));
 
             VaultUri = vaultUri;
 
-            options ??= new KeyVaultBackupClientOptions();
+            options ??= new KeyVaultAdministrationClientOptions();
             string apiVersion = options.GetVersionString();
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options,

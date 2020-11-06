@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
-    public static class KeyVaultModelFactory
+    public static class KeyVaultAdministrationModelFactory
     {
         /// <summary>
         /// Initializes a new instance of RoleDefinition.
@@ -72,5 +73,25 @@ namespace Azure.Security.KeyVault.Administration.Models
                 endTime,
                 id,
                 blobContainerUri.AbsoluteUri), response, client);
+
+        /// <summary>
+        /// Initializes a new instance of a <see cref="BackupResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="backupFolderUri">The location of the backup.</param>
+        /// <param name="startTime">The start time of the backup operation.</param>
+        /// <param name="endTime">The end time of the backup operation.</param>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        public static BackupResult BackupResult(Uri backupFolderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new BackupResult(backupFolderUri, startTime, endTime);
+
+
+        /// <summary>
+        /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="startTime">The start time of the restore operation.</param>
+        /// <param name="endTime">The end time of the restore operation.</param>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        public static RestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new RestoreResult(startTime, endTime);
     }
 }

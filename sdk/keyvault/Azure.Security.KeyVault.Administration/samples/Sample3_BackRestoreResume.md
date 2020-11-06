@@ -18,10 +18,10 @@ KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
 
 // Wait for completion of the BackupOperation.
-Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupFolderUri = backupResult.Value;
+Uri backupFolderUri = backupResult.Value.BackupFolderUri;
 ```
 
 ## Checking status of a full key restore operation
@@ -39,7 +39,7 @@ KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 RestoreOperation restoreOperation = new RestoreOperation(client, restoreOperationId);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
 
 <!-- LINKS -->
