@@ -10,29 +10,31 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Resync input properties.
+    /// Create protection intent input properties.
     /// </summary>
-    public partial class ResyncInputProperties
+    public partial class CreateProtectionIntentProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ResyncInputProperties class.
+        /// Initializes a new instance of the CreateProtectionIntentProperties
+        /// class.
         /// </summary>
-        public ResyncInputProperties()
+        public CreateProtectionIntentProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResyncInputProperties class.
+        /// Initializes a new instance of the CreateProtectionIntentProperties
+        /// class.
         /// </summary>
-        /// <param name="providerSpecificDetails">The provider specific
-        /// details.</param>
-        public ResyncInputProperties(ResyncProviderSpecificInput providerSpecificDetails)
+        /// <param name="providerSpecificDetails">The ReplicationProviderInput.
+        /// For A2A provider, it will be A2ACreateProtectionIntentInput object.
+        /// For other providers, it can be null.</param>
+        public CreateProtectionIntentProperties(CreateProtectionIntentProviderSpecificDetails providerSpecificDetails = default(CreateProtectionIntentProviderSpecificDetails))
         {
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
@@ -44,23 +46,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provider specific details.
+        /// Gets or sets the ReplicationProviderInput. For A2A provider, it
+        /// will be A2ACreateProtectionIntentInput object. For other providers,
+        /// it can be null.
         /// </summary>
         [JsonProperty(PropertyName = "providerSpecificDetails")]
-        public ResyncProviderSpecificInput ProviderSpecificDetails { get; set; }
+        public CreateProtectionIntentProviderSpecificDetails ProviderSpecificDetails { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ProviderSpecificDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProviderSpecificDetails");
-            }
-        }
     }
 }

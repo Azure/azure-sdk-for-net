@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Resync provider specific input.
+    /// Storage account custom input.
     /// </summary>
-    public partial class ResyncProviderSpecificInput
+    public partial class StorageAccountCustomDetails
     {
         /// <summary>
-        /// Initializes a new instance of the ResyncProviderSpecificInput
+        /// Initializes a new instance of the StorageAccountCustomDetails
         /// class.
         /// </summary>
-        public ResyncProviderSpecificInput()
+        public StorageAccountCustomDetails()
         {
             CustomInit();
         }

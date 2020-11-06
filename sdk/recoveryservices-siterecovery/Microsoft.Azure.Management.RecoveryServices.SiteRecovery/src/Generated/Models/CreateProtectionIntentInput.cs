@@ -10,28 +10,30 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Resync input.
+    /// Create protection intent input.
     /// </summary>
-    public partial class ResyncInput
+    public partial class CreateProtectionIntentInput
     {
         /// <summary>
-        /// Initializes a new instance of the ResyncInput class.
+        /// Initializes a new instance of the CreateProtectionIntentInput
+        /// class.
         /// </summary>
-        public ResyncInput()
+        public CreateProtectionIntentInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResyncInput class.
+        /// Initializes a new instance of the CreateProtectionIntentInput
+        /// class.
         /// </summary>
-        /// <param name="properties">Resync input properties.</param>
-        public ResyncInput(ResyncInputProperties properties)
+        /// <param name="properties">Create protection intent input
+        /// properties.</param>
+        public CreateProtectionIntentInput(CreateProtectionIntentProperties properties = default(CreateProtectionIntentProperties))
         {
             Properties = properties;
             CustomInit();
@@ -43,27 +45,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resync input properties.
+        /// Gets or sets create protection intent input properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public ResyncInputProperties Properties { get; set; }
+        public CreateProtectionIntentProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
-        }
     }
 }

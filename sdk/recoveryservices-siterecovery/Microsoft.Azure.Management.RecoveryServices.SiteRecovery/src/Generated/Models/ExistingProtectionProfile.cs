@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMwareCbt specific resync input.
+    /// Existing storage account input.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VMwareCbt")]
-    public partial class VMwareCbtResyncInput : ResyncProviderSpecificInput
+    [Newtonsoft.Json.JsonObject("Existing")]
+    public partial class ExistingProtectionProfile : ProtectionProfileCustomDetails
     {
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtResyncInput class.
+        /// Initializes a new instance of the ExistingProtectionProfile class.
         /// </summary>
-        public VMwareCbtResyncInput()
+        public ExistingProtectionProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtResyncInput class.
+        /// Initializes a new instance of the ExistingProtectionProfile class.
         /// </summary>
-        /// <param name="skipCbtReset">A value indicating whether CBT is to be
-        /// reset.</param>
-        public VMwareCbtResyncInput(string skipCbtReset)
+        /// <param name="protectionProfileId">The protection profile Arm Id.
+        /// Throw error, if resource does not exists.</param>
+        public ExistingProtectionProfile(string protectionProfileId)
         {
-            SkipCbtReset = skipCbtReset;
+            ProtectionProfileId = protectionProfileId;
             CustomInit();
         }
 
@@ -45,10 +45,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a value indicating whether CBT is to be reset.
+        /// Gets or sets the protection profile Arm Id. Throw error, if
+        /// resource does not exists.
         /// </summary>
-        [JsonProperty(PropertyName = "skipCbtReset")]
-        public string SkipCbtReset { get; set; }
+        [JsonProperty(PropertyName = "protectionProfileId")]
+        public string ProtectionProfileId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,9 +59,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SkipCbtReset == null)
+            if (ProtectionProfileId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SkipCbtReset");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProtectionProfileId");
             }
         }
     }
