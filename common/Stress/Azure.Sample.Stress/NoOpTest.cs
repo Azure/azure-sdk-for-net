@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Test.Stress;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Test.Stress;
 using System.Threading.Tasks;
+using Azure.Test.Stress;
 
 namespace Azure.Template.Stress
 {

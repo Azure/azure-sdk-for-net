@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Test.Stress;
 using CommandLine;
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Template.Stress
 {
@@ -53,13 +52,15 @@ namespace Azure.Template.Stress
             }
         }
 
-        public class MiniSecretClientMetrics : StressMetrics {
+        public class MiniSecretClientMetrics : StressMetrics
+        {
             public long SecretsReceived;
             public long CorrectValues;
             public long IncorrectValues;
         }
 
-        public class MiniSecretClientOptions : StressOptions {
+        public class MiniSecretClientOptions : StressOptions
+        {
             [Option("secret-name", Default = "TestSecret", HelpText = "Name of secret to get")]
             public string SecretName { get; set; }
 

@@ -32,7 +32,8 @@ namespace Azure.Sample.Stress
             public int InitialDelayMs { get; set; }
         }
 
-        public class DelayMetrics : StressMetrics {
+        public class DelayMetrics : StressMetrics
+        {
             public long TotalOperations;
         }
     }
