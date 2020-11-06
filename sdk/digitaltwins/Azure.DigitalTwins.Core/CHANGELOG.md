@@ -1,5 +1,13 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### New Features
+
+### Breaking changes
+
+### Fixes and improvements
+
 ## 1.0.1 (2020-11-04)
 
 ### Fixes and improvements
@@ -16,7 +24,7 @@
 
 ### Breaking changes
 
-Note that these breaking changes are only breaking changes from the preview version of this library.
+Note that these breaking changes are only breaking changes from the **preview** version of this library.
 
 - Replaced all `Response<string>` and `Pageable<string>` APIs with `Response<T>` and `Pageable<T>` respectively.
 - Renamed `CreateDigitalTwin`, `CreateRelationship` and `CreateEventRoute` APIs to `CreateOrReplaceDigitalTwin`, `CreateOrReplaceRelationship` and `CreateOrReplaceEventRoute` respectively.

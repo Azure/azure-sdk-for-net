@@ -22,6 +22,8 @@ namespace Azure.Iot.Hub.Service.Tests
             JsonPathSanitizers.Add("inputBlobContainerUri");
             JsonPathSanitizers.Add("..primaryKey");
             JsonPathSanitizers.Add("..secondaryKey");
+            // TODO: Remove when re-recording
+            LegacyConvertJsonDateTokens = true;
         }
 
         public override string SanitizeUri(string uri)
