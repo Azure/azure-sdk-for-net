@@ -13,8 +13,9 @@
 - Moved `TimeMode`, `FeedbackQueryTimeMode`, `GetAnomaliesForDetectionConfigurationFilter`, and `GetDataFeedsFilter` from `Azure.AI.MetricsAdvisor.Models` to the `Azure.AI.MetricsAdvisor` namespace.
 - In `MetricsAdvisorClient`, renamed `GetAnomaliesForDetectionConfiguration` and `GetAnomaliesForAlert` sync and async methods to `GetAnomalies`.
 - In `MetricsAdvisorClient`, renamed `GetIncidentsForDetectionConfiguration` and `GetIncidentsForAlert` sync and async methods to `GetIncidents`.
-- In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedback` methods to `GetFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllFeedback`.
 - In `MetricsAdvisorClient`, renamed sync and async `GetMetricDimensionValues` methods to `GetDimensionValues`.
 - In `MetricsAdvisorClient`, changed return types of sync and async `CreateMetricFeedback` methods to a `Response<string>` containing the ID of the created feedback.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
@@ -32,13 +33,14 @@
 - Made `EnrichmentStatus.Timestamp` non-nullable.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
 - Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
-- Renamed `GetMetricFeedbacksOptions` to `GetAllMetricFeedbackOptions`.
+- Renamed `GetMetricFeedbacksOptions` to `GetAllFeedbackOptions`.
 - Renamed `GetMetricDimensionValuesOptions` to `GetDimensionValuesOptions`.
 - Renamed `MetricDimension` to `DataFeedDimension`.
 - Renamed `DataAnomaly` to `DataPointAnomaly`.
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+- In `DataFeedGranularityType`, renamed `Minutely` and `Secondly` to `PerMinute` and `PerSecond`, respectively.
 - In `ElasticsearchDataFeedSource`, renamed the constructor parameter `authHeader` to `authorizationHeader`.
 
 ### Key Bug Fixes

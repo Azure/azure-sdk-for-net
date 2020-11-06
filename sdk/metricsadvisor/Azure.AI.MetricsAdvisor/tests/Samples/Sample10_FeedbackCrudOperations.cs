@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     public partial class MetricsAdvisorSamples : MetricsAdvisorTestEnvironment
     {
         [Test]
-        public async Task AddMetricFeedbackAsync()
+        public async Task AddFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var anomalyFeedback = new MetricAnomalyFeedback(metricId, filter, startTime, endTime, AnomalyValue.NotAnomaly);
 
-            Response<string> response = await client.AddMetricFeedbackAsync(anomalyFeedback);
+            Response<string> response = await client.AddFeedbackAsync(anomalyFeedback);
 
             string feedbackId = response.Value;
 
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetMetricFeedbackAsync()
+        public async Task GetFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string feedbackId = FeedbackId;
 
-            Response<MetricFeedback> response = await client.GetMetricFeedbackAsync(feedbackId);
+            Response<MetricFeedback> response = await client.GetFeedbackAsync(feedbackId);
 
             MetricFeedback feedback = response.Value;
 
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        public async Task GetAllMetricFeedbackAsync()
+        public async Task GetAllFeedbackAsync()
         {
             string endpoint = MetricsAdvisorUri;
             string subscriptionKey = MetricsAdvisorSubscriptionKey;
@@ -103,7 +103,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            var options = new GetAllMetricFeedbackOptions()
+            var options = new GetAllFeedbackOptions()
             {
                 StartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z"),
                 EndTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z"),
@@ -113,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int feedbackCount = 0;
 
-            await foreach (MetricFeedback feedback in client.GetAllMetricFeedbackAsync(metricId, options))
+            await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(metricId, options))
             {
                 Console.WriteLine($"Feedback ID: {feedback.Id}");
                 Console.WriteLine($"Metric ID: {feedback.MetricId}");

@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
 {
-    public class MetricsTests : ClientTestBase
+    public class TimeSeriesTests : ClientTestBase
     {
-        public MetricsTests(bool isAsync) : base(isAsync)
+        public TimeSeriesTests(bool isAsync) : base(isAsync)
         {
         }
 

@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int pages = 0;
 
-            await foreach (MetricFeedback feedback in client.GetAllMetricFeedbackAsync(MetricId, new GetAllMetricFeedbackOptions() { TopCount = 2 }))
+            await foreach (MetricFeedback feedback in client.GetAllFeedbackAsync(MetricId, new GetAllFeedbackOptions() { TopCount = 2 }))
             {
                 Assert.That(feedback, Is.Not.Null);
                 Assert.That(feedback.MetricId, Is.EqualTo(MetricId));
@@ -83,11 +83,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             foreach (var feedback in feedbacks)
             {
-                string createdFeedbackId = await client.AddMetricFeedbackAsync(feedback).ConfigureAwait(false);
+                string createdFeedbackId = await client.AddFeedbackAsync(feedback).ConfigureAwait(false);
 
                 Assert.That(createdFeedbackId, Is.Not.Null);
 
-                MetricFeedback getFeedback = await client.GetMetricFeedbackAsync(feedbackId: createdFeedbackId).ConfigureAwait(false);
+                MetricFeedback getFeedback = await client.GetFeedbackAsync(feedbackId: createdFeedbackId).ConfigureAwait(false);
 
                 Assert.That(getFeedback.Id, Is.EqualTo(createdFeedbackId));
             }
