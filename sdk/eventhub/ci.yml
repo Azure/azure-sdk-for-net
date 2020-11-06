@@ -37,5 +37,7 @@ extends:
       safeName: MicrosoftAzureEventHubsProcessor
     - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
       safeName: MicrosoftAzureEventHubsServiceFabricProcessor
+    - name: Microsoft.Azure.WebJobs.Extensions.EventHubs
+      safeName: MicrosoftAzureWebJobsExtensionsEventHubs
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs
