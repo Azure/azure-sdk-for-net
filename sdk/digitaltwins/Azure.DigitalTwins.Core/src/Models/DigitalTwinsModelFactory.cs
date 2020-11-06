@@ -4,12 +4,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
-    /// DigitalTwinModelData model factory that enables mocking of that type.
+    /// Model factory that enables mocking of the models within the this Digital Twins library.
+    /// These models cannot be created otherwise due to having only internal or private constructors.
     /// </summary>
-    public static class DigitalTwinsModelDataFactory
+    public static class DigitalTwinsModelFactory
     {
         /// <summary>
         /// Initializes a new instance of <see cref="DigitalTwinsModelData"/> for mocking purposes.
@@ -30,6 +31,19 @@ namespace Azure.DigitalTwins.Core.Models
             string dtdlModel)
         {
             return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="IncomingRelationship"/> for mocking purposes.
+        /// </summary>
+        /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
+        /// <param name="sourceId"> The id of the source digital twin. </param>
+        /// <param name="relationshipName"> The name of the relationship. </param>
+        /// <param name="relationshipLink"> Link to the relationship, to be used for deletion. </param>
+        /// <returns>The new instance of <see cref="IncomingRelationship"/> to be used for mocking purposes.</returns>
+        public static IncomingRelationship IncomingRelationship(string relationshipId, string sourceId, string relationshipName, string relationshipLink)
+        {
+            return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
         }
     }
 }
