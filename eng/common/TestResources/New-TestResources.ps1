@@ -331,8 +331,8 @@ if ($TestApplicationSecret) {
 if ($ArmTemplateParameters) {
     $templateParameters += $ArmTemplateParameters
 }
-if ($AdditionalParameters) {
-    $templateParameters += $AdditionalParameters
+foreach ($key in $AdditionalParameters.Keys) {
+  $templateParameters[$key] = $AdditionalParameters[$key]
 }
 
 # Include environment-specific parameters only if not already provided as part of the "ArmTemplateParameters"
@@ -397,8 +397,8 @@ foreach ($templateFile in $templateFiles) {
         "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
     }
 
-    foreach ($ev in $EnvironmentVariables) {
-        $deploymentOutputs[$ev.Name] = $ev.Value
+    foreach ($key in $EnvironmentVariables.Keys) {
+        $deploymentOutputs.Add($key, $EnvironmentVariables[$key])
     }
 
     foreach ($key in $deployment.Outputs.Keys) {
