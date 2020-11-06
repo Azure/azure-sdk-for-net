@@ -89,10 +89,10 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="nunit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Update="OpenTelemetry" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.7.0-beta.1" />
+    <PackageReference Update="OpenTelemetry" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.8.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
@@ -153,6 +153,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />

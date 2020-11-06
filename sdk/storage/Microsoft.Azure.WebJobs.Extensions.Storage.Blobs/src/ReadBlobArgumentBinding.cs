@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Bindings;
 using System.Threading;
-using Azure.Storage.Blobs.Specialized;
+using System.Threading.Tasks;
 using Azure;
+using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Host.Bindings;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class ReadBlobArgumentBinding
     {

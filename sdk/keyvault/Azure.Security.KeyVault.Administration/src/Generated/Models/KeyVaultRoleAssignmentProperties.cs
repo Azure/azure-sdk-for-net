@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties. </summary>
-    public partial class KeyVaultRoleAssignmentProperties
+    internal partial class KeyVaultRoleAssignmentProperties
     {
         /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
         /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>

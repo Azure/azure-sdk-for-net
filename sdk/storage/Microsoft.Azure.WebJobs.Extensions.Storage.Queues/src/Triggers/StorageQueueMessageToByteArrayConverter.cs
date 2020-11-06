@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using Azure.Storage.Queues.Models;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class StorageQueueMessageToByteArrayConverter : IConverter<QueueMessage, byte[]>
     {
