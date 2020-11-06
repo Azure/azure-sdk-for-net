@@ -360,7 +360,7 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public partial class FileSmbProperties
     {
-        internal FileSmbProperties() { }
+        public FileSmbProperties() { }
         public Azure.Storage.Files.Shares.Models.NtfsFileAttributes? FileAttributes { get { throw null; } set { } }
         public System.DateTimeOffset? FileChangedOn { get { throw null; } }
         public System.DateTimeOffset? FileCreatedOn { get { throw null; } set { } }

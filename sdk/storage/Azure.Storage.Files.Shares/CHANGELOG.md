@@ -10,6 +10,7 @@
 - Added ability to set Position on streams created with ShareFileClient.OpenRead().
 - Added CanGenerateSasUri property and GenerateSasUri() to ShareFileClient, ShareDirectoryClient and ShareClient.
 - Added CanGenerateSasUri property and GenerateAccountSasUri() to ShareServiceClient.
+- Changed default constructor for FileSmbProperties from internal to public.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

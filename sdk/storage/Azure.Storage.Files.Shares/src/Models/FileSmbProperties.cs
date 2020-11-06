@@ -52,7 +52,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public string ParentId { get; internal set; }
 
-        internal FileSmbProperties()
+        /// <summary>
+        /// Creates a new FileSmbProperties instance.
+        /// </summary>
+        public FileSmbProperties()
         {
         }
 
