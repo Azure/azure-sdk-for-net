@@ -65,7 +65,8 @@ param (
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
-    [hashtable] $EnvironmentVariables,
+    [ValidateNotNullOrEmpty()]
+    [hashtable] $EnvironmentVariables = @{},
 
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
@@ -124,7 +125,6 @@ $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
 $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
-$outputEnvironmentVariables = @{}
 # Azure SDK Developer Playground
 $defaultSubscription = "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
 
@@ -295,7 +295,7 @@ if ($CI) {
     # Set the resource group name variable.
     Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
     Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
-    $outputEnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
+    $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
 }
 
 Log "Creating resource group '$ResourceGroupName' in location '$Location'"
@@ -435,7 +435,7 @@ foreach ($templateFile in $templateFiles) {
 
         foreach ($key in $deploymentOutputs.Keys) {
             $value = $deploymentOutputs[$key]
-            $outputEnvironmentVariables[$key] = $value
+            $EnvironmentVariables[$key] = $value
 
             if ($CI) {
                 # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
@@ -466,7 +466,7 @@ $exitActions.Invoke()
 
 # Suppress output locally
 if ($CI) {
-    return $outputEnvironmentVariables
+    return $EnvironmentVariables
 }
 
 <#
