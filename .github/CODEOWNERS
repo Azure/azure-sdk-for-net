@@ -279,7 +279,7 @@
 
 # PRLabel: %DigitalTwins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @sourabhguha @inesk-vt @jamdavi
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
 # ServiceLabel: %Event Grid %Service Attention
 # PRLabel: %Event Grid
