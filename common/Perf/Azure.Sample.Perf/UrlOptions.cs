@@ -4,7 +4,7 @@
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     public class UrlOptions : PerfOptions
     {

@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Test.Perf;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     // Used to verify framework calls DisposeAsync()
     public class DisposeTest : PerfTest<PerfOptions>

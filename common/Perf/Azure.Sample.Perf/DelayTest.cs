@@ -3,10 +3,11 @@
 
 using Azure.Test.Perf;
 using CommandLine;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     public class DelayTest : PerfTest<DelayTest.DelayOptions>
     {

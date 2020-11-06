@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     public class HttpClientGetTest : PerfTest<UrlOptions>
     {

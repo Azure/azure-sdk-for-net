@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Test.Perf;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     // Measures the overhead of creating, throwing, and catching an exception (compared to NoOpTest)
     public class ExceptionTest : PerfTest<PerfOptions>

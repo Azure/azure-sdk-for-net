@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Test.Perf;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.PerfStress
+namespace Azure.Sample.Perf
 {
     public class TimerRunTest : PerfTest<PerfOptions>
     {
