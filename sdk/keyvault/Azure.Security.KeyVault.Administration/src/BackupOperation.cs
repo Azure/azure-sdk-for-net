@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A long-running operation for <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.
     /// </summary>
-    public class BackupOperation : Operation<Uri>
+    public class BackupOperation : Operation<BackupResult>
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
@@ -72,12 +72,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// The start time of the restore operation.
+        /// The start time of the backup operation.
         /// </summary>
         public DateTimeOffset? StartTime => _value?.StartTime;
 
         /// <summary>
-        /// The end time of the restore operation.
+        /// The end time of the backup operation.
         /// </summary>
         public DateTimeOffset? EndTime => _value?.EndTime;
 
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
         /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a key in this pending state.
         /// </summary>
-        public override Uri Value
+        public override BackupResult Value
         {
             get
             {
@@ -97,17 +97,17 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     throw new InvalidOperationException("The operation is not complete.");
                 }
-                if (EndTime.HasValue && _value.Error != null)
+                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
                 {
                     throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return new Uri(_value.AzureStorageBlobContainerUri);
+                return new BackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => EndTime.HasValue;
+        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
 
         /// <inheritdoc/>
         public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
@@ -142,12 +142,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Uri>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
                 this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Uri>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
                 this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

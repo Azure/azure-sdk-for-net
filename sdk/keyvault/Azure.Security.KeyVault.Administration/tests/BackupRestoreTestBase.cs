@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var client = new KeyVaultBackupClient(
                 Uri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultBackupClientOptions()));
+                InstrumentClientOptions(new KeyVaultAdministrationClientOptions()));
             return isInstrumented ? InstrumentClient(client) : client;
         }
 

@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 (new KeyVaultAccessControlClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyVaultAccessControlClientOptions())));
+                    InstrumentClientOptions(new KeyVaultAdministrationClientOptions())));
         }
 
         protected override void Start()

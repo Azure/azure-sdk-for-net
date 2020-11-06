@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties with scope. </summary>
     public partial class KeyVaultRoleAssignmentPropertiesWithScope

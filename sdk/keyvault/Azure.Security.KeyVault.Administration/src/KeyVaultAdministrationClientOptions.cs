@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    public class KeyVaultAccessControlClientOptions : ClientOptions
+    public class KeyVaultAdministrationClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest service version supported by this client library.
@@ -40,14 +40,14 @@ namespace Azure.Security.KeyVault.Administration
         public ServiceVersion Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyVaultAccessControlClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
         /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public KeyVaultAccessControlClientOptions(ServiceVersion version = LatestVersion)
+        public KeyVaultAdministrationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
 

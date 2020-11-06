@@ -14,5 +14,5 @@ string keyName = "<key name to restore>";
 RestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, backupFolderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
-Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```
