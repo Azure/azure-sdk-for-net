@@ -1,13 +1,15 @@
-﻿using Azure.Test.PerfStress;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Test.Perf;
 
 namespace System.PerfStress
 {
-    // Used for measuring the overhead of the perf framework with the fastest possible test
-    public class NoOpTest : PerfStressTest<PerfStressOptions>
+    public class MiniSecretClientTest : PerfStressTest<PerfStressOptions>
     {
-        public NoOpTest(PerfStressOptions options) : base(options) { }
+        public MiniSecretClientTest(PerfStressOptions options) : base(options) { }
 
         public override void Run(CancellationToken cancellationToken)
         {
