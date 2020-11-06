@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-02-10/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2020-04-08/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -169,7 +169,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "Success";
     $.put.responses["201"]["x-az-response-name"] = "ShareInfo";
-    $.get.responses["200"]["x-az-response-name"] = "ShareProperties";
+    $.get.responses["200"]["x-az-response-name"] = "SharePropertiesInternal";
     $.get.responses["200"].headers["x-ms-share-quota"]["x-ms-client-name"] = "QuotaInGB";
 ```
 
@@ -616,7 +616,7 @@ directive:
 ``` yaml
 directive:
 - from: swagger-document
-  where: $.definitions.ShareProperties
+  where: $.definitions.SharePropertiesInternal
   transform: >
     $.properties.QuotaInGB = $.properties.Quota;
     $.properties.QuotaInGB.xml = { "name": "Quota"};
@@ -631,8 +631,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.ShareProperties.properties.Metadata = {"$ref": "#/definitions/Metadata"};
-    delete $.ShareItem.properties.Metadata;
+    $.SharePropertiesInternal.properties.Metadata = {"$ref": "#/definitions/Metadata"};
+    delete $.ShareItemInternal.properties.Metadata;
 ```
 
 ### FilePermission
@@ -973,8 +973,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.ShareItem.properties.Deleted["x-ms-client-name"] = "IsDeleted";
-    $.ShareItem.properties.Version["x-ms-client-name"] = "VersionId";
+    $.ShareItemInternal.properties.Deleted["x-ms-client-name"] = "IsDeleted";
+    $.ShareItemInternal.properties.Version["x-ms-client-name"] = "VersionId";
 ```
 
 ### Rename ShareProperties fields
@@ -983,7 +983,7 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    $.ShareProperties.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
+    $.SharePropertiesInternal.properties.DeletedTime["x-ms-client-name"] = "DeletedOn";
 ```
 
 ### Rename DeleteSnapshotsOptionType
@@ -993,6 +993,24 @@ directive:
   where: $.parameters
   transform: >
     $.DeleteSnapshots["x-ms-enum"]["name"] = "ShareSnapshotsDeleteOptionInternal";
+```
+
+### Hide SharePropertiesInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.SharePropertiesInternal["x-az-public"] = false;
+```
+
+### Hide SharePropertiesInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.ShareItemInternal["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant

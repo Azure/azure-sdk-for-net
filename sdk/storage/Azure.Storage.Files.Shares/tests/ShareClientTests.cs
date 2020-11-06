@@ -314,6 +314,36 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task CreateAsync_EnabledProtocolsAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareEnabledProtocols.Nfs, response.Value.EnabledProtocols);
+                Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [Test]
         public async Task GetPermissionAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -572,6 +602,30 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 snapshotShareClient.GetPropertiesAsync(),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task GetPropertiesAsync_EnabledProtocolsAndRootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                RootSquash = ShareRootSquash.AllSquash,
+            };
+
+            await share.CreateAsync(options);
+
+            // Act
+            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(ShareEnabledProtocols.Nfs, propertiesResponse.Value.EnabledProtocols);
+            Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
         }
 
         [Test]
@@ -1202,6 +1256,33 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
             Assert.AreEqual(5, response.Value.QuotaInGB);
             Assert.IsNotNull(response.Value.AccessTierChangeTime);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetPropertiesAsync_RootSquash()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions createOptions = new ShareCreateOptions
+            {
+                EnabledProtocols = ShareEnabledProtocols.Nfs
+            };
+            await share.CreateAsync(createOptions);
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                RootSquash = ShareRootSquash.AllSquash
+            };
+
+            // Act
+            await share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
         }
 
         [Test]

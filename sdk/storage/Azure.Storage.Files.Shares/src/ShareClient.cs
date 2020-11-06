@@ -353,6 +353,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -388,6 +390,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -428,6 +432,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -468,6 +474,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                rootSquash: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -489,6 +497,12 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="accessTier">
         /// Optional.  Specifies the access tier of the share.
+        /// </param>
+        /// <param name="enabledProtocols">
+        /// The protocols to enable on the share.
+        /// </param>
+        /// <param name="rootSquash">
+        /// Squash root to set on the share.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -512,6 +526,8 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareEnabledProtocols? enabledProtocols,
+            ShareRootSquash? rootSquash,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -533,6 +549,8 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        enabledProtocols: enabledProtocols.ToShareEnableProtocolsString(),
+                        rootSquash: rootSquash,
                         async: async,
                         operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
@@ -583,6 +601,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -617,6 +637,8 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
+                options?.EnabledProtocols,
+                options?.RootSquash,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -656,6 +678,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                squashRoot: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -694,6 +718,8 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 quotaInGB,
                 accessTier: default,
+                enabledProtocols: default,
+                squashRoot: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -715,6 +741,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="accessTier">
         /// Optional.  Specifies the access tier of the share.
         /// </param>
+        /// <param name="enabledProtocols">
+        /// The protocols to enable on the share.
+        /// </param>
+        /// <param name="squashRoot">
+        /// Squash root to set on the share.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -734,6 +766,8 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareEnabledProtocols? enabledProtocols,
+            ShareRootSquash? squashRoot,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -751,6 +785,8 @@ namespace Azure.Storage.Files.Shares
                         metadata,
                         quotaInGB,
                         accessTier,
+                        enabledProtocols,
+                        squashRoot,
                         async,
                         cancellationToken,
                         $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
@@ -852,7 +888,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    Response<ShareProperties> response = await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1612,7 +1648,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.Share.GetPropertiesAsync(
+                    Response<SharePropertiesInternal> response = await FileRestClient.Share.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -1622,6 +1658,10 @@ namespace Azure.Storage.Files.Shares
                         operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value.ToShareProperties(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1665,6 +1705,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -1699,6 +1740,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: options?.QuotaInGB,
                 accessTier: options?.AccessTier,
+                rootSquash: options?.RootSquash,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -1718,6 +1760,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="accessTier">
         /// Access tier to set on the share.
+        /// </param>
+        /// <param name="rootSquash">
+        /// The root squash to set for the share.  Only valid for NFS shares.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -1744,6 +1789,7 @@ namespace Azure.Storage.Files.Shares
         internal virtual async Task<Response<ShareInfo>> SetPropertiesInternal(
             int? quotaInGB,
             ShareAccessTier? accessTier,
+            ShareRootSquash? rootSquash,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -1765,6 +1811,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         accessTier: accessTier,
+                        rootSquash: rootSquash,
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: operationName,
@@ -1820,6 +1867,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1861,6 +1909,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -1900,6 +1949,7 @@ namespace Azure.Storage.Files.Shares
             SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -1938,6 +1988,7 @@ namespace Azure.Storage.Files.Shares
             await SetPropertiesInternal(
                 quotaInGB: quotaInGB,
                 accessTier: default,
+                rootSquash: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
