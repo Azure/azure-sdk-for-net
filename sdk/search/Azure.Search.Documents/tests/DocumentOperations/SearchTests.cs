@@ -11,6 +11,7 @@ using Azure.Core.Serialization;
 using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -661,6 +662,57 @@ namespace Azure.Search.Documents.Tests
             ValueFacetResult<int> second = facets.ElementAt(1).AsValueFacetResult<int>();
             Assert.AreEqual(4, second.Value);
             Assert.AreEqual(4, second.Count);
+        }
+
+        public class FacetKeyValuePair
+        {
+            public FacetKeyValuePair() { }
+            public FacetKeyValuePair(string key, string value) { Key = key; Value = value; }
+
+            [SimpleField(IsKey = true)]
+            public string Key { get; set; }
+
+            [SimpleField(IsFacetable = true)]
+            public string Value { get; set; }
+        }
+
+        [Test]
+        public async Task FacetsArentAutomaticallyParsed()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            await client.UploadDocumentsAsync(
+                new[]
+                {
+                    new FacetKeyValuePair("1", "9-6"),
+                    new FacetKeyValuePair("2", "9.6"),
+                    new FacetKeyValuePair("3", "9'6\""),
+                });
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<FacetKeyValuePair>> response =
+                await resources.GetQueryClient().SearchAsync<FacetKeyValuePair>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value" } });
+
+            Assert.IsNotNull(response.Value.Facets);
+            AssertFacetsEqual(
+                GetFacetsForField(response.Value.Facets, "Value", 3),
+                MakeValueFacet(1, "9'6\""),
+                MakeValueFacet(1, "9-6"),
+                MakeValueFacet(1, "9.6"));
+
+            // Check strongly typed value facets
+            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "Value", 3);
+            ValueFacetResult<string> first = facets.ElementAt(0).AsValueFacetResult<string>();
+            Assert.AreEqual("9'6\"", first.Value);
+            Assert.AreEqual(1, first.Count);
+            ValueFacetResult<string> second = facets.ElementAt(1).AsValueFacetResult<string>();
+            Assert.AreEqual("9-6", second.Value);
+            Assert.AreEqual(1, second.Count);
+            ValueFacetResult<string> third = facets.ElementAt(2).AsValueFacetResult<string>();
+            Assert.AreEqual("9.6", third.Value);
+            Assert.AreEqual(1, third.Count);
         }
 
         [Test]
