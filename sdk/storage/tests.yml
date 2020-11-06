@@ -7,7 +7,7 @@ extends:
     BuildInParallel: true
     TimeoutInMinutes: 90
     Location: canadacentral
-    Clouds: AzureCloud_Preview
+    Clouds: Preview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     EnvVars:

@@ -5,4 +5,4 @@ extends:
   parameters:
     ServiceDirectory: digitaltwins
     Location: westus2
-    Clouds: AzureCloud_Preview
+    Clouds: Preview
