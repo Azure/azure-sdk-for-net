@@ -7,6 +7,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// KeyPhraseExtractionTasksItem.
+    /// </summary>
     [CodeGenModel("TasksStateTasksKeyPhraseExtractionTasksItem")]
     public partial class KeyPhraseExtractionTasksItem
     {

@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// PiiTaskParametersDomain.
+    /// </summary>
     [CodeGenModel("PiiTaskParametersDomain")]
     public readonly partial struct PiiTaskParametersDomain
     {

@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// KeyPhrasesTaskParameters.
+    /// </summary>
     [CodeGenModel("KeyPhrasesTaskParameters")]
     public partial class KeyPhrasesTaskParameters
     {

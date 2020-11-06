@@ -7,6 +7,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// JobManifestTasks.
+    /// </summary>
     [CodeGenModel("JobManifestTasks")]
     public partial class JobManifestTasks
     {

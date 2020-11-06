@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
+    /// <summary>
+    /// HealthcareEntityLink.
+    /// </summary>
     [CodeGenModel("HealthcareEntityLink")]
     public partial class HealthcareEntityLink
     {
