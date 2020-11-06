@@ -47,8 +47,8 @@ steps:
       }
 
       $armTemplateParameters = ${{ parameters.ArmTemplateParameters }}
-      foreach ($p in $armTemplateParameters.GetEnumerator()) {
-        $subscriptionConfiguration.ArmTemplateParameters[$p.Name] = $p.Value
+      foreach ($key in $armTemplateParameters.Keys) {
+        $subscriptionConfiguration.ArmTemplateParameters[$key] = $armTemplateParameters[$key]
       }
 
       eng/common/TestResources/New-TestResources.ps1 `
