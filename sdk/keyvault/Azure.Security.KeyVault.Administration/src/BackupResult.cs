@@ -15,14 +15,14 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(backupFolderUri, nameof(backupFolderUri));
 
-            this.backupFolderUri = backupFolderUri;
+            this.BackupFolderUri = backupFolderUri;
             StartTime = startTime;
             EndTime = endTime;
         }
         /// <summary>
         /// The location of the full backup.
         /// </summary>
-        public Uri backupFolderUri { get; }
+        public Uri BackupFolderUri { get; }
 
         /// <summary>
         /// The start time of the backup operation.

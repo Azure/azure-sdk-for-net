@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             await WaitForOperationAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value.backupFolderUri;
+            Uri backupFolderUri = backupResult.Value.BackupFolderUri;
 
             Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);

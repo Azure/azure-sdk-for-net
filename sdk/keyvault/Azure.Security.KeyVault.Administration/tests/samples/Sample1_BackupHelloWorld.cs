@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value.backupFolderUri;
+            Uri backupFolderUri = backupResult.Value.BackupFolderUri;
             #endregion
 
             Assert.That(backupFolderUri, Is.Not.Null);
@@ -60,12 +60,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RestoreOperation restoreOperation = await Client.StartRestoreAsync(backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+            Response<RestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);
-            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
-            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.Value.StartTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.Value.EndTime, Is.Not.EqualTo(default));
 
             await WaitForOperationAsync();
         }
@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupOperation.Value.backupFolderUri;
+            Uri backupFolderUri = backupOperation.Value.BackupFolderUri;
             #endregion
 
             Assert.That(backupFolderUri, Is.Not.Null);
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 /*@@*/ await DelayAsync(TimeSpan.FromSeconds(3));
                 //@@Thread.Sleep(3000);
             }
-            Uri restoreResult = backupOperation.Value.backupFolderUri;
+            Uri restoreResult = backupOperation.Value.BackupFolderUri;
             #endregion
 
             Assert.That(restoreResult, Is.Not.Null);

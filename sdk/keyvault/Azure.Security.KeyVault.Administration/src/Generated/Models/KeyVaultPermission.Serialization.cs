@@ -16,11 +16,11 @@ namespace Azure.Security.KeyVault.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(AllowActions))
             {
                 writer.WritePropertyName("actions");
                 writer.WriteStartArray();
-                foreach (var item in Actions)
+                foreach (var item in AllowActions)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -36,11 +36,11 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataActions))
+            if (Optional.IsCollectionDefined(AllowDataActions))
             {
                 writer.WritePropertyName("dataActions");
                 writer.WriteStartArray();
-                foreach (var item in DataActions)
+                foreach (var item in AllowDataActions)
                 {
                     writer.WriteStringValue(item);
                 }

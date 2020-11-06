@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class BackupResult
     {
         internal BackupResult() { }
-        public System.Uri backupFolderUri { get { throw null; } }
+        public System.Uri BackupFolderUri { get { throw null; } }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }
@@ -72,8 +72,8 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultPermission
     {
         public KeyVaultPermission() { }
-        public System.Collections.Generic.IList<string> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<string> DataActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowDataActions { get { throw null; } }
         public System.Collections.Generic.IList<string> DenyActions { get { throw null; } }
         public System.Collections.Generic.IList<string> DenyDataActions { get { throw null; } }
     }
