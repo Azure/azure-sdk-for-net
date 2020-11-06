@@ -42,21 +42,16 @@ steps:
         ${{ parameters.SubscriptionConfiguration }}
       '@ | ConvertFrom-Json -AsHashtable;
 
-      if (!$subscriptionConfiguration.ArmTemplateParameters) {
-        $subscriptionConfiguration.ArmTemplateParameters = @{}
-      }
-
-      $armTemplateParameters = ${{ parameters.ArmTemplateParameters }}
-      foreach ($key in $armTemplateParameters.Keys) {
-        $subscriptionConfiguration.ArmTemplateParameters[$key] = $armTemplateParameters[$key]
-      }
-
+      # The subscriptionConfiguration may have ArmTemplateParameters defined, so
+      # pass those in via the ArmTemplateParameters flag, and handle any
+      # additional parameters from the pipelines via AdditionalParameters
       eng/common/TestResources/New-TestResources.ps1 `
         -BaseName 'Generated' `
         -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
         -Location '${{ parameters.Location }}' `
         -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
         @subscriptionConfiguration `
+        -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
         -CI `
         -Force `
         -Verbose | Out-Null

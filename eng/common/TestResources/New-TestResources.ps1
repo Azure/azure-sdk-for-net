@@ -65,7 +65,7 @@ param (
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
+    [ValidateNotNull()]
     [hashtable] $EnvironmentVariables = @{},
 
     [Parameter()]
