@@ -13,7 +13,6 @@ namespace Azure.Sample.Perf
     {
         private readonly SemaphoreSlim _semaphoreSlim;
 
-        [SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
         private readonly Timer _timer;
 
         public TimerRunTest(PerfOptions options) : base(options)
