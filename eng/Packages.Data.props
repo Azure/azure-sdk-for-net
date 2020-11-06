@@ -187,9 +187,12 @@
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.2" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.2" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
+  </ItemGroup>
 
-    <!-- Perf/Stress packages-->
+  <!-- Stress only packages -->
+  <ItemGroup Condition="'$(IsStressProject)' == 'true'">
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
+
 </Project>
