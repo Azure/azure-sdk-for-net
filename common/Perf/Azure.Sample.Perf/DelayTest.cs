@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace System.PerfStress
 {
-    public class DelayTest : PerfStressTest<DelayTest.DelayOptions>
+    public class DelayTest : PerfTest<DelayTest.DelayOptions>
     {
         private static int _instanceCount = 0;
         private TimeSpan _delay;
@@ -33,7 +33,7 @@ namespace System.PerfStress
             _delay = TimeSpan.FromMilliseconds(_delay.TotalMilliseconds * Options.IterationGrowthFactor);
         }
 
-        public class DelayOptions : PerfStressOptions
+        public class DelayOptions : PerfOptions
         {
             [Option("initialDelayMs", Default = 1000, HelpText = "Initial delay (in milliseconds)")]
             public int InitialDelayMs { get; set; }

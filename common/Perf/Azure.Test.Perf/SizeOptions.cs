@@ -5,7 +5,7 @@ using CommandLine;
 
 namespace Azure.Test.Perf
 {
-    public class SizeOptions : PerfStressOptions
+    public class SizeOptions : PerfOptions
     {
         [Option('s', "size", Default = 1024, HelpText = "Size of payload (in bytes)")]
         public long Size { get; set; }

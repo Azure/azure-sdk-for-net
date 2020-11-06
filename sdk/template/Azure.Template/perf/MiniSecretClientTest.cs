@@ -7,9 +7,9 @@ using Azure.Test.Perf;
 
 namespace System.PerfStress
 {
-    public class MiniSecretClientTest : PerfStressTest<PerfStressOptions>
+    public class MiniSecretClientTest : PerfTest<PerfOptions>
     {
-        public MiniSecretClientTest(PerfStressOptions options) : base(options) { }
+        public MiniSecretClientTest(PerfOptions options) : base(options) { }
 
         public override void Run(CancellationToken cancellationToken)
         {

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public static class PerfStressProgram
+    public static class PerfProgram
     {
         private static int[] _completedOperations;
         private static TimeSpan[] _lastCompletionTimes;
@@ -27,12 +27,12 @@ namespace Azure.Test.Perf
         public static async Task Main(Assembly assembly, string[] args)
         {
             var testTypes = assembly.ExportedTypes
-                .Where(t => typeof(IPerfStressTest).IsAssignableFrom(t) && !t.IsAbstract);
+                .Where(t => typeof(IPerfTest).IsAssignableFrom(t) && !t.IsAbstract);
 
             if (testTypes.Any())
             {
                 var optionTypes = GetOptionTypes(testTypes);
-                await Parser.Default.ParseArguments(args, optionTypes).MapResult<PerfStressOptions, Task>(
+                await Parser.Default.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
@@ -48,7 +48,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task Run(Type testType, PerfStressOptions options)
+        private static async Task Run(Type testType, PerfOptions options)
         {
             // Require Server GC, since most performance-sensitive usage will be in ASP.NET apps which
             // enable Server GC by default.  Though Server GC is disabled on 1-core machines as of
@@ -88,10 +88,10 @@ namespace Azure.Test.Perf
             using var cleanupStatusCts = new CancellationTokenSource();
             Thread cleanupStatusThread = null;
 
-            var tests = new IPerfStressTest[options.Parallel];
+            var tests = new IPerfTest[options.Parallel];
             for (var i = 0; i < options.Parallel; i++)
             {
-                tests[i] = (IPerfStressTest)Activator.CreateInstance(testType, options);
+                tests[i] = (IPerfTest)Activator.CreateInstance(testType, options);
             }
 
             try
@@ -160,7 +160,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfStressTest[] tests, bool sync, int parallel, int? rate,
+        private static async Task RunTestsAsync(IPerfTest[] tests, bool sync, int parallel, int? rate,
             int durationSeconds, string title, bool jobStatistics = false, bool latency = false)
         {
             _completedOperations = new int[parallel];
@@ -307,7 +307,7 @@ namespace Azure.Test.Perf
             Console.WriteLine();
         }
 
-        private static void RunLoop(IPerfStressTest test, int index, bool latency, CancellationToken cancellationToken)
+        private static void RunLoop(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             var latencySw = new Stopwatch();
@@ -336,7 +336,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunLoopAsync(IPerfStressTest test, int index, bool latency, CancellationToken cancellationToken)
+        private static async Task RunLoopAsync(IPerfTest test, int index, bool latency, CancellationToken cancellationToken)
         {
             var sw = Stopwatch.StartNew();
             var latencySw = new Stopwatch();

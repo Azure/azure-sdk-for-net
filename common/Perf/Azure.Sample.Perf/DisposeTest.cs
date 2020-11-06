@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace System.PerfStress
 {
     // Used to verify framework calls DisposeAsync()
-    public class DisposeTest : PerfStressTest<PerfStressOptions>
+    public class DisposeTest : PerfTest<PerfOptions>
     {
-        public DisposeTest(PerfStressOptions options) : base(options)
+        public DisposeTest(PerfOptions options) : base(options)
         {
         }
 

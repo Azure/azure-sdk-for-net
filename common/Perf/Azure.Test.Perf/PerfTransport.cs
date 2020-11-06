@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public static class PerfStressTransport
+    public static class PerfTransport
     {
-        public static HttpPipelineTransport Create(PerfStressOptions options)
+        public static HttpPipelineTransport Create(PerfOptions options)
         {
             HttpClient httpClient;
             if (options.Insecure)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace System.PerfStress
 {
-    public class HttpClientGetTest : PerfStressTest<UrlOptions>
+    public class HttpClientGetTest : PerfTest<UrlOptions>
     {
         private static HttpClient _httpClient;
 

@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.PerfStress
     {
         public static async Task Main(string[] args)
         {
-            await PerfStressProgram.Main(typeof(Program).Assembly, args);
+            await PerfProgram.Main(typeof(Program).Assembly, args);
         }
     }
 }

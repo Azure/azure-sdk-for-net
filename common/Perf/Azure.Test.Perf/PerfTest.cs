@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class PerfStressTest<TOptions> : IPerfStressTest where TOptions : PerfStressOptions
+    public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
     {
         protected TOptions Options { get; private set; }
 
-        public PerfStressTest(TOptions options)
+        public PerfTest(TOptions options)
         {
             Options = options;
         }

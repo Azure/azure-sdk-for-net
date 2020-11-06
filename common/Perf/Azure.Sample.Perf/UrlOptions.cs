@@ -6,7 +6,7 @@ using CommandLine;
 
 namespace System.PerfStress
 {
-    public class UrlOptions : PerfStressOptions
+    public class UrlOptions : PerfOptions
     {
         [Option('u', "url", Required = true)]
         public string Url { get; set; }

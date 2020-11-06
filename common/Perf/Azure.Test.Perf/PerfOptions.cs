@@ -5,7 +5,7 @@ using CommandLine;
 
 namespace Azure.Test.Perf
 {
-    public class PerfStressOptions
+    public class PerfOptions
     {
         [Option('d', "duration", Default = 10, HelpText = "Duration of test in seconds")]
         public int Duration { get; set; }

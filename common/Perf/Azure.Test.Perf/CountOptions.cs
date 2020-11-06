@@ -5,7 +5,7 @@ using CommandLine;
 
 namespace Azure.Test.Perf
 {
-    public class CountOptions : PerfStressOptions
+    public class CountOptions : PerfOptions
     {
         [Option('c', "count", Default = 10, HelpText = "Number of items")]
         public int Count { get; set; }
