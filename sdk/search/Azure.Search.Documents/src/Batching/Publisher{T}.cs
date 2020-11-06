@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Batching
         /// Manual retry policy to add exponential back-off after throttled
         /// requests.
         /// </summary>
-        private ManualRetryDelay _manualRetries = new ManualRetryDelay();
+        private ManualRetryDelay _manualRetries;
 
         /// <summary>
         /// Gets the number of indexing actions currently awaiting submission.
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Batching
         /// Gets a value indicating the number of actions to group into a batch
         /// when tuning the behavior of the publisher.
         /// </summary>
-        protected int BatchActionSize { get; }  // TODO: Not automatically tuning yet
+        protected int BatchActionCount { get; }  // TODO: Not automatically tuning yet
 
         /// <summary>
         /// Gets a value indicating the number of bytes to use when tuning the
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// Gets the number of times to retry a failed document.
         /// </summary>
-        protected int RetryCount { get; }  // TODO: Not configurable yet
+        protected int MaxRetries { get; }
 
         /// <summary>
         /// Creates a new Publisher which immediately starts listening to
@@ -134,8 +134,15 @@ namespace Azure.Search.Documents.Batching
         /// The number of bytes to use when tuning the behavior of the
         /// publisher.
         /// </param>
-        /// <param name="retryCount">
+        /// <param name="maxRetries">
         /// The number of times to retry a failed document.
+        /// </param>
+        /// <param name="retryDelay">
+        /// The initial retry delay on which to base calculations for a
+        /// backoff-based approach.
+        /// </param>
+        /// <param name="maxRetryDelay">
+        /// The maximum permissible delay between retry attempts.
         /// </param>
         /// <param name="publisherCancellationToken">
         /// A <see cref="CancellationToken"/> to use when publishing.
@@ -145,15 +152,20 @@ namespace Azure.Search.Documents.Batching
             TimeSpan? autoFlushInterval,
             int? batchActionSize,
             int? batchPayloadSize,
-            int? retryCount,
+            int maxRetries,
+            TimeSpan retryDelay,
+            TimeSpan maxRetryDelay,
             CancellationToken publisherCancellationToken)
         {
             AutoFlush = autoFlush;
             AutoFlushInterval = autoFlushInterval <= TimeSpan.Zero ? null : autoFlushInterval;
             PublisherCancellationToken = publisherCancellationToken;
-            BatchActionSize = batchActionSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultBatchActionSize;
+            BatchActionCount = batchActionSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultInitialBatchActionCount;
             BatchPayloadSize = batchPayloadSize ?? SearchIndexingBufferedSenderOptions<T>.DefaultBatchPayloadSize;
-            RetryCount = retryCount ??  SearchIndexingBufferedSenderOptions<T>.DefaultRetryCount;
+            MaxRetries = maxRetries;
+
+            // Setup manual retries
+            _manualRetries = new ManualRetryDelay { Delay = retryDelay, MaxDelay = maxRetryDelay };
 
             // Start the message loop
             _readerLoop = Task.Run(ProcessMessagesAsync, publisherCancellationToken);
@@ -372,7 +384,7 @@ namespace Azure.Search.Documents.Batching
         /// <param name="flush">Whether we're flushing.</param>
         /// <returns>If we have a full batch ready to send.</returns>
         private bool HasBatch(bool flush = false) =>
-            IndexingActionsCount > (flush ? 0 : BatchActionSize);
+            IndexingActionsCount > (flush ? 0 : BatchActionCount);
 
         /// <summary>
         /// Publish as many batches are ready.
@@ -389,7 +401,7 @@ namespace Azure.Search.Documents.Batching
             do
             {
                 List<PublisherAction<T>> batch = new List<PublisherAction<T>>(
-                    capacity: Math.Min(BatchActionSize, IndexingActionsCount));
+                    capacity: Math.Min(BatchActionCount, IndexingActionsCount));
 
                 // Prefer pulling from the _retry queue first
                 if (!FillBatchFromQueue(batch, _retry))
@@ -415,7 +427,7 @@ namespace Azure.Search.Documents.Batching
 
                 while (queue.Count > 0)
                 {
-                    if (batch.Count < BatchActionSize)
+                    if (batch.Count < BatchActionCount)
                     {
                         batch.Add(queue.Dequeue());
                     }
@@ -471,7 +483,7 @@ namespace Azure.Search.Documents.Batching
             PublisherAction<T> action,
             bool skipIncrement = false)
         {
-            bool retriable = skipIncrement || action.RetryAttempts++ < RetryCount;
+            bool retriable = skipIncrement || action.RetryAttempts++ < MaxRetries;
             if (retriable)
             {
                 _retry.Enqueue(action);

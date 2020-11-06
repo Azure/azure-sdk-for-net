@@ -80,7 +80,11 @@ namespace Azure.Search.Documents
         public bool AutoFlush { get { throw null; } set { } }
         public System.TimeSpan? AutoFlushInterval { get { throw null; } set { } }
         public System.Threading.CancellationToken FlushCancellationToken { get { throw null; } set { } }
+        public int? InitialBatchActionCount { get { throw null; } set { } }
         public System.Func<T, string> KeyFieldAccessor { get { throw null; } set { } }
+        public int MaxRetries { get { throw null; } set { } }
+        public System.TimeSpan MaxRetryDelay { get { throw null; } set { } }
+        public System.TimeSpan RetryDelay { get { throw null; } set { } }
     }
     public partial class SearchIndexingBufferedSender<T> : System.IAsyncDisposable, System.IDisposable
     {

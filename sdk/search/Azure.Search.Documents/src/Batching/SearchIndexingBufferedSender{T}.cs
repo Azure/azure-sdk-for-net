@@ -127,9 +127,11 @@ namespace Azure.Search.Documents
                 this,
                 options.AutoFlush,
                 options.AutoFlushInterval,
-                options.BatchActionSize,
+                options.InitialBatchActionCount,
                 options.BatchPayloadSize,
-                options.RetryCount,
+                options.MaxRetries,
+                options.RetryDelay,
+                options.MaxRetryDelay,
                 options.FlushCancellationToken);
         }
 
@@ -331,10 +333,20 @@ namespace Azure.Search.Documents
         /// </returns>
         internal async Task RaiseActionAddedAsync(
             IndexDocumentsAction<T> action,
-            CancellationToken cancellationToken) =>
-            await ActionAddedAsync
-                .RaiseAsync(action, cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await ActionAddedAsync
+                    .RaiseAsync(action, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
+            }
+        }
 
         /// <summary>
         /// Raise the <see cref="ActionSentAsync"/> event.
@@ -346,10 +358,20 @@ namespace Azure.Search.Documents
         /// </returns>
         internal async Task RaiseActionSentAsync(
             IndexDocumentsAction<T> action,
-            CancellationToken cancellationToken) =>
-            await ActionSentAsync
-                .RaiseAsync(action, cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await ActionSentAsync
+                    .RaiseAsync(action, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
+            }
+        }
 
         /// <summary>
         /// Raise the <see cref="ActionCompletedAsync"/> event.
@@ -363,10 +385,20 @@ namespace Azure.Search.Documents
         internal async Task RaiseActionCompletedAsync(
             IndexDocumentsAction<T> action,
             IndexingResult result,
-            CancellationToken cancellationToken) =>
-            await ActionCompletedAsync
-                .RaiseAsync(action, result, cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await ActionCompletedAsync
+                    .RaiseAsync(action, result, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
+            }
+        }
 
         /// <summary>
         /// Raise the <see cref="ActionFailedAsync"/> event.
@@ -382,10 +414,20 @@ namespace Azure.Search.Documents
             IndexDocumentsAction<T> action,
             IndexingResult result,
             Exception exception,
-            CancellationToken cancellationToken) =>
-            await ActionFailedAsync
-                .RaiseAsync(action, result, exception, cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await ActionFailedAsync
+                    .RaiseAsync(action, result, exception, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // TODO: #16706 - Log any exceptions raised from async events
+                // we can't let bubble out because they'd tear down the process
+            }
+        }
         #endregion
 
         #region Index Documents
