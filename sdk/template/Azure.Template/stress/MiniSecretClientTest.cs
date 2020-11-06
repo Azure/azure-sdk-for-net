@@ -12,16 +12,14 @@ namespace Azure.Template.Stress
 {
     public class MiniSecretClientTest : StressTest<MiniSecretClientTest.MiniSecretClientOptions, MiniSecretClientTest.MiniSecretClientMetrics>
     {
-        protected string KeyVaultUri { get; private set; }
-
         public MiniSecretClientTest(MiniSecretClientOptions options, MiniSecretClientMetrics metrics) : base(options, metrics)
         {
-            KeyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            var client = new MiniSecretClient(new Uri(KeyVaultUri), new DefaultAzureCredential());
+            var keyVaultUri = GetEnvironmentVariable("KEYVAULT_URL");
+            var client = new MiniSecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
             while (!cancellationToken.IsCancellationRequested)
             {
