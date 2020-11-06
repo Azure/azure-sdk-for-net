@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +16,7 @@ namespace Azure.Identity
         private const string IdentityEndpointInvalidUriError = "The environment variable IDENTITY_ENDPOINT contains an invalid Uri.";
         private const string NoChallengeErrorMessage = "Did not receive expected WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint.";
         private const string InvalidChallangeErrorMessage = "The WWW-Authenticate header in the response from Azure Arc Managed Identity Endpoint did not match the expected format.";
+        private const string UserAssignedNotSupportedErrorMessage = "User assigned identity is not supported by the Azure Arc Managed Identity Endpoint. To authenticate with the system assigned identity omit the client id when constructing the ManagedIdentityCredential, or if authenticating with the DefaultAzureCredential ensure the AZURE_CLIENT_ID environment variable is not set.";
         private const string ArcApiVersion = "2019-11-01";
 
         private readonly string _clientId;
@@ -54,7 +54,14 @@ namespace Azure.Identity
 
         protected override Request CreateRequest(string[] scopes)
         {
+            // arc MI endpoint doesn't support user assigned identities so if client id was specified throw AuthenticationFailedException
+            if (!string.IsNullOrEmpty(_clientId))
+            {
+                throw new AuthenticationFailedException(UserAssignedNotSupportedErrorMessage);
+            }
+
             // covert the scopes to a resource string
+            string resource = ScopeUtilities.ScopesToResource(scopes);
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Headers.Add("Metadata", "true");
@@ -62,12 +69,8 @@ namespace Azure.Identity
             request.Uri.Reset(_endpoint);
             request.Uri.AppendQuery("api-version", ArcApiVersion);
 
-            request.Uri.AppendQuery("resource", string.Join(" ", scopes));
+            request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(_clientId))
-            {
-                request.Uri.AppendQuery("client_id", _clientId);
-            }
 
             return request;
         }
