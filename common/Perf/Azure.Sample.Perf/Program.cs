@@ -4,7 +4,7 @@
 using Azure.Test.Perf;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Blobs.PerfStress
+namespace Azure.Sample.Perf
 {
     public class Program
     {
