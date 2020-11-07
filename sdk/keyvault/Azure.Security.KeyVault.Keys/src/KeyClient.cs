@@ -411,7 +411,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeyVersions)}", cancellationToken));
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), $"{nameof(KeyClient)}.{nameof(GetPropertiesOfKeyVersions)}", cancellationToken));
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), $"{nameof(KeyClient)}.{nameof(GetDeletedKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -657,7 +657,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), $"{nameof(KeyClient)}.{nameof(GetDeletedKeys)}", cancellationToken));
         }
 
         /// <summary>
@@ -1053,6 +1053,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="importKeyOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="importKeyOptions"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultKey> ImportKey(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)
@@ -1086,6 +1087,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="importKeyOptions">The key import configuration object containing information about the <see cref="JsonWebKey"/> being imported.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="KeyVaultKey"/> that was imported.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="importKeyOptions"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultKey>> ImportKeyAsync(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)
