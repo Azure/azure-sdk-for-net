@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.Queues
 {
@@ -19,7 +19,14 @@ namespace Azure.Storage.Queues
                 case QueueMessageEncoding.UTF8:
                     return binaryData.ToString();
                 case QueueMessageEncoding.Base64:
-                    return Convert.ToBase64String(binaryData.ToArray());
+                    if (MemoryMarshal.TryGetArray(binaryData.ToMemory(), out var segment))
+                    {
+                        return Convert.ToBase64String(segment.Array);
+                    }
+                    else
+                    {
+                        return Convert.ToBase64String(binaryData.ToArray());
+                    }
                 default:
                     throw new ArgumentException($"Unsupported message encoding {messageEncoding}");
             }
