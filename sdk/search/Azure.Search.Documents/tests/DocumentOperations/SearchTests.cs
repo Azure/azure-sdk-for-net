@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -713,6 +714,82 @@ namespace Azure.Search.Documents.Tests
             ValueFacetResult<string> third = facets.ElementAt(2).AsValueFacetResult<string>();
             Assert.AreEqual("9.6", third.Value);
             Assert.AreEqual(1, third.Count);
+        }
+
+        [Test]
+        public async Task FacetDateTimesRoundtrip()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            DateTimeOffset now = Recording.Now;
+
+            // Use valid dates
+            string prefix = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+            FacetKeyValuePair[] data =
+                new[]
+                {
+                    new FacetKeyValuePair("1", now.ToString(prefix + "zzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("2", now.ToString(prefix + "K", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("3", now.ToString(prefix + "'.'fzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("4", now.ToString(prefix + "'.'fK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("5", now.ToString(prefix + "'.'ffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("6", now.ToString(prefix + "'.'ffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("7", now.ToString(prefix + "'.'fffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("8", now.ToString(prefix + "'.'fffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("9", now.ToString(prefix + "'.'ffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("10", now.ToString(prefix + "'.'ffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("11", now.ToString(prefix + "'.'fffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("12", now.ToString(prefix + "'.'fffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("13", now.ToString(prefix + "'.'ffffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("14", now.ToString(prefix + "'.'ffffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("15", now.ToString(prefix + "'.'fffffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("16", now.ToString(prefix + "'.'fffffffK", CultureInfo.InvariantCulture))
+                };
+            await client.UploadDocumentsAsync(data);
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<SearchDocument>> response =
+                await resources.GetQueryClient().SearchAsync<SearchDocument>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
+            foreach (FacetResult facet in response.Value.Facets["Value"])
+            {
+                Assert.IsInstanceOf(
+                    typeof(DateTimeOffset),
+                    facet.Value,
+                    $"Expected a DateTimeOffset, not {facet.Value} of type {facet.Value?.GetType().FullName}");
+            }
+        }
+
+        [Test]
+        public async Task FacetDateTimesInvalid()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            DateTimeOffset now = Recording.Now;
+
+            // Use invalid dates
+            FacetKeyValuePair[] data =
+                new[]
+                {
+                    new FacetKeyValuePair("1", now.ToString("yyyy'-'MM'-'dd'T'HH':'mm", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("2", now.ToString("yyyy'-'MM'-'dd", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("3", now.ToString("HH':'mm", CultureInfo.InvariantCulture))
+                };
+            await client.UploadDocumentsAsync(data);
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<SearchDocument>> response =
+                await resources.GetQueryClient().SearchAsync<SearchDocument>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
+            foreach (FacetResult facet in response.Value.Facets["Value"])
+            {
+                Assert.IsInstanceOf(
+                    typeof(string),
+                    facet.Value,
+                    $"Expected a string, not {facet.Value} of type {facet.Value?.GetType().FullName}");
+            }
         }
 
         [Test]
