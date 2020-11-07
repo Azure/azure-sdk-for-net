@@ -13,14 +13,14 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialArcLiveTests : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ArcMiRecordedTestSanitizer();
         }
 
         [NonParallelizable]
         [Test]
-        public async Task ValidateImdsSystemAssignedIdentity()
+        public async Task ValidateSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))
             {
@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void ValidateImdsUserAssignedIdentity()
+        public void ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))
             {

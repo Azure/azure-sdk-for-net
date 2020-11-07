@@ -1,0 +1,104 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://localhost:40342/metadata/identity/oauth2/token?api-version=2019-11-01\u0026resource=https%3A%2F%2Fvault.azure.net",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Metadata": "true",
+        "User-Agent": [
+          "azsdk-net-Identity/1.3.0-alpha.20201107.1",
+          "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "256ffb5513574d4e12ad353908589ccb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "U2FuaXRpemVk",
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Length": "261",
+        "Content-Type": "application/json",
+        "Date": "Sat, 07 Nov 2020 00:53:46 GMT",
+        "WWW-Authenticate": "Basic realm=/home/sschaab/azure-sdk-for-net/artifacts/bin/Azure.Identity.Tests/Debug/netcoreapp3.1/Data/mock-arc-mi-key.key"
+      },
+      "ResponseBody": "{\u0022error\u0022:\u0022unauthorized_client\u0022,\u0022error_description\u0022:\u0022Missing Basic Authorization header\u0022,\u0022error_codes\u0022:[401],\u0022timestamp\u0022:\u00222020-11-07 00:53:46.325415417 \\u002B0000 UTC m=\\u002B23008.814003518\u0022,\u0022trace_id\u0022:\u0022\u0022,\u0022correlation_id\u0022:\u002292735155-959b-4900-8433-1cf0f542a6fb\u0022}"
+    },
+    {
+      "RequestUri": "http://localhost:40342/metadata/identity/oauth2/token?api-version=2019-11-01\u0026resource=https%3A%2F%2Fvault.azure.net",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Metadata": "true",
+        "User-Agent": [
+          "azsdk-net-Identity/1.3.0-alpha.20201107.1",
+          "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "1469bc106fae2a665105119b4271c81f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "U2FuaXRpemVk",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "165",
+        "Content-Type": "application/json",
+        "Date": "Sat, 07 Nov 2020 00:53:46 GMT"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized",
+        "refresh_token": "Sanitized",
+        "expires_in": "84506",
+        "expires_on": "1604794933",
+        "not_before": "1604708233",
+        "resource": "",
+        "token_type": "Bearer"
+      }
+    },
+    {
+      "RequestUri": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret?api-version=7.0",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+          "(.NET Core 3.1.9; Linux 5.4.0-1031-azure #32~18.04.1-Ubuntu SMP Tue Oct 6 10:03:22 UTC 2020)"
+        ],
+        "x-ms-client-request-id": "40a2eb1e6d79a69a20db6a8a43043942",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "value"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "222",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 07 Nov 2020 00:53:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.175.209.151;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.2.58.0",
+        "x-ms-request-id": "517fb28e-d81f-4642-a8e0-9018772e1b53",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": "value",
+        "id": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret/785f01808c35404b90936e113dcd80f3",
+        "attributes": {
+          "enabled": true,
+          "created": 1604710426,
+          "updated": 1604710426,
+          "recoveryLevel": "Purgeable"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1336942094"
+  }
+}
