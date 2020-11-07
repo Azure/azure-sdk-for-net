@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
     /// Setting indicating whether the service has a managed identity
     /// associated with it.
     /// </summary>
-    public partial class ResourceIdentity
+    public partial class ServicesResourceIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceIdentity class.
+        /// Initializes a new instance of the ServicesResourceIdentity class.
         /// </summary>
-        public ResourceIdentity()
+        public ServicesResourceIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceIdentity class.
+        /// Initializes a new instance of the ServicesResourceIdentity class.
         /// </summary>
         /// <param name="principalId">The principal ID of the resource
         /// identity.</param>
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         /// <param name="type">Type of identity being specified, currently
         /// SystemAssigned and None are allowed. Possible values include:
         /// 'SystemAssigned', 'None'</param>
-        public ResourceIdentity(string principalId = default(string), string tenantId = default(string), string type = default(string))
+        public ServicesResourceIdentity(string principalId = default(string), string tenantId = default(string), string type = default(string))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
