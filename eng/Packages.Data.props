@@ -190,8 +190,8 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
   </ItemGroup>
 
-  <!-- Stress only packages -->
-  <ItemGroup Condition="'$(IsStressProject)' == 'true'">
+  <!-- Perf and Stress packages -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true')">
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
