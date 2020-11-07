@@ -22,7 +22,6 @@ pr:
     - release/*
   paths:
     include:
-    - common/stress/
     - sdk/core/
     - sdk/testcommon/
     - eng/
