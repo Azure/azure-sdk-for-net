@@ -79,7 +79,7 @@ jobs:
               --logger "trx"
               --logger:"console;verbosity=normal"
               /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-              /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludeStress=false
+              /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
               /p:BuildInParallel=${{ parameters.BuildInParallel }}
               ${{ platform.AdditionalTestArguments }}
 
