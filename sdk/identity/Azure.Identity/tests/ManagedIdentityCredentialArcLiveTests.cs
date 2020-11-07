@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -11,8 +13,9 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialArcLiveTests : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
+            Sanitizer = new ArcMiRecordedTestSanitizer();
         }
 
         [NonParallelizable]
@@ -50,12 +53,21 @@ namespace Azure.Identity.Tests
 
             var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var clientId = TestEnvironment.IMDSClientId;
+            var cred = new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
 
-            var cred = new ManagedIdentityCredential(clientId = Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
-
-            Assert.Throws<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
         }
 
+        private class ArcMiRecordedTestSanitizer : IdentityRecordedTestSanitizer
+        {
+            public override void Sanitize(RecordEntry entry)
+            {
+                if (entry.Response.Headers.TryGetValue("WWW-Authenticate", out string[] challenges) && challenges[0].StartsWith("Basic realm="))
+                {
+                    challenges[0] = challenges[0].Split('=')[0] + "=" + Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key");
+                }
+                base.Sanitize(entry);
+            }
+        }
     }
 }
