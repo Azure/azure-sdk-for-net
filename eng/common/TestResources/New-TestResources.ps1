@@ -647,6 +647,4 @@ Run this in an Azure DevOps CI (with approrpiate variables configured) before
 executing live tests. The script will output variables as secrets (to enable
 log redaction).
 
-.LINK
-Remove-TestResources.ps1
 #>
