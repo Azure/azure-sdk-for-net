@@ -2080,7 +2080,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = 255 * Constants.MB;
+            long blobSize = 256 * Constants.MB;
             var data = GetRandomBuffer(blobSize);
             TestProgress progress = new TestProgress();
 
