@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
@@ -18,23 +16,6 @@ namespace Azure.Communication.Pipeline
         private const string ExpiredToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjEwMH0.1h_scYkNp-G98-O4cW6KvfJZwiz54uJMyeDACE4nypg";
         private static string FetchTokenForUserFromMyServer(string userId, CancellationToken cancellationToken) => SampleToken;
         private static ValueTask<string> FetchTokenForUserFromMyServerAsync(string userId, CancellationToken cancellationToken) => new ValueTask<string>(SampleToken);
-
-        private static AutoRefreshUserCredential CreateUserCredentialWithTestClock(
-            TestClock testClock,
-            bool refreshProactively,
-            Func<CancellationToken, string> tokenRefresher,
-            Func<CancellationToken, ValueTask<string>>? asyncTokenRefresher = null,
-            string? initialToken = null)
-        {
-            return new AutoRefreshUserCredential(
-                tokenRefresher,
-                asyncTokenRefresher ?? (cancellationToken => new ValueTask<string>(tokenRefresher(cancellationToken))),
-                initialToken,
-                refreshProactively,
-                testClock.Schedule,
-                () => testClock.UtcNow);
-        }
-
 
         public TokenRequestContext MockTokenRequestContext()
         {
