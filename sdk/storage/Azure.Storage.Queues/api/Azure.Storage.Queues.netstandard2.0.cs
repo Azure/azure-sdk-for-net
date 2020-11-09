@@ -47,15 +47,11 @@ namespace Azure.Storage.Queues
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync(int? maxMessages = default(int?), System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage[]>> ReceiveMessagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(System.BinaryData message) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(System.BinaryData message, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(System.BinaryData message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.SendReceipt> SendMessage(string messageText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(System.BinaryData message) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(System.BinaryData message, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(System.BinaryData message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText, System.TimeSpan? visibilityTimeout = default(System.TimeSpan?), System.TimeSpan? timeToLive = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.SendReceipt>> SendMessageAsync(string messageText, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,7 +80,7 @@ namespace Azure.Storage.Queues
     }
     public enum QueueMessageEncoding
     {
-        UTF8 = 0,
+        None = 0,
         Base64 = 1,
     }
     public partial class QueueServiceClient
