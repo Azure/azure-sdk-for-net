@@ -207,13 +207,17 @@ var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(re
 await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
 // Ensure purchase has completed successfuly
-if (!reservationPurchaseOperation.HasSucceeded)
-{ 
+try
+{
+    var reservationStatus = reservationPurchaseOperation.Value;
+    // ...
+}
+catch (Exception ex)
+{
     Console.WriteLine("Purchase failed");
-    Console.WriteLine(reservationPurchaseOperation.Error);
+    Console.WriteLine(ex.Message);
 }
 
-Console.WriteLine($"Purchase status: {reservationPurchaseOperation.Value}");
 ```
 
 ### Configure phone number

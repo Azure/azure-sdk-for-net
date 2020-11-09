@@ -77,7 +77,7 @@ namespace Azure.Communication.Administration.Models
                 {
                     throw new InvalidOperationException("The operation is not completed yet.");
                 }
-                if (!HasSucceeded)
+                if (_value != ReservationStatus.Success)
                 {
                     throw new RequestFailedException(GetErrorMessage(_value));
                 }
@@ -90,18 +90,8 @@ namespace Azure.Communication.Administration.Models
         /// <inheritdocs />
         public override bool HasCompleted => _hasCompleted;
 
-        /// <summary>
-        /// Returns true if the long-running operation completed successfully.
-        /// </summary>
-        public virtual bool HasSucceeded { get; protected set; }
-
-        /// <summary>
-        /// > The error if operation completed failed.
-        /// </summary>
-        public virtual string? Error { get; protected set; }
-
         /// <inheritdocs />
-        public override bool HasValue => HasSucceeded;
+        public override bool HasValue => _value == ReservationStatus.Success;
 
         /// <inheritdocs />
         public override Response GetRawResponse() => _rawResponse;
@@ -149,8 +139,6 @@ namespace Azure.Communication.Administration.Models
 
                 if (IsOperationCompleted(update))
                 {
-                    HasSucceeded = update.Value.Status == ReservationStatus.Success;
-                    Error = GetErrorMessage(update.Value.Status);
                     _value = update.Value.Status;
                     _hasCompleted = true;
                 }
