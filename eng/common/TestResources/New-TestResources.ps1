@@ -10,7 +10,7 @@
 
 [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
-    # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming.
+    # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
     [Parameter()]
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
@@ -110,7 +110,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
 
 function MergeHashes([hashtable] $source, [psvariable] $dest) {
     foreach ($key in $source.Keys) {
-        if ($dest.Value[$key]) {
+        if ($dest.Value.ContainsKey($key) -and $dest.Value[$key] -ne $source[$key]) {
             Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
                           "to new value '$($source[$key])'")
         }
@@ -305,6 +305,12 @@ if ($CI) {
     # Set the resource group name variable.
     Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
     Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
+    if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
+        $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
+    {
+        Write-Warning ("Overwriting 'EnvironmentVariables.AZURE_RESOURCEGROUP_NAME' with value " + 
+            "'$($EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'])' " + "to new value '$($ResourceGroupName)'")
+    }
     $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
 }
 
