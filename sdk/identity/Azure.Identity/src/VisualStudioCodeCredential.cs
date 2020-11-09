@@ -120,7 +120,7 @@ namespace Azure.Identity
         {
             var path = _vscAdapter.GetUserSettingsPath();
             tenant = _tenantId;
-            environmentName = "Azure";
+            environmentName = "AzureCloud";
 
             try
             {
