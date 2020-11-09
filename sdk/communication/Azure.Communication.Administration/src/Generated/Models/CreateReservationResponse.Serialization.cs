@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CreateSearchResponse
+    internal partial class CreateReservationResponse
     {
-        internal static CreateSearchResponse DeserializeCreateSearchResponse(JsonElement element)
+        internal static CreateReservationResponse DeserializeCreateReservationResponse(JsonElement element)
         {
             string searchId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.Administration.Models
                     continue;
                 }
             }
-            return new CreateSearchResponse(searchId);
+            return new CreateReservationResponse(searchId);
         }
     }
 }
