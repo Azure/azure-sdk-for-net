@@ -8,18 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     public class BlobBindingEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {
@@ -222,6 +223,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToIEnumerableBlobClient()
+        {
+            await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("IEnumerableBlobClientBinding"));
+
+            Assert.AreEqual(6, _numBlobsRead);
+        }
+
+        [Test]
         public async Task BindToByteArray()
         {
             await _fixture.JobHost.CallAsync(typeof(BlobBindingEndToEndTests).GetMethod("ByteArrayBinding"));
@@ -318,7 +327,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             arguments = new { input = TestData };
             await _fixture.JobHost.CallAsync(method, arguments);
 
-            // TODO (this sometimes results in empty string
             Assert.True(await blob.ExistsAsync());
             string result = await blob.DownloadTextAsync();
             Assert.AreEqual(TestData, result);
@@ -502,6 +510,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [NoAutomaticTrigger]
         public static async Task IEnumerableICloudBlobBinding(
             [Blob(ContainerName)] IEnumerable<BlobBaseClient> blobs)
+        {
+            foreach (var blob in blobs)
+            {
+                Stream stream = await blob.OpenReadAsync();
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string content = reader.ReadToEnd();
+                    Assert.AreEqual(TestData, content);
+                }
+            }
+            _numBlobsRead = blobs.Count();
+        }
+
+        [NoAutomaticTrigger]
+        public static async Task IEnumerableBlobClientBinding(
+            [Blob(ContainerName)] IEnumerable<BlobClient> blobs)
         {
             foreach (var blob in blobs)
             {

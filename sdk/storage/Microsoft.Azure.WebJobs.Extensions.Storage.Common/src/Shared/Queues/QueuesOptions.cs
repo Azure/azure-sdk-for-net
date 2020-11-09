@@ -4,17 +4,17 @@
 using System;
 using System.Globalization;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Host
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
 #if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
+    /// <summary>
+    /// Represents configuration for <see cref="QueueTriggerAttribute"/>.
+    /// </summary>
     public class QueuesOptions : IOptionsFormatter
 #else
     internal class QueuesOptions : IOptionsFormatter
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.WebJobs.Host
 
         // Azure Queues currently limits the number of messages retrieved to 32. We enforce this constraint here because
         // the runtime error message the user would receive from the SDK otherwise is not as helpful.
-        private const int MaxBatchSize = 32;
+        internal const int MaxBatchSize = 32;
 
         private int _batchSize = DefaultBatchSize;
         private int _newBatchThreshold;

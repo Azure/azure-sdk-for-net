@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {

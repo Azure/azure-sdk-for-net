@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.WebJobs.Extensions.Storage.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class BlobServiceClientProvider : StorageClientProvider<BlobServiceClient, BlobClientOptions>
     {

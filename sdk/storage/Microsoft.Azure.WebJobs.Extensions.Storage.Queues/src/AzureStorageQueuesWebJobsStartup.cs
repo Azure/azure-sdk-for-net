@@ -9,9 +9,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc cref="IWebJobsStartup"/>
     public class AzureStorageQueuesWebJobsStartup : IWebJobsStartup
     {
         /// <inheritdoc/>

@@ -1,7 +1,8 @@
 # Release History
 
 ## 5.1.0-beta.3 (Unreleased)
-
+### Breaking changes
+- Modified the way to turn on Opinion Mining feature in `AnalyzeSentiment` to a bool property called `IncludeOpinionMining`.
 
 ## 5.1.0-beta.2 (2020-10-06)
 ### Breaking changes

@@ -5,13 +5,14 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - task: PowerShell@2
-        displayName: Prep template pipeline for release
-        condition: and(succeeded(),eq(variables['TestPipeline'],'true'))
-        inputs:
-          pwsh: true
-          workingDirectory: $(Build.SourcesDirectory)
-          filePath: eng/scripts/SetTestPipelineVersion.ps1
+      - ${{if eq(parameters.TestPipeline, 'true')}}:
+        - task: PowerShell@2
+          displayName: Prep template pipeline for release
+          condition: succeeded()
+          inputs:
+            pwsh: true
+            workingDirectory: $(Build.SourcesDirectory)
+            filePath: eng/scripts/SetTestPipelineVersion.ps1
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -56,7 +57,7 @@ jobs:
           artifactName: packages
           path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
-    condition: ne(variables['Skip.Analyze'], true)
+    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     variables:
       - template: ../variables/globals.yml
     pool:
@@ -105,7 +106,7 @@ jobs:
           ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: "Test"
-    condition: ne(variables['Skip.Test'], true)
+    condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
     strategy:
@@ -117,8 +118,6 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
@@ -143,7 +142,8 @@ jobs:
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToTest}} /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:ServiceDirectory=${{parameters.ServiceToTest}}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:

@@ -3,7 +3,8 @@ parameters:
 
 steps:
   - script: >
-      mkdir $(Pipeline.Workspace)/pipeline-generator
+      mkdir pipeline-generator
+    workingDirectory: $(Pipeline.Workspace)
     displayName: Setup working directory for pipeline generator.
   - script: >
       dotnet tool install

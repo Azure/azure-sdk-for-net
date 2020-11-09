@@ -45,7 +45,9 @@ namespace Azure.Storage.Sas
 {
     public partial class AccountSasBuilder
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AccountSasBuilder() { }
+        public AccountSasBuilder(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasServices services, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
@@ -149,6 +151,7 @@ namespace Azure.Storage.Sas
         public string Signature { get { throw null; } }
         public System.DateTimeOffset StartsOn { get { throw null; } }
         public string Version { get { throw null; } }
+        protected internal void AppendProperties(System.Text.StringBuilder stringBuilder) { }
         protected static Azure.Storage.Sas.SasQueryParameters Create(System.Collections.Generic.IDictionary<string, string> values) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected static Azure.Storage.Sas.SasQueryParameters Create(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { throw null; }

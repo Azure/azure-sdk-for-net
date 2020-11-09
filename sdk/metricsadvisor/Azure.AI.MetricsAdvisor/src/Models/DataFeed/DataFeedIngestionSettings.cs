@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The starting point in time from which data will be ingested from the data source. Subsequent
         /// ingestions happen periodically according to the data feed's granularity.
         /// </summary>
-        public DateTimeOffset IngestionStartTime { get; internal set; }
+        public DateTimeOffset IngestionStartTime { get; }
 
         /// <summary>
         /// If the specified data source supports limited concurrency, this can be set to specify the

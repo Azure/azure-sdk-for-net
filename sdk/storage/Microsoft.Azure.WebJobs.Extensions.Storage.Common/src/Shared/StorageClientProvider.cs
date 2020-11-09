@@ -5,10 +5,10 @@ using System;
 using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 {
@@ -24,12 +24,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         private readonly AzureComponentFactory _componentFactory;
         private readonly AzureEventSourceLogForwarder _logForwarder;
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="componentFactory"></param>
-        /// <param name="logForwarder"></param>
         public StorageClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
@@ -37,23 +31,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             _logForwarder = logForwarder;
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resolver"></param>
-        /// <returns></returns>
         public virtual TClient Get(string name, INameResolver resolver)
         {
             var resolvedName = resolver.ResolveWholeString(name);
             return this.Get(resolvedName);
         }
 
-        /// <summary>
-        /// TODO.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public virtual TClient Get(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -83,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
                 throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
             }
 
-            var credential = _componentFactory.CreateCredential(connectionSection);
+            var credential = _componentFactory.CreateTokenCredential(connectionSection);
             var endpointUri = new Uri(endpoint);
             return CreateClientFromTokenCredential(endpointUri, credential, CreateClientOptions(connectionSection));
         }

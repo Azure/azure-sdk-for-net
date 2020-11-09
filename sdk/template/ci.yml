@@ -18,14 +18,16 @@ pr:
     - release/*
   paths:
     include:
+    - common/perf/
+    - common/stress/
     - sdk/template/
-    - eng/common/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
     ArtifactName: packages
+    TestPipeline: true
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
