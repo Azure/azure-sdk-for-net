@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
@@ -14,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public void HealthcareCancellation()
+        public async Task HealthcareCancellation()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -32,9 +33,16 @@ namespace Azure.AI.TextAnalytics.Samples
                                 minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                                 increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            HealthcareOperation healthOperation = client.StartHealthcare(document);
+            var batchDocument = new List<string>();
 
-            client.StartCancelHealthJob(healthOperation);
+            for (var i = 0; i < 10; i++)
+            {
+                batchDocument.Add(document);
+            }
+
+            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchDocument, "en");
+
+            await client.StartCancelHealthJobAsync(healthOperation);
         }
 
         #endregion
