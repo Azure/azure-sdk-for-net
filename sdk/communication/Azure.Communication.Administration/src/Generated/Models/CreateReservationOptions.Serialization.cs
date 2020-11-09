@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class CreateSearchOptions : IUtf8JsonSerializable
+    public partial class CreateReservationOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
