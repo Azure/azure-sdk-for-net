@@ -13,6 +13,8 @@ Additionally, support for Base64 encoding in HTTP requests and reponses has been
 The `QueueClient.SendMessage` and `QueueClient.SendMessageAsync` consume `System.BinaryData` in addition to `string`.
 `QueueMessage` and `PeekedMessage` expose new property `Body` of `System.BinaryData` type to access message payload and should be used instead of `MessageText`.
 
+See [System.BinaryData](https://github.com/Azure/azure-sdk-for-net/blob/System.Memory.Data_1.0.0/sdk/core/System.Memory.Data/README.md) for more information about handling `string`, binary data and custom shapes.
+
 #### Receiving message as string
 Before:
 ```C#

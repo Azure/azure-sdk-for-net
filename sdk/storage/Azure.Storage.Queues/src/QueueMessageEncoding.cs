@@ -17,10 +17,12 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// The <see cref="QueueMessage.Body"/> is represented as Base64 encoded string in HTTP requests and responses.
-        ///
-        /// This was the default in V11 and prior Storage SDK, see
-        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
         /// </summary>
+        /// <remarks>
+        /// This was the default behavior in the prior v11 library.  See
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
+        /// Using this option can make interop with an existing application easier.
+        /// </remarks>
         Base64 = 1,
     }
 }
