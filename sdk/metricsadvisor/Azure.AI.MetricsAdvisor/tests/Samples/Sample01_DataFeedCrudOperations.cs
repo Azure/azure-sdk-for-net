@@ -116,7 +116,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;

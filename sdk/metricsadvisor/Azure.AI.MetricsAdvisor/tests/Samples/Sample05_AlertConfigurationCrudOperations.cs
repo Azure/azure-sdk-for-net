@@ -91,7 +91,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateAlertConfigurationAsync()
         {
             string endpoint = MetricsAdvisorUri;
