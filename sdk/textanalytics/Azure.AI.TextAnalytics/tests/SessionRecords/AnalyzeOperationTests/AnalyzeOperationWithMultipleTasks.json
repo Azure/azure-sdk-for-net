@@ -1,0 +1,3376 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Content-Length": "465",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-6080981021cc7a4fad1adb707ae6e843-accc7b7aebd9cc4b-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "36d74cae0543ad22b4752e104a677574",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Mi perro y mi gato tienen que ir al veterinario.",
+              "language": "es"
+            }
+          ]
+        },
+        "tasks": {
+          "entityRecognitionTasks": [
+            {
+              "parameters": {
+                "model-version": "latest"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "parameters": {
+                "model-version": "latest"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "parameters": {
+                "model-version": "latest"
+              }
+            }
+          ]
+        },
+        "displayName": "AnalyzeOperationTest"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "e56e288e-3d77-4b2c-8fb2-b2354201cd33",
+        "Date": "Mon, 09 Nov 2020 07:54:22 GMT",
+        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "358"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "360f939000899016ea2d36ca05142466",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "79c2d24f-81d4-40b8-9ff4-43eff2dfb102",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:22Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:22Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "32033b4d84a2f3a2ac913141d710299b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "afc30a17-a9b5-478c-a882-73f9cda8edbf",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "67"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:22Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:22Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f287b823979aae6e35464c16cf57a89f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6ddee911-b9ff-4366-8374-50abb52d6b3c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "246"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "0fc2c75142640bd1f11c89f7cfd5b8da",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d8395671-1042-4b7d-8dda-93d314e1d27a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:32 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5216"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4da79a03318db6cbcc54fd5b388b2454",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d01f426b-0b7c-4d68-ba16-52519ed9d395",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5257"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "10ef92e91a4de036e67c017e0d76df5f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "506cdfc1-a09f-45c3-b598-03522c2e51aa",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "129"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "3412728d5bb02012fb0c420f4575d365",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cdbe0ff8-a514-414c-8ba4-d0224e44ece6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "176"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "3d0e35f7a8e5e98c63c76610304da856",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0b014f8c-6e24-476c-afc5-17c0f99aa6df",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "120"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "c5cd9d75ef798da47fcf1441d8269b70",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b43122d4-1a3d-402d-af0c-84e35d4ee658",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "131"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "d8869ca8a267e579e629d0e8f401f0ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2a7c22e3-e146-4a82-87f7-0b845dc46fa9",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5197"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a79aeb630da808eb9080bd16944a103c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c58618e1-877a-4142-b081-a669fa58853c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "149"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9368f62bd0c6d3ee23e8df501fbb997e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c64832fc-1cb2-4e16-a31f-956adc0d5b9f",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "102"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ecde66dff38c9bc8b17e47e7e563509b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "75ea978f-7ae8-443a-8417-407ad3d38991",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "119"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "febd93185c9993e7fdc784bf2d9ae8d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9ef1239c-dde2-4f97-864e-030bec7bcc21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:55 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "131"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "2e363ee7236b38b02ecce2488807edc0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2fdbe73a-f5e8-431a-8766-943dec0cf8d1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "128"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8b3844989bfe83e57f4befc46f086d16",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "03ec938c-8cda-4b6e-b877-7000bb7b6553",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "136"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a6ff7395222cf430e384cfcc7a9e0af5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3d6c094c-3f73-4cb5-a658-3c6fd4fd656c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:54:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "123"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "e927c4d95d624cd658b3af2033ebc925",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5286f82f-9536-460c-945c-00ee76a8e9a7",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "175"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "15b2cc5e470775931443a779cb1908e0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "be51ccce-e093-4dc7-b5f2-9150c2dcada2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "102"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "aaeaf94084e038b39db34d79720fc1f7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8ba8d66c-b949-4d20-b8a8-768053890460",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5138"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ae6daabbf5eb92ee30b1d51fb55c813f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "88907c5b-673a-4b89-9c1f-31fbe58b478f",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "135"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "3adfceaa1e00da44187a7854f91a0204",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "668212e2-de22-49b4-b8c2-965b91ac8a53",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "133"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "20beb0825aab4af40b58792fae948240",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c9c816da-f303-43e5-8250-f8b2b3f94ac4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:12 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "134"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a3ce0e3286309cf6659295717d9a9916",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8890f75c-d080-4631-905e-65a7fdd773cd",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "111"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "059dd1ae609d4f93da942ea8a4152b84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "37cf7e22-3251-4705-97d5-1149172abda6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:14 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "107"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ea2137f85e4bfbd4b922bb18c583cc71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5aaed294-a686-4e64-8768-c42371fc2676",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "109"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "dd8063bf7df6d2a37a7ec99b584ef74f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b60a059f-0382-4309-a6c7-c56321e3fbb3",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "109"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "46791167ae784fcafca14b7ba47b8a57",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a5dae933-eda8-40b9-a0ac-604b97a87736",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "126"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "41e9bdc74d957a8d934f70cd9539a36b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fccefc49-fcd8-4ebf-b778-c896a8241922",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "162"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "b3b16b2a860a10f99830e15432272dff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "717d40c1-57e1-491a-a01e-95635d67044a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "154"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "9ad372f3b66519ba84feb2283dfdbac3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8c84c586-5b1c-400f-b14a-657186701464",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "101"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "3851dffed7c9414cc4d8a9646c38486b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d6b1f56a-f3ae-40fc-9c9f-34d85ea30ec1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5146"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "22d9702208667306b1982f0bd3d1d29a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "347416fa-a11c-4a1e-a3db-0141dbdab719",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "142"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 3,
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "52561d75f4d61c352591d68d0d55ac4c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "92ffc3e3-5929-4a09-b17e-347b9a4cc2c8",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "189"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 3,
+          "entityRecognitionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "Mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 0,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 11,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.52
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "cd0546b59724f55dd9dd8731a7416df3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "25db7ce3-b560-4217-8118-d423f7518dbf",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "250"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 3,
+          "entityRecognitionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "Mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 0,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 11,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.52
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4fee0e05f6e12d953abcfdd43278665b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "376d0702-7bb4-466e-afa2-31d118f3af38",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:34 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "158"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 3,
+          "entityRecognitionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "Mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 0,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 11,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.52
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "8c55e2eb05cbde76c06078f86c0475e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8b477ae6-66db-4f81-9f82-6267f42bc7c0",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "174"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 3,
+          "entityRecognitionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "Mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 0,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 11,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.52
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "ff87e3235d67bf6ab1d892679a88c360",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2e5a59b5-2730-4a9e-b773-6ebeaaeebb08",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 09 Nov 2020 07:55:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "201"
+      },
+      "ResponseBody": {
+        "displayName": "AnalyzeOperationTest",
+        "jobId": "2c681642-aa22-409f-947a-05a01a0e6b0c_637404768000000000",
+        "lastUpdateDateTime": "2020-11-09T07:54:24Z",
+        "createdDateTime": "2020-11-09T07:54:22Z",
+        "expirationDateTime": "2020-11-11T07:54:22Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "name": "AnalyzeOperationTest",
+            "lastUpdateDateTime": "2020-11-09T07:54:24Z"
+          },
+          "completed": 3,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 3,
+          "entityRecognitionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "entities": [
+                      {
+                        "text": "Mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 0,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "mi",
+                        "category": "DateTime",
+                        "subcategory": "Date",
+                        "offset": 11,
+                        "length": 2,
+                        "confidenceScore": 0.8
+                      },
+                      {
+                        "text": "veterinario",
+                        "category": "PersonType",
+                        "offset": 36,
+                        "length": 11,
+                        "confidenceScore": 0.52
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-04-01"
+              }
+            }
+          ],
+          "entityRecognitionPiiTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "redactedText": "",
+                    "id": "1",
+                    "entities": [
+                      {
+                        "text": "Microsoft",
+                        "category": "Organization",
+                        "offset": 0,
+                        "length": 9,
+                        "confidenceScore": 0.83
+                      },
+                      {
+                        "text": "Bill Gates",
+                        "category": "Person",
+                        "offset": 25,
+                        "length": 10,
+                        "confidenceScore": 0.85
+                      },
+                      {
+                        "text": "Paul Allen",
+                        "category": "Person",
+                        "offset": 40,
+                        "length": 10,
+                        "confidenceScore": 0.9
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [
+                  {
+                    "id": "2",
+                    "error": {
+                      "code": "InvalidArgument",
+                      "message": "Invalid language code. Supported languages: en"
+                    }
+                  }
+                ],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ],
+          "keyPhraseExtractionTasks": [
+            {
+              "name": "AnalyzeOperationTest",
+              "lastUpdateDateTime": "2020-11-09T07:54:24.698594Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Bill Gates",
+                      "Paul Allen",
+                      "Microsoft"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "keyPhrases": [
+                      "gato",
+                      "perro",
+                      "veterinario"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "143612553",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+  }
+}
