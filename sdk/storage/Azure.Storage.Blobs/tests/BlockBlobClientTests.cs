@@ -2080,7 +2080,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = 256 * Constants.MB;
+            long blobSize = 255 * Constants.MB;
             var data = GetRandomBuffer(blobSize);
             TestProgress progress = new TestProgress();
 
@@ -2096,6 +2096,48 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(progress.List.Count == 0);
 
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_SingleUpload()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = 255 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            await blob.UploadAsync(content: stream);
+
+            // Assert
+            Response<BlockList> blockListResponse = await blob.GetBlockListAsync();
+            Assert.AreEqual(0, blockListResponse.Value.CommittedBlocks.ToList().Count);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_MultipleUpload()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = 257 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            await blob.UploadAsync(content: stream);
+
+            // Assert
+            Response<BlockList> blockListResponse = await blob.GetBlockListAsync();
+            Assert.AreEqual(33, blockListResponse.Value.CommittedBlocks.ToList().Count);
         }
 
         [Test]
