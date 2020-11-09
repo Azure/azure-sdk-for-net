@@ -2369,8 +2369,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// This method is used if the number of documents are greater than 20
-        /// Otherwise, use the StartHealthcareAsync and StartHealthcareBatchAsync for less than 20 documents.
         /// </summary>
         /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
