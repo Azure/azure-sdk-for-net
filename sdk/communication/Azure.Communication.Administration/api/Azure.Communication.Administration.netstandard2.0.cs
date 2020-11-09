@@ -444,9 +444,7 @@ namespace Azure.Communication.Administration.Models
     public partial class PhoneNumberReservationPurchaseOperation : Azure.Operation<Azure.Communication.Administration.Models.ReservationStatus>
     {
         public PhoneNumberReservationPurchaseOperation(Azure.Communication.Administration.PhoneNumberAdministrationClient client, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public virtual string? Error { get { throw null; } protected set { } }
         public override bool HasCompleted { get { throw null; } }
-        public virtual bool HasSucceeded { get { throw null; } protected set { } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Communication.Administration.Models.ReservationStatus Value { get { throw null; } }
