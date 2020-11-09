@@ -11,16 +11,15 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasks. </summary>
-    public partial class TasksStateTasks
+    public partial class AnalyzeTasks
     {
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
         /// <param name="completed"> . </param>
         /// <param name="failed"> . </param>
         /// <param name="inProgress"> . </param>
         /// <param name="total"> . </param>
-        internal TasksStateTasks(int completed, int failed, int inProgress, int total)
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total)
         {
-            Details = new ChangeTrackingList<TaskState>();
             Completed = completed;
             Failed = failed;
             InProgress = inProgress;
@@ -30,7 +29,7 @@ namespace Azure.AI.TextAnalytics
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
         /// <param name="details"> . </param>
         /// <param name="completed"> . </param>
         /// <param name="failed"> . </param>
@@ -39,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionTasks"> . </param>
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
-        internal TasksStateTasks(IReadOnlyList<TaskState> details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
+        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
         {
             Details = details;
             Completed = completed;

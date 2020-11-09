@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The AnalyzeBatchInput. </summary>
     internal partial class AnalyzeBatchInput : JobDescriptor

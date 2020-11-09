@@ -7,15 +7,15 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// TasksStateTasks.
+    /// AnalyzeTasks.
     /// </summary>
     [CodeGenModel("TasksStateTasks")]
-    public partial class TasksStateTasks
+    public partial class AnalyzeTasks
     {
         /// <summary>
         /// Details
         /// </summary>
-        public IReadOnlyList<TaskState> Details { get; }
+        public TasksStateTasksDetails Details { get; }
 
         /// <summary>
         /// Completed

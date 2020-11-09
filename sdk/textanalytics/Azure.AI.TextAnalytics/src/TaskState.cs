@@ -32,16 +32,16 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Last updated time.
         /// </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
+        public DateTimeOffset LastUpdateDateTime { get; } = new DateTimeOffset();
 
         /// <summary>
         /// Name for the Task.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; } = "";
 
         /// <summary>
         /// Status for Task.
         /// </summary>
-        public JobStatus Status { get; }
+        public JobStatus Status { get; } = JobStatus.NotStarted;
     }
 }

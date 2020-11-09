@@ -251,6 +251,19 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
+        #region Analyze Operation
+
+        internal static AnalyzeOperationResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            EntitiesResult entitiesResult = jobState.Tasks.EntityRecognitionTasks.Count > 0 ? jobState.Tasks.EntityRecognitionTasks[0].Results : null;
+            PiiEntitiesResult piiEntitiesResult = jobState.Tasks.EntityRecognitionPiiTasks.Count > 0 ? jobState.Tasks.EntityRecognitionPiiTasks[0].Results : null;
+            KeyPhraseResult keyPhraseResult = jobState.Tasks.KeyPhraseExtractionTasks.Count > 0 ? jobState.Tasks.KeyPhraseExtractionTasks[0].Results : null;
+
+            return new AnalyzeOperationResult(entitiesResult, piiEntitiesResult, keyPhraseResult, map);
+        }
+
+        #endregion
+
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();

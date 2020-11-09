@@ -2084,7 +2084,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2130,7 +2130,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2175,7 +2175,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2201,7 +2201,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2234,7 +2234,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2260,7 +2260,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
+        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2375,7 +2375,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// This method is used if the number of documents are greater than 20
+        /// This method is used if the number of documents are
         /// Otherwise, use the StartHealthcareAsync and StartHealthcareBatchAsync for less than 20 documents.
         /// </summary>
         /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
@@ -2467,6 +2467,193 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        #endregion
+
+        #region Analyze Operation
+
+        /// <summary>
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeOperationOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new AnalyzeOperationOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of entities containing
+        /// Personally Identifiable Information found in the passed-in document,
+        /// and categorize those entities into types such as US social security
+        /// number, drivers license number, or credit card number.
+        /// For more information on available categories, see
+        /// <a href="https://aka.ms/tanerpii"/>.
+        /// For a list of languages supported by this operation, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
+        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, string language = default, AnalyzeOperationOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new AnalyzeOperationOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+
+            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Recognizes Analyze Operation.
+        /// </summary>
+        /// <param name="documents"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new AnalyzeOperationOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Recognizes Analyze Operation async.
+        /// </summary>
+        /// <param name="documents"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new AnalyzeOperationOptions();
+            MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+
+            return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        private AnalyzeOperation StartAnalyzeOperationBatch(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeOperationOptions();
+
+
+            JobManifestTasks tasks = new JobManifestTasks();
+
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks);
+
+            if (options.PiiTaskParameters != null)
+            {
+                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+            }
+            if (options.EntitiesTaskParameters != null)
+            {
+                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+            }
+            if (options.KeyPhrasesTaskParameters != null)
+            {
+                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+            }
+
+            if (options.DisplayName != null)
+            {
+                analyzeDocumentInputs.DisplayName = options.DisplayName;
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = _serviceRestClient.Analyze(analyzeDocumentInputs, cancellationToken);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeOperationOptions();
+
+            JobManifestTasks tasks = new JobManifestTasks();
+
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks);
+
+            if (options.PiiTaskParameters != null)
+            {
+                tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
+            }
+            if (options.EntitiesTaskParameters != null)
+            {
+                tasks.EntityRecognitionTasks = new List<EntitiesTask>() { new EntitiesTask() { Parameters = options.EntitiesTaskParameters } };
+            }
+            if (options.KeyPhrasesTaskParameters != null)
+            {
+                tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
+            }
+
+            if (options.DisplayName != null)
+            {
+                analyzeDocumentInputs.DisplayName = options.DisplayName;
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = await _serviceRestClient.AnalyzeAsync(analyzeDocumentInputs, cancellationToken).ConfigureAwait(false);
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
