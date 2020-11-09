@@ -174,8 +174,7 @@
           "application/json",
           "image/jpeg",
           "image/png",
-          "image/tiff",
-          "image/bmp"
+          "image/tiff"
         ],
         "produces": [
           "application/json"
@@ -494,11 +493,7 @@
             "x-nullable": false
           },
           {
-            "name": "locale",
-            "in": "query",
-            "description": "Locale of the business card. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default).",
-            "required": false,
-            "type": "string"
+            "$ref": "#/parameters/Locale"
           },
           {
             "$ref": "#/parameters/FileStream"
@@ -596,11 +591,7 @@
             "x-nullable": false
           },
           {
-            "name": "locale",
-            "in": "query",
-            "description": "Locale of the invoice. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default).",
-            "required": false,
-            "type": "string"
+            "$ref": "#/parameters/Locale"
           },
           {
             "$ref": "#/parameters/FileStream"
@@ -698,11 +689,7 @@
             "x-nullable": false
           },
           {
-            "name": "locale",
-            "in": "query",
-            "description": "Locale of the receipt. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default).",
-            "required": false,
-            "type": "string"
+            "$ref": "#/parameters/Locale"
           },
           {
             "$ref": "#/parameters/FileStream"
@@ -790,6 +777,9 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "$ref": "#/parameters/Language"
+          },
           {
             "$ref": "#/parameters/FileStream"
           },
@@ -1586,7 +1576,13 @@
       "type": "string",
       "enum": [
         "en",
-        "es"
+        "es",
+        "de",
+        "fr",
+        "it",
+        "nl",
+        "pt",
+        "zh-Hans"
       ],
       "x-ms-enum": {
         "name": "Language",
@@ -1801,7 +1797,8 @@
       "required": [
         "rows",
         "columns",
-        "cells"
+        "cells",
+        "boundingBox"
       ],
       "properties": {
         "rows": {
@@ -1930,7 +1927,7 @@
           }
         },
         "docTypeConfidence": {
-          "description": "Confidence score.",
+          "description": "Predicted document type confidence.",
           "$ref": "#/definitions/Confidence"
         },
         "fields": {
@@ -2102,7 +2099,7 @@
       }
     }
   },
- "parameters": {
+  "parameters": {
     "Endpoint": {
       "name": "endpoint",
       "description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
@@ -2131,6 +2128,47 @@
       "items": {
         "type": "string",
         "pattern": "(^[0-9]+-[0-9]+$)|(^[0-9]+$)"
+      }
+    },
+    "Locale": {
+      "name": "locale",
+      "in": "query",
+      "description": "Locale of the input document. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US(default).",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "string",
+      "enum": [
+        "en-AU",
+        "en-CA",
+        "en-GB",
+        "en-IN",
+        "en-US"
+      ],
+      "x-ms-enum": {
+        "name": "Locale",
+        "modelAsString": true
+      }
+    },
+    "Language": {
+      "name": "language",
+      "in": "query",
+      "description": "The BCP-47 language code of the text in the document. Currently, only English ('en'), Dutch (‘nl’), French (‘fr’), German (‘de’), Italian (‘it’), Portuguese (‘pt'), simplified Chinese ('zh-Hans') and Spanish ('es') are supported (print – nine languages and handwritten – English only). Layout supports auto language identification and multi language documents, so only provide a language code if you would like to force the documented to be processed as that specific language.",
+      "required": false,
+      "x-ms-parameter-location": "method",
+      "type": "string",
+      "enum": [
+        "en",
+        "es",
+        "de",
+        "fr",
+        "it",
+        "nl",
+        "pt",
+        "zh-Hans"
+      ],
+      "x-ms-enum": {
+        "name": "Language",
+        "modelAsString": true
       }
     }
   }

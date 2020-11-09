@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -19,18 +18,23 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cells"/> is null. </exception>
-        internal DataTable(int rows, int columns, IEnumerable<DataTableCell> cells)
+        /// <param name="boundingBox"> Bounding box of the table. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cells"/> or <paramref name="boundingBox"/> is null. </exception>
+        internal DataTable(int rows, int columns, IEnumerable<DataTableCell> cells, IEnumerable<float> boundingBox)
         {
             if (cells == null)
             {
                 throw new ArgumentNullException(nameof(cells));
             }
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
 
             Rows = rows;
             Columns = columns;
             Cells = cells.ToList();
-            BoundingBox = new ChangeTrackingList<float>();
+            BoundingBox = boundingBox.ToList();
         }
 
         /// <summary> Initializes a new instance of DataTable. </summary>
