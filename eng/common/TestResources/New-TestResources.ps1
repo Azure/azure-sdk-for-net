@@ -108,7 +108,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
-function MergeHashes([System.Collections.HashTable] $source, [psvariable] $dest) {
+function MergeHashes([hashtable] $source, [psvariable] $dest) {
     foreach ($key in $source.Keys) {
         if ($dest.Value[$key]) {
             Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
@@ -338,8 +338,9 @@ if ($TenantId) {
 if ($TestApplicationSecret) {
     $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
 }
-MergeHashes($ArmTemplateParameters, $(Get-Variable $templateParameters))
-MergeHashes($AdditionalParameters, $(Get-Variable $templateParameters))
+
+MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
+MergeHashes $AdditionalParameters $(Get-Variable templateParameters)
 
 # Include environment-specific parameters only if not already provided as part of the "ArmTemplateParameters"
 if (($context.Environment.StorageEndpointSuffix) -and (-not ($templateParameters.ContainsKey('storageEndpointSuffix')))) {
@@ -403,7 +404,7 @@ foreach ($templateFile in $templateFiles) {
         "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
     }
 
-    MergeHashes($EnvironmentVariables, $(Get-Variable $deploymentOutputs))
+    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
 
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
