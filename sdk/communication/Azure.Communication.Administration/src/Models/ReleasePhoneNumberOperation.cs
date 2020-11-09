@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary>
-    /// Represents a long-running release phone number operation.
+    /// Represents a long-running operation for releasing a phone number.
     /// </summary>
     public class ReleasePhoneNumberOperation : Operation<PhoneNumberRelease>
     {
@@ -27,7 +27,7 @@ namespace Azure.Communication.Administration.Models
         };
 
         /// <summary>
-        /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
+        /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance.
         /// </summary>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="id">The phone number release operation ID.</param>
@@ -45,7 +45,7 @@ namespace Azure.Communication.Administration.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance
+        /// Initializes a new <see cref="ReleasePhoneNumberOperation"/> instance.
         /// </summary>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="id">The phone number release operation ID.</param>
@@ -75,7 +75,7 @@ namespace Azure.Communication.Administration.Models
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 if (!HasCompleted)
                 {
-                    throw new InvalidOperationException("The operation is not completed yet.");
+                    throw new InvalidOperationException("The operation has not completed yet.");
                 }
                 if (_value?.Status != ReleaseStatus.Complete)
                 {
@@ -186,7 +186,7 @@ namespace Azure.Communication.Administration.Models
             if (status == ReleaseStatus.Failed)
                 return "Phone number release failed.";
             if (status == ReleaseStatus.Expired)
-                return "Phone number release is expired.";
+                return "Phone number release operation is expired.";
 
             throw new InvalidOperationException($"Unsupported status: {status}");
         }

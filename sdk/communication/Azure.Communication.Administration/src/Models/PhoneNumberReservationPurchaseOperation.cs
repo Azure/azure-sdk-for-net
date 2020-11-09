@@ -75,7 +75,7 @@ namespace Azure.Communication.Administration.Models
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 if (!HasCompleted)
                 {
-                    throw new InvalidOperationException("The operation is not completed yet.");
+                    throw new InvalidOperationException("The operation has not completed yet.");
                 }
                 if (_value != ReservationStatus.Success)
                 {
@@ -174,7 +174,7 @@ namespace Azure.Communication.Administration.Models
             if (reservationStatus == ReservationStatus.Cancelled)
                 return "Reservation is cancelled.";
             if (reservationStatus == ReservationStatus.Error)
-                return "Reservation error.";
+                return "Reservation has failed.";
             if (reservationStatus == ReservationStatus.Expired)
                 return "Reservation is expired.";
 

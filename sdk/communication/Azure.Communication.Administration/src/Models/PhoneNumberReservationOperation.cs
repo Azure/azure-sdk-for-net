@@ -76,7 +76,7 @@ namespace Azure.Communication.Administration.Models
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 if (!HasCompleted)
                 {
-                    throw new InvalidOperationException("The operation is not completed yet.");
+                    throw new InvalidOperationException("The operation has not completed yet.");
                 }
                 if (_value?.Status != ReservationStatus.Reserved)
                 {
@@ -90,16 +90,6 @@ namespace Azure.Communication.Administration.Models
 
         /// <inheritdocs />
         public override bool HasCompleted => _hasCompleted;
-
-        ///// <summary>
-        ///// Returns true if the long-running operation completed successfully.
-        ///// </summary>
-        //public virtual bool HasSucceeded { get; protected set; }
-
-        ///// <summary>
-        ///// > The error if operation completed failed.
-        ///// </summary>
-        //public virtual string? Error { get; protected set; }
 
         /// <inheritdocs />
         public override bool HasValue => _value?.Status == ReservationStatus.Reserved;
@@ -200,7 +190,7 @@ namespace Azure.Communication.Administration.Models
             if (reservationStatus == ReservationStatus.Cancelled)
                 return "Reservation is cancelled.";
             if (reservationStatus == ReservationStatus.Error)
-                return "Reservation error.";
+                return "Reservation has failed.";
             if (reservationStatus == ReservationStatus.Expired)
                 return "Reservation is expired.";
 
