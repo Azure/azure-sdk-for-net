@@ -1457,25 +1457,6 @@ namespace Azure.Storage.Queues
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
         /// Put Message</see>.
         /// </summary>
-        /// <param name="message">
-        /// Message.
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{SendReceipt}"/>
-        /// </returns>
-        public virtual Response<SendReceipt> SendMessage(BinaryData message) =>
-            SendMessage(
-                message,
-                null); // Pass anything else so we don't recurse on this overload
-
-        /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
-        /// Put Message</see>.
-        /// </summary>
         /// <param name="messageText">
         /// Message text.
         /// </param>
@@ -1485,26 +1466,6 @@ namespace Azure.Storage.Queues
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
             await SendMessageAsync(
                 messageText,
-                null) // Pass anything else so we don't recurse on this overload
-            .ConfigureAwait(false);
-
-        /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
-        /// Put Message</see>.
-        /// </summary>
-        /// <param name="message">
-        /// Message.
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{SendReceipt}"/>
-        /// </returns>
-        public virtual async Task<Response<SendReceipt>> SendMessageAsync(BinaryData message) =>
-            await SendMessageAsync(
-                message,
                 null) // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
 
@@ -1539,29 +1500,6 @@ namespace Azure.Storage.Queues
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
         /// Put Message</see>.
         /// </summary>
-        /// <param name="message">
-        /// Message.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>.
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{SendReceipt}"/>
-        /// </returns>
-        public virtual Response<SendReceipt> SendMessage(BinaryData message, CancellationToken cancellationToken = default) =>
-            SendMessage(
-                message,
-                cancellationToken: cancellationToken,
-                visibilityTimeout: default); // Pass anything else so we don't recurse on this overload
-
-        /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
-        /// Put Message</see>.
-        /// </summary>
         /// <param name="messageText">
         /// Message text.
         /// </param>
@@ -1573,29 +1511,6 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText, CancellationToken cancellationToken = default) =>
             await SendMessageAsync(messageText,
-                cancellationToken: cancellationToken,
-                visibilityTimeout: default) // Pass anything else so we don't recurse on this overload
-            .ConfigureAwait(false);
-
-        /// <summary>
-        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
-        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
-        /// Put Message</see>.
-        /// </summary>
-        /// <param name="message">
-        /// Message.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/>.
-        /// </param>
-        /// <returns>
-        /// <see cref="Response{SendReceipt}"/>
-        /// </returns>
-        public virtual async Task<Response<SendReceipt>> SendMessageAsync(BinaryData message, CancellationToken cancellationToken = default) =>
-            await SendMessageAsync(message,
                 cancellationToken: cancellationToken,
                 visibilityTimeout: default) // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
@@ -2778,9 +2693,10 @@ namespace Azure.Storage.Queues
 
         private void AssertEncodingForEncryption()
         {
-            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.UTF8)
+            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.None)
             {
-                throw new ArgumentException($"Message encoding can't be customized if encryption-enabled QueueClient is used.");
+                throw new ArgumentException($"{nameof(SpecializedQueueClientOptions)} requires {nameof(QueueMessageEncoding)}.{nameof(QueueMessageEncoding.None)}" +
+                    $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");
             }
         }
         #endregion Encoding

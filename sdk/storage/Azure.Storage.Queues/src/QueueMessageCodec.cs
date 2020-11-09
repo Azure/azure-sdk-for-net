@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Storage.Queues
 {
-    internal class QueueMessageCodec
+    internal static class QueueMessageCodec
     {
         public static string EncodeMessageBody(BinaryData binaryData, QueueMessageEncoding messageEncoding)
         {
@@ -16,12 +16,12 @@ namespace Azure.Storage.Queues
             }
             switch (messageEncoding)
             {
-                case QueueMessageEncoding.UTF8:
+                case QueueMessageEncoding.None:
                     return binaryData.ToString();
                 case QueueMessageEncoding.Base64:
                     if (MemoryMarshal.TryGetArray(binaryData.ToMemory(), out var segment))
                     {
-                        return Convert.ToBase64String(segment.Array);
+                        return Convert.ToBase64String(segment.Array, segment.Offset, segment.Count);
                     }
                     else
                     {
@@ -41,12 +41,12 @@ namespace Azure.Storage.Queues
 
             switch (messageEncoding)
             {
-                case QueueMessageEncoding.UTF8:
+                case QueueMessageEncoding.None:
                     return new BinaryData(messageText);
                 case QueueMessageEncoding.Base64:
                     return new BinaryData(Convert.FromBase64String(messageText));
                 default:
-                    throw new ArgumentException($"Unsupported message encoding {messageEncoding}");
+                    throw new ArgumentException($"Unsupported message encoding {messageEncoding}", nameof(messageEncoding));
             }
         }
     }

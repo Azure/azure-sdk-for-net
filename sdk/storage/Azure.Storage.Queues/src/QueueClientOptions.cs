@@ -104,9 +104,9 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Gets or sets a message encoding that determines how <see cref="QueueMessage.Body"/> is represented in HTTP requests and responses.
-        /// The default is <see cref="QueueMessageEncoding.UTF8"/>.
+        /// The default is <see cref="QueueMessageEncoding.None"/>.
         /// </summary>
-        public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.UTF8;
+        public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

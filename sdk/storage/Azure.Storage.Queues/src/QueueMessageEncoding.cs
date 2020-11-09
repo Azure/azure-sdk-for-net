@@ -11,12 +11,15 @@ namespace Azure.Storage.Queues
     public enum QueueMessageEncoding
     {
         /// <summary>
-        /// The <see cref="QueueMessage.Body"/> is prepresented as UTF8 encoded string in HTTP requests and responses.
+        /// The <see cref="QueueMessage.Body"/> is represented verbatim in HTTP requests and responses. I.e. message is not transformed.
         /// </summary>
-        UTF8 = 0,
+        None = 0,
 
         /// <summary>
-        /// The <see cref="QueueMessage.Body"/> is prepresented as Base64 encoded string in HTTP requests and responses.
+        /// The <see cref="QueueMessage.Body"/> is represented as Base64 encoded string in HTTP requests and responses.
+        ///
+        /// This was the default in V11 and prior Storage SDK, see
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
         /// </summary>
         Base64 = 1,
     }
