@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
+        /// Gets the name of the queue or subscription that this message was enqueued on, before it was dead-lettered.
         /// </summary>
         /// <remarks>
         /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue

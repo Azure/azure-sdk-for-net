@@ -1093,7 +1093,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(5)));
 
                             // we expect a lock lost exception
-                            // when the message is autocompleted
+                            // when the message is auto-completed
                         }
                         else
                         {

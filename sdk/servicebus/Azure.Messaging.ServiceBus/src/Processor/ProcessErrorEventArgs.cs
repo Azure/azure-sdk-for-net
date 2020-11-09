@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The source associated with the error.</value>
         public ServiceBusErrorSource ErrorSource { get; }
 
-        /// <summary>Gets the namespace name asscoiated with the error event.
+        /// <summary>Gets the namespace name associated with the error event.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</summary>
         public string FullyQualifiedNamespace { get; }
 

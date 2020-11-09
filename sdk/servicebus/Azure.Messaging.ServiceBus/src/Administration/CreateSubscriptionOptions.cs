@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// Indicates whether this subscription has dead letter support when a message expires.
         /// </summary>
-        /// <remarks>If true, the expired messages are moved to dead-letter sub-queue. Default value is false.</remarks>
+        /// <remarks>If true, the expired messages are moved to dead-letter subqueue. Default value is false.</remarks>
         public bool DeadLetteringOnMessageExpiration { get; set; } = false;
 
         /// <summary>

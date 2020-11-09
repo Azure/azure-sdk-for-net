@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// </para>
     /// <para>
     /// The CorrelationRuleFilter provides an efficient shortcut for declarations of filters that deal only with correlation equality.
-    /// In this case the cost of the lexigraphical analysis of the expression can be avoided.
+    /// In this case the cost of the lexicographical analysis of the expression can be avoided.
     /// Not only will correlation filters be optimized at declaration time, but they will also be optimized at runtime.
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>

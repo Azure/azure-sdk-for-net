@@ -563,7 +563,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
 
                 // This is the maximum number of unsettled transfers across all receive links on this session.
-                // This will allow the session to accept unlimited number of transfers, even if the recevier(s)
+                // This will allow the session to accept unlimited number of transfers, even if the receiver(s)
                 // are not settling any of the deliveries.
                 sessionSettings.IncomingWindow = uint.MaxValue;
 
@@ -823,7 +823,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The AMQP connection to which the link being refreshed is bound to.</param>
-        /// <param name="amqpLink">The AMQO link to refresh authorization for.</param>
+        /// <param name="amqpLink">The AMQP link to refresh authorization for.</param>
         /// <param name="tokenProvider">The <see cref="CbsTokenProvider" /> to use for obtaining access tokens.</param>
         /// <param name="endpoint">The Service Bus service endpoint that the AMQP link is communicating with.</param>
         /// <param name="audience">The audience associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>

@@ -546,7 +546,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusProcessor"/> for.</param>
-        /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusProcessor"/> for.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public virtual ServiceBusProcessor CreateProcessor(
@@ -570,7 +570,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusProcessor"/> for.</param>
-        /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusProcessor"/>.</param>
         ///
@@ -620,7 +620,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
-        /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         ///
