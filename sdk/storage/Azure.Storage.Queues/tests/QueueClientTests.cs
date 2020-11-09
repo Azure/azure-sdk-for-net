@@ -691,6 +691,29 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task EncodesOutgoingMessageAndRespectsSegmentBoundaries()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var payload = "pre payload post";
+            var bytes = Encoding.UTF8.GetBytes(payload);
+            var segment = new ArraySegment<byte>(bytes, 4, 7);
+            var data = BinaryData.FromBytes(segment);
+
+            // Act
+            Response<Models.SendReceipt> response = await encodingClient.SendMessageAsync(data);
+
+            // Assert
+            Assert.NotNull(response.Value);
+
+            // Act
+            QueueMessage receivedMessage = (await encodingClient.ReceiveMessagesAsync()).Value.First();
+
+            Assert.AreEqual("payload", receivedMessage.Body.ToString());
+        }
+
+        [Test]
         public async Task DecodesReceivedMessage()
         {
             // Arrange
