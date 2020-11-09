@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.Confluent.Models
             }
             if (EmailAddress != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "^[\\w\\.\\-+!%\"\\s]+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "^\\S+@\\S+\\.\\S+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "^[\\w\\.\\-+!%\"\\s]+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$");
+                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "^\\S+@\\S+\\.\\S+$");
                 }
             }
         }
