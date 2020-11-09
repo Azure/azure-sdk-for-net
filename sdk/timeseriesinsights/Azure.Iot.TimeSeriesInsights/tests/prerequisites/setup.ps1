@@ -1,3 +1,7 @@
+# IMPORTANT: Use the contents of this file as a template on what resources should be created in order run the tests
+
+#-tsIDs series.id, id -environmentName Zeta -pathToParams .\params.json -pathToTemplate .\deploy.json
+
 # This script is used to create the necessary resources required to run the unit/E2E tests
 
 param(
@@ -11,12 +15,21 @@ param(
     [string] $SubscriptionId,
 
     [Parameter(Mandatory)]
-    [ValidateLength(6, 50)]
-    [string] $DigitalTwinName,
+    [string[]] $TimeSeriesIds,
 
-    [Parameter()]
-    [string] $AppRegistrationName
+    [Parameter(Mandatory)]
+    [ValidateLength(6, 50)]
+    [string] $EnvironmentName,
+
+    [Parameter(Mandatory)]
+    [string] $ConsumerGroupName,
+
+    [Parameter(Mandatory)]
+    [string] $Timestamp
 )
+
+$user = $env:UserName
+$pathToUserParamsFile = "$PSScriptRoot\params.$user.json"
 
 Function Connect-AzureSubscription
 {
@@ -45,6 +58,33 @@ Function Connect-AzureSubscription
     return $azureContext
 }
 
+Function Write-Params($applicationOId)
+{
+    $tsIDArray = @()
+
+    foreach ($id in $TimeSeriesIds)
+    {
+        $tsId = [pscustomobject]@{name=$id ;type='string'}
+        $tsIDArray += $tsID
+    }
+
+    $pathToTemplateParamsFile = "$PSScriptRoot\params.template.json"
+
+    $a = Get-Content $pathToTemplateParamsFile | ConvertFrom-Json
+    $a.parameters.environmentTimeSeriesIdProperties.value = $tsIDArray
+    $a.parameters.iotHubName.value = $EnvironmentName + "-hub"
+    $a.parameters.environmentName.value = $EnvironmentName
+    $a.parameters.eventSourceName.value = $EnvironmentName + "eventSource"
+    $a.parameters.consumerGroupName.value = $ConsumerGroupName
+    $a.parameters.eventSourceTimestampPropertyName.value = $Timestamp
+    $a.parameters.testApplicationOid.value = $applicationOId
+    $a.parameters.region.value = $Region
+    $a.parameters.resourceGroup.value = $ResourceGroup
+    $a.parameters.subscriptionId.value = $SubscriptionId
+
+    $a | ConvertTo-Json -depth 32 | set-content $pathToUserParamsFile
+}
+
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
 if (-not $isAdmin)
 {
@@ -59,8 +99,6 @@ if (-not $AppRegistrationName)
 {
     $AppRegistrationName = $ResourceGroup
 }
-
-$pathToManifest = "$PSScriptRoot\manifest.json"
 
 $appId = az ad app list --show-mine --query "[?displayName=='$AppRegistrationName'].appId" --output tsv
 if (-not $appId)
@@ -95,20 +133,18 @@ if (-not (Test-Path $armTemplateFile -PathType leaf))
     throw "`nARM template was not found. Please make sure you have an ARM template file named test-resources.json in the root of the service directory`n"
 }
 
+Write-Params $applicationOId
+
 # Deploy test-resources.json ARM template.
-az deployment group create --resource-group $ResourceGroup --name $($DigitalTwinName.ToLower()) --template-file $armTemplateFile --parameters `
-    baseName=$($DigitalTwinName.ToLower()) `
-    testApplicationOid=$applicationOId `
-    location=$Region
+az deployment group create --resource-group $ResourceGroup --name $($EnvironmentName.ToLower()) --template-file $armTemplateFile --parameters $pathToUserParamsFile
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$dtHostName = az deployment group show -g $ResourceGroup -n $($DigitalTwinName.ToLower()) --query 'properties.outputs.digitaltwinS_URL.value' --output tsv
+$dataAccessFQDN = az deployment group show -g $ResourceGroup -n $($EnvironmentName.ToLower()) --query 'properties.outputs.dataAccessFQDN.value' --output tsv
 
 Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
 
-$user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("`nWriting user config file - $fileName`n")
 
@@ -129,10 +165,10 @@ Add-Type -AssemblyName System.Security
 $appSecretJsonEscaped = ConvertTo-Json $appSecret
 $environmentText = @"
 {
-    "DIGITALTWINS_URL": "$dtHostName",
-    "DIGITALTWINS_CLIENT_ID": "$appId",
-    "DIGITALTWINS_CLIENT_SECRET": $appSecretJsonEscaped,
-    "DIGITALTWINS_TENANT_ID":  "$tenantId"
+    "TIMESERIESINSIGHTS_URL": "$dataAccessFQDN",
+    "TIMESERIESINSIGHTS_CLIENT_ID": "$appId",
+    "TIMESERIESINSIGHTS_CLIENT_SECRET": $appSecretJsonEscaped,
+    "TIMESERIESINSIGHTS_TENANT_ID":  "$tenantId"
 }
 "@
 

@@ -1,3 +1,5 @@
+# IMPORTANT: Use the contents of this file as a template on what resources should be cleaned in the test subscription
+
 # # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
@@ -15,9 +15,11 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void FirstTest()
+        public async Task TimeSeriesInsightsClient_Construct()
         {
             TimeSeriesInsightsClient client = GetClient();
+            Response<Models.ModelSettingsResponse> response = await client.GetAsync().ConfigureAwait(false);
+            response.GetRawResponse().Status.Should().Be(200);
         }
     }
 }

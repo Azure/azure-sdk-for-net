@@ -1,14 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Iot.TimeSeriesInsights.Models;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// The sample secrets client.
+    /// The Time Series Insights client.
     /// </summary>
     public class TimeSeriesInsightsClient
     {
@@ -18,7 +20,7 @@ namespace Azure.Iot.TimeSeriesInsights
         private const string TsiDefaultAppId = "https://api.timeseries.azure.com/";
 
         private const string DefaultPermissionConsent = "/.default";
-        private static readonly string[] TsiDefaultScopes = new[] { TsiDefaultAppId + DefaultPermissionConsent };
+        private static readonly string[] s_tsiDefaultScopes = new[] { TsiDefaultAppId + DefaultPermissionConsent };
 
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly QueryRestClient _queryRestClient;
@@ -85,10 +87,37 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
+        /// </summary>
+        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
+        /// <example>
+        /// This sample demonstrates getting and deserializing a model settings.
+        ///
+        /// <code snippet="Snippet:TimeSeriesInsightsGetModelSettings">
+        /// </code>
+        /// </example>
+        public virtual Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
+        {
+            return _modelSettingsRestClient.GetAsync(clientSessionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns the model settings which includes model display name, Time Series ID properties and default type ID. Every Gen2 environment has a model that is automatically created.
+        /// </summary>
+        /// <param name="clientSessionId"> Optional client session ID. Service records this value. Allows the service to trace a group of related operations across services, and allows the customer to contact support regarding a particular group of requests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>The deserialized application/json model settings digital twin and the http response <see cref="Response{ModelSettingsResponse}"/>.</returns>
+        public virtual Response<ModelSettingsResponse> Get(string clientSessionId = null, CancellationToken cancellationToken = default)
+        {
+            return _modelSettingsRestClient.Get(clientSessionId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the scope for authentication/authorization policy.
         /// </summary>
         /// <returns>List of scopes for the specified endpoint.</returns>
-        internal static string[] GetAuthorizationScopes() => TsiDefaultScopes;
-
+        internal static string[] GetAuthorizationScopes() => s_tsiDefaultScopes;
     }
 }
