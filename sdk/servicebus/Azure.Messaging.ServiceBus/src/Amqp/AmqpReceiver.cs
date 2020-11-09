@@ -576,17 +576,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Moves a message to the deadletter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
+        /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
+        /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you will need a new
+        /// In order to receive a message from the dead-letter queue, you will need a new
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
@@ -611,14 +611,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Moves a message to the deadletter sub-queue.
+        /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="lockToken">The lock token of the corresponding message to dead-letter.</param>
         /// <param name="timeout"></param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
+        /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
+        /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         internal virtual Task DeadLetterInternalAsync(
             string lockToken,
             TimeSpan timeout,
