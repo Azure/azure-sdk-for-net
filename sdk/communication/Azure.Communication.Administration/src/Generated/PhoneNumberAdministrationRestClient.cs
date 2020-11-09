@@ -1025,7 +1025,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public async Task<Response<ReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumberReleaseResponse>> ReleasePhoneNumbersAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1038,9 +1038,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        ReleaseResponse value = default;
+                        PhoneNumberReleaseResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
+                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1052,7 +1052,7 @@ namespace Azure.Communication.Administration
         /// <param name="phoneNumbers"> The list of phone numbers in the release request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
-        public Response<ReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
+        public Response<PhoneNumberReleaseResponse> ReleasePhoneNumbers(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
             if (phoneNumbers == null)
             {
@@ -1065,9 +1065,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        ReleaseResponse value = default;
+                        PhoneNumberReleaseResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReleaseResponse.DeserializeReleaseResponse(document.RootElement);
+                        value = PhoneNumberReleaseResponse.DeserializePhoneNumberReleaseResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1160,7 +1160,7 @@ namespace Azure.Communication.Administration
         /// <param name="searchId"> The search id to be searched for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        public async Task<Response<PhoneNumberSearch>> GetSearchByIdAsync(string searchId, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumberReservation>> GetSearchByIdAsync(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
             {
@@ -1173,9 +1173,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        PhoneNumberSearch value = default;
+                        PhoneNumberReservation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PhoneNumberSearch.DeserializePhoneNumberSearch(document.RootElement);
+                        value = PhoneNumberReservation.DeserializePhoneNumberReservation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1187,7 +1187,7 @@ namespace Azure.Communication.Administration
         /// <param name="searchId"> The search id to be searched for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        public Response<PhoneNumberSearch> GetSearchById(string searchId, CancellationToken cancellationToken = default)
+        public Response<PhoneNumberReservation> GetSearchById(string searchId, CancellationToken cancellationToken = default)
         {
             if (searchId == null)
             {
@@ -1200,9 +1200,9 @@ namespace Azure.Communication.Administration
             {
                 case 200:
                     {
-                        PhoneNumberSearch value = default;
+                        PhoneNumberReservation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PhoneNumberSearch.DeserializePhoneNumberSearch(document.RootElement);
+                        value = PhoneNumberReservation.DeserializePhoneNumberReservation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1210,7 +1210,7 @@ namespace Azure.Communication.Administration
             }
         }
 
-        internal HttpMessage CreateCreateSearchRequest(CreateSearchOptions body)
+        internal HttpMessage CreateCreateSearchRequest(CreateReservationOptions body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1234,7 +1234,7 @@ namespace Azure.Communication.Administration
         /// <summary> Creates a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CreateSearchResponse>> CreateSearchAsync(CreateSearchOptions body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateReservationResponse>> CreateSearchAsync(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSearchRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1242,9 +1242,9 @@ namespace Azure.Communication.Administration
             {
                 case 201:
                     {
-                        CreateSearchResponse value = default;
+                        CreateReservationResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateSearchResponse.DeserializeCreateSearchResponse(document.RootElement);
+                        value = CreateReservationResponse.DeserializeCreateReservationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1255,7 +1255,7 @@ namespace Azure.Communication.Administration
         /// <summary> Creates a phone number search. </summary>
         /// <param name="body"> Defines the search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CreateSearchResponse> CreateSearch(CreateSearchOptions body = null, CancellationToken cancellationToken = default)
+        public Response<CreateReservationResponse> CreateSearch(CreateReservationOptions body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateSearchRequest(body);
             _pipeline.Send(message, cancellationToken);
@@ -1263,9 +1263,9 @@ namespace Azure.Communication.Administration
             {
                 case 201:
                     {
-                        CreateSearchResponse value = default;
+                        CreateReservationResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateSearchResponse.DeserializeCreateSearchResponse(document.RootElement);
+                        value = CreateReservationResponse.DeserializeCreateReservationResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

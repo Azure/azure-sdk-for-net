@@ -12,18 +12,18 @@ using Azure.Core;
 namespace Azure.Communication.Administration.Models
 {
     /// <summary> Represents a phone number search. </summary>
-    public partial class PhoneNumberSearch
+    public partial class PhoneNumberReservation
     {
-        /// <summary> Initializes a new instance of PhoneNumberSearch. </summary>
-        internal PhoneNumberSearch()
+        /// <summary> Initializes a new instance of PhoneNumberReservation. </summary>
+        internal PhoneNumberReservation()
         {
             PhonePlanIds = new ChangeTrackingList<string>();
             LocationOptions = new ChangeTrackingList<LocationOptionsDetails>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberSearch. </summary>
-        /// <param name="searchId"> The id of the search. </param>
+        /// <summary> Initializes a new instance of PhoneNumberReservation. </summary>
+        /// <param name="reservationId"> The id of the search. </param>
         /// <param name="displayName"> The name of the search. </param>
         /// <param name="createdAt"> The creation time of the search. </param>
         /// <param name="description"> The description of the search. </param>
@@ -35,9 +35,9 @@ namespace Azure.Communication.Administration.Models
         /// <param name="phoneNumbers"> The list of phone numbers in the search, in the case the status is reserved or success. </param>
         /// <param name="reservationExpiryDate"> The date that search expires and the numbers become available. </param>
         /// <param name="errorCode"> The error code of the search. </param>
-        internal PhoneNumberSearch(string searchId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, SearchStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
+        internal PhoneNumberReservation(string reservationId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, ReservationStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
         {
-            SearchId = searchId;
+            ReservationId = reservationId;
             DisplayName = displayName;
             CreatedAt = createdAt;
             Description = description;
@@ -50,9 +50,6 @@ namespace Azure.Communication.Administration.Models
             ReservationExpiryDate = reservationExpiryDate;
             ErrorCode = errorCode;
         }
-
-        /// <summary> The id of the search. </summary>
-        public string SearchId { get; }
         /// <summary> The name of the search. </summary>
         public string DisplayName { get; }
         /// <summary> The creation time of the search. </summary>
@@ -68,7 +65,7 @@ namespace Azure.Communication.Administration.Models
         /// <summary> The location options of the search. </summary>
         public IReadOnlyList<LocationOptionsDetails> LocationOptions { get; }
         /// <summary> The status of the search. </summary>
-        public SearchStatus? Status { get; }
+        public ReservationStatus? Status { get; }
         /// <summary> The list of phone numbers in the search, in the case the status is reserved or success. </summary>
         public IReadOnlyList<string> PhoneNumbers { get; }
         /// <summary> The date that search expires and the numbers become available. </summary>

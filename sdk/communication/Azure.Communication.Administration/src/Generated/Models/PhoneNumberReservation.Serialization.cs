@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Administration.Models
 {
-    public partial class PhoneNumberSearch
+    public partial class PhoneNumberReservation
     {
-        internal static PhoneNumberSearch DeserializePhoneNumberSearch(JsonElement element)
+        internal static PhoneNumberReservation DeserializePhoneNumberReservation(JsonElement element)
         {
             Optional<string> searchId = default;
             Optional<string> displayName = default;
@@ -24,7 +24,7 @@ namespace Azure.Communication.Administration.Models
             Optional<string> areaCode = default;
             Optional<int> quantity = default;
             Optional<IReadOnlyList<LocationOptionsDetails>> locationOptions = default;
-            Optional<SearchStatus> status = default;
+            Optional<ReservationStatus> status = default;
             Optional<IReadOnlyList<string>> phoneNumbers = default;
             Optional<DateTimeOffset> reservationExpiryDate = default;
             Optional<int> errorCode = default;
@@ -107,7 +107,7 @@ namespace Azure.Communication.Administration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SearchStatus(property.Value.GetString());
+                    status = new ReservationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("phoneNumbers"))
@@ -146,7 +146,7 @@ namespace Azure.Communication.Administration.Models
                     continue;
                 }
             }
-            return new PhoneNumberSearch(searchId.Value, displayName.Value, Optional.ToNullable(createdAt), description.Value, Optional.ToList(phonePlanIds), areaCode.Value, Optional.ToNullable(quantity), Optional.ToList(locationOptions), Optional.ToNullable(status), Optional.ToList(phoneNumbers), Optional.ToNullable(reservationExpiryDate), Optional.ToNullable(errorCode));
+            return new PhoneNumberReservation(searchId.Value, displayName.Value, Optional.ToNullable(createdAt), description.Value, Optional.ToList(phonePlanIds), areaCode.Value, Optional.ToNullable(quantity), Optional.ToList(locationOptions), Optional.ToNullable(status), Optional.ToList(phoneNumbers), Optional.ToNullable(reservationExpiryDate), Optional.ToNullable(errorCode));
         }
     }
 }
