@@ -164,7 +164,7 @@ namespace Azure.Identity
         private static AzureCloudInstance GetAzureCloudInstance(string name) =>
             name switch
             {
-                "Azure" => AzureCloudInstance.AzurePublic,
+                "AzureCloud" => AzureCloudInstance.AzurePublic,
                 "AzureChina" => AzureCloudInstance.AzureChina,
                 "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
                 "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,
