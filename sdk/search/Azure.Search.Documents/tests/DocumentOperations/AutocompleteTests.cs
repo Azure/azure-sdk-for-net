@@ -27,8 +27,8 @@ namespace Azure.Search.Documents.Tests
             Assert.NotNull(completions.Results);
             Assert.NotNull(expectedText);
             Assert.NotNull(expectedQueryPlusText);
-            CollectionAssert.AreEqual(expectedText, completions.Results.Select(c => c.Text));
-            CollectionAssert.AreEqual(expectedQueryPlusText, completions.Results.Select(c => c.QueryPlusText));
+            CollectionAssert.AreEquivalent(expectedText, completions.Results.Select(c => c.Text));
+            CollectionAssert.AreEquivalent(expectedQueryPlusText, completions.Results.Select(c => c.QueryPlusText));
         }
 
         [Test]
