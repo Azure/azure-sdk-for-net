@@ -2084,7 +2084,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2130,7 +2129,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="document">The document to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2175,7 +2173,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
@@ -2201,7 +2198,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.
@@ -2234,7 +2230,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2260,7 +2255,6 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// Use <see cref="GetHealthcareEntities(HealthcareOperation, CancellationToken)"/> for documents greater than 20.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional configurable options<see cref="HealthcareOptions"/></param>
@@ -2375,8 +2369,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets collection of healthcare entities from the HealthOperation using async pageable.
-        /// This method is used if the number of documents are greater than 20
-        /// Otherwise, use the StartHealthcareAsync and StartHealthcareBatchAsync for less than 20 documents.
         /// </summary>
         /// <param name="operation"> Healthcare operation class object which is returned when operation is started. <see cref="HealthcareOperation"/></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

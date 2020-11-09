@@ -270,12 +270,17 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var list = new List<string>();
 
-            for (int i = 0; i < 23; i++)
+            for (int i = 0; i < 10; i++)
             {
                 list.Add(document);
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list);
+            HealthcareOptions options = new HealthcareOptions()
+            {
+                Top = 2
+            };
+
+            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
 
             AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
 
@@ -285,7 +290,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 resultCount += 1;
             }
 
-            Assert.AreEqual(23, resultCount);
+            Assert.AreEqual(10, resultCount);
         }
     }
 }

@@ -27,12 +27,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var list = new List<string>();
 
-            for (int i = 0; i < 23; i++)
+            for (int i = 0; i < 10; i++)
             {
                 list.Add(document);
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list);
+            HealthcareOptions options = new HealthcareOptions()
+            {
+                Top = 2
+            };
+
+            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(list, "en", options);
 
             AsyncPageable<DocumentHealthcareResult> results = client.GetHealthcareEntities(healthOperation);
 
