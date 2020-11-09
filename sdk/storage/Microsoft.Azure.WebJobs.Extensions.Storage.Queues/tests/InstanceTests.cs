@@ -3,16 +3,16 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Moq;
+using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Hosting;
+using Moq;
 using NUnit.Framework;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class InstanceTests
     {

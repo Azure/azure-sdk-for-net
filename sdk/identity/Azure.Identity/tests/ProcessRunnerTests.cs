@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -42,7 +43,40 @@ namespace Azure.Identity.Tests
             var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
             var result = await Run(runner);
 
-            Assert.AreEqual(output, result.TrimEnd());
+            Assert.AreEqual(output, result);
+        }
+
+        [Test]
+        public async Task ProcessRunnerRealProcessLargeOutputSucceeded()
+        {
+            var output = string.Concat(Enumerable.Repeat("Test output", 500));
+            var command = $"echo {output}";
+            var process = CreateRealProcess(command, command);
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(output, result);
+        }
+
+        [Test]
+        public async Task ProcessRunnerRealProcessMultipleLinesSucceeded()
+        {
+            var output = "Test output";
+            var command = string.Join("&&", Enumerable.Repeat($"echo {output}", 100));
+            var process = CreateRealProcess(command, command);
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(string.Join(Environment.NewLine, Enumerable.Repeat(output, 100)), result);
+        }
+
+        [Test]
+        public void ProcessRunnerProcessFailsToStart()
+        {
+            var process = new TestProcess { FailedToStart = true };
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+
+            Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
         }
 
         [Test]
@@ -113,6 +147,17 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerRealProcessFailedWithErrorMessage()
         {
             var error = "Test error";
+            var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+
+            var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
+            Assert.AreEqual(error, exception.Message.Trim());
+        }
+
+        [Test]
+        public void ProcessRunnerRealProcessFailedWithLargeErrorMessage()
+        {
+            var error = string.Concat(Enumerable.Repeat("Test error", 500));;
             var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
             var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 

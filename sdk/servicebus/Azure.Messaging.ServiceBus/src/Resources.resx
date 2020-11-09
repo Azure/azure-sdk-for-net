@@ -256,7 +256,7 @@
     <value>The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shard Access Signature to be valid.</value>
+    <value>The connection string used for an Service Bus client must specify the Service Bus namespace host and either a Shared Access Key (both the name and value) OR a Shared Access Signature to be valid.</value>
   </data>
   <data name="OnlyOneEntityNameMayBeSpecified" xml:space="preserve">
     <value>The queue or topic name provided does not match the EntityPath in the connection string passed to the ServiceBusClient constructor.</value>
@@ -299,5 +299,8 @@
   </data>
   <data name="OnlyOneSharedAccessAuthorizationMayBeSpecified" xml:space="preserve">
     <value>The authorization for a connection string may specifiy a shared key or precomputed shared access signature, but not both.  Please verify that your connection string does not have the `SharedAccessSignature` token if you are passing the `SharedKeyName` and `SharedKey`.</value>
+  </data>
+  <data name="InvalidEndpointAddress" xml:space="preserve">
+    <value>The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme.</value>
   </data>
 </root>

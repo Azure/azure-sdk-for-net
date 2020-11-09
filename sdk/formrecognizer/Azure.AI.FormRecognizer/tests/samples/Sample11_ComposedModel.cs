@@ -41,10 +41,10 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string purchaseOrderFurnitureUrl = "<purchaseOrderFurniture>";
             //@@ string purchaseOrderCleaningSuppliesUrl = "<purchaseOrderCleaningSupplies>";
 
-            CustomFormModel purchaseOrderOfficeSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Office supplies" }).WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderOfficeEquipmentModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Office Equipment" }).WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderFurnitureModel = (await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Furniture" }).WaitForCompletionAsync()).Value;
-            CustomFormModel purchaseOrderCleaningSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, new TrainingOptions() { ModelName = "Purchase order - Cleaning Supplies" }).WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderOfficeSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeSuppliesUrl), useTrainingLabels: true, "Purchase order - Office supplies").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderOfficeEquipmentModel = (await client.StartTrainingAsync(new Uri(purchaseOrderOfficeEquipmentUrl), useTrainingLabels: true, "Purchase order - Office Equipment").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderFurnitureModel = (await client.StartTrainingAsync(new Uri(purchaseOrderFurnitureUrl), useTrainingLabels: true, "Purchase order - Furniture").WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderCleaningSuppliesModel = (await client.StartTrainingAsync(new Uri(purchaseOrderCleaningSuppliesUrl), useTrainingLabels: true, "Purchase order - Cleaning Supplies").WaitForCompletionAsync()).Value;
 
             #endregion
 
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 purchaseOrderCleaningSuppliesModel.ModelId
             };
 
-            CustomFormModel purchaseOrderModel = (await client.StartCreateComposedModelAsync(modelIds, new CreateComposedModelOptions() { ModelName = "Composed Purchase order" }).WaitForCompletionAsync()).Value;
+            CustomFormModel purchaseOrderModel = (await client.StartCreateComposedModelAsync(modelIds, "Composed Purchase order").WaitForCompletionAsync()).Value;
 
             Console.WriteLine($"Purchase Order Model Info:");
             Console.WriteLine($"    Is composed model: {purchaseOrderModel.Properties.IsComposedModel}");

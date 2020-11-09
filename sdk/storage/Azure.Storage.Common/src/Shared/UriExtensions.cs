@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -119,9 +120,10 @@ namespace Azure.Storage
         /// <param name="uri">The Uri.</param>
         /// <returns>True if using IP Endpoint style.</returns>
         public static bool IsHostIPEndPointStyle(this Uri uri) =>
-           !string.IsNullOrEmpty(uri.Host) &&
+            (!string.IsNullOrEmpty(uri.Host) &&
             uri.Host.IndexOf(".", StringComparison.InvariantCulture) >= 0 &&
-            IPAddress.TryParse(uri.Host, out _);
+            IPAddress.TryParse(uri.Host, out _)) ||
+            Constants.Sas.PathStylePorts.Contains(uri.Port);
 
         /// <summary>
         /// Appends a query parameter to the string builder.

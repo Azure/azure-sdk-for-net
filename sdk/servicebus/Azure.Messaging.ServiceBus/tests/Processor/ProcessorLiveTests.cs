@@ -393,7 +393,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     if (sbException.Reason == ServiceBusFailureReason.MessagingEntityNotFound ||
                         // There is a race condition wherein the service closes the connection when getting
-                        // the request for the non-existant queue. If the connection is closed by the time
+                        // the request for the non-existent queue. If the connection is closed by the time
                         // our exception handling kicks in, we throw it as a ServiceCommunicationProblem
                         // as we cannot be sure the error wasn't due to the connection being closed,
                         // as opposed to what we know is the true cause in this case,

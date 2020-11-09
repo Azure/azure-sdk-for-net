@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="EventData.EventBody" />
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ReadOnlyMemory<byte> Body => EventBody.ToBytes();
+        public ReadOnlyMemory<byte> Body => EventBody.ToMemory();
 
         /// <summary>
         ///   The data associated with the event, in stream form.

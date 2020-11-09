@@ -2,27 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Tests;
 using Azure.Storage;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    public class BackupRestoreTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    [NonParallelizable]
+    public abstract class BackupRestoreTestBase : AdministrationTestBase
     {
-        public KeyVaultBackupClient Client { get; set; }
-        internal string SasToken { get; set; }
+        public KeyVaultBackupClient Client { get; private set; }
+
+        internal string SasToken { get; private set; }
         internal string BlobContainerName = "backup";
-        internal string PreviouslyBackedUpKeyName = "rsa-1";
 
-        public BackupRestoreTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new BackupRestoreRecordedTestSanitizer();
-        }
-
-        public BackupRestoreTestBase(bool isAsync) : base(isAsync)
+        public BackupRestoreTestBase(bool isAsync, RecordedTestMode? mode)
+            : base(isAsync, mode)
         {
             Sanitizer = new BackupRestoreRecordedTestSanitizer();
         }
@@ -30,28 +27,23 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal KeyVaultBackupClient GetClient(bool isInstrumented = true)
         {
             var client = new KeyVaultBackupClient(
-                new Uri(TestEnvironment.KeyVaultUrl),
+                Uri,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultBackupClientOptions()));
+                InstrumentClientOptions(new KeyVaultAdministrationClientOptions()));
             return isInstrumented ? InstrumentClient(client) : client;
         }
 
-
-        [SetUp]
-        public void ClearChallengeCacheforRecord()
+        protected override void Start()
         {
-            Client ??= GetClient();
-            SasToken ??= GenerateSasToken();
+            Client = GetClient();
+            SasToken = GenerateSasToken();
 
-            // in record mode we reset the challenge cache before each test so that the challenge call
-            // is always made.  This allows tests to be replayed independently and in any order
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                Client = GetClient();
-
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
-            }
+            base.Start();
         }
+
+        // The service polls every second, so wait a bit to make sure the operation appears completed.
+        protected async Task WaitForOperationAsync() =>
+            await DelayAsync(TimeSpan.FromSeconds(2));
 
         private string GenerateSasToken()
         {
