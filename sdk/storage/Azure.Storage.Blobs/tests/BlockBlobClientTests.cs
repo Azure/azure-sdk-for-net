@@ -2100,14 +2100,14 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [Test]
-        public async Task UploadAsync_SingleUpload()
+        public async Task UploadAsync_SingleUpload_DefaultThreshold()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = 255 * Constants.MB;
+            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes - 1;
             var data = GetRandomBuffer(blobSize);
             using Stream stream = new MemoryStream(data);
 
@@ -2121,14 +2121,14 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [Test]
-        public async Task UploadAsync_MultipleUpload()
+        public async Task UploadAsync_MultipleUpload_DefaultThreshold()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
-            long blobSize = 257 * Constants.MB;
+            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes + 1;
             var data = GetRandomBuffer(blobSize);
             using Stream stream = new MemoryStream(data);
 
