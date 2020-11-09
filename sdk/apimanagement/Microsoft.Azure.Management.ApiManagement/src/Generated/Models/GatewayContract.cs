@@ -75,6 +75,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 LocationData.Validate();
             }
+            if (Description != null)
+            {
+                if (Description.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 1000);
+                }
+            }
         }
     }
 }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -103,11 +104,44 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Title != null)
+            {
+                if (Title.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 300);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 2000);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+            }
+            if (ResourceId != null)
+            {
+                if (ResourceId.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ResourceId", 2000);
+                }
+                if (ResourceId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ResourceId", 1);
+                }
+            }
             if (Properties != null)
             {
                 Properties.Validate();

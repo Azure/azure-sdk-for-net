@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the ResourceSku class.
         /// </summary>
         /// <param name="name">Name of the Sku. Possible values include:
-        /// 'Developer', 'Standard', 'Premium', 'Basic', 'Consumption'</param>
+        /// 'Developer', 'Standard', 'Premium', 'Basic', 'Consumption',
+        /// 'Isolated'</param>
         public ResourceSku(string name = default(string))
         {
             Name = name;
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets name of the Sku. Possible values include: 'Developer',
-        /// 'Standard', 'Premium', 'Basic', 'Consumption'
+        /// 'Standard', 'Premium', 'Basic', 'Consumption', 'Isolated'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

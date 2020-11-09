@@ -111,6 +111,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PeriodKey");
             }
+            if (CounterKey != null)
+            {
+                if (CounterKey.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "CounterKey", 1);
+                }
+            }
+            if (PeriodKey != null)
+            {
+                if (PeriodKey.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "PeriodKey", 1);
+                }
+            }
         }
     }
 }

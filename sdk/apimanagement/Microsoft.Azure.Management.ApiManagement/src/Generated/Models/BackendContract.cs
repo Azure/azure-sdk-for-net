@@ -142,6 +142,39 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
             }
+            if (Title != null)
+            {
+                if (Title.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Title", 300);
+                }
+                if (Title.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Title", 1);
+                }
+            }
+            if (Description != null)
+            {
+                if (Description.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 2000);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+            }
+            if (ResourceId != null)
+            {
+                if (ResourceId.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ResourceId", 2000);
+                }
+                if (ResourceId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ResourceId", 1);
+                }
+            }
             if (Properties != null)
             {
                 Properties.Validate();
@@ -153,6 +186,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Proxy != null)
             {
                 Proxy.Validate();
+            }
+            if (Url != null)
+            {
+                if (Url.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Url", 2000);
+                }
+                if (Url.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Url", 1);
+                }
             }
         }
     }

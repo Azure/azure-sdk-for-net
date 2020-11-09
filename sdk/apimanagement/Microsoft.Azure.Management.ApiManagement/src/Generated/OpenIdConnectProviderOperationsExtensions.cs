@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets specific OpenID Connect Provider.
+            /// Gets specific OpenID Connect Provider without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets specific OpenID Connect Provider.
+            /// Gets specific OpenID Connect Provider without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -245,9 +245,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderUpdateContract parameters, string ifMatch)
+            public static OpenidConnectProviderContract Update(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, opid, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, opid, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -276,9 +276,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OpenidConnectProviderContract> UpdateAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, opid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, opid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
