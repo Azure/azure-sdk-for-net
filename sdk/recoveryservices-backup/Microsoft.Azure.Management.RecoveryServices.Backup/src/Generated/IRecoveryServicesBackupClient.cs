@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 
 
         /// <summary>
+        /// Gets the IBackupResourceEncryptionConfigsOperations.
+        /// </summary>
+        IBackupResourceEncryptionConfigsOperations BackupResourceEncryptionConfigs { get; }
+
+        /// <summary>
         /// Gets the IBMSPrepareDataMoveOperationResultOperations.
         /// </summary>
         IBMSPrepareDataMoveOperationResultOperations BMSPrepareDataMoveOperationResult { get; }
@@ -152,46 +157,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupProtectedItemsOperations.
         /// </summary>
         IBackupProtectedItemsOperations BackupProtectedItems { get; }
-
-        /// <summary>
-        /// Gets the IAadPropertiesOperations.
-        /// </summary>
-        IAadPropertiesOperations AadProperties { get; }
-
-        /// <summary>
-        /// Gets the ICrossRegionRestoreOperations.
-        /// </summary>
-        ICrossRegionRestoreOperations CrossRegionRestore { get; }
-
-        /// <summary>
-        /// Gets the IBackupCrrJobDetailsOperations.
-        /// </summary>
-        IBackupCrrJobDetailsOperations BackupCrrJobDetails { get; }
-
-        /// <summary>
-        /// Gets the IBackupCrrJobsOperations.
-        /// </summary>
-        IBackupCrrJobsOperations BackupCrrJobs { get; }
-
-        /// <summary>
-        /// Gets the ICrrOperationResultsOperations.
-        /// </summary>
-        ICrrOperationResultsOperations CrrOperationResults { get; }
-
-        /// <summary>
-        /// Gets the ICrrOperationStatusOperations.
-        /// </summary>
-        ICrrOperationStatusOperations CrrOperationStatus { get; }
-
-        /// <summary>
-        /// Gets the IRecoveryPointsCrrOperations.
-        /// </summary>
-        IRecoveryPointsCrrOperations RecoveryPointsCrr { get; }
-
-        /// <summary>
-        /// Gets the IBackupProtectedItemsCrrOperations.
-        /// </summary>
-        IBackupProtectedItemsCrrOperations BackupProtectedItemsCrr { get; }
 
         /// <summary>
         /// Gets the IOperationOperations.

@@ -15,20 +15,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class CrossRegionRestoreRequestResource : Resource
+    public partial class BackupResourceEncryptionConfigResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the CrossRegionRestoreRequestResource
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupResourceEncryptionConfigResource class.
         /// </summary>
-        public CrossRegionRestoreRequestResource()
+        public BackupResourceEncryptionConfigResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CrossRegionRestoreRequestResource
-        /// class.
+        /// Initializes a new instance of the
+        /// BackupResourceEncryptionConfigResource class.
         /// </summary>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="eTag">Optional ETag.</param>
-        /// <param name="properties">CrossRegionRestoreRequestResource
+        /// <param name="properties">BackupResourceEncryptionConfigResource
         /// properties</param>
-        public CrossRegionRestoreRequestResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), CrossRegionRestoreRequest properties = default(CrossRegionRestoreRequest))
+        public BackupResourceEncryptionConfigResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), BackupResourceEncryptionConfig properties = default(BackupResourceEncryptionConfig))
             : base(id, name, type, location, tags, eTag)
         {
             Properties = properties;
@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets crossRegionRestoreRequestResource properties
+        /// Gets or sets backupResourceEncryptionConfigResource properties
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public CrossRegionRestoreRequest Properties { get; set; }
+        public BackupResourceEncryptionConfig Properties { get; set; }
 
     }
 }
