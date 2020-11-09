@@ -108,6 +108,16 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
+function MergeHashes([System.Collections.HashTable] $source, [psvariable] $dest) {
+    foreach ($key in $source.Keys) {
+        if ($dest.Value[$key]) {
+            Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
+                          "to new value '$($source[$key])'")
+        }
+        $dest.Value[$key] = $source[$key]
+    }
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -258,7 +268,7 @@ $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
     $ServiceDirectory
 }
 
-if ($CI) { 
+if ($CI) {
   $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
   Write-Verbose "Generated base name '$BaseName' for CI build"
 }
@@ -328,12 +338,8 @@ if ($TenantId) {
 if ($TestApplicationSecret) {
     $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
 }
-if ($ArmTemplateParameters) {
-    $templateParameters += $ArmTemplateParameters
-}
-foreach ($key in $AdditionalParameters.Keys) {
-  $templateParameters[$key] = $AdditionalParameters[$key]
-}
+MergeHashes($ArmTemplateParameters, $(Get-Variable $templateParameters))
+MergeHashes($AdditionalParameters, $(Get-Variable $templateParameters))
 
 # Include environment-specific parameters only if not already provided as part of the "ArmTemplateParameters"
 if (($context.Environment.StorageEndpointSuffix) -and (-not ($templateParameters.ContainsKey('storageEndpointSuffix')))) {
@@ -397,9 +403,7 @@ foreach ($templateFile in $templateFiles) {
         "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
     }
 
-    foreach ($key in $EnvironmentVariables.Keys) {
-        $deploymentOutputs.Add($key, $EnvironmentVariables[$key])
-    }
+    MergeHashes($EnvironmentVariables, $(Get-Variable $deploymentOutputs))
 
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
