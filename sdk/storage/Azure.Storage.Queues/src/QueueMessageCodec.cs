@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues
                         return Convert.ToBase64String(binaryData.ToArray());
                     }
                 default:
-                    throw new ArgumentException($"Unsupported message encoding {messageEncoding}");
+                    throw new ArgumentException($"Unsupported message encoding {messageEncoding}", nameof(messageEncoding));
             }
         }
 
