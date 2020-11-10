@@ -2811,6 +2811,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CanGetParentBlobServiceClient_WithAccountSAS()
         {
             // Arrange
