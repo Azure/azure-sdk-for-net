@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    public class KeyVaultSecret : IJsonDeserializable
+    internal class KeyVaultSecret : IJsonDeserializable
     {
         private const string ValuePropertyName = "value";
 

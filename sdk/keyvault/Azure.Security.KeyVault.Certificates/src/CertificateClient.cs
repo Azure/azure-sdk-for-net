@@ -154,22 +154,16 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
+#pragma warning disable AZC0015 // Unexpected client method return type.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
         /// <remarks>
-        /// <para>
         /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
-        /// associated with the specified secret which contains the full certificate. If you do not have permissions to get the secret,
+        /// that contains the full certificate. If you do not have permissions to get the secret,
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
-        /// </para>
-        /// <para>
-        /// If you want a certificate containing only the public key, you can create one like:
-        /// <code snippet="Snippet:CertificateClientLiveTests_DownloadLatestCertificate">
-        /// KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
-        /// using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
-        /// </code>
-        /// </para>
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
@@ -179,7 +173,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        public virtual X509Certificate2 DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -200,7 +194,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 byte[] rawData = Convert.FromBase64String(value);
 
-                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+                return new X509Certificate2(rawData);
             }
             catch (Exception e)
             {
@@ -213,18 +207,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
         /// <remarks>
-        /// <para>
         /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
-        /// associated with the specified secret which contains the full certificate. If you do not have permissions to get the secret,
+        /// that contains the full certificate. If you do not have permissions to get the secret,
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
-        /// </para>
-        /// <para>
-        /// If you want a certificate containing only the public key, you can create one like:
-        /// <code snippet="Snippet:CertificateClientLiveTests_DownloadLatestCertificate">
-        /// KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
-        /// using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
-        /// </code>
-        /// </para>
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
@@ -234,7 +221,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        public virtual async Task<X509Certificate2> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -255,7 +242,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 byte[] rawData = Convert.FromBase64String(value);
 
-                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+                return new X509Certificate2(rawData);
             }
             catch (Exception e)
             {
@@ -263,6 +250,7 @@ namespace Azure.Security.KeyVault.Certificates
                 throw;
             }
         }
+#pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.

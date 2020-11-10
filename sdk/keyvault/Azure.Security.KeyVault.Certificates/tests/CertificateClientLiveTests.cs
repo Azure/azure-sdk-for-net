@@ -765,21 +765,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.WaitForCompletionAsync();
 
-            #region Snippet:CertificateClientLiveTests_DownloadLatestCertificate
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
-            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
-            #endregion
 
+            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
             using RSA pubkey = (RSA)pub.PublicKey.Key;
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
-            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
 
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
             using RSA rsa = (RSA)x509certificate.PrivateKey;
-            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256);
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
@@ -816,7 +814,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using RSA pubkey = (RSA)pub.PublicKey.Key;
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
-            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
 
             // Create a new certificate version that is not exportable just to further prove we are not downloading it.
             policy.Exportable = false;
@@ -832,7 +830,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
             using RSA rsa = (RSA)x509certificate.PrivateKey;
-            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256);
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
 
             CollectionAssert.AreEqual(plaintext, decrypted);
         }
