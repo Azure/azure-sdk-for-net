@@ -11,4 +11,4 @@ extends:
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     EnvVars:
-      AZURE_USE_LATEST_SERVICE_VERSION: "true"
+      AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: "true"

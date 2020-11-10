@@ -15,7 +15,13 @@ namespace Azure.Core.TestFramework
     {
         public static readonly string SyncOnlyKey = "SyncOnly";
         public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
-        public static readonly string UseLatestServiceVersionKey = "AZURE_USE_LATEST_SERVICE_VERSION";
+        public static readonly string OnlyTestLatestServiceVersionKey = "AZURE_ONLY_TEST_LATEST_SERVICE_VERSION";
+
+        private static readonly Lazy<bool> OnlyTestLatestServiceVersionLazy = new Lazy<bool>(() =>
+        {
+            bool.TryParse(Environment.GetEnvironmentVariable(OnlyTestLatestServiceVersionKey), out bool onlyTestLatestServiceVersion);
+            return onlyTestLatestServiceVersion;
+        });
 
         private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
@@ -157,11 +163,11 @@ namespace Azure.Core.TestFramework
                 test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not the latest.");
             }
 
-            if ("true" == Environment.GetEnvironmentVariable(UseLatestServiceVersionKey) && serviceVersionNumber != _maxServiceVersion)
+            if (OnlyTestLatestServiceVersionLazy.Value && serviceVersionNumber != _maxServiceVersion)
             {
                 test.RunState = RunState.Ignored;
                 test.Properties.Set("_SKIPREASON",
-                    $"Test is ignored when running live because the service version {serviceVersion} is not the latest while latest service version has been requested.");
+                    $"Test ignored because {OnlyTestLatestServiceVersionKey} is set in the environment and version {serviceVersion} is not the latest.");
             }
 
             var minServiceVersion = test.GetCustomAttributes<ServiceVersionAttribute>(true);
