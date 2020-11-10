@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
             long enqueuedSequenceNumber = default,
             DateTimeOffset enqueuedTime = default)
         {
-            var amqpMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { body });
+            var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
             amqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
             amqpMessage.Properties.Subject = subject;
             amqpMessage.Properties.To = new AmqpAddress(to);
