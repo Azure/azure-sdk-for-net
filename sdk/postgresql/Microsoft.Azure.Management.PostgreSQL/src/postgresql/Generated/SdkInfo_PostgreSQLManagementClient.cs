@@ -37,16 +37,5 @@ namespace Microsoft.Azure.Management.PostgreSQL
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/postgresql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\z\\azure-sdk-for-net\\sdk\\postgresql\\Microsoft.Azure.Management.PostgreSQL\\src\\postgresql\\Generated";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "faf8e1c19e3b36e6d16622bf168369a838b04a7f";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
