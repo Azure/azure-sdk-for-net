@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using static Azure.Iot.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.Iot.TimeSeriesInsights.Samples
 {
@@ -17,11 +19,24 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
         }
 
         /// <summary>
-        /// Describe the sample here.
+        /// This sample is a placeholder to demo the snippet generation.
         /// </summary>
-        public Task RunSamplesAsync()
+        public async Task RunSamplesAsync()
         {
-            return Task.CompletedTask;
+            try
+            {
+                #region Snippet:TimeSeriesInsightsGetModelSettings
+                
+                // Get the model settings for the time series insights environment
+                Response<Models.ModelSettingsResponse> response = await client.GetAsync().ConfigureAwait(false);
+                Console.WriteLine($"Retrieved model {response.Value.ModelSettings.Name}.");
+                
+                #endregion Snippet:TimeSeriesInsightsGetModelSettings
+            }
+            catch (Exception ex)
+            {
+                FatalError($"Failed to create models due to:\n{ex}");
+            }
         }
     }
 }

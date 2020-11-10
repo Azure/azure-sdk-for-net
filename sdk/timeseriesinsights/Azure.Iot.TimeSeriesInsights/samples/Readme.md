@@ -14,6 +14,12 @@ The client requires an instance of [TokenCredential](https://docs.microsoft.com/
 In this samples, we illustrate how to use one derived class: ClientSecretCredential.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
+// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+// It attempts to use multiple credential types in an order until it finds a working credential.
+var tokenCredential = new DefaultAzureCredential();
 
+var client = new TimeSeriesInsightsClient(
+    tsiEndpoint,
+    tokenCredential);
 ```
 

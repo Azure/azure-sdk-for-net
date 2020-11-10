@@ -41,6 +41,13 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </seealso>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
+        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+        /// // It attempts to use multiple credential types in an order until it finds a working credential.
+        /// var tokenCredential = new DefaultAzureCredential();
+        ///
+        /// var client = new TimeSeriesInsightsClient(
+        ///     tsiEndpoint,
+        ///     tokenCredential);
         /// </code>
         /// </example>
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential)
@@ -96,6 +103,9 @@ namespace Azure.Iot.TimeSeriesInsights
         /// This sample demonstrates getting and deserializing a model settings.
         ///
         /// <code snippet="Snippet:TimeSeriesInsightsGetModelSettings">
+        /// // Get the model settings for the time series insights environment
+        /// Response&lt;Models.ModelSettingsResponse&gt; response = await client.GetAsync().ConfigureAwait(false);
+        /// Console.WriteLine($&quot;Retrieved model {response.Value.ModelSettings.Name}.&quot;);
         /// </code>
         /// </example>
         public virtual Task<Response<ModelSettingsResponse>> GetAsync(string clientSessionId = null, CancellationToken cancellationToken = default)
