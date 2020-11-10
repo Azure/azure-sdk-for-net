@@ -46,7 +46,7 @@ namespace Azure.Core.Amqp
                 data = _data;
                 return true;
             }
-            data = _data;
+            data = Enumerable.Empty<ReadOnlyMemory<byte>>();
             return false;
         }
     }
