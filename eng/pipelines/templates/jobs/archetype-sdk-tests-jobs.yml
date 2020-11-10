@@ -79,7 +79,6 @@ jobs:
             ArmTemplateParameters: ${{ cloudConfig.value.ArmTemplateParameters }}
 
       - pwsh: >
-          Set-PsDebug -Trace 1 &&
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
           --filter "TestCategory!=Manually"
