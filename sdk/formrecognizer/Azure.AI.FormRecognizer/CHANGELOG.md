@@ -18,6 +18,7 @@
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
 - Added property `Appearance` to `FormLine` to indicate the style of the extracted text. for example, "handwriting" or "other".
+- Added property `BoundingBox` to `FormTable`.
 
 ## 3.0.0 (2020-08-20)
 

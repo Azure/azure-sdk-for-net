@@ -130,6 +130,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(3, table.RowCount);
             Assert.AreEqual(6, table.ColumnCount);
+            Assert.AreEqual(4, table.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = table.Cells.ToList();
 
@@ -246,6 +247,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(4, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
+            Assert.AreEqual(4, sampleTable.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = sampleTable.Cells.ToList();
 
@@ -2196,6 +2198,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedPageNumber, table.PageNumber);
                 Assert.Greater(table.ColumnCount, 0);
                 Assert.Greater(table.RowCount, 0);
+                // Currently not true for CustomForms. Issue https://github.com/Azure/azure-sdk-for-net/issues/16827
+                // Assert.AreEqual(4, table.BoundingBox.Points.Count());
 
                 Assert.NotNull(table.Cells);
 

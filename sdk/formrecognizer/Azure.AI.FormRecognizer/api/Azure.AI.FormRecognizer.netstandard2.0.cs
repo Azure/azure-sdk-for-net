@@ -260,6 +260,7 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class FormTable
     {
         internal FormTable() { }
+        public Azure.AI.FormRecognizer.Models.FieldBoundingBox BoundingBox { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormTableCell> Cells { get { throw null; } }
         public int ColumnCount { get { throw null; } }
         public int PageNumber { get { throw null; } }
