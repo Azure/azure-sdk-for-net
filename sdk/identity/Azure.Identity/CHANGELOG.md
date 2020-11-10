@@ -1,6 +1,9 @@
 # Release History
 ## 1.3.0-beta.3 (Unreleased)
 
+### Fixes and improvements
+- Prevent `VisualStudioCodeCredential` using invalid authentication data when no user is signed in to Visual Studio Code ([#15870](https://github.com/Azure/azure-sdk-for-net/issues/15870))
+
 ### Breaking Changes
 - Rename property `IncludeX5CClaimHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.4.0-beta.1.

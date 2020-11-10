@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string sqlServerQuery = "<query>";
 
             var dataFeedName = "Sample data feed";
-            var dataFeedSource = new MySqlDataFeedSource(sqlServerConnectionString, sqlServerQuery);
+            var dataFeedSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             var dataFeedGranularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
             var dataFeedMetrics = new List<DataFeedMetric>()
@@ -56,11 +56,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dataFeed = new DataFeed(dataFeedName, dataFeedSource, dataFeedGranularity, dataFeedSchema, dataFeedIngestionSettings);
 
-            Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
+            Response<string> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
-            dataFeed = response.Value;
+            string dataFeedId = response.Value;
 
-            Console.WriteLine($"Data feed ID: {dataFeed.Id}");
+            Console.WriteLine($"Data feed ID: {dataFeedId}");
             #endregion
 
             // Only the ID of the data feed is known at this point. You can perform another service
@@ -70,7 +70,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Delete the created data feed to clean up the Metrics Advisor resource. Do not perform this
             // step if you intend to keep using the data feed.
 
-            await adminClient.DeleteDataFeedAsync(dataFeed.Id);
+            await adminClient.DeleteDataFeedAsync(dataFeedId);
         }
 
         [Test]
@@ -116,7 +116,6 @@ namespace Azure.AI.MetricsAdvisor.Samples
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/16168")]
         public async Task UpdateDataFeedAsync()
         {
             string endpoint = MetricsAdvisorUri;

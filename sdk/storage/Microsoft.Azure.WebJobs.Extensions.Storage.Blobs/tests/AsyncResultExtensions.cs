@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class AsyncResultExtensions
     {

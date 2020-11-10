@@ -10,17 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientCertificateCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientCertificateCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]

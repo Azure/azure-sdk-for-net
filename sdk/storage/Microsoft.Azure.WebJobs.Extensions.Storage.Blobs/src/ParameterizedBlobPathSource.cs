@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Azure.WebJobs.Host.Bindings.Path;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class ParameterizedBlobPathSource : IBlobPathSource
     {

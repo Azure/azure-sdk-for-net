@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "52",
         "Content-Type": "application/json",
-        "Date": "Tue, 10 Nov 2020 17:40:26 GMT",
-        "traceparent": "00-b0bf2f132c81e744a3bf89785d4d6a3b-1e6bc85fdb9c5246-00",
+        "Date": "Tue, 10 Nov 2020 18:28:35 GMT",
+        "traceparent": "00-2660ad6ec0fc444095db92d9fed41b89-902a2a2dc8ff9c45-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.0.0-alpha.20201109.1",
+          "azsdk-net-Communication.Sms/1.0.0-alpha.20201110.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "502c14eada64473d9335b07c59ac6bf4",
@@ -26,11 +26,11 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 10 Nov 2020 17:40:26 GMT",
-        "MS-CV": "Fnayql/Nb0Sv2WXbovnkeQ.0",
+        "Date": "Tue, 10 Nov 2020 18:28:36 GMT",
+        "MS-CV": "IAs1v\u002BNoEEC3clYc/U0dLA.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0itCqXwAAAACpL4djNIztQ4QAzZ4ts1LpWVRPMDFFREdFMDYxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "461ms"
+        "X-Azure-Ref": "009uqXwAAAABxw8vQdmHtSYDQG0WI/xKNWVRPMDFFREdFMDYwOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "760ms"
       },
       "ResponseBody": {
         "messageId": "Sanitized"

@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
 
             Assert.AreEqual("SomeUserProperty", convertedSbMessage.ApplicationProperties["UserProperty"]);
-            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToBytes().ToArray());
+            Assert.AreEqual(messageBody, convertedSbMessage.Body.ToArray());
             Assert.AreEqual(messageId, convertedSbMessage.MessageId);
             Assert.AreEqual(partitionKey, convertedSbMessage.PartitionKey);
             Assert.AreEqual(viaPartitionKey, convertedSbMessage.ViaPartitionKey);

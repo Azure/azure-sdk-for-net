@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers
 {

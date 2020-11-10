@@ -18,6 +18,8 @@ pr:
     - release/*
   paths:
     include:
+    - common/perf/
+    - common/stress/
     - sdk/template/
 
 extends:

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
@@ -11,6 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>

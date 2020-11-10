@@ -9,7 +9,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal static class BlobBaseClientExtensions
     {
