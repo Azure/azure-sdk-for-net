@@ -61,6 +61,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
+        /// Configuration name
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -91,6 +92,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
+        /// Configuration name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,6 +121,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// Monitor resource name
         /// </param>
         /// <param name='configurationName'>
+        /// Configuration name
         /// </param>
         /// <param name='properties'>
         /// </param>

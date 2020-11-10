@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Datadog organization properties
+    /// </summary>
     public partial class DatadogOrganizationProperties
     {
         /// <summary>

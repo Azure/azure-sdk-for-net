@@ -74,6 +74,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -95,6 +96,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -122,6 +124,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             public static DatadogSingleSignOnResource Get(this ISingleSignOnConfigurationsOperations operations, string resourceGroupName, string monitorName, string configurationName)
             {
@@ -141,6 +144,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -166,6 +170,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -187,6 +192,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='configurationName'>
+            /// Configuration name
             /// </param>
             /// <param name='properties'>
             /// </param>

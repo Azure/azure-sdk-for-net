@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.Datadog
 
 
         /// <summary>
+        /// Gets the IMarketplaceAgreementsOperations.
+        /// </summary>
+        IMarketplaceAgreementsOperations MarketplaceAgreements { get; }
+
+        /// <summary>
         /// Gets the IApiKeysOperations.
         /// </summary>
         IApiKeysOperations ApiKeys { get; }
