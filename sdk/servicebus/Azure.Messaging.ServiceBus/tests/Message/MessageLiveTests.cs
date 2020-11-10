@@ -198,21 +198,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var msg = new ServiceBusMessage();
                 var amqp = new AmqpAnnotatedMessage(
+                    new AmqpMessageBody(
                     new ReadOnlyMemory<byte>[]
                     {
                         new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
                         new ReadOnlyMemory<byte>(GetRandomBuffer(100))
-                    });
+                    }));
                 msg.AmqpMessage = amqp;
 
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
-                var receivedData = ((AmqpDataMessageBody)received.GetRawMessage().Body).Data;
+                received.GetRawMessage().Body.TryGetData(out var receivedData);
                 var bodyEnum = receivedData.GetEnumerator();
                 int ct = 0;
-                var sentData = ((AmqpDataMessageBody)msg.GetRawMessage().Body).Data;
+                msg.GetRawMessage().Body.TryGetData(out var sentData);
 
                 foreach (ReadOnlyMemory<byte> data in sentData)
                 {
@@ -239,7 +240,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
-                msg.GetRawMessage().Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[]
+                msg.GetRawMessage().Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[]
                     {
                         new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
                         new ReadOnlyMemory<byte>(GetRandomBuffer(100))
