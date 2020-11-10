@@ -31,7 +31,7 @@ namespace Azure.Core.Amqp
     {
         public AmqpMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
         public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
-        public bool TryGetData(out System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
+        public bool TryGetData(out System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>>? data) { throw null; }
     }
     public enum AmqpMessageBodyType
     {

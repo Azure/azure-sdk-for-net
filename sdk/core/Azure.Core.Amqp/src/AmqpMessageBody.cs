@@ -39,14 +39,14 @@ namespace Azure.Core.Amqp
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public bool TryGetData(out IEnumerable<ReadOnlyMemory<byte>> data)
+        public bool TryGetData(out IEnumerable<ReadOnlyMemory<byte>>? data)
         {
             if (BodyType == AmqpMessageBodyType.Data)
             {
                 data = _data;
                 return true;
             }
-            data = Enumerable.Empty<ReadOnlyMemory<byte>>();
+            data = null;
             return false;
         }
     }
