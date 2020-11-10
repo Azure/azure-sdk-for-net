@@ -10,13 +10,14 @@
 - Added support for pre-built invoices recognition.
 - Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
 - Added ability to pass parameter `ModelName` to `StartTraining` methods.
 - Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
-- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
+- Added property `Appearance` to `FormLine` to indicate the style of the extracted text. for example, "handwriting" or "other".
 
 ## 3.0.0 (2020-08-20)
 

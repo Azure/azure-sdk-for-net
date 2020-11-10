@@ -4,10 +4,12 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
-    [CodeGenModel("TextStyle")]
+    /// <inheritdoc />
+    [CodeGenModel("Style")]
     [SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "Will fix name in future release")]
-    public partial struct TextStyle
-    { }
+    public partial class Style
+    {
+    }
 }

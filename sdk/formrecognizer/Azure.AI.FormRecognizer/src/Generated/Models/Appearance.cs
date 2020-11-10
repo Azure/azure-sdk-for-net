@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     /// <summary> An object representing the appearance of the text line. </summary>
-    internal partial class Appearance
+    public partial class Appearance
     {
         /// <summary> Initializes a new instance of Appearance. </summary>
         /// <param name="style"> An object representing the style of the text line. </param>

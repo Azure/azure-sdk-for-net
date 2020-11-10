@@ -119,6 +119,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 {
                     Assert.GreaterOrEqual(item.Confidence, 0);
                 }
+
+                Assert.IsNotNull(line.Appearance);
+                Assert.IsNotNull(line.Appearance.Style);
+                Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                Assert.Greater(line.Appearance.Style.Confidence, 0f);
             }
 
             var table = formPage.Tables.Single();
@@ -219,6 +224,19 @@ namespace Azure.AI.FormRecognizer.Tests
                 foreach (var item in line.Words)
                 {
                     Assert.GreaterOrEqual(item.Confidence, 0);
+                }
+
+                Assert.IsNotNull(line.Appearance);
+                Assert.IsNotNull(line.Appearance.Style);
+                Assert.Greater(line.Appearance.Style.Confidence, 0f);
+
+                if (lineIndex == 45)
+                {
+                    Assert.AreEqual(TextStyle.Handwriting, line.Appearance.Style.Name);
+                }
+                else
+                {
+                    Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
                 }
             }
 
