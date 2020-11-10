@@ -61,13 +61,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public BinaryData Body
-        {
-            get
-            {
-                return AmqpMessage.GetBody();
-            }
-        }
+        public BinaryData Body => AmqpMessage.GetBody();
 
         /// <summary>
         /// Gets the MessageId to identify the message.
