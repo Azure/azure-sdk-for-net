@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
@@ -15,11 +14,12 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        /// <param name="entitiesResult"></param>
-        /// <param name="piiEntitiesResult"></param>
-        /// <param name="keyPhraseResult"></param>
-        /// <param name="map"></param>
-        internal AnalyzeOperationResult(EntitiesResult entitiesResult, PiiEntitiesResult piiEntitiesResult, KeyPhraseResult keyPhraseResult, IDictionary<string, int> map)
+        /// <param name="entitiesResult">Entities result returned from the service</param>
+        /// <param name="piiEntitiesResult">PII Entities result returned from the service</param>
+        /// <param name="keyPhraseResult">Keyphrase result returned from the service</param>
+        /// <param name="map">Variable to map documents with id and maintaining the order</param>
+        /// <param name="displayName">DisplayName for the Job</param>
+        internal AnalyzeOperationResult(EntitiesResult entitiesResult, PiiEntitiesResult piiEntitiesResult, KeyPhraseResult keyPhraseResult, IDictionary<string, int> map, string displayName)
         {
             if (entitiesResult != null)
             {
@@ -34,6 +34,10 @@ namespace Azure.AI.TextAnalytics
             if (keyPhraseResult != null)
             {
                 KeyPhraseResult = Transforms.ConvertToExtractKeyPhrasesResultCollection(keyPhraseResult, map);
+            }
+            if (displayName != null)
+            {
+                DisplayName = displayName;
             }
         }
 
@@ -52,5 +56,9 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public ExtractKeyPhrasesResultCollection KeyPhraseResult { get; }
 
+        /// <summary>
+        /// DisplayName
+        /// </summary>
+        public string DisplayName { get; }
     }
 }

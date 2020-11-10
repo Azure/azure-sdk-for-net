@@ -11,9 +11,9 @@
         "Content-Length": "410",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-cd1494bd501d0246afbbb14d6d71ea45-98b9cabd6c043547-00",
+        "traceparent": "00-48b7d8e1ffbfe34398c0ef6ef9baab67-9d7e486583deb040-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201109.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201110.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e97bbbcf82adc1bcfc469a941c1a1f32",
@@ -52,18 +52,18 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "a8d41999-8e06-4487-aa33-44110d647afa",
+        "apim-request-id": "c0d98706-294f-4cdd-9ab3-5c2484c55ea4",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Nov 2020 19:30:45 GMT",
+        "Date": "Tue, 10 Nov 2020 21:11:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidArgument",
-          "message": "At least one document is missing a Text attribute."
+          "message": "Value cannot be null.\nParameter name: blobName"
         }
       }
     }

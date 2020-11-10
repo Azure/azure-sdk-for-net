@@ -19,11 +19,6 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal TaskState(DateTimeOffset lastUpdateDateTime, string name, JobStatus status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             LastUpdateDateTime = lastUpdateDateTime;
             Name = name;
             Status = status;
@@ -32,16 +27,16 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Last updated time.
         /// </summary>
-        public DateTimeOffset LastUpdateDateTime { get; } = new DateTimeOffset();
+        public DateTimeOffset LastUpdateDateTime { get; }
 
         /// <summary>
         /// Name for the Task.
         /// </summary>
-        public string Name { get; } = "";
+        public string Name { get; }
 
         /// <summary>
         /// Status for Task.
         /// </summary>
-        public JobStatus Status { get; } = JobStatus.NotStarted;
+        public JobStatus Status { get; }
     }
 }

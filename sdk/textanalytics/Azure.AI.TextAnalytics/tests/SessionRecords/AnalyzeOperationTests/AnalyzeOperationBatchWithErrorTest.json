@@ -8,12 +8,12 @@
           "application/json",
           "text/json"
         ],
-        "Content-Length": "396",
+        "Content-Length": "410",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-95dbf12a399a534daca32e5029fb0cbf-d82a4537ddfa854c-00",
+        "traceparent": "00-007d613896a45b4e8873c0f59847c4f1-67698018ca79e94a-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201108.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201110.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8bc4734310bb7be2c59f879707480cb0",
@@ -48,22 +48,22 @@
             }
           ]
         },
-        "displayName": "AnalyzeOperationTest"
+        "displayName": "AnalyzeOperationBatchWithErrorTest"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "1c4b33fc-210d-43d6-b4e2-dda8b142bc84",
+        "apim-request-id": "cf00b9cd-8d08-4606-b29b-6ac36041f3ac",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 09 Nov 2020 08:46:26 GMT",
+        "Date": "Tue, 10 Nov 2020 21:11:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "13"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidArgument",
-          "message": "At least one document is missing a Text attribute."
+          "message": "Value cannot be null.\nParameter name: blobName"
         }
       }
     }

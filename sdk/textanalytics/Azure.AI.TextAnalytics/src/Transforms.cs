@@ -259,7 +259,7 @@ namespace Azure.AI.TextAnalytics
             PiiEntitiesResult piiEntitiesResult = jobState.Tasks.EntityRecognitionPiiTasks.Count > 0 ? jobState.Tasks.EntityRecognitionPiiTasks[0].Results : null;
             KeyPhraseResult keyPhraseResult = jobState.Tasks.KeyPhraseExtractionTasks.Count > 0 ? jobState.Tasks.KeyPhraseExtractionTasks[0].Results : null;
 
-            return new AnalyzeOperationResult(entitiesResult, piiEntitiesResult, keyPhraseResult, map);
+            return new AnalyzeOperationResult(entitiesResult, piiEntitiesResult, keyPhraseResult, map, jobState.DisplayName);
         }
 
         #endregion

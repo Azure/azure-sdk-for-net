@@ -212,8 +212,7 @@ namespace Azure.AI.TextAnalytics
                     }
                     else if (update.Value.Status == JobStatus.Failed)
                     {
-                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors)
-                            .ConfigureAwait(false);
+                        _requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.Errors).ConfigureAwait(false);
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }

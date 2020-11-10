@@ -38,11 +38,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                DisplayName = "AnalyzeOperationTest"
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
             };
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
@@ -51,21 +47,29 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.KeyPhraseResult;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.EntitiesResult;
 
-            Assert.IsNotNull(result);
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.KeyPhraseResult;
 
-            Assert.AreEqual(2, result.Count);
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.PiiEntitiesResult;
+
+            Assert.IsNotNull(keyPhrasesResult);
+            Assert.IsNull(entitiesResult);
+            Assert.IsNull(piiResult);
+
+            Assert.IsNotNull(keyPhrasesResult);
+
+            Assert.AreEqual(2, keyPhrasesResult.Count);
 
             var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
 
-            foreach (string keyphrase in result[0].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
             }
 
-            foreach (string keyphrase in result[1].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[1].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
             }
@@ -94,7 +98,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     ModelVersion = "latest"
                 },
-                DisplayName = "AnalyzeOperationTest"
+                DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
@@ -108,6 +112,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(result);
 
             Assert.AreEqual(2, result.Count);
+
+            Assert.AreEqual("AnalyzeOperationWithLanguageTest", resultCollection.DisplayName);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
@@ -172,6 +178,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
             Assert.IsNotNull(piiResult);
+            Assert.AreEqual("AnalyzeOperationWithMultipleTasks", resultCollection.DisplayName);
 
             // Keyphrases
             Assert.AreEqual(2, keyPhrasesResult.Count);
@@ -239,13 +246,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(result);
 
-            // TODO - Update this to Assert.AreEqual(1, result.Count), once skip starts working.
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(1, result.Count);
 
             var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
 
-            // TODO - Update this to result[0].KeyPhrases
-            foreach (string keyphrase in result[1].KeyPhrases)
+            foreach (string keyphrase in result[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
             }
@@ -276,8 +281,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(result);
 
-            // TODO - Update this to Assert.AreEqual(1, result.Count), once skip starts working.
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(1, result.Count);
 
             var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
 
@@ -309,14 +313,14 @@ namespace Azure.AI.TextAnalytics.Tests
                 Skip = 1
             };
 
-            var exceptionMessage = "At least one document is missing a Text attribute.\r\nStatus: 400 (Bad Request)\r\nErrorCode: InvalidArgument\r";
             await Task.Run(() => {
                 RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                    AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, "en", operationOptions);
                 });
 
-                Assert.IsTrue(ex.Message.Contains(exceptionMessage));
+                Assert.IsTrue(ex.ErrorCode.Equals("InvalidArgument"));
+                Assert.IsTrue(ex.Status.Equals(400));
             });
 
         }
@@ -353,8 +357,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, result.Count);
 
-            // TODO - Update this to "A patient with medical id ******** whose phone number is ************ is going under heart surgery."
-            // once orchestrator returns redatcted string.
             var redactedText = string.Empty;
             Assert.AreEqual(redactedText, result[0].Entities.RedactedText);
 
@@ -363,6 +365,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("The statstics is not being returned from the service - https://github.com/Azure/azure-sdk-for-net/issues/16839")]
         public async Task AnalyzeOperationBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
