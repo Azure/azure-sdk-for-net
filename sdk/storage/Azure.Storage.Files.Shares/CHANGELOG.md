@@ -1,6 +1,7 @@
 # Release History
 
-## 12.5.0-preview.2 (Unreleased)
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
 - Fixed bug where ShareDirectoryClient.Exists(), .DeleteIfExists() and ShareFileClient.Exists(), .DeleteIfExists() would thrown an exception when the directory or file's parent directory didn't exist.
 - Renamed ShareClient.SetTier() -> ShareClient.SetProperties().  SetProperties() can be used to set both Share Tier and Share Quota.
 - Changed ShareDeleteOptions.IncludeSnapshots -> .ShareSnapshotsDeleteOption, and added option to also delete Share Snapshots that have been leased.
