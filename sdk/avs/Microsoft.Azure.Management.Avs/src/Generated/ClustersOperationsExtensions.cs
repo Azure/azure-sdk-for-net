@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -174,12 +174,12 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='cluster'>
-            /// A cluster in a private cloud
+            /// <param name='clusterUpdate'>
+            /// The cluster properties to be updated
             /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate)
             {
-                return operations.UpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, privateCloudName, clusterName, clusterUpdate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -197,15 +197,15 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='cluster'>
-            /// A cluster in a private cloud
+            /// <param name='clusterUpdate'>
+            /// The cluster properties to be updated
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, clusterUpdate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -321,12 +321,12 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='cluster'>
-            /// A cluster in a private cloud
+            /// <param name='clusterUpdate'>
+            /// The cluster properties to be updated
             /// </param>
-            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster)
+            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, clusterName, cluster).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, privateCloudName, clusterName, clusterUpdate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -344,15 +344,15 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='clusterName'>
             /// Name of the cluster in the private cloud
             /// </param>
-            /// <param name='cluster'>
-            /// A cluster in a private cloud
+            /// <param name='clusterUpdate'>
+            /// The cluster properties to be updated
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, Cluster cluster, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, ClusterUpdate clusterUpdate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, clusterUpdate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.Avs
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='privateCloudName'>
             /// Name of the private cloud

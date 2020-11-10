@@ -4,14 +4,12 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class StorageBlobScanInfoManagerTests
     {

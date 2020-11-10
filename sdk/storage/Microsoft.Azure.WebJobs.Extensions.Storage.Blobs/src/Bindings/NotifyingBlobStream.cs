@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     internal class NotifyingBlobStream : DelegatingStream
     {

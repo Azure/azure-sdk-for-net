@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -102,6 +103,16 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
+        /// Optional. The snapshot of the blob.
+        /// </summary>
+        private string _snapshot;
+
+        /// <summary>
+        /// Optional. The version of the blob.
+        /// </summary>
+        private string _blobVersionId;
+
+        /// <summary>
         /// The Storage account name corresponding to the blob client.
         /// </summary>
         private string _accountName;
@@ -151,6 +162,17 @@ namespace Azure.Storage.Blobs.Specialized
                 return _name;
             }
         }
+
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -226,6 +248,7 @@ namespace Azure.Storage.Blobs.Specialized
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -246,7 +269,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
-            : this(blobUri, (HttpPipelinePolicy)null, options)
+            : this(blobUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -269,7 +292,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options)
+            : this(blobUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -292,7 +315,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options)
+            : this(blobUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
@@ -315,16 +338,36 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal BlobBaseClient(
+            Uri blobUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new BlobClientOptions();
             _uri = blobUri;
+            if (!string.IsNullOrEmpty(blobUri.Query))
+            {
+                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
+                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
+                {
+                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
+                }
+                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
+                {
+                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
+                }
+            }
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _encryptionScope = options.EncryptionScope;
+            _storageSharedKeyCredential = storageSharedKeyCredential;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
             BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
@@ -396,6 +439,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
+            _snapshot = snapshot;
             var blobUriBuilder = new BlobUriBuilder(Uri)
             {
                 Snapshot = snapshot
@@ -434,6 +478,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
+            _blobVersionId = versionId;
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
                 VersionId = versionId
@@ -1416,7 +1461,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual Stream OpenRead(
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            long position = 0 ,
+            long position = 0,
             int? bufferSize = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1531,7 +1576,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Stream> OpenReadAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool allowBlobModifications,
-            long position = 0 ,
+            long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
                 => await OpenReadAsync(
@@ -4103,6 +4148,141 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = BlobContainerName,
+                BlobName = Name,
+                Snapshot = _snapshot,
+                BlobVersionId = _blobVersionId
+            });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(BlobSasBuilder)"/> returns a <see cref="Uri"/>
+        /// that generates a Blob Service Shared Access Signature (SAS) Uri
+        /// based on the Client properties and and builder. The SAS is signed
+        /// by the shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(BlobSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(BlobContainerName));
+            }
+            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Snapshot),
+                    nameof(BlobSasBuilder));
+            }
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobVersionId),
+                    nameof(BlobSasBuilder));
+            }
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region GetParentBlobContainerClientCore
+
+        private BlobContainerClient _parentBlobContainerClient;
+
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlobContainerClient GetParentBlobContainerClientCore()
+        {
+            if (_parentBlobContainerClient == null)
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
+
+                _parentBlobContainerClient = new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics,
+                    CustomerProvidedKey,
+                    ClientSideEncryption,
+                    EncryptionScope);
+            }
+
+            return _parentBlobContainerClient;
+        }
+        #endregion
     }
 
     /// <summary>
@@ -4111,6 +4291,19 @@ namespace Azure.Storage.Blobs.Specialized
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobBaseClient"/>'s parent container.
+        /// The new <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobBaseClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobBaseClient"/>.</param>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public static BlobContainerClient GetParentBlobContainerClient(this BlobBaseClient client)
+        {
+            return client.GetParentBlobContainerClientCore();
+        }
+
         /// <summary>
         /// Create a new <see cref="BlobBaseClient"/> object by concatenating
         /// <paramref name="blobName"/> to the end of the

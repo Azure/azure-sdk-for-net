@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -131,6 +132,17 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        internal readonly StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
@@ -200,6 +212,7 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(conn.Credentials);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
         }
 
         /// <summary>
@@ -217,7 +230,7 @@ namespace Azure.Storage.Files.Shares
         /// applied to every request.
         /// </param>
         public ShareDirectoryClient(Uri directoryUri, ShareClientOptions options = default)
-            : this(directoryUri, (HttpPipelinePolicy)null, options)
+            : this(directoryUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -239,7 +252,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareDirectoryClient(Uri directoryUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy(), options)
+            : this(directoryUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -260,13 +273,21 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareDirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, ShareClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _pipeline = options.Build(authentication);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
         }
 
         /// <summary>
@@ -2609,5 +2630,89 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteFile
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareFileSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Directory Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareFileSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = ShareName,
+                FilePath = Path
+            });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Share Directory Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and and builder. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.ShareName),
+                    nameof(ShareSasBuilder),
+                    nameof(ShareName));
+            }
+            if (!builder.FilePath.Equals(Path, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.FilePath),
+                    nameof(ShareSasBuilder),
+                    nameof(Path));
+            }
+            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
+            {
+                Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString()
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
     }
 }

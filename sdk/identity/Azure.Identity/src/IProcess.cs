@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 
 namespace Azure.Identity
 {
@@ -11,13 +10,15 @@ namespace Azure.Identity
     {
         bool HasExited { get; }
         int ExitCode { get; }
-        StreamReader StandardOutput { get; }
-        StreamReader StandardError { get; }
         ProcessStartInfo StartInfo { get; set; }
 
         event EventHandler Exited;
+        event DataReceivedEventHandler OutputDataReceived;
+        event DataReceivedEventHandler ErrorDataReceived;
 
-        void Start();
+        bool Start();
         void Kill();
+        void BeginOutputReadLine();
+        void BeginErrorReadLine();
     }
 }

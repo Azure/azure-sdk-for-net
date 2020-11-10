@@ -18,7 +18,7 @@ namespace Azure.Core.Amqp
         /// passed in data sections.
         /// </summary>
         /// <param name="data">The data sections.</param>
-        public AmqpDataMessageBody(IEnumerable<BinaryData> data)
+        public AmqpDataMessageBody(IEnumerable<ReadOnlyMemory<byte>> data)
         {
             Data = data;
         }
@@ -26,6 +26,11 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The data sections for the AMQP message body.
         /// </summary>
-        public IEnumerable<BinaryData> Data { get; internal set; }
+        public virtual IEnumerable<ReadOnlyMemory<byte>> Data { get; internal set; }
+
+        /// <summary>
+        /// Gets the type of the message body.
+        /// </summary>
+        public override AmqpMessageBodyType BodyType => AmqpMessageBodyType.Data;
     }
 }

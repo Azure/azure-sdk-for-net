@@ -19,7 +19,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal DataFeedMissingDataPointFillSettings(DataFeedDetail dataFeedDetail)
         {
             FillType = dataFeedDetail.FillMissingPointType;
-            CustomFillValue = dataFeedDetail.FillMissingPointValue;
+            CustomFillValue = dataFeedDetail.FillMissingPointType == DataFeedMissingDataPointFillType.CustomValue
+                ? dataFeedDetail.FillMissingPointValue
+                : null;
         }
 
         /// <summary>

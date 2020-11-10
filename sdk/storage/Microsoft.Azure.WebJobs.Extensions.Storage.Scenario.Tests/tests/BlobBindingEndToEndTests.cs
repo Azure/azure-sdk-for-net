@@ -8,18 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
-namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 {
     public class BlobBindingEndToEndTests : LiveTestBase<WebJobsTestEnvironment>
     {

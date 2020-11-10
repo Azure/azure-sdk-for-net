@@ -54,7 +54,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -228,6 +228,10 @@ namespace Azure.DigitalTwins.Core.Tests
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -261,7 +265,6 @@ namespace Azure.DigitalTwins.Core.Tests
 
             string floorTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.FloorTwinIdPrefix).ConfigureAwait(false);
             string roomTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.RoomTwinIdPrefix).ConfigureAwait(false);
-            string hvacTwinId = await GetUniqueTwinIdAsync(client, TestAssetDefaults.HvacTwinIdPrefix).ConfigureAwait(false);
 
             try
             {
@@ -269,7 +272,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -349,6 +352,10 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.DeleteRelationshipAsync(roomTwinId, $"{roomToFloorRelationshipPrefix}{i}{randomPostfix}").ConfigureAwait(false);
                 }
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -393,7 +400,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -443,6 +450,10 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorContainsRoomRelationshipId)
                     .ConfigureAwait(false);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -488,7 +499,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -540,6 +551,10 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorContainsRoomRelationshipId)
                     .ConfigureAwait(false);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -585,7 +600,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -649,6 +664,10 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorTwinId,
                         floorContainsRoomRelationshipId);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -694,7 +713,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -768,6 +787,10 @@ namespace Azure.DigitalTwins.Core.Tests
                             floorContainsRoomRelationshipId);
                 }
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -813,7 +836,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -874,6 +897,10 @@ namespace Azure.DigitalTwins.Core.Tests
                         floorContainsRoomRelationshipId)
                     .ConfigureAwait(false);
             }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
+            }
             finally
             {
                 // clean up
@@ -919,7 +946,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 string floorModel = TestAssetsHelper.GetFloorModelPayload(floorModelId, roomModelId, hvacModelId);
                 string roomModel = TestAssetsHelper.GetRoomModelPayload(roomModelId, floorModelId);
                 string hvacModel = TestAssetsHelper.GetHvacModelPayload(hvacModelId, floorModelId);
-                await client.CreateModelsAsync(new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
+                await CreateAndListModelsAsync(client, new List<string> { floorModel, roomModel, hvacModel }).ConfigureAwait(false);
 
                 // create floor twin
                 BasicDigitalTwin floorTwin = TestAssetsHelper.GetFloorTwinPayload(floorModelId);
@@ -988,6 +1015,10 @@ namespace Azure.DigitalTwins.Core.Tests
 
                     throw new AssertionException("DeleteRelationship should not fail with PreconditionFailed when ifMatch header was set with the correct ETag", ex);
                 }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Failure in executing a step in the test case: {ex.Message}.");
             }
             finally
             {

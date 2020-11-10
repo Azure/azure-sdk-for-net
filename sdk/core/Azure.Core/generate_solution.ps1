@@ -3,7 +3,10 @@ $ObjDirectory = "$RepoRoot\artifacts\obj";
 dotnet restore $RepoRoot\eng\service.proj
 
 $slnName = "Azure.Core.All.sln";
-
+if (!(Test-Path $slnName))
+{
+    dotnet new sln -n "Azure.Core.All"
+}
 foreach ($projectName in Get-ChildItem -Directory $ObjDirectory)
 {
     Write-Host "Processing $projectName\project.assets.json"

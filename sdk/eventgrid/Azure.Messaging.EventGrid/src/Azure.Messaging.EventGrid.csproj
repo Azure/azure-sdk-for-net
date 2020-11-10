@@ -9,7 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
+    <!--This can be removed once this dependency is added to Core in the next release.-->
+    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
@@ -24,10 +28,6 @@
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <ProjectReference Include="..\..\..\core\System.Memory.Data\src\System.Memory.Data.csproj" />
   </ItemGroup>
 
 </Project>
