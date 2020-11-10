@@ -6,6 +6,7 @@
 - Added logSettings property into CopyActivity
 - Added connectionProperties property into Concur linkedService
 - Added authenticationType and sessionToken properties into AmazonS3 linkedService
+- Added support for more frequency types for TumblingWindowTrigger
 
 ## Version 4.12.0
 ###  Feature Additions
