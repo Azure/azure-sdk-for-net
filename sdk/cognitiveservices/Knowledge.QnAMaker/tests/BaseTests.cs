@@ -12,7 +12,7 @@ namespace QnAMaker.Tests
         static BaseTests()
         {
             // Retrieve the configuration information.
-            QnAMakerSubscriptionKey = "7afcaa16ba1747328eb7a77de8316445";
+            QnAMakerSubscriptionKey = "";
             QnAMakerEndpointKey = "";
         }
 
