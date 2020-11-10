@@ -52,7 +52,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message.</param>
         public ServiceBusMessage(BinaryData body)
         {
-            AmqpMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { body ?? new BinaryData(Array.Empty<byte>()) });
+            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body ?? new BinaryData(Array.Empty<byte>()) });
+            AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
         /// <summary>
@@ -62,7 +63,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            AmqpMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { receivedMessage.Body });
+            AmqpMessageBody body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { receivedMessage.Body });
+            AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
             AmqpMessageProperties properties = AmqpMessage.Properties;
@@ -133,7 +135,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
             }
         }
 

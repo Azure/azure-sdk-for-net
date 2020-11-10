@@ -214,11 +214,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(amqpMessage.GetDataViaDataBody());
+                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.GetDataViaDataBody()));
             }
             else
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { Array.Empty<byte>() });
+                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(Enumerable.Empty<ReadOnlyMemory<byte>>()));
             }
             ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
 

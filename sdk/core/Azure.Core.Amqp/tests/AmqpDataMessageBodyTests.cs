@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Core.Amqp.Tests
@@ -11,8 +12,15 @@ namespace Azure.Core.Amqp.Tests
         [Test]
         public void CanCreateDataBody()
         {
-            var body = new AmqpDataMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
+            var body = new AmqpMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
             Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out var data));
+            Assert.NotNull(data);
+
+            body = new AmqpMessageBody(null);
+            Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out data));
+            Assert.NotNull(data);
         }
     }
 }
