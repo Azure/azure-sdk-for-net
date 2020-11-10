@@ -45,15 +45,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// service.</param>
         /// <param name="shareDeleteRetentionPolicy">The file service
         /// properties for share soft delete.</param>
-        /// <param name="protocolSettings">Protocol settings for file
-        /// service</param>
         /// <param name="sku">Sku name and tier.</param>
-        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), ProtocolSettings protocolSettings = default(ProtocolSettings), Sku sku = default(Sku))
+        public FileServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Cors = cors;
             ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy;
-            ProtocolSettings = protocolSettings;
             Sku = sku;
             CustomInit();
         }
@@ -77,12 +74,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
-
-        /// <summary>
-        /// Gets or sets protocol settings for file service
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.protocolSettings")]
-        public ProtocolSettings ProtocolSettings { get; set; }
 
         /// <summary>
         /// Gets sku name and tier.
