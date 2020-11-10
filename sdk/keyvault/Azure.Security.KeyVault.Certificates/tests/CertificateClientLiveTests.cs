@@ -765,9 +765,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.WaitForCompletionAsync();
 
+            #region Snippet:CertificateClientLiveTests_DownloadLatestCertificate
             KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
-
             using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+            #endregion
+
             using RSA pubkey = (RSA)pub.PublicKey.Key;
 
             byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");

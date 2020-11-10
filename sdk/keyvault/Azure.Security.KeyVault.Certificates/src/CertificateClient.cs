@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -158,9 +158,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
         /// associated with the specified secret which contains the full certificate. If you do not have permissions to get the secret,
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// </para>
+        /// <para>
+        /// If you want a certificate containing only the public key, you can create one like:
+        /// <code snippet="Snippet:CertificateClientLiveTests_DownloadLatestCertificate">
+        /// KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+        /// using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+        /// </code>
+        /// </para>
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
@@ -204,9 +213,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
         /// associated with the specified secret which contains the full certificate. If you do not have permissions to get the secret,
         /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// </para>
+        /// <para>
+        /// If you want a certificate containing only the public key, you can create one like:
+        /// <code snippet="Snippet:CertificateClientLiveTests_DownloadLatestCertificate">
+        /// KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+        /// using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+        /// </code>
+        /// </para>
         /// </remarks>
         /// <param name="certificateName">The name of the certificate to download.</param>
         /// <param name="version">Optional version of a certificate to download.</param>
