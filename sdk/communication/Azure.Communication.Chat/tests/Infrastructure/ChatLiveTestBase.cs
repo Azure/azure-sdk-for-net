@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Identity;
+using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
@@ -14,7 +15,7 @@ namespace Azure.Communication.Chat.Tests
     {
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new ChatRecordedTestSanitizer();
+            Sanitizer = new CommunicationRecordedTestSanitizer();
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Azure.Communication.Chat.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                token = ChatRecordedTestSanitizer.SanitizedChatAuthHeaderValue;
+                token = CommunicationRecordedTestSanitizer.SanitizedChatAuthHeaderValue;
             }
 
             CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);

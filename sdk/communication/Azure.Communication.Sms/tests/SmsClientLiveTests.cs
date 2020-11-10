@@ -6,6 +6,7 @@ using System;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
+using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.Sms.Tests
     public class SmsClientLiveTests : RecordedTestBase<SmsClientTestEnvironment>
     {
         public SmsClientLiveTests(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
+            => Sanitizer = new CommunicationRecordedTestSanitizer();
 
         [Test]
         public async Task SendingAnSmsMessage()
