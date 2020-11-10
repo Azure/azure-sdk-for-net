@@ -261,6 +261,10 @@
 # ServiceLabel: %Digital Twins %Service Attention
 /sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
 
+# PRLabel: %TimeSeriesInsights
+# ServiceLabel: %Time Series Insights %Service Attention
+/sdk/timeseriesinsights/                        @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @yeskarthik @rasidhan @dmdenmsft
+
 # ServiceLabel: %Event Grid %Service Attention
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                 @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
