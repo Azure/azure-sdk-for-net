@@ -41,7 +41,7 @@ parameters:
     Public:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
     Preview:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
     Canary:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
       Location: 'eastus2euap'
