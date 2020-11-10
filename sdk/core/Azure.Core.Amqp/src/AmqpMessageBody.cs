@@ -16,7 +16,7 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// The data sections for the AMQP message body.
         /// </summary>
-        private readonly IEnumerable<ReadOnlyMemory<byte>>? _data;
+        private readonly IEnumerable<ReadOnlyMemory<byte>> _data;
 
         /// <summary>
         /// Gets the type of the message body.
@@ -30,7 +30,7 @@ namespace Azure.Core.Amqp
         /// <param name="data">The data sections.</param>
         public AmqpMessageBody(IEnumerable<ReadOnlyMemory<byte>> data)
         {
-            _data = data;
+            _data = data ?? Enumerable.Empty<ReadOnlyMemory<byte>>();
             BodyType = AmqpMessageBodyType.Data;
         }
 
@@ -43,10 +43,10 @@ namespace Azure.Core.Amqp
         {
             if (BodyType == AmqpMessageBodyType.Data)
             {
-                data = _data!;
+                data = _data;
                 return true;
             }
-            data = Enumerable.Empty<ReadOnlyMemory<byte>>();
+            data = _data;
             return false;
         }
     }

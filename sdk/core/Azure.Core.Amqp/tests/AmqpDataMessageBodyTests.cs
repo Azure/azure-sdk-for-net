@@ -14,6 +14,13 @@ namespace Azure.Core.Amqp.Tests
         {
             var body = new AmqpMessageBody(Array.Empty<ReadOnlyMemory<byte>>());
             Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out var data));
+            Assert.NotNull(data);
+
+            body = new AmqpMessageBody(null);
+            Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out data));
+            Assert.NotNull(data);
         }
     }
 }
