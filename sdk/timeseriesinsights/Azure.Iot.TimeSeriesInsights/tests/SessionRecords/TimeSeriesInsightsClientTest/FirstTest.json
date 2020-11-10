@@ -1,7 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "RandomSeed": "1201680288",
-    "TIMESERIESINSIGHTS_URL": "https://fakeHost.api.wus2.timeseriesinsights.azure.com"
-  }
-}
