@@ -23,6 +23,8 @@ namespace Azure.Iot.TimeSeriesInsights
         protected TimeSeriesInsightsClient() { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential) { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential, Azure.Iot.TimeSeriesInsights.TimeSeriesInsightsClientOptions options) { }
+        public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.Models.ModelSettingsResponse> Get(string clientSessionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.Models.ModelSettingsResponse>> GetAsync(string clientSessionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TimeSeriesInsightsClientOptions : Azure.Core.ClientOptions
     {
