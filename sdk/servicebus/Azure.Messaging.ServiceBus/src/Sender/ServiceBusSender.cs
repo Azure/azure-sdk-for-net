@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     using DiagnosticScope messageScope = _scopeFactory.CreateScope(
                         DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.SenderKind);
+                        DiagnosticProperty.ProducerKind);
                     messageScope.Start();
 
                     Activity activity = Activity.Current;
@@ -477,7 +477,6 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             return sequenceNumbers;
         }
 
@@ -524,7 +523,6 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
 
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             scope.Start();
             try
             {
