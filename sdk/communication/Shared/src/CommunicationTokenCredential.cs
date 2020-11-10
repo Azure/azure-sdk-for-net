@@ -14,7 +14,7 @@ namespace Azure.Communication.Pipeline
 
         public CommunicationTokenCredential(CommunicationUserCredential credential) => _credential = credential;
 
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetToken();
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetTokenAsync();
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetToken(cancellationToken);
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => _credential.GetTokenAsync(cancellationToken);
     }
 }
