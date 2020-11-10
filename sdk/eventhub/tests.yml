@@ -8,6 +8,7 @@ extends:
       - ServiceDirectory: eventhub
         MaxParallel: 6
         TimeoutInMinutes: 120
+        TestCanary: true
         ScenarioName: AzureCloud
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ArmTemplateParameters: "@{ storageEndpointSuffix = 'core.windows.net' }"
@@ -18,7 +19,7 @@ extends:
           RESOURCE_MANAGER_URL: https://management.azure.com/
 
       # AzureUSGovernment
-      - ServiceDirectory: eventhub
+      - ServiceDirectory: eventhub 
         MaxParallel: 6
         TimeoutInMinutes: 120
         ScenarioName: AzureUSGovernment

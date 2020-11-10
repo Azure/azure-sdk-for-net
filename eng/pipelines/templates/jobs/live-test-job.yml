@@ -26,6 +26,15 @@ parameters:
 - name: SubscriptionConfiguration
   type: string
   default: $(sub-config-azure-cloud-test-resources)
+- name: TestCanary
+  type: boolean
+  default: false
+- name: ResourceGroupLocationCanary
+  type: string
+  default: "centraluseuap"
+- name: TestSetupSteps
+  type: stepList
+  default: []
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -67,6 +76,12 @@ jobs:
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        ${{ if eq(parameters.TestCanary, 'true') }}:          
+          Windows_NetCoreApp_Canary_region:
+            OSVmImage: "windows-2019"
+            TestTargetFramework: netcoreapp2.1
+            SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)            
+            Location: ${{ parameters.ResourceGroupLocationCanary }}           
     pool:
       vmImage: "$(OSVmImage)"
 
@@ -76,6 +91,10 @@ jobs:
       - ${{ parameters.PreSteps }}
 
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:

@@ -1,6 +1,29 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests-multiple.yml
   parameters:
-    ServiceDirectory: appconfiguration
+    jobs:
+      # Azure Cloud
+      - ServiceDirectory: appconfiguration
+        ScenarioName: AzureCloud
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.azconfig.io' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.com
+
+      # AzureUSGovernment
+      - ServiceDirectory: appconfiguration
+        ScenarioName: AzureUSGovernment
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.azconfig.azure.us' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.microsoftonline.us
+
+      # AzureChinaCloud
+      - ServiceDirectory: appconfiguration
+        ScenarioName: AzureChinaCloud
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ArmTemplateParameters: "@{ endpointSuffix = '.azconfig.azure.cn' }"
+        EnvVars:
+          AZURE_AUTHORITY_HOST: https://login.chinacloudapi.cn

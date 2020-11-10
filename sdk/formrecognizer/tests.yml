@@ -7,6 +7,7 @@ extends:
       # Azure Cloud
       - ServiceDirectory: formrecognizer
         ScenarioName: AzureCloud
+        TimeoutInMinutes: 120
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.com'; location = 'westus2' }"
         EnvVars:
@@ -15,6 +16,7 @@ extends:
       # AzureUSGovernment
       - ServiceDirectory: formrecognizer
         ScenarioName: AzureUSGovernment
+        TimeoutInMinutes: 180
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         ArmTemplateParameters: "@{ endpointSuffix = '.cognitiveservices.azure.us'; location = 'usgovvirginia' }"
         EnvVars:
