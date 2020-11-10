@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Avs
     using System.Threading.Tasks;
 
     /// <summary>
-    /// HcxEnterpriseSitesOperations operations.
+    /// GlobalReachConnectionsOperations operations.
     /// </summary>
-    internal partial class HcxEnterpriseSitesOperations : IServiceOperations<AvsClient>, IHcxEnterpriseSitesOperations
+    internal partial class GlobalReachConnectionsOperations : IServiceOperations<AvsClient>, IGlobalReachConnectionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the HcxEnterpriseSitesOperations class.
+        /// Initializes a new instance of the GlobalReachConnectionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal HcxEnterpriseSitesOperations(AvsClient client)
+        internal GlobalReachConnectionsOperations(AvsClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Avs
         public AvsClient Client { get; private set; }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List global reach connections in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<HcxEnterpriseSite>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GlobalReachConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Avs
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/hcxEnterpriseSites").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{privateCloudName}", System.Uri.EscapeDataString(privateCloudName));
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Avs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<HcxEnterpriseSite>>();
+            var _result = new AzureOperationResponse<IPage<GlobalReachConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Avs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HcxEnterpriseSite>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GlobalReachConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get a global reach connection by name in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -284,8 +284,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// Name of the private cloud
         /// </param>
-        /// <param name='hcxEnterpriseSiteName'>
-        /// Name of the HCX Enterprise Site in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HcxEnterpriseSite>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GlobalReachConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -344,9 +344,9 @@ namespace Microsoft.Azure.Management.Avs
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateCloudName");
             }
-            if (hcxEnterpriseSiteName == null)
+            if (globalReachConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hcxEnterpriseSiteName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "globalReachConnectionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -368,17 +368,17 @@ namespace Microsoft.Azure.Management.Avs
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("privateCloudName", privateCloudName);
-                tracingParameters.Add("hcxEnterpriseSiteName", hcxEnterpriseSiteName);
+                tracingParameters.Add("globalReachConnectionName", globalReachConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/hcxEnterpriseSites/{hcxEnterpriseSiteName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{privateCloudName}", System.Uri.EscapeDataString(privateCloudName));
-            _url = _url.Replace("{hcxEnterpriseSiteName}", System.Uri.EscapeDataString(hcxEnterpriseSiteName));
+            _url = _url.Replace("{globalReachConnectionName}", System.Uri.EscapeDataString(globalReachConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.Avs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<HcxEnterpriseSite>();
+            var _result = new AzureOperationResponse<GlobalReachConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Management.Avs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HcxEnterpriseSite>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalReachConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -510,7 +510,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -518,8 +518,64 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// The name of the private cloud.
         /// </param>
-        /// <param name='hcxEnterpriseSiteName'>
-        /// Name of the HCX Enterprise Site in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
+        /// </param>
+        /// <param name='globalReachConnection'>
+        /// A global reach connection in the private cloud
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<GlobalReachConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<GlobalReachConnection> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, globalReachConnection, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete a global reach connection in a private cloud
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='privateCloudName'>
+        /// Name of the private cloud
+        /// </param>
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update a global reach connection in a private cloud
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='privateCloudName'>
+        /// The name of the private cloud.
+        /// </param>
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
+        /// </param>
+        /// <param name='globalReachConnection'>
+        /// A global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -542,7 +598,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HcxEnterpriseSite>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GlobalReachConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -578,9 +634,13 @@ namespace Microsoft.Azure.Management.Avs
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateCloudName");
             }
-            if (hcxEnterpriseSiteName == null)
+            if (globalReachConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hcxEnterpriseSiteName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "globalReachConnectionName");
+            }
+            if (globalReachConnection == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "globalReachConnection");
             }
             if (Client.ApiVersion == null)
             {
@@ -593,7 +653,6 @@ namespace Microsoft.Azure.Management.Avs
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
-            HcxEnterpriseSite hcxEnterpriseSite = new HcxEnterpriseSite();
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -603,18 +662,18 @@ namespace Microsoft.Azure.Management.Avs
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("privateCloudName", privateCloudName);
-                tracingParameters.Add("hcxEnterpriseSiteName", hcxEnterpriseSiteName);
-                tracingParameters.Add("hcxEnterpriseSite", hcxEnterpriseSite);
+                tracingParameters.Add("globalReachConnectionName", globalReachConnectionName);
+                tracingParameters.Add("globalReachConnection", globalReachConnection);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/hcxEnterpriseSites/{hcxEnterpriseSiteName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{privateCloudName}", System.Uri.EscapeDataString(privateCloudName));
-            _url = _url.Replace("{hcxEnterpriseSiteName}", System.Uri.EscapeDataString(hcxEnterpriseSiteName));
+            _url = _url.Replace("{globalReachConnectionName}", System.Uri.EscapeDataString(globalReachConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -658,9 +717,9 @@ namespace Microsoft.Azure.Management.Avs
 
             // Serialize Request
             string _requestContent = null;
-            if(hcxEnterpriseSite != null)
+            if(globalReachConnection != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(hcxEnterpriseSite, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(globalReachConnection, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -719,7 +778,7 @@ namespace Microsoft.Azure.Management.Avs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<HcxEnterpriseSite>();
+            var _result = new AzureOperationResponse<GlobalReachConnection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -732,7 +791,7 @@ namespace Microsoft.Azure.Management.Avs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HcxEnterpriseSite>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalReachConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -750,7 +809,7 @@ namespace Microsoft.Azure.Management.Avs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<HcxEnterpriseSite>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<GlobalReachConnection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -770,7 +829,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// Delete an HCX Enterprise Site in a private cloud
+        /// Delete a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -778,8 +837,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// Name of the private cloud
         /// </param>
-        /// <param name='hcxEnterpriseSiteName'>
-        /// Name of the HCX Enterprise Site in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -799,7 +858,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -835,9 +894,9 @@ namespace Microsoft.Azure.Management.Avs
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateCloudName");
             }
-            if (hcxEnterpriseSiteName == null)
+            if (globalReachConnectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "hcxEnterpriseSiteName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "globalReachConnectionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -859,17 +918,17 @@ namespace Microsoft.Azure.Management.Avs
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("privateCloudName", privateCloudName);
-                tracingParameters.Add("hcxEnterpriseSiteName", hcxEnterpriseSiteName);
+                tracingParameters.Add("globalReachConnectionName", globalReachConnectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/hcxEnterpriseSites/{hcxEnterpriseSiteName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{privateCloudName}", System.Uri.EscapeDataString(privateCloudName));
-            _url = _url.Replace("{hcxEnterpriseSiteName}", System.Uri.EscapeDataString(hcxEnterpriseSiteName));
+            _url = _url.Replace("{globalReachConnectionName}", System.Uri.EscapeDataString(globalReachConnectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -933,7 +992,7 @@ namespace Microsoft.Azure.Management.Avs
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -983,7 +1042,7 @@ namespace Microsoft.Azure.Management.Avs
         }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List global reach connections in a private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1009,7 +1068,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<HcxEnterpriseSite>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<GlobalReachConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1123,7 +1182,7 @@ namespace Microsoft.Azure.Management.Avs
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<HcxEnterpriseSite>>();
+            var _result = new AzureOperationResponse<IPage<GlobalReachConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1136,7 +1195,7 @@ namespace Microsoft.Azure.Management.Avs
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HcxEnterpriseSite>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GlobalReachConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

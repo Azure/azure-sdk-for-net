@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Avs
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for AuthorizationsOperations.
+    /// Extension methods for GlobalReachConnectionsOperations.
     /// </summary>
-    public static partial class AuthorizationsOperationsExtensions
+    public static partial class GlobalReachConnectionsOperationsExtensions
     {
             /// <summary>
-            /// List ExpressRoute Circuit Authorizations in a private cloud
+            /// List global reach connections in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            public static IPage<ExpressRouteAuthorization> List(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName)
+            public static IPage<GlobalReachConnection> List(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName)
             {
                 return operations.ListAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List ExpressRoute Circuit Authorizations in a private cloud
+            /// List global reach connections in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteAuthorization>> ListAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GlobalReachConnection>> ListAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
-            /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+            /// Get a global reach connection by name in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -73,16 +73,16 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
-            public static ExpressRouteAuthorization Get(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
+            public static GlobalReachConnection Get(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName)
             {
-                return operations.GetAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, privateCloudName, globalReachConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get an ExpressRoute Circuit Authorization by name in a private cloud
+            /// Get a global reach connection by name in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,22 +93,22 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteAuthorization> GetAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GlobalReachConnection> GetAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+            /// Create or update a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,16 +119,19 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
-            public static ExpressRouteAuthorization CreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
+            /// <param name='globalReachConnection'>
+            /// A global reach connection in the private cloud
+            /// </param>
+            public static GlobalReachConnection CreateOrUpdate(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, privateCloudName, globalReachConnectionName, globalReachConnection).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+            /// Create or update a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -139,22 +142,25 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
+            /// </param>
+            /// <param name='globalReachConnection'>
+            /// A global reach connection in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteAuthorization> CreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GlobalReachConnection> CreateOrUpdateAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, globalReachConnection, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete an ExpressRoute Circuit Authorization in a private cloud
+            /// Delete a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,16 +171,16 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
-            public static void Delete(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
+            public static void Delete(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName)
             {
-                operations.DeleteAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, privateCloudName, globalReachConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete an ExpressRoute Circuit Authorization in a private cloud
+            /// Delete a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,19 +191,19 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+            /// Create or update a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -208,16 +214,19 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
-            public static ExpressRouteAuthorization BeginCreateOrUpdate(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
+            /// <param name='globalReachConnection'>
+            /// A global reach connection in the private cloud
+            /// </param>
+            public static GlobalReachConnection BeginCreateOrUpdate(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, privateCloudName, globalReachConnectionName, globalReachConnection).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update an ExpressRoute Circuit Authorization in a private cloud
+            /// Create or update a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -228,22 +237,25 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// The name of the private cloud.
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
+            /// </param>
+            /// <param name='globalReachConnection'>
+            /// A global reach connection in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteAuthorization> BeginCreateOrUpdateAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GlobalReachConnection> BeginCreateOrUpdateAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, globalReachConnection, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete an ExpressRoute Circuit Authorization in a private cloud
+            /// Delete a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -254,16 +266,16 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
-            public static void BeginDelete(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName)
+            public static void BeginDelete(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, privateCloudName, authorizationName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, privateCloudName, globalReachConnectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete an ExpressRoute Circuit Authorization in a private cloud
+            /// Delete a global reach connection in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -274,19 +286,19 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='privateCloudName'>
             /// Name of the private cloud
             /// </param>
-            /// <param name='authorizationName'>
-            /// Name of the ExpressRoute Circuit Authorization in the private cloud
+            /// <param name='globalReachConnectionName'>
+            /// Name of the global reach connection in the private cloud
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IAuthorizationsOperations operations, string resourceGroupName, string privateCloudName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IGlobalReachConnectionsOperations operations, string resourceGroupName, string privateCloudName, string globalReachConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, authorizationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, privateCloudName, globalReachConnectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// List ExpressRoute Circuit Authorizations in a private cloud
+            /// List global reach connections in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -294,13 +306,13 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExpressRouteAuthorization> ListNext(this IAuthorizationsOperations operations, string nextPageLink)
+            public static IPage<GlobalReachConnection> ListNext(this IGlobalReachConnectionsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List ExpressRoute Circuit Authorizations in a private cloud
+            /// List global reach connections in a private cloud
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +323,7 @@ namespace Microsoft.Azure.Management.Avs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteAuthorization>> ListNextAsync(this IAuthorizationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GlobalReachConnection>> ListNextAsync(this IGlobalReachConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

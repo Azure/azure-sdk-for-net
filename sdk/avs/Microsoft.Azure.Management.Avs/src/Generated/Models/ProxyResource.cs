@@ -10,29 +10,30 @@
 
 namespace Microsoft.Azure.Management.Avs.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The properties of a cluster that may be updated
+    /// The resource model definition for a ARM proxy resource
     /// </summary>
-    public partial class ClusterUpdateProperties
+    public partial class ProxyResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterUpdateProperties class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        public ClusterUpdateProperties()
+        public ProxyResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterUpdateProperties class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        /// <param name="clusterSize">The cluster size</param>
-        public ClusterUpdateProperties(int? clusterSize = default(int?))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
-            ClusterSize = clusterSize;
             CustomInit();
         }
 
@@ -40,12 +41,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the cluster size
-        /// </summary>
-        [JsonProperty(PropertyName = "clusterSize")]
-        public int? ClusterSize { get; set; }
 
     }
 }
