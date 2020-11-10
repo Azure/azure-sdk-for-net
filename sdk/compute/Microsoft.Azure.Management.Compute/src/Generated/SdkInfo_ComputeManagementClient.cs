@@ -25,16 +25,20 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "DiskAccesses", "2020-06-30"),
                 new Tuple<string, string, string>("Compute", "DiskEncryptionSets", "2020-06-30"),
                 new Tuple<string, string, string>("Compute", "Disks", "2020-06-30"),
-                new Tuple<string, string, string>("Compute", "Galleries", "2019-12-01"),
-                new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2019-12-01"),
-                new Tuple<string, string, string>("Compute", "GalleryApplications", "2019-12-01"),
-                new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2019-12-01"),
-                new Tuple<string, string, string>("Compute", "GalleryImages", "2019-12-01"),
+                new Tuple<string, string, string>("Compute", "Galleries", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "GalleryApplications", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "GalleryImages", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "GallerySharingProfile", "2020-09-30"),
                 new Tuple<string, string, string>("Compute", "Images", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "LogAnalytics", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "Operations", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "ResourceSkus", "2019-04-01"),
+                new Tuple<string, string, string>("Compute", "SharedGalleries", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "SharedGalleryImageVersions", "2020-09-30"),
+                new Tuple<string, string, string>("Compute", "SharedGalleryImages", "2020-09-30"),
                 new Tuple<string, string, string>("Compute", "Snapshots", "2020-06-30"),
                 new Tuple<string, string, string>("Compute", "SshPublicKeys", "2020-06-01"),
                 new Tuple<string, string, string>("Compute", "Usage", "2020-06-01"),
@@ -54,16 +58,5 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "1959aa63dd7a626aac36cc0e6b8c656dd2c1791d";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
