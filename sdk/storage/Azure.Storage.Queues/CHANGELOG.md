@@ -1,5 +1,8 @@
 # Release History
 
+## 12.6.0-beta.1 (Unreleased)
+
+
 ## 12.5.0 (2020-11-10)
 - Includes all features from 12.5.0-preview.1
 - Fixed a bug where QueueServiceClient.SetProperties and QueueService.GetProperties where the creating/parsing XML Service Queue Properties CorsRules incorrectly causing Invalid XML Errors
