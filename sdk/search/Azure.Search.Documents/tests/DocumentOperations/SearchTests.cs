@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Azure.Core.Serialization;
 using Azure.Core.GeoJson;
 #endif
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -661,6 +663,133 @@ namespace Azure.Search.Documents.Tests
             ValueFacetResult<int> second = facets.ElementAt(1).AsValueFacetResult<int>();
             Assert.AreEqual(4, second.Value);
             Assert.AreEqual(4, second.Count);
+        }
+
+        public class FacetKeyValuePair
+        {
+            public FacetKeyValuePair() { }
+            public FacetKeyValuePair(string key, string value) { Key = key; Value = value; }
+
+            [SimpleField(IsKey = true)]
+            public string Key { get; set; }
+
+            [SimpleField(IsFacetable = true)]
+            public string Value { get; set; }
+        }
+
+        [Test]
+        public async Task FacetsArentAutomaticallyParsed()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            await client.UploadDocumentsAsync(
+                new[]
+                {
+                    new FacetKeyValuePair("1", "9-6"),
+                    new FacetKeyValuePair("2", "9.6"),
+                    new FacetKeyValuePair("3", "9'6\""),
+                });
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<FacetKeyValuePair>> response =
+                await resources.GetQueryClient().SearchAsync<FacetKeyValuePair>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value" } });
+
+            Assert.IsNotNull(response.Value.Facets);
+            AssertFacetsEqual(
+                GetFacetsForField(response.Value.Facets, "Value", 3),
+                MakeValueFacet(1, "9'6\""),
+                MakeValueFacet(1, "9-6"),
+                MakeValueFacet(1, "9.6"));
+
+            // Check strongly typed value facets
+            ICollection<FacetResult> facets = GetFacetsForField(response.Value.Facets, "Value", 3);
+            ValueFacetResult<string> first = facets.ElementAt(0).AsValueFacetResult<string>();
+            Assert.AreEqual("9'6\"", first.Value);
+            Assert.AreEqual(1, first.Count);
+            ValueFacetResult<string> second = facets.ElementAt(1).AsValueFacetResult<string>();
+            Assert.AreEqual("9-6", second.Value);
+            Assert.AreEqual(1, second.Count);
+            ValueFacetResult<string> third = facets.ElementAt(2).AsValueFacetResult<string>();
+            Assert.AreEqual("9.6", third.Value);
+            Assert.AreEqual(1, third.Count);
+        }
+
+        [Test]
+        public async Task FacetDateTimesRoundtrip()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            DateTimeOffset now = Recording.Now;
+
+            // Use valid dates
+            string prefix = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+            FacetKeyValuePair[] data =
+                new[]
+                {
+                    new FacetKeyValuePair("1", now.ToString(prefix + "zzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("2", now.ToString(prefix + "K", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("3", now.ToString(prefix + "'.'fzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("4", now.ToString(prefix + "'.'fK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("5", now.ToString(prefix + "'.'ffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("6", now.ToString(prefix + "'.'ffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("7", now.ToString(prefix + "'.'fffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("8", now.ToString(prefix + "'.'fffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("9", now.ToString(prefix + "'.'ffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("10", now.ToString(prefix + "'.'ffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("11", now.ToString(prefix + "'.'fffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("12", now.ToString(prefix + "'.'fffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("13", now.ToString(prefix + "'.'ffffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("14", now.ToString(prefix + "'.'ffffffK", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("15", now.ToString(prefix + "'.'fffffffzzz", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("16", now.ToString(prefix + "'.'fffffffK", CultureInfo.InvariantCulture))
+                };
+            await client.UploadDocumentsAsync(data);
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<SearchDocument>> response =
+                await resources.GetQueryClient().SearchAsync<SearchDocument>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
+            foreach (FacetResult facet in response.Value.Facets["Value"])
+            {
+                Assert.IsInstanceOf(
+                    typeof(DateTimeOffset),
+                    facet.Value,
+                    $"Expected a DateTimeOffset, not {facet.Value} of type {facet.Value?.GetType().FullName}");
+            }
+        }
+
+        [Test]
+        public async Task FacetDateTimesInvalid()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<FacetKeyValuePair>(this);
+            SearchClient client = resources.GetSearchClient();
+            DateTimeOffset now = Recording.Now;
+
+            // Use invalid dates
+            FacetKeyValuePair[] data =
+                new[]
+                {
+                    new FacetKeyValuePair("1", now.ToString("yyyy'-'MM'-'dd'T'HH':'mm", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("2", now.ToString("yyyy'-'MM'-'dd", CultureInfo.InvariantCulture)),
+                    new FacetKeyValuePair("3", now.ToString("HH':'mm", CultureInfo.InvariantCulture))
+                };
+            await client.UploadDocumentsAsync(data);
+            await resources.WaitForIndexingAsync();
+
+            Response<SearchResults<SearchDocument>> response =
+                await resources.GetQueryClient().SearchAsync<SearchDocument>(
+                    null,
+                    new SearchOptions { Facets = new[] { "Value,count:" + data.Length } });
+            foreach (FacetResult facet in response.Value.Facets["Value"])
+            {
+                Assert.IsInstanceOf(
+                    typeof(string),
+                    facet.Value,
+                    $"Expected a string, not {facet.Value} of type {facet.Value?.GetType().FullName}");
+            }
         }
 
         [Test]

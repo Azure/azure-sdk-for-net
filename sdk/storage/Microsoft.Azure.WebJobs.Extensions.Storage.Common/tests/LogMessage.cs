@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class LogMessage
     {

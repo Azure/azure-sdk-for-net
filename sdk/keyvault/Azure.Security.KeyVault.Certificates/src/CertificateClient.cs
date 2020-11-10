@@ -668,7 +668,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -697,7 +697,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>

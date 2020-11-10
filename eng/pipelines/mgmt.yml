@@ -125,6 +125,7 @@ pr:
     - sdk/scheduler/Microsoft.Azure.Management.Scheduler
     - sdk/search/Microsoft.Azure.Management.Search
     - sdk/securitycenter/Microsoft.Azure.Management.SecurityCenter
+    - sdk/securityinsights/Microsoft.Azure.Management.SecurityInsights
     - sdk/servermanagement/Microsoft.Azure.Management.ServerManagement
     - sdk/servicebus/Microsoft.Azure.Management.ServiceBus
     - sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric

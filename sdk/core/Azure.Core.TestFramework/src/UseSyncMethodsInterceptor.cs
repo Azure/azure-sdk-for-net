@@ -204,7 +204,7 @@ namespace Azure.Core.TestFramework
                 // If the previous check has any results, check if they have the same number of type arguments
                 // (all of our cases today either specialize on 0 or 1 type
                 // argument for the static or dynamic user schema approach)
-                // Else, close each GenericMethodDefinition and compare its paramter types.
+                // Else, close each GenericMethodDefinition and compare its parameter types.
                 var withSimilarGenericArguments = genericDefs.Any() ?
                     genericDefs.Where(m =>
                         m.GetGenericArguments().Length ==
