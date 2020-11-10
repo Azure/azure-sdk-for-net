@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is a template project to demonstrate how to create a package that uses code generation as well as use for testing our build and release pipelines</Description>
+    <Description>This project provides .Net client library implementation for Azure IoT Time Series Insights.</Description>
     <AssemblyTitle>Azure Time Series Insights SDK</AssemblyTitle>
-    <Version>1.0.3-beta.19</Version>
+    <Version>1.0.0-beta-1</Version>
     <PackageTags>Azure Time Series Insights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>

@@ -32,11 +32,11 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
                 options.TenantId,
                 options.ClientId,
                 options.ClientSecret,
-                options.TsiEndpoint);
+                options.TsiEnvironmentFQDN);
 
             // Run the samples
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(dtClient, options.TsiEndpoint);
+            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(dtClient, options.TsiEnvironmentFQDN);
             await tsiLifecycleSamples.RunSamplesAsync();
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
             Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientId);
             Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantId);
 
-            #region Snippet:TimeSeriesinsightsSampleCreateServiceClientWithClientSecret
+            #region Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
             // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
             // It attempts to use multiple credential types in an order until it finds a working credential.
@@ -62,7 +62,7 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
                 tsiEndpoint,
                 tokenCredential);
 
-            #endregion Snippet:TimeSeriesinsightsSampleCreateServiceClientWithClientSecret
+            #endregion Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
             return client;
         }

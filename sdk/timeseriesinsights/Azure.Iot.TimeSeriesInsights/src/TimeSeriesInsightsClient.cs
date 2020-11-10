@@ -40,7 +40,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// and controlling <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Configuration.md">retry strategy</see>.
         /// </seealso>
         /// <example>
-        /// <code snippet="Snippet:TimeSeriesinsightsSampleCreateServiceClientWithClientSecret">
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
         /// </code>
         /// </example>
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential)
