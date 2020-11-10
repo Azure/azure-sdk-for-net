@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Event details for VMwareCbt provider.
+    /// ApplyRecoveryPoint input specific to InMageRcm provider.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VMwareCbt")]
-    public partial class VMwareCbtEventDetails : EventProviderSpecificDetails
+    [Newtonsoft.Json.JsonObject("InMageRcm")]
+    public partial class InMageRcmApplyRecoveryPointInput : ApplyRecoveryPointProviderSpecificInput
     {
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtEventDetails class.
+        /// Initializes a new instance of the InMageRcmApplyRecoveryPointInput
+        /// class.
         /// </summary>
-        public VMwareCbtEventDetails()
+        public InMageRcmApplyRecoveryPointInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtEventDetails class.
+        /// Initializes a new instance of the InMageRcmApplyRecoveryPointInput
+        /// class.
         /// </summary>
-        /// <param name="migrationItemName">The migration item name.</param>
-        public VMwareCbtEventDetails(string migrationItemName = default(string))
+        /// <param name="recoveryPointId">The recovery point Id.</param>
+        public InMageRcmApplyRecoveryPointInput(string recoveryPointId = default(string))
         {
-            MigrationItemName = migrationItemName;
+            RecoveryPointId = recoveryPointId;
             CustomInit();
         }
 
@@ -43,10 +45,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the migration item name.
+        /// Gets or sets the recovery point Id.
         /// </summary>
-        [JsonProperty(PropertyName = "migrationItemName")]
-        public string MigrationItemName { get; private set; }
+        [JsonProperty(PropertyName = "recoveryPointId")]
+        public string RecoveryPointId { get; set; }
 
     }
 }
