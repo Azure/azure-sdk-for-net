@@ -8,6 +8,7 @@
 - Added ability to set Position on streams created with DataLakeFileClient.OpenRead().
 - Added CanGenerateSasUri property and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
 - Added CanGenerateAccountSasUri property and GenerateAccountSasUri() to DataLakeServiceClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

@@ -10,6 +10,7 @@
 - Added CanAccountGenerateSasUri property, GenerateAccountSasUri() to BlobServiceClient.
 - Deprecated property BlobSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 - Added ability to get parent BlobContainerClient from BlobBaseClient and to get parent BlobServiceClient from BlobContainerClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
 
 ## 12.7.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.
