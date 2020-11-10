@@ -22,6 +22,7 @@ namespace Azure.Identity.Tests
         public string IMDSEnable => GetOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
         public string IMDSClientId => GetVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
         public string ArcEnable => GetOptionalVariable("IDENTITYTEST_ARCTEST_ENABLE");
+        public string SFEnable => GetOptionalVariable("IDENTITYTEST_SFTEST_ENABLE");
         public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
