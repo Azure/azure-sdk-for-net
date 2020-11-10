@@ -71,11 +71,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// IpConfigurations.</param>
         /// <param name="virtualRouterAsn">VirtualRouter ASN.</param>
         /// <param name="virtualRouterIps">VirtualRouter IPs.</param>
-        /// <param name="enableVirtualRouterRoutePropogation">Flag to control
-        /// route propogation for VirtualRouter hub.</param>
+        /// <param name="allowBranchToBranchTraffic">Flag to control transit
+        /// for VirtualRouter hub.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? enableVirtualRouterRoutePropogation = default(bool?), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
             IpConfigurations = ipConfigurations;
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIps = virtualRouterIps;
-            EnableVirtualRouterRoutePropogation = enableVirtualRouterRoutePropogation;
+            AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             Etag = etag;
             CustomInit();
         }
@@ -213,11 +213,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> VirtualRouterIps { get; set; }
 
         /// <summary>
-        /// Gets or sets flag to control route propogation for VirtualRouter
-        /// hub.
+        /// Gets or sets flag to control transit for VirtualRouter hub.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableVirtualRouterRoutePropogation")]
-        public bool? EnableVirtualRouterRoutePropogation { get; set; }
+        [JsonProperty(PropertyName = "properties.allowBranchToBranchTraffic")]
+        public bool? AllowBranchToBranchTraffic { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
@@ -234,13 +233,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (VirtualRouterAsn > 4294967295)
+            if (VirtualRouterAsn != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualRouterAsn", 4294967295);
-            }
-            if (VirtualRouterAsn < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 0);
+                if (VirtualRouterAsn > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualRouterAsn", 4294967295);
+                }
+                if (VirtualRouterAsn < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 0);
+                }
             }
         }
     }
