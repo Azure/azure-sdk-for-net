@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -36,7 +35,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationUserCredential = new CommunicationUserCredential(CommunicationRecordedTestSanitizer.SanitizedChatAuthHeaderValue);
+            var communicationUserCredential = new CommunicationUserCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
             var chatThreadClient = new ChatThreadClient(threadId, uri, communicationUserCredential, chatClientOptions);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 
@@ -77,7 +76,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             };
 
             //act
-            var communicationUserCredential = new CommunicationUserCredential(CommunicationRecordedTestSanitizer.SanitizedChatAuthHeaderValue);
+            var communicationUserCredential = new CommunicationUserCredential(ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue);
             var chatThreadClient = new ChatThreadClient(threadId, uri, communicationUserCredential, chatClientOptions);
             AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 

@@ -15,7 +15,7 @@ namespace Azure.Communication.Sms.Tests
     public class SmsClientLiveTests : RecordedTestBase<SmsClientTestEnvironment>
     {
         public SmsClientLiveTests(bool isAsync) : base(isAsync)
-            => Sanitizer = new CommunicationRecordedTestSanitizer();
+            => Sanitizer = new SmsClientRecordedTestSanitizer();
 
         [Test]
         public async Task SendingAnSmsMessage()

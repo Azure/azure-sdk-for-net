@@ -1,42 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Azure.Communication.Pipeline
 {
-    internal class CommunicationRecordedTestSanitizer : RecordedTestSanitizer
+    public class CommunicationRecordedTestSanitizer : RecordedTestSanitizer
     {
         private static readonly Regex s_azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
         private static readonly Regex s_identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
-
-        /// <summary>
-        /// This is a testing/unsigned token required on the sanitized payloads for the playback mode due to format validation on CommunicationUserCredential constructors.
-        /// </summary>
-        internal const string SanitizedChatAuthHeaderValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
         public CommunicationRecordedTestSanitizer() : base()
         {
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..id");
-            JsonPathSanitizers.Add("$..from");
-            JsonPathSanitizers.Add("$..to");
-            JsonPathSanitizers.Add("$..messageId");
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(HttpHeader.Names.Authorization))
             {
-                if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x => x.Contains("Communication.Chat")))
-                {
-                    headers[HttpHeader.Names.Authorization] = new[] { SanitizedChatAuthHeaderValue };
-                    return;
-                }
                 headers[HttpHeader.Names.Authorization] = new[] { SanitizeValue };
             }
             if (headers.ContainsKey("x-ms-content-sha256"))
@@ -46,19 +32,15 @@ namespace Azure.Communication.Pipeline
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
+            => variableName switch
             {
-                CommunicationEnvironmentVariableNames.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
-                CommunicationEnvironmentVariableNames.FromPhoneNumberEnvironmentVariableName => "+18005551234",
-                CommunicationEnvironmentVariableNames.ToPhoneNumberEnvironmentVariableName => "+18005555555",
+                ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
-        }
 
         private static string SanitizeAzureResource(string uri) => s_azureResourceRegEx.Replace(uri, SanitizeValue).ToLower();
 
-        private static string SanitizeConnectionString(string connectionString)
+        internal static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
             const string endpoint = "endpoint";

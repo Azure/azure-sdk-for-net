@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Administration.Tests
@@ -14,6 +13,6 @@ namespace Azure.Communication.Administration.Tests
 
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
-        public string ConnectionString => GetRecordedVariable(CommunicationEnvironmentVariableNames.ConnectionStringEnvironmentVariableName);
+        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
     }
 }

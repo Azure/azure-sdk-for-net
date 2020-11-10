@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Castle.Core.Internal;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
-    internal class CommunicationManagementRecordedTestSanitizer : CommunicationRecordedTestSanitizer
+    public class CommunicationManagementRecordedTestSanitizer : RecordedTestSanitizer
     {
         public string SubscriptionId { get; set; }
 
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             return variableName switch
             {
-                CommunicationEnvironmentVariableNames.NotificationHubsConnectionStringEnvironmentVariableName => SanitizeValue.ToLower(),
+                CommunicationManagementTestEnvironment.NotificationHubsConnectionStringEnvironmentVariableName => SanitizeValue.ToLower(),
                 _ => base.SanitizeVariable(variableName, SanitizeSubscriptionIdString(environmentVariableValue))
             };
         }
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.Communication.Tests
         public override void Sanitize(RecordSession session)
         {
             // Save the Subscription ID so that it can be sanitized from all fields later
-            if (session.Variables.ContainsKey(CommunicationEnvironmentVariableNames.SubscriptionIdEnvironmentVariableName))
+            if (session.Variables.ContainsKey(CommunicationManagementTestEnvironment.SubscriptionIdEnvironmentVariableName))
             {
-                SubscriptionId = session.Variables[CommunicationEnvironmentVariableNames.SubscriptionIdEnvironmentVariableName];
+                SubscriptionId = session.Variables[CommunicationManagementTestEnvironment.SubscriptionIdEnvironmentVariableName];
             }
 
             base.Sanitize(session);
