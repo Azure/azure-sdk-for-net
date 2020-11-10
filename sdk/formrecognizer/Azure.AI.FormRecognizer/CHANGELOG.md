@@ -20,6 +20,7 @@
 - Added property `Appearance` to `FormLine` to indicate the style of the extracted text. for example, "handwriting" or "other".
 - Added property `BoundingBox` to `FormTable`.
 - Added support for `ContentType` `image/bmp` in recognize content and prebuilt models.
+- Added property `Pages` to `RecognizeContentOptions` to specify the page numbers to analyze.
 
 ## 3.0.0 (2020-08-20)
 
