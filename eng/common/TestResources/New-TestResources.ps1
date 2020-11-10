@@ -385,7 +385,15 @@ foreach ($templateFile in $templateFiles) {
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
     $deployment = Retry {
-        New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        $lastDebugPreference = $DebugPreference
+        try {
+            $DebugPreference = "Continue"
+            New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        } catch {
+            throw $_
+        } finally {
+            $DebugPreference = $lastDebugPreference
+        }
     }
 
     if ($deployment.ProvisioningState -eq 'Succeeded') {
