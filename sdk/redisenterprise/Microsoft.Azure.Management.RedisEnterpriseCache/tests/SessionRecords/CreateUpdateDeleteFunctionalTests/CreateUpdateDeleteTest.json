@@ -1,0 +1,2210 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MT9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"EnterpriseFlash_F300\",\r\n    \"capacity\": 3\r\n  },\r\n  \"zones\": [\r\n    \"1\",\r\n    \"2\",\r\n    \"3\"\r\n  ],\r\n  \"location\": \"East US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a580f8d0-93b1-4590-98fb-c4ebfab3751d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871?api-version=2020-10-01-preview"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview"
+        ],
+        "x-ms-request-id": [
+          "22ce7399-bce6-4b84-b769-60cf345cca43"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "29873a42-cdb7-46e1-9e23-d25b037e2289"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003620Z:29873a42-cdb7-46e1-9e23-d25b037e2289"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:36:20 GMT"
+        ],
+        "Content-Length": [
+          "542"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"East US\",\r\n  \"name\": \"RedisEnterpriseCreateUpdate8871\",\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871\",\r\n  \"type\": \"Microsoft.Cache/redisEnterprise\",\r\n  \"tags\": null,\r\n  \"sku\": {\r\n    \"name\": \"EnterpriseFlash_F300\",\r\n    \"capacity\": 3\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"resourceState\": \"Creating\"\r\n  },\r\n  \"zones\": [\r\n    \"1\",\r\n    \"2\",\r\n    \"3\"\r\n  ]\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4597978a-9841-4471-b353-15a37da51fb4"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "219db5c7-1d52-4bd2-8122-b4798c077d26"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003651Z:219db5c7-1d52-4bd2-8122-b4798c077d26"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:36:50 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "935660a5-9b05-4f1a-a5a9-e42e755eb57c"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7879d8d-e938-4af0-bf52-4a6eec46e5e4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003721Z:f7879d8d-e938-4af0-bf52-4a6eec46e5e4"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:37:20 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "dadd6217-d010-4412-a814-a8bbf61861f1"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf87dcaf-0f44-4fd9-a7f3-7807ac18221d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003751Z:cf87dcaf-0f44-4fd9-a7f3-7807ac18221d"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:37:50 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6a7ef287-eb1f-4ae2-9f4b-94f21c08d040"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b1ab322-fe48-4849-9ec5-9c9490ae6fb5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003821Z:5b1ab322-fe48-4849-9ec5-9c9490ae6fb5"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:38:21 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d94bd29f-ca81-4af6-85f6-f2f4b44d1ffc"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "e51bade2-fc99-439a-b83a-84be68f44035"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003851Z:e51bade2-fc99-439a-b83a-84be68f44035"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:38:51 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c8eec0cd-1adc-40b7-b049-86797e404b41"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b6c9df7-ca89-44a9-875f-7593d5c619d3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003921Z:5b6c9df7-ca89-44a9-875f-7593d5c619d3"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:39:21 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "919c3cbd-a215-4020-94e6-38c60935fd0b"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "add61cd4-516b-42d3-a94f-1e035e55c313"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T003951Z:add61cd4-516b-42d3-a94f-1e035e55c313"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:39:50 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6cd2e607-2ac0-40ed-9158-c2646926d4b8"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "4d5fbffb-b610-48c4-8cfb-0d1bf9b6710e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004021Z:4d5fbffb-b610-48c4-8cfb-0d1bf9b6710e"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:40:21 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1e41b546-12bc-4f61-9c66-a62af9db05cc"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "6c0846bb-4256-4ad0-910c-5c2359a23fa3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004051Z:6c0846bb-4256-4ad0-910c-5c2359a23fa3"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:40:51 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "56d1d79a-ec0c-42ff-947a-1cf0db07abba"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "c94b3a92-3e22-4cda-8479-fd66d620acf5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004122Z:c94b3a92-3e22-4cda-8479-fd66d620acf5"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:41:21 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2966d0a2-409a-49e9-91da-abd2e8f29b97"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "x-ms-correlation-request-id": [
+          "3343695b-0162-4f33-80bf-dfe225b7b8fd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004152Z:3343695b-0162-4f33-80bf-dfe225b7b8fd"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:41:51 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:36:21.8842485-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzU0Y2M5YmZkLTk1ZGUtNDA2MC05MzdkLWQ2ZTE2OTI4YmYzMz9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fa3a0cba-091e-4371-aa43-bcb92b177fa5"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "08d4c1cd-40e4-4934-b1f2-f90ccae676c8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004222Z:08d4c1cd-40e4-4934-b1f2-f90ccae676c8"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:21 GMT"
+        ],
+        "Content-Length": [
+          "319"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"name\": \"54cc9bfd-95de-4060-937d-d6e16928bf33\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-11-09T16:36:20.4728955-08:00\",\r\n  \"endTime\": \"2020-11-09T16:41:53.6643419-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MT9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5e32da01-853d-431a-805f-0655b5372cc3"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "09884092-3bf3-4729-b771-34db6761fbde"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004222Z:09884092-3bf3-4729-b771-34db6761fbde"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:21 GMT"
+        ],
+        "Content-Length": [
+          "579"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"East US\",\r\n  \"name\": \"RedisEnterpriseCreateUpdate8871\",\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871\",\r\n  \"type\": \"Microsoft.Cache/redisEnterprise\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"EnterpriseFlash_F300\",\r\n    \"capacity\": 3\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceState\": \"Running\",\r\n    \"privateEndpointConnections\": []\r\n  },\r\n  \"zones\": [\r\n    \"1\",\r\n    \"2\",\r\n    \"3\"\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/databases/default?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MS9kYXRhYmFzZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"clientProtocol\": \"Plaintext\",\r\n    \"clusteringPolicy\": \"EnterpriseCluster\",\r\n    \"evictionPolicy\": \"VolatileLRU\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e7e140dd-a628-4822-a138-7c1bcebf47db"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "147"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/databases/default?api-version=2020-10-01-preview"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/b610e85b-f843-4a4a-9454-22ea4ce6923b?api-version=2020-10-01-preview"
+        ],
+        "x-ms-request-id": [
+          "3dd4af15-fdd2-49e6-8d17-68c88457afea"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "ae5f8d73-dc34-43bf-9a0b-80f5810cb039"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004222Z:ae5f8d73-dc34-43bf-9a0b-80f5810cb039"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:22 GMT"
+        ],
+        "Content-Length": [
+          "520"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"default\",\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/databases/default\",\r\n  \"type\": \"Microsoft.Cache/redisEnterprise/databases\",\r\n  \"properties\": {\r\n    \"clientProtocol\": \"Plaintext\",\r\n    \"port\": 10000,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceState\": \"Running\",\r\n    \"clusteringPolicy\": \"EnterpriseCluster\",\r\n    \"evictionPolicy\": \"VolatileLRU\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/databases/default?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MS9kYXRhYmFzZXMvZGVmYXVsdD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9a4d2ab3-42fc-49e7-8df9-cbe7d6fbd381"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d07df1e-3be6-4497-bf9b-2ec02dd62355"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004223Z:2d07df1e-3be6-4497-bf9b-2ec02dd62355"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:22 GMT"
+        ],
+        "Content-Length": [
+          "452"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"default\",\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/databases/default\",\r\n  \"type\": \"Microsoft.Cache/redisEnterprise/databases\",\r\n  \"properties\": {\r\n    \"clientProtocol\": \"Plaintext\",\r\n    \"port\": 10000,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceState\": \"Running\",\r\n    \"clusteringPolicy\": \"EnterpriseCluster\",\r\n    \"evictionPolicy\": \"VolatileLRU\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MT9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8ac4fec2-c316-4af2-a643-70491698b62a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/operationresults/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview"
+        ],
+        "x-ms-request-id": [
+          "70fc90fa-1776-4d9c-972d-2a352ea88dce"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "51a4e06e-46ca-4f57-8ced-8d94ac537b02"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004223Z:51a4e06e-46ca-4f57-8ced-8d94ac537b02"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:22 GMT"
+        ],
+        "Content-Length": [
+          "579"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"East US\",\r\n  \"name\": \"RedisEnterpriseCreateUpdate8871\",\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871\",\r\n  \"type\": \"Microsoft.Cache/redisEnterprise\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"EnterpriseFlash_F300\",\r\n    \"capacity\": 3\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Deleting\",\r\n    \"resourceState\": \"Deleting\",\r\n    \"privateEndpointConnections\": []\r\n  },\r\n  \"zones\": [\r\n    \"1\",\r\n    \"2\",\r\n    \"3\"\r\n  ]\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "406df0e1-0d46-486c-a556-b90a4e9e634d"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "84217117-33b4-4d12-84e7-6c04f7f2f517"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004253Z:84217117-33b4-4d12-84e7-6c04f7f2f517"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:42:53 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6f68f9e7-edc8-4a91-9696-f9734a0df360"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-correlation-request-id": [
+          "e266502b-90d3-4aa0-a3ab-56e730fab250"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004323Z:e266502b-90d3-4aa0-a3ab-56e730fab250"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:43:23 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6bd3a592-3da4-4615-9024-4628addee5d3"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "x-ms-correlation-request-id": [
+          "a1ad6f12-8ed3-4f1f-826a-ea18489e0b25"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004354Z:a1ad6f12-8ed3-4f1f-826a-ea18489e0b25"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:43:53 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "cac46784-021d-43d4-94fc-1588667d36ad"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-correlation-request-id": [
+          "41f34a81-4b40-44bd-a6e0-7f565edf6621"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004424Z:41f34a81-4b40-44bd-a6e0-7f565edf6621"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:44:23 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c6e7d008-24da-48b2-842e-63dbc7ce0323"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-correlation-request-id": [
+          "2a5e6737-a731-469b-b16c-ae43ce9b8817"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004454Z:2a5e6737-a731-469b-b16c-ae43ce9b8817"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:44:53 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "65f81d8e-09f8-4dac-b85d-0830773a83ee"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "x-ms-correlation-request-id": [
+          "59ec96b2-18b0-4224-bcc4-20e6a09ca38e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004524Z:59ec96b2-18b0-4224-bcc4-20e6a09ca38e"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:45:23 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a39470e1-aee8-47cc-93f1-75d3bcddf22b"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "d20152f9-e3f1-4954-9519-e5b7e2e5d1db"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004554Z:d20152f9-e3f1-4954-9519-e5b7e2e5d1db"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:45:54 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fae8ed89-51a3-46e3-a050-f07793fcd780"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "x-ms-correlation-request-id": [
+          "c7e2f6c9-d47d-4373-9fb2-df6a7880e41a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004624Z:c7e2f6c9-d47d-4373-9fb2-df6a7880e41a"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:46:23 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "621f17a9-f5fa-48dd-9974-d43c394bd308"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "x-ms-correlation-request-id": [
+          "34fa5548-48ec-4348-b7b5-5ba5fe506188"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004654Z:34fa5548-48ec-4348-b7b5-5ba5fe506188"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:46:54 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "406b495f-0681-4a1b-9eae-3945956234be"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "x-ms-correlation-request-id": [
+          "8fc0701f-5691-4ff8-87d9-4b047a97a538"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004724Z:8fc0701f-5691-4ff8-87d9-4b047a97a538"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:47:24 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a8704da8-f2f8-4ac2-a97b-d8fdc9bdfd56"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "x-ms-correlation-request-id": [
+          "b5e9332d-eb68-40a5-b56c-ac7c77eb2156"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004754Z:b5e9332d-eb68-40a5-b56c-ac7c77eb2156"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:47:54 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ab9a0c11-9cc8-4693-8ba1-d9010901947e"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "x-ms-correlation-request-id": [
+          "73e995ca-6bcd-4cda-9d67-6492d7b9e899"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004825Z:73e995ca-6bcd-4cda-9d67-6492d7b9e899"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:48:24 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7d2c1f3c-c3d1-4952-a450-656be8d7c022"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf3e45d7-c9b6-4a5c-b95c-597af3abd81a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004855Z:bf3e45d7-c9b6-4a5c-b95c-597af3abd81a"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:48:54 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "b0b5423c-f9d2-4302-84a8-a53e5985c201"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "x-ms-correlation-request-id": [
+          "ffe45153-98d1-4e9d-b179-8e5970600050"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004925Z:ffe45153-98d1-4e9d-b179-8e5970600050"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:49:24 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2979dc40-fff5-495f-9a67-9a9beb3dfde7"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "57c075a9-68d8-4c03-a479-215427460843"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T004955Z:57c075a9-68d8-4c03-a479-215427460843"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:49:55 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "558dc11e-d5c0-4b2c-ba3a-7b44cb9d4cd1"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "x-ms-correlation-request-id": [
+          "a9a66d4c-8e8e-4907-b980-bf0be6aed883"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T005025Z:a9a66d4c-8e8e-4907-b980-bf0be6aed883"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:50:25 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c94a4832-d9c7-4917-9150-4904e82492e2"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11969"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce7a92d4-7fc3-4f14-8195-82abffeb8ffa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T005055Z:ce7a92d4-7fc3-4f14-8195-82abffeb8ffa"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:50:54 GMT"
+        ],
+        "Content-Length": [
+          "320"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"InProgress\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:42:25.2309975-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East%20US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvbG9jYXRpb25zL0Vhc3QlMjBVUy9vcGVyYXRpb25zU3RhdHVzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d9d4e93e-979b-425d-9748-faf229d2b811"
+        ],
+        "x-rp-server-mvid": [
+          "76c595a1-9744-4a1c-a3d4-d4f8fc236cf6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11968"
+        ],
+        "x-ms-correlation-request-id": [
+          "b0a68c7c-7ec6-402d-8d91-fab04d9b2248"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T005125Z:b0a68c7c-7ec6-402d-8d91-fab04d9b2248"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:51:25 GMT"
+        ],
+        "Content-Length": [
+          "319"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/providers/Microsoft.Cache/locations/East US/operationsStatus/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"name\": \"3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2020-11-09T16:42:23.2909781-08:00\",\r\n  \"endTime\": \"2020-11-09T16:51:15.0371336-08:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e311648e-a318-4a16-836e-f4a91cc73e9b/resourceGroups/RedisEnterpriseCreateUpdate5795/providers/Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871/operationresults/3bdeb2ce-ebbc-4c29-9267-75bdd98fa13d?api-version=2020-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMxMTY0OGUtYTMxOC00YTE2LTgzNmUtZjRhOTFjYzczZTliL3Jlc291cmNlR3JvdXBzL1JlZGlzRW50ZXJwcmlzZUNyZWF0ZVVwZGF0ZTU3OTUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9yZWRpc0VudGVycHJpc2UvUmVkaXNFbnRlcnByaXNlQ3JlYXRlVXBkYXRlODg3MS9vcGVyYXRpb25yZXN1bHRzLzNiZGViMmNlLWViYmMtNGMyOS05MjY3LTc1YmRkOThmYTEzZD9hcGktdmVyc2lvbj0yMDIwLTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29130.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.RedisEnterprise.redisenterpriseClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "3e4ba81a-d058-4708-93ca-29b0a173a38c"
+        ],
+        "x-ms-correlation-request-id": [
+          "3e4ba81a-d058-4708-93ca-29b0a173a38c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20201110T005126Z:3e4ba81a-d058-4708-93ca-29b0a173a38c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 10 Nov 2020 00:51:25 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "266"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Cache/redisEnterprise/RedisEnterpriseCreateUpdate8871' under resource group 'RedisEnterpriseCreateUpdate5795' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e311648e-a318-4a16-836e-f4a91cc73e9b"
+  }
+}
