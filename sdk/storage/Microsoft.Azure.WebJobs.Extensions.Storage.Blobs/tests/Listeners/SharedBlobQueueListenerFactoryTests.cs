@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class SharedBlobQueueListenerFactoryTests
     {

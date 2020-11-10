@@ -5,12 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Azure.WebJobs.Extensions.Storage.Queues.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class BinderTests
     {

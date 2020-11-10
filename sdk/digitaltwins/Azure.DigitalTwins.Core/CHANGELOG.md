@@ -8,7 +8,12 @@
 
 ### Fixes and improvements
 
+## 1.0.1 (2020-11-04)
+
+### Fixes and improvements
+
 - Improved deserialization and error reporting for `BasicDigitalTwin` for `DigitalTwinMetadata`.
+- Removed logic to determine authorization scope based on digital twins instance URI.
 
 ## 1.0.0 (2020-10-30)
 
@@ -19,7 +24,7 @@
 
 ### Breaking changes
 
-Note that these breaking changes are only breaking changes from the preview version of this library.
+Note that these breaking changes are only breaking changes from the **preview** version of this library.
 
 - Replaced all `Response<string>` and `Pageable<string>` APIs with `Response<T>` and `Pageable<T>` respectively.
 - Renamed `CreateDigitalTwin`, `CreateRelationship` and `CreateEventRoute` APIs to `CreateOrReplaceDigitalTwin`, `CreateOrReplaceRelationship` and `CreateOrReplaceEventRoute` respectively.
@@ -42,6 +47,7 @@ Note that these breaking changes are only breaking changes from the preview vers
 ### Fixes and improvements
 
 - Fixed bug where `CreateDigitalTwin` and `CreateRelationship` APIs always sent ifNoneMatch header with value "*" making it impossible to replace an existing entity.
+- Fixed authentication scope for ADT instances that don't match the public cloud domain name pattern.
 
 ## 1.0.0-preview.3 (2020-07-13)
 

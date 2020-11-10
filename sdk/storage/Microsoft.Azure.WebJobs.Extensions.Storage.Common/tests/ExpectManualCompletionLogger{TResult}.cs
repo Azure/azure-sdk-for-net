@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Logging;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Logging;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class ExpectManualCompletionLogger<TResult> : ILogger
     {

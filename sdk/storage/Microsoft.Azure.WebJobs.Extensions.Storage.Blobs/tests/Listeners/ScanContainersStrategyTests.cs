@@ -4,14 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
-using Microsoft.Azure.WebJobs.Host.Executors;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Host.Executors;
 using NUnit.Framework;
-using Azure.Storage.Blobs;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class ScanContainersStrategyTests
     {

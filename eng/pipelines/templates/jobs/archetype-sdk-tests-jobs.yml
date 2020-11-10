@@ -67,7 +67,7 @@ jobs:
 
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
-              Location: ${{ cloudConfig.value.Location }}
+              Location: ${{ coalesce(parameters.Location, cloudConfig.value.Location, 'westus2') }}
               ServiceDirectory: '${{ parameters.ServiceDirectory }}'
               SubscriptionConfiguration: ${{ cloudConfig.value.SubscriptionConfiguration }}
               ArmTemplateParameters: ${{ cloudConfig.value.ArmTemplateParameters }}
@@ -79,7 +79,7 @@ jobs:
               --logger "trx"
               --logger:"console;verbosity=normal"
               /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-              /p:IncludeSrc=false /p:IncludeSamples=false
+              /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
               /p:BuildInParallel=${{ parameters.BuildInParallel }}
               ${{ platform.AdditionalTestArguments }}
 

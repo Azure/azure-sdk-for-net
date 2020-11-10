@@ -60,12 +60,13 @@ namespace Azure.Communication.Administration.Models
             => new CommunicationUserToken(id, token, expiresOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateSearchResponse"/> class.
+        /// Initializes a new instance of the <see cref="PhoneNumberReservationOperation"/> class.
         /// </summary>
-        /// <param name="searchId"> The search id of the search that was created. </param>
-        /// <returns>A new <see cref="CreateSearchResponse"/> instance for mocking.</returns>
-        public static CreateSearchResponse CreateSearchResponse(string searchId)
-            => new CreateSearchResponse(searchId);
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <param name="reservationId"> The reservation id that was created. </param>
+        /// <returns>A new <see cref="PhoneNumberReservationOperation"/> instance for mocking.</returns>
+        public static PhoneNumberReservationOperation PhoneNumberReservationOperation(PhoneNumberAdministrationClient client, string reservationId)
+            => new PhoneNumberReservationOperation(client, reservationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LocationOptions"/> class.
@@ -176,9 +177,9 @@ namespace Azure.Communication.Administration.Models
             => new PhoneNumberReleaseDetails(status, errorCode);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberSearch"/> class.
+        /// Initializes a new instance of the <see cref="PhoneNumberReservation"/> class.
         /// </summary>
-        /// <param name="searchId"> The id of the search. </param>
+        /// <param name="reservationId"> The id of the reservation. </param>
         /// <param name="displayName"> The name of the search. </param>
         /// <param name="createdAt"> The creation time of the search. </param>
         /// <param name="description"> The description of the search. </param>
@@ -190,9 +191,9 @@ namespace Azure.Communication.Administration.Models
         /// <param name="phoneNumbers"> The list of phone numbers in the search, in the case the status is reserved or success. </param>
         /// <param name="reservationExpiryDate"> The date that search expires and the numbers become available. </param>
         /// <param name="errorCode"> The error code of the search. </param>
-        /// <returns>A new <see cref="PhoneNumberSearch"/> instance for mocking.</returns>
-        public static PhoneNumberSearch PhoneNumberSearch(string searchId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, SearchStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
-            => new PhoneNumberSearch(searchId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
+        /// <returns>A new <see cref="PhoneNumberReservation"/> instance for mocking.</returns>
+        public static PhoneNumberReservation PhoneNumberReservation(string reservationId, string displayName, DateTimeOffset? createdAt, string description, IReadOnlyList<string> phonePlanIds, string areaCode, int? quantity, IReadOnlyList<LocationOptionsDetails> locationOptions, ReservationStatus? status, IReadOnlyList<string> phoneNumbers, DateTimeOffset? reservationExpiryDate, int? errorCode)
+            => new PhoneNumberReservation(reservationId, displayName, createdAt, description, phonePlanIds, areaCode, quantity, locationOptions, status, phoneNumbers, reservationExpiryDate, errorCode);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhonePlan"/> class.
@@ -244,12 +245,22 @@ namespace Azure.Communication.Administration.Models
             => new RateInformation(monthlyRate, currencyType, rateErrorMessage);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReleaseResponse"/> class.
+        /// Initializes a new instance of the <see cref="ReleasePhoneNumberOperation"/> class.
         /// </summary>
         /// <param name="releaseId"> The release id of a created release. </param>
-        /// <returns>A new <see cref="ReleaseResponse"/> instance for mocking.</returns>
-        public static ReleaseResponse ReleaseResponse(string releaseId)
-            => new ReleaseResponse(releaseId);
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <returns>A new <see cref="ReleasePhoneNumberOperation"/> instance for mocking.</returns>
+        public static ReleasePhoneNumberOperation ReleasePhoneNumberOperation(PhoneNumberAdministrationClient client, string releaseId)
+            => new ReleasePhoneNumberOperation(client, releaseId);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhoneNumberReservationPurchaseOperation"/> class.
+        /// </summary>
+        /// <param name="reservationId"> The reservation id of a created reservation. </param>
+        /// <param name="client"> PhoneNumberAdministrationClient <see cref="PhoneNumberAdministrationClient"/> </param>
+        /// <returns>A new <see cref="PhoneNumberReservationPurchaseOperation"/> instance for mocking.</returns>
+        public static PhoneNumberReservationPurchaseOperation PhoneNumberReservationPurchaseOperation(PhoneNumberAdministrationClient client, string reservationId)
+            => new PhoneNumberReservationPurchaseOperation(client, reservationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateNumberCapabilitiesResponse"/> class.
