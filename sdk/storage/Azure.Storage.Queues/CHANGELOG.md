@@ -6,6 +6,29 @@
 - Added CanGenerateSasUri property, GenerateSasUri() to QueueClient.
 - Added CanGenerateAccountSasUri property, GenerateAccountSasUri() to QueueServiceClient.
 
+### Support for binary data, custom shapes and Base64 encoding
+This release adds a convinient way to send and receive binary data and custom shapes as a payload.
+Additionally, support for Base64 encoding in HTTP requests and reponses has been added that makes interoperability with V11 and prior Storage SDK easier to implement.
+
+The `QueueClient.SendMessage` and `QueueClient.SendMessageAsync` consume `System.BinaryData` in addition to `string`.
+`QueueMessage` and `PeekedMessage` expose new property `Body` of `System.BinaryData` type to access message payload and should be used instead of `MessageText`.
+
+See [System.BinaryData](https://github.com/Azure/azure-sdk-for-net/blob/System.Memory.Data_1.0.0/sdk/core/System.Memory.Data/README.md) for more information about handling `string`, binary data and custom shapes.
+
+#### Receiving message as string
+Before:
+```C#
+QueueMessage message = await queueClient.ReceiveMessage();
+string messageText = message.MessageText;
+```
+
+After:
+```C#
+QueueMessage message = await queueClient.ReceiveMessage();
+BinaryData body = message.Body;
+string messageText = body.ToString();
+```
+
 ## 12.5.0-preview.1 (2020-09-30)
 - This preview contains bug fixes to improve quality.
 
