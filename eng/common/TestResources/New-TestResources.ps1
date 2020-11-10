@@ -10,7 +10,7 @@
 
 [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
-    # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming.
+    # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
     [Parameter()]
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
@@ -59,7 +59,14 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
+    [hashtable] $ArmTemplateParameters,
+
+    [Parameter()]
     [hashtable] $AdditionalParameters,
+
+    [Parameter()]
+    [ValidateNotNull()]
+    [hashtable] $EnvironmentVariables = @{},
 
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
@@ -101,6 +108,16 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
+function MergeHashes([hashtable] $source, [psvariable] $dest) {
+    foreach ($key in $source.Keys) {
+        if ($dest.Value.ContainsKey($key) -and $dest.Value[$key] -ne $source[$key]) {
+            Write-Warning ("Overwriting '$($dest.Name).$($key)' with value '$($dest.Value[$key])' " +
+                          "to new value '$($source[$key])'")
+        }
+        $dest.Value[$key] = $source[$key]
+    }
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -118,7 +135,6 @@ $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
 $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
-$environmentVariables = @{}
 # Azure SDK Developer Playground
 $defaultSubscription = "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
 
@@ -252,7 +268,7 @@ $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
     $ServiceDirectory
 }
 
-if ($CI) { 
+if ($CI) {
   $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
   Write-Verbose "Generated base name '$BaseName' for CI build"
 }
@@ -289,7 +305,13 @@ if ($CI) {
     # Set the resource group name variable.
     Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $ResourceGroupName"
     Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$ResourceGroupName"
-    $environmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
+    if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
+        $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
+    {
+        Write-Warning ("Overwriting 'EnvironmentVariables.AZURE_RESOURCEGROUP_NAME' with value " + 
+            "'$($EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'])' " + "to new value '$($ResourceGroupName)'")
+    }
+    $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
 }
 
 Log "Creating resource group '$ResourceGroupName' in location '$Location'"
@@ -322,11 +344,11 @@ if ($TenantId) {
 if ($TestApplicationSecret) {
     $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
 }
-if ($AdditionalParameters) {
-    $templateParameters += $AdditionalParameters
-}
 
-# Include environment-specific parameters only if not already provided as part of the "AdditionalParameters"
+MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
+MergeHashes $AdditionalParameters $(Get-Variable templateParameters)
+
+# Include environment-specific parameters only if not already provided as part of the "ArmTemplateParameters"
 if (($context.Environment.StorageEndpointSuffix) -and (-not ($templateParameters.ContainsKey('storageEndpointSuffix')))) {
     $templateParameters.Add('storageEndpointSuffix', $context.Environment.StorageEndpointSuffix)
 }
@@ -388,6 +410,8 @@ foreach ($templateFile in $templateFiles) {
         "$($serviceDirectoryPrefix)STORAGE_ENDPOINT_SUFFIX" = $context.Environment.StorageEndpointSuffix;
     }
 
+    MergeHashes $EnvironmentVariables $(Get-Variable deploymentOutputs)
+
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
 
@@ -422,7 +446,7 @@ foreach ($templateFile in $templateFiles) {
 
         foreach ($key in $deploymentOutputs.Keys) {
             $value = $deploymentOutputs[$key]
-            $environmentVariables[$key] = $value
+            $EnvironmentVariables[$key] = $value
 
             if ($CI) {
                 # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
@@ -453,7 +477,7 @@ $exitActions.Invoke()
 
 # Suppress output locally
 if ($CI) {
-    return $environmentVariables
+    return $EnvironmentVariables
 }
 
 <#
@@ -571,7 +595,13 @@ Name of the cloud environment. The default is the Azure Public Cloud
 ('AzureCloud')
 
 .PARAMETER AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s) and pre-post scripts.
+
+.PARAMETER ArmTemplateParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER EnvironmentVariables
+Optional key-value pairs of parameters to set as environment variables to the shell.
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous
@@ -617,6 +647,4 @@ Run this in an Azure DevOps CI (with approrpiate variables configured) before
 executing live tests. The script will output variables as secrets (to enable
 log redaction).
 
-.LINK
-Remove-TestResources.ps1
 #>

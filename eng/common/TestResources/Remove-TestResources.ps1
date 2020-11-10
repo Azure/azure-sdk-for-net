@@ -214,6 +214,4 @@ Remove-TestResources.ps1 `
 When run in the context of an Azure DevOps pipeline, this script removes the
 resource group whose name is stored in the environment variable
 AZURE_RESOURCEGROUP_NAME.
-.LINK
-New-TestResources.ps1
 #>
