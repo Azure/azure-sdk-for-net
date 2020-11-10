@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual X509Certificate2 DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -194,7 +194,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 byte[] rawData = Convert.FromBase64String(value);
 
-                return new X509Certificate2(rawData);
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,7 +221,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
-        public virtual async Task<X509Certificate2> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -242,7 +242,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 byte[] rawData = Convert.FromBase64String(value);
 
-                return new X509Certificate2(rawData);
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
             }
             catch (Exception e)
             {
