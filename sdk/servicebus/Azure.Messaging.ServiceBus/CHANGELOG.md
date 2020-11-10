@@ -1,7 +1,19 @@
 # Release History
 
-## 7.0.0-preview.9 (Unreleased)
+## 7.0.0-preview.10 (Unreleased)
 
+
+## 7.0.0-preview.9 (2020-11-04)
+
+### Added
+- Added dependency on Azure.Core.Amqp library.
+- Added dependency on System.Memory.Data library.
+
+### Breaking Changes
+- Removed `AmqpMessage` property in favor of a `GetRawMessage` method on `ServiceBusMessage` and `ServiceBusReceivedMessage`.
+- Renamed `Properties` to `ApplicationProperties` in `CorrelationRuleFilter`.
+- Removed `ServiceBusSenderOptions`.
+- Removed `TransactionEntityPath` from `ServiceBusSender`.
 
 ## 7.0.0-preview.8 (2020-10-06)
 

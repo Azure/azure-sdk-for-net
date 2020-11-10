@@ -3,17 +3,19 @@
 
 using System;
 using System.Reflection;
-using Microsoft.Azure.WebJobs.Host.Queues.Triggers;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Newtonsoft.Json;
-using Azure.Storage.Queues;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueTriggerBindingIntegrationTests
     {
@@ -32,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             QueueClient queue = queueServiceClient.GetQueueClient("queueName-queuetriggerbindingintegrationtests");
 
             IWebJobsExceptionHandler exceptionHandler = new WebJobsExceptionHandler(new Mock<IHost>().Object);
-            var enqueueWatcher = new Host.Queues.Listeners.SharedQueueWatcher();
+            var enqueueWatcher = new SharedQueueWatcher();
             _binding = new QueueTriggerBinding("parameterName", queueServiceClient, queue, argumentBinding,
                 new QueuesOptions(), exceptionHandler,
                 enqueueWatcher,
