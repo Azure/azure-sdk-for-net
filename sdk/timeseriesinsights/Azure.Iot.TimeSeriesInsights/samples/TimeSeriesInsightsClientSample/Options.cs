@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using CommandLine;
 
 namespace Azure.Iot.TimeSeriesInsights.Samples
@@ -14,8 +13,8 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
         /// <summary>
         /// The Time Series Insights environment FQDN.
         /// </summary>
-        [Option('a', "tsiEnvironmentFQDN", Required = true, HelpText = "Time Series Insights environment FQDN")]
-        public string TsiEnvironmentFQDN { get; set; }
+        [Option('a', "tsiEnvironmentFqdn", Required = true, HelpText = "Time Series Insights environment FQDN")]
+        public string TsiEnvironmentFqdn { get; set; }
 
         /// <summary>
         /// The application Id used to log the user in.

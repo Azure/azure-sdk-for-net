@@ -32,11 +32,11 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
                 options.TenantId,
                 options.ClientId,
                 options.ClientSecret,
-                options.TsiEnvironmentFQDN);
+                options.TsiEnvironmentFqdn);
 
             // Run the samples
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(dtClient, options.TsiEnvironmentFQDN);
+            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(dtClient, options.TsiEnvironmentFqdn);
             await tsiLifecycleSamples.RunSamplesAsync();
         }
 

@@ -1,7 +1,3 @@
-# IMPORTANT: Use the contents of this file as a template on what resources should be created in order run the tests
-
-#-tsIDs series.id, id -environmentName Zeta -pathToParams .\params.json -pathToTemplate .\deploy.json
-
 # This script is used to create the necessary resources required to run the unit/E2E tests
 
 param(
@@ -70,19 +66,19 @@ Function Write-Params($applicationOId)
 
     $pathToTemplateParamsFile = "$PSScriptRoot\params.template.json"
 
-    $a = Get-Content $pathToTemplateParamsFile | ConvertFrom-Json
-    $a.parameters.environmentTimeSeriesIdProperties.value = $tsIDArray
-    $a.parameters.iotHubName.value = $EnvironmentName + "-hub"
-    $a.parameters.environmentName.value = $EnvironmentName
-    $a.parameters.eventSourceName.value = $EnvironmentName + "eventSource"
-    $a.parameters.consumerGroupName.value = $ConsumerGroupName
-    $a.parameters.eventSourceTimestampPropertyName.value = $Timestamp
-    $a.parameters.testApplicationOid.value = $applicationOId
-    $a.parameters.region.value = $Region
-    $a.parameters.resourceGroup.value = $ResourceGroup
-    $a.parameters.subscriptionId.value = $SubscriptionId
+    $paramsFileContent = Get-Content $pathToTemplateParamsFile | ConvertFrom-Json
+    $paramsFileContent.parameters.environmentTimeSeriesIdProperties.value = $tsIDArray
+    $paramsFileContent.parameters.iotHubName.value = $EnvironmentName + "-hub"
+    $paramsFileContent.parameters.environmentName.value = $EnvironmentName
+    $paramsFileContent.parameters.eventSourceName.value = $EnvironmentName + "eventSource"
+    $paramsFileContent.parameters.consumerGroupName.value = $ConsumerGroupName
+    $paramsFileContent.parameters.eventSourceTimestampPropertyName.value = $Timestamp
+    $paramsFileContent.parameters.testApplicationOid.value = $applicationOId
+    $paramsFileContent.parameters.region.value = $Region
+    $paramsFileContent.parameters.resourceGroup.value = $ResourceGroup
+    $paramsFileContent.parameters.subscriptionId.value = $SubscriptionId
 
-    $a | ConvertTo-Json -depth 32 | set-content $pathToUserParamsFile
+    $paramsFileContent | ConvertTo-Json -depth 32 | set-content $pathToUserParamsFile
 }
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
@@ -140,7 +136,7 @@ az deployment group create --resource-group $ResourceGroup --name $($Environment
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
-$dataAccessFQDN = az deployment group show -g $ResourceGroup -n $($EnvironmentName.ToLower()) --query 'properties.outputs.dataAccessFQDN.value' --output tsv
+$dataAccessFqdn = az deployment group show -g $ResourceGroup -n $($EnvironmentName.ToLower()) --query 'properties.outputs.dataAccessFQDN.value' --output tsv
 
 Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
@@ -150,7 +146,7 @@ Write-Host("`nWriting user config file - $fileName`n")
 
 $config = @"
 {
-    "TestMode":  "Live"	
+    "TestMode": "Live"	
 }
 "@
 
@@ -165,10 +161,10 @@ Add-Type -AssemblyName System.Security
 $appSecretJsonEscaped = ConvertTo-Json $appSecret
 $environmentText = @"
 {
-    "TIMESERIESINSIGHTS_URL": "$dataAccessFQDN",
+    "TIMESERIESINSIGHTS_URL": "$dataAccessFqdn",
     "TIMESERIESINSIGHTS_CLIENT_ID": "$appId",
     "TIMESERIESINSIGHTS_CLIENT_SECRET": $appSecretJsonEscaped,
-    "TIMESERIESINSIGHTS_TENANT_ID":  "$tenantId"
+    "TIMESERIESINSIGHTS_TENANT_ID": "$tenantId"
 }
 "@
 
