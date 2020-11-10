@@ -12,7 +12,7 @@ namespace QnAMaker.Tests
         static BaseTests()
         {
             // Retrieve the configuration information.
-            QnAMakerSubscriptionKey = "";
+            QnAMakerSubscriptionKey = "7afcaa16ba1747328eb7a77de8316445";
             QnAMakerEndpointKey = "";
         }
 
@@ -20,7 +20,7 @@ namespace QnAMaker.Tests
         {
             IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), handlers: handler)
             {
-                Endpoint = "https://australiaeast.api.cognitive.microsoft.com"
+                Endpoint = "https://westus.api.cognitive.microsoft.com"
             };
                 
 
