@@ -99,5 +99,15 @@ namespace Microsoft.Azure.Management.Avs
         /// </summary>
         IAuthorizationsOperations Authorizations { get; }
 
+        /// <summary>
+        /// Gets the IGlobalReachConnectionsOperations.
+        /// </summary>
+        IGlobalReachConnectionsOperations GlobalReachConnections { get; }
+
+        /// <summary>
+        /// Gets the IWorkloadNetworksOperations.
+        /// </summary>
+        IWorkloadNetworksOperations WorkloadNetworks { get; }
+
     }
 }

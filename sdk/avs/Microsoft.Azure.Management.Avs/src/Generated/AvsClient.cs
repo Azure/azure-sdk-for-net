@@ -105,6 +105,16 @@ namespace Microsoft.Azure.Management.Avs
         public virtual IAuthorizationsOperations Authorizations { get; private set; }
 
         /// <summary>
+        /// Gets the IGlobalReachConnectionsOperations.
+        /// </summary>
+        public virtual IGlobalReachConnectionsOperations GlobalReachConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkloadNetworksOperations.
+        /// </summary>
+        public virtual IWorkloadNetworksOperations WorkloadNetworks { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AvsClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -351,8 +361,10 @@ namespace Microsoft.Azure.Management.Avs
             Clusters = new ClustersOperations(this);
             HcxEnterpriseSites = new HcxEnterpriseSitesOperations(this);
             Authorizations = new AuthorizationsOperations(this);
+            GlobalReachConnections = new GlobalReachConnectionsOperations(this);
+            WorkloadNetworks = new WorkloadNetworksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-20";
+            ApiVersion = "2020-07-17-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -382,6 +394,8 @@ namespace Microsoft.Azure.Management.Avs
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WorkloadNetworkDhcpEntity>("dhcpType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
