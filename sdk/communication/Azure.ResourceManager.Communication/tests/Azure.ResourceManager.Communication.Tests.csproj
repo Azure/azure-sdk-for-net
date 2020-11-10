@@ -9,4 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\src\CommunicationRecordedTestSanitizer.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Shared\src\CommunicationEnvironmentVariableNames.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

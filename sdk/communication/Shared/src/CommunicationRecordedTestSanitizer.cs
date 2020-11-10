@@ -13,9 +13,7 @@ namespace Azure.Communication.Pipeline
     {
         private static readonly Regex s_azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
         private static readonly Regex s_identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
-        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
-        internal const string ToPhoneNumberEnvironmentVariableName = "TO_PHONE_NUMBER";
-        internal const string FromPhoneNumberEnvironmentVariableName = "FROM_PHONE_NUMBER";
+
         /// <summary>
         /// This is a testing/unsigned token required on the sanitized payloads for the playback mode due to format validation on CommunicationUserCredential constructors.
         /// </summary>
@@ -51,9 +49,9 @@ namespace Azure.Communication.Pipeline
         {
             return variableName switch
             {
-                ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
-                FromPhoneNumberEnvironmentVariableName => "+18005551234",
-                ToPhoneNumberEnvironmentVariableName => "+18005555555",
+                CommunicationEnvironmentVariableNames.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationEnvironmentVariableNames.FromPhoneNumberEnvironmentVariableName => "+18005551234",
+                CommunicationEnvironmentVariableNames.ToPhoneNumberEnvironmentVariableName => "+18005555555",
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

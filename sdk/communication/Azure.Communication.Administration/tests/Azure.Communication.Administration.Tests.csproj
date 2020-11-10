@@ -19,7 +19,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\CommunicationRecordedTestSanitizer.cs" Link="Shared\Communication\CommunicationRecordedTestSanitizer.cs" />
-
+    <Compile Include="..\..\Shared\src\CommunicationEnvironmentVariableNames.cs" Link="Shared\Communication\CommunicationEnvironmentVariableNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\samples\README.md" Link="samples\README.md" />

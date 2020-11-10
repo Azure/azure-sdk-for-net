@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
@@ -14,10 +15,7 @@ namespace Azure.Communication.Chat.Tests
         {
         }
 
-        /// <summary>The name of the environment variable from which the Azure Communicion Service resource's connection string will be extracted for the live tests.</summary>
-        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
-
-        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
+        public string ConnectionString => GetRecordedVariable(CommunicationEnvironmentVariableNames.ConnectionStringEnvironmentVariableName);
 
         public string ChatApiUrl()
         {
