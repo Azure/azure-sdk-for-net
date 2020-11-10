@@ -113,6 +113,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='galleryName'>
         /// The name of the Shared Image Gallery.
         /// </param>
+        /// <param name='select'>
+        /// The select expression to apply on the operation. Possible values include:
+        /// 'Permissions'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -134,7 +138,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -148,7 +152,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -159,6 +163,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("galleryName", galleryName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("select", select);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -172,6 +177,10 @@ namespace Microsoft.Azure.Management.Compute
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (select != null)
+            {
+                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -357,7 +366,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -535,7 +544,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -738,7 +747,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 gallery.Validate();
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -984,7 +993,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "gallery");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1182,7 +1191,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
