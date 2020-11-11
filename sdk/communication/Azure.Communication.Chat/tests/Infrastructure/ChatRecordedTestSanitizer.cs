@@ -3,13 +3,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests
 {
-    public class ChatRecordedTestSanitizer : CommunicationRecordedTestSanitizer
+    public class ChatRecordedTestSanitizer : RecordedTestSanitizer
     {
         public const string SanitizedUnsignedUserTokenValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
@@ -34,12 +33,12 @@ namespace Azure.Communication.Chat.Tests
         {
             return variableName switch
             {
-                ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeChatConnectionString(environmentVariableValue),
+                ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }
 
-        private static string SanitizeChatConnectionString(string connectionString)
+        private static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
 
