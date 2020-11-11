@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Attestation
             Operations = new Operations(this);
             AttestationProviders = new AttestationProvidersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-01-preview";
+            ApiVersion = "2018-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

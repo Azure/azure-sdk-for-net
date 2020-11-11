@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance.
             /// </param>
             /// <param name='creationParams'>
             /// Client supplied parameters.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance.
             /// </param>
             /// <param name='creationParams'>
             /// Client supplied parameters.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance.
             /// </param>
             /// <param name='updateParams'>
             /// Client supplied parameters.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance.
             /// </param>
             /// <param name='updateParams'>
             /// Client supplied parameters.
