@@ -327,7 +327,7 @@ namespace Azure.Test.Stress
         private static string GetVerbName(string testName)
         {
             var lower = testName.ToLowerInvariant();
-            return lower.EndsWith("test") ? lower.Substring(0, lower.Length - 4) : lower;
+            return lower.EndsWith("test") ? testName.Substring(0, lower.Length - 4) : testName;
         }
     }
 }
