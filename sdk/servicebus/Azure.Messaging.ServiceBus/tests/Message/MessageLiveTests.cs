@@ -91,6 +91,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         [Test]
+        public async Task CanSendNullBodyMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var maxSizeMessage = new ServiceBusMessage((BinaryData)null);
+
+                await client.CreateSender(scope.QueueName).SendMessageAsync(maxSizeMessage);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var receivedMessage = await receiver.ReceiveMessageAsync();
+                Assert.IsNotNull(receivedMessage);
+                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+            }
+        }
+
+        [Test]
         public async Task CreateFromReceivedMessageCopiesProperties()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))

@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return dataBody.ConvertAndFlattenData();
             }
-            throw new NotSupportedException($"{message.Body.GetType()} is not a supported message body type.");
+            throw new NotSupportedException($"{message.Body.BodyType} is not a supported message body type.");
         }
     }
 }
