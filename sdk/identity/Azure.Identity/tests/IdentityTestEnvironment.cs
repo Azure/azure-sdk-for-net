@@ -21,8 +21,15 @@ namespace Azure.Identity.Tests
         public string IdentityClientSecret => GetOptionalVariable("AZURE_IDENTITY_TEST_CLIENT_SECRET") ?? "SANITIZED";
         public string IMDSEnable => GetOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
         public string IMDSClientId => GetVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
-        public string ArcEnable => GetOptionalVariable("IDENTITYTEST_ARCTEST_ENABLE");
-        public string SFEnable => GetOptionalVariable("IDENTITYTEST_SFTEST_ENABLE");
+        public string ArcEnable => GetRecordedOptionalVariable("IDENTITYTEST_ARCTEST_ENABLE");
+        public string SFEnable => GetRecordedOptionalVariable("IDENTITYTEST_SFTEST_ENABLE");
+        public string IdentityEndpoint => GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
+        public string ImdsEndpoint => GetRecordedOptionalVariable("IMDS_ENDPOINT");
+        public string MsiEndpoint => GetRecordedOptionalVariable("MSI_ENDPOINT");
+        public string MsiSecret => GetRecordedOptionalVariable("MSI_SECRET");
+        public string IdentityHeader => GetRecordedOptionalVariable("IDENTITY_HEADER");
+        public string IdentityServerThumbprint => GetRecordedOptionalVariable("IDENTITY_SERVER_THUMBPRINT");
+
         public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
@@ -33,5 +40,15 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+        public void RecordManagedIdentityEnvironmentVariables()
+        {
+            GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
+            GetRecordedOptionalVariable("IMDS_ENDPOINT");
+            GetRecordedOptionalVariable("MSI_ENDPOINT");
+            GetRecordedOptionalVariable("MSI_SECRET");
+            GetRecordedOptionalVariable("IDENTITY_HEADER");
+            GetRecordedOptionalVariable("IDENTITY_SERVER_THUMBPRINT");
+        }
     }
 }

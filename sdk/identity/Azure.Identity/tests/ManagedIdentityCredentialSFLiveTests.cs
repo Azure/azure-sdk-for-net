@@ -10,7 +10,7 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialSFLiveTests : IdentityRecordedTestBase
     {
-        public ManagedIdentityCredentialSFLiveTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialSFLiveTests(bool isAsync) : base(isAsync, Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
@@ -22,6 +22,8 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore();
             }
+
+            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
 
             var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
@@ -36,5 +38,6 @@ namespace Azure.Identity.Tests
 
             Assert.IsNotNull(secret);
         }
+
     }
 }

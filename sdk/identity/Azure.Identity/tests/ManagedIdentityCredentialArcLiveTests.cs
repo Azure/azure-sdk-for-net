@@ -27,6 +27,8 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
+            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+
             var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
             var cred = new ManagedIdentityCredential(options: InstrumentClientOptions(new TokenCredentialOptions()));
@@ -50,6 +52,8 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore();
             }
+
+            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
 
             var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
