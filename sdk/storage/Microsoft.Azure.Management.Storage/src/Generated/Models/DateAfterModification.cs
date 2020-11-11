@@ -32,13 +32,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="daysAfterModificationGreaterThan">Value indicating the
         /// age in days after last modification</param>
-        /// <param name="daysAfterLastAccessTimeGreaterThan">Value indicating
-        /// the age in days after last blob access. This property can only be
-        /// used in conjunction with last access time tracking policy</param>
-        public DateAfterModification(double? daysAfterModificationGreaterThan = default(double?), double? daysAfterLastAccessTimeGreaterThan = default(double?))
+        public DateAfterModification(double daysAfterModificationGreaterThan)
         {
             DaysAfterModificationGreaterThan = daysAfterModificationGreaterThan;
-            DaysAfterLastAccessTimeGreaterThan = daysAfterLastAccessTimeGreaterThan;
             CustomInit();
         }
 
@@ -52,15 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// modification
         /// </summary>
         [JsonProperty(PropertyName = "daysAfterModificationGreaterThan")]
-        public double? DaysAfterModificationGreaterThan { get; set; }
-
-        /// <summary>
-        /// Gets or sets value indicating the age in days after last blob
-        /// access. This property can only be used in conjunction with last
-        /// access time tracking policy
-        /// </summary>
-        [JsonProperty(PropertyName = "daysAfterLastAccessTimeGreaterThan")]
-        public double? DaysAfterLastAccessTimeGreaterThan { get; set; }
+        public double DaysAfterModificationGreaterThan { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -70,27 +58,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DaysAfterModificationGreaterThan != null)
+            if (DaysAfterModificationGreaterThan < 0)
             {
-                if (DaysAfterModificationGreaterThan < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterModificationGreaterThan", 0);
-                }
-                if (DaysAfterModificationGreaterThan % 1 != 0)
-                {
-                    throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterModificationGreaterThan", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterModificationGreaterThan", 0);
             }
-            if (DaysAfterLastAccessTimeGreaterThan != null)
+            if (DaysAfterModificationGreaterThan % 1 != 0)
             {
-                if (DaysAfterLastAccessTimeGreaterThan < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterLastAccessTimeGreaterThan", 0);
-                }
-                if (DaysAfterLastAccessTimeGreaterThan % 1 != 0)
-                {
-                    throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterLastAccessTimeGreaterThan", 1);
-                }
+                throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterModificationGreaterThan", 1);
             }
         }
     }

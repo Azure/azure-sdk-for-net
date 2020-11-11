@@ -194,16 +194,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ShareQuota != null)
+            if (ShareQuota > 102400)
             {
-                if (ShareQuota > 102400)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
-                }
-                if (ShareQuota < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
+            }
+            if (ShareQuota < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
             }
         }
     }

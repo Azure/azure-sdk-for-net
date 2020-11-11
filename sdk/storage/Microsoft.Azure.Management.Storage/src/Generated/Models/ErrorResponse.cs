@@ -29,11 +29,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">Azure Storage Resource Provider error response
-        /// body.</param>
-        public ErrorResponse(ErrorResponseBody error = default(ErrorResponseBody))
+        /// <param name="code">An identifier for the error. Codes are invariant
+        /// and are intended to be consumed programmatically.</param>
+        /// <param name="message">A message describing the error, intended to
+        /// be suitable for display in a user interface.</param>
+        public ErrorResponse(string code = default(string), string message = default(string))
         {
-            Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -43,10 +46,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets azure Storage Resource Provider error response body.
+        /// Gets or sets an identifier for the error. Codes are invariant and
+        /// are intended to be consumed programmatically.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponseBody Error { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets a message describing the error, intended to be
+        /// suitable for display in a user interface.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
