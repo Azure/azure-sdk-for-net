@@ -3,7 +3,7 @@
 ## 3.1.0-beta.1 (Unreleased)
 
 ### Breaking changes
-- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+- It defaults to the latest supported API version, which currently is `2.1-preview.2`.
 
 ### New Features
 - Added support for pre-built business card recognition.
