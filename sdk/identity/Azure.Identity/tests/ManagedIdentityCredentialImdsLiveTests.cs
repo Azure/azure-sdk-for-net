@@ -55,6 +55,8 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
+            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+
             var vaultUri = new Uri(TestEnvironment.UserAssignedVault);
 
             var clientId = TestEnvironment.IMDSClientId;
