@@ -14,9 +14,9 @@
       <![CDATA[
                 Changes:
                 
-                1) Adding support of double encryption by Azure DataBox Service. 
+                1) Adding support of double encryption. 
                 
-                2) Adding support of user assigned identity in create job by Azure DataBox Service.
+                2) Adding support of user assigned identity in create/update order.
 
             ]]>
 
