@@ -18,16 +18,8 @@ namespace Azure.ResourceManager.Dns.Tests
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
         protected string location;
-        protected string resourceGroup;
-        protected DnsManagementClientBase(bool isAsync) : base(isAsync)
+        protected DnsManagementClientBase(bool isAsync, string defaultRgPrefix = "Default-",  uint numberOfResourceGroups = 1) : base(isAsync, defaultRgPrefix, numberOfResourceGroups)
         {
-
-        }
-        protected override async Task AfterOneTimeSetupAsync()
-        {
-            location = "West US";
-            this.resourceGroup = Recording.GenerateAssetName("Default-Dns-");
-            await Helper.TryRegisterResourceGroupAsync(ResourcesManagementClient.ResourceGroups, this.location, this.resourceGroup);
         }
 
         protected override void InitializeClients()

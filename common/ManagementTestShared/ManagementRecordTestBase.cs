@@ -5,9 +5,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using System.Diagnostics;
-
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources.Models;
+using System.Collections.Generic;
 
 
 namespace Azure.ResourceManager.TestFramework
@@ -23,8 +24,19 @@ namespace Azure.ResourceManager.TestFramework
 
         private ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
 
-        protected ManagementRecordTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        private uint numberOfResourceGroups;
+
+        protected List<string> resourceGroups;
+
+        protected string defaultResourceGroup;
+
+        private string defaultRgPrefix;
+        protected ManagementRecordTestBase(bool isAsync, string defaultRgPrefix = "Default-", uint numberOfResourceGroups = 1) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
+            this.numberOfResourceGroups = numberOfResourceGroups;
+            this.resourceGroups = new List<string>();
+            defaultResourceGroup = null;
+            this.defaultRgPrefix = defaultRgPrefix;
         }
         protected ManagementRecordTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
@@ -49,6 +61,16 @@ namespace Azure.ResourceManager.TestFramework
         protected virtual Task AfterOneTimeSetupAsync()
         {
             this.InitializeClients();
+            if (this.numberOfResourceGroups < 1)
+                return Task.FromResult<object>(null);
+            this.defaultResourceGroup = Recording.GenerateAssetName(this.defaultRgPrefix);
+            var tmpClient = this.GetResourceManagementClient();
+            tmpClient.ResourceGroups.CreateOrUpdateAsync(defaultResourceGroup, new ResourceGroup("East US"));
+            for (int i = (int)this.numberOfResourceGroups - 1; i >= 0; i--)
+            {
+                resourceGroups.Add(Recording.GenerateAssetName(this.defaultRgPrefix));
+                tmpClient.ResourceGroups.CreateOrUpdateAsync(defaultResourceGroup, new ResourceGroup("East US"));
+            }
             return Task.FromResult<object>(null);
         }
 
@@ -103,7 +125,8 @@ namespace Azure.ResourceManager.TestFramework
         protected async Task RunOneTimeTearDown()
         {
             await RunTearDown();
-            CleanupResourceGroupsAsync();
+            CleanupResourceGroupsAsync(); //Clean up resource groups created during test
+            ResourceCleanup.cleanUpResources(this.resourceGroups, TestEnvironment.SubscriptionId, TestEnvironment.Credential);
             Logger?.Dispose();
             Logger = null;
             await AfterOneTimeTearDownAsync();
@@ -150,7 +173,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         /// <summary>
-        /// Delete all monitored resource groups.
+        /// Delete all monitored resource groups that were created during test run -- after one time setup.
         /// </summary>
         protected void CleanupResourceGroupsAsync()
         {

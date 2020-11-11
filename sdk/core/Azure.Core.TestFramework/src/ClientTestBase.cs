@@ -12,6 +12,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
+
 namespace Azure.Core.TestFramework
 {
     [ClientTestFixture]
