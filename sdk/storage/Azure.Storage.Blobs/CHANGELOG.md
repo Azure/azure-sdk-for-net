@@ -1,5 +1,8 @@
 # Release History
 
+## 12.8.0-beta.1 (Unreleased)
+
+
 ## 12.7.0 (2020-11-10)
 - Includes all features from 12.7.0-preview.1
 - Fixed bug where BlobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.

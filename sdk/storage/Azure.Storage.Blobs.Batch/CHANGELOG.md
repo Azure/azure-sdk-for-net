@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-beta.1 (Unreleased)
+
+
 ## 12.4.0 (2020-11-10)
 - This release contains bug fixes to improve quality.
 - Includes all features from 12.4.0-preview.1

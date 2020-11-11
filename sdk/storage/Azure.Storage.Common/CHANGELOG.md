@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-beta.1 (Unreleased)
+
+
 ## 12.6.0 (2020-11-10)
 - This release contains bug fixes to improve quality.
 
