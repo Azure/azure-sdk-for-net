@@ -13,7 +13,7 @@ using Xunit;
 
 namespace SecurityCenter.Tests
 {
-    public class IoTSecuritySolutionTests : TestBase
+    public class IotSecuritySolutionTests : TestBase
     {
         #region Test setup
 
