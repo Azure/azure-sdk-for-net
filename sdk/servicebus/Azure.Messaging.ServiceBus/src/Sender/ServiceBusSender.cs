@@ -396,12 +396,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            long[] sequenceNumbers = await ScheduleMessagesAsync(
+            IReadOnlyList<long> sequenceNumbers = await ScheduleMessagesAsync(
                 new ServiceBusMessage[] { message },
                 scheduledEnqueueTime,
                 cancellationToken)
             .ConfigureAwait(false);
-            // if there isn't one sequence number in the array, an
+            // if there isn't one sequence number in the list, an
             // exception should have been thrown by this point.
             return sequenceNumbers[0];
         }
@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long[]> ScheduleMessagesAsync(
+        public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)

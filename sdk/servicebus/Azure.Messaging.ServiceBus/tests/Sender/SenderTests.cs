@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 CallBase = true
             };
 
-            long[] sequenceNums = await mock.Object.ScheduleMessagesAsync(
+            IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
                 new List<ServiceBusMessage>(),
                 default);
             Assert.IsEmpty(sequenceNums);
