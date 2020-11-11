@@ -73,6 +73,7 @@ namespace Azure.AI.FormRecognizer
     {
         public RecognizeContentOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
+        public string Language { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<string> Pages { get { throw null; } set { } }
     }
     public partial class RecognizeCustomFormsOptions

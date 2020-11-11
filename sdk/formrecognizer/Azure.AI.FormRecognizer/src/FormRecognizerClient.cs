@@ -140,7 +140,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeLayoutAsync(
                     formContentType.ConvertToContentType1(),
                     form,
-                    null,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
                     recognizeContentOptions.Pages,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -178,7 +178,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
                     formContentType.ConvertToContentType1(),
                     form,
-                    null,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
                     recognizeContentOptions.Pages,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeLayoutAsync(
-                    null,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
                     recognizeContentOptions.Pages,
                     sourcePath,
                     cancellationToken);
@@ -249,7 +249,7 @@ namespace Azure.AI.FormRecognizer
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
-                    null,
+                    recognizeContentOptions.Language == null ? (Language?)null : recognizeContentOptions.Language,
                     recognizeContentOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
