@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Dns-6086/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-Zones-6086/providers/Microsoft.Network/dnsZones/somegibberish?api-version=2018-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-93cdd40e2441fd4cb19b79a18cd08f12-1d4124dd14433e46-00",
+        "traceparent": "00-e09e8a0ddb96a04eb285162c3317cb2a-50087e4e5a403d41-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201023.1",
+          "azsdk-net-ResourceManager.Dns/1.0.0-alpha.20201111.1",
           "(.NET Core 4.6.29130.01; Linux 4.19.128-microsoft-standard #1 SMP Tue Jun 23 12:58:10 UTC 2020)"
         ],
         "x-ms-client-request-id": "9fc020a5bed08c714291245d1c0d6013",
@@ -18,22 +18,22 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "228",
+        "Content-Length": "230",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Oct 2020 22:29:36 GMT",
+        "Date": "Wed, 11 Nov 2020 21:58:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4cb7d3eb-90cd-4d25-a72b-13816e501de9",
+        "x-ms-correlation-request-id": "7adb85ce-03b7-4612-889e-e4857d771371",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "4cb7d3eb-90cd-4d25-a72b-13816e501de9",
-        "x-ms-routing-request-id": "WESTUS2:20201023T222937Z:4cb7d3eb-90cd-4d25-a72b-13816e501de9"
+        "x-ms-request-id": "7adb85ce-03b7-4612-889e-e4857d771371",
+        "x-ms-routing-request-id": "WESTUS2:20201111T215820Z:7adb85ce-03b7-4612-889e-e4857d771371"
       },
       "ResponseBody": {
         "error": {
           "code": "ResourceNotFound",
-          "message": "The Resource \u0027Microsoft.Network/dnszones/somegibberish\u0027 under resource group \u0027Default-Dns-6086\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+          "message": "The Resource \u0027Microsoft.Network/dnszones/somegibberish\u0027 under resource group \u0027Default-Zones-6086\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
         }
       }
     }
