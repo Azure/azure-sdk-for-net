@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
-    internal partial class Appearance
+    public partial class Appearance
     {
         internal static Appearance DeserializeAppearance(JsonElement element)
         {

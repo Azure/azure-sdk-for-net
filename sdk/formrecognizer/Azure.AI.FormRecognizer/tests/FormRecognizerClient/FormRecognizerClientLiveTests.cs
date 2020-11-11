@@ -119,12 +119,18 @@ namespace Azure.AI.FormRecognizer.Tests
                 {
                     Assert.GreaterOrEqual(item.Confidence, 0);
                 }
+
+                Assert.IsNotNull(line.Appearance);
+                Assert.IsNotNull(line.Appearance.Style);
+                Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                Assert.Greater(line.Appearance.Style.Confidence, 0f);
             }
 
             var table = formPage.Tables.Single();
 
             Assert.AreEqual(3, table.RowCount);
             Assert.AreEqual(6, table.ColumnCount);
+            Assert.AreEqual(4, table.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = table.Cells.ToList();
 
@@ -220,6 +226,19 @@ namespace Azure.AI.FormRecognizer.Tests
                 {
                     Assert.GreaterOrEqual(item.Confidence, 0);
                 }
+
+                Assert.IsNotNull(line.Appearance);
+                Assert.IsNotNull(line.Appearance.Style);
+                Assert.Greater(line.Appearance.Style.Confidence, 0f);
+
+                if (lineIndex == 45)
+                {
+                    Assert.AreEqual(TextStyle.Handwriting, line.Appearance.Style.Name);
+                }
+                else
+                {
+                    Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                }
             }
 
             Assert.AreEqual(2, formPage.Tables.Count);
@@ -228,6 +247,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.AreEqual(4, sampleTable.RowCount);
             Assert.AreEqual(2, sampleTable.ColumnCount);
+            Assert.AreEqual(4, sampleTable.BoundingBox.Points.Count(), $"There should be exactly 4 points in the table bounding box.");
 
             var cells = sampleTable.Cells.ToList();
 
@@ -429,6 +449,44 @@ namespace Azure.AI.FormRecognizer.Tests
             var formPage = operation.Value.Single();
 
             ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
+        }
+
+        [Test]
+        [TestCase("1", 1)]
+        [TestCase("1-2", 2)]
+        public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { pages } });
+            }
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, formPages.Count);
+        }
+
+        [Test]
+        [TestCase("1", "3", 2)]
+        [TestCase("1-2", "3", 3)]
+        public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { page1, page2 } });
+            }
+
+            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, formPages.Count);
         }
 
         #endregion
@@ -2178,6 +2236,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedPageNumber, table.PageNumber);
                 Assert.Greater(table.ColumnCount, 0);
                 Assert.Greater(table.RowCount, 0);
+                // Currently not true for CustomForms. Issue https://github.com/Azure/azure-sdk-for-net/issues/16827
+                // Assert.AreEqual(4, table.BoundingBox.Points.Count());
 
                 Assert.NotNull(table.Cells);
 

@@ -137,7 +137,12 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = ServiceClient.AnalyzeLayoutAsync(formContentType.ConvertToContentType1(), form, null, null, cancellationToken);
+                Response response = ServiceClient.AnalyzeLayoutAsync(
+                    formContentType.ConvertToContentType1(),
+                    form,
+                    null,
+                    recognizeContentOptions.Pages,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -170,7 +175,12 @@ namespace Azure.AI.FormRecognizer
             {
                 FormContentType formContentType = recognizeContentOptions.ContentType ?? DetectContentType(form, nameof(form));
 
-                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(formContentType.ConvertToContentType1(), form, null, null, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
+                    formContentType.ConvertToContentType1(),
+                    form,
+                    null,
+                    recognizeContentOptions.Pages,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -202,7 +212,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
-                Response response = ServiceClient.AnalyzeLayoutAsync(null, null, sourcePath, cancellationToken);
+                Response response = ServiceClient.AnalyzeLayoutAsync(
+                    null,
+                    recognizeContentOptions.Pages,
+                    sourcePath,
+                    cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);
@@ -234,7 +248,11 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
-                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(null, null, sourcePath, cancellationToken).ConfigureAwait(false);
+                Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
+                    null,
+                    recognizeContentOptions.Pages,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
 
                 return new RecognizeContentOperation(ServiceClient, Diagnostics, location);

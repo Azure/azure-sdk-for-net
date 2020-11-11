@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Models
+using Azure.AI.FormRecognizer.Models;
+
+namespace Azure.AI.FormRecognizer
 {
     /// <summary> An object representing the style of the text line. </summary>
-    internal partial class Style
+    public partial class Style
     {
         /// <summary> Initializes a new instance of Style. </summary>
         /// <param name="name"> The text line style name, including handwriting and other. </param>
