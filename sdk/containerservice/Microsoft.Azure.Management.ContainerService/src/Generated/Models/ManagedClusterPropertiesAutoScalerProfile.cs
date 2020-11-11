@@ -31,9 +31,17 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the
         /// ManagedClusterPropertiesAutoScalerProfile class.
         /// </summary>
-        public ManagedClusterPropertiesAutoScalerProfile(string balanceSimilarNodeGroups = default(string), string scanInterval = default(string), string scaleDownDelayAfterAdd = default(string), string scaleDownDelayAfterDelete = default(string), string scaleDownDelayAfterFailure = default(string), string scaleDownUnneededTime = default(string), string scaleDownUnreadyTime = default(string), string scaleDownUtilizationThreshold = default(string), string maxGracefulTerminationSec = default(string))
+        /// <param name="expander">Possible values include: 'least-waste',
+        /// 'most-pods', 'random'</param>
+        public ManagedClusterPropertiesAutoScalerProfile(string balanceSimilarNodeGroups = default(string), string expander = default(string), string maxEmptyBulkDelete = default(string), string maxGracefulTerminationSec = default(string), string maxTotalUnreadyPercentage = default(string), string newPodScaleUpDelay = default(string), string okTotalUnreadyCount = default(string), string scanInterval = default(string), string scaleDownDelayAfterAdd = default(string), string scaleDownDelayAfterDelete = default(string), string scaleDownDelayAfterFailure = default(string), string scaleDownUnneededTime = default(string), string scaleDownUnreadyTime = default(string), string scaleDownUtilizationThreshold = default(string), string skipNodesWithLocalStorage = default(string), string skipNodesWithSystemPods = default(string))
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
+            Expander = expander;
+            MaxEmptyBulkDelete = maxEmptyBulkDelete;
+            MaxGracefulTerminationSec = maxGracefulTerminationSec;
+            MaxTotalUnreadyPercentage = maxTotalUnreadyPercentage;
+            NewPodScaleUpDelay = newPodScaleUpDelay;
+            OkTotalUnreadyCount = okTotalUnreadyCount;
             ScanInterval = scanInterval;
             ScaleDownDelayAfterAdd = scaleDownDelayAfterAdd;
             ScaleDownDelayAfterDelete = scaleDownDelayAfterDelete;
@@ -41,7 +49,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             ScaleDownUnneededTime = scaleDownUnneededTime;
             ScaleDownUnreadyTime = scaleDownUnreadyTime;
             ScaleDownUtilizationThreshold = scaleDownUtilizationThreshold;
-            MaxGracefulTerminationSec = maxGracefulTerminationSec;
+            SkipNodesWithLocalStorage = skipNodesWithLocalStorage;
+            SkipNodesWithSystemPods = skipNodesWithSystemPods;
             CustomInit();
         }
 
@@ -54,6 +63,38 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "balance-similar-node-groups")]
         public string BalanceSimilarNodeGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'least-waste', 'most-pods',
+        /// 'random'
+        /// </summary>
+        [JsonProperty(PropertyName = "expander")]
+        public string Expander { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "max-empty-bulk-delete")]
+        public string MaxEmptyBulkDelete { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "max-graceful-termination-sec")]
+        public string MaxGracefulTerminationSec { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "max-total-unready-percentage")]
+        public string MaxTotalUnreadyPercentage { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "new-pod-scale-up-delay")]
+        public string NewPodScaleUpDelay { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "ok-total-unready-count")]
+        public string OkTotalUnreadyCount { get; set; }
 
         /// <summary>
         /// </summary>
@@ -92,8 +133,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "max-graceful-termination-sec")]
-        public string MaxGracefulTerminationSec { get; set; }
+        [JsonProperty(PropertyName = "skip-nodes-with-local-storage")]
+        public string SkipNodesWithLocalStorage { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "skip-nodes-with-system-pods")]
+        public string SkipNodesWithSystemPods { get; set; }
 
     }
 }

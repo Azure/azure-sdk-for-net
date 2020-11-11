@@ -102,6 +102,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// the disk size for every machine in this master/agent pool. If you
         /// specify 0, it will apply the default osDisk size according to the
         /// vmSize specified.</param>
+        /// <param name="osDiskType">OS disk type to be used for machines in a
+        /// given agent pool. Allowed values are 'Ephemeral' and 'Managed'.
+        /// Defaults to 'Managed'. May not be changed after creation. Possible
+        /// values include: 'Managed', 'Ephemeral'</param>
         /// <param name="vnetSubnetID">VNet SubnetID specifies the VNet's
         /// subnet identifier.</param>
         /// <param name="maxPods">Maximum number of pods that can run on a
@@ -127,6 +131,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// agentpool</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
+        /// <param name="powerState">Describes whether the Agent Pool is
+        /// Running or Stopped</param>
         /// <param name="availabilityZones">Availability zones for nodes. Must
         /// use VirtualMachineScaleSets AgentPoolType.</param>
         /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
@@ -149,12 +155,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// create and scale. For example, key=value:NoSchedule.</param>
         /// <param name="proximityPlacementGroupID">The ID for Proximity
         /// Placement Group.</param>
-        public AgentPool(string id = default(string), string name = default(string), string type = default(string), int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string))
+        public AgentPool(string id = default(string), string name = default(string), string type = default(string), int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string osDiskType = default(string), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string mode = default(string), string orchestratorVersion = default(string), string nodeImageVersion = default(string), AgentPoolUpgradeSettings upgradeSettings = default(AgentPoolUpgradeSettings), string provisioningState = default(string), PowerState powerState = default(PowerState), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>), string proximityPlacementGroupID = default(string))
             : base(id, name, type)
         {
             Count = count;
             VmSize = vmSize;
             OsDiskSizeGB = osDiskSizeGB;
+            OsDiskType = osDiskType;
             VnetSubnetID = vnetSubnetID;
             MaxPods = maxPods;
             OsType = osType;
@@ -167,6 +174,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             NodeImageVersion = nodeImageVersion;
             UpgradeSettings = upgradeSettings;
             ProvisioningState = provisioningState;
+            PowerState = powerState;
             AvailabilityZones = availabilityZones;
             EnableNodePublicIP = enableNodePublicIP;
             ScaleSetPriority = scaleSetPriority;
@@ -263,6 +271,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public int? OsDiskSizeGB { get; set; }
 
         /// <summary>
+        /// Gets or sets OS disk type to be used for machines in a given agent
+        /// pool. Allowed values are 'Ephemeral' and 'Managed'. Defaults to
+        /// 'Managed'. May not be changed after creation. Possible values
+        /// include: 'Managed', 'Ephemeral'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.osDiskType")]
+        public string OsDiskType { get; set; }
+
+        /// <summary>
         /// Gets or sets vNet SubnetID specifies the VNet's subnet identifier.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vnetSubnetID")]
@@ -340,6 +357,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets describes whether the Agent Pool is Running or Stopped
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.powerState")]
+        public PowerState PowerState { get; private set; }
 
         /// <summary>
         /// Gets or sets availability zones for nodes. Must use

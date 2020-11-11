@@ -96,5 +96,15 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IResolvePrivateLinkServiceIdOperations.
+        /// </summary>
+        IResolvePrivateLinkServiceIdOperations ResolvePrivateLinkServiceId { get; }
+
     }
 }
