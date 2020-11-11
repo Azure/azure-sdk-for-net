@@ -112,6 +112,30 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [Test]
+        [TestCase("")]
+        [TestCase("en")]
+        public async Task StartRecognizeContentSendsUserSpecifiedLanguage(string language)
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, "host/layout/analyzeResults/00000000000000000000000000000000"));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Form1);
+            var recognizeOptions = new RecognizeContentOptions { Language = language };
+            await client.StartRecognizeContentAsync(stream, recognizeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+
+            var languageQuery = "language=";
+            var index = requestUriQuery.IndexOf(languageQuery);
+            var length = requestUriQuery.Length - (index + languageQuery.Length);
+            Assert.AreEqual(language, requestUriQuery.Substring(index + languageQuery.Length, length));
+        }
+
         #endregion
 
         #region Recognize Receipt

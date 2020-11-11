@@ -25,6 +25,15 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; } = null;
 
         /// <summary>
+        /// The BCP-47 language code of the text in the document.
+        /// Recognize Content supports auto language identification and multi language documents, so only
+        /// provide a language code if you would like to force the documented to be processed as
+        /// that specific language.
+        /// <para>See supported language codes <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/language-support">here</a>.</para>
+        /// </summary>
+        public string Language { get; set; }
+
+        /// <summary>
         /// Custom page numbers for multi-page documents(PDF/TIFF). Input the number of the
         /// pages you want to get OCR result. For a range of pages, use a hyphen.
         /// Separate each page or range with a comma.

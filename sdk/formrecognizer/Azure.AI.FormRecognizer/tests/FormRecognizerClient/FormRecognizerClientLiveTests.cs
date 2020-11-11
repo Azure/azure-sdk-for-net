@@ -489,6 +489,35 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expected, formPages.Count);
         }
 
+        [Test]
+        [TestCase("en")]
+        [TestCase("")]
+        public async Task StartRecognizeContentWithLanguage(string language)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeContentOperation operation;
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+            operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = language } );
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            var formPage = operation.Value.Single();
+
+            ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
+        }
+
+        [Test]
+        public void StartRecognizeContentWithNoSupporttedLanguage()
+        {
+            var client = CreateFormRecognizerClient();
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = "not language" }) );
+            Assert.AreEqual("NotSupportedLanguage", ex.ErrorCode);
+        }
+
         #endregion
 
         #region StartRecognizeReceipts
