@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -33,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
         public ServiceBusMessage(string body) :
-            this(new BinaryData(body))
+            this(Encoding.UTF8.GetBytes(body))
         {
         }
 
@@ -41,19 +42,18 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(BinaryData.FromBytes(body))
+        public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
+            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
         /// <summary>
         /// Creates a new message from the specified <see cref="BinaryData"/> instance.
         /// </summary>
         /// <param name="body">The payload of the message.</param>
-        public ServiceBusMessage(BinaryData body)
+        public ServiceBusMessage(BinaryData body) : this (body?.ToMemory() ?? default)
         {
-            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body ?? new BinaryData(Array.Empty<byte>()) });
-            AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
         /// <summary>
@@ -63,7 +63,12 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            AmqpMessageBody body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { receivedMessage.Body });
+            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
+            }
+
+            AmqpMessageBody body = new AmqpMessageBody(dataBody);
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
