@@ -1,5 +1,8 @@
 # Release History
 
+## 12.6.0-beta.1 (Unreleased)
+
+
 ## 12.5.0 (2020-11-10)
 - Includes all features from 12.5.0-preview.1
 - Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.

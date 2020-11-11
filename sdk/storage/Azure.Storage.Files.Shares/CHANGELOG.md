@@ -1,5 +1,8 @@
 # Release History
 
+## 12.6.0-beta.1 (Unreleased)
+
+
 ## 12.5.0 (2020-11-10)
 - Includes all features from 12.5.0-preview.1
 - Fixed bug where ShareDirectoryClient.Exists(), .DeleteIfExists() and ShareFileClient.Exists(), .DeleteIfExists() would thrown an exception when the directory or file's parent directory didn't exist.
