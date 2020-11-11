@@ -15,6 +15,8 @@ namespace Azure.Security.KeyVault.Keys
         private const string CurveNamePropertyName = "crv";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string PublicExponentPropertyName = "public_exponent";
+        private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
@@ -22,6 +24,8 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private static readonly JsonEncodedText s_publicExponentPropertyNameBytes = JsonEncodedText.Encode(PublicExponentPropertyName);
+        private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
         private KeyAttributes _attributes;
 
@@ -34,6 +38,8 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? Expires { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
         public IDictionary<string, string> Tags { get; set; }
         public KeyCurveName? Curve { get; set; }
+        public int? PublicExponent { get; set; }
+        public KeyReleasePolicy ReleasePolicy { get; set; }
 
         internal KeyRequestParameters(KeyProperties key, IEnumerable<KeyOperation> operations)
         {
@@ -57,6 +63,8 @@ namespace Azure.Security.KeyVault.Keys
             {
                 KeyOperations = new List<KeyOperation>(operations);
             }
+
+            ReleasePolicy = key.ReleasePolicy;
         }
 
         internal KeyRequestParameters(KeyType type, CreateKeyOptions options = default)
@@ -84,6 +92,8 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     Tags = new Dictionary<string, string>(options.Tags);
                 }
+
+                ReleasePolicy = options.ReleasePolicy;
             }
         }
 
@@ -102,6 +112,11 @@ namespace Azure.Security.KeyVault.Keys
             if (rsaKey.KeySize.HasValue)
             {
                 KeySize = rsaKey.KeySize.Value;
+            }
+
+            if (rsaKey.PublicExponent.HasValue)
+            {
+                PublicExponent = rsaKey.PublicExponent.Value;
             }
         }
 
@@ -144,6 +159,20 @@ namespace Azure.Security.KeyVault.Keys
                 {
                     json.WriteString(kvp.Key, kvp.Value);
                 }
+
+                json.WriteEndObject();
+            }
+
+            if (PublicExponent.HasValue)
+            {
+                json.WriteNumber(s_publicExponentPropertyNameBytes, PublicExponent.Value);
+            }
+
+            if (ReleasePolicy != null)
+            {
+                json.WriteStartObject(s_releasePolicyPropertyNameBytes);
+
+                ReleasePolicy.WriteProperties(json);
 
                 json.WriteEndObject();
             }

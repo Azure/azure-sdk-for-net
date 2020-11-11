@@ -27,6 +27,11 @@ namespace Azure.Security.KeyVault.Keys
         public int? KeySize { get; set; }
 
         /// <summary>
+        /// Gets or sets the public exponent for a RSA key.
+        /// </summary>
+        public int? PublicExponent { get; set; }
+
+        /// <summary>
         /// Gets a value indicating whether to create a hardware-protected key in a hardware security module (HSM).
         /// </summary>
         /// <value><c>true</c> to create a hardware-protected key; otherwise, <c>false</c> to create a software key.</value>

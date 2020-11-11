@@ -98,6 +98,11 @@ az login --service-principal --tenant "$tenant" --username "$username" --passwor
 Log "Downloading security domain from '$hsmUrl'"
 
 $sdPath = "$PSScriptRoot\$hsmName-security-domain.key"
+if (Test-Path $sdpath) {
+    Log "Deleting old security domain: $sdPath"
+    Remove-Item $sdPath -Force
+}
+
 az keyvault security-domain download --hsm-name $hsmName --security-domain-file $sdPath --sd-quorum 2 --sd-wrapping-keys $wrappingFiles
 
 Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$hsmUrl'"

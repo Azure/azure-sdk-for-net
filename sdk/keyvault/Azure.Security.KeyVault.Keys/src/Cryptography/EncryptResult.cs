@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
+        /// Gets the key identifier of the <see cref="KeyVaultKey"/> used to encrypt. This must be stored alongside the <see cref="Ciphertext"/> as the same key must be used to decrypt it.
         /// </summary>
         public string KeyId { get; internal set; }
 

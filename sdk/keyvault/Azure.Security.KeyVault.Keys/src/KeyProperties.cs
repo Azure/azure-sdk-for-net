@@ -19,8 +19,10 @@ namespace Azure.Security.KeyVault.Keys
         private const string ManagedPropertyName = "managed";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string ReleasePolicyPropertyName = "release_policy";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
 
         internal Dictionary<string, string> _tags;
 
@@ -123,6 +125,16 @@ namespace Azure.Security.KeyVault.Keys
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the private key can be exported.
+        /// </summary>
+        public bool? Exportable { get => _attributes.Exportable; set => _attributes.Exportable = value; }
+
+        /// <summary>
+        /// Gets or sets the policy rules under which the key can be exported.
+        /// </summary>
+        public KeyReleasePolicy ReleasePolicy { get; set; }
+
+        /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
         /// <param name="idToParse">The key vault object identifier.</param>
@@ -162,6 +174,10 @@ namespace Azure.Security.KeyVault.Keys
                         Tags[tagProp.Name] = tagProp.Value.GetString();
                     }
                     break;
+                case ReleasePolicyPropertyName:
+                    ReleasePolicy = new KeyReleasePolicy();
+                    ReleasePolicy.ReadProperties(prop.Value);
+                    break;
             }
         }
 
@@ -180,6 +196,15 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteStartObject(s_attributesPropertyNameBytes);
 
                 _attributes.WriteProperties(json);
+
+                json.WriteEndObject();
+            }
+
+            if (ReleasePolicy != null)
+            {
+                json.WriteStartObject(s_releasePolicyPropertyNameBytes);
+
+                ReleasePolicy.WriteProperties(json);
 
                 json.WriteEndObject();
             }
