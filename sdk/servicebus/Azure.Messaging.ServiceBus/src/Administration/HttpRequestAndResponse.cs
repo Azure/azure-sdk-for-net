@@ -53,10 +53,9 @@ namespace Azure.Messaging.ServiceBus.Administration
             RequestFailedException ex = await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             if (response.Status == (int)HttpStatusCode.Unauthorized)
             {
-                throw new ServiceBusException(
+                throw new UnauthorizedAccessException(
                     ex.Message,
-                    ServiceBusFailureReason.Unauthorized,
-                    innerException: ex);
+                    inner: ex);
             }
 
             if (response.Status == (int)HttpStatusCode.NotFound)

@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase) ||
                 string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(message, ServiceBusFailureReason.Unauthorized);
+                return new UnauthorizedAccessException(message);
             }
 
             if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))

@@ -154,8 +154,7 @@ namespace Azure.Messaging.ServiceBus
         ServiceCommunicationProblem = 9,
         SessionCannotBeLocked = 10,
         SessionLockLost = 11,
-        Unauthorized = 12,
-        MessagingEntityAlreadyExists = 13,
+        MessagingEntityAlreadyExists = 12,
     }
     public partial class ServiceBusMessage
     {
