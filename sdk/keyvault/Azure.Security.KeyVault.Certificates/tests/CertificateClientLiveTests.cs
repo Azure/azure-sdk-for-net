@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -737,6 +738,101 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(certificatePolicy.CertificateTransparency, updatePolicy.CertificateTransparency);
             Assert.AreEqual(certificatePolicy.ContentType, updatePolicy.ContentType);
             Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
+        }
+
+        [Test]
+        public async Task DownloadLatestCertificate()
+        {
+            string name = Recording.GenerateId();
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = true,
+                ReuseKey = false,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DataEncipherment,
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                CertificateTransparency = false,
+                ContentType = CertificateContentType.Pkcs12,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync();
+
+            KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+
+            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+            using RSA pubkey = (RSA)pub.PublicKey.Key;
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
+            Assert.IsTrue(x509certificate.HasPrivateKey);
+
+            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+
+            CollectionAssert.AreEqual(plaintext, decrypted);
+        }
+
+        [Test]
+        public async Task DownloadVersionedCertificate()
+        {
+            string name = Recording.GenerateId();
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Rsa,
+                Exportable = true,
+                ReuseKey = false,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DataEncipherment,
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                CertificateTransparency = false,
+                ContentType = CertificateContentType.Pkcs12,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await operation.WaitForCompletionAsync();
+
+            KeyVaultCertificate certificate = await Client.GetCertificateAsync(name);
+            string version = certificate.Properties.Version;
+
+            using X509Certificate2 pub = new X509Certificate2(certificate.Cer);
+            using RSA pubkey = (RSA)pub.PublicKey.Key;
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("Hello, world!");
+            byte[] ciphertext = pubkey.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
+            // Create a new certificate version that is not exportable just to further prove we are not downloading it.
+            policy.Exportable = false;
+            operation = await Client.StartCreateCertificateAsync(name, policy);
+
+            await operation.WaitForCompletionAsync();
+
+            certificate = await Client.GetCertificateAsync(name);
+            Assert.AreNotEqual(version, certificate.Properties.Version);
+
+            // Now download the certificate and test decryption.
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version);
+            Assert.IsTrue(x509certificate.HasPrivateKey);
+
+            using RSA rsa = (RSA)x509certificate.PrivateKey;
+            byte[] decrypted = rsa.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+
+            CollectionAssert.AreEqual(plaintext, decrypted);
         }
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
