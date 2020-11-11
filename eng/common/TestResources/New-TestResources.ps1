@@ -152,6 +152,8 @@ if (!$templateFiles) {
 }
 
 $UserName =  if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+# Remove spaces, etc. that may be in $UserName
+$UserName = $UserName -replace '\W'
 
 # If no base name is specified use current user name
 if (!$BaseName) {
