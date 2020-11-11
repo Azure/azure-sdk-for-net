@@ -64,10 +64,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// . Possible values include: 'Automatic', 'Manual'</param>
         /// <param name="clusterUpgradeDescription">Describes the policy used
         /// when upgrading the cluster.</param>
-        /// <param name="reverseProxyEndpointPort">The endpoint used by reverse
-        /// proxy.</param>
         /// <param name="tags">Managed cluster update parameters</param>
-        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), int? reverseProxyEndpointPort = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedClusterUpdateParameters(int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), ClusterUpgradePolicy clusterUpgradeDescription = default(ClusterUpgradePolicy), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ClientConnectionPort = clientConnectionPort;
             HttpGatewayConnectionPort = httpGatewayConnectionPort;
@@ -78,7 +76,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ClusterCodeVersion = clusterCodeVersion;
             ClusterUpgradeMode = clusterUpgradeMode;
             ClusterUpgradeDescription = clusterUpgradeDescription;
-            ReverseProxyEndpointPort = reverseProxyEndpointPort;
             Tags = tags;
             CustomInit();
         }
@@ -156,12 +153,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterUpgradeDescription")]
         public ClusterUpgradePolicy ClusterUpgradeDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the endpoint used by reverse proxy.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.reverseProxyEndpointPort")]
-        public int? ReverseProxyEndpointPort { get; set; }
 
         /// <summary>
         /// Gets or sets managed cluster update parameters

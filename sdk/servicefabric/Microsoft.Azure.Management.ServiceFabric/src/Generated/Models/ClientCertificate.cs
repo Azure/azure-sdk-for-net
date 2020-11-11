@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="thumbprint">Certificate Thumbprint.</param>
         /// <param name="commonName">Certificate Common name.</param>
         /// <param name="issuerThumbprint">Issuer thumbprint for the
-        /// certificate. Its only use ehn CommonName is used.</param>
+        /// certificate. Its only use CommonName is used.</param>
         public ClientCertificate(bool isAdmin, string thumbprint = default(string), string commonName = default(string), string issuerThumbprint = default(string))
         {
             IsAdmin = isAdmin;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
 
         /// <summary>
         /// Gets or sets issuer thumbprint for the certificate. Its only use
-        /// ehn CommonName is used.
+        /// CommonName is used.
         /// </summary>
         [JsonProperty(PropertyName = "issuerThumbprint")]
         public string IssuerThumbprint { get; set; }

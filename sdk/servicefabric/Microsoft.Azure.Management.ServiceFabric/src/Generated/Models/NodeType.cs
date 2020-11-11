@@ -38,9 +38,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="isPrimary">The node type on which system services will
         /// run. Only one node type should be marked as primary. Primary node
         /// type cannot be deleted or changed for existing clusters.</param>
-        /// <param name="vmInstanceCount">The number of nodes in the node type.
-        /// This count should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.</param>
+        /// <param name="vmInstanceCount">The number of nodes in the node
+        /// type.</param>
         /// <param name="dataDiskSizeGB">Disk size for each vm in the node type
         /// in GBs.</param>
         /// <param name="id">Azure resource identifier.</param>
@@ -114,9 +113,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public bool IsPrimary { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in the node type. This count
-        /// should match the capacity property in the corresponding
-        /// VirtualMachineScaleSet resource.
+        /// Gets or sets the number of nodes in the node type.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmInstanceCount")]
         public int VmInstanceCount { get; set; }
