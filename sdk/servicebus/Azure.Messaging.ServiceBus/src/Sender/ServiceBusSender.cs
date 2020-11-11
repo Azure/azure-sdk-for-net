@@ -428,10 +428,15 @@ namespace Azure.Messaging.ServiceBus
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(messages, nameof(messages));
+            Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var messageList = messages.ToList();
+            if (messageList.Count == 0)
+            {
+                return Array.Empty<long>();
+            }
+
             await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
@@ -489,8 +494,14 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumberList = sequenceNumbers.ToArray();
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);
+            long[] sequenceNumbersArray = sequenceNumbers.ToArray();
+
+            if (sequenceNumbersArray.Length == 0)
+            {
+                return;
+            }
+
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumbersArray);
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
@@ -499,7 +510,7 @@ namespace Azure.Messaging.ServiceBus
             scope.Start();
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceNumberList, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceNumbersArray, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

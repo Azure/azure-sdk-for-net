@@ -423,6 +423,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -898,9 +900,13 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
-            Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
+            if (sequenceNumbersList.Count == 0)
+            {
+                return Array.Empty<ServiceBusReceivedMessage>();
+            }
 
             Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList);
             using DiagnosticScope scope = ScopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);

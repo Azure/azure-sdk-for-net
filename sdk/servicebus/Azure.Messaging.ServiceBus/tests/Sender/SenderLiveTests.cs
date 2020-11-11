@@ -241,6 +241,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.IsNull(msg);
                 }
+
+                // can cancel empty array
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: Array.Empty<long>());
             }
         }
 
