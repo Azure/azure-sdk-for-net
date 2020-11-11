@@ -109,7 +109,10 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2019-09-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -120,7 +123,6 @@ namespace Microsoft.Azure.Management.KeyVault
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -132,9 +134,9 @@ namespace Microsoft.Azure.Management.KeyVault
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -323,11 +325,14 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "properties");
             }
-            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -338,7 +343,6 @@ namespace Microsoft.Azure.Management.KeyVault
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("properties", properties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Put", tracingParameters);
@@ -351,9 +355,9 @@ namespace Microsoft.Azure.Management.KeyVault
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -584,7 +588,10 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
-            string apiVersion = "2019-09-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -595,7 +602,6 @@ namespace Microsoft.Azure.Management.KeyVault
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -607,9 +613,9 @@ namespace Microsoft.Azure.Management.KeyVault
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{privateEndpointConnectionName}", System.Uri.EscapeDataString(privateEndpointConnectionName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

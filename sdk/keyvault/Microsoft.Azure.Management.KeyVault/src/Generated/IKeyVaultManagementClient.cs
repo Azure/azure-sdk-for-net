@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.KeyVault
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -88,9 +93,9 @@ namespace Microsoft.Azure.Management.KeyVault
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IManagedHsmsOperations.
+        /// Gets the IKeysOperations.
         /// </summary>
-        IManagedHsmsOperations ManagedHsms { get; }
+        IKeysOperations Keys { get; }
 
     }
 }
