@@ -393,6 +393,17 @@ foreach ($templateFile in $templateFiles) {
                 $DebugPreference = "Continue"
             }
             New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        } catch {
+            $msg = @(
+                "",
+                "==================================================",
+                "For help debugging live test provisioning issues,",
+                "see http://aka.ms/azure-sdk-live-test-help",
+                "=================================================="
+            ) -join ([Environment]::NewLine)
+            Write-Output $msg
+
+            throw $_
         } finally {
             $DebugPreference = $lastDebugPreference
         }
