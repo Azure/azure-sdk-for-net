@@ -27,7 +27,14 @@ namespace Azure.Test.Stress
             if (testTypes.Any())
             {
                 var optionTypes = GetOptionTypes(testTypes);
-                await Parser.Default.ParseArguments(args, optionTypes).MapResult<StressOptions, Task>(
+
+                var parser = new Parser(settings =>
+                {
+                    settings.CaseSensitive = false;
+                    settings.HelpWriter = Console.Error;
+                });
+
+                await parser.ParseArguments(args, optionTypes).MapResult<StressOptions, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
