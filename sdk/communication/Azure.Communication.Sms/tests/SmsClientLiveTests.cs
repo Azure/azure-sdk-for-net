@@ -6,7 +6,6 @@ using System;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

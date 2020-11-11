@@ -30,5 +30,23 @@ namespace Azure.Communication.Chat.Tests
                 headers[HttpHeader.Names.Authorization] = new[] { SanitizeValue };
             }
         }
+        public override string SanitizeVariable(string variableName, string environmentVariableValue)
+        {
+            return variableName switch
+            {
+                ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeChatConnectionString(environmentVariableValue),
+                _ => base.SanitizeVariable(variableName, environmentVariableValue)
+            };
+        }
+
+        private static string SanitizeChatConnectionString(string connectionString)
+        {
+            const string accessKey = "accesskey";
+
+            var parsed = ConnectionString.Parse(connectionString, allowEmptyValues: true);
+            parsed.Replace(accessKey, "Kg==;");
+
+            return parsed.ToString();
+        }
     }
 }
