@@ -96,7 +96,7 @@ namespace Compute.Tests
                 m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
-                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion:true);
 
                 passed = true;
             }
@@ -311,7 +311,7 @@ namespace Compute.Tests
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };
                     m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs, forceDeletion: true);
                     passed = true;
                 }
                 finally
@@ -459,7 +459,7 @@ namespace Compute.Tests
                     var vmScaleSetResult = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name);
                     Assert.True(vmScaleSetResult.SinglePlacementGroup);
 
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion:true);
 
                     passed = true;
                 }
