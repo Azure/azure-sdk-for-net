@@ -16,6 +16,10 @@ namespace Microsoft.Azure.Management.Authorization
     using Newtonsoft.Json;
 
     /// <summary>
+    /// Role based access control provides you a way to apply granular level
+    /// policy administration down to individual resources or resource groups.
+    /// These operations enable you to manage role assignments. A role
+    /// assignment grants access to Azure Active Directory users.
     /// </summary>
     public partial interface IAuthorizationManagementClient : System.IDisposable
     {
@@ -45,6 +49,11 @@ namespace Microsoft.Azure.Management.Authorization
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -62,36 +71,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IClassicAdministratorsOperations.
-        /// </summary>
-        IClassicAdministratorsOperations ClassicAdministrators { get; }
-
-        /// <summary>
-        /// Gets the IGlobalAdministratorOperations.
-        /// </summary>
-        IGlobalAdministratorOperations GlobalAdministrator { get; }
-
-        /// <summary>
-        /// Gets the IProviderOperationsMetadataOperations.
-        /// </summary>
-        IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
-
-        /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        IPermissionsOperations Permissions { get; }
-
-        /// <summary>
-        /// Gets the IRoleDefinitionsOperations.
-        /// </summary>
-        IRoleDefinitionsOperations RoleDefinitions { get; }
-
-        /// <summary>
-        /// Gets the IDenyAssignmentsOperations.
-        /// </summary>
-        IDenyAssignmentsOperations DenyAssignments { get; }
 
         /// <summary>
         /// Gets the IRoleAssignmentsOperations.
