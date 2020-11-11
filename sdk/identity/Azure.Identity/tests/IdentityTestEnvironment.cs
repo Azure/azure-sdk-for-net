@@ -30,7 +30,9 @@ namespace Azure.Identity.Tests
         public string IdentityHeader => GetRecordedOptionalVariable("IDENTITY_HEADER");
         public string IdentityServerThumbprint => GetRecordedOptionalVariable("IDENTITY_SERVER_THUMBPRINT");
 
-        public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
+        public string SystemAssignedVault => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
+        public string UserAssignedVault => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT");
+
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
         public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
 

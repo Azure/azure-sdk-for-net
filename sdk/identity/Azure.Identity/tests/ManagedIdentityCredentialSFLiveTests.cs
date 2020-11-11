@@ -39,5 +39,31 @@ namespace Azure.Identity.Tests
             Assert.IsNotNull(secret);
         }
 
+        [NonParallelizable]
+        [Test]
+        public async Task ValidateUserAssignedIdentity()
+        {
+            if (string.IsNullOrEmpty(TestEnvironment.SFEnable))
+            {
+                Assert.Ignore();
+            }
+
+            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+
+            var vaultUri = new Uri(TestEnvironment.UserAssignedVault);
+
+            var clientId = TestEnvironment.IMDSClientId;
+
+            var cred = new ManagedIdentityCredential(clientId: clientId, options: InstrumentClientOptions(new TokenCredentialOptions()));
+
+            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+
+            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+
+            KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
+
+            Assert.IsNotNull(secret);
+        }
     }
 }
