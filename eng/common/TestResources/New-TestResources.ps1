@@ -308,7 +308,7 @@ if ($CI) {
     if ($EnvironmentVariables.ContainsKey('AZURE_RESOURCEGROUP_NAME') -and `
         $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] -ne $ResourceGroupName)
     {
-        Write-Warning ("Overwriting 'EnvironmentVariables.AZURE_RESOURCEGROUP_NAME' with value " + 
+        Write-Warning ("Overwriting 'EnvironmentVariables.AZURE_RESOURCEGROUP_NAME' with value " +
             "'$($EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'])' " + "to new value '$($ResourceGroupName)'")
     }
     $EnvironmentVariables['AZURE_RESOURCEGROUP_NAME'] = $ResourceGroupName
@@ -385,7 +385,15 @@ foreach ($templateFile in $templateFiles) {
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
     $deployment = Retry {
-        New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        $lastDebugPreference = $DebugPreference
+        try {
+            if ($CI) {
+                $DebugPreference = "Continue"
+            }
+            New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        } finally {
+            $DebugPreference = $lastDebugPreference
+        }
     }
 
     if ($deployment.ProvisioningState -eq 'Succeeded') {
