@@ -784,8 +784,8 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='namespaceName'>
         /// The Namespace name
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters to check availability of the given Alias name
+        /// <param name='name'>
+        /// Name to check the namespace name availability
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -844,15 +844,16 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
                 }
             }
-            if (parameters == null)
+            if (name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             string apiVersion = "2017-04-01";
+            CheckNameAvailabilityParameter parameters = new CheckNameAvailabilityParameter();
+            if (name != null)
+            {
+                parameters.Name = name;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1227,8 +1228,12 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='alias'>
         /// The Disaster Recovery configuration name
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters required to create an Alias(Disaster Recovery configuration)
+        /// <param name='partnerNamespace'>
+        /// ARM Id of the Primary/Secondary eventhub namespace name, which is part of
+        /// GEO DR pairing
+        /// </param>
+        /// <param name='alternateName'>
+        /// Alternate name specified when alias and namespace names are same.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1251,7 +1256,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ArmDisasterRecovery>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, ArmDisasterRecovery parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ArmDisasterRecovery>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, string partnerNamespace = default(string), string alternateName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1298,15 +1303,17 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "alias", 1);
                 }
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2017-04-01";
+            ArmDisasterRecovery parameters = new ArmDisasterRecovery();
+            if (partnerNamespace != null || alternateName != null)
+            {
+                parameters.PartnerNamespace = partnerNamespace;
+                parameters.AlternateName = alternateName;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1317,8 +1324,8 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("alias", alias);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }

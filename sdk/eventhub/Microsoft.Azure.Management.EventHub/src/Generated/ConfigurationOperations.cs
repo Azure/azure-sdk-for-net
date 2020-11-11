@@ -61,8 +61,9 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='clusterName'>
         /// The name of the Event Hubs Cluster.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters for creating an Event Hubs Cluster resource.
+        /// <param name='settings'>
+        /// All possible Cluster settings - a collection of key/value paired settings
+        /// which apply to quotas and configurations imposed on the cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ClusterQuotaConfigurationProperties>> PatchWithHttpMessagesAsync(string resourceGroupName, string clusterName, IDictionary<string, string> settings = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -121,11 +122,12 @@ namespace Microsoft.Azure.Management.EventHub
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 6);
                 }
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             string apiVersion = "2018-01-01-preview";
+            ClusterQuotaConfigurationProperties parameters = new ClusterQuotaConfigurationProperties();
+            if (settings != null)
+            {
+                parameters.Settings = settings;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
