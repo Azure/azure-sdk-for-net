@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateSystemAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(TestEnvironment.SFEnable))
+            if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || !string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))
             {
                 Assert.Ignore();
             }
@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateUserAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(TestEnvironment.SFEnable))
+            if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))
             {
                 Assert.Ignore();
             }
