@@ -116,16 +116,6 @@ namespace SecurityCenter.Tests
                 Validate(ret);
             }
         }
-
-        [Fact]
-        public void IotSecuritySolution_ListBySubscription()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-               
-            }
-        }
         #endregion
 
         #region Validations
