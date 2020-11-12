@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
 
                 KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
@@ -59,7 +59,7 @@ namespace Azure.Identity.Tests
             {
                 var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-                var cred = new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
+                var cred = InstrumentClient(new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions())));
 
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
             }

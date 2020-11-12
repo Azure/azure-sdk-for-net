@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
 
                 KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
 
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
 
                 KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
 

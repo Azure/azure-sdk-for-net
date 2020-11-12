@@ -30,12 +30,12 @@ namespace Azure.Identity.Tests
 
                 CredentialPipeline pipeline = CredentialPipeline.GetInstance(InstrumentClientOptions(new TokenCredentialOptions { Transport = ServiceFabricManagedIdentitySource.GetServiceFabricMITransport() }));
 
-                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, PreserveTransport = (Mode == RecordedTestMode.Playback) }));
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, PreserveTransport = true }));
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
 
                 KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
@@ -60,12 +60,12 @@ namespace Azure.Identity.Tests
 
                 CredentialPipeline pipeline = CredentialPipeline.GetInstance(InstrumentClientOptions(new TokenCredentialOptions { Transport = ServiceFabricManagedIdentitySource.GetServiceFabricMITransport() }));
 
-                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = (Mode == RecordedTestMode.Playback) }));
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = true }));
 
                 // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
                 var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
 
                 KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 

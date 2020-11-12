@@ -42,15 +42,5 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-
-        public void RecordOrRestoreManagedIdentityEnvironmentVariables()
-        {
-            GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
-            GetRecordedOptionalVariable("IMDS_ENDPOINT");
-            GetRecordedOptionalVariable("MSI_ENDPOINT");
-            GetRecordedOptionalVariable("MSI_SECRET");
-            GetRecordedOptionalVariable("IDENTITY_HEADER");
-            GetRecordedOptionalVariable("IDENTITY_SERVER_THUMBPRINT");
-        }
     }
 }

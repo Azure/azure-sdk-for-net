@@ -33,14 +33,9 @@ namespace Azure.Identity
                 return default;
             }
 
-            Uri endpointUri;
-            try
+            if (!Uri.TryCreate(identityEndpoint, UriKind.Absolute, out Uri endpointUri))
             {
-                endpointUri = new Uri(identityEndpoint);
-            }
-            catch (FormatException ex)
-            {
-                throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
+                throw new AuthenticationFailedException(IdentityEndpointInvalidUriError);
             }
 
             return new AzureArcManagedIdentitySource(options.Pipeline, endpointUri, options.ClientId);
