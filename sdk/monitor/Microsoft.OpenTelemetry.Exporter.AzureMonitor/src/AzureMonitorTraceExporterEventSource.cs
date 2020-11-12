@@ -14,7 +14,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorTraceExporterEventSource : EventSource
     {
-        private const string EventSourceName = "OpenTelemetry-TraceExporter-AzureMonitor";
+        private const string EventSourceName = "Microsoft-OpenTelemetry-TraceExporter-AzureMonitor";
         public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
 #if DEBUG
         public static AzureMonitorTraceExporterEventListener Listener = new AzureMonitorTraceExporterEventListener();
@@ -98,7 +98,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                if (eventSource?.Name.StartsWith("OpenTelemetry", StringComparison.OrdinalIgnoreCase) == true)
+                if (eventSource?.Name.StartsWith("Microsoft-OpenTelemetry", StringComparison.OrdinalIgnoreCase) == true)
                 {
                     this.eventSources.Add(eventSource);
                     this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));

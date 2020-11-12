@@ -18,7 +18,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             if (Debugger.IsAttached && Debugger.IsLogging())
             {
-                Debugger.Log(0, "category",  message);
+                Debugger.Log(0, null,  message);
             }
         }
     }
