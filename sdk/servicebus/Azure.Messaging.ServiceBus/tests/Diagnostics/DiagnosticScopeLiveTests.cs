@@ -79,6 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     (string Key, object Value, DiagnosticListener) receiveStop = _listener.Events.Dequeue();
 
                     Assert.AreEqual(DiagnosticProperty.ReceiveActivityName + ".Stop", receiveStop.Key);
+                    remaining -= received.Count;
                 }
 
                 var msgIndex = 0;
