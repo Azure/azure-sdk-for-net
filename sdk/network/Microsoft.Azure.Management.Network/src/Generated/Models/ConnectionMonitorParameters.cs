@@ -142,13 +142,16 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 Destination.Validate();
             }
-            if (MonitoringIntervalInSeconds > 1800)
+            if (MonitoringIntervalInSeconds != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MonitoringIntervalInSeconds", 1800);
-            }
-            if (MonitoringIntervalInSeconds < 30)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MonitoringIntervalInSeconds", 30);
+                if (MonitoringIntervalInSeconds > 1800)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MonitoringIntervalInSeconds", 1800);
+                }
+                if (MonitoringIntervalInSeconds < 30)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MonitoringIntervalInSeconds", 30);
+                }
             }
             if (Endpoints != null)
             {
