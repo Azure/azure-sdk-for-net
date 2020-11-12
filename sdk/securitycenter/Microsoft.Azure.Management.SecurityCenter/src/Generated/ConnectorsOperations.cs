@@ -427,15 +427,15 @@ namespace Microsoft.Azure.Management.Security
 
         /// <summary>
         /// Create a cloud account connector or update an existing one. Connect to your
-        /// AWS cloud account using either account credentials or role-based
-        /// authentication.
+        /// cloud account. For AWS, use either account credentials or role-based
+        /// authentication. For GCP, use account organization credentials.
         /// </summary>
         /// <param name='connectorName'>
         /// Name of the cloud account connector
         /// </param>
         /// <param name='hybridComputeSettings'>
-        /// Settings for hybrid compute management, these settings are relevant only
-        /// Arc autoProvision (Hybrid Compute).
+        /// Settings for hybrid compute management. These settings are relevant only
+        /// for Arc autoProvision (Hybrid Compute).
         /// </param>
         /// <param name='authenticationDetails'>
         /// Settings for authentication management, these settings are relevant only

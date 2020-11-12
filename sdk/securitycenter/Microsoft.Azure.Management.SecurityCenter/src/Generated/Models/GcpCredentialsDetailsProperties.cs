@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Security.Models
 
     /// <summary>
     /// GCP cloud account connector based service to service credentials, the
-    /// credentials is composed of organization id and json api key (write
-    /// only)&lt;/a&gt;
+    /// credentials are composed of the organization ID and a JSON API key
+    /// (write only)
     /// </summary>
     [Newtonsoft.Json.JsonObject("gcpCredentials")]
     public partial class GcpCredentialsDetailsProperties : AuthenticationDetailsProperties
@@ -37,26 +37,26 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the GcpCredentialsDetailsProperties
         /// class.
         /// </summary>
-        /// <param name="organizationId">The Organization ID of the GCP cloud
+        /// <param name="organizationId">The organization ID of the GCP cloud
         /// account</param>
         /// <param name="type">Type field of the API key (write only)</param>
-        /// <param name="projectId">Project Id field of the API key (write
+        /// <param name="projectId">Project ID field of the API key (write
         /// only)</param>
-        /// <param name="privateKeyId">Private key Id field of the API key
+        /// <param name="privateKeyId">Private key ID field of the API key
         /// (write only)</param>
         /// <param name="privateKey">Private key field of the API key (write
         /// only)</param>
         /// <param name="clientEmail">Client email field of the API key (write
         /// only)</param>
-        /// <param name="clientId">Client Id field of the API key (write
+        /// <param name="clientId">Client ID field of the API key (write
         /// only)</param>
-        /// <param name="authUri">Auth Uri field of the API key (write
+        /// <param name="authUri">Auth URI field of the API key (write
         /// only)</param>
-        /// <param name="tokenUri">Token Uri field of the API key (write
+        /// <param name="tokenUri">Token URI field of the API key (write
         /// only)</param>
         /// <param name="authProviderX509CertUrl">Auth provider x509
-        /// certificate url field of the API key (write only)</param>
-        /// <param name="clientX509CertUrl">Client x509 certificate url field
+        /// certificate URL field of the API key (write only)</param>
+        /// <param name="clientX509CertUrl">Client x509 certificate URL field
         /// of the API key (write only)</param>
         /// <param name="authenticationProvisioningState">State of the
         /// multi-cloud connector. Possible values include: 'Valid', 'Invalid',
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Organization ID of the GCP cloud account
+        /// Gets or sets the organization ID of the GCP cloud account
         /// </summary>
         [JsonProperty(PropertyName = "organizationId")]
         public string OrganizationId { get; set; }
@@ -98,13 +98,13 @@ namespace Microsoft.Azure.Management.Security.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets project Id field of the API key (write only)
+        /// Gets or sets project ID field of the API key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "projectId")]
         public string ProjectId { get; set; }
 
         /// <summary>
-        /// Gets or sets private key Id field of the API key (write only)
+        /// Gets or sets private key ID field of the API key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "privateKeyId")]
         public string PrivateKeyId { get; set; }
@@ -122,32 +122,32 @@ namespace Microsoft.Azure.Management.Security.Models
         public string ClientEmail { get; set; }
 
         /// <summary>
-        /// Gets or sets client Id field of the API key (write only)
+        /// Gets or sets client ID field of the API key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets auth Uri field of the API key (write only)
+        /// Gets or sets auth URI field of the API key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "authUri")]
         public string AuthUri { get; set; }
 
         /// <summary>
-        /// Gets or sets token Uri field of the API key (write only)
+        /// Gets or sets token URI field of the API key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "tokenUri")]
         public string TokenUri { get; set; }
 
         /// <summary>
-        /// Gets or sets auth provider x509 certificate url field of the API
+        /// Gets or sets auth provider x509 certificate URL field of the API
         /// key (write only)
         /// </summary>
         [JsonProperty(PropertyName = "authProviderX509CertUrl")]
         public string AuthProviderX509CertUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets client x509 certificate url field of the API key
+        /// Gets or sets client x509 certificate URL field of the API key
         /// (write only)
         /// </summary>
         [JsonProperty(PropertyName = "clientX509CertUrl")]

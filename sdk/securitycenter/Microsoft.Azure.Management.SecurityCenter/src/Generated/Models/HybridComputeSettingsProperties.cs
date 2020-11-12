@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'Invalid', 'Expired'</param>
         /// <param name="resourceGroupName">The name of the resource group
         /// where Arc (Hybrid Compute) connectors are connected.</param>
-        /// <param name="region">The location where the meta data of machines
+        /// <param name="region">The location where the metadata of machines
         /// will be stored</param>
         /// <param name="proxyServer">For a non-Azure machine that is not
         /// connected directly to the internet, specify a proxy server that the
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Security.Models
         public string ResourceGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the location where the meta data of machines will be
+        /// Gets or sets the location where the metadata of machines will be
         /// stored
         /// </summary>
         [JsonProperty(PropertyName = "region")]

@@ -297,6 +297,21 @@ namespace Microsoft.Azure.Management.Security
         public virtual IConnectorsOperations Connectors { get; private set; }
 
         /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        public virtual ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; private set; }
+
+        /// <summary>
         /// Gets the IIotDefenderSettingsOperations.
         /// </summary>
         public virtual IIotDefenderSettingsOperations IotDefenderSettings { get; private set; }
@@ -611,6 +626,9 @@ namespace Microsoft.Azure.Management.Security
             SecureScoreControlDefinitions = new SecureScoreControlDefinitionsOperations(this);
             SecuritySolutions = new SecuritySolutionsOperations(this);
             Connectors = new ConnectorsOperations(this);
+            SqlVulnerabilityAssessmentScans = new SqlVulnerabilityAssessmentScansOperations(this);
+            SqlVulnerabilityAssessmentScanResults = new SqlVulnerabilityAssessmentScanResultsOperations(this);
+            SqlVulnerabilityAssessmentBaselineRules = new SqlVulnerabilityAssessmentBaselineRulesOperations(this);
             IotDefenderSettings = new IotDefenderSettingsOperations(this);
             IotSensors = new IotSensorsOperations(this);
             DevicesForSubscription = new DevicesForSubscriptionOperations(this);

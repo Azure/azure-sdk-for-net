@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         public const string Invalid = "Invalid";
         /// <summary>
-        /// the connection is expired
+        /// the connection has expired
         /// </summary>
         public const string Expired = "Expired";
         /// <summary>

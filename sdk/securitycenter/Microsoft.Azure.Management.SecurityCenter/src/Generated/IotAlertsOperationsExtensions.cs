@@ -153,6 +153,132 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='minStartTimeUtc'>
+            /// Filter by minimum startTimeUtc (ISO 8601 format)
+            /// </param>
+            /// <param name='maxStartTimeUtc'>
+            /// Filter by maximum startTimeUtc (ISO 8601 format)
+            /// </param>
+            /// <param name='alertType'>
+            /// Filter by alert type
+            /// </param>
+            /// <param name='deviceManagementType'>
+            /// Get devices only from specific type, Managed or Unmanaged. Possible values
+            /// include: 'Managed', 'Unmanaged'
+            /// </param>
+            /// <param name='compromisedEntity'>
+            /// Filter by compromised device
+            /// </param>
+            /// <param name='limit'>
+            /// Limit the number of items returned in a single page
+            /// </param>
+            /// <param name='skipToken'>
+            /// Skip token used for pagination
+            /// </param>
+            public static IPage<IotAlertModel> List1(this IIotAlertsOperations operations, string scope, string minStartTimeUtc = default(string), string maxStartTimeUtc = default(string), string alertType = default(string), string deviceManagementType = default(string), string compromisedEntity = default(string), int? limit = default(int?), string skipToken = default(string))
+            {
+                return operations.List1Async(scope, minStartTimeUtc, maxStartTimeUtc, alertType, deviceManagementType, compromisedEntity, limit, skipToken).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List IoT alerts
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='minStartTimeUtc'>
+            /// Filter by minimum startTimeUtc (ISO 8601 format)
+            /// </param>
+            /// <param name='maxStartTimeUtc'>
+            /// Filter by maximum startTimeUtc (ISO 8601 format)
+            /// </param>
+            /// <param name='alertType'>
+            /// Filter by alert type
+            /// </param>
+            /// <param name='deviceManagementType'>
+            /// Get devices only from specific type, Managed or Unmanaged. Possible values
+            /// include: 'Managed', 'Unmanaged'
+            /// </param>
+            /// <param name='compromisedEntity'>
+            /// Filter by compromised device
+            /// </param>
+            /// <param name='limit'>
+            /// Limit the number of items returned in a single page
+            /// </param>
+            /// <param name='skipToken'>
+            /// Skip token used for pagination
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IotAlertModel>> List1Async(this IIotAlertsOperations operations, string scope, string minStartTimeUtc = default(string), string maxStartTimeUtc = default(string), string alertType = default(string), string deviceManagementType = default(string), string compromisedEntity = default(string), int? limit = default(int?), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.List1WithHttpMessagesAsync(scope, minStartTimeUtc, maxStartTimeUtc, alertType, deviceManagementType, compromisedEntity, limit, skipToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get IoT alert
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='iotAlertId'>
+            /// Id of the alert
+            /// </param>
+            public static IotAlertModel Get1(this IIotAlertsOperations operations, string scope, string iotAlertId)
+            {
+                return operations.Get1Async(scope, iotAlertId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get IoT alert
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the query: Subscription (i.e. /subscriptions/{subscriptionId}) or
+            /// IoT Hub (i.e.
+            /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Devices/iotHubs/{iotHubName})
+            /// </param>
+            /// <param name='iotAlertId'>
+            /// Id of the alert
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IotAlertModel> Get1Async(this IIotAlertsOperations operations, string scope, string iotAlertId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.Get1WithHttpMessagesAsync(scope, iotAlertId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List IoT alerts
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
@@ -176,6 +302,40 @@ namespace Microsoft.Azure.Management.Security
             public static async Task<IPage<IotAlert>> ListNextAsync(this IIotAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List IoT alerts
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<IotAlertModel> List1Next(this IIotAlertsOperations operations, string nextPageLink)
+            {
+                return operations.List1NextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List IoT alerts
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IotAlertModel>> List1NextAsync(this IIotAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.List1NextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

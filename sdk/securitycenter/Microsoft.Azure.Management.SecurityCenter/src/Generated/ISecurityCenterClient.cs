@@ -292,6 +292,21 @@ namespace Microsoft.Azure.Management.Security
         IConnectorsOperations Connectors { get; }
 
         /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScansOperations SqlVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentScanResultsOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentScanResultsOperations SqlVulnerabilityAssessmentScanResults { get; }
+
+        /// <summary>
+        /// Gets the ISqlVulnerabilityAssessmentBaselineRulesOperations.
+        /// </summary>
+        ISqlVulnerabilityAssessmentBaselineRulesOperations SqlVulnerabilityAssessmentBaselineRules { get; }
+
+        /// <summary>
         /// Gets the IIotDefenderSettingsOperations.
         /// </summary>
         IIotDefenderSettingsOperations IotDefenderSettings { get; }

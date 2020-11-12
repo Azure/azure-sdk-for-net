@@ -111,5 +111,67 @@ namespace Microsoft.Azure.Management.Security
                 }
             }
 
+            /// <summary>
+            /// List IoT alert types
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IotAlertTypeList List1(this IIotAlertTypesOperations operations)
+            {
+                return operations.List1Async().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List IoT alert types
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IotAlertTypeList> List1Async(this IIotAlertTypesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.List1WithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get IoT alert type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='iotAlertTypeName'>
+            /// Name of the alert type
+            /// </param>
+            public static IotAlertType Get1(this IIotAlertTypesOperations operations, string iotAlertTypeName)
+            {
+                return operations.Get1Async(iotAlertTypeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get IoT alert type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='iotAlertTypeName'>
+            /// Name of the alert type
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IotAlertType> Get1Async(this IIotAlertTypesOperations operations, string iotAlertTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.Get1WithHttpMessagesAsync(iotAlertTypeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

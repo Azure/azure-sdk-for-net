@@ -73,13 +73,11 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="lastScanTime">last time the device was
         /// scanning.</param>
         /// <param name="riskScore">risk score of the device.</param>
-        /// <param name="sensorName">When the device is unmanaged, the sensor
-        /// that scanned this device.</param>
-        /// <param name="siteName">The sensor site name.</param>
-        /// <param name="zoneName">The sensor zone name.</param>
+        /// <param name="sensors">List of sensors that scanned this
+        /// device.</param>
         /// <param name="deviceStatus">Device status. Possible values include:
         /// 'Active', 'Removed'</param>
-        public Device(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string deviceType = default(string), string sourceName = default(string), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string vendor = default(string), string osName = default(string), IList<Protocol1> protocols = default(IList<Protocol1>), System.DateTime? lastActiveTime = default(System.DateTime?), System.DateTime? lastUpdateTime = default(System.DateTime?), string managementState = default(string), string authorizationState = default(string), string deviceCriticality = default(string), string purdueLevel = default(string), string notes = default(string), IList<Firmware> firmwares = default(IList<Firmware>), System.DateTime? discoveryTime = default(System.DateTime?), string programmingState = default(string), System.DateTime? lastProgrammingTime = default(System.DateTime?), string scanningFunctionality = default(string), System.DateTime? lastScanTime = default(System.DateTime?), int? riskScore = default(int?), string sensorName = default(string), string siteName = default(string), string zoneName = default(string), string deviceStatus = default(string))
+        public Device(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string deviceType = default(string), string sourceName = default(string), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string vendor = default(string), string osName = default(string), IList<Protocol1> protocols = default(IList<Protocol1>), System.DateTime? lastActiveTime = default(System.DateTime?), System.DateTime? lastUpdateTime = default(System.DateTime?), string managementState = default(string), string authorizationState = default(string), string deviceCriticality = default(string), string purdueLevel = default(string), string notes = default(string), IList<Firmware> firmwares = default(IList<Firmware>), System.DateTime? discoveryTime = default(System.DateTime?), string programmingState = default(string), System.DateTime? lastProgrammingTime = default(System.DateTime?), string scanningFunctionality = default(string), System.DateTime? lastScanTime = default(System.DateTime?), int? riskScore = default(int?), IList<Sensor> sensors = default(IList<Sensor>), Site site = default(Site), string deviceStatus = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -103,9 +101,8 @@ namespace Microsoft.Azure.Management.Security.Models
             ScanningFunctionality = scanningFunctionality;
             LastScanTime = lastScanTime;
             RiskScore = riskScore;
-            SensorName = sensorName;
-            SiteName = siteName;
-            ZoneName = zoneName;
+            Sensors = sensors;
+            Site = site;
             DeviceStatus = deviceStatus;
             CustomInit();
         }
@@ -248,23 +245,15 @@ namespace Microsoft.Azure.Management.Security.Models
         public int? RiskScore { get; private set; }
 
         /// <summary>
-        /// Gets when the device is unmanaged, the sensor that scanned this
-        /// device.
+        /// Gets list of sensors that scanned this device.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sensorName")]
-        public string SensorName { get; private set; }
+        [JsonProperty(PropertyName = "properties.sensors")]
+        public IList<Sensor> Sensors { get; private set; }
 
         /// <summary>
-        /// Gets the sensor site name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.siteName")]
-        public string SiteName { get; private set; }
-
-        /// <summary>
-        /// Gets the sensor zone name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.zoneName")]
-        public string ZoneName { get; private set; }
+        [JsonProperty(PropertyName = "properties.site")]
+        public Site Site { get; private set; }
 
         /// <summary>
         /// Gets device status. Possible values include: 'Active', 'Removed'

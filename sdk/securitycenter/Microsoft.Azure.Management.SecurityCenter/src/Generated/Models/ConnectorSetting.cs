@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="hybridComputeSettings">Settings for hybrid compute
-        /// management, these settings are relevant only Arc autoProvision
+        /// management. These settings are relevant only for Arc autoProvision
         /// (Hybrid Compute).</param>
         /// <param name="authenticationDetails">Settings for authentication
         /// management, these settings are relevant only for the cloud
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets settings for hybrid compute management, these settings
-        /// are relevant only Arc autoProvision (Hybrid Compute).
+        /// Gets or sets settings for hybrid compute management. These settings
+        /// are relevant only for Arc autoProvision (Hybrid Compute).
         /// </summary>
         [JsonProperty(PropertyName = "properties.hybridComputeSettings")]
         public HybridComputeSettingsProperties HybridComputeSettings { get; set; }

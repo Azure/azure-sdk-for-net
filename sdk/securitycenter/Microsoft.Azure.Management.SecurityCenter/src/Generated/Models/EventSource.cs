@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.Security.Models
         public const string Assessments = "Assessments";
         public const string SubAssessments = "SubAssessments";
         public const string Alerts = "Alerts";
+        public const string SecureScores = "SecureScores";
+        public const string SecureScoreControls = "SecureScoreControls";
     }
 }
