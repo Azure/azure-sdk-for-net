@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Transport = new MockTransport(),
             };
 
-            Client = InstrumentClient(new CertificateClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
+            Client = InstrumentClient(new CertificateClient(new Uri("http://localhost"), new MockCredential(), options));
         }
 
         public CertificateClient Client { get; }
@@ -213,7 +213,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 }),
             };
 
-            CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://heathskeyvault.vault.azure.net"), new DefaultAzureCredential(), options));
+            CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://heathskeyvault.vault.azure.net"), new MockCredential(), options));
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DownloadCertificateAsync("test"));
             Assert.AreEqual(403, ex.Status);
