@@ -362,6 +362,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(
                     async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageNotFound));
+
+                // verify that an empty list can be passed
+                deferredMessages = await receiver.ReceiveDeferredMessagesAsync(Array.Empty<long>());
+                Assert.IsEmpty(deferredMessages);
             }
         }
 

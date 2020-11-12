@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message represented as bytes.</param>
         internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
-            : this(new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { body }))
+            : this(new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body })))
         {
         }
 
@@ -61,13 +61,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the body of the message.
         /// </summary>
-        public BinaryData Body
-        {
-            get
-            {
-                return AmqpMessage.GetBody();
-            }
-        }
+        public BinaryData Body => AmqpMessage.GetBody();
 
         /// <summary>
         /// Gets the MessageId to identify the message.
