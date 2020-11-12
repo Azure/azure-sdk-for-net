@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> . </param>
-        /// <param name="linkedInfo"> The base definition of a linked integration runtime. </param>
+        /// <param name="linkedInfo"> Linked integration runtime type from data factory. </param>
         internal SelfHostedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(type, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
             Type = type;
         }
 
-        /// <summary> The base definition of a linked integration runtime. </summary>
+        /// <summary> Linked integration runtime type from data factory. </summary>
         public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
     }
 }

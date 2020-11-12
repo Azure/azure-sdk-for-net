@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The resource management error response. </summary>
+    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
