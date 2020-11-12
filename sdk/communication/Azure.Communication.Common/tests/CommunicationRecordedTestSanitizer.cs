@@ -1,24 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.TestFramework;
 
-namespace Azure.Communication.Administration.Tests
+namespace Azure.Communication.Pipeline
 {
-    internal class CommunicationIdentityClientRecordedTestSanitizer : RecordedTestSanitizer
+    public class CommunicationRecordedTestSanitizer : RecordedTestSanitizer
     {
         private static readonly Regex s_azureResourceRegEx = new Regex(@"[^/]+?(?=(.communication.azure))", RegexOptions.Compiled);
         private static readonly Regex s_identityInRouteRegEx = new Regex(@"(?<=identities/)([^/]+)", RegexOptions.Compiled);
+        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
-        public CommunicationIdentityClientRecordedTestSanitizer(): base()
+        public CommunicationRecordedTestSanitizer() : base()
         {
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..id");
-            // TODO: Remove when re-recording
-            LegacyConvertJsonDateTokens = true;
         }
 
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
@@ -27,20 +25,22 @@ namespace Azure.Communication.Administration.Tests
             {
                 headers[HttpHeader.Names.Authorization] = new[] { SanitizeValue };
             }
+            if (headers.ContainsKey("x-ms-content-sha256"))
+            {
+                headers["x-ms-content-sha256"] = new[] { SanitizeValue };
+            }
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
+            => variableName switch
             {
-                CommunicationIdentityClientTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
-        }
 
         private static string SanitizeAzureResource(string uri) => s_azureResourceRegEx.Replace(uri, SanitizeValue).ToLower();
 
-        private static string SanitizeConnectionString(string connectionString)
+        internal static string SanitizeConnectionString(string connectionString)
         {
             const string accessKey = "accesskey";
             const string endpoint = "endpoint";
