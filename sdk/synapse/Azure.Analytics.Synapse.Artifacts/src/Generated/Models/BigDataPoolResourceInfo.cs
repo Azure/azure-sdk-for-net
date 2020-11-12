@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -23,8 +22,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new ArgumentNullException(nameof(location));
             }
-
-            CustomLibraries = new ChangeTrackingList<LibraryInfo>();
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>
@@ -38,28 +35,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="creationDate"> The time when the Big Data pool was created. </param>
         /// <param name="autoPause"> Auto-pausing properties. </param>
         /// <param name="isComputeIsolationEnabled"> Whether compute isolation is required or not. </param>
-        /// <param name="sessionLevelPackagesEnabled"> Whether session level library/package management is enabled or not. </param>
         /// <param name="sparkEventsFolder"> The Spark events folder. </param>
         /// <param name="nodeCount"> The number of nodes in the Big Data pool. </param>
         /// <param name="libraryRequirements"> Library version requirements. </param>
-        /// <param name="customLibraries"> List of custom libraries/packages associated with the spark pool. </param>
         /// <param name="sparkConfigProperties"> Spark configuration file to specify additional properties. </param>
         /// <param name="sparkVersion"> The Apache Spark version. </param>
         /// <param name="defaultSparkLogFolder"> The default folder where Spark logs will be written. </param>
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
-        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? sessionLevelPackagesEnabled, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily) : base(id, name, type, tags, location)
+        internal BigDataPoolResourceInfo(string id, string name, string type, IDictionary<string, string> tags, string location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? creationDate, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, LibraryRequirements sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily) : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
             CreationDate = creationDate;
             AutoPause = autoPause;
             IsComputeIsolationEnabled = isComputeIsolationEnabled;
-            SessionLevelPackagesEnabled = sessionLevelPackagesEnabled;
             SparkEventsFolder = sparkEventsFolder;
             NodeCount = nodeCount;
             LibraryRequirements = libraryRequirements;
-            CustomLibraries = customLibraries;
             SparkConfigProperties = sparkConfigProperties;
             SparkVersion = sparkVersion;
             DefaultSparkLogFolder = defaultSparkLogFolder;
@@ -77,16 +70,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public AutoPauseProperties AutoPause { get; set; }
         /// <summary> Whether compute isolation is required or not. </summary>
         public bool? IsComputeIsolationEnabled { get; set; }
-        /// <summary> Whether session level library/package management is enabled or not. </summary>
-        public bool? SessionLevelPackagesEnabled { get; set; }
         /// <summary> The Spark events folder. </summary>
         public string SparkEventsFolder { get; set; }
         /// <summary> The number of nodes in the Big Data pool. </summary>
         public int? NodeCount { get; set; }
         /// <summary> Library version requirements. </summary>
         public LibraryRequirements LibraryRequirements { get; set; }
-        /// <summary> List of custom libraries/packages associated with the spark pool. </summary>
-        public IList<LibraryInfo> CustomLibraries { get; }
         /// <summary> Spark configuration file to specify additional properties. </summary>
         public LibraryRequirements SparkConfigProperties { get; set; }
         /// <summary> The Apache Spark version. </summary>

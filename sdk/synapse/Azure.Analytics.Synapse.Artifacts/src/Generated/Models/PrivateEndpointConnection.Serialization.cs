@@ -36,9 +36,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> provisioningState = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -65,11 +65,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("privateEndpoint"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -90,11 +85,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, provisioningState.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
         }
     }
 }

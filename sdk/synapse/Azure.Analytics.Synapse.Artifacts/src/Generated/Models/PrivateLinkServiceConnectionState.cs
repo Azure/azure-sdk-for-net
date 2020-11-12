@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Private Link Service Connection State. </summary>
+    /// <summary> Connection state details of the private endpoint. </summary>
     public partial class PrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
@@ -16,9 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Status of private link service connection state. </param>
-        /// <param name="description"> Description of private link service connection state. </param>
-        /// <param name="actionsRequired"> Actions Required. </param>
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="actionsRequired"> The actions required for private link service connection. </param>
         internal PrivateLinkServiceConnectionState(string status, string description, string actionsRequired)
         {
             Status = status;
@@ -26,11 +26,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary> Status of private link service connection state. </summary>
-        public string Status { get; }
-        /// <summary> Description of private link service connection state. </summary>
-        public string Description { get; }
-        /// <summary> Actions Required. </summary>
+        /// <summary> The private link service connection status. </summary>
+        public string Status { get; set; }
+        /// <summary> The private link service connection description. </summary>
+        public string Description { get; set; }
+        /// <summary> The actions required for private link service connection. </summary>
         public string ActionsRequired { get; }
     }
 }

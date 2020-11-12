@@ -98,6 +98,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("managedVirtualNetworkSettings");
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
+            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
+            {
+                writer.WritePropertyName("workspaceRepositoryConfiguration");
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+            }
             if (Optional.IsDefined(BabylonConfiguration))
             {
                 writer.WritePropertyName("babylonConfiguration");
@@ -128,6 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
+            Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<BabylonConfiguration> babylonConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -305,6 +311,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("workspaceRepositoryConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("babylonConfiguration"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -319,7 +335,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, babylonConfiguration.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, babylonConfiguration.Value);
         }
     }
 }

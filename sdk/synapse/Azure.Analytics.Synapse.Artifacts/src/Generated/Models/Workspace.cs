@@ -49,8 +49,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="workspaceUID"> The workspace unique identifier. </param>
         /// <param name="extraProperties"> Workspace level configs and feature flags. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
         /// <param name="babylonConfiguration"> Babylon Configuration. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, BabylonConfiguration babylonConfiguration) : base(id, name, type, tags, location)
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, BabylonConfiguration babylonConfiguration) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -66,6 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WorkspaceUID = workspaceUID;
             ExtraProperties = extraProperties;
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
             BabylonConfiguration = babylonConfiguration;
         }
 
@@ -97,6 +99,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IReadOnlyDictionary<string, object> ExtraProperties { get; }
         /// <summary> Managed Virtual Network Settings. </summary>
         public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+        /// <summary> Git integration settings. </summary>
+        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
         /// <summary> Babylon Configuration. </summary>
         public BabylonConfiguration BabylonConfiguration { get; set; }
     }
