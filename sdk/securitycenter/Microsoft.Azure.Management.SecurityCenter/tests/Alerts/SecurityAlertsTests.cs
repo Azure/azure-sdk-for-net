@@ -37,7 +37,7 @@ namespace SecurityCenter.Tests
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
-            securityCenterClient.AscLocation = "westeurope";
+            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -64,11 +64,17 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
+                securityCenterClient.AscLocation = "centralus"; // Alert is in central us
+
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
 
-                var alert = securityCenterClient.Alerts.GetResourceGroupLevelAlerts(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
-                ValidateAlert(alert);
+                var firstAlert = alerts.First();
+                var alertName = firstAlert.Name;
+                var resourceGroupName = Regex.Match(firstAlert.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value;
+
+                var foundAlert = await securityCenterClient.Alerts.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName);
+                ValidateAlert(foundAlert);
             }
         }
 
@@ -82,7 +88,7 @@ namespace SecurityCenter.Tests
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
 
-                var alert = securityCenterClient.Alerts.GetSubscriptionLevelAlert(alerts.First().Name);
+                var alert = await securityCenterClient.Alerts.GetSubscriptionLevelAlertAsync(alerts.First().Name);
 
                 ValidateAlert(alert);
             }

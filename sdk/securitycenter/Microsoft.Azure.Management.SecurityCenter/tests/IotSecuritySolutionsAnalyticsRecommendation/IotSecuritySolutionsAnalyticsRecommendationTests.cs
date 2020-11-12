@@ -17,6 +17,7 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
+        private static readonly string SubscriptionId = "075423e9-7d33-4166-8bdf-3920b04e3735";
         private static readonly string AggregatedRecommendationName = "IoT_OpenPorts";
         private static readonly string ResourceGroupName = "ResourceGroup-CUS";
         private static readonly string SolutionName = "IotHub-CUS";
@@ -28,6 +29,7 @@ namespace SecurityCenter.Tests
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+                TestEnvironment.SubscriptionId = SubscriptionId;
             }
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
@@ -61,6 +63,8 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
+                securityCenterClient.SubscriptionId = SubscriptionId;
+
                 var ret = securityCenterClient.IotSecuritySolutionsAnalyticsRecommendation.List(ResourceGroupName, SolutionName);
                 Validate(ret);
             }
