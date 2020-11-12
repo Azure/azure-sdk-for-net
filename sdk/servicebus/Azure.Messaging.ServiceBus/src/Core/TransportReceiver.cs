@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
-            IReadOnlyList<long> sequenceNumbers,
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default);
 
         /// <summary>
