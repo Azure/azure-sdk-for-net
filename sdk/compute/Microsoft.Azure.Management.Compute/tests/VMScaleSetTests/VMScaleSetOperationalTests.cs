@@ -89,14 +89,16 @@ namespace Compute.Tests
                 // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
                 m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name);
+                bool forceDeletion = false;
                 if (hasManagedDisks)
                 {
                     m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name);
+                    forceDeletion = true;
                 }
                 m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
                 m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);
-                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion:true);
+                m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name, forceDeletion: forceDeletion);
 
                 passed = true;
             }

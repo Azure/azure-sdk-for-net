@@ -126,15 +126,17 @@ namespace Compute.Tests
                 m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: null);
 
+                bool forceDeletion = false;
                 if (hasManagedDisks)
                 {
                     m_CrpClient.VirtualMachineScaleSetVMs.ReimageAll(rgName, vmScaleSet.Name, instanceId);
+                    forceDeletion = true;
                 }
 
                 m_CrpClient.VirtualMachineScaleSetVMs.Restart(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.PowerOff(rgName, vmScaleSet.Name, instanceId);
                 m_CrpClient.VirtualMachineScaleSetVMs.Deallocate(rgName, vmScaleSet.Name, instanceId);
-                m_CrpClient.VirtualMachineScaleSetVMs.Delete(rgName, vmScaleSet.Name, instanceId, forceDeletion:true);
+                m_CrpClient.VirtualMachineScaleSetVMs.Delete(rgName, vmScaleSet.Name, instanceId, forceDeletion:forceDeletion);
 
                 passed = true;
             }
