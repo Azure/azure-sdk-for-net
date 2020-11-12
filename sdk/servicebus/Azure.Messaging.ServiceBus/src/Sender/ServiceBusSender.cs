@@ -180,7 +180,12 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            IList<ServiceBusMessage> messageList = messages.ToList();
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
             if (messageList.Count == 0)
             {
                 return;
@@ -208,7 +213,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
+        private async Task ApplyPlugins(IReadOnlyList<ServiceBusMessage> messages)
         {
             foreach (ServiceBusPlugin plugin in _plugins)
             {
@@ -431,7 +436,13 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var messageList = messages.ToList();
+
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
             if (messageList.Count == 0)
             {
                 return Array.Empty<long>();
@@ -448,7 +459,7 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 
-            long[] sequenceNumbers = null;
+            IReadOnlyList<long> sequenceNumbers = null;
             try
             {
                 foreach (ServiceBusMessage message in messageList)
@@ -493,15 +504,21 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            long[] sequenceNumbersArray = sequenceNumbers.ToArray();
 
-            if (sequenceNumbersArray.Length == 0)
+            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            {
+                IReadOnlyList<long> alreadyList => alreadyList,
+                _ => sequenceNumbers.ToList()
+            };
+
+            if (sequenceList.Count == 0)
             {
                 return;
             }
 
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumbersArray);
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceList);
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
@@ -510,7 +527,7 @@ namespace Azure.Messaging.ServiceBus
             scope.Start();
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceNumbersArray, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceList, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -902,13 +902,19 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumbersList = sequenceNumbers.ToList();
-            if (sequenceNumbersList.Count == 0)
+
+            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            {
+                IReadOnlyList<long> alreadyList => alreadyList,
+                _ => sequenceNumbers.ToList()
+            };
+
+            if (sequenceList.Count == 0)
             {
                 return Array.Empty<ServiceBusReceivedMessage>();
             }
 
-            Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList);
+            Logger.ReceiveDeferredMessageStart(Identifier, sequenceList);
             using DiagnosticScope scope = ScopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
             scope.AddAttribute(
                 DiagnosticProperty.SequenceNumbersAttribute,
@@ -919,7 +925,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 deferredMessages = await InnerReceiver.ReceiveDeferredMessagesAsync(
-                    sequenceNumbersList,
+                    sequenceList,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
