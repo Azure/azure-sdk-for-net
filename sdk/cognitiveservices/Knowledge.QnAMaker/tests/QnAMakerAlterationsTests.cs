@@ -13,7 +13,7 @@ namespace QnAMaker.Tests
     {
         private static readonly string KbId = "0667a3c4-fd61-4f13-9ada-a7fc0e257112";
 
-        [Fact(Skip = "UntilFixAlterationsRoute")]
+        [Fact]
         public void QnAMakerAlterationsReadUpdate()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
