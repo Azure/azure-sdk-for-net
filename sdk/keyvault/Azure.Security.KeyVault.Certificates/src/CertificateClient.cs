@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -172,6 +171,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
@@ -186,10 +186,17 @@ namespace Azure.Security.KeyVault.Certificates
                 KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version);
                 Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
 
-                string value = secretResponse.Value.Value;
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
                 }
 
                 byte[] rawData = Convert.FromBase64String(value);
@@ -220,6 +227,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
         /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
         public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
         {
@@ -234,10 +242,17 @@ namespace Azure.Security.KeyVault.Certificates
                 KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
                 Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
 
-                string value = secretResponse.Value.Value;
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
                 }
 
                 byte[] rawData = Convert.FromBase64String(value);
