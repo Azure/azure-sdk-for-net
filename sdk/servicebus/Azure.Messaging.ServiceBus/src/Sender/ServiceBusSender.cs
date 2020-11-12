@@ -180,7 +180,12 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
-            IList<ServiceBusMessage> messageList = messages.ToList();
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
             if (messageList.Count == 0)
             {
                 return;
@@ -208,7 +213,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
+        private async Task ApplyPlugins(IReadOnlyList<ServiceBusMessage> messages)
         {
             foreach (ServiceBusPlugin plugin in _plugins)
             {
@@ -396,12 +401,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            long[] sequenceNumbers = await ScheduleMessagesAsync(
+            IReadOnlyList<long> sequenceNumbers = await ScheduleMessagesAsync(
                 new ServiceBusMessage[] { message },
                 scheduledEnqueueTime,
                 cancellationToken)
             .ConfigureAwait(false);
-            // if there isn't one sequence number in the array, an
+            // if there isn't one sequence number in the list, an
             // exception should have been thrown by this point.
             return sequenceNumbers[0];
         }
@@ -423,15 +428,26 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long[]> ScheduleMessagesAsync(
+        public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(messages, nameof(messages));
+            Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var messageList = messages.ToList();
+
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
+            if (messageList.Count == 0)
+            {
+                return Array.Empty<long>();
+            }
+
             await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
@@ -443,7 +459,7 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 
-            long[] sequenceNumbers = null;
+            IReadOnlyList<long> sequenceNumbers = null;
             try
             {
                 foreach (ServiceBusMessage message in messageList)
@@ -488,9 +504,21 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumberList = sequenceNumbers.ToArray();
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);
+
+            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            {
+                IReadOnlyList<long> alreadyList => alreadyList,
+                _ => sequenceNumbers.ToList()
+            };
+
+            if (sequenceList.Count == 0)
+            {
+                return;
+            }
+
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceList);
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
@@ -499,7 +527,7 @@ namespace Azure.Messaging.ServiceBus
             scope.Start();
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceNumberList, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceList, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -44,11 +44,21 @@ namespace Azure.Messaging.ServiceBus
             DateTimeOffset enqueuedTime = default)
         {
             var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
-            amqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
+
+            if (correlationId != default)
+            {
+                amqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
+            }
             amqpMessage.Properties.Subject = subject;
-            amqpMessage.Properties.To = new AmqpAddress(to);
+            if (to != default)
+            {
+                amqpMessage.Properties.To = new AmqpAddress(to);
+            }
             amqpMessage.Properties.ContentType = contentType;
-            amqpMessage.Properties.ReplyTo = new AmqpAddress(replyTo);
+            if (replyTo != default)
+            {
+                amqpMessage.Properties.ReplyTo = new AmqpAddress(replyTo);
+            }
             amqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
 
             if (messageId != default)

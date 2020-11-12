@@ -57,6 +57,38 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public void PeekValidatesMaxMessageCount()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver("queueName");
+            Assert.That(
+                async () => await receiver.PeekMessagesAsync(0),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                async () => await receiver.PeekMessagesAsync(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void ReceiveValidatesMaxMessageCount()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver("queueName");
+            Assert.That(
+                async () => await receiver.ReceiveMessagesAsync(0),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                async () => await receiver.ReceiveMessagesAsync(-1),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
         public void ReceiverOptionsValidation()
         {
             var options = new ServiceBusReceiverOptions();

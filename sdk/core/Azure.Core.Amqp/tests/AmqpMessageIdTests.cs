@@ -27,5 +27,13 @@ namespace Azure.Core.Amqp.Tests
             Assert.False(messageId.Equals(Guid.NewGuid()));
             Assert.False(messageId.Equals((object)"messageId"));
         }
+
+        [Test]
+        public void CannotCreateFromNullMessageId()
+        {
+            Assert.That(
+                () => new AmqpMessageId(null),
+                Throws.InstanceOf<ArgumentNullException>());
+        }
     }
 }

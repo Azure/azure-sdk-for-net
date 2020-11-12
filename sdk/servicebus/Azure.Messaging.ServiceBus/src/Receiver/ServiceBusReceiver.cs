@@ -423,6 +423,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
@@ -898,11 +900,21 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
-            Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumbersList = sequenceNumbers.ToList();
 
-            Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList);
+            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            {
+                IReadOnlyList<long> alreadyList => alreadyList,
+                _ => sequenceNumbers.ToList()
+            };
+
+            if (sequenceList.Count == 0)
+            {
+                return Array.Empty<ServiceBusReceivedMessage>();
+            }
+
+            Logger.ReceiveDeferredMessageStart(Identifier, sequenceList);
             using DiagnosticScope scope = ScopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
             scope.AddAttribute(
                 DiagnosticProperty.SequenceNumbersAttribute,
@@ -913,7 +925,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 deferredMessages = await InnerReceiver.ReceiveDeferredMessagesAsync(
-                    sequenceNumbersList,
+                    sequenceList,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)

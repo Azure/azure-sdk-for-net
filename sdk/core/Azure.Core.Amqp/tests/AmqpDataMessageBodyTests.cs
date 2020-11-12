@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Core.Amqp.Tests
@@ -16,11 +15,14 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
             Assert.IsTrue(body.TryGetData(out var data));
             Assert.NotNull(data);
+        }
 
-            body = new AmqpMessageBody(null);
-            Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
-            Assert.IsTrue(body.TryGetData(out data));
-            Assert.NotNull(data);
+        [Test]
+        public void CannotCreateFromNullBody()
+        {
+            Assert.That(
+                () => new AmqpMessageBody(null),
+                Throws.InstanceOf<ArgumentNullException>());
         }
     }
 }

@@ -541,7 +541,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentSessions = numThreads,
                     AutoComplete = autoComplete,
                     // using the last sessionId from the loop
-                    SessionIds = new string[] { sessionId }
+                    SessionIds = { sessionId }
                 };
 
                 await using var processor = client.CreateSessionProcessor(
@@ -898,11 +898,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                var sessionIds = new List<string>();
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = numThreads,
+                    AutoComplete = autoComplete,
+                };
                 for (int i = 0; i < specifiedSessionCount; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    sessionIds.Add(sessionId);
+                    options.SessionIds.Add(sessionId);
                     await sender.SendMessageAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
@@ -922,13 +926,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int messageCt = 0;
                 int sessionCloseEventCt = 0;
 
-                var options = new ServiceBusSessionProcessorOptions
-                {
-                    MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete,
-                    SessionIds = sessionIds.ToArray()
-                };
-
                 await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options);
@@ -942,7 +939,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Interlocked.Increment(ref sessionCloseEventCt);
                     await args.GetSessionStateAsync();
-                    Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                    Assert.IsTrue(options.SessionIds.Contains(args.SessionId));
                 }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
@@ -955,8 +952,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                             await args.CompleteMessageAsync(message);
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.IsTrue(sessionIds.Contains(message.SessionId));
-                        Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                        Assert.IsTrue(options.SessionIds.Contains(message.SessionId));
+                        Assert.IsTrue(options.SessionIds.Contains(args.SessionId));
                         Assert.IsNotNull(args.SessionLockedUntil);
                     }
                     finally
@@ -999,12 +996,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
-                var sessionIds = new List<string>();
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = numThreads,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(1)
+                };
                 int messagesPerSession = 20;
                 for (int i = 0; i < numSessions; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
-                    sessionIds.Add(sessionId);
+                    options.SessionIds.Add(sessionId);
                     var messages = GetMessages(messagesPerSession, sessionId);
                     await sender.SendMessagesAsync(messages);
                     sessions.TryAdd(sessionId, true);
@@ -1019,13 +1020,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ConcurrentDictionary<string, int> sessionClosedEvents = new ConcurrentDictionary<string, int>();
                 ConcurrentDictionary<string, int> sessionOpenEvents = new ConcurrentDictionary<string, int>();
                 ConcurrentDictionary<string, int> lockLostMap = new ConcurrentDictionary<string, int>();
-
-                var options = new ServiceBusSessionProcessorOptions
-                {
-                    MaxConcurrentSessions = numThreads,
-                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(1),
-                    SessionIds = sessionIds.ToArray()
-                };
 
                 await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
@@ -1104,8 +1098,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         }
 
                         sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.IsTrue(sessionIds.Contains(message.SessionId));
-                        Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                        Assert.IsTrue(options.SessionIds.Contains(message.SessionId));
+                        Assert.IsTrue(options.SessionIds.Contains(args.SessionId));
                         Assert.IsNotNull(args.SessionLockedUntil);
                     }
                     finally
@@ -1119,7 +1113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
                 await processor.CloseAsync();
-                foreach (var sessionId in sessionIds)
+                foreach (var sessionId in options.SessionIds)
                 {
                     Assert.True(receivedMessagesAfterLockLost.ContainsKey(sessionId));
 
@@ -1167,7 +1161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 1,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(10),
-                    SessionIds = new string[] { sessionId }
+                    SessionIds = { sessionId }
                 };
 
                 await using var processor = client.CreateSessionProcessor(
@@ -1271,7 +1265,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     MaxConcurrentSessions = 1,
                     MaxAutoLockRenewalDuration = (errorSource == ServiceBusErrorSource.RenewLock ?
                         TimeSpan.FromSeconds(1) : TimeSpan.FromSeconds(0)),
-                    SessionIds = new string[] { sessionId }
+                    SessionIds = { sessionId }
                 };
 
                 await using var processor = client.CreateSessionProcessor(
@@ -1441,7 +1435,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 1,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30),
-                    SessionIds = new string[] { sessionId }
+                    SessionIds = { sessionId }
                 };
 
                 await using var processor = client.CreateSessionProcessor(

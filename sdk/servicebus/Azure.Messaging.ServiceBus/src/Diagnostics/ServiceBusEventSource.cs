@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, IReadOnlyList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
@@ -371,12 +371,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void CancelScheduledMessagesStart(string identifier, long[] sequenceNumbers)
+        public virtual void CancelScheduledMessagesStart(string identifier, IReadOnlyList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
+                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
             }
         }
 

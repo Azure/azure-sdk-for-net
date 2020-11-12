@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -126,12 +127,12 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
-        /// Gets or sets an optional list of session IDs to scope
-        /// the <see cref="ServiceBusSessionProcessor"/> to. If left
-        /// blank, the processor will not be limited to any specific
+        /// Gets an optional list of session IDs to scope
+        /// the <see cref="ServiceBusSessionProcessor"/> to. If the list is
+        /// left empty, the processor will not be limited to any specific
         /// session IDs.
         /// </summary>
-        public string[] SessionIds { get; set; }
+        public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
