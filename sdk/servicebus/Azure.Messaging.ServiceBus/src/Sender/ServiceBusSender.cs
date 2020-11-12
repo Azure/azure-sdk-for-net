@@ -519,11 +519,12 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
+
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
-
             scope.Start();
+
             try
             {
                 await _innerSender.CancelScheduledMessagesAsync(sequenceArray, cancellationToken).ConfigureAwait(false);
