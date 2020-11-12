@@ -6,27 +6,51 @@ using System;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using Azure.Management.Dns.Tests;
 
 namespace Azure.ResourceManager.Dns.Tests
 {
+
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class DnsManagementClientBase : ManagementRecordTestBase<DnsManagementTestEnvironment>
+    public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
+        public ResourcesOperations ResourcesOperations { get; set; }
+        public ProvidersOperations ResourceProvidersOperations { get; set; }
+        public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public RecordSetsOperations RecordSetsOperations { get; set; }
         public DnsManagementClient DnsManagementClient { get; set; }
-        protected string location;
-        protected DnsManagementClientBase(bool isAsync, string defaultRgPrefix = "Default-",  uint numberOfResourceGroups = 1) : base(isAsync, defaultRgPrefix, numberOfResourceGroups)
+        public ZonesOperations ZonesOperations { get; set; }
+        protected DnsManagementClientBase(bool isAsync) : base(isAsync)
         {
-        }
 
-        protected override void InitializeClients()
+        }
+        protected void InitializeClients()
+        {
+            SubscriptionId = TestEnvironment.SubscriptionId;
+            ResourcesManagementClient = this.GetResourceManagementClient();
+            ResourcesOperations = ResourcesManagementClient.Resources;
+            ResourceProvidersOperations = ResourcesManagementClient.Providers;
+            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            DnsManagementClient = this.GetDnsManagementClient();
+            RecordSetsOperations = DnsManagementClient.RecordSets;
+            ZonesOperations = DnsManagementClient.Zones;
+        }
+        protected void initNewRecord()
         {
             ResourcesManagementClient = this.GetResourceManagementClient();
-            DnsManagementClient = this.GetManagementClient<DnsManagementClient>(new DnsManagementClientOptions());
+            ResourcesOperations = ResourcesManagementClient.Resources;
+            ResourceProvidersOperations = ResourcesManagementClient.Providers;
+            ResourceGroupsOperations = ResourcesManagementClient.ResourceGroups;
+            DnsManagementClient = this.GetDnsManagementClient();
+            RecordSetsOperations = DnsManagementClient.RecordSets;
+            ZonesOperations = DnsManagementClient.Zones;
         }
 
+        internal DnsManagementClient GetDnsManagementClient()
+        {
+            return CreateClient<DnsManagementClient>(this.SubscriptionId,
+                TestEnvironment.Credential, InstrumentClientOptions(new DnsManagementClientOptions()));
+        }
     }
 }
