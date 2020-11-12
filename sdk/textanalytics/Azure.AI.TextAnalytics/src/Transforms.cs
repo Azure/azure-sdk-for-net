@@ -45,39 +45,6 @@ namespace Azure.AI.TextAnalytics
 
         }
 
-        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<KeyPhraseExtractionTasksItem>();
-            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
-            {
-                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
-        }
-
-        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<EntityRecognitionPiiTasksItem>();
-            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
-            {
-                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
-        }
-
-        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
-        {
-            var collection = new List<EntityRecognitionTasksItem>();
-            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
-            {
-                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
-            }
-
-            return collection;
-        }
-
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
         {
             var warnings = new List<TextAnalyticsWarning>();
@@ -307,6 +274,39 @@ namespace Azure.AI.TextAnalytics
         internal static AnalyzeOperationResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
         {
             return new AnalyzeOperationResult(jobState, map);
+        }
+
+        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<KeyPhraseExtractionTasksItem>();
+            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
+            {
+                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionPiiTasksItem>();
+            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
+            {
+                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionTasksItem>();
+            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
+            {
+                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     public partial class KeyPhraseExtractionTasksItem
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
-        public KeyPhraseExtractionTasksItem(KeyPhraseExtractionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
+        internal KeyPhraseExtractionTasksItem(KeyPhraseExtractionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
         {
             Results = Transforms.ConvertToExtractKeyPhrasesResultCollection(task.ResultsInternal, idToIndexMap);
         }

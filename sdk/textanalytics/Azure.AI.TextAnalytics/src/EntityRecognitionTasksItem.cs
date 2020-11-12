@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
     public partial class EntityRecognitionTasksItem
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
-        public EntityRecognitionTasksItem(EntityRecognitionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
+        internal EntityRecognitionTasksItem(EntityRecognitionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)
         {
             Results = Transforms.ConvertToRecognizeEntitiesResultCollection(task.ResultsInternal, idToIndexMap);
         }
