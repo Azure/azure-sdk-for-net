@@ -507,18 +507,19 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            // the sequence numbers MUST be in array form for them to be encoded correctly
+            long[] sequenceArray = sequenceNumbers switch
             {
-                IReadOnlyList<long> alreadyList => alreadyList,
-                _ => sequenceNumbers.ToList()
+                long[] alreadyArray => alreadyArray,
+                _ => sequenceNumbers.ToArray()
             };
 
-            if (sequenceList.Count == 0)
+            if (sequenceArray.Length == 0)
             {
                 return;
             }
 
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceList);
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
@@ -527,7 +528,7 @@ namespace Azure.Messaging.ServiceBus
             scope.Start();
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceList, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceArray, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
