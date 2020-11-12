@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - sdk/securitycenter/
+
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - sdk/securitycenter/
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: securitycenter
