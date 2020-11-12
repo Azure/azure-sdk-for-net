@@ -78,7 +78,7 @@ namespace Peering.Tests
         /// <summary>
         /// The api version latest.
         /// </summary>
-        public const string ApiVersionLatest = "2020-04-01";
+        public const string ApiVersionLatest = "2020-10-01";
 
         /// <summary>
         /// The peering operations test.
