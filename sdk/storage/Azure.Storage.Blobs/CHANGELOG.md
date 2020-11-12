@@ -1,10 +1,20 @@
 # Release History
 
-## 12.7.0-preview.2 (Unreleased)
-- Fixed bug where BobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
+## 12.8.0-beta.1 (Unreleased)
+
+
+## 12.7.0 (2020-11-10)
+- Includes all features from 12.7.0-preview.1
+- Fixed bug where BlobContainerClient.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
+- Added seekability to BaseBlobClient.OpenRead().
 - Added additional info to exception messages.
 - Fixed bug where Blobs SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 - Added ability to set Position on streams created with BlobBaseClient.OpenRead().
+- Added CanGenerateSasUri property, GenerateSasUri() to BlobBaseClient, BlobClient, BlockBlobClient, AppendBlobClient, PageBlobClient and BlobContainerClient.
+- Added CanAccountGenerateSasUri property, GenerateAccountSasUri() to BlobServiceClient.
+- Deprecated property BlobSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
+- Added ability to get parent BlobContainerClient from BlobBaseClient and to get parent BlobServiceClient from BlobContainerClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
 
 ## 12.7.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

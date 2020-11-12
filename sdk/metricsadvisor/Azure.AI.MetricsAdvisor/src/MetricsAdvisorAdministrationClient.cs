@@ -54,37 +54,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the service.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The endpoint to use for connecting to the Metrics Advisor Cognitive Service.</param>
-        /// <param name="credential">A credential used to authenticate to the service.</param>
-        /// <param name="options">A set of options to apply when configuring the client.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        internal MetricsAdvisorAdministrationClient(Uri endpoint, TokenCredential credential, MetricsAdvisorClientsOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new MetricsAdvisorClientsOptions();
-
-            _clientDiagnostics = new ClientDiagnostics(options);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-
-            _serviceRestClient = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2RestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorAdministrationClient"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
@@ -272,11 +241,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created feed.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
-        public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
@@ -287,8 +256,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = await _serviceRestClient.CreateDataFeedAsync(dataFeedDetail, cancellationToken).ConfigureAwait(false);
 
-                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
-                return Response.FromValue(dataFeed, response.GetRawResponse());
+                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -303,11 +272,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="dataFeed">Specifies how the created <see cref="DataFeed"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataFeed"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c> instance
         /// containing the ID of the newly created feed.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeed"/> is null.</exception>
-        public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataFeed, nameof(dataFeed));
 
@@ -318,8 +287,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateDataFeedHeaders> response = _serviceRestClient.CreateDataFeed(dataFeedDetail, cancellationToken);
 
-                dataFeed.Id = ClientCommon.GetDataFeedId(response.Headers.Location);
-                return Response.FromValue(dataFeed, response.GetRawResponse());
+                string dataFeedId = ClientCommon.GetDataFeedId(response.Headers.Location);
+                return Response.FromValue(dataFeedId, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -688,23 +657,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual async Task<Response<AnomalyDetectionConfiguration>> CreateMetricAnomalyDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateDetectionConfigurationAsync(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyDetectionConfigurationAsync(detectionConfiguration, cancellationToken).ConfigureAwait(false);
-                detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
+                string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfiguration, response.GetRawResponse());
+                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -719,23 +688,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="detectionConfiguration">Specifies how the created <see cref="AnomalyDetectionConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyDetectionConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfiguration"/> is null.</exception>
-        public virtual Response<AnomalyDetectionConfiguration> CreateMetricAnomalyDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateDetectionConfiguration(AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDetectionConfiguration)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyDetectionConfigurationHeaders> response = _serviceRestClient.CreateAnomalyDetectionConfiguration(detectionConfiguration, cancellationToken);
-                detectionConfiguration.Id = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
+                string detectionConfigurationId = ClientCommon.GetAnomalyDetectionConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(detectionConfiguration, response.GetRawResponse());
+                return Response.FromValue(detectionConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -755,11 +724,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<AnomalyDetectionConfiguration>> GetMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyDetectionConfiguration>> GetDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -784,11 +753,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyDetectionConfiguration> GetDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -813,7 +782,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateDetectionConfigurationAsync(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
@@ -822,7 +791,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -848,7 +817,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="detectionConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateMetricAnomalyDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response UpdateDetectionConfiguration(string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfiguration, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             Argument.AssertNotNull(detectionConfiguration, nameof(detectionConfiguration));
@@ -857,7 +826,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(detectionConfigurationId)} does not match {nameof(detectionConfiguration.Id)}");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -881,13 +850,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyDetectionConfiguration> GetDetectionConfigurationsAsync(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             async Task<Page<AnomalyDetectionConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfigurations)}");
                 scope.Start();
 
                 try
@@ -914,13 +883,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="AnomalyDetectionConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AnomalyDetectionConfiguration> GetMetricAnomalyDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyDetectionConfiguration> GetDetectionConfigurations(string metricId, CancellationToken cancellationToken = default)
         {
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
 
             Page<AnomalyDetectionConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetMetricAnomalyDetectionConfigurations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDetectionConfigurations)}");
                 scope.Start();
 
                 try
@@ -948,11 +917,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> DeleteMetricAnomalyDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteDetectionConfigurationAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -976,11 +945,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response DeleteMetricAnomalyDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteDetectionConfiguration(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteMetricAnomalyDetectionConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDetectionConfiguration)}");
             scope.Start();
 
             try
@@ -996,7 +965,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         #endregion AnomalyDetectionConfiguration
 
-        #region AnomalyAlertingConfiguration
+        #region AnomalyAlertConfiguration
 
         /// <summary>
         /// Creates an <see cref="AnomalyAlertConfiguration"/> and assigns it a unique ID.
@@ -1004,25 +973,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual async Task<Response<AnomalyAlertConfiguration>> CreateAnomalyAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateAlertConfigurationAsync(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateAlertConfiguration)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = await _serviceRestClient.CreateAnomalyAlertingConfigurationAsync(alertConfiguration, cancellationToken).ConfigureAwait(false);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1037,25 +1006,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="alertConfiguration">Specifies how the created <see cref="AnomalyAlertConfiguration"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is an <see cref="AnomalyAlertConfiguration"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created configuration.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfiguration"/> or <paramref name="alertConfiguration"/>.MetricAlertConfigurations is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfiguration"/>.MetricAlertConfigurations is empty.</exception>
-        public virtual Response<AnomalyAlertConfiguration> CreateAnomalyAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateAlertConfiguration(AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
             Argument.AssertNotNullOrEmpty(alertConfiguration.MetricAlertConfigurations, $"{nameof(alertConfiguration)}.{nameof(alertConfiguration.MetricAlertConfigurations)}");
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateAlertConfiguration)}");
             scope.Start();
 
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateAnomalyAlertingConfigurationHeaders> response = _serviceRestClient.CreateAnomalyAlertingConfiguration(alertConfiguration, cancellationToken);
-                alertConfiguration.Id = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
+                string alertConfigurationId = ClientCommon.GetAnomalyAlertConfigurationId(response.Headers.Location);
 
-                return Response.FromValue(alertConfiguration, response.GetRawResponse());
+                return Response.FromValue(alertConfigurationId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1075,7 +1044,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> UpdateAnomalyAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAlertConfigurationAsync(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
@@ -1084,7 +1053,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1110,7 +1079,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> or <paramref name="alertConfiguration"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response UpdateAnomalyAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
+        public virtual Response UpdateAlertConfiguration(string alertConfigurationId, AnomalyAlertConfiguration alertConfiguration, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             Argument.AssertNotNull(alertConfiguration, nameof(alertConfiguration));
@@ -1119,7 +1088,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 throw new ArgumentException($"{nameof(alertConfigurationId)} does not match {nameof(alertConfiguration.Id)}");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1145,11 +1114,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<AnomalyAlertConfiguration>> GetAnomalyAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnomalyAlertConfiguration>> GetAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1174,11 +1143,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<AnomalyAlertConfiguration> GetAnomalyAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Response<AnomalyAlertConfiguration> GetAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1201,13 +1170,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnomalyAlertConfiguration> GetAlertConfigurationsAsync(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             async Task<Page<AnomalyAlertConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfigurations)}");
                 scope.Start();
 
                 try
@@ -1234,13 +1203,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="AnomalyAlertConfiguration"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<AnomalyAlertConfiguration> GetAnomalyAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnomalyAlertConfiguration> GetAlertConfigurations(string detectionConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
 
             Page<AnomalyAlertConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAnomalyAlertConfigurations)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetAlertConfigurations)}");
                 scope.Start();
 
                 try
@@ -1268,11 +1237,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> DeleteAnomalyAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAlertConfigurationAsync(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1296,11 +1265,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="alertConfigurationId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="alertConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Response DeleteAnomalyAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteAlertConfiguration(string alertConfigurationId, CancellationToken cancellationToken = default)
         {
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAnomalyAlertConfiguration)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteAlertConfiguration)}");
             scope.Start();
 
             try
@@ -1314,9 +1283,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
         }
 
-        #endregion AnomalyAlertingConfiguration
+        #endregion AnomalyAlertConfiguration
 
-        #region Hook
+        #region NotificationHook
 
         /// <summary>
         /// Creates a <see cref="NotificationHook"/> and assigns it a unique ID.
@@ -1324,12 +1293,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual async Task<Response<NotificationHook>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> CreateHookAsync(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1344,9 +1313,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = await _serviceRestClient.CreateHookAsync(hook, cancellationToken).ConfigureAwait(false);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1361,12 +1330,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="hook">Specifies how the created <see cref="NotificationHook"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="NotificationHook"/> instance
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <c>string</c>
         /// containing the ID of the newly created hook.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="hook"/> is null; or <paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="hook"/> is an <see cref="EmailNotificationHook"/> and <paramref name="hook"/>.EmailsToAlert is empty.</exception>
-        public virtual Response<NotificationHook> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
+        public virtual Response<string> CreateHook(NotificationHook hook, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(hook, nameof(hook));
 
@@ -1381,9 +1350,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             try
             {
                 ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateHookHeaders> response = _serviceRestClient.CreateHook(hook, cancellationToken);
-                hook.Id = ClientCommon.GetHookId(response.Headers.Location);
+                string hookId = ClientCommon.GetHookId(response.Headers.Location);
 
-                return Response.FromValue(hook, response.GetRawResponse());
+                return Response.FromValue(hookId, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1670,6 +1639,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #endregion Hook
+        #endregion NotificationHook
     }
 }

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     internal static class QueueClientExtensions
     {

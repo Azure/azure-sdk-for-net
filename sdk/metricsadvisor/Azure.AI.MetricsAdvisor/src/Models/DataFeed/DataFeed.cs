@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             CreatedTime = dataFeedDetail.CreatedTime;
             Creator = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
-            MetricIds = dataFeedDetail.Metrics.Select(metric => metric.MetricId).ToList();
+            MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.MetricName, metric => metric.MetricId);
             Name = dataFeedDetail.DataFeedName;
             DataSource = DataFeedSource.GetDataFeedSource(dataFeedDetail);
             SourceType = dataFeedDetail.DataSourceType;
@@ -72,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
 
         /// <summary>
         /// The current ingestion status of this <see cref="DataFeed"/>.
@@ -99,7 +99,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The unique identifiers of the metrics defined in this feed's <see cref="DataFeedSchema"/>.
         /// Set by the service.
         /// </summary>
-        public IReadOnlyList<string> MetricIds { get; }
+        public IReadOnlyDictionary<string, string> MetricIds { get; }
 
         /// <summary>
         /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal.
@@ -244,7 +244,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedDetailPatch patch = DataSource.InstantiateDataFeedDetailPatch();
 
             patch.DataFeedName = Name;
-            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default;
+            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);
 
             patch.TimestampColumn = Schema.TimestampColumn;
 
@@ -256,19 +256,19 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             patch.DataFeedDescription = Description;
             patch.ActionLinkTemplate = ActionLinkTemplate;
-            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default;
+            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default(DataFeedDetailPatchViewMode?);
 
             if (RollupSettings != null)
             {
                 patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
-                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default;
-                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default;
+                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default(DataFeedDetailPatchNeedRollup?);
+                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default(DataFeedDetailPatchRollUpMethod?);
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
             }
 
             if (MissingDataPointFillSettings != null)
             {
-                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default;
+                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default(DataFeedDetailPatchFillMissingPointType?);
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 

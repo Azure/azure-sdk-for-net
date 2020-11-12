@@ -4,14 +4,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Timers;
+using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
     internal class UpdateQueueMessageVisibilityCommand : ITaskSeriesCommand
     {

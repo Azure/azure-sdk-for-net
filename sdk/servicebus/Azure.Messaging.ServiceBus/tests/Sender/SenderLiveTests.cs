@@ -228,7 +228,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
                 var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
-
                 await using var receiver = client.CreateReceiver(scope.QueueName);
                 foreach (long seq in sequenceNums)
                 {
@@ -241,6 +240,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
                     Assert.IsNull(msg);
                 }
+
+                // can cancel empty array
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: Array.Empty<long>());
+
+                // cannot cancel null
+                Assert.That(
+                    async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers: null),
+                    Throws.InstanceOf<ArgumentNullException>());
             }
         }
 

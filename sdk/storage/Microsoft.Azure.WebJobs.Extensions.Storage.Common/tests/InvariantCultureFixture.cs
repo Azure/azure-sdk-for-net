@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-namespace Azure.WebJobs.Extensions.Storage.Common.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
 {
     public class InvariantCultureFixture : IDisposable
     {

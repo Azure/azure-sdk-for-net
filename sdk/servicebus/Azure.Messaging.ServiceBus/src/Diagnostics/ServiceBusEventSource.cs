@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
-    ///   Entitys client.
+    ///   Entity's client.
     /// </summary>
     ///
     /// <remarks>
@@ -37,13 +37,13 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being
         ///   created outside the scope of the <see cref="Log" /> instance, as well as setting up the
-        ///   integration with AzureEventSourceListenter.
+        ///   integration with AzureEventSourceListener.
         /// </summary>
         private ServiceBusEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
-        // parameterless constructor for mocking
+        // Parameterless constructor for mocking
         internal ServiceBusEventSource() { }
 
         #region event constants
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, IReadOnlyList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
@@ -371,12 +371,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void CancelScheduledMessagesStart(string identifier, long[] sequenceNumbers)
+        public virtual void CancelScheduledMessagesStart(string identifier, IReadOnlyList<long> sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
+                CancelScheduledMessagesStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
             }
         }
 

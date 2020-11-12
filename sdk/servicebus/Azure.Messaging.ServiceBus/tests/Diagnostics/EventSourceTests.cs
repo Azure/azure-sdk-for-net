@@ -94,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.SendAsync(
-                    It.IsAny<IList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
@@ -183,9 +183,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             };
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new long[] { 1 }));
+                .Returns(Task.FromResult((IReadOnlyList<long>) new List<long> { 1 }));
 
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
             await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportSender.Setup(
                 sender => sender.ScheduleMessagesAsync(
-                    It.IsAny<IList<ServiceBusMessage>>(),
+                    It.IsAny<IReadOnlyList<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
@@ -1292,7 +1292,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Returns(new ServiceBusRetryOptions());
             mockConnection.Setup(
                 connection => connection.CreateTransportSender(
-                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<ServiceBusRetryPolicy>(),
                     It.IsAny<string>()))

@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid
             Source = source;
             Type = type;
             DataContentType = dataContentType;
-            DataBase64 = data.ToBytes().ToArray();
+            DataBase64 = data.ToArray();
             ExtensionAttributes = new Dictionary<string, object>();
         }
 
