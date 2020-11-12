@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable. Disposing of _process and _ctRegistration / _timeoutCtRegistration fields from outside may result in _tcs being incomplete or process handle leak.
     internal sealed class ProcessRunner : IDisposable
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly IProcess _process;
         private readonly TimeSpan _timeout;
