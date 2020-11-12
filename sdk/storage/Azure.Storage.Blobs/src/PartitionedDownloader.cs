@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferSize.HasValue
                 && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = transferOptions.MaximumTransferSize.Value;
+                _initialRangeSize = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
