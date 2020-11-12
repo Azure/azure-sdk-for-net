@@ -43,8 +43,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
             };
