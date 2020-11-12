@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+  <PropertyGroup>
+    <PackageId>RedisEnterpriseCache.Tests</PackageId>
+    <Description>AzureRedisEnterpriseCache.Tests Class Library</Description>
+    <AssemblyName>RedisEnterpriseCache.Tests</AssemblyName>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.Cache" Version="1.0.0-preview" />-->
+    
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.RedisEnterprise.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <!--Do not remove until VS Test Tools fixes #472-->
+  <ItemGroup>
+    <Service Include="{BFE75073-87C2-4540-B36A-32EBFD979D69}" />
+  </ItemGroup>
+</Project>
