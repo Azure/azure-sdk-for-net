@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource(EventSourceName);
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///

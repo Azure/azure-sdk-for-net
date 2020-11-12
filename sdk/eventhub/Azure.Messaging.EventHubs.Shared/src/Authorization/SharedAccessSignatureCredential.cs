@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private SharedAccessSignature SharedAccessSignature { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential"/> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential" /> class.
         /// </summary>
         ///
         /// <param name="signature">The shared access signature on which to base the token.</param>

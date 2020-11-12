@@ -187,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task EventHubs_Sample06_ConnectionStringParse()
+        public async Task ConnectionStringParse()
         {
             #region Snippet:EventHubs_Sample06_ConnectionStringParse
 
