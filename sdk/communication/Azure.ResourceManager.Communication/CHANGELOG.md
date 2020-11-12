@@ -1,7 +1,7 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
+## 1.0.0-beta.3 (2020-11-16)
+Updated `Azure.ResourceManager.Communication` version
 
 ## 1.0.0-beta.2 (2020-10-06)
 Updated `Azure.ResourceManager.Communication` version
