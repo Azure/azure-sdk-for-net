@@ -96,7 +96,7 @@ namespace Azure.Identity
 
                 return storedCredentials;
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
             {
                 throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account.", ex);
             }
