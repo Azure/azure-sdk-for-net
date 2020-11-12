@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Shared;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Tracing;
+#if DEBUG
+using System.Diagnostics;
+using Azure.Core.Shared;
+#endif
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {

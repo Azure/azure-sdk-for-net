@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#define DEBUG
+#if DEBUG
 
 using System.Diagnostics;
 
@@ -23,3 +23,5 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
     }
 }
+
+#endif
