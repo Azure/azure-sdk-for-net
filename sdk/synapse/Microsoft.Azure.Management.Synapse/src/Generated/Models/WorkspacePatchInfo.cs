@@ -38,12 +38,20 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="identity">The identity of the workspace</param>
         /// <param name="sqlAdministratorLoginPassword">SQL administrator login
         /// password</param>
+        /// <param name="managedVirtualNetworkSettings">Managed Virtual Network
+        /// Settings</param>
+        /// <param name="workspaceRepositoryConfiguration">Git integration
+        /// settings</param>
+        /// <param name="babylonConfiguration">Babylon Configuration</param>
         /// <param name="provisioningState">Resource provisioning state</param>
-        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), string provisioningState = default(string))
+        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), BabylonConfiguration babylonConfiguration = default(BabylonConfiguration), string provisioningState = default(string))
         {
             Tags = tags;
             Identity = identity;
             SqlAdministratorLoginPassword = sqlAdministratorLoginPassword;
+            ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
+            BabylonConfiguration = babylonConfiguration;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -70,6 +78,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlAdministratorLoginPassword")]
         public string SqlAdministratorLoginPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed Virtual Network Settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedVirtualNetworkSettings")]
+        public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets git integration settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.workspaceRepositoryConfiguration")]
+        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets babylon Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.babylonConfiguration")]
+        public BabylonConfiguration BabylonConfiguration { get; set; }
 
         /// <summary>
         /// Gets resource provisioning state
