@@ -492,7 +492,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task CancelScheduledMessagesAsync(
-            IReadOnlyList<long> sequenceNumbers,
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
             Task cancelMessageTask = _retryPolicy.RunOperation(async (timeout) =>
@@ -515,7 +515,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task CancelScheduledMessageInternalAsync(
-            IReadOnlyList<long> sequenceNumbers,
+            long[] sequenceNumbers,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {

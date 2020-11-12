@@ -220,7 +220,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public async Task ScheduleMultiple()
+        public async Task ScheduleMultipleArray()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -235,6 +235,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
                 }
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: sequenceNums);
+
                 foreach (long seq in sequenceNums)
                 {
                     ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
@@ -243,6 +244,82 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 // can cancel empty array
                 await sender.CancelScheduledMessagesAsync(sequenceNumbers: Array.Empty<long>());
+
+                // cannot cancel null
+                Assert.That(
+                    async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers: null),
+                    Throws.InstanceOf<ArgumentNullException>());
+            }
+        }
+
+        [Test]
+        public async Task ScheduleMultipleList()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+                var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
+                var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                await using var receiver = client.CreateReceiver(scope.QueueName);
+                foreach (long seq in sequenceNums)
+                {
+                    ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
+                    Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                }
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: new List<long>(sequenceNums));
+
+                foreach (long seq in sequenceNums)
+                {
+                    ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
+                    Assert.IsNull(msg);
+                }
+
+                // can cancel empty list
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: new List<long>());
+
+                // cannot cancel null
+                Assert.That(
+                    async () => await sender.CancelScheduledMessagesAsync(sequenceNumbers: null),
+                    Throws.InstanceOf<ArgumentNullException>());
+            }
+        }
+
+        [Test]
+        public async Task ScheduleMultipleEnumerable()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var sender = client.CreateSender(scope.QueueName);
+                var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
+                var sequenceNums = await sender.ScheduleMessagesAsync(GetMessages(5), scheduleTime);
+                await using var receiver = client.CreateReceiver(scope.QueueName);
+                foreach (long seq in sequenceNums)
+                {
+                    ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
+                    Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
+                }
+
+                // use an enumerable
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: GetEnumerable());
+
+                IEnumerable<long> GetEnumerable()
+                {
+                    foreach (long seq in sequenceNums)
+                    {
+                        yield return seq;
+                    }
+                }
+
+                foreach (long seq in sequenceNums)
+                {
+                    ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync(seq);
+                    Assert.IsNull(msg);
+                }
+
+                // can cancel empty enumerable
+                await sender.CancelScheduledMessagesAsync(sequenceNumbers: Enumerable.Empty<long>());
 
                 // cannot cancel null
                 Assert.That(
