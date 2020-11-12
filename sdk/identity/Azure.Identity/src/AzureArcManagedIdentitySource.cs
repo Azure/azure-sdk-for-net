@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly Uri _endpoint;
 
-        public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string identityEndpoint = EnvironmentVariables.IdentityEndpoint;
             string imdsEndpoint = EnvironmentVariables.ImdsEndpoint;
@@ -43,7 +43,7 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
             }
 
-            return new AzureArcManagedIdentitySource(pipeline, endpointUri, clientId);
+            return new AzureArcManagedIdentitySource(options.Pipeline, endpointUri, options.ClientId);
         }
 
         private AzureArcManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string clientId) : base(pipeline)

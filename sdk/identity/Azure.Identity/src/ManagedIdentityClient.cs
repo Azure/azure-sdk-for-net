@@ -13,17 +13,25 @@ namespace Azure.Identity
         internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
         private readonly AsyncLockWithValue<ManagedIdentitySource> _identitySourceAsyncLock = new AsyncLockWithValue<ManagedIdentitySource>();
-        private readonly CredentialPipeline _pipeline;
+        private readonly ManagedIdentityClientOptions _options;
 
         protected ManagedIdentityClient()
         {
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId})
         {
-            _pipeline = pipeline;
-            ClientId = clientId;
         }
+
+        public ManagedIdentityClient(ManagedIdentityClientOptions options)
+        {
+            _options = options;
+            ClientId = options.ClientId;
+            Pipeline = options.Pipeline;
+        }
+
+        internal CredentialPipeline Pipeline { get; }
 
         protected string ClientId { get; }
 
@@ -48,11 +56,11 @@ namespace Azure.Identity
                 return asyncLock.Value;
             }
 
-            ManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
-                                                    CloudShellManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
-                                                    AzureArcManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
-                                                    ServiceFabricManagedIdentitySource.TryCreate(_pipeline, ClientId) ??
-                                                    await ImdsManagedIdentitySource.TryCreateAsync(_pipeline, ClientId, async, cancellationToken).ConfigureAwait(false);
+            ManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_options) ??
+                                                    CloudShellManagedIdentitySource.TryCreate(_options) ??
+                                                    AzureArcManagedIdentitySource.TryCreate(_options) ??
+                                                    ServiceFabricManagedIdentitySource.TryCreate(_options) ??
+                                                    await ImdsManagedIdentitySource.TryCreateAsync(_options, async, cancellationToken).ConfigureAwait(false);
 
             asyncLock.SetValue(identitySource);
             return identitySource;

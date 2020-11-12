@@ -19,7 +19,7 @@ namespace Azure.Identity
         private readonly string _identityHeaderValue;
         private readonly string _clientId;
 
-        public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string identityEndpoint = EnvironmentVariables.IdentityEndpoint;
             string identityHeader = EnvironmentVariables.IdentityHeader;
@@ -40,15 +40,25 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(IdentityEndpointInvalidUriError, ex);
             }
 
+            var pipeline = options.Pipeline;
+
+            if (!options.PreserveTransport)
+            {
+                var customSslHttpPipline = HttpPipelineBuilder.Build(new TokenCredentialOptions { Transport = GetServiceFabricMITransport() });
+
+                pipeline = new CredentialPipeline(pipeline.AuthorityHost, customSslHttpPipline, pipeline.Diagnostics);
+            }
+
+            return new ServiceFabricManagedIdentitySource(pipeline, endpointUri, identityHeader, options.ClientId);
+        }
+
+        internal static HttpClientTransport GetServiceFabricMITransport()
+        {
             var httpHandler = new HttpClientHandler();
 
             httpHandler.ServerCertificateCustomValidationCallback = ValidateMsiServerCertificate;
 
-            var customSslHttpPipline = HttpPipelineBuilder.Build(new TokenCredentialOptions { Transport = new HttpClientTransport(httpHandler) });
-
-            var innerPipeline = new CredentialPipeline(pipeline.AuthorityHost, customSslHttpPipline, pipeline.Diagnostics);
-
-            return new ServiceFabricManagedIdentitySource(innerPipeline, endpointUri, identityHeader, clientId);
+            return new HttpClientTransport(httpHandler);
         }
 
         private ServiceFabricManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string identityHeaderValue, string clientId) : base(pipeline)

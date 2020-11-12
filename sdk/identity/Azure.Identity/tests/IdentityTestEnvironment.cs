@@ -19,8 +19,8 @@ namespace Azure.Identity.Tests
         public string Password => GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
         public string IdentityClientId => GetVariable("AZURE_IDENTITY_TEST_CLIENT_ID");
         public string IdentityClientSecret => GetOptionalVariable("AZURE_IDENTITY_TEST_CLIENT_SECRET") ?? "SANITIZED";
-        public string IMDSEnable => GetOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
-        public string IMDSClientId => GetVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
+        public string IMDSEnable => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
+        public string IMDSClientId => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
         public string ArcEnable => GetRecordedOptionalVariable("IDENTITYTEST_ARCTEST_ENABLE");
         public string SFEnable => GetRecordedOptionalVariable("IDENTITYTEST_SFTEST_ENABLE");
         public string IdentityEndpoint => GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 
-        public void RecordManagedIdentityEnvironmentVariables()
+        public void RecordOrRestoreManagedIdentityEnvironmentVariables()
         {
             GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
             GetRecordedOptionalVariable("IMDS_ENDPOINT");

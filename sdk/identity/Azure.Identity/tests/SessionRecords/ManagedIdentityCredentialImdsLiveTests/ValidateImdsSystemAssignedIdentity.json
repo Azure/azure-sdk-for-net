@@ -113,6 +113,7 @@
     }
   ],
   "Variables": {
+    "IDENTITYTEST_IMDSTEST_ENABLE": "true",
     "IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT": "https://aiimdssavault.vault.azure.net/",
     "IDENTITY_ENDPOINT": null,
     "IDENTITY_HEADER": null,

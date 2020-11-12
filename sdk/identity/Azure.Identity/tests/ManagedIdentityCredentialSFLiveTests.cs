@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ManagedIdentityCredentialSFLiveTests : IdentityRecordedTestBase
+    public class ManagedIdentityCredentialSFLiveTests : ManagedIdentityCredentialLiveTestBase
     {
-        public ManagedIdentityCredentialSFLiveTests(bool isAsync) : base(isAsync, Core.TestFramework.RecordedTestMode.Record)
+        public ManagedIdentityCredentialSFLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -23,20 +24,23 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
-            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+            using (ReadOrRestoreManagedIdentityEnvironment())
+            {
+                var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
+                CredentialPipeline pipeline = CredentialPipeline.GetInstance(InstrumentClientOptions(new TokenCredentialOptions { Transport = ServiceFabricManagedIdentitySource.GetServiceFabricMITransport() }));
 
-            var cred = new ManagedIdentityCredential(options: InstrumentClientOptions(new TokenCredentialOptions()));
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, PreserveTransport = (Mode == RecordedTestMode.Playback) }));
 
-            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+                // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+                var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
-            KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
+                KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
-            Assert.IsNotNull(secret);
+                Assert.IsNotNull(secret);
+            }
         }
 
         [NonParallelizable]
@@ -48,22 +52,25 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
-            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+            using (ReadOrRestoreManagedIdentityEnvironment())
+            {
+                var vaultUri = new Uri(TestEnvironment.UserAssignedVault);
 
-            var vaultUri = new Uri(TestEnvironment.UserAssignedVault);
+                var clientId = TestEnvironment.IMDSClientId;
 
-            var clientId = TestEnvironment.IMDSClientId;
+                CredentialPipeline pipeline = CredentialPipeline.GetInstance(InstrumentClientOptions(new TokenCredentialOptions { Transport = ServiceFabricManagedIdentitySource.GetServiceFabricMITransport() }));
 
-            var cred = new ManagedIdentityCredential(clientId: clientId, options: InstrumentClientOptions(new TokenCredentialOptions()));
+                var cred = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = (Mode == RecordedTestMode.Playback) }));
 
-            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+                // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+                var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
-            KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
+                KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
-            Assert.IsNotNull(secret);
+                Assert.IsNotNull(secret);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
-        public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string msiEndpoint = EnvironmentVariables.MsiEndpoint;
 
@@ -36,7 +36,7 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new CloudShellManagedIdentitySource(pipeline, endpointUri, clientId);
+            return new CloudShellManagedIdentitySource(options.Pipeline, endpointUri, options.ClientId);
         }
 
         private CloudShellManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string clientId) : base(pipeline)

@@ -28,7 +28,7 @@ namespace Azure.Identity
 
         private string _identityUnavailableErrorMessage;
 
-        public static async ValueTask<ManagedIdentitySource> TryCreateAsync(CredentialPipeline pipeline, string clientId, bool async, CancellationToken cancellationToken)
+        public static async ValueTask<ManagedIdentitySource> TryCreateAsync(ManagedIdentityClientOptions options, bool async, CancellationToken cancellationToken)
         {
             AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
 
@@ -68,7 +68,7 @@ namespace Azure.Identity
                 AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
             }
 
-            return available ? new ImdsManagedIdentitySource(pipeline, clientId) : default;
+            return available ? new ImdsManagedIdentitySource(options.Pipeline, options.ClientId) : default;
         }
 
         internal ImdsManagedIdentitySource(CredentialPipeline pipeline, string clientId) : base(pipeline)

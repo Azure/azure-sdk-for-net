@@ -26,7 +26,7 @@ namespace Azure.Identity.Tests.Mock
             => new EnvironmentCredential(Pipeline);
 
         public override TokenCredential CreateManagedIdentityCredential(string clientId)
-            => new ManagedIdentityCredential(Pipeline, CreateManagedIdentityClient(clientId));
+            => new ManagedIdentityCredential(CreateManagedIdentityClient(clientId));
 
         public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
             => new SharedTokenCacheCredential(tenantId, username, default, Pipeline);

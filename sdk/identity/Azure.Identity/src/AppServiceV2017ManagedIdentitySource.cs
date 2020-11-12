@@ -20,7 +20,7 @@ namespace Azure.Identity
         private readonly string _secret;
         private readonly string _clientId;
 
-        public static ManagedIdentitySource TryCreate(CredentialPipeline pipeline, string clientId)
+        public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
             string msiEndpoint = EnvironmentVariables.MsiEndpoint;
             string msiSecret = EnvironmentVariables.MsiSecret;
@@ -41,7 +41,7 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new AppServiceV2017ManagedIdentitySource(pipeline, endpointUri, msiSecret, clientId);
+            return new AppServiceV2017ManagedIdentitySource(options.Pipeline, endpointUri, msiSecret, options.ClientId);
         }
 
         private AppServiceV2017ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret, string clientId) : base(pipeline)

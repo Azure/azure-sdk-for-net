@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,11 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ManagedIdentityCredentialArcLiveTests : IdentityRecordedTestBase
+    public class ManagedIdentityCredentialArcLiveTests : ManagedIdentityCredentialLiveTestBase
     {
         public ManagedIdentityCredentialArcLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new ArcMiRecordedTestSanitizer();
+            Matcher = new ArcMiRecordedTestMatcher();
         }
 
         [NonParallelizable]
@@ -27,20 +28,21 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
-            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+            using (ReadOrRestoreManagedIdentityEnvironment())
+            {
+                var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
+                var cred = new ManagedIdentityCredential(options: InstrumentClientOptions(new TokenCredentialOptions()));
 
-            var cred = new ManagedIdentityCredential(options: InstrumentClientOptions(new TokenCredentialOptions()));
+                // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+                var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
-            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
-            var kvoptions = InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
+                var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
-            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
+                KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
 
-            KeyVaultSecret secret = await kvclient.SetSecretAsync("identitytestsecret", "value");
-
-            Assert.IsNotNull(secret);
+                Assert.IsNotNull(secret);
+            }
         }
 
 
@@ -53,24 +55,28 @@ namespace Azure.Identity.Tests
                 Assert.Ignore();
             }
 
-            TestEnvironment.RecordManagedIdentityEnvironmentVariables();
+            using (ReadOrRestoreManagedIdentityEnvironment())
+            {
+                var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
+                var cred = new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
 
-            var cred = new ManagedIdentityCredential(clientId: Guid.NewGuid().ToString(), options: InstrumentClientOptions(new TokenCredentialOptions()));
-
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) })));
+            }
         }
 
-        private class ArcMiRecordedTestSanitizer : IdentityRecordedTestSanitizer
+        private class ArcMiRecordedTestMatcher : RecordMatcher
         {
-            public override void Sanitize(RecordEntry entry)
+            public override RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
             {
-                if (entry.Response.Headers.TryGetValue("WWW-Authenticate", out string[] challenges) && challenges[0].StartsWith("Basic realm="))
+                var match = base.FindMatch(request, entries);
+
+                if (match.Response.Headers.TryGetValue("WWW-Authenticate", out string[] challenges) && challenges[0].StartsWith("Basic realm="))
                 {
                     challenges[0] = challenges[0].Split('=')[0] + "=" + Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key");
                 }
-                base.Sanitize(entry);
+
+                return match;
             }
         }
     }

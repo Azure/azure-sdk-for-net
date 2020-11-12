@@ -56,7 +56,7 @@
         "Content-Length": "261",
         "Content-Type": "application/json",
         "Date": "Wed, 11 Nov 2020 22:38:15 GMT",
-        "WWW-Authenticate": "Basic realm=/home/sschaab/azure-sdk-for-net/artifacts/bin/Azure.Identity.Tests/Debug/netcoreapp3.1/Data/mock-arc-mi-key.key"
+        "WWW-Authenticate": "Basic realm=Data/mock-arc-mi-key.key"
       },
       "ResponseBody": "{\u0022error\u0022:\u0022unauthorized_client\u0022,\u0022error_description\u0022:\u0022Missing Basic Authorization header\u0022,\u0022error_codes\u0022:[401],\u0022timestamp\u0022:\u00222020-11-11 22:38:15.596399013 \\u002B0000 UTC m=\\u002B56183.746777614\u0022,\u0022trace_id\u0022:\u0022\u0022,\u0022correlation_id\u0022:\u0022e01cfd4a-dbf1-4e9b-b872-1ac8338d97ae\u0022}"
     },

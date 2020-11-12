@@ -1,0 +1,61 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret?api-version=7.0",
+            "RequestMethod": "PUT",
+            "RequestHeaders": {
+                "Accept": "application/json",
+                "Authorization": "Sanitized",
+                "Content-Length": "17",
+                "Content-Type": "application/json",
+                "User-Agent": [
+                    "azsdk-net-Security.KeyVault.Secrets/4.0.2",
+                    "(.NET Core 3.1.10; Linux 4.15.0-1098-azure #109~16.04.1-Ubuntu SMP Wed Sep 30 18:53:14 UTC 2020)"
+                ],
+                "x-ms-client-request-id": "7534ea01a5eed9756f7f11b8a086b6a3",
+                "x-ms-return-client-request-id": "true"
+            },
+            "RequestBody": {
+                "value": "value"
+            },
+            "StatusCode": 200,
+            "ResponseHeaders": {
+                "Cache-Control": "no-cache",
+                "Content-Length": "222",
+                "Content-Type": "application/json; charset=utf-8",
+                "Date": "Thu, 12 Nov 2020 02:14:18 GMT",
+                "Expires": "-1",
+                "Pragma": "no-cache",
+                "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+                "X-Content-Type-Options": "nosniff",
+                "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=52.143.65.188;act_addr_fam=InterNetwork;",
+                "x-ms-keyvault-region": "westus",
+                "x-ms-keyvault-service-version": "1.2.58.0",
+                "x-ms-request-id": "801681a4-abd2-4a69-bed6-c701b2b11839",
+                "X-Powered-By": "ASP.NET"
+            },
+            "ResponseBody": {
+                "value": "value",
+                "id": "https://aiimdssavault.vault.azure.net/secrets/identitytestsecret/4cb68ffb87a64af887fab8bde58c7c10",
+                "attributes": {
+                    "enabled": true,
+                    "created": 1605147259,
+                    "updated": 1605147259,
+                    "recoveryLevel": "Purgeable"
+                }
+            }
+        }
+    ],
+    "Variables": {
+        "IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT": "https://aiimdssavault.vault.azure.net/",
+        "IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT": null,
+        "IDENTITYTEST_SFTEST_ENABLE": "true",
+        "IDENTITY_ENDPOINT": "https://10.0.0.8:2377/metadata/identity/oauth2/token",
+        "IDENTITY_HEADER": "51cb994f-e395-4f8d-be33-ffef00000000",
+        "IDENTITY_SERVER_THUMBPRINT": "396343c35036494bd289e15889ef8ec9736859dc",
+        "IMDS_ENDPOINT": null,
+        "MSI_ENDPOINT": null,
+        "MSI_SECRET": null,
+        "RandomSeed": "984935222"
+    }
+}
