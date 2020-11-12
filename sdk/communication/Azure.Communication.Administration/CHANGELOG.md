@@ -1,6 +1,10 @@
 # Release History
 
 ## 1.0.0-beta.3 (2020-11-16)
+### Breaking
+- Support long running operations for purchasing phone numbers
+- Renamed `PhoneNumberSearch` to `PhoneNumberReservation`
+
 ### Added
 - Support for mocking all client methods that use models with internal constructors
 
