@@ -16,19 +16,14 @@ namespace Azure.AI.TextAnalytics
     {
         internal static EntityRecognitionTasksItem DeserializeEntityRecognitionTasksItem(JsonElement element)
         {
-            Optional<EntitiesResult> results = default;
+            EntitiesResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            string name = default;
+            Optional<string> name = default;
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
@@ -48,7 +43,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new EntityRecognitionTasksItem(lastUpdateDateTime, name, status, results.Value);
+            return new EntityRecognitionTasksItem(lastUpdateDateTime, name.Value, status, results);
         }
     }
 }

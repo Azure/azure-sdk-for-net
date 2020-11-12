@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareCancellation()
+        public void HealthcareCancellation()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             HealthcareOperation healthOperation = client.StartHealthcareBatch(batchDocument, "en");
 
-            await client.StartCancelHealthJobAsync(healthOperation);
+            client.StartCancelHealthJob(healthOperation);
         }
 
         #endregion

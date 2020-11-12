@@ -12,8 +12,5 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("TasksStateTasksDetails")]
     public partial class TasksStateTasksDetails
     {
-        internal TasksStateTasksDetails(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
-        {
-        }
     }
 }

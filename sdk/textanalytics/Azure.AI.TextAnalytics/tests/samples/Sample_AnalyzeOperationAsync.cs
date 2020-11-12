@@ -18,8 +18,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AnalyzeOperationAsync()
         {
-			string endpoint = TestEnvironment.Endpoint;
-			string apiKey = TestEnvironment.ApiKey;
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -55,11 +55,11 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.EntitiesResult;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.PiiEntitiesResult;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 
             Console.WriteLine("Recognized Entities");
 

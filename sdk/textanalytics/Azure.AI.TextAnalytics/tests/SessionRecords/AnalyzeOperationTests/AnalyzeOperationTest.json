@@ -11,10 +11,10 @@
         "Content-Length": "265",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "Request-Id": "00-e92d632eed359f49871b8dddc95bb19e-5879c3c95fba8541-00",
-        "traceparent": "00-e92d632eed359f49871b8dddc95bb19e-5879c3c95fba8541-00",
+        "Request-Id": "00-eb2187d8d0a22a4baee707016cc450b7-f01a84148de8e749-00",
+        "traceparent": "00-eb2187d8d0a22a4baee707016cc450b7-f01a84148de8e749-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201110.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201111.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "bc10ae4f3809e9b40d4f6b783fc973c7",
@@ -47,18 +47,18 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "4c3ce51b-25c4-4c66-a3d1-7af7cf650980",
-        "Date": "Tue, 10 Nov 2020 21:49:16 GMT",
-        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/8eb9291d-22f7-4b47-8d75-870792ed749f_637405632000000000",
+        "apim-request-id": "cc3132aa-c421-4c34-b9d5-9cbc2f6a0617",
+        "Date": "Wed, 11 Nov 2020 23:27:44 GMT",
+        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/06d023d4-5eab-4c1c-8f32-25109cf6647b_637406496000000000",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "262"
+        "x-envoy-upstream-service-time": "312"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/8eb9291d-22f7-4b47-8d75-870792ed749f_637405632000000000?showStats=false",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/06d023d4-5eab-4c1c-8f32-25109cf6647b_637406496000000000?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -66,9 +66,9 @@
           "text/json"
         ],
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "Request-Id": "|3d8ab2c9-4c65f3c47f9b89a7.",
+        "Request-Id": "|798d337c-426444c94be64117.",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201110.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201111.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "e45290396662ad6e1e38f63536f933b4",
@@ -77,24 +77,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "971def95-2788-4a8e-9e60-046fd0ee8a37",
+        "apim-request-id": "01071d14-ed3f-4460-a1f7-5fb1939d5e20",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 10 Nov 2020 21:52:22 GMT",
+        "Date": "Wed, 11 Nov 2020 23:27:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "373"
+        "x-envoy-upstream-service-time": "366"
       },
       "ResponseBody": {
-        "jobId": "8eb9291d-22f7-4b47-8d75-870792ed749f_637405632000000000",
-        "lastUpdateDateTime": "2020-11-10T21:49:17Z",
-        "createdDateTime": "2020-11-10T21:49:16Z",
-        "expirationDateTime": "2020-11-11T21:49:16Z",
+        "jobId": "06d023d4-5eab-4c1c-8f32-25109cf6647b_637406496000000000",
+        "lastUpdateDateTime": "2020-11-11T23:27:45Z",
+        "createdDateTime": "2020-11-11T23:27:44Z",
+        "expirationDateTime": "2020-11-12T23:27:44Z",
         "status": "succeeded",
         "errors": [],
         "tasks": {
           "details": {
-            "lastUpdateDateTime": "2020-11-10T21:49:17Z"
+            "lastUpdateDateTime": "2020-11-11T23:27:45Z"
           },
           "completed": 1,
           "failed": 0,
@@ -102,7 +102,7 @@
           "total": 1,
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2020-11-10T21:49:17.2442521Z",
+              "lastUpdateDateTime": "2020-11-11T23:27:45.4944375Z",
               "results": {
                 "inTerminalState": true,
                 "documents": [

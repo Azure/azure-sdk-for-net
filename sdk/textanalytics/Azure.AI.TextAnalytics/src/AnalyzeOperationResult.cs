@@ -14,51 +14,39 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary>
         /// </summary>
-        /// <param name="entitiesResult">Entities result returned from the service</param>
-        /// <param name="piiEntitiesResult">PII Entities result returned from the service</param>
-        /// <param name="keyPhraseResult">Keyphrase result returned from the service</param>
-        /// <param name="map">Variable to map documents with id and maintaining the order</param>
-        /// <param name="displayName">DisplayName for the Job</param>
-        internal AnalyzeOperationResult(EntitiesResult entitiesResult, PiiEntitiesResult piiEntitiesResult, KeyPhraseResult keyPhraseResult, IDictionary<string, int> map, string displayName)
+        /// <param name="jobState"></param>
+        /// <param name="idToIndexMap"></param>
+        internal AnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
         {
-            if (entitiesResult != null)
-            {
-                EntitiesResult = Transforms.ConvertToRecognizeEntitiesResultCollection(entitiesResult, map);
-            }
-
-            if (piiEntitiesResult != null)
-            {
-                PiiEntitiesResult = Transforms.ConvertToRecognizePiiEntitiesResultCollection(piiEntitiesResult, map);
-            }
-
-            if (keyPhraseResult != null)
-            {
-                KeyPhraseResult = Transforms.ConvertToExtractKeyPhrasesResultCollection(keyPhraseResult, map);
-            }
-            if (displayName != null)
-            {
-                DisplayName = displayName;
-            }
+            Tasks = jobState.Tasks;
+            Errors = Transforms.ConvertToErrors(jobState.Errors);
+            Statistics = jobState.Statistics;
+            DisplayName = jobState.DisplayName;
+            Status = jobState.Status;
+            Tasks = new AnalyzeTasks(jobState.Tasks, idToIndexMap);
         }
 
         /// <summary>
-        /// EntityRecognitionTasks
+        /// Tasks
         /// </summary>
-        public RecognizeEntitiesResultCollection EntitiesResult { get; }
-
-        /// <summary>
-        /// EntityRecognitionPiiTasks
-        /// </summary>
-        public RecognizePiiEntitiesResultCollection PiiEntitiesResult { get; }
-
-        /// <summary>
-        /// KeyPhraseExtractionTasks
-        /// </summary>
-        public ExtractKeyPhrasesResultCollection KeyPhraseResult { get; }
+        public AnalyzeTasks Tasks { get; }
 
         /// <summary>
         /// DisplayName
         /// </summary>
         public string DisplayName { get; }
+
+        /// <summary>
+        /// Status
+        /// </summary>
+        public JobStatus Status { get; }
+
+        /// <summary>
+        /// Errors for AnalyzeOperationResult
+        /// </summary>
+        public IReadOnlyList<TextAnalyticsError> Errors { get; }
+
+        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
+        public TextDocumentBatchStatistics Statistics { get; }
     }
 }

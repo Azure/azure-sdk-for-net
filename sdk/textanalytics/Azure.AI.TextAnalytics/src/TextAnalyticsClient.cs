@@ -2603,8 +2603,6 @@ namespace Azure.AI.TextAnalytics
 
             JobManifestTasks tasks = new JobManifestTasks();
 
-            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks);
-
             if (options.PiiTaskParameters != null)
             {
                 tasks.EntityRecognitionPiiTasks = new List<PiiTask>() { new PiiTask() { Parameters = options.PiiTaskParameters } };
@@ -2618,10 +2616,7 @@ namespace Azure.AI.TextAnalytics
                 tasks.KeyPhraseExtractionTasks = new List<KeyPhrasesTask>() { new KeyPhrasesTask() { Parameters = options.KeyPhrasesTaskParameters } };
             }
 
-            if (options.DisplayName != null)
-            {
-                analyzeDocumentInputs.DisplayName = options.DisplayName;
-            }
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, options.DisplayName);
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeOperationBatch)}");
             scope.Start();

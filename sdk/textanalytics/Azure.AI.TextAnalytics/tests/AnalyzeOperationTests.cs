@@ -47,17 +47,14 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.EntitiesResult;
+            IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasksItemCollection = resultCollection.Tasks.EntityRecognitionTasks;
+            IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasksItemCollection = resultCollection.Tasks.EntityRecognitionPiiTasks;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.KeyPhraseResult;
-
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.PiiEntitiesResult;
-
-            Assert.IsNotNull(keyPhrasesResult);
-            Assert.IsNull(entitiesResult);
-            Assert.IsNull(piiResult);
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
             Assert.IsNotNull(keyPhrasesResult);
+            Assert.IsNotNull(entityRecognitionTasksItemCollection);
+            Assert.IsNotNull(entityRecognitionPiiTasksItemCollection);
 
             Assert.AreEqual(2, keyPhrasesResult.Count);
 
@@ -94,10 +91,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
                 {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithLanguageTest"
             };
 
@@ -107,23 +101,23 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(keyPhrasesResult);
 
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, keyPhrasesResult.Count);
 
             Assert.AreEqual("AnalyzeOperationWithLanguageTest", resultCollection.DisplayName);
 
             var keyPhrasesListId1 = new List<string> { "Bill Gates", "Paul Allen", "Microsoft" };
             var keyPhrasesListId2 = new List<string> { "gato", "perro", "veterinario" };
 
-            foreach (string keyphrase in result[0].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
             }
 
-            foreach (string keyphrase in result[1].KeyPhrases)
+            foreach (string keyphrase in keyPhrasesResult[1].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
             }
@@ -148,18 +142,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                EntitiesTaskParameters = new EntitiesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                PiiTaskParameters = new PiiTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                EntitiesTaskParameters = new EntitiesTaskParameters(),
+                PiiTaskParameters = new PiiTaskParameters(),
                 DisplayName = "AnalyzeOperationWithMultipleTasks"
             };
 
@@ -169,11 +154,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.EntitiesResult;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.PiiEntitiesResult;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 
             Assert.IsNotNull(keyPhrasesResult);
             Assert.IsNotNull(entitiesResult);
@@ -228,10 +213,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithSkipParameter",
                 Skip = 1
             };
@@ -242,7 +224,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
             Assert.IsNotNull(result);
 
@@ -263,10 +245,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithSkipParameter",
                 Top = 1
             };
@@ -277,7 +256,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
             Assert.IsNotNull(result);
 
@@ -305,10 +284,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
                 Skip = 1
             };
@@ -339,7 +315,6 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 PiiTaskParameters = new PiiTaskParameters()
                 {
-                    ModelVersion = "latest",
                     Domain = PiiTaskParametersDomain.Phi
                 },
                 DisplayName = "AnalyzeOperationWithPHIDomain"
@@ -351,14 +326,15 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizePiiEntitiesResultCollection result = resultCollection.PiiEntitiesResult;
+            RecognizePiiEntitiesResultCollection result = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;;
 
             Assert.IsNotNull(result);
 
             Assert.AreEqual(1, result.Count);
 
-            var redactedText = string.Empty;
-            Assert.AreEqual(redactedText, result[0].Entities.RedactedText);
+            // TODO - Update this once the service starts returning RedactedText
+            //var redactedText = string.Empty;
+            //Assert.AreEqual(redactedText, result[0].Entities.RedactedText);
 
             Assert.IsFalse(result[0].HasError);
             Assert.AreEqual(2, result[0].Entities.Count);
@@ -384,10 +360,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationTest",
                 IncludeStatistics = true
             };
@@ -398,7 +371,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            ExtractKeyPhrasesResultCollection result = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection result = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
             Assert.IsNotNull(result);
 

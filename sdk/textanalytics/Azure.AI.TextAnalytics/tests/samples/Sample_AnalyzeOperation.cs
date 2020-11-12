@@ -53,11 +53,11 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.EntitiesResult;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.KeyPhraseResult;
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.PiiEntitiesResult;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 
             Console.WriteLine("Recognized Entities");
 
