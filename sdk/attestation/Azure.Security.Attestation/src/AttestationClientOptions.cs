@@ -17,13 +17,18 @@ namespace Azure.Security.Attestation
     {
         internal string Version { get; }
 
+        internal bool ValidateAttestationTokens { get; }
+
         /// <summary>
         /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken{TBodyType}"/>.
         /// </summary>
         public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
-        public AttestationClientOptions(ServiceVersion version = ServiceVersion.V20201001, Func<AttestationToken, AttestationSigner, bool> validationCallback = null)
+        public AttestationClientOptions(
+            ServiceVersion version = ServiceVersion.V20201001,
+            Func<AttestationToken, AttestationSigner, bool> validationCallback = null,
+            bool validateAttestationTokens = true)
         {
             Version = version switch
             {
@@ -31,6 +36,7 @@ namespace Azure.Security.Attestation
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
             ValidationCallback = validationCallback;
+            ValidateAttestationTokens = validateAttestationTokens;
         }
 
         /// <summary>

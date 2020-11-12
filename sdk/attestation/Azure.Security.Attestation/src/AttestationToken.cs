@@ -77,7 +77,7 @@ namespace Azure.Security.Attestation
         /// <param name="body"></param>
         /// <param name="signingKey"></param>
         /// <param name="signingCertificate"></param>
-        public static AttestationToken<TBodyType> CreateToken<TBodyType>(TBodyType body, System.Security.Cryptography.RSA signingKey = null, X509Certificate2 signingCertificate = null)
+        public static AttestationToken<TBodyType> CreateToken<TBodyType>(TBodyType body, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, X509Certificate2 signingCertificate = null)
             where TBodyType : class
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -85,6 +85,36 @@ namespace Azure.Security.Attestation
             {
                 Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
             }
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttestationToken{X509Certificate2}"/>.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="signingKey"></param>
+        /// <param name="signingCertificate"></param>
+        public static AttestationToken<X509Certificate2> CreateToken(X509Certificate2 body, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, X509Certificate2 signingCertificate = null)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            if (signingKey != null)
+            {
+                Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
+            }
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Creates a new Attestation token based off of an X.509 Certificate.
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="signingCertificate">Signing certificate used to create the key. Note that the PrivateKey of the certificate must be set.</param>
+        /// <returns></returns>
+        public static AttestationToken<X509Certificate2> CreateToken(X509Certificate2 body, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
+            Argument.AssertNotNull(signingCertificate.PrivateKey, nameof(signingCertificate.PrivateKey));
             throw new NotImplementedException();
         }
 

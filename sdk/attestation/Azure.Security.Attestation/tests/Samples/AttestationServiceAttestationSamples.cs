@@ -117,15 +117,18 @@ namespace Azure.Security.Attestation.Tests.Samples
             AttestationSigner[] signingCertificates = client.GetSigningCertificates();
 
             {
+                // Collect quote and enclave held data from OpenEnclave enclave.
+
                 var attestationResult = client.AttestOpenEnclave(binaryQuote, null, binaryRuntimeData).Value;
-                attestationResult.ValidateToken(signingCertificates);
-                Assert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
+                Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+                // VERIFY ATTESTATIONRESULT.
+                // Encrypt Data using DeprecatedEnclaveHeldData
+                // Send to enclave.
             }
 
             {
                 var attestationResult = client.AttestOpenEnclave(binaryQuote, null, new RuntimeData(binaryRuntimeData));
-                attestationResult.Value.ValidateToken(signingCertificates);
-                Assert.AreEqual(binaryRuntimeData, attestationResult.Value.Value.DeprecatedEnclaveHeldData);
+                Assert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
             }
 
 
@@ -143,8 +146,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             AttestationSigner[] signingCertificates = attestClient.GetSigningCertificates();
 
             var policyResult = client.GetPolicy(AttestationType.SgxEnclave).Value;
-            policyResult.ValidateToken(signingCertificates);
-            var result = policyResult.Value.AttestationPolicy;
+            var result = policyResult.AttestationPolicy;
 
             string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
 
@@ -154,17 +156,12 @@ namespace Azure.Security.Attestation.Tests.Samples
                 new StoredAttestationPolicy { AttestationPolicy = attestationPolicy, },
                 policyTokenSigner));
 
-            setResult.Value.ValidateToken(signingCertificates);
-
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
-            Assert.IsTrue(resetResult.Value.ValidateToken(signingCertificates));
 
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
             var resetResult2 = client.ResetPolicy(
                 AttestationType.SgxEnclave,
-                AttestationToken.CreateToken(null, null));
-            Assert.IsTrue(resetResult2.Value.ValidateToken(signingCertificates));
-
+                AttestationToken.CreateToken(new RSACng(), CertificateUtils.CreateSelfSignedCertificate("cn=selfsigned")));
 
         }
         private AttestationClient GetAttestationClient()

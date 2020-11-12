@@ -85,7 +85,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
 #pragma warning disable CA1822
-        public virtual Response<AttestationToken<AttestationResult>> AttestSgxEnclave(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(quote, nameof(quote));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -112,7 +112,7 @@ namespace Azure.Security.Attestation
         /// <param name="runtimeData">Data provided when the quote was generated.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestSgxEnclaveAsync(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(quote, nameof(quote));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -140,7 +140,7 @@ namespace Azure.Security.Attestation
         /// <param name="runtimeData">Data provided when the quote was generated.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestOpenEnclave(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -168,7 +168,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestOpenEnclave(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             /* Argument.AssertNotNull(initTimeData, nameof(initTimeData)); */
@@ -196,7 +196,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestOpenEnclave(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             /* Argument.AssertNotNull(initTimeData, nameof(initTimeData));*/
@@ -223,7 +223,7 @@ namespace Azure.Security.Attestation
         /// <param name="runtimeData"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestOpenEnclaveAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -252,7 +252,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestOpenEnclaveAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -281,7 +281,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestOpenEnclaveAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -309,7 +309,7 @@ namespace Azure.Security.Attestation
         /// <param name="runtimeData">Data provided when the quote was generated.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestSevSnpVm(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -337,7 +337,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestSevSnpVm(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             /* Argument.AssertNotNull(initTimeData, nameof(initTimeData)); */
@@ -365,7 +365,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
         /// <returns></returns>
-        public virtual Response<AttestationToken<AttestationResult>> AttestSevSnpVm(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             /* Argument.AssertNotNull(initTimeData, nameof(initTimeData));*/
@@ -392,7 +392,7 @@ namespace Azure.Security.Attestation
         /// <param name="runtimeData"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestSevSnpVmAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -421,7 +421,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestSevSnpVmAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
@@ -450,7 +450,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
         /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        public virtual async Task<Response<AttestationToken<AttestationResult>>> AttestSevSnpVmAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
