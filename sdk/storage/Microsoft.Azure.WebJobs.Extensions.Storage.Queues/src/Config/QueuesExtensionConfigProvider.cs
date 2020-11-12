@@ -64,9 +64,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                 _queueServiceClientProvider = queueServiceClientProvider;
                 _messageEnqueuedWatcherGetter = contextGetter;
 
-                // TODO: FACAVAL replace this with queue options. This should no longer be needed.
-                //context.ApplyConfig(context.Config.Queues, "queues");
-
                 // IStorageQueueMessage is the core testing interface
                 var binding = context.AddBindingRule<QueueAttribute>();
                 binding
@@ -139,18 +136,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
 
             private byte[] ConvertCloudQueueMessageToByteArray(QueueMessage arg)
             {
-                return Encoding.UTF8.GetBytes(arg.MessageText);
+                return arg.Body.ToArray();
             }
 
             private static string ConvertCloudQueueMessageToString(QueueMessage arg)
             {
-                return arg.MessageText;
+                return arg.Body.ToString();
             }
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
-                // TODO (kasobol-msft) revisit this base64/BinaryData
-                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0);
+                return QueuesModelFactory.QueueMessage(null, null, new BinaryData(arg), 0);
             }
 
             private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)
@@ -214,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                     throw new InvalidOperationException("Cannot enqueue a null queue message instance.");
                 }
 
-                await _queue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
 
                 if (_messageEnqueuedWatcher != null)
                 {

@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                     item,
                     JsonSerialization.Settings);
 
-                await _queue.AddMessageAndCreateIfNotExistsAsync(contents, cancellationToken).ConfigureAwait(false);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(BinaryData.FromString(contents), cancellationToken).ConfigureAwait(false);
 
                 _parent._sharedWatcher.Notify(_queue.Name);
             }
