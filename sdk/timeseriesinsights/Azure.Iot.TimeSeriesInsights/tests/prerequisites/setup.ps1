@@ -6,7 +6,7 @@ param(
 
     [Parameter(Mandatory)]
     [string] $ResourceGroup,
-    
+
     [Parameter(Mandatory)]
     [string] $SubscriptionId,
 
@@ -23,9 +23,6 @@ param(
     [Parameter(Mandatory)]
     [string] $Timestamp
 )
-
-$user = $env:UserName
-$pathToUserParamsFile = "$PSScriptRoot\params.$user.json"
 
 Function Connect-AzureSubscription
 {
@@ -52,33 +49,6 @@ Function Connect-AzureSubscription
     }
 
     return $azureContext
-}
-
-Function Write-Params($applicationOId)
-{
-    $tsIDArray = @()
-
-    foreach ($id in $TimeSeriesIds)
-    {
-        $tsId = [pscustomobject]@{name=$id ;type='string'}
-        $tsIDArray += $tsID
-    }
-
-    $pathToTemplateParamsFile = "$PSScriptRoot\params.template.json"
-
-    $paramsFileContent = Get-Content $pathToTemplateParamsFile | ConvertFrom-Json
-    $paramsFileContent.parameters.environmentTimeSeriesIdProperties.value = $tsIDArray
-    $paramsFileContent.parameters.iotHubName.value = $EnvironmentName + "-hub"
-    $paramsFileContent.parameters.environmentName.value = $EnvironmentName
-    $paramsFileContent.parameters.eventSourceName.value = $EnvironmentName + "eventSource"
-    $paramsFileContent.parameters.consumerGroupName.value = $ConsumerGroupName
-    $paramsFileContent.parameters.eventSourceTimestampPropertyName.value = $Timestamp
-    $paramsFileContent.parameters.testApplicationOid.value = $applicationOId
-    $paramsFileContent.parameters.region.value = $Region
-    $paramsFileContent.parameters.resourceGroup.value = $ResourceGroup
-    $paramsFileContent.parameters.subscriptionId.value = $SubscriptionId
-
-    $paramsFileContent | ConvertTo-Json -depth 32 | set-content $pathToUserParamsFile
 }
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
@@ -129,10 +99,29 @@ if (-not (Test-Path $armTemplateFile -PathType leaf))
     throw "`nARM template was not found. Please make sure you have an ARM template file named test-resources.json in the root of the service directory`n"
 }
 
-Write-Params $applicationOId
+# Format the Id properties before deployment
+$tsIDArray = @()
+foreach( $id in $TimeSeriesIds)
+{
+    $tsId = [pscustomobject]@{name=$id;type='string'}
+    $tsIDArray += $tsId
+}
+
+$timeSeriesIdProperties = $tsIDArray | ConvertTo-Json -Compress
+$timeSeriesIdProperties = $timeSeriesIdProperties.Replace('"','\"')
 
 # Deploy test-resources.json ARM template.
-az deployment group create --resource-group $ResourceGroup --name $($EnvironmentName.ToLower()) --template-file $armTemplateFile --parameters $pathToUserParamsFile
+az deployment group create --resource-group $ResourceGroup --name $($EnvironmentName.ToLower()) --template-file $armTemplateFile --parameters `
+    region=$Region `
+    resourceGroup=$ResourceGroup `
+    subscriptionId=$SubscriptionId `
+    environmentName=$EnvironmentName `
+    iotHubName=$($EnvironmentName + "-hub") `
+    consumerGroupName=$ConsumerGroupName `
+    environmentTimeSeriesIdProperties=$timeSeriesIdProperties `
+    eventSourceName=$($EnvironmentName + "EventSource") `
+    eventSourceTimestampPropertyName=$eventSourceTimestampPropertyName `
+    testApplicationOid=$applicationOId
 
 # Even though the output variable names are all capital letters in the script, ARM turns them into a strange casing
 # and we have to use that casing in order to get them from the deployment outputs.
@@ -141,6 +130,7 @@ $dataAccessFqdn = az deployment group show -g $ResourceGroup -n $($EnvironmentNa
 Write-Host("`nSet a new client secret for $appId`n")
 $appSecret = az ad app credential reset --id $appId --years 2 --query 'password' --output tsv
 
+$user = $env:UserName
 $fileName = "$user.config.json"
 Write-Host("`nWriting user config file - $fileName`n")
 
