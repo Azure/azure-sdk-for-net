@@ -4,7 +4,6 @@
 
 ### Fixes and improvements
 - Fix `VisualStudioCodeCredential` to raise `CredentialUnavailableException` when reads from libsecret fail ([#16795](https://github.com/Azure/azure-sdk-for-net/issues/16795))
-- Fix `VisualStudioCodeCredential` to raise `CredentialUnavailableException` when reads from libsecret fail ([#16795](https://github.com/Azure/azure-sdk-for-net/issues/16795))
 - Prevent `VisualStudioCodeCredential` using invalid authentication data when no user is signed in to Visual Studio Code ([#15870](https://github.com/Azure/azure-sdk-for-net/issues/15870))
 
 ### Breaking Changes
