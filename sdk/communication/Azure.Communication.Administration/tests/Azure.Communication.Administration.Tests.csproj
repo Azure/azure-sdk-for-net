@@ -18,6 +18,7 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Azure.Communication.Common\tests\CommunicationRecordedTestSanitizer.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\samples\README.md" Link="samples\README.md" />
