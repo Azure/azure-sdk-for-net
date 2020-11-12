@@ -17,11 +17,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
         protected override QueueServiceClient CreateClientFromConnectionString(string connectionString, QueueClientOptions options)
         {
+            // TODO (kasobol-msft) configure this
+            options.MessageEncoding = QueueMessageEncoding.Base64;
             return new QueueServiceClient(connectionString, options);
         }
 
         protected override QueueServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, QueueClientOptions options)
         {
+            // TODO (kasobol-msft) configure this
+            options.MessageEncoding = QueueMessageEncoding.Base64;
             return new QueueServiceClient(endpointUri, tokenCredential, options);
         }
     }
