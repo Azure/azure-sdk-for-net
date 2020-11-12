@@ -1,6 +1,6 @@
 param (
   # The root repo we scaned with.
-  [string[]] $RootRepo = '$PSScriptRoot/../../..',
+  [string] $RootRepo = '$PSScriptRoot/../../..',
   # The target branch to compare with.
   [string] $targetBranch = "origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}"
 )
