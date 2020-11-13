@@ -87,23 +87,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
             // Act
-            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
+            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorByteArray");
 
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.AreEqual(3, messages.Count());
-            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-            Assert.AreEqual("test1", sortedMessages[0].MessageText);
-            Assert.AreEqual("test2", sortedMessages[1].MessageText);
-            Assert.AreEqual("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
         }
 
         [Test]
-        public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
+        public async Task Queue_IfBoundToICollectorByteArray_CanCall()
         {
             // Act
             await CallAsync(typeof(QueueProgram), "BindToICollectorByteArray");
@@ -113,11 +112,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.AreEqual(3, messages.Count());
-            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].MessageText);
-            Assert.AreEqual("test2", sortedMessages[1].MessageText);
-            Assert.AreEqual("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
         }
 
         [Test]
