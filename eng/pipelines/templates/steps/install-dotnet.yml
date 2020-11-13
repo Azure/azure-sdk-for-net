@@ -5,8 +5,7 @@ steps:
       useGlobalJson: true
       performMultiLevelLookup: true
   - task: UseDotNet@2
-    # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    condition: 'ne(variables['Agent.OS'], 'Windows_NT')'
+    condition: 'ne(variables['Agent.OS'], 'Windows_NT')' # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET Core 2.1 runtime'
     inputs:
       packageType: runtime
