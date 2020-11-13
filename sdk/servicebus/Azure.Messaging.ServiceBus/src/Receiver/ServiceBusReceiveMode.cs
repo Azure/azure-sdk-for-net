@@ -6,7 +6,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The mode in which to receive messages.
     /// </summary>
-    public enum ReceiveMode
+    public enum ServiceBusReceiveMode
     {
         /// <summary>
         /// Once a message is received in this mode, the receiver has a lock on the message for a
@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus
         /// to be fetched by the next receive operation.
         /// </summary>
         ///
-        /// <remarks>This is the default value for <see cref="ReceiveMode" />, and should be used for guaranteed delivery.</remarks>
+        /// <remarks>This is the default value for <see cref="ServiceBusReceiveMode" />, and should be used for guaranteed delivery.</remarks>
         PeekLock,
 
         /// <summary>

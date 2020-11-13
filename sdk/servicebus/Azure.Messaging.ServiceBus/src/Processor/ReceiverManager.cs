@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 if (!Receiver.IsSessionReceiver &&
-                    Receiver.ReceiveMode == ReceiveMode.PeekLock &&
+                    Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
                     renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus
                         renewLockCancellationTokenSource);
                 }
 
-                errorSource = ServiceBusErrorSource.UserCallback;
+                errorSource = ServiceBusErrorSource.ProcessMessageCallback;
 
                 try
                 {
@@ -182,8 +182,8 @@ namespace Azure.Messaging.ServiceBus
                     throw;
                 }
 
-                if (Receiver.ReceiveMode == ReceiveMode.PeekLock &&
-                    _processorOptions.AutoComplete &&
+                if (Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
+                    _processorOptions.AutoCompleteMessages &&
                     !message.IsSettled)
                 {
                     errorSource = ServiceBusErrorSource.Complete;
@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus
                 // do not attempt to abandon the message
                 ServiceBusFailureReason? failureReason = (ex as ServiceBusException)?.Reason;
                 if (!message.IsSettled &&
-                    _receiverOptions.ReceiveMode == ReceiveMode.PeekLock &&
+                    _receiverOptions.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     failureReason != ServiceBusFailureReason.SessionLockLost &&
                     failureReason != ServiceBusFailureReason.MessageLockLost)
                 {
