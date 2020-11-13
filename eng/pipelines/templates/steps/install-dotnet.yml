@@ -1,0 +1,14 @@
+steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core SDK'
+    inputs:
+      useGlobalJson: true
+      performMultiLevelLookup: true
+  - task: UseDotNet@2
+    # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    condition: 'ne(variables['Agent.OS'], 'Windows_NT')'
+    displayName: 'Use .NET Core 2.1 runtime'
+    inputs:
+      packageType: runtime
+      version: 2.1
+  

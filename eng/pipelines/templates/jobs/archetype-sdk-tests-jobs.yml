@@ -72,6 +72,7 @@ jobs:
               SubscriptionConfiguration: ${{ cloudConfig.value.SubscriptionConfiguration }}
               ArmTemplateParameters: ${{ cloudConfig.value.ArmTemplateParameters }}
 
+          - template: /eng/pipelines/templates/steps/install-dotnet.yml
           - script: >
               dotnet test eng/service.proj
               --framework ${{ platform.TestTargetFramework }}
@@ -87,7 +88,6 @@ jobs:
             env:
               DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
               DOTNET_CLI_TELEMETRY_OPTOUT: 1
-              DOTNET_MULTILEVEL_LOOKUP: 0
               AZURE_TEST_MODE: "${{ coalesce(platform.TestMode, 'None') }}"
               ${{ each var in parameters.EnvVars }}:
                 ${{ var.key }}: ${{ var.value }}
