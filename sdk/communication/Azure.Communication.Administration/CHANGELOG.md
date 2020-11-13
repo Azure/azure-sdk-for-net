@@ -7,11 +7,21 @@
 - Added support for long-running operations. More detail under Breaking Changes.
 
 ### Breaking
+
+#### Model Types
 - Renamed `CreateSearchOptions` to `CreateReservationOptions`.
 - Renamed `CreateSearchResponse` to `CreateReservationResponse`.
 - Renamed `ReleaseResponse` to `PhoneNumberReleaseResponse`.
-- Renamed `PhoneNumberSearch` to `PhoneNumberReservation` and renamed its `searchId` property to `reservationId`.
 - Renamed `SearchStatus` to `ReservationStatus`.
+- Added `PhoneNumberReservationOperation`.
+- Added `PhoneNumberReservationPurchaseOperation`.
+- Added `ReleasePhoneNumberOperation`.
+- Renamed `PhoneNumberSearch` to `PhoneNumberReservation`.
+
+#### PhoneNumberReservation
+- Renamed `searchId` to `reservationId`.
+
+#### PhoneNumberAdministrationClient
 - Renamed `CancelSearch` to `CancelReservation`.
 - Renamed `CancelSearchAsync` to `CancelReservationAsync`.
 - Renamed `GetAllSearches` to `GetAllReservations`.
@@ -20,9 +30,6 @@
 - Renamed `GetSearchById` to `GetReservationById`.
 - Renamed `CancelSearch` to `CancelReservation`.
 - Renamed `CancelSearchAsync` to `CancelReservationAsync`.
-- Added `PhoneNumberReservationOperation`.
-- Added `PhoneNumberReservationPurchaseOperation`.
-- Added `ReleasePhoneNumberOperation`.
 - Replaced `CreateSearchAsync` with `StartReservationAsync` which returns a poller for the long-running operation.
 - Replaced `CreateSearch` with `StartReservation` which is a long-running operation.
 - Replaced `PurchaseSearchAsync` with `StartPurchaseReservationAsync` which returns a poller for the long-running operation.
