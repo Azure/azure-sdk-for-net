@@ -18,14 +18,17 @@
 - Renamed `GetAllSearchesAsync` to `GetAllReservationsAsync`
 - Renamed `GetSearchByIdAsync` to `GetReservationByIdAsync`
 - Renamed `GetSearchById` to `GetReservationById`
-- Renamed `CreateSearchAsync` to `StartReservationAsync` which returns a poller for the long-running operation
-- Renamed `CancelSearchAsync` to `CancelReservationAsync`
 - Renamed `CancelSearch` to `CancelReservation`
-- Renamed `CreateSearch` to `StartReservation`
-- Renamed `PurchaseSearchAsync` to `StartPurchaseReservationAsync` which returns a poller for the long-running operation
-- Renamed `PurchaseSearch` to `StartPurchaseReservation`
-- Renamed `ReleasePhoneNumbersAsync` to `StartReleasePhoneNumbersAsync` which returns a poller for the long-running operation
-- Renamed `ReleasePhoneNumbers` to `StartReleasePhoneNumbers`
+- Renamed `CancelSearchAsync` to `CancelReservationAsync`
+- Added `PhoneNumberReservationOperation`
+- Added `PhoneNumberReservationPurchaseOperation`
+- Added `ReleasePhoneNumberOperation`
+- Replaced `CreateSearchAsync` with `StartReservationAsync` which returns a poller for the long-running operation
+- Replaced `CreateSearch` with `StartReservation` which is a long-running operation
+- Replaced `PurchaseSearchAsync` with `StartPurchaseReservationAsync` which returns a poller for the long-running operation
+- Replaced `PurchaseSearch` with `StartPurchaseReservation` which is a long-running operation
+- Replaced `ReleasePhoneNumbersAsync` with `StartReleasePhoneNumbersAsync` which returns a poller for the long-running operation
+- Replaced `ReleasePhoneNumbers` with `StartReleasePhoneNumbers` which is a long-running operation
 
 ## 1.0.0-beta.2 (2020-10-06)
 Added phone number administration. For more information, please see the [README][read_me] and [documentation][documentation].
