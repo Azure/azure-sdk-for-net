@@ -288,9 +288,6 @@
   <data name="MessageBatchIsLocked" xml:space="preserve">
     <value>The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete.</value>
   </data>
-  <data name="SettlementOperationNotSupported" xml:space="preserve">
-    <value>The operation is not supported for peeked message. Only received message can be settled.</value>
-  </data>
   <data name="SendViaCannotBeUsedWithEntityInConnectionString" xml:space="preserve">
     <value>When sending via a different entity, an entity path is not allowed to specified in the connection string.</value>
   </data>
