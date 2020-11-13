@@ -155,6 +155,11 @@ namespace Azure.Storage.Files.Shares
                 }
             }
 
+            if (result == 0)
+            {
+                return null;
+            }
+
             return (ShareProtocols)result;
         }
     }
