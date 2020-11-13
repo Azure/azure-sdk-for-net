@@ -41,7 +41,7 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-        private string GetSessionFilePath()
+        protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -63,7 +63,7 @@ namespace Azure.Core.TestFramework
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
         }
-        
+
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
