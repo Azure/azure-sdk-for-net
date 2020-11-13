@@ -129,14 +129,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? HttpHelper.GetUrl(partBTags) : GetMessagingUrl(partBTags);
-                var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
-                var success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                AttributeHelper.GenerateUrlAndAuthority(partBTags, out var url, out var urlAuthority);
+                var statusCode = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeHttpStatusCode) ?? "0";
+                var success = activity.GetStatus() != Status.Error;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
-                    // TODO: Handle request.source.
+                    Source = urlAuthority
                 };
 
                 // TODO: Handle activity.TagObjects, extract well-known tags
@@ -147,22 +147,34 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             {
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
-                    Id = activity.Context.SpanId.ToHexString()
+                    Id = activity.Context.SpanId.ToHexString(),
+                    Success = activity.GetStatus() != Status.Error
                 };
 
-                // TODO: Handle activity.TagObjects
-                // ExtractPropertiesFromTags(dependency.Properties, activity.Tags);
-
-                if (activityType == PartBType.Http)
+                switch (activityType)
                 {
-                    dependency.Data = HttpHelper.GetUrl(partBTags);
-                    dependency.Type = "HTTP"; // TODO: Parse for storage / SB.
-                    var statusCode = HttpHelper.GetHttpStatusCode(partBTags);
-                    dependency.ResultCode = statusCode;
-                    dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                    case PartBType.Http:
+                        AttributeHelper.GenerateUrlAndAuthority(partBTags, out var url, out var urlAuthority);
+                        dependency.Data = url;
+                        dependency.Target = urlAuthority;
+                        dependency.Type = "Http";
+                        dependency.ResultCode = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeHttpStatusCode) ?? "0";
+                        break;
+                    case PartBType.Db:
+                        dependency.Data = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeDbStatement);
+                        dependency.Type = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeDbSystem);
+                        break;
+                    case PartBType.Rpc:
+                        dependency.Data = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeRpcService);
+                        dependency.Type = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeRpcSystem);
+                        dependency.ResultCode = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeRpcStatus);
+                        break;
+                    case PartBType.Messaging:
+                        dependency.Data = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeMessagingUrl);
+                        dependency.Type = AttributeHelper.GetTagValue(partBTags, SemanticConventions.AttributeMessagingSystem);
+                        break;
                 }
 
-                // TODO: Handle dependency.target.
                 AddPropertiesToTelemetry(dependency.Properties, PartCTags);
                 telemetry.BaseData = dependency;
             }

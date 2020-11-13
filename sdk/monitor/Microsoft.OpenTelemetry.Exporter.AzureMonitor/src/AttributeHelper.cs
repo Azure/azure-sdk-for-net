@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
-    internal class HttpHelper
+    internal class AttributeHelper
     {
         private const string SchemePostfix = "://";
         private const string Colon = ":";
@@ -17,15 +17,17 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         /// Reference: https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client.
         /// </summary>
         /// <param name="tags">Activity Tags</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetUrl(Dictionary<string, string> tags)
+        /// <param name="url">URL</param>
+        /// <param name="urlAuthority">Host name or IP address and the port number </param>
+        internal static void GenerateUrlAndAuthority(Dictionary<string, string> tags, out string url, out string urlAuthority)
         {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
+            urlAuthority = null;
+            if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out url))
             {
                 if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
-                    return url;
+                    urlAuthority = uri.Authority;
+                    return;
                 }
             }
 
@@ -38,23 +40,29 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                     if (httpPort != null && httpPort != "80" && httpPort != "443")
                     {
                         url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
+                        urlAuthority = $"{httpHost}{Colon}{httpPort}";
                     }
                     else
                     {
                         url = $"{httpScheme}{SchemePostfix}{httpHost}{httpTarget}";
+                        urlAuthority = $"{httpHost}";
                     }
 
-                    return url;
+                    return;
                 }
                 else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerName, out var netPeerName)
                          && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out var netPeerPort))
                 {
-                    return string.IsNullOrWhiteSpace(netPeerName) ? null :  $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    url = string.IsNullOrWhiteSpace(netPeerName) ? null :  $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    urlAuthority = url == null ? null : $"{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}";
+                    return;
                 }
                 else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerIp, out var netPeerIP)
                          && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out netPeerPort))
                 {
-                    return string.IsNullOrWhiteSpace(netPeerIP) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    url = string.IsNullOrWhiteSpace(netPeerIP) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    urlAuthority = url == null ? null : $"{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}";
+                    return;
                 }
             }
 
@@ -63,35 +71,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                 tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
                 tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
                 url = $"{host}{(string.IsNullOrWhiteSpace(httpPort) ? null : Colon)}{httpPort}{httpTarget}";
-                return url;
+                urlAuthority = $"{host}{(string.IsNullOrWhiteSpace(httpPort) ? null : Colon)}{httpPort}";
+                return;
             }
 
-            return string.IsNullOrWhiteSpace(url) ? null : url;
+            url = string.IsNullOrWhiteSpace(url) ? null : url;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHttpStatusCode(Dictionary<string, string> tags)
+        internal static string GetTagValue(Dictionary<string, string> tags, string attributeSemanticsKey)
         {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
+            if (tags != null && attributeSemanticsKey !=null && tags.TryGetValue(attributeSemanticsKey, out var value))
             {
-                return status;
-            }
-
-            return "0";
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool GetSuccessFromHttpStatusCode(string statusCode)
-        {
-            return statusCode == "200" || statusCode == "Ok";
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHost(Dictionary<string, string> tags)
-        {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
-            {
-                return host;
+                return value;
             }
 
             return null;

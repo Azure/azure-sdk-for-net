@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry;
 using OpenTelemetry.Resources;
 using System.Diagnostics;
 
@@ -16,7 +17,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         public static void Main()
         {
             var resource = Resources.CreateServiceResource("my-service", "roleinstance1", "my-namespace");
-            using var tracerProvider = OpenTelemetrySdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetResource(resource)
                 .AddSource("Demo.DemoServer")
                 .AddSource("Demo.DemoClient")

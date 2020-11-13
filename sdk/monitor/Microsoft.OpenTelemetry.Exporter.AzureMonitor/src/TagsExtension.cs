@@ -11,9 +11,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
     {
         private static readonly IReadOnlyDictionary<string, PartBType> Part_B_Mapping = new Dictionary<string, PartBType>()
         {
+            [SemanticConventions.AttributeDbStatement] = PartBType.Db,
             [SemanticConventions.AttributeDbSystem] = PartBType.Db,
-            [SemanticConventions.AttributeDbConnectionString] = PartBType.Db,
-            [SemanticConventions.AttributeDbUser] = PartBType.Db,
 
             [SemanticConventions.AttributeHttpMethod] = PartBType.Http,
             [SemanticConventions.AttributeHttpUrl] = PartBType.Http,
@@ -32,9 +31,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeNetHostName] = PartBType.Common,
             [SemanticConventions.AttributeComponent] = PartBType.Common,
 
-            [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
             [SemanticConventions.AttributeRpcService] = PartBType.Rpc,
-            [SemanticConventions.AttributeRpcMethod] = PartBType.Rpc,
+            [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
+            [SemanticConventions.AttributeRpcStatus] = PartBType.Rpc,
 
             [SemanticConventions.AttributeFaasTrigger] = PartBType.FaaS,
             [SemanticConventions.AttributeFaasExecution] = PartBType.FaaS,
@@ -47,13 +46,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeFaasTime] = PartBType.FaaS,
 
             [SemanticConventions.AttributeAzureNameSpace] = PartBType.Azure,
-            [SemanticConventions.AttributeEndpointAddress] = PartBType.Azure,
             [SemanticConventions.AttributeMessageBusDestination] = PartBType.Azure,
 
+            [SemanticConventions.AttributeEndpointAddress] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingSystem] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingDestination] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingDestinationKind] = PartBType.Messaging,
-            [SemanticConventions.AttributeMessagingTempDestination] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingUrl] = PartBType.Messaging
         };
 
