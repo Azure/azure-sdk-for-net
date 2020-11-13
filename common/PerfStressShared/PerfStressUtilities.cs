@@ -15,13 +15,13 @@ namespace Azure.Test.PerfStress
 {
     internal static class PerfStressUtilities
     {
-        private static readonly Lazy<Parser> _defaultParser = new Lazy<Parser>(() => new Parser(settings =>
+        private static readonly Lazy<Parser> _parser = new Lazy<Parser>(() => new Parser(settings =>
         {
             settings.CaseSensitive = false;
             settings.HelpWriter = Console.Error;
         }));
 
-        internal static Parser Parser => _defaultParser.Value;
+        internal static Parser Parser => _parser.Value;
 
         internal static bool ContainsOperationCanceledException(Exception e)
         {
