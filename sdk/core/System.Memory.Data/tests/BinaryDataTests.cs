@@ -324,6 +324,13 @@ namespace System.Tests
 
             data = new BinaryData(jsonSerializable: null, type: typeof(TestModel));
             Assert.Null(data.ToObjectFromJson<TestModel>());
+
+            data = new BinaryData(jsonSerializable: null);
+            Assert.Null(data.ToObjectFromJson<TestModel>());
+
+            data = new BinaryData(jsonSerializable: null, type: null);
+            Assert.Null(data.ToObjectFromJson<TestModel>());
+
             data = BinaryData.FromObjectAsJson<TestModel>(null);
             Assert.Null(data.ToObjectFromJson<TestModel>());
         }
