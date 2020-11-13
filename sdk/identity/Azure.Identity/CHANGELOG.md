@@ -3,6 +3,7 @@
 ## 1.3.0-beta.3 (Unreleased)
 
 ### Fixes and improvements
+- Fix race condition in `ProcessRunner` causing `VisualStudioCredential` and `AzureCliCredential` to fail intermittently ([#16211](https://github.com/Azure/azure-sdk-for-net/issues/16211))
 - Fix `VisualStudioCodeCredential` to raise `CredentialUnavailableException` when reads from libsecret fail ([#16795](https://github.com/Azure/azure-sdk-for-net/issues/16795))
 - Prevent `VisualStudioCodeCredential` using invalid authentication data when no user is signed in to Visual Studio Code ([#15870](https://github.com/Azure/azure-sdk-for-net/issues/15870))
 

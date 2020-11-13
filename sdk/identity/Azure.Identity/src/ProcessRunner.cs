@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable. Disposing of _process and _ctRegistration / _timeoutCtRegistration fields from outside may result in _tcs being incomplete or process handle leak.
-    internal sealed class ProcessRunner
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
+    internal sealed class ProcessRunner : IDisposable
     {
         private readonly IProcess _process;
         private readonly TimeSpan _timeout;
@@ -139,7 +137,6 @@ namespace Azure.Identity
 
         private void TrySetResult(string result)
         {
-            DisposeProcess();
             _tcs.TrySetResult(result);
         }
 
@@ -147,7 +144,6 @@ namespace Azure.Identity
         {
             if (_cancellationToken.IsCancellationRequested)
             {
-                DisposeProcess();
                 _tcs.TrySetCanceled(_cancellationToken);
             }
 
@@ -156,12 +152,12 @@ namespace Azure.Identity
 
         private void TrySetException(Exception exception)
         {
-            DisposeProcess();
             _tcs.TrySetException(exception);
         }
 
-        private void DisposeProcess()
+        public void Dispose()
         {
+            _tcs.TrySetCanceled();
             _process.Dispose();
             _ctRegistration.Dispose();
             _timeoutCts?.Dispose();
