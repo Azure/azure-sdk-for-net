@@ -2466,9 +2466,7 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// <a href="https://aka.ms/tanerpii"/>.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
@@ -2488,30 +2486,14 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in document,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For more information on available categories, see
-        /// <a href="https://aka.ms/tanerpii"/>.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="options">The additional configurable <see cref="RecognizePiiEntitiesOptions"/> that may be passed when
-        /// recognizing PII entities. Options include entity domain filters, model version, and more.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// for each of the documents, as well as scores indicating the confidence
-        /// that a given entity correctly matches the identified substring.</returns>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, string language = default, AnalyzeOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -2524,13 +2506,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Recognizes Analyze Operation.
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="AnalyzeOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeOperation.Value"/> upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
         public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
@@ -2541,13 +2525,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Recognizes Analyze Operation async.
+        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="AnalyzeOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeOperation.Value"/> upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
         public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
@@ -2583,12 +2569,17 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
+                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
+                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
+                int _top = default;
+                int _skip = default;
+
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = _serviceRestClient.Analyze(analyzeDocumentInputs, cancellationToken);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {
@@ -2623,12 +2614,17 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
+                // TODO - Add Top and Skip once pagination is implemented for Analyze operation
+                // Github issue - https://github.com/Azure/azure-sdk-for-net/issues/16958
+                int _top = default;
+                int _skip = default;
+
                 ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> response = await _serviceRestClient.AnalyzeAsync(analyzeDocumentInputs, cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
 
-                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, options.Top, options.Skip, options.IncludeStatistics);
+                return new AnalyzeOperation(_serviceRestClient, _clientDiagnostics, location, idToIndexMap, _top, _skip, options.IncludeStatistics);
             }
             catch (Exception e)
             {

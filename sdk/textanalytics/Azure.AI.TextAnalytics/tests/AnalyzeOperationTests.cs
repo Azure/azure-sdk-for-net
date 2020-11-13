@@ -207,6 +207,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
         public async Task AnalyzeOperationWithSkipParameter()
         {
             TextAnalyticsClient client = GetClient();
@@ -215,7 +216,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithSkipParameter",
-                Skip = 1
+                //Skip = 1
             };
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
@@ -239,6 +240,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
         public async Task AnalyzeOperationWithTopParameter()
         {
             TextAnalyticsClient client = GetClient();
@@ -247,7 +249,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationWithSkipParameter",
-                Top = 1
+                //Top = 1
             };
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
@@ -271,6 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Will add this once the pagination is implemented for AnalyzeOperation - https://github.com/Azure/azure-sdk-for-net/issues/16958")]
         public async Task AnalyzeOperationBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -286,7 +289,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
                 DisplayName = "AnalyzeOperationBatchWithErrorTest",
-                Skip = 1
+                //Skip = 1
             };
 
             await Task.Run(() => {
