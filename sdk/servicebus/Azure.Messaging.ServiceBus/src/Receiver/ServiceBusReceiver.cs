@@ -140,6 +140,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
+
                 options = options?.Clone() ?? new ServiceBusReceiverOptions();
                 Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
                 _connection = connection;
@@ -246,12 +247,14 @@ namespace Azure.Messaging.ServiceBus
             {
                 Logger.MaxMessagesExceedsPrefetch(Identifier, PrefetchCount, maxMessages);
             }
-
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.ReceiveMessageStart(Identifier, maxMessages);
+
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
-                requestedMessageCount: maxMessages);
+                DiagnosticProperty.ConsumerKind);
+
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
@@ -423,11 +426,13 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.PeekActivityName,
-                requestedMessageCount: maxMessages);
+                DiagnosticProperty.ProducerKind);
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
@@ -498,18 +503,18 @@ namespace Azure.Messaging.ServiceBus
             string lockToken,
             CancellationToken cancellationToken = default)
         {
-            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
-            Argument.AssertNotNullOrEmpty(lockToken, nameof(lockToken));
             ThrowIfNotPeekLockMode();
+            ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.CompleteMessageStart(
                 Identifier,
                 1,
                 lockToken);
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.CompleteActivityName,
-                lockToken: lockToken);
+                DiagnosticProperty.ClientKind);
             scope.Start();
 
             try
@@ -575,14 +580,17 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
+            ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.AbandonMessageStart(Identifier, 1, lockToken);
+
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.AbandonActivityName,
-                lockToken: lockToken);
+                DiagnosticProperty.ClientKind);
+
             scope.Start();
 
             try
@@ -736,14 +744,17 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
+            ThrowIfLockTokenIsEmpty(lockToken);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.DeadLetterMessageStart(Identifier, 1, lockToken);
+
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeadLetterActivityName,
-                lockToken: lockToken);
+                DiagnosticProperty.ClientKind);
+
             scope.Start();
 
             try
@@ -816,14 +827,17 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
+            ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.DeferMessageStart(Identifier, 1, lockToken);
+
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.DeferActivityName,
-                lockToken: lockToken);
+                DiagnosticProperty.ClientKind);
+
             scope.Start();
 
             try
@@ -861,7 +875,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (Guid.Parse(lockToken) == Guid.Empty)
             {
-                throw new InvalidOperationException(Resources.SettlementOperationNotSupported);
+                throw new InvalidOperationException(Resources.PeekLockModeRequired);
             }
         }
 
@@ -898,22 +912,34 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
-            Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumbersList = sequenceNumbers.ToList();
 
-            Logger.ReceiveDeferredMessageStart(Identifier, sequenceNumbersList);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(DiagnosticProperty.ReceiveDeferredActivityName);
-            scope.AddAttribute(
-                DiagnosticProperty.SequenceNumbersAttribute,
-                string.Join(",", sequenceNumbers));
+            // the sequence numbers MUST be in array form for them to be encoded correctly
+            long[] sequenceArray = sequenceNumbers switch
+            {
+                long[] alreadyArray => alreadyArray,
+                _ => sequenceNumbers.ToArray()
+            };
+
+            if (sequenceArray.Length == 0)
+            {
+                return Array.Empty<ServiceBusReceivedMessage>();
+            }
+
+            Logger.ReceiveDeferredMessageStart(Identifier, sequenceArray);
+
+            using DiagnosticScope scope = ScopeFactory.CreateScope(
+                DiagnosticProperty.ReceiveDeferredActivityName,
+                DiagnosticProperty.ConsumerKind);
+
             scope.Start();
 
             IReadOnlyList<ServiceBusReceivedMessage> deferredMessages = null;
             try
             {
                 deferredMessages = await InnerReceiver.ReceiveDeferredMessagesAsync(
-                    sequenceNumbersList,
+                    sequenceArray,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -969,15 +995,17 @@ namespace Azure.Messaging.ServiceBus
             string lockToken,
             CancellationToken cancellationToken = default)
         {
-            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
+            ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.RenewMessageLockStart(Identifier, 1, lockToken);
+
             using DiagnosticScope scope = ScopeFactory.CreateScope(
                 DiagnosticProperty.RenewMessageLockActivityName,
-                lockToken: lockToken);
+                DiagnosticProperty.ClientKind);
             scope.Start();
 
             DateTimeOffset lockedUntil;
@@ -995,7 +1023,6 @@ namespace Azure.Messaging.ServiceBus
             }
 
             Logger.RenewMessageLockComplete(Identifier);
-            scope.AddAttribute(DiagnosticProperty.LockedUntilAttribute, lockedUntil);
             return lockedUntil;
         }
 

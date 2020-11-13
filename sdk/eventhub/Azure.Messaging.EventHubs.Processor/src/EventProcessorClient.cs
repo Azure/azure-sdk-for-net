@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs
         private StorageManager StorageManager { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -318,7 +318,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -338,7 +338,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -348,7 +348,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -365,7 +365,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -393,7 +393,7 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string" />
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -406,7 +406,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
@@ -492,7 +492,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
@@ -522,7 +522,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
         ///
         protected EventProcessorClient() : base()
@@ -534,7 +534,7 @@ namespace Azure.Messaging.EventHubs
         ///   is running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
         public override async Task StartProcessingAsync(CancellationToken cancellationToken = default)
         {
@@ -576,7 +576,7 @@ namespace Azure.Messaging.EventHubs
         ///   is running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
         public override void StartProcessing(CancellationToken cancellationToken = default)
         {
@@ -618,7 +618,7 @@ namespace Azure.Messaging.EventHubs
         ///   is not running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
         /// <remarks>
         ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
@@ -635,7 +635,7 @@ namespace Azure.Messaging.EventHubs
         ///   is not running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
         /// <remarks>
         ///   When stopping, the processor will update the ownership of partitions that it was responsible for processing and clean up network resources used for communication with
@@ -682,7 +682,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         internal Task UpdateCheckpointAsync(EventData eventData,
                                             PartitionContext context,
@@ -744,7 +744,7 @@ namespace Azure.Messaging.EventHubs
         ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <returns>The set of checkpoints for the processor to take into account when initializing partitions.</returns>
         ///
@@ -782,7 +782,7 @@ namespace Azure.Messaging.EventHubs
         ///   between them.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <returns>The set of ownership records to take into account when making load balancing decisions.</returns>
         ///
@@ -796,9 +796,9 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="desiredOwnership">The set of partition ownership desired by the event processor instance; this is the set of partitions that it will attempt to request responsibility for processing.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
-        /// <returns>The set of ownership records for the partitions that were successfully claimed; this is expected to be the <paramref name="desiredOwnership"/> or a subset of those partitions.</returns>
+        /// <returns>The set of ownership records for the partitions that were successfully claimed; this is expected to be the <paramref name="desiredOwnership" /> or a subset of those partitions.</returns>
         ///
         protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership,
                                                                                                    CancellationToken cancellationToken) =>
@@ -810,19 +810,19 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="events">The batch of events to be processed.</param>
         /// <param name="partition">The context of the partition from which the events were read.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <remarks>
-        ///   <para>The number of events in the <paramref name="events"/> batch may vary.  The batch will contain a number of events between zero and batch size that was
-        ///   requested when the processor was created, depending on the availability of events in the partition within the requested <see cref="EventProcessorOptions.MaximumWaitTime"/>
+        ///   <para>The number of events in the <paramref name="events" /> batch may vary.  The batch will contain a number of events between zero and batch size that was
+        ///   requested when the processor was created, depending on the availability of events in the partition within the requested <see cref="EventProcessorOptions.MaximumWaitTime" />
         ///   interval.
         ///
         ///   If there are enough events available in the Event Hub partition to fill a batch of the requested size, the processor will populate the batch and dispatch it to this method
         ///   immediately.  If there were not a sufficient number of events available in the partition to populate a full batch, the event processor will continue reading from the partition
-        ///   to reach the requested batch size until the <see cref="EventProcessorOptions.MaximumWaitTime"/> has elapsed, at which point it will return a batch containing whatever events were
+        ///   to reach the requested batch size until the <see cref="EventProcessorOptions.MaximumWaitTime" /> has elapsed, at which point it will return a batch containing whatever events were
         ///   available by the end of that period.
         ///
-        ///   If a <see cref="EventProcessorOptions.MaximumWaitTime"/> was not requested, indicated by setting the option to <c>null</c>, the event processor will continue reading from the Event Hub
+        ///   If a <see cref="EventProcessorOptions.MaximumWaitTime" /> was not requested, indicated by setting the option to <c>null</c>, the event processor will continue reading from the Event Hub
         ///   partition until a full batch of the requested size could be populated and will not dispatch any partial batches to this method.</para>
         ///
         ///   <para>Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
@@ -917,7 +917,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="exception">The exception that occurred during operation of the event processor.</param>
         /// <param name="partition">The context of the partition associated with the error, if any; otherwise, <c>null</c>.  This may only be initialized for members of <see cref="EventProcessorPartition" />, depending on the point at which the error occurred.</param>
         /// <param name="operationDescription">A short textual description of the operation during which the exception occurred; intended to be informational only.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
         ///
         /// <remarks>
         ///   This error handler is invoked when there is an exception observed within the event processor itself; it is not invoked for exceptions in
@@ -951,7 +951,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partition">The context of the partition being initialized.  Only the well-known members of the <see cref="EventProcessorPartition" /> will be populated.  If a custom context is being used, the implementor of this method is responsible for initializing custom members.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the initialization.  This is most likely to occur if the partition is claimed by another event processor instance or the processor is shutting down.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the initialization.  This is most likely to occur if the partition is claimed by another event processor instance or the processor is shutting down.</param>
         ///
         /// <remarks>
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
@@ -980,7 +980,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partition">The context of the partition for which processing is being stopped.</param>
         /// <param name="reason">The reason that processing is being stopped for the partition.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is not expected to signal under normal circumstances and will only occur if the processor encounters an unrecoverable error.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the processing.  This is not expected to signal under normal circumstances and will only occur if the processor encounters an unrecoverable error.</param>
         ///
         /// <remarks>
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
@@ -1020,7 +1020,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="sourceCheckpoints">The checkpoint set to process.</param>
         ///
-        /// <returns>An enumerable consisting of the <paramref name="sourceCheckpoints"/> and a set of artificial checkpoints for any overrides applied to the starting position.</returns>
+        /// <returns>An enumerable consisting of the <paramref name="sourceCheckpoints" /> and a set of artificial checkpoints for any overrides applied to the starting position.</returns>
         ///
         private IEnumerable<EventProcessorCheckpoint> ProcessCheckpointStartingPositions(IEnumerable<EventProcessorCheckpoint> sourceCheckpoints)
         {
@@ -1177,7 +1177,7 @@ namespace Azure.Messaging.EventHubs
             ///
             /// <returns>The set of properties for the last event that was enqueued to the partition.</returns>
             ///
-            /// <exception cref="InvalidOperationException">The method call is not available on the <see cref="EmptyPartitionContext"/>.</exception>
+            /// <exception cref="InvalidOperationException">The method call is not available on the <see cref="EmptyPartitionContext" />.</exception>
             ///
             public override LastEnqueuedEventProperties ReadLastEnqueuedEventProperties() =>
                 throw new InvalidOperationException(Resources.CannotReadLastEnqueuedEventPropertiesWithoutEvent);

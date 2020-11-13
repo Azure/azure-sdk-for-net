@@ -27,10 +27,9 @@ namespace Azure.Storage.Test.Shared
     {
         static StorageTestBase()
         {
-            // https://github.com/Azure/azure-sdk-for-net/issues/9087
-            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
+            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests. Go out of bound like .NET Core does.
 #if !NETCOREAPP
-            ServicePointManager.DefaultConnectionLimit = 100;
+            ServicePointManager.DefaultConnectionLimit = int.MaxValue;
 #endif
         }
 

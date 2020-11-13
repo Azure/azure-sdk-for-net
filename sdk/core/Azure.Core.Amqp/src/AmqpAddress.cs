@@ -22,6 +22,7 @@ namespace Azure.Core.Amqp
         /// <param name="address">The address.</param>
         public AmqpAddress(string address)
         {
+            Argument.AssertNotNull(address, nameof(address));
             _address = address;
         }
 
