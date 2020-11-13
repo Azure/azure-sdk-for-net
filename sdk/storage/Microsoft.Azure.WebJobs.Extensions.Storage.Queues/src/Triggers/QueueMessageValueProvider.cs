@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
@@ -38,9 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 
         public string ToInvokeString()
         {
-            // Potential enhancement: Base64-encoded AsBytes might replay correctly when use to create a new message.
-            // return _message.TryGetAsString() ?? Convert.ToBase64String(_message.AsBytes);
-            return _message.Body.ToString(); // TODO (kasobol-msft) revisit this when Base64/BinaryData is added to SDK
+            return _message.Body.TryGetAsString();
         }
     }
 }

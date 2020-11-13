@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Converters;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
@@ -150,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         {
             Dictionary<string, object> bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-            string queueMessageString = value.MessageText;
+            string queueMessageString = value.Body.TryGetAsString();
 
             // Don't provide the QueueTrigger binding data when the queue message is not a valid string.
             if (queueMessageString != null)

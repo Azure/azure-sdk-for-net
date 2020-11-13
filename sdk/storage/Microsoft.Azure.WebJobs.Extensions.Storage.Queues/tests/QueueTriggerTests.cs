@@ -97,13 +97,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) reenable when we get base64/BinaryData in SDK")]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(content));
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToStringProgram),
@@ -298,13 +297,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit that when we get base64/BinaryData in the SDK")]
         public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange
             byte[] content = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(content));
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             Exception exception = await RunTriggerFailureAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),

@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
 
             private static string ConvertCloudQueueMessageToString(QueueMessage arg)
             {
-                return arg.Body.ToString();
+                return arg.Body.ToValidUTF8String();
             }
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)

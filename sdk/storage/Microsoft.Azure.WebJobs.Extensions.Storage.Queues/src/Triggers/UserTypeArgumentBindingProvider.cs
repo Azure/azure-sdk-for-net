@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Triggers;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 object convertedValue;
                 try
                 {
-                    convertedValue = JsonConvert.DeserializeObject(value.MessageText, ValueType, JsonSerialization.Settings);
+                    convertedValue = JsonConvert.DeserializeObject(value.Body.ToValidUTF8String(), ValueType, JsonSerialization.Settings);
                 }
                 catch (JsonException e)
                 {

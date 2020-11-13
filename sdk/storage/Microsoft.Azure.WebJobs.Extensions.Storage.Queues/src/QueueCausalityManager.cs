@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
 using Newtonsoft.Json.Linq;
 
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         [DebuggerNonUserCode]
         public static Guid? GetOwner(QueueMessage msg)
         {
-            string text = msg.MessageText;
+            string text = msg.Body.TryGetAsString();
 
             if (text == null)
             {

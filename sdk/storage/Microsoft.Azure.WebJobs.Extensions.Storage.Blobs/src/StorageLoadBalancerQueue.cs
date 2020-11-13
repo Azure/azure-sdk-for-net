@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
             {
-                return _callback(value.MessageText, cancellationToken);
+                return _callback(value.Body.ToValidUTF8String(), cancellationToken);
             }
         }
     }
