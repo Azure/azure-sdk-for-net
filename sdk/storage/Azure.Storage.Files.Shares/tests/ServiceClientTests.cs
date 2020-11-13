@@ -315,7 +315,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
-                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                Protocols = ShareProtocols.Nfs,
                 RootSquash = ShareRootSquash.AllSquash,
             };
 
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
-            Assert.AreEqual(ShareEnabledProtocols.Nfs, shareItem.Properties.EnabledProtocols);
+            Assert.AreEqual(ShareProtocols.Nfs, shareItem.Properties.Protocols);
             Assert.AreEqual(ShareRootSquash.AllSquash, shareItem.Properties.RootSquash);
         }
 

@@ -84,7 +84,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// EnabledProtocols.
         /// </summary>
-        public ShareEnabledProtocols? EnabledProtocols { get; internal set; }
+        public ShareProtocols? Protocols { get; internal set; }
 
         /// <summary>
         /// RootSquash.

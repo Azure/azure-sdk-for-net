@@ -379,11 +379,6 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string VersionId { get { throw null; } }
     }
-    public enum BlobCopySourceBlobPropertiesOption
-    {
-        Copy = 0,
-        Overwrite = 1,
-    }
     public partial class BlobCorsRule
     {
         public BlobCorsRule() { }
@@ -954,7 +949,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public BlobUploadFromUriOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobCopySourceBlobPropertiesOption CopySourceBlobPropertiesOption { get { throw null; } set { } }
+        public bool? CopySourceBlobProperties { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
@@ -1387,14 +1382,14 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(string base64BlockId, System.IO.Stream content, byte[] transactionalContentHash = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUri(System.Uri sourceUri, string base64BlockId, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.RequestConditions sourceConditions = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(System.Uri sourceUri, string base64BlockId, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.RequestConditions sourceConditions = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> SyncUploadFromUri(System.Uri copySource, Azure.Storage.Blobs.Models.BlobUploadFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> SyncUploadFromUriAsync(System.Uri copySource, Azure.Storage.Blobs.Models.BlobUploadFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.Blobs.Models.AccessTier? accessTier = default(Azure.Storage.Blobs.Models.AccessTier?), System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(System.IO.Stream content, Azure.Storage.Blobs.Models.BlobUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadFromUri(System.Uri copySource, Azure.Storage.Blobs.Models.BlobUploadFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadFromUriAsync(System.Uri copySource, Azure.Storage.Blobs.Models.BlobUploadFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public new Azure.Storage.Blobs.Specialized.BlockBlobClient WithSnapshot(string snapshot) { throw null; }
         protected sealed override Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshotCore(string snapshot) { throw null; }
         public new Azure.Storage.Blobs.Specialized.BlockBlobClient WithVersion(string versionId) { throw null; }

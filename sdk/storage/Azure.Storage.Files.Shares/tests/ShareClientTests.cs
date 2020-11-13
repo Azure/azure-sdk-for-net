@@ -324,7 +324,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
-                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                Protocols = ShareProtocols.Nfs,
                 RootSquash = ShareRootSquash.AllSquash
             };
 
@@ -335,7 +335,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Assert
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
-                Assert.AreEqual(ShareEnabledProtocols.Nfs, response.Value.EnabledProtocols);
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
                 Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
             }
             finally
@@ -615,7 +615,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions options = new ShareCreateOptions
             {
-                EnabledProtocols = ShareEnabledProtocols.Nfs,
+                Protocols = ShareProtocols.Nfs,
                 RootSquash = ShareRootSquash.AllSquash,
             };
 
@@ -625,7 +625,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(ShareEnabledProtocols.Nfs, propertiesResponse.Value.EnabledProtocols);
+            Assert.AreEqual(ShareProtocols.Nfs, propertiesResponse.Value.Protocols);
             Assert.AreEqual(ShareRootSquash.AllSquash, propertiesResponse.Value.RootSquash);
         }
 
@@ -1269,7 +1269,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             ShareCreateOptions createOptions = new ShareCreateOptions
             {
-                EnabledProtocols = ShareEnabledProtocols.Nfs
+                Protocols = ShareProtocols.Nfs
             };
             await share.CreateAsync(createOptions);
 

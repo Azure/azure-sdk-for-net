@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Protocols that can be set on a Share.
     /// </summary>
     [Flags]
-    public enum ShareEnabledProtocols
+    public enum ShareProtocols
     {
         /// <summary>
         /// SMB

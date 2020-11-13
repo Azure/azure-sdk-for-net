@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The protocols to enable for the share.
         /// </summary>
-        public ShareEnabledProtocols? EnabledProtocols { get; set; }
+        public ShareProtocols? Protocols { get; set; }
 
         /// <summary>
         /// The root squash to set for the share.  Only valid for NFS shares.

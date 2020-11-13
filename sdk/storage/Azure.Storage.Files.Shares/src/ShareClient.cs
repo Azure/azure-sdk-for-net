@@ -374,7 +374,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
-                options?.EnabledProtocols,
+                options?.Protocols,
                 options?.RootSquash,
                 async: false,
                 cancellationToken)
@@ -411,7 +411,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
-                options?.EnabledProtocols,
+                options?.Protocols,
                 options?.RootSquash,
                 async: true,
                 cancellationToken)
@@ -547,7 +547,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
-            ShareEnabledProtocols? enabledProtocols,
+            ShareProtocols? enabledProtocols,
             ShareRootSquash? rootSquash,
             bool async,
             CancellationToken cancellationToken,
@@ -622,7 +622,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
-                options?.EnabledProtocols,
+                options?.Protocols,
                 options?.RootSquash,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -658,7 +658,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Metadata,
                 options?.QuotaInGB,
                 options?.AccessTier,
-                options?.EnabledProtocols,
+                options?.Protocols,
                 options?.RootSquash,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -787,7 +787,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             ShareAccessTier? accessTier,
-            ShareEnabledProtocols? enabledProtocols,
+            ShareProtocols? enabledProtocols,
             ShareRootSquash? squashRoot,
             bool async,
             CancellationToken cancellationToken)

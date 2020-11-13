@@ -9,14 +9,15 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for <see cref="BlockBlobClient.UploadFromUri"/>.
+    /// Optional parameters for <see cref="BlockBlobClient.SyncUploadFromUri"/>.
     /// </summary>
     public class BlobUploadFromUriOptions
     {
         /// <summary>
-        /// The copy source blob properties behavior.
+        /// The copy source blob properties behavior.  If true, the properties
+        /// of the source blob will be copied to the new blob.  Default is true.
         /// </summary>
-        public BlobCopySourceBlobPropertiesOption CopySourceBlobPropertiesOption { get; set; }
+        public bool? CopySourceBlobProperties { get; set; }
 
         /// <summary>
         /// Optional standard HTTP header properties that can be set for the
