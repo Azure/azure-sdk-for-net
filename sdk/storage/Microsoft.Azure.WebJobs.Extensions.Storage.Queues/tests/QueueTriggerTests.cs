@@ -33,14 +33,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
         private async Task SetupAsync(QueueServiceClient client, object contents)
         {
-            string message;
+            BinaryData message;
             if (contents is string str)
             {
-                message = str;
+                message = BinaryData.FromString(str);
             }
-            else if (contents is byte[] bytearray) // TODO (kasobol-msft) revisit this when we have Base64/BinaryData
+            else if (contents is byte[] bytearray)
             {
-                message = Encoding.UTF8.GetString(bytearray);
+                message = BinaryData.FromBytes(bytearray);
             }
             else
             {
@@ -119,7 +119,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArray_Binds()
         {
             byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
@@ -134,18 +133,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK")]
         public async Task QueueTrigger_IfBoundToByteArrayAndMessageIsNonUtf8_Binds()
         {
             byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
             await TestBindToByteArray(expectedContent);
         }
 
-        private async Task TestBindToByteArray(byte[] expectedContent) // TODO (kasobol-msft) Revisit base64 encoding story
+        private async Task TestBindToByteArray(byte[] expectedContent)
         {
             // Arrange
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(Convert.ToBase64String(expectedContent));
+            await queue.SendMessageAsync(BinaryData.FromBytes(expectedContent));
 
             // Act
             byte[] result = await RunTriggerAsync<byte[]>(typeof(BindToByteArrayProgram),
@@ -287,9 +285,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             // Arrange
             const string expectedQueueTrigger = "abc";
-            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger); // TODO (kasobol-msft) Revisit base64 encoding story
+            byte[] content = Encoding.UTF8.GetBytes(expectedQueueTrigger);
             var queue = await CreateQueue(queueServiceClient, QueueName);
-            await queue.SendMessageAsync(expectedQueueTrigger);
+            await queue.SendMessageAsync(BinaryData.FromBytes(content));
 
             // Act
             string result = await RunTriggerAsync<string>(typeof(BindToQueueTriggerBindingDataProgram),
