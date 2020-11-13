@@ -60,6 +60,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// Monitor resource name
         /// </param>
         /// <param name='ruleSetName'>
+        /// Rule set name
         /// </param>
         /// <param name='properties'>
         /// </param>
@@ -90,6 +91,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// Monitor resource name
         /// </param>
         /// <param name='ruleSetName'>
+        /// Rule set name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
