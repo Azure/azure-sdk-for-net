@@ -552,7 +552,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25), CacheEventCount = 999 };
 
             await using var enumerator = consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromOffset(12), options).GetAsyncEnumerator();
-            await enumerator.MoveNextAsync();
+
+            for (var index = 0; index < 5; ++index)
+            {
+                await enumerator.MoveNextAsync();
+            }
 
             var (receiveBatchSize, _) = transportConsumer.ReceiveCalledWith;
             Assert.That(receiveBatchSize, Is.EqualTo(options.CacheEventCount), "Receive should have used the cache event count for the batch size");
@@ -1287,7 +1291,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(25), CacheEventCount = 543 };
 
             await using var enumerator = consumer.ReadEventsAsync(options).GetAsyncEnumerator();
-            await enumerator.MoveNextAsync();
+
+            for (var index = 0; index < 5; ++index)
+            {
+                await enumerator.MoveNextAsync();
+            }
 
             var (receiveBatchSize, _) = transportConsumer.ReceiveCalledWith;
             Assert.That(receiveBatchSize, Is.EqualTo(options.CacheEventCount), "Receive should have used the cache event count for the batch size");
