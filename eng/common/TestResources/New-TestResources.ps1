@@ -199,8 +199,18 @@ if (!$CI) {
 
     # If no test application ID is specified during an interactive session, create a new service principal.
     if (!$TestApplicationId) {
-        Log "TestApplicationId was not specified; creating a new service principal"
-        $servicePrincipal = New-AzADServicePrincipal -Role Owner
+
+        # Cache the created service principal in this session for frequent reuse.
+        $servicePrincipal = if ($AzureTestPrincipal) {
+            Log "TestApplicationId was not specified; loading the cached service principal"
+            $AzureTestPrincipal
+        } else {
+            Log "TestApplicationId was not specified; creating a new service principal"
+            $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner
+
+            Log "Created service principal '$AzureTestPrincipal'"
+            $AzureTestPrincipal
+        }
 
         $TestApplicationId = $servicePrincipal.ApplicationId
         $TestApplicationSecret = (ConvertFrom-SecureString $servicePrincipal.Secret -AsPlainText);
@@ -208,8 +218,6 @@ if (!$CI) {
         # Make sure pre- and post-scripts are passed formerly required arguments.
         $PSBoundParameters['TestApplicationId'] = $TestApplicationId
         $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
-
-        Log "Created service principal '$TestApplicationId'"
     }
 
     if (!$ProvisionerApplicationId) {
@@ -634,12 +642,7 @@ The environment file would be scoped to the current repository directory.
 
 .EXAMPLE
 Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-$testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-New-TestResources.ps1 `
-    -BaseName 'uuid123' `
-    -ServiceDirectory 'keyvault' `
-    -TestApplicationId $testAadApp.ApplicationId.ToString() `
-    -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
+New-TestResources.ps1 -ServiceDirectory 'keyvault'
 
 Run this in a desktop environment to create new AAD apps and Service Principals
 that can be used to provision resources and run live tests.
