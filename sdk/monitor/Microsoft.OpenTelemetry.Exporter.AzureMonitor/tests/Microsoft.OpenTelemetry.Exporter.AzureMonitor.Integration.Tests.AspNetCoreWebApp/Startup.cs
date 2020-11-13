@@ -21,11 +21,15 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+#pragma warning disable 618
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+#pragma warning restore 618
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+#pragma warning disable 618
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+#pragma warning restore 618
         {
             if (env.IsDevelopment())
             {
@@ -37,7 +41,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNet
             }
 
             app.UseHttpsRedirection();
+
+#pragma warning disable MVC1005
             app.UseMvc();
+#pragma warning restore MVC1005
         }
     }
 }

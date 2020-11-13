@@ -36,7 +36,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 return;
             }
 
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            string codeBase = Assembly.GetExecutingAssembly().Location;
             var uri = new UriBuilder(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
             string workingDirectory = Path.GetDirectoryName(path);

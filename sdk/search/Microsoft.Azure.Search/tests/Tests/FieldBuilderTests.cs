@@ -11,6 +11,7 @@ using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
 using Xunit;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
+using Index = Microsoft.Azure.Search.Models.Index;
 
 namespace Microsoft.Azure.Search.Tests
 {
