@@ -161,15 +161,17 @@ try {
     # Remove spaces, etc. that may be in $UserName
     $UserName = $UserName -replace '\W'
 
-    # If no base name is specified use current user name
-    if (!$BaseName) {
+    # Make sure $BaseName is set.
+    if ($CI) {
+        $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
+        Log "Generated base name '$BaseName' for CI build"
+    } elseif (!$BaseName) {
         $BaseName = "$UserName$ServiceDirectory"
-
-        # Make sure pre- and post-scripts are passed formerly required arguments.
-        $PSBoundParameters['BaseName'] = $BaseName
-
         Log "BaseName was not set. Using default base name: '$BaseName'"
     }
+
+    # Make sure pre- and post-scripts are passed formerly required arguments.
+    $PSBoundParameters['BaseName'] = $BaseName
 
     # Try detecting repos that support OutFile and defaulting to it
     if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows) {
@@ -282,11 +284,6 @@ try {
         Split-Path -Leaf $ServiceDirectory
     } else {
         $ServiceDirectory
-    }
-
-    if ($CI) {
-        $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
-        Write-Verbose "Generated base name '$BaseName' for CI build"
     }
 
     $ResourceGroupName = if ($ResourceGroupName) {
