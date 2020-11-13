@@ -17,7 +17,8 @@ namespace Azure.Messaging.ServiceBus
     }
     public sealed partial class ProcessErrorEventArgs : System.EventArgs
     {
-        public ProcessErrorEventArgs(System.Exception exception, Azure.Messaging.ServiceBus.ServiceBusErrorSource errorSource, string fullyQualifiedNamespace, string entityPath) { }
+        public ProcessErrorEventArgs(System.Exception exception, Azure.Messaging.ServiceBus.ServiceBusErrorSource errorSource, string fullyQualifiedNamespace, string entityPath, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public string EntityPath { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusErrorSource ErrorSource { get { throw null; } }
         public System.Exception Exception { get { throw null; } }

@@ -118,7 +118,8 @@ namespace Azure.Messaging.ServiceBus
                         ex,
                         errorSource,
                         _fullyQualifiedNamespace,
-                        _entityPath))
+                        _entityPath,
+                        cancellationToken))
                     .ConfigureAwait(false);
             }
         }
@@ -210,7 +211,8 @@ namespace Azure.Messaging.ServiceBus
                         ex,
                         errorSource,
                         _fullyQualifiedNamespace,
-                        _entityPath))
+                        _entityPath,
+                        cancellationToken))
                     .ConfigureAwait(false);
 
                 // if the user settled the message, or if the message or session lock was lost,
@@ -239,7 +241,8 @@ namespace Azure.Messaging.ServiceBus
                                 exception,
                                 ServiceBusErrorSource.Abandon,
                                 _fullyQualifiedNamespace,
-                                _entityPath))
+                                _entityPath,
+                                cancellationToken))
                         .ConfigureAwait(false);
                     }
                 }
@@ -350,7 +353,8 @@ namespace Azure.Messaging.ServiceBus
                         ex,
                         ServiceBusErrorSource.RenewLock,
                         _fullyQualifiedNamespace,
-                        _entityPath)).ConfigureAwait(false);
+                        _entityPath,
+                        cancellationToken)).ConfigureAwait(false);
             }
         }
 

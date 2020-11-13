@@ -447,6 +447,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
                 {
+                    Assert.IsNotNull(args.CancellationToken);
                     Assert.NotNull(args);
                     Assert.NotNull(args.Exception);
                     if (args.Exception is InvalidOperationException)

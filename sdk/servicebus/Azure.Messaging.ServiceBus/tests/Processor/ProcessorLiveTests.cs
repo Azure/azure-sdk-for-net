@@ -559,6 +559,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Task ExceptionHandler(ProcessErrorEventArgs args)
                 {
                     tcs.SetResult(true);
+                    Assert.IsNotNull(args.CancellationToken);
                     if (!(args.Exception is TestException))
                     {
                         Assert.Fail(args.Exception.ToString());
