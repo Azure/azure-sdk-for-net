@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Datadog
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IMarketplaceAgreementsOperations.
+        /// </summary>
+        public virtual IMarketplaceAgreementsOperations MarketplaceAgreements { get; private set; }
+
+        /// <summary>
         /// Gets the IApiKeysOperations.
         /// </summary>
         public virtual IApiKeysOperations ApiKeys { get; private set; }
@@ -357,6 +362,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// </summary>
         private void Initialize()
         {
+            MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
             ApiKeys = new ApiKeysOperations(this);
             Hosts = new HostsOperations(this);
             LinkedResources = new LinkedResourcesOperations(this);

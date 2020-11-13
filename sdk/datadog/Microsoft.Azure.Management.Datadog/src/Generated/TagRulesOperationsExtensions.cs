@@ -74,6 +74,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='ruleSetName'>
+            /// Rule set name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -95,6 +96,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='ruleSetName'>
+            /// Rule set name
             /// </param>
             /// <param name='properties'>
             /// </param>
@@ -122,6 +124,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='ruleSetName'>
+            /// Rule set name
             /// </param>
             public static MonitoringTagRules Get(this ITagRulesOperations operations, string resourceGroupName, string monitorName, string ruleSetName)
             {
@@ -141,6 +144,7 @@ namespace Microsoft.Azure.Management.Datadog
             /// Monitor resource name
             /// </param>
             /// <param name='ruleSetName'>
+            /// Rule set name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
