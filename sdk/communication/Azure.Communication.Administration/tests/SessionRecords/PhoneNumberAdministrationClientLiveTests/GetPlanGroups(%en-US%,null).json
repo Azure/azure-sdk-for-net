@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/administration/phonenumbers/countries/us/phoneplangroups?locale=en-us\u0026api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 13 Nov 2020 21:24:10 GMT",
+        "traceparent": "00-e2efc5717f295646944dba6d9859af00-eae76d5e28dbd64c-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201113.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "adfa196010acb46ddc43efecdfdeb219",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Nov 2020 21:24:08 GMT",
+        "MS-CV": "dPgeyaLYf02P20\u002BHQ/skPQ.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0efmuXwAAAABMmzTGhS0BS7soG1E6BRtaWVZSMzBFREdFMDQxMAA3MDU0Mzk1ZS1jZTFkLTQ1NWUtYWU1ZC0yMzNjYTgzOTA1NTQ=",
+        "X-Processing-Time": "365ms"
+      },
+      "ResponseBody": {
+        "phonePlanGroups": [
+          {
+            "phonePlanGroupId": "55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure- User - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "671ee064-662f-4c3b-82a9-af2ab200dd5c",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "d47a0cdc-8dc1-4e82-a29b-39067f7fc317",
+            "phoneNumberType": "TollFree",
+            "localizedName": "Azure - Toll Free",
+            "localizedDescription": "These are toll free numbers used by Azure resources."
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==;",
+    "RandomSeed": "1273186525"
+  }
+}

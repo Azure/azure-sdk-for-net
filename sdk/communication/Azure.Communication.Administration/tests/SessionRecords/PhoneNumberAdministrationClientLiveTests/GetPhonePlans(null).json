@@ -1,0 +1,116 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/administration/phonenumbers/countries/us/phoneplangroups?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 13 Nov 2020 21:24:08 GMT",
+        "traceparent": "00-9fcf98f71b11b746a2d2dd67c9798626-48909a88a34dd344-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201113.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "05696a5a50b365020f8c828c1a16c0f2",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Nov 2020 21:24:06 GMT",
+        "MS-CV": "y71gCRmOUUaQo4yX0w1Bmg.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0dvmuXwAAAACJQLDm1zXIS5\u002BSau/ReIEBWVZSMzBFREdFMDQxMAA3MDU0Mzk1ZS1jZTFkLTQ1NWUtYWU1ZC0yMzNjYTgzOTA1NTQ=",
+        "X-Processing-Time": "650ms"
+      },
+      "ResponseBody": {
+        "phonePlanGroups": [
+          {
+            "phonePlanGroupId": "55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure- User - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "671ee064-662f-4c3b-82a9-af2ab200dd5c",
+            "phoneNumberType": "Geographic",
+            "localizedName": "Azure - Geographic",
+            "localizedDescription": "These are numbers used by Azure resources."
+          },
+          {
+            "phonePlanGroupId": "d47a0cdc-8dc1-4e82-a29b-39067f7fc317",
+            "phoneNumberType": "TollFree",
+            "localizedName": "Azure - Toll Free",
+            "localizedDescription": "These are toll free numbers used by Azure resources."
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/administration/phonenumbers/countries/us/phoneplangroups/55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf/phoneplans?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 13 Nov 2020 21:24:08 GMT",
+        "traceparent": "00-4dbb7bc28a00ed4ab754ff1525091b1f-3697d1daf1eaf948-00",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201113.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "7e31e22295b6387c7d21cd7520d2023d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Nov 2020 21:24:07 GMT",
+        "MS-CV": "VYPxryL\u002BckevyRZoadCyyg.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0d/muXwAAAACvPCgmPFhISYMF3AW2Y3X4WVZSMzBFREdFMDQxMAA3MDU0Mzk1ZS1jZTFkLTQ1NWUtYWU1ZC0yMzNjYTgzOTA1NTQ=",
+        "X-Processing-Time": "380ms"
+      },
+      "ResponseBody": {
+        "phonePlans": [
+          {
+            "phonePlanId": "01432411-5169-4665-b13e-3fa56c10e1d1",
+            "localizedName": "Outbound Only PSTN For User - Geographic",
+            "locationType": "Selection",
+            "areaCodes": [],
+            "capabilities": [
+              "Azure",
+              "OutboundCalling",
+              "UserAssignment",
+              "Geographic"
+            ],
+            "maximumSearchSize": 20
+          },
+          {
+            "phonePlanId": "b528a997-03bb-446e-af98-3d99877cf0ba",
+            "localizedName": "Inbound Only PSTN For User - Geographic",
+            "locationType": "Selection",
+            "areaCodes": [],
+            "capabilities": [
+              "Azure",
+              "InboundCalling",
+              "UserAssignment",
+              "Geographic"
+            ],
+            "maximumSearchSize": 20
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==;",
+    "RandomSeed": "1249678682"
+  }
+}

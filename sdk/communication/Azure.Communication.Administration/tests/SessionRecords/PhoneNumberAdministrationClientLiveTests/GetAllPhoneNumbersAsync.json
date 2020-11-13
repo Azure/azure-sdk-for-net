@@ -1,0 +1,237 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.net/administration/phonenumbers/phonenumbers?api-version=2020-07-20-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Fri, 13 Nov 2020 21:24:13 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201113.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "cbcaa85fc80e14234ba9d10ff10cbc40",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 13 Nov 2020 21:24:12 GMT",
+        "MS-CV": "8zGRgJdGg0GQzqZAr4k33g.0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0fPmuXwAAAABKnJGaWl9yRbN\u002BFbLcpR04WVZSMzBFREdFMDQxMAA3MDU0Mzk1ZS1jZTFkLTQ1NWUtYWU1ZC0yMzNjYTgzOTA1NTQ=",
+        "X-Processing-Time": "601ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "phoneNumber": "\u002B16266411267",
+            "acquiredCapabilities": [
+              "Azure",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "Geographic"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "Geographic",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Los Angeles, United States",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B16268056005",
+            "acquiredCapabilities": [
+              "Azure",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "Geographic"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "Geographic",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Los Angeles, United States",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18000001156",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18002220004",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18002220014",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18002220026",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18182442301",
+            "acquiredCapabilities": [
+              "Azure",
+              "OutboundCalling",
+              "ThirdPartyAppAssignment",
+              "Geographic"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "Geographic",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unassigned",
+            "placeName": "Los Angeles, United States",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18880000150",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          },
+          {
+            "phoneNumber": "\u002B18880000151",
+            "acquiredCapabilities": [
+              "Azure",
+              "ThirdPartyAppAssignment",
+              "InboundCalling",
+              "TollFree"
+            ],
+            "availableCapabilities": [
+              "ConferenceAssignment",
+              "TollFree",
+              "FirstPartyAppAssignment",
+              "ThirdPartyAppAssignment",
+              "Azure",
+              "Office365",
+              "InboundCalling",
+              "OutboundCalling"
+            ],
+            "assignmentStatus": "Unknown",
+            "placeName": "Toll-Free, NOAM Toll Free",
+            "activationState": "Activated"
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==;",
+    "RandomSeed": "1552086494"
+  }
+}
