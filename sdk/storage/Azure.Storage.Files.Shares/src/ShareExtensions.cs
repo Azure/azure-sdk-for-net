@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
 
-        internal static string ToShareEnableProtocolsString(this ShareEnabledProtocols? shareEnabledProtocols)
+        internal static string ToShareEnableProtocolsString(this ShareProtocols? shareEnabledProtocols)
         {
             if (shareEnabledProtocols == null)
             {
@@ -49,8 +49,8 @@ namespace Azure.Storage.Files.Shares
 
             return shareEnabledProtocols switch
                 {
-                    ShareEnabledProtocols.Smb => Constants.File.SmbProtocol,
-                    ShareEnabledProtocols.Nfs => Constants.File.NfsProtocol,
+                    ShareProtocols.Smb => Constants.File.SmbProtocol,
+                    ShareProtocols.Nfs => Constants.File.NfsProtocol,
                     _ => throw new ArgumentException($"Unknown share protocol: {shareEnabledProtocols}"),
                 };
         }
@@ -124,14 +124,14 @@ namespace Azure.Storage.Files.Shares
                 LeaseStatus = sharePropertiesInternal.LeaseStatus,
                 LeaseState = sharePropertiesInternal.LeaseState,
                 LeaseDuration = sharePropertiesInternal.LeaseDuration,
-                EnabledProtocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
+                Protocols = ToShareEnabledProtocols(sharePropertiesInternal.EnabledProtocols),
                 RootSquash = sharePropertiesInternal.RootSquash,
                 QuotaInGB = sharePropertiesInternal.QuotaInGB,
                 Metadata = sharePropertiesInternal.Metadata
             };
         }
 
-        internal static ShareEnabledProtocols? ToShareEnabledProtocols(string rawProtocols)
+        internal static ShareProtocols? ToShareEnabledProtocols(string rawProtocols)
         {
             if (rawProtocols == null)
             {
@@ -141,9 +141,9 @@ namespace Azure.Storage.Files.Shares
             switch (rawProtocols)
             {
                 case Constants.File.SmbProtocol:
-                    return ShareEnabledProtocols.Smb;
+                    return ShareProtocols.Smb;
                 case Constants.File.NfsProtocol:
-                    return ShareEnabledProtocols.Nfs;
+                    return ShareProtocols.Nfs;
                 default:
                     throw new ArgumentException($"Unknown share enabled protocol: {rawProtocols}");
             }

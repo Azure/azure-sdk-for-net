@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares.Models
             ShareLeaseDuration? leaseDuration = default,
             int? quotaInGB = default,
             IDictionary<string, string> metadata = default,
-            ShareEnabledProtocols? enabledProtocols = default,
+            ShareProtocols? protocols = default,
             ShareRootSquash? rootSquash = default)
             => new ShareProperties()
             {
@@ -91,7 +91,7 @@ namespace Azure.Storage.Files.Shares.Models
                 LeaseDuration = leaseDuration,
                 QuotaInGB = quotaInGB,
                 Metadata = metadata,
-                EnabledProtocols = enabledProtocols,
+                Protocols = protocols,
                 RootSquash = rootSquash
             };
 
