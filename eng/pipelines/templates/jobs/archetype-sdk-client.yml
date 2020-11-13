@@ -132,6 +132,9 @@ jobs:
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        Windows_Net5:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net5
     pool:
       vmImage: "$(OSVmImage)"
     steps:
