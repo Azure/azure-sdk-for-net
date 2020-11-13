@@ -20,8 +20,6 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.EntitiesTaskParameters EntitiesTaskParameters { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.KeyPhrasesTaskParameters KeyPhrasesTaskParameters { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.PiiTaskParameters PiiTaskParameters { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class AnalyzeOperationResult
     {
