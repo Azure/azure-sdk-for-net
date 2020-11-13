@@ -39,9 +39,9 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(client));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -80,9 +80,9 @@ namespace Azure.Identity.Tests
 
                 var pipeline = CredentialPipeline.GetInstance(options);
 
-                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline.HttpPipeline, "mock-client-id") };
+                var client = new MockManagedIdentityClient(pipeline, "mock-client-id") { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(pipeline, "mock-client-id") };
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, client));
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(client));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -387,9 +387,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableCredentialException()
         {
-            var mockClient = new MockManagedIdentityClient { ManagedIdentitySourceFactory = () => default };
+            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null)) { ManagedIdentitySourceFactory = () => default };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(mockClient));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -401,9 +401,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientGetMsiTypeThrows()
         {
-            var mockClient = new MockManagedIdentityClient { ManagedIdentitySourceFactory = () => throw new MockClientException("message") };
+            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null)) { ManagedIdentitySourceFactory = () => throw new MockClientException("message") };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(mockClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -415,9 +415,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyClientAuthenticateThrows()
         {
-            var mockClient = new MockManagedIdentityClient { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(default, default), TokenFactory = () => throw new MockClientException("message") };
+            var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null)) { ManagedIdentitySourceFactory = () => new ImdsManagedIdentitySource(default, default), TokenFactory = () => throw new MockClientException("message") };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(mockClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
