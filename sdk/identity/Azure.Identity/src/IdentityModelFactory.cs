@@ -21,7 +21,7 @@ namespace Azure.Identity
         /// <param name="tenantId">Sets the <see cref="AuthenticationRecord.TenantId"/>.</param>
         /// <param name="clientId">Sets the <see cref="AuthenticationRecord.ClientId"/>.</param>
         /// <returns>A new instance of the <see cref="AuthenticationRecord"/> for mocking purposes.</returns>
-        public static AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
+        internal static AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
             => new AuthenticationRecord(username, authority, homeAccountId, tenantId, clientId);
 
         /// <summary>

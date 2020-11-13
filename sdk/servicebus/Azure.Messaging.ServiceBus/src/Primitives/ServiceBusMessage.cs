@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -33,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="body">The payload of the message as a string.</param>
         public ServiceBusMessage(string body) :
-            this(new BinaryData(body))
+            this(Encoding.UTF8.GetBytes(body))
         {
         }
 
@@ -41,18 +42,18 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes.</param>
-        public ServiceBusMessage(ReadOnlyMemory<byte> body) :
-            this(BinaryData.FromBytes(body))
+        public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
+            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
         /// <summary>
         /// Creates a new message from the specified <see cref="BinaryData"/> instance.
         /// </summary>
         /// <param name="body">The payload of the message.</param>
-        public ServiceBusMessage(BinaryData body)
+        public ServiceBusMessage(BinaryData body) : this (body?.ToMemory() ?? default)
         {
-            AmqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
         }
 
         /// <summary>
@@ -62,15 +63,73 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
-            AmqpMessage = new AmqpAnnotatedMessage(receivedMessage.AmqpMessage);
-            AmqpMessage.Header.DeliveryCount = null;
-            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.LockedUntilName);
-            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.SequenceNumberName);
-            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.DeadLetterSourceName);
-            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueueSequenceNumberName);
-            AmqpMessage.MessageAnnotations.Remove(AmqpMessageConstants.EnqueuedTimeUtcName);
-            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterReasonHeader);
-            ApplicationProperties.Remove(AmqpMessageConstants.DeadLetterErrorDescriptionHeader);
+            if (!receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
+            }
+
+            AmqpMessageBody body = new AmqpMessageBody(dataBody);
+            AmqpMessage = new AmqpAnnotatedMessage(body);
+
+            // copy properties
+            AmqpMessageProperties properties = AmqpMessage.Properties;
+            AmqpMessageProperties receivedProperties = receivedMessage.AmqpMessage.Properties;
+            properties.MessageId = receivedProperties.MessageId;
+            properties.UserId = receivedProperties.UserId;
+            properties.To = receivedProperties.To;
+            properties.Subject = receivedProperties.Subject;
+            properties.ReplyTo = receivedProperties.ReplyTo;
+            properties.CorrelationId = receivedProperties.CorrelationId;
+            properties.ContentType = receivedProperties.ContentType;
+            properties.ContentEncoding = receivedProperties.ContentEncoding;
+            properties.AbsoluteExpiryTime = receivedProperties.AbsoluteExpiryTime;
+            properties.CreationTime = receivedProperties.CreationTime;
+            properties.GroupId = receivedProperties.GroupId;
+            properties.GroupSequence = receivedProperties.GroupSequence;
+            properties.ReplyToGroupId = receivedProperties.ReplyToGroupId;
+
+            // copy header except for delivery count which should be set to null
+            AmqpMessageHeader header = AmqpMessage.Header;
+            AmqpMessageHeader receivedHeader = receivedMessage.AmqpMessage.Header;
+            header.DeliveryCount = null;
+            header.Durable = receivedHeader.Durable;
+            header.Priority = receivedHeader.Priority;
+            header.TimeToLive = receivedHeader.TimeToLive;
+            header.FirstAcquirer = receivedHeader.FirstAcquirer;
+
+            // copy message annotations except for broker set ones
+            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.MessageAnnotations)
+            {
+                if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName)
+                {
+                    continue;
+                }
+                AmqpMessage.MessageAnnotations.Add(kvp.Key, kvp.Value);
+            }
+
+            // copy delivery annotations
+            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.DeliveryAnnotations)
+            {
+                AmqpMessage.DeliveryAnnotations.Add(kvp.Key, kvp.Value);
+            }
+
+            // copy footer
+            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.Footer)
+            {
+                AmqpMessage.Footer.Add(kvp.Key, kvp.Value);
+            }
+
+            // copy application properties except for broker set ones
+            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.ApplicationProperties)
+            {
+                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader)
+                {
+                    continue;
+                }
+                AmqpMessage.ApplicationProperties.Add(kvp.Key, kvp.Value);
+            }
         }
 
         /// <summary>
@@ -78,20 +137,10 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public BinaryData Body
         {
-            get
-            {
-                if (AmqpMessage.Body is AmqpDataBody dataBody)
-                {
-                    return dataBody.Data.ConvertAndFlattenData();
-                }
-                else
-                {
-                    return default;
-                }
-            }
+            get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpDataBody(new BinaryData[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
             }
         }
 
@@ -108,12 +157,13 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public string MessageId
         {
-            get => AmqpMessage.Properties.MessageId;
+            get => AmqpMessage.Properties.MessageId?.ToString();
 
             set
             {
-                ValidateMessageId(value);
-                AmqpMessage.Properties.MessageId = value;
+                Argument.AssertNotNullOrEmpty(value, nameof(value));
+                Argument.AssertNotTooLong(value, Constants.MaxMessageIdLength, nameof(value));
+                AmqpMessage.Properties.MessageId = new AmqpMessageId(value);
             }
         }
 
@@ -133,7 +183,11 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                ValidatePartitionKey(value);
+                Argument.AssertNotTooLong(value, Constants.MaxPartitionKeyLength, nameof(value));
+                if (SessionId != null && SessionId != value)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), $"PartitionKey:{value} cannot be set to a different value than SessionId:{SessionId}.");
+                }
                 AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = value;
             }
         }
@@ -154,7 +208,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                ValidatePartitionKey(value);
+                Argument.AssertNotTooLong(value, Constants.MaxPartitionKeyLength, nameof(value));
                 AmqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = value;
             }
         }
@@ -174,7 +228,11 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(value);
+                Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(value));
+                if (PartitionKey != null && PartitionKey != value)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), $"SessionId:{value} cannot be set to a different value than PartitionKey:{PartitionKey}.");
+                }
                 AmqpMessage.Properties.GroupId = value;
             }
         }
@@ -192,7 +250,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(value);
+                Argument.AssertNotTooLong(value, Constants.MaxSessionIdLength, nameof(value));
                 AmqpMessage.Properties.ReplyToGroupId = value;
             }
         }
@@ -216,7 +274,7 @@ namespace Azure.Messaging.ServiceBus
             }
             set
             {
-                Argument.AssertPositive(value, nameof(TimeToLive));
+                Argument.AssertPositive(value, nameof(value));
                 AmqpMessage.Header.TimeToLive = value;
             }
         }
@@ -232,11 +290,11 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                return AmqpMessage.Properties.CorrelationId;
+                return AmqpMessage.Properties.CorrelationId.ToString();
             }
             set
             {
-                AmqpMessage.Properties.CorrelationId = value;
+                AmqpMessage.Properties.CorrelationId = new AmqpMessageId(value);
             }
         }
 
@@ -270,11 +328,11 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                return AmqpMessage.Properties.To;
+                return AmqpMessage.Properties.To.ToString();
             }
             set
             {
-                AmqpMessage.Properties.To = value;
+                AmqpMessage.Properties.To = new AmqpAddress(value);
             }
         }
 
@@ -308,11 +366,11 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                return AmqpMessage.Properties.ReplyTo;
+                return AmqpMessage.Properties.ReplyTo.ToString();
             }
             set
             {
-                AmqpMessage.Properties.ReplyTo = value;
+                AmqpMessage.Properties.ReplyTo = new AmqpAddress(value);
             }
         }
 
@@ -335,11 +393,19 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw Amqp message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
-        /// data that is not exposed as top level properties in the ServiceBusMessage.
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
-        public AmqpAnnotatedMessage AmqpMessage { get; set; }
+        internal AmqpAnnotatedMessage AmqpMessage { get; set; }
+
+        /// <summary>
+        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
+        /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
+        /// </summary>
+        /// <returns>The raw Amqp message.</returns>
+        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the application properties bag, which can be used for custom message metadata.
@@ -355,10 +421,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 return AmqpMessage.ApplicationProperties;
             }
-            internal set
-            {
-                AmqpMessage.ApplicationProperties = value;
-            }
         }
 
         /// <summary>Returns a string that represents the current message.</summary>
@@ -366,31 +428,6 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
-        }
-
-        private static void ValidateMessageId(string messageId)
-        {
-            if (string.IsNullOrEmpty(messageId) ||
-                messageId.Length > Constants.MaxMessageIdLength)
-            {
-                throw new ArgumentException("MessageIdIsNullOrEmptyOrOverMaxValue");
-            }
-        }
-
-        private static void ValidateSessionId(string sessionId)
-        {
-            if (sessionId != null && sessionId.Length > Constants.MaxSessionIdLength)
-            {
-                throw new ArgumentException("SessionIdIsOverMaxValue");
-            }
-        }
-
-        private static void ValidatePartitionKey(string partitionKey)
-        {
-            if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
-            {
-                throw new ArgumentException("PropertyValueOverMaxValue");
-            }
         }
     }
 }

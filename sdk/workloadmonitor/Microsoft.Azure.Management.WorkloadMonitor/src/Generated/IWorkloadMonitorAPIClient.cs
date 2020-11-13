@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The API version to use for this operation.
+        /// The API version to use for the operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IMonitorsOperations.
+        /// Gets the IHealthMonitorsOperations.
         /// </summary>
-        IMonitorsOperations Monitors { get; }
+        IHealthMonitorsOperations HealthMonitors { get; }
 
     }
 }

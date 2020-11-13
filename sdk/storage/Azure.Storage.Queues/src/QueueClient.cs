@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -12,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -120,6 +122,10 @@ namespace Azure.Storage.Queues
         /// </summary>
         private string _name;
 
+        private QueueMessageEncoding _messageEncoding;
+
+        internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
+
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
@@ -131,6 +137,17 @@ namespace Azure.Storage.Queues
                 return _name;
             }
         }
+
+        /// <summary>
+        /// The <see cref="StorageSharedKeyCredential"/> used to authenticate and generate SAS
+        /// </summary>
+        private StorageSharedKeyCredential _storageSharedKeyCredential;
+
+        /// <summary>
+        /// Determines whether the client is able to generate a SAS.
+        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// </summary>
+        public bool CanGenerateSasUri => _storageSharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -186,11 +203,10 @@ namespace Azure.Storage.Queues
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
-                new QueueUriBuilder(conn.QueueEndpoint)
-                {
-                    QueueName = queueName
-                };
+            var builder = new QueueUriBuilder(conn.QueueEndpoint)
+            {
+                QueueName = queueName
+            };
             _uri = builder.ToUri();
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
@@ -198,6 +214,9 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -215,7 +234,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
-            : this(queueUri, (HttpPipelinePolicy)null, options)
+            : this(queueUri, (HttpPipelinePolicy)null, options, null)
         {
         }
 
@@ -237,7 +256,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, credential)
         {
         }
 
@@ -259,7 +278,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options)
+            : this(queueUri, credential.AsPolicy(), options, null)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -281,7 +300,14 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal QueueClient(
+            Uri queueUri,
+            HttpPipelinePolicy authentication,
+            QueueClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -290,6 +316,9 @@ namespace Azure.Storage.Queues
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
+            _storageSharedKeyCredential = storageSharedKeyCredential;
+            _messageEncoding = options.MessageEncoding;
+            AssertEncodingForEncryption();
         }
 
         /// <summary>
@@ -314,12 +343,16 @@ namespace Azure.Storage.Queues
         /// <param name="encryptionOptions">
         /// Options for client-side encryption.
         /// </param>
+        /// <param name="messageEncoding">
+        /// The encoding of the message sent over the wire.
+        /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipeline pipeline,
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
-            ClientSideEncryptionOptions encryptionOptions)
+            ClientSideEncryptionOptions encryptionOptions,
+            QueueMessageEncoding messageEncoding)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -327,6 +360,8 @@ namespace Azure.Storage.Queues
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
+            _messageEncoding = messageEncoding;
+            AssertEncodingForEncryption();
         }
         #endregion ctors
 
@@ -1509,7 +1544,43 @@ namespace Azure.Storage.Queues
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             SendMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
+                visibilityTimeout,
+                timeToLive,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
+        /// </summary>
+        /// <param name="message">
+        /// Message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual Response<SendReceipt> SendMessage(
+            BinaryData message,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            SendMessageInternal(
+                message,
                 visibilityTimeout,
                 timeToLive,
                 false, // async
@@ -1545,7 +1616,7 @@ namespace Azure.Storage.Queues
             TimeSpan? timeToLive = default,
             CancellationToken cancellationToken = default) =>
             await SendMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 visibilityTimeout,
                 timeToLive,
                 true, // async
@@ -1560,7 +1631,43 @@ namespace Azure.Storage.Queues
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
         /// Put Message</see>.
         /// </summary>
-        /// <param name="messageText">
+        /// <param name="message">
+        /// Message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Visibility timeout.  Optional with a default value of 0.  Cannot be larger than 7 days.
+        /// </param>
+        /// <param name="timeToLive">
+        /// Optional. Specifies the time-to-live interval for the message
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{SendReceipt}"/>
+        /// </returns>
+        public virtual async Task<Response<SendReceipt>> SendMessageAsync(
+            BinaryData message,
+            TimeSpan? visibilityTimeout = default,
+            TimeSpan? timeToLive = default,
+            CancellationToken cancellationToken = default) =>
+            await SendMessageInternal(
+                message,
+                visibilityTimeout,
+                timeToLive,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
+        /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-message">
+        /// Put Message</see>.
+        /// </summary>
+        /// <param name="message">
         /// Message text.
         /// </param>
         /// <param name="visibilityTimeout">
@@ -1579,7 +1686,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{SendMessageResult}"/>
         /// </returns>
         private async Task<Response<SendReceipt>> SendMessageInternal(
-            string messageText,
+            BinaryData message,
             TimeSpan? visibilityTimeout,
             TimeSpan? timeToLive,
             bool async,
@@ -1595,17 +1702,18 @@ namespace Azure.Storage.Queues
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
-                    messageText = UsingClientSideEncryption
-                        ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
-                        : messageText;
+                    if (UsingClientSideEncryption)
+                    {
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
+                    }
 
                     Response<IEnumerable<SendReceipt>> messages =
                         await QueueRestClient.Messages.EnqueueAsync(
                             ClientDiagnostics,
                             Pipeline,
                             MessagesUri,
-                            message: new QueueSendMessage { MessageText = messageText },
+                            message: new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) },
                             version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
@@ -1822,12 +1930,12 @@ namespace Azure.Storage.Queues
                     {
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2093,7 +2201,7 @@ namespace Azure.Storage.Queues
                     $"{nameof(maxMessages)}: {maxMessages}");
                 try
                 {
-                    Response<IEnumerable<PeekedMessage>> response = await QueueRestClient.Messages.PeekAsync(
+                    Response<IEnumerable<PeekedMessageItem>> response = await QueueRestClient.Messages.PeekAsync(
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
@@ -2113,12 +2221,12 @@ namespace Azure.Storage.Queues
                     {
                         return Response.FromValue(
                             await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.ToArray(), async, cancellationToken).ConfigureAwait(false),
+                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
                             response.GetRawResponse());
                     }
                     else
                     {
-                        return Response.FromValue(response.Value.ToArray(), response.GetRawResponse());
+                        return Response.FromValue(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
@@ -2292,7 +2400,47 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             UpdateMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual Response<UpdateReceipt> UpdateMessage(
+            string messageId,
+            string popReceipt,
+            BinaryData message,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            UpdateMessageInternal(
+                message,
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2332,7 +2480,7 @@ namespace Azure.Storage.Queues
             TimeSpan visibilityTimeout = default,
             CancellationToken cancellationToken = default) =>
             await UpdateMessageInternal(
-                messageText,
+                ToBinaryData(messageText),
                 messageId,
                 popReceipt,
                 visibilityTimeout,
@@ -2347,8 +2495,48 @@ namespace Azure.Storage.Queues
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
         /// Update Message</see>.
         /// </summary>
-        /// <param name="messageText">
-        /// Updated message text.
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="message">
+        /// Optional. Updated message.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Response{UpdateReceipt}"/>.
+        /// </returns>
+        public virtual async Task<Response<UpdateReceipt>> UpdateMessageAsync(
+            string messageId,
+            string popReceipt,
+            BinaryData message,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            await UpdateMessageInternal(
+                message,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/update-message">
+        /// Update Message</see>.
+        /// </summary>
+        /// <param name="message">
+        /// Updated message.
         /// </param>
         /// <param name="messageId">ID of the message to update.</param>
         /// <param name="popReceipt">
@@ -2369,7 +2557,7 @@ namespace Azure.Storage.Queues
         /// <see cref="Response{UpdateReceipt}"/>.
         /// </returns>
         private async Task<Response<UpdateReceipt>> UpdateMessageInternal(
-            string messageText,
+            BinaryData message,
             string messageId,
             string popReceipt,
             TimeSpan visibilityTimeout,
@@ -2387,14 +2575,15 @@ namespace Azure.Storage.Queues
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
                 try
                 {
-                    messageText = UsingClientSideEncryption && messageText != default
-                        ? await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
-                            .ClientSideEncryptInternal(messageText, async, cancellationToken).ConfigureAwait(false)
-                        : messageText;
-                    QueueSendMessage queueSendMessage = null;
-                    if (messageText != default)
+                    if (UsingClientSideEncryption)
                     {
-                        queueSendMessage = new QueueSendMessage { MessageText = messageText };
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                            .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
+                    }
+                    QueueSendMessage queueSendMessage = null;
+                    if (message != null)
+                    {
+                        queueSendMessage = new QueueSendMessage { MessageText = QueueMessageCodec.EncodeMessageBody(message, _messageEncoding) };
                     }
 
                     return await QueueRestClient.MessageId.UpdateAsync(
@@ -2422,6 +2611,95 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion UpdateMessage
+
+        #region GenerateSas
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Queue Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="QueueSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
+            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Queue Service SAS Uri based
+        /// on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        public virtual Uri GenerateSasUri(
+            QueueSasBuilder builder)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                // TODO: throw proper exception for non-matching builder name
+                // e.g. containerName doesn't match or leave the containerName in builder
+                // should be left empty. Or should we always default to the client's ContainerName
+                // and chug along if they don't match?
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.QueueName),
+                    nameof(QueueSasBuilder),
+                    nameof(Name));
+            }
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
+            sasUri.Query = builder.ToSasQueryParameters(_storageSharedKeyCredential).ToString();
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region Encoding
+        private static BinaryData ToBinaryData(string input)
+        {
+            if (input == null)
+            {
+                return null;
+            } else
+            {
+                return new BinaryData(input);
+            }
+        }
+
+        private void AssertEncodingForEncryption()
+        {
+            if (UsingClientSideEncryption && _messageEncoding != QueueMessageEncoding.None)
+            {
+                throw new ArgumentException($"{nameof(SpecializedQueueClientOptions)} requires {nameof(QueueMessageEncoding)}.{nameof(QueueMessageEncoding.None)}" +
+                    $" if {nameof(SpecializedQueueClientOptions.ClientSideEncryption)} is enabled as encrypted payload is already Base64 encoded.");
+            }
+        }
+        #endregion Encoding
     }
 }
 
@@ -2445,6 +2723,7 @@ namespace Azure.Storage.Queues.Specialized
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
-                clientSideEncryptionOptions);
+                clientSideEncryptionOptions,
+                client.MessageEncoding);
     }
 }

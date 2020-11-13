@@ -37,7 +37,7 @@ To quickly create the needed Service Bus resources in Azure and to receive a con
 Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.4
+dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.9
 ```
 
 ### Authenticate the client
@@ -215,7 +215,7 @@ Dead lettering a message is similar to deferring with one main difference being 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
 await receiver.DeadLetterMessageAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.

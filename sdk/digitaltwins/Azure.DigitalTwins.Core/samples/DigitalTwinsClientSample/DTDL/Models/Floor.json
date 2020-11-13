@@ -1,5 +1,5 @@
 {
-    "@id": "dtmi:samples:Floor;1",
+    "@id": "dtmi:com:samples:Floor;1",
     "@type": "Interface",
     "@context": "dtmi:dtdl:context;2",
     "displayName": "Floor",
@@ -7,7 +7,7 @@
         {
             "@type": "Relationship",
             "name": "contains",
-            "target": "dtmi:samples:Room;1"
+            "target": "dtmi:com:samples:Room;1"
         },
         {
             "@type": "Property",

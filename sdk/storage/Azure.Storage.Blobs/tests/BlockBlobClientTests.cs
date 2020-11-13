@@ -2098,6 +2098,48 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_SingleUpload_DefaultThreshold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes - 1;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            await blob.UploadAsync(content: stream);
+
+            // Assert
+            Response<BlockList> blockListResponse = await blob.GetBlockListAsync();
+            Assert.AreEqual(0, blockListResponse.Value.CommittedBlocks.ToList().Count);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_MultipleUpload_DefaultThreshold()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes + 1;
+            var data = GetRandomBuffer(blobSize);
+            using Stream stream = new MemoryStream(data);
+
+            // Act
+            await blob.UploadAsync(content: stream);
+
+            // Assert
+            Response<BlockList> blockListResponse = await blob.GetBlockListAsync();
+            Assert.AreEqual(33, blockListResponse.Value.CommittedBlocks.ToList().Count);
+        }
+
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadAsync_VersionId()
@@ -2768,19 +2810,6 @@ namespace Azure.Storage.Blobs.Test
             public BlockListTypes BlockListTypes { get; set; }
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
-        }
-
-        private async Task<BlockBlobClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
-        {
-            blobName ??= GetNewBlobName();
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            var data = GetRandomBuffer(Constants.KB);
-
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            return blob;
         }
     }
 }

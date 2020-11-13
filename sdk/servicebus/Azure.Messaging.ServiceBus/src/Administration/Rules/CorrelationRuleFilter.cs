@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// </para>
     /// <para>
     /// The CorrelationRuleFilter provides an efficient shortcut for declarations of filters that deal only with correlation equality.
-    /// In this case the cost of the lexigraphical analysis of the expression can be avoided.
+    /// In this case the cost of the lexicographical analysis of the expression can be avoided.
     /// Not only will correlation filters be optimized at declaration time, but they will also be optimized at runtime.
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>
@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 SessionId = SessionId,
                 ReplyToSessionId = ReplyToSessionId,
                 ContentType = ContentType,
-                Properties = (Properties as PropertyDictionary).Clone()
+                ApplicationProperties = (ApplicationProperties as PropertyDictionary).Clone()
             };
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
         /// and IList / IDictionary of supported types
         /// </remarks>
-        public IDictionary<string, object> Properties { get; internal set; } = new PropertyDictionary();
+        public IDictionary<string, object> ApplicationProperties { get; internal set; } = new PropertyDictionary();
 
         /// <summary>
         /// Converts the value of the current instance to its equivalent string representation.
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", ReplyToSessionId);
             AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", ContentType);
 
-            foreach (var pair in Properties)
+            foreach (var pair in ApplicationProperties)
             {
                 string propertyName = pair.Key;
                 object propertyValue = pair.Value;
@@ -243,14 +243,14 @@ namespace Azure.Messaging.ServiceBus.Administration
                     && string.Equals(ReplyToSessionId, correlationRuleFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ContentType, correlationRuleFilter.ContentType, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (Properties.Count != correlationRuleFilter.Properties.Count)
+                    if (ApplicationProperties.Count != correlationRuleFilter.ApplicationProperties.Count)
                     {
                         return false;
                     }
 
-                    foreach (var param in Properties)
+                    foreach (var param in ApplicationProperties)
                     {
-                        if (!correlationRuleFilter.Properties.TryGetValue(param.Key, out var otherParamValue) ||
+                        if (!correlationRuleFilter.ApplicationProperties.TryGetValue(param.Key, out var otherParamValue) ||
                             (param.Value == null ^ otherParamValue == null) ||
                             (param.Value != null && !param.Value.Equals(otherParamValue)))
                         {
@@ -265,12 +265,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public static bool operator ==(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -286,12 +281,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public static bool operator !=(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             return !(left == right);

@@ -1,6 +1,21 @@
 # Release History
 
-## 5.3.0-beta.4 (Unreleased)
+## 5.3.0-beta.5 (Unreleased)
+
+
+## 5.3.0-beta.4 (2020-11-10)
+
+### Changes
+
+#### New Features
+
+- Additional options for tuning load balancing have been added to the `EventProcessorClientOptions`.
+
+- Documentation used for auto-completion via Intellisense and other tools has been enhanced in many areas, addressing gaps and commonly asked questions.
+
+#### Key Bug Fixes
+
+- The calculation for authorization token expiration has been fixed, resulting in fewer token refreshes and network requests.
 
 ## 5.3.0-beta.3 (2020-09-30)
 

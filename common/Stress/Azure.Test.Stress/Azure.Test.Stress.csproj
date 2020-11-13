@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="System.Reflection.Emit" />
+  </ItemGroup>
+
+</Project>

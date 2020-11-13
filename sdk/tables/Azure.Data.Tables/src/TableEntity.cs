@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables
@@ -16,7 +17,7 @@ namespace Azure.Data.Tables
     /// This type can be used with any of the generic entity interaction methods in <see cref="TableClient"/> where entity model type flexibility is desired.
     /// For example, if your table contains a jagged schema, or you need to precisely update a subset of properties in a <see cref="TableUpdateMode.Merge"/> mode operation.
     /// </remarks>
-    public partial class TableEntity : ITableEntity
+    public sealed partial class TableEntity : ITableEntity
     {
         private readonly IDictionary<string, object> _properties;
 
@@ -58,12 +59,12 @@ namespace Azure.Data.Tables
         /// <value>An <see cref="ETag"/> containing the ETag value for the entity.</value>
         public ETag ETag
         {
-            get { return new ETag(GetString(TableConstants.PropertyNames.EtagOdata)); }
-            set { _properties[TableConstants.PropertyNames.EtagOdata] = value.ToString(); }
+            get { return new ETag(GetString(TableConstants.PropertyNames.ETag)); }
+            set { _properties[TableConstants.PropertyNames.ETag] = value.ToString(); }
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="TableEntity" /> class.
+        /// Creates an instance of the <see cref="TableEntity" /> class without any properties initialized.
         /// </summary>
         public TableEntity()
             : this(null)
@@ -83,7 +84,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties in the <see cref="IDictionary"/>.
+        /// Initializes a new instance of the <see cref="TableEntity"/> class with properties specified in <paramref name="values"/>.
         /// </summary>
         /// <param name="values">A <see cref="IDictionary"/> containing the initial values of the entity.</param>
         public TableEntity(IDictionary<string, object> values)
@@ -95,7 +96,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -115,7 +116,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="String"/> property called
+        /// <see cref="string"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -135,7 +136,17 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Double"/> property called
+        /// <see cref="DateTimeOffset"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <see cref="DateTimeOffset" />.</exception>
+        public DateTimeOffset? GetDateTimeOffset(string key) => GetValue<DateTimeOffset?>(key);
+
+        /// <summary>
+        /// Get the value of a <see cref="TableEntity"/>'s
+        /// <see cref="double"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -155,7 +166,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int32"/> property called
+        /// <see cref="int"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -165,7 +176,7 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
-        /// <see cref="Int64"/> property called
+        /// <see cref="long"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
@@ -179,13 +190,13 @@ namespace Azure.Data.Tables
         /// <param name="key">The property name.</param>
         /// <param name="value">The property value.</param>
         /// <exception cref="InvalidOperationException">The given <paramref name="value"/> does not match the type of the existing value associated with given <paramref name="key"/>.</exception>
-        private protected void SetValue(string key, object value)
+        private void SetValue(string key, object value)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             if (value != null && _properties.TryGetValue(key, out object existingValue) && existingValue != null)
             {
-                EnforceType(existingValue.GetType(), value.GetType());
+                value = CoerceType(existingValue, value);
             }
             _properties[key] = value;
         }
@@ -197,7 +208,7 @@ namespace Azure.Data.Tables
         /// <param name="key">The property name.</param>
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of given type <typeparamref name="T"/>.</exception>
-        private protected T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
+        private T GetValue<T>(string key) => (T)GetValue(key, typeof(T));
 
         /// <summary>
         /// Get an entity property.
@@ -206,7 +217,7 @@ namespace Azure.Data.Tables
         /// <param name="type">The expected type of the property value.</param>
         /// <returns>The value of the property.</returns>
         /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type <paramref name="type"/>.</exception>
-        private protected object GetValue(string key, Type type = null)
+        private object GetValue(string key, Type type = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
             if (!_properties.TryGetValue(key, out object value) || value == null)
@@ -234,6 +245,38 @@ namespace Azure.Data.Tables
                     CultureInfo.InvariantCulture,
                     $"Cannot return {requestedType} type for a {givenType} typed property."));
             }
+        }
+
+        /// <summary>
+        /// Performs type coercion for numeric types.
+        /// <param name="newValue"/> of type int will be coerced to long or double if <param name="existingValue"/> is typed as long or double.
+        /// All other type assignment changes will be accepted as is.
+        /// </summary>
+        private static object CoerceType(object existingValue, object newValue)
+        {
+            if (!existingValue.GetType().IsAssignableFrom(newValue.GetType()))
+            {
+                return existingValue switch
+                {
+                    double _ => newValue switch
+                    {
+                        // if we already had a double value, preserve it as double even if newValue was an int.
+                        // example: entity["someDoubleValue"] = 5;
+                        int newIntValue => (double)newIntValue,
+                        _ => newValue
+                    },
+                    long _ => newValue switch
+                    {
+                        // if we already had a long value, preserve it as long even if newValue was an int.
+                        // example: entity["someLongValue"] = 5;
+                        int newIntValue => (long)newIntValue,
+                        _ => newValue
+                    },
+                    _ => newValue
+                };
+            }
+
+            return newValue;
         }
     }
 }

@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
@@ -67,7 +69,7 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
-            bool save = TestContext.CurrentContext.Result.FailCount == 0;
+            bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
