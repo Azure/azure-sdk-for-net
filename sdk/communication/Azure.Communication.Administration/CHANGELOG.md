@@ -1,12 +1,31 @@
 # Release History
 
 ## 1.0.0-beta.3 (2020-11-16)
-### Breaking
-- Support long running operations for purchasing phone numbers
-- Renamed `PhoneNumberSearch` to `PhoneNumberReservation`
-
 ### Added
 - Support for mocking all client methods that use models with internal constructors
+- Added support for long-running operations. More detail under Breaking Changes.
+
+### Breaking
+- Support long running operations for purchasing phone numbers
+- Renamed `CreateSearchOptions` to `CreateReservationOptions`
+- Renamed `CreateSearchResponse` to `CreateReservationResponse`
+- Renamed `ReleaseResponse` to `PhoneNumberReleaseResponse`
+- Renamed `PhoneNumberSearch` to `PhoneNumberReservation` and renamed its `searchId` property to `reservationId`
+- Renamed `SearchStatus` to `ReservationStatus`
+- Renamed `CancelSearch` to `CancelReservation`
+- Renamed `CancelSearchAsync` to `CancelReservationAsync`
+- Renamed `GetAllSearches` to `GetAllReservations`
+- Renamed `GetAllSearchesAsync` to `GetAllReservationsAsync`
+- Renamed `GetSearchByIdAsync` to `GetReservationByIdAsync`
+- Renamed `GetSearchById` to `GetReservationById`
+- Renamed `CreateSearchAsync` to `StartReservationAsync` which returns a poller for the long-running operation
+- Renamed `CancelSearchAsync` to `CancelReservationAsync`
+- Renamed `CancelSearch` to `CancelReservation`
+- Renamed `CreateSearch` to `StartReservation`
+- Renamed `PurchaseSearchAsync` to `StartPurchaseReservationAsync` which returns a poller for the long-running operation
+- Renamed `PurchaseSearch` to `StartPurchaseReservation`
+- Renamed `ReleasePhoneNumbersAsync` to `StartReleasePhoneNumbersAsync` which returns a poller for the long-running operation
+- Renamed `ReleasePhoneNumbers` to `StartReleasePhoneNumbers`
 
 ## 1.0.0-beta.2 (2020-10-06)
 Added phone number administration. For more information, please see the [README][read_me] and [documentation][documentation].
