@@ -138,15 +138,24 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            switch (rawProtocols)
+            string[] split = rawProtocols.Split(',');
+
+            int result = 0;
+
+            foreach (string s in split)
             {
-                case Constants.File.SmbProtocol:
-                    return ShareProtocols.Smb;
-                case Constants.File.NfsProtocol:
-                    return ShareProtocols.Nfs;
-                default:
-                    throw new ArgumentException($"Unknown share enabled protocol: {rawProtocols}");
+                switch (s)
+                {
+                    case Constants.File.SmbProtocol:
+                        result |= (int)ShareProtocols.Smb;
+                        break;
+                    case Constants.File.NfsProtocol:
+                        result |= (int)ShareProtocols.Nfs;
+                        break;
+                }
             }
+
+            return (ShareProtocols)result;
         }
     }
 }
