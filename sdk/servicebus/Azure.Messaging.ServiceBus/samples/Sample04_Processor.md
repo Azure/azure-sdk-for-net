@@ -26,7 +26,7 @@ var options = new ServiceBusProcessorOptions
 {
     // By default after the message handler returns, the processor will complete the message
     // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
+    AutoCompleteMessages = false,
 
     // I can also allow for multi-threading
     MaxConcurrentCalls = 2

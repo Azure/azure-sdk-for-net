@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             Assert.That(() => new AmqpReceiver(
                 entityPath: entityName,
-                receiveMode: ReceiveMode.PeekLock,
+                receiveMode: ServiceBusReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             Assert.That(() => new AmqpReceiver(
                 entityPath: "someQueue",
-                receiveMode: ReceiveMode.PeekLock,
+                receiveMode: ServiceBusReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: null,
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             Assert.That(() => new AmqpReceiver(
                 entityPath: "someQueue",
-                receiveMode: ReceiveMode.PeekLock,
+                receiveMode: ServiceBusReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: null,
@@ -159,13 +159,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
@@ -213,13 +213,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
@@ -275,14 +275,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -292,7 +292,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
@@ -333,13 +333,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -350,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()),
@@ -387,13 +387,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -404,7 +404,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<string>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<uint>(),
-                    It.IsAny<ReceiveMode>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()),
@@ -440,13 +440,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                    It.IsAny<string>(),
                    It.IsAny<TimeSpan>(),
                    It.IsAny<uint>(),
-                   It.IsAny<ReceiveMode>(),
+                   It.IsAny<ServiceBusReceiveMode>(),
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
                 default,
@@ -457,7 +457,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<string>(),
                     It.IsAny<TimeSpan>(),
                     It.IsAny<uint>(),
-                    It.IsAny<ReceiveMode>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()),
@@ -467,7 +467,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         private AmqpReceiver CreateReceiver() =>
             new AmqpReceiver(
                 "someQueue",
-                ReceiveMode.PeekLock,
+                ServiceBusReceiveMode.PeekLock,
                 0,
                 Mock.Of<AmqpConnectionScope>(),
                 Mock.Of<ServiceBusRetryPolicy>(),

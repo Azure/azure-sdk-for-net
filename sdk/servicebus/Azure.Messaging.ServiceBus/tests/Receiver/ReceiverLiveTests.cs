@@ -514,7 +514,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var clientOptions = new ServiceBusReceiverOptions()
                 {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = client.CreateReceiver(scope.QueueName, clientOptions);
                 var messageEnum = messages.GetEnumerator();
@@ -547,7 +547,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var clientOptions = new ServiceBusReceiverOptions()
                 {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = client.CreateReceiver(scope.QueueName, clientOptions);
                 var receivedMessage = await receiver.ReceiveMessageAsync();
@@ -736,7 +736,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var receiver = client.CreateReceiver(
                     scope.QueueName,
-                    new ServiceBusReceiverOptions { ReceiveMode = ReceiveMode.ReceiveAndDelete });
+                    new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
 
                 var peekedMessage = await receiver.PeekMessageAsync();
 

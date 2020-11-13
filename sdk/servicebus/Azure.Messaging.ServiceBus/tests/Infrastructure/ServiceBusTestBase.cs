@@ -34,6 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         protected Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
+            Assert.IsNotNull(eventArgs.CancellationToken);
             Assert.Fail(eventArgs.Exception.ToString());
             return Task.CompletedTask;
         }

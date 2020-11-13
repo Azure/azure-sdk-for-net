@@ -237,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 ServiceBusProcessor processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
                     MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
                     MaxConcurrentCalls = 1
                 });
@@ -286,7 +286,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 ServiceBusSessionProcessor processor = client.CreateSessionProcessor(scope.QueueName,
                     new ServiceBusSessionProcessorOptions
                     {
-                        AutoComplete = false,
+                        AutoCompleteMessages = false,
                         MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
                         MaxConcurrentSessions = 1
                     });

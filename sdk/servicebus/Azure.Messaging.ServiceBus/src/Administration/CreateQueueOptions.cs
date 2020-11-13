@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// The maximum delivery count of a message before it is dead-lettered.
         /// </summary>
-        /// <remarks>The delivery count is increased when a message is received in <see cref="ReceiveMode.PeekLock"/> mode
+        /// <remarks>The delivery count is increased when a message is received in <see cref="ServiceBusReceiveMode.PeekLock"/> mode
         /// and didn't complete the message before the message lock expired.
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount

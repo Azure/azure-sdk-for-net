@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var clientOptions = new ServiceBusSessionReceiverOptions
                 {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
                 };
 
                 ServiceBusReceiver receiver = await client.AcceptSessionAsync(

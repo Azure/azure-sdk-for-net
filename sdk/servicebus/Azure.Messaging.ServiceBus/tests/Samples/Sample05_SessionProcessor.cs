@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 {
                     // By default after the message handler returns, the processor will complete the message
                     // If I want more fine-grained control over settlement, I can set this to false.
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
 
                     // I can also allow for processing multiple sessions
                     MaxConcurrentSessions = 5,

@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.ViaPartitionKey"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
