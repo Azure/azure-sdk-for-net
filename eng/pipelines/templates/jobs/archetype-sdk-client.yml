@@ -32,6 +32,10 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          useGlobalJson: true
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -87,6 +91,10 @@ jobs:
         inputs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          useGlobalJson: true
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
@@ -142,6 +150,10 @@ jobs:
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          useGlobalJson: true
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
