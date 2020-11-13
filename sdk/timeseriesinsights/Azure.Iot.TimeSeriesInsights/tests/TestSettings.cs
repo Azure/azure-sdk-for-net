@@ -36,10 +36,9 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 return;
             }
 
+
             string codeBase = Assembly.GetExecutingAssembly().Location;
-            var uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            string workingDirectory = Path.GetDirectoryName(path);
+            string workingDirectory = Path.GetDirectoryName(codeBase);
 
             string userName = Environment.UserName;
 

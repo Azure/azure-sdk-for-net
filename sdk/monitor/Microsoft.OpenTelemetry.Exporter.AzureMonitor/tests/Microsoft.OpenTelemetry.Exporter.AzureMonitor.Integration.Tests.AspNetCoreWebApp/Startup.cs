@@ -21,8 +21,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options =>
+            {
+#if NET5_0
+                options.EnableEndpointRouting = false;
+#endif
 #pragma warning disable 618
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 #pragma warning restore 618
         }
 
@@ -42,9 +47,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.AspNet
 
             app.UseHttpsRedirection();
 
-#pragma warning disable MVC1005
             app.UseMvc();
-#pragma warning restore MVC1005
         }
     }
 }
