@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Marketplace.Models
 {
 
     /// <summary>
-    /// Defines values for Operation.
+    /// Defines values for Accessibility.
     /// </summary>
-    public static class Operation
+    public static class Accessibility
     {
-        public const string DeletePrivateStoreOffer = "DeletePrivateStoreOffer";
-        public const string Ping = "Ping";
+        public const string Unknown = "Unknown";
+        public const string Public = "Public";
+        public const string PrivateTenantOnLevel = "PrivateTenantOnLevel";
+        public const string PrivateSubscriptionOnLevel = "PrivateSubscriptionOnLevel";
     }
 }
