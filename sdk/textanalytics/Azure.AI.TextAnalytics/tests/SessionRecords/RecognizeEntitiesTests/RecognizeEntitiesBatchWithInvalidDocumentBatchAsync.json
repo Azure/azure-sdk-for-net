@@ -4,12 +4,18 @@
       "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
         "Content-Length": "297",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c8dff0aa2cb72749a35141f854694d0b-ce372ff3ab74b04d-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201112.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-9209456e22670b4f861f0aa4ffddb07d-6da1bbb2c7bdd246-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201113.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "28b544e5b9a5cf3535ddef0fb0fd1d43",
         "x-ms-return-client-request-id": "true"
       },
@@ -49,12 +55,12 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "3637f752-d1ba-4630-8251-8690b53cbe20",
+        "apim-request-id": "a4922b0d-7dc3-44e5-a3bf-d5b492cdf2d8",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 12 Nov 2020 19:32:29 GMT",
+        "Date": "Fri, 13 Nov 2020 22:25:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
+        "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "4"
       },
       "ResponseBody": {

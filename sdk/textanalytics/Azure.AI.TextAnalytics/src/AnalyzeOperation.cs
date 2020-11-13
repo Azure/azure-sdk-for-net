@@ -197,8 +197,8 @@ namespace Azure.AI.TextAnalytics
                 try
                 {
                     Response<AnalyzeJobState> update = async
-                        ? await _serviceClient.AnalyzeStatusAsync(Id, _showStats, _top, _skip, cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.AnalyzeStatus(Id, _showStats, _top, _skip, cancellationToken);
+                        ? await _serviceClient.AnalyzeStatusAsync(Id, _showStats, null, null, cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.AnalyzeStatus(Id, _showStats, null, null, cancellationToken);
 
                     _response = update.GetRawResponse();
 
