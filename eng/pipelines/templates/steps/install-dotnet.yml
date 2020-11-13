@@ -9,5 +9,5 @@ steps:
     displayName: 'Use .NET Core 2.1 runtime'
     inputs:
       packageType: runtime
-      version: 2.1
+      version: 2.1.x
   
