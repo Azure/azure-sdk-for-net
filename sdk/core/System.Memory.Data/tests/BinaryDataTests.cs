@@ -336,6 +336,27 @@ namespace System.Tests
         }
 
         [Fact]
+        public void CanSerializeBaseType()
+        {
+            DerivedModel payload = new DerivedModel { A = "value", B = 5, C = true, D = null, E = "derived property" };
+
+            BinaryData data = new BinaryData(jsonSerializable: payload, type: typeof(TestModel));
+            Assert.Null(data.ToObjectFromJson<DerivedModel>().E);
+
+            data = new BinaryData(jsonSerializable: payload, type: typeof(DerivedModel));
+            Assert.Equal("derived property", data.ToObjectFromJson<DerivedModel>().E);
+
+            data = new BinaryData(jsonSerializable: payload);
+            Assert.Equal("derived property", data.ToObjectFromJson<DerivedModel>().E);
+
+            data = BinaryData.FromObjectAsJson<TestModel>(payload);
+            Assert.Null(data.ToObjectFromJson<DerivedModel>().E);
+
+            data = BinaryData.FromObjectAsJson<DerivedModel>(payload);
+            Assert.Equal("derived property", data.ToObjectFromJson<DerivedModel>().E);
+        }
+
+        [Fact]
         public async Task CreateThrowsOnNullStream()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => BinaryData.FromStream(null));
@@ -546,6 +567,11 @@ namespace System.Tests
             Assert.False(stream.CanRead);
             Assert.False(stream.CanSeek);
 
+        }
+
+        private class DerivedModel : TestModel
+        {
+            public string E { get; set; }
         }
 
         private class TestModel
