@@ -49,7 +49,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
@@ -102,7 +101,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: -ServiceDirectory ${{parameters.ServiceDirectory}}
@@ -167,7 +165,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
