@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new StorageAccountCreateParameters(
                     new Sku("Standard_LRS"),
                     kind: "StorageV2",
-                    location: "eastus2euap"));
+                    location: "centraluseuap"));
 
             Assert.NotNull(account);
             StorageAccountId = account.Id;
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         {
             return new SearchService()
             {
-                Location = "EastUS2EUAP",
+                Location = "CentralUSEUAP",
                 Sku = new Management.Search.Models.Sku() { Name = sku },
                 ReplicaCount = 1,
                 PartitionCount = 1

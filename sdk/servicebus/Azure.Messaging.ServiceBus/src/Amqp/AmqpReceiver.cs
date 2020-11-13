@@ -1159,13 +1159,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
-            IList<long> sequenceNumbers,
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
             IReadOnlyList<ServiceBusReceivedMessage> messages = null;
             await _retryPolicy.RunOperation(
                 async (timeout) => messages = await ReceiveDeferredMessagesAsyncInternal(
-                    sequenceNumbers.ToArray(),
+                    sequenceNumbers,
                     timeout).ConfigureAwait(false),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);

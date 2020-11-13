@@ -304,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
-            IList<ServiceBusMessage> messages,
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
             AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
@@ -374,8 +374,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<long[]> ScheduleMessagesAsync(
-            IList<ServiceBusMessage> messages,
+        public override async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
             long[] seqNumbers = null;
@@ -399,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<long[]> ScheduleMessageInternalAsync(
-            IList<ServiceBusMessage> messages,
+            IReadOnlyList<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {

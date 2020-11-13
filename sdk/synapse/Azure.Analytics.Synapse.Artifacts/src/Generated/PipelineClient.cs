@@ -305,5 +305,65 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw;
             }
         }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<PipelineRenamePipelineOperation> StartRenamePipelineAsync(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenamePipelineAsync(pipelineName, request, cancellationToken).ConfigureAwait(false);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual PipelineRenamePipelineOperation StartRenamePipeline(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenamePipeline(pipelineName, request, cancellationToken);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
