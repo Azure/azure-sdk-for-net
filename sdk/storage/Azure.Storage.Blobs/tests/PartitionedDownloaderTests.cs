@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(dataSource.Requests.Count, 10);
+            Assert.AreEqual(dataSource.Requests.Count, 9);
             AssertContent(100, stream);
             Assert.NotNull(result);
         }

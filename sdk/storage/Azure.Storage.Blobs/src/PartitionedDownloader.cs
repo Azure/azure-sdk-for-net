@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferSize.HasValue
                 && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = Math.Min(transferOptions.InitialTransferSize.Value, _rangeSize);
+                _initialRangeSize = transferOptions.InitialTransferSize.Value;
             }
             else
             {
