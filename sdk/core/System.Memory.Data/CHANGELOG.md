@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.1 (2020-11-13)
+## 1.0.1 (2020-11-16)
 - Fix issue where if the type was not passed into the constructor, an exception would be thrown instead of defaulting to
 calling GetType().
 
