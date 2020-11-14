@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Administration;
+using Azure.Communication.Administration.Models;
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

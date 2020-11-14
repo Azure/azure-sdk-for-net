@@ -21,12 +21,14 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="isDeleted"> Flag if a chat thread is soft deleted. </param>
+        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatThreadInfo(string id, string topic, bool? isDeleted, DateTimeOffset? lastMessageReceivedOn)
+        internal ChatThreadInfo(string id, string topic, bool? isDeleted, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
         {
             Id = id;
             Topic = topic;
             IsDeleted = isDeleted;
+            DeletedOn = deletedOn;
             LastMessageReceivedOn = lastMessageReceivedOn;
         }
 
@@ -36,6 +38,8 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> Flag if a chat thread is soft deleted. </summary>
         public bool? IsDeleted { get; }
+        /// <summary> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? LastMessageReceivedOn { get; }
     }

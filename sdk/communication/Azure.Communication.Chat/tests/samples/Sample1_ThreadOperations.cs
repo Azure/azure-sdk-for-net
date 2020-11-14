@@ -31,11 +31,11 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreatorId))
+            var chatParticipant = new ChatParticipant(new CommunicationUser(threadCreatorId))
             {
                 DisplayName = "UserDisplayName"
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
+            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             string threadId = chatThreadClient.Id;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
@@ -53,7 +53,7 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
             var topic = "new topic";
-            await chatThreadClient.UpdateThreadAsync(topic);
+            await chatThreadClient.UpdateTopicAsync(topic);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
@@ -63,8 +63,8 @@ namespace Azure.Communication.Chat.Tests.samples
             #region Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
             try
             {
-                /*@@*/ chatThreadMember = new ChatThreadMember(new CommunicationUser("invalid user"));
-                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
+                /*@@*/ chatParticipant = new ChatParticipant(new CommunicationUser("invalid user"));
+                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             }
             catch (RequestFailedException ex)
             {
