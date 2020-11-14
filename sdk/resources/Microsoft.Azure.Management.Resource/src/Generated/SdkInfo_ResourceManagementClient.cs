@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.ResourceManager
               {
                 new Tuple<string, string, string>("Management", "DeploymentOperations", "2020-06-01"),
                 new Tuple<string, string, string>("Management", "Deployments", "2020-06-01"),
+                new Tuple<string, string, string>("Management", "Providers", "2020-06-01"),
                 new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2020-06-01"),
                 new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2020-06-01"),
                 new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2020-06-01"),

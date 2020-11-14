@@ -16,8 +16,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource management error response.
+    /// Error Response
     /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.)
+    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
