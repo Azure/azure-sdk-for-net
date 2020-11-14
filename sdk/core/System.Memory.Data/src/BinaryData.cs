@@ -52,7 +52,7 @@ namespace System
         public BinaryData(object? jsonSerializable, JsonSerializerOptions? options = default, Type? type = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            _bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type, options);
+            _bytes = JsonSerializer.SerializeToUtf8Bytes(jsonSerializable, type ?? jsonSerializable?.GetType() ?? typeof(object), options);
         }
 
         /// <summary>
