@@ -2466,20 +2466,36 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Operation
 
         /// <summary>
-        /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// StartAnalyzeOperationBatchAsync enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeOperationOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new AnalyzeOperationOptions();
+            Argument.AssertNotNull(options, nameof(options));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -2487,13 +2503,29 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="documents">The list of documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, string language = default, AnalyzeOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -2507,18 +2539,34 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new AnalyzeOperationOptions();
+            Argument.AssertNotNull(options, nameof(options));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
@@ -2526,18 +2574,34 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Analyze Operation enables the application to have multiple tasks including NER, PII and KPE.
+        /// Accepts a list of strings which are analyzed asynchronously.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options">The additional configurable <see cref="AnalyzeOperationOptions"/> </param>
-        /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="options"> The different operations to pass as options.
+        /// You can use it to have multiple tasks to analyze as well as multiple task item per each individual task.
+        /// For example -
+        ///    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+        ///    {
+        ///        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        ///        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        ///        PiiTaskParameters = new PiiTaskParameters(),
+        ///        DisplayName = "AnalyzeOperation"
+        ///    };
+        /// By default ModelVersion is set as 'latest' and it can set from the task parameters.
+        /// KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        /// {
+        ///     ModelVersion = "latest"
+        /// },
+        /// For additional configurable options see <see cref="AnalyzeOperationOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new AnalyzeOperationOptions();
+            Argument.AssertNotNull(options, nameof(options));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await StartAnalyzeOperationBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
