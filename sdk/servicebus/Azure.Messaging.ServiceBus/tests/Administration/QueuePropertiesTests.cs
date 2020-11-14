@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardTo", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"ForwardTo", ex.ParamName);
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var sub = new QueueProperties("Fake Name");
             ArgumentOutOfRangeException ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.AutoDeleteOnIdle = TimeSpan.FromMinutes(2));
 
-            Assert.AreEqual($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}.{Environment.NewLine}Parameter name: AutoDeleteOnIdle", ex.Message);
+            StringAssert.StartsWith($"The value supplied must be greater than or equal to {AdministrationClientConstants.MinimumAllowedAutoDeleteOnIdle}.", ex.Message);
             Assert.AreEqual($"AutoDeleteOnIdle", ex.ParamName);
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardDeadLetteredMessagesTo = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardDeadLetteredMessagesTo", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"ForwardDeadLetteredMessagesTo", ex.ParamName);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.Name = $"{baseUrl}{longName}");
 
-            Assert.AreEqual($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: Name", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"Name", ex.ParamName);
         }
 

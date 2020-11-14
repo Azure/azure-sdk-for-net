@@ -25,12 +25,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         }
 
 
+#if !NET5_0  // "https://github.com/Azure/azure-sdk-for-net/issues/16961")]
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
         /// </summary>
         [Fact]
-        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16961")]
         public async Task ProofOfConcept()
         {
             string testValue = Guid.NewGuid().ToString();
@@ -54,6 +54,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             var baseData = (Models.RequestData)item.Data.BaseData;
             Assert.True(baseData.Url.EndsWith(testValue), "it is expected that the recorded TelemetryItem matches the value of testValue.");
         }
+#endif
 
         /// <summary>
         /// This uses the XUnit ITestOutputHelper to print details to the output of the test run.
