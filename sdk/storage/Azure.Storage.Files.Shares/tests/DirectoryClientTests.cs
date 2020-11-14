@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.Shares.Test
                 directory.CreateAsync(filePermission: filePermission),
                 e =>
                 {
-                    Assert.AreEqual("filePermission", e.Message);
+                    Assert.AreEqual("filePermission", e.ParamName);
                     StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
                 });
         }

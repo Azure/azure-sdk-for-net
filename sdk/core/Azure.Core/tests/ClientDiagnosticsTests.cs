@@ -144,7 +144,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
 
-            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links").GetValue(startEvent.Value);
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links").GetValue(startEvent.Value);
             Activity linkedActivity = activities.Single();
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);

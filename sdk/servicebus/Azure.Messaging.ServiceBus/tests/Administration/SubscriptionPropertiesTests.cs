@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => sub.ForwardTo = $"{baseUrl}{longName}");
 
-            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.{Environment.NewLine}Parameter name: ForwardTo", ex.Message);
+            StringAssert.StartsWith($"Entity path '{longName}' exceeds the '260' character limit.", ex.Message);
             Assert.AreEqual($"ForwardTo", ex.ParamName);
         }
 
