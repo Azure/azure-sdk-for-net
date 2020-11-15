@@ -393,6 +393,14 @@ foreach ($templateFile in $templateFiles) {
                 $DebugPreference = "Continue"
             }
             New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+        } catch {
+            Write-Output @"
+==================================================
+For help debugging live test provisioning issues,
+see http://aka.ms/azsdk/engsys/live-test-help,
+==================================================
+"@
+            throw
         } finally {
             $DebugPreference = $lastDebugPreference
         }

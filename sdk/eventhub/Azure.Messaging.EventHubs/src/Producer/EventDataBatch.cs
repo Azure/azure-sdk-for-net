@@ -11,7 +11,9 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   A set of <see cref="EventData" /> with size constraints known up-front,
-    ///   intended to be sent to the Event Hubs service as a single batch.
+    ///   intended to be sent to the Event Hubs service in a single operation.
+    ///   When published, the result is atomic; either all events that belong to the batch
+    ///   were successful or all have failed.  Partial success is not possible.
     /// </summary>
     ///
     /// <remarks>
