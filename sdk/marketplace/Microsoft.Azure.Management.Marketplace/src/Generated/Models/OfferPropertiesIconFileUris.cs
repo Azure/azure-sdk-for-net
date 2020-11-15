@@ -13,23 +13,28 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Icon
+    /// <summary>
+    /// Icon File Uris
+    /// </summary>
+    public partial class OfferPropertiesIconFileUris
     {
         /// <summary>
-        /// Initializes a new instance of the Icon class.
+        /// Initializes a new instance of the OfferPropertiesIconFileUris
+        /// class.
         /// </summary>
-        public Icon()
+        public OfferPropertiesIconFileUris()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Icon class.
+        /// Initializes a new instance of the OfferPropertiesIconFileUris
+        /// class.
         /// </summary>
         /// <param name="iconKind">Icon size. Possible values include: 'Small',
         /// 'Medium', 'Large', 'Wide', 'Hero'</param>
         /// <param name="uri">Icon uri</param>
-        public Icon(string iconKind = default(string), string uri = default(string))
+        public OfferPropertiesIconFileUris(string iconKind = default(string), string uri = default(string))
         {
             IconKind = iconKind;
             Uri = uri;
