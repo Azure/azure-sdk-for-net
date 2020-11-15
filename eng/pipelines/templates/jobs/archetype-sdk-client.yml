@@ -71,7 +71,7 @@ jobs:
         parameters:
           ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
             Directory: ''
-            Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- '*.md')
+            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
             Directory: sdk/${{ parameters.ServiceDirectory }}
           CheckLinkGuidance: $true
