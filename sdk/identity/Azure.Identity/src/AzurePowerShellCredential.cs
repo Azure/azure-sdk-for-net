@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -22,6 +23,15 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private const int PowerShellProcessTimeoutMs = 10000;
+        private AzurePowerShellCredentialOptions _azurePowerShellCredentialOptions;
+
+        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
+        private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
+
+        private const string AzurePowerShellNotLogIn = "Please run 'Connect-AzAccount' to set up account";
+
+        private const string AzurePowerShellNoContext = "NoContext";
+
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         //private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
@@ -30,15 +40,24 @@ namespace Azure.Identity
 
 
         /// <summary>
-        /// Create an instance of AzurePowerShellCredential class.
+        /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
         /// </summary>
         public AzurePowerShellCredential()
-            : this(CredentialPipeline.GetInstance(null), default)
+            : this(default, default, default)
         { }
 
-        internal AzurePowerShellCredential(CredentialPipeline pipeline, IProcessService processService)
+        /// <summary>
+        /// Creates a new instance of the <see cref="AzurePowerShellCredential"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Options for configuring the credential.</param>
+        public AzurePowerShellCredential(AzurePowerShellCredentialOptions options) : this(options, default, default)
         {
-            _pipeline = pipeline;
+        }
+
+        internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
+        {
+            _azurePowerShellCredentialOptions = options;
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
         }
 
@@ -89,36 +108,31 @@ namespace Azure.Identity
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs), cancellationToken);
 
-            string output = string.Empty;
+            string output;
             try
             {
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
+
+                CheckForErrors(output);
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
-                throw new AuthenticationFailedException("AzureCliTimeoutError");
+                throw new AuthenticationFailedException(AzurePowerShellTimeoutError);
             }
             catch (InvalidOperationException exception)
             {
-
-                throw new AuthenticationFailedException($"{exception.Message}");
-
-                // bool isWinError = exception.Message.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
-
-                // bool isOtherOsError = AzNotFoundPattern.IsMatch(exception.Message);
-
-                //   if (isWinError || isOtherOsError)
-                //     {
-                //        throw new CredentialUnavailableException(AzureCLINotInstalled);
-                //    }
-
-               // bool isLoginError = exception.Message.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
-
-
-         //       throw new AuthenticationFailedException($"{AzureCliFailedError} {exception.Message}");
+                throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
 
-            return DeserializeOutput(output);
+            return GetTokenWithExpirationDateTimeUtc(output);
+        }
+
+        private static void CheckForErrors(string output)
+        {
+            if (output.Contains(AzurePowerShellNoContext))
+            {
+                throw new CredentialUnavailableException(AzurePowerShellNotLogIn);
+            }
         }
 
         private ProcessStartInfo GetAzurePowerShellProcessStartInfo(string fileName, string argument) =>
@@ -130,15 +144,11 @@ namespace Azure.Identity
                 ErrorDialog = false,
                 CreateNoWindow = true,
                 WorkingDirectory = DefaultWorkingDir
-               // Environment = { { "PATH", _path } }
             };
 
         private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
-
-            string command = $"powershell -c \"$skip = $false; $c = Get-AzContext; if (! $c) {{$skip = $true; Write-Error 'ERROR!'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}\"";
-
-            //string command = $"az account get-access-token --output json --resource {resource}";
+            string command = $"powershell -c \"$skip = $false; $c = Get-AzContext; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}\"";
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -152,11 +162,10 @@ namespace Azure.Identity
             }
         }
 
-
-        private static AccessToken DeserializeOutput(string output)
+        private static AccessToken GetTokenWithExpirationDateTimeUtc(string token)
         {
-            //TODO: Create the right token
-            return new AccessToken(output, DateTimeOffset.MaxValue);
+            var jwtSecurityToken = new JwtSecurityToken(token);
+            return new AccessToken(token, jwtSecurityToken.ValidTo);
         }
 
     }
