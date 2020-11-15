@@ -172,8 +172,13 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate when downloaded from GetSecret.
+        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate.
         /// </summary>
+        /// <remarks>
+        /// Set to <see cref="CertificateContentType.Pkcs12"/> when <see cref="KeyVaultCertificate.Cer"/> contains your raw PKCS#12/PFX bytes,
+        /// or to <see cref="CertificateContentType.Pem"/> when <see cref="KeyVaultCertificate.Cer"/> contains your ASCII PEM-encoded bytes.
+        /// If not specified, <see cref="CertificateContentType.Pkcs12"/> is assumed.
+        /// </remarks>
         public CertificateContentType? ContentType { get; set; }
 
         /// <summary>
@@ -226,6 +231,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Gets the actions to be executed at specified times in the certificates lifetime.
+        /// Currently, only a single <see cref="LifetimeAction"/> is allowed.
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 

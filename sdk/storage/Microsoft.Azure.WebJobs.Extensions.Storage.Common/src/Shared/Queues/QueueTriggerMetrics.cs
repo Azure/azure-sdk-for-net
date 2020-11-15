@@ -4,7 +4,7 @@
 using System;
 using Microsoft.Azure.WebJobs.Host.Scale;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
     /// <summary>
     /// Metrics type representing the status of an Azure Queue.

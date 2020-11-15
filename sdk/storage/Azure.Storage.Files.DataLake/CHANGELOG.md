@@ -1,11 +1,18 @@
 # Release History
 
-## 12.5.0-preview.2 (Unreleased)
+## 12.6.0-beta.1 (Unreleased)
+
+
+## 12.5.0 (2020-11-10)
+- Includes all features from 12.5.0-preview.1
 - Fixed bug where DataLakeFileSystem.SetAccessPolicy() would throw an exception if signed identifier permissions were not in the correct order.
 - Added additional info to exception messages.
 - Added DataLakeDirectoryClient.GetPaths().
 - Fixed bug where Data Lake SDK coudn't handle SASs with start and expiry time in format other than yyyy-MM-ddTHH:mm:ssZ.
 - Added ability to set Position on streams created with DataLakeFileClient.OpenRead().
+- Added CanGenerateSasUri property and GenerateSasUri() to DataLakePathClient, DataLakeFileClient, DataLakeDirectoryClient and DataLakeFileSystemClient.
+- Added CanGenerateAccountSasUri property and GenerateAccountSasUri() to DataLakeServiceClient.
+- Restored single upload threshold for parallel uploads from 5 TB to 256 MB.
 
 ## 12.5.0-preview.1 (2020-09-30)
 - Added support for service version 2020-02-10.

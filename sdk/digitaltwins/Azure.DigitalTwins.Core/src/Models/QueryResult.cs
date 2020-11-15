@@ -9,23 +9,47 @@ using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
+    /// <summary>
+    /// The results of a query operation.
+    /// </summary>
+    /// <typeparam name="T">The type of the individual items in the collection.</typeparam>
     internal partial class QueryResult<T>
     {
+        /// <summary>
+        /// The query results.
+        /// </summary>
         internal IReadOnlyList<T> Value { get; }
 
+        /// <summary>
+        /// A token which can be used to construct a new QuerySpecification to retrieve the next set of results.
+        /// </summary>
         internal string ContinuationToken { get; }
 
+        /// <summary>
+        /// Initializes a new instance of QueryResult.
+        /// </summary>
         internal QueryResult()
         {
             Value = new ChangeTrackingList<T>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of QueryResult.
+        /// </summary>
+        /// <param name="value">The query results.</param>
+        /// <param name="continuationToken">A token which can be used to construct a new QuerySpecification to retrieve the next set of results.</param>
         internal QueryResult(IReadOnlyList<T> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
+        /// <summary>
+        /// Deserialize the JSON element into a QueryResult instance and deserialize each item in the collection into type <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="element">The JSON element to be deserialized into a QueryResult.</param>
+        /// <param name="objectSerializer">The object serializer instance used to deserialize the items in the collection.</param>
+        /// <returns>A collection of query results deserialized into type <typeparamref name="T"/>.</returns>
         internal static QueryResult<T> DeserializeQueryResult(JsonElement element, ObjectSerializer objectSerializer)
         {
             IReadOnlyList<T> items = default;
@@ -38,10 +62,10 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
-                    List<T> array = new List<T>();
+                    var array = new List<T>();
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
+                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
                         T obj = (T)objectSerializer.Deserialize(streamedObject, typeof(T), default);
                         array.Add(obj);
                     }

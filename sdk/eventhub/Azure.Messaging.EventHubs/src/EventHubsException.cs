@@ -183,7 +183,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
-        public override string ToString() => $"{ typeof(EventHubsException).Name }({ Reason })";
+        public override string ToString() =>
+            $"{ typeof(EventHubsException).FullName }({ Reason }): { Message }{ Environment.NewLine }{ StackTrace }";
 
         /// <summary>
         ///   The set of well-known reasons for an Event Hubs operation failure that

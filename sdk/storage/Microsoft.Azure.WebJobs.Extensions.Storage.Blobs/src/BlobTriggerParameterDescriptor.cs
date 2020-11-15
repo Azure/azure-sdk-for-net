@@ -3,10 +3,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Azure.WebJobs.Host.Protocols;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Microsoft.Azure.WebJobs.Host.Protocols
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     /// <summary>Represents a parameter triggered on a blob in Azure Storage.</summary>
     internal class BlobTriggerParameterDescriptor : TriggerParameterDescriptor

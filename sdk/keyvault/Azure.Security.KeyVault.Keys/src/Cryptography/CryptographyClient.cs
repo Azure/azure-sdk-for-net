@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
         /// <param name="keyId">
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>
@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Initializes a new instance of the <see cref="CryptographyClient"/> class.
         /// </summary>
         /// <param name="keyId">
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
+        /// The key identifier of the <see cref="KeyVaultKey"/> which will be used for cryptographic operations.
         /// If you have a key <see cref="Uri"/>, use <see cref="KeyVaultKeyIdentifier"/> to parse the <see cref="KeyVaultKeyIdentifier.VaultUri"/> and other information.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, like DefaultAzureCredential.</param>

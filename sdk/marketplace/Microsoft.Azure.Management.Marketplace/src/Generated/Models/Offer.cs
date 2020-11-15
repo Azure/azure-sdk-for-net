@@ -146,6 +146,5 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.plans")]
         public IList<Plan> Plans { get; set; }
-
     }
 }
