@@ -72,11 +72,10 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
-          parameters:
-            Location: ${{ coalesce(parameters.Location, cloudConfig.value.Location, 'westus2') }}
-            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-            SubscriptionConfiguration: ${{ cloudConfig.value.SubscriptionConfiguration }}
-            ArmTemplateParameters: ${{ cloudConfig.value.ArmTemplateParameters }}
+          Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location, 'westus2') }}
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: >
           dotnet test eng/service.proj
