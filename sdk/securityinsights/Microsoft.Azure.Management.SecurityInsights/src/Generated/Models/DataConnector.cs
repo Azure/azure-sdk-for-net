@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Data connector.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataConnector")]
     public partial class DataConnector : ResourceWithEtag
     {
         /// <summary>
