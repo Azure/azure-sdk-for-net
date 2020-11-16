@@ -8,8 +8,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
     {
         public AzureMonitorExporterOptions() { }
         public string ConnectionString { get { throw null; } set { } }
-        public long MaxTransmissionStorageCapacity { get { throw null; } set { } }
-        public string StorageFolder { get { throw null; } set { } }
     }
     public partial class AzureMonitorTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
     {
