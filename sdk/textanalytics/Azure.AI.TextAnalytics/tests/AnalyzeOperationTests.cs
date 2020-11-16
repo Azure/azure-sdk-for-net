@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
             await operation.WaitForCompletionAsync();
 
@@ -219,7 +219,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 //Skip = 1
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
             await operation.WaitForCompletionAsync();
 
@@ -252,7 +252,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 //Top = 1
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, "en", operationOptions);
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchConvenienceDocuments, operationOptions, "en");
 
             await operation.WaitForCompletionAsync();
 
@@ -295,7 +295,7 @@ namespace Azure.AI.TextAnalytics.Tests
             await Task.Run(() => {
                 RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
-                   AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, "en", operationOptions);
+                   AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
                 });
 
                 Assert.IsTrue(ex.ErrorCode.Equals("InvalidArgument"));
@@ -323,7 +323,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 DisplayName = "AnalyzeOperationWithPHIDomain"
             };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, "en", operationOptions);
+            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(documents, operationOptions, "en");
 
             await operation.WaitForCompletionAsync();
 
