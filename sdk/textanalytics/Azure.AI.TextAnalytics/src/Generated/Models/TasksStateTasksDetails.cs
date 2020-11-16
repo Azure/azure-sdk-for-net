@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksDetails. </summary>
-    public partial class TasksStateTasksDetails : TaskState
+    internal partial class TasksStateTasksDetails : TaskState
     {
         /// <summary> Initializes a new instance of TasksStateTasksDetails. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
