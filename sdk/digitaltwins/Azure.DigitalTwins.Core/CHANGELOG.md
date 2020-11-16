@@ -4,7 +4,7 @@
 
 ### New Features
 
-- Added `DigitalTwinsModelFactory` to allow for the creation of certain model objects to enable mocking them for unit tests 
+- Added `DigitalTwinsModelFactory` to allow for the creation of certain model objects to enable mocking them for unit tests.
 
 ### Breaking changes
 
