@@ -10,9 +10,12 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatRecordedTestSanitizer : RecordedTestSanitizer
     {
-        public const string SanitizedUnsignedUserTokenValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+        /// <summary>
+        /// This is a testing/unsigned token required on the sanitized payloads for the playback mode due to format validation on CommunicationUserCredential constructors.
+        /// </summary>
+        public const string SanitizedChatAuthHeaderValue = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
-        public ChatRecordedTestSanitizer() : base()
+        public ChatRecordedTestSanitizer(): base()
         {
             JsonPathSanitizers.Add("$..token");
         }
@@ -21,20 +24,23 @@ namespace Azure.Communication.Chat.Tests
         {
             if (headers.ContainsKey(HttpHeader.Names.Authorization))
             {
-                if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x => x.Contains("Communication.Chat")))
+                if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x=>x.Contains("Communication.Chat")))
                 {
-                    headers[HttpHeader.Names.Authorization] = new[] { SanitizedUnsignedUserTokenValue };
+                    headers[HttpHeader.Names.Authorization] = new[] { SanitizedChatAuthHeaderValue };
                     return;
                 }
                 headers[HttpHeader.Names.Authorization] = new[] { SanitizeValue };
             }
         }
+
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
-            => variableName switch
+        {
+            return variableName switch
             {
                 ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
+        }
 
         private static string SanitizeConnectionString(string connectionString)
         {
