@@ -12,6 +12,6 @@ namespace Azure.AI.TextAnalytics
     public partial class KeyPhrasesTaskParameters
     {
         /// <summary> ModelVersion. </summary>
-        public string ModelVersion { get; set; }
+        public string ModelVersion { get; set; } = "latest";
     }
 }

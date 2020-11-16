@@ -7,15 +7,41 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// TasksStateTasks.
+    /// AnalyzeTasks.
     /// </summary>
     [CodeGenModel("TasksStateTasks")]
-    public partial class TasksStateTasks
+    public partial class AnalyzeTasks
     {
+        /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
+        /// <param name="tasks"></param>
+        /// <param name="idToIndexMap"></param>
+        internal AnalyzeTasks(AnalyzeTasks tasks, IDictionary<string, int> idToIndexMap)
+        {
+            Details = tasks.Details;
+            Completed = tasks.Completed;
+            Failed = tasks.Failed;
+            InProgress = tasks.InProgress;
+            Total = tasks.Total;
+
+            if (tasks.EntityRecognitionTasks.Count > 0)
+            {
+                EntityRecognitionTasks = Transforms.ConvertToEntityRecognitionTasks(tasks.EntityRecognitionTasks, idToIndexMap);
+            }
+
+            if (tasks.EntityRecognitionPiiTasks.Count > 0)
+            {
+                EntityRecognitionPiiTasks = Transforms.ConvertToEntityRecognitionPiiTasks(tasks.EntityRecognitionPiiTasks, idToIndexMap);
+            }
+
+            if (tasks.KeyPhraseExtractionTasks.Count > 0)
+            {
+                KeyPhraseExtractionTasks = Transforms.ConvertToKeyPhraseExtractionTasks(tasks.KeyPhraseExtractionTasks, idToIndexMap);
+            }
+        }
         /// <summary>
         /// Details
         /// </summary>
-        public IReadOnlyList<TaskState> Details { get; }
+        public TasksStateTasksDetails Details { get; }
 
         /// <summary>
         /// Completed
@@ -40,16 +66,16 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// EntityRecognitionTasks
         /// </summary>
-        public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
+        public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; } = new List<EntityRecognitionTasksItem>();
 
         /// <summary>
         /// EntityRecognitionPiiTasks
         /// </summary>
-        public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
+        public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; } = new List<EntityRecognitionPiiTasksItem>();
 
         /// <summary>
         /// KeyPhraseExtractionTasks
         /// </summary>
-        public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
+        public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; } = new List<KeyPhraseExtractionTasksItem>();
     }
 }

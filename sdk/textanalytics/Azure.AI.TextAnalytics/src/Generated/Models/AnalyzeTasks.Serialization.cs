@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class TasksStateTasks
+    public partial class AnalyzeTasks
     {
-        internal static TasksStateTasks DeserializeTasksStateTasks(JsonElement element)
+        internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
-            Optional<IReadOnlyList<TaskState>> details = default;
+            Optional<TasksStateTasksDetails> details = default;
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -32,12 +32,7 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TaskState> array = new List<TaskState>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TaskState.DeserializeTaskState(item));
-                    }
-                    details = array;
+                    details = TasksStateTasksDetails.DeserializeTasksStateTasksDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("completed"))
@@ -106,7 +101,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new TasksStateTasks(Optional.ToList(details), completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks));
+            return new AnalyzeTasks(details.Value, completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> expirationDateTime = default;
-            Guid jobId = default;
+            string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetGuid();
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"))

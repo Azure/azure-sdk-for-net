@@ -15,19 +15,14 @@ namespace Azure.AI.TextAnalytics
     {
         internal static EntityRecognitionPiiTasksItem DeserializeEntityRecognitionPiiTasksItem(JsonElement element)
         {
-            Optional<PiiEntitiesResult> results = default;
+            PiiEntitiesResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            string name = default;
+            Optional<string> name = default;
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = PiiEntitiesResult.DeserializePiiEntitiesResult(property.Value);
                     continue;
                 }
@@ -47,7 +42,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, name, status, results.Value);
+            return new EntityRecognitionPiiTasksItem(lastUpdateDateTime, name.Value, status, results);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.AI.TextAnalytics.Models
         {
             Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
-            TasksStateTasks tasks = default;
+            AnalyzeTasks tasks = default;
             Optional<string> nextLink = default;
             DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> expirationDateTime = default;
-            Guid jobId = default;
+            string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("tasks"))
                 {
-                    tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
+                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))
@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetGuid();
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"))

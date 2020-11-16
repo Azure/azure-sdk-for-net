@@ -18,8 +18,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal JobMetadata(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        internal JobMetadata(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
         {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
             CreatedDateTime = createdDateTime;
             JobId = jobId;
             LastUpdateDateTime = lastUpdateDateTime;
@@ -33,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal JobMetadata(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
+        internal JobMetadata(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
         {
             CreatedDateTime = createdDateTime;
             DisplayName = displayName;
@@ -46,7 +52,6 @@ namespace Azure.AI.TextAnalytics.Models
         public DateTimeOffset CreatedDateTime { get; }
         public string DisplayName { get; }
         public DateTimeOffset? ExpirationDateTime { get; }
-        public Guid JobId { get; }
         public DateTimeOffset LastUpdateDateTime { get; }
         public JobStatus Status { get; }
     }

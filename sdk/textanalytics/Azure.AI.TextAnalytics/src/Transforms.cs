@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
@@ -25,6 +26,23 @@ namespace Azure.AI.TextAnalytics
             }
 
             return new TextAnalyticsError(errorCode, message, target);
+        }
+
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
+        {
+            var errors = new List<TextAnalyticsError>();
+
+            if (internalErrors == null)
+            {
+                return errors;
+            }
+
+            foreach (TextAnalyticsErrorInternal error in internalErrors)
+            {
+                errors.Add(ConvertToError(error));
+            }
+            return errors;
+
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
@@ -247,6 +265,48 @@ namespace Azure.AI.TextAnalytics
             healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
 
             return new RecognizeHealthcareEntitiesResultCollection(healthcareEntititesResults, results.Statistics, results.ModelVersion);
+        }
+
+        #endregion
+
+        #region Analyze Operation
+
+        internal static AnalyzeOperationResult ConvertToAnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            return new AnalyzeOperationResult(jobState, map);
+        }
+
+        internal static IReadOnlyList<KeyPhraseExtractionTasksItem> ConvertToKeyPhraseExtractionTasks(IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<KeyPhraseExtractionTasksItem>();
+            foreach (KeyPhraseExtractionTasksItem task in keyPhraseExtractionTasks)
+            {
+                collection.Add(new KeyPhraseExtractionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionPiiTasksItem> ConvertToEntityRecognitionPiiTasks(IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionPiiTasksItem>();
+            foreach (EntityRecognitionPiiTasksItem task in entityRecognitionPiiTasks)
+            {
+                collection.Add(new EntityRecognitionPiiTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
+        }
+
+        internal static IReadOnlyList<EntityRecognitionTasksItem> ConvertToEntityRecognitionTasks(IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<EntityRecognitionTasksItem>();
+            foreach (EntityRecognitionTasksItem task in entityRecognitionTasks)
+            {
+                collection.Add(new EntityRecognitionTasksItem(task, idToIndexMap));
+            }
+
+            return collection;
         }
 
         #endregion
