@@ -2531,7 +2531,7 @@ namespace Azure.AI.TextAnalytics
         public virtual AnalyzeOperation StartAnalyzeOperationBatch(IEnumerable<string> documents, AnalyzeOperationOptions options, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new AnalyzeOperationOptions();
+            Argument.AssertNotNull(options, nameof(options));
             MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return StartAnalyzeOperationBatch(documentInputs, options, cancellationToken);
@@ -2609,8 +2609,6 @@ namespace Azure.AI.TextAnalytics
 
         private AnalyzeOperation StartAnalyzeOperationBatch(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeOperationOptions();
-
             JobManifestTasks tasks = new JobManifestTasks();
 
             if (options.PiiTaskParameters != null)
@@ -2654,8 +2652,6 @@ namespace Azure.AI.TextAnalytics
 
         private async Task<AnalyzeOperation> StartAnalyzeOperationBatchAsync(MultiLanguageBatchInput batchInput, AnalyzeOperationOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AnalyzeOperationOptions();
-
             JobManifestTasks tasks = new JobManifestTasks();
 
             if (options.PiiTaskParameters != null)
