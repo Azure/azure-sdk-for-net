@@ -86,6 +86,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static string GetHttpStatusCode(this PooledList<KeyValuePair<string, object>> tagObjects)
         {
+            _ = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode);
             var status = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString();
             return status ?? "0";
         }
@@ -112,7 +113,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         internal static object GetTagValue(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
         {
             ActivitySingleTagEnumerator state = new ActivitySingleTagEnumerator(tagName);
-            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(tagObjects, ref state);
+            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(ref tagObjects, ref state);
 
             return state.Value;
         }
@@ -126,18 +127,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             }
 
             ActivityMultipleTagEnumerator state = new ActivityMultipleTagEnumerator(tagNames);
-            ActivityTagsEnumeratorFactory<ActivityMultipleTagEnumerator>.Enumerate(tagObjects, ref state);
+            ActivityTagsEnumeratorFactory<ActivityMultipleTagEnumerator>.Enumerate(ref tagObjects, ref state);
 
             return state.Values;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static object GetTagValues(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
-        {
-            ActivitySingleTagEnumerator state = new ActivitySingleTagEnumerator(tagName);
-            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(tagObjects, ref state);
-
-            return state.Value;
         }
 
         internal struct ActivitySingleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
@@ -209,7 +201,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             private static readonly DictionaryEnumerator<string, object, TState>.ForEachDelegate ForEachTagValueCallbackRef = ForEachTagValueCallback;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static void Enumerate(PooledList<KeyValuePair<string, object>> tagObjects, ref TState state)
+            public static void Enumerate(ref PooledList<KeyValuePair<string, object>> tagObjects, ref TState state)
             {
                 if (tagObjects.Count == 0)
                 {
