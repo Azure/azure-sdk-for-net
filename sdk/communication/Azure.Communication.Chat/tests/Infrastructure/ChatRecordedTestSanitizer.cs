@@ -34,13 +34,12 @@ namespace Azure.Communication.Chat.Tests
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
+            => variableName switch
             {
                 ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
-        }
+
 
         private static string SanitizeConnectionString(string connectionString)
         {
