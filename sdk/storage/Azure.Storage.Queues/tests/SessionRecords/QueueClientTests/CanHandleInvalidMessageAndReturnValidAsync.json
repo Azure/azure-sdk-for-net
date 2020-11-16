@@ -1,0 +1,162 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://kasoboltest.queue.core.windows.net/test-queue-c5683fc2-f70b-440a-29ee-3d7d009be19e",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-74025cf8d478f14bad74c29f231882a1-fcd6bf17c74b8d41-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "14f54917-8966-c9a4-4e04-df6c43ff8841",
+        "x-ms-date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 16 Nov 2020 22:31:45 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "d73ce5be-f003-003f-6d68-bce32f000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://kasoboltest.queue.core.windows.net/test-queue-c5683fc2-f70b-440a-29ee-3d7d009be19e/messages",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "68",
+        "Content-Type": "application/xml",
+        "traceparent": "00-05ad8e8c7496a74cbaf46f5b1777e86c-deca65c6bad4fd4b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "b6654d0f-cda5-1137-5552-8b4e87cf9472",
+        "x-ms-date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": "\u003CQueueMessage\u003E\u003CMessageText\u003Etest_content\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "d73ce5d2-f003-003f-7d68-bce32f000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E356508b7-170f-439c-afc3-0f519046f5e1\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 23 Nov 2020 22:31:46 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAsiJ3RGi81gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://kasoboltest.queue.core.windows.net/test-queue-c5683fc2-f70b-440a-29ee-3d7d009be19e/messages",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "72",
+        "Content-Type": "application/xml",
+        "traceparent": "00-865516e1d4976646877b12ff7821955e-4be903b6d9336746-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f65ddba6-d199-889b-15db-8ae85a70d434",
+        "x-ms-date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": "\u003CQueueMessage\u003E\u003CMessageText\u003EdGVzdF9jb250ZW50\u003C/MessageText\u003E\u003C/QueueMessage\u003E",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "4b3ecf2f-d003-0028-0268-bc234c000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E47a03680-9c1e-47df-ade5-9de544de6ee7\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 23 Nov 2020 22:31:46 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAlw\u002BBRGi81gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/TimeNextVisible\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://kasoboltest.queue.core.windows.net/test-queue-c5683fc2-f70b-440a-29ee-3d7d009be19e/messages?numofmessages=10",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f748a100c83bba428a683967eca7d8ef-fc348addb4ebda46-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "aba85dbf-9d71-ffd9-e40c-845d75cdd81a",
+        "x-ms-date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "Vary": "Origin",
+        "x-ms-request-id": "4b3ecf43-d003-0028-1468-bc234c000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CQueueMessagesList\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E356508b7-170f-439c-afc3-0f519046f5e1\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 23 Nov 2020 22:31:46 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAeJVnVmi81gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 16 Nov 2020 22:32:16 GMT\u003C/TimeNextVisible\u003E\u003CDequeueCount\u003E1\u003C/DequeueCount\u003E\u003CMessageText\u003Etest_content\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003CQueueMessage\u003E\u003CMessageId\u003E47a03680-9c1e-47df-ade5-9de544de6ee7\u003C/MessageId\u003E\u003CInsertionTime\u003EMon, 16 Nov 2020 22:31:46 GMT\u003C/InsertionTime\u003E\u003CExpirationTime\u003EMon, 23 Nov 2020 22:31:46 GMT\u003C/ExpirationTime\u003E\u003CPopReceipt\u003EAgAAAAMAAAAAAAAAeJVnVmi81gE=\u003C/PopReceipt\u003E\u003CTimeNextVisible\u003EMon, 16 Nov 2020 22:32:16 GMT\u003C/TimeNextVisible\u003E\u003CDequeueCount\u003E1\u003C/DequeueCount\u003E\u003CMessageText\u003EdGVzdF9jb250ZW50\u003C/MessageText\u003E\u003C/QueueMessage\u003E\u003C/QueueMessagesList\u003E"
+    },
+    {
+      "RequestUri": "http://kasoboltest.queue.core.windows.net/test-queue-c5683fc2-f70b-440a-29ee-3d7d009be19e",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5ce75916f0c58c4a82aa499a361e8f69-3946eb722cdb5046-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.6.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fc282600-28c7-5ec2-07e3-d180406d9aca",
+        "x-ms-date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 16 Nov 2020 22:31:46 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "d73ce5e5-f003-003f-0e68-bce32f000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1418509458",
+    "Storage_TestConfigDefault": "ProductionTenant\nkasoboltest\nU2FuaXRpemVk\nhttp://kasoboltest.blob.core.windows.net\nhttp://kasoboltest.file.core.windows.net\nhttp://kasoboltest.queue.core.windows.net\nhttp://kasoboltest.table.core.windows.net\n\n\n\n\nhttp://kasoboltest-secondary.blob.core.windows.net\nhttp://kasoboltest-secondary.file.core.windows.net\nhttp://kasoboltest-secondary.queue.core.windows.net\nhttp://kasoboltest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasoboltest.blob.core.windows.net/;QueueEndpoint=http://kasoboltest.queue.core.windows.net/;FileEndpoint=http://kasoboltest.file.core.windows.net/;BlobSecondaryEndpoint=http://kasoboltest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasoboltest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasoboltest-secondary.file.core.windows.net/;AccountName=kasoboltest;AccountKey=Kg==;\nencryptionScope"
+  }
+}

@@ -76,6 +76,10 @@ namespace Azure.Storage.Queues
 
         internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
+        private readonly InvalidQueueMessageHandler _invalidQueueMessageHandler;
+
+        internal virtual InvalidQueueMessageHandler InvalidQueueMessageHandler => _invalidQueueMessageHandler;
+
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -163,6 +167,7 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
         }
 
         /// <summary>
@@ -259,6 +264,7 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
         }
         #endregion ctors
 
@@ -275,7 +281,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics, ClientSideEncryption, MessageEncoding, InvalidQueueMessageHandler);
 
         #region GetQueues
         /// <summary>

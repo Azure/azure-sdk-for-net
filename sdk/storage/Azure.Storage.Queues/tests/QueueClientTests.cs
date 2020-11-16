@@ -14,13 +14,16 @@ using Azure.Storage.Sas;
 using Azure.Core.TestFramework;
 using System.Buffers.Text;
 using System.Text;
+using Moq;
+using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.Queues.Test
 {
     public class QueueClientTests : QueueTestBase
     {
         public QueueClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -774,6 +777,54 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
+        }
+
+        [Test]
+        public async Task FailsOnInvalidQueueMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.ReceiveMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [Test]
+        public async Task CanHandleInvalidMessageAndReturnValid()
+        {
+            // Arrange
+            Mock<InvalidQueueMessageHandler> invalidQueueMessageHandlerMock = new Mock<InvalidQueueMessageHandler>();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64, invalidQueueMessageHandlerMock.Object);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            if (IsAsync)
+            {
+                invalidQueueMessageHandlerMock.Verify(
+                    m => m.OnInvalidMessageAsync(It.IsAny<string>(), It.IsAny<string>(), nonEncodedContent, It.IsAny<CancellationToken>()));
+            }
+            else
+            {
+                invalidQueueMessageHandlerMock.Verify(
+                    m => m.OnInvalidMessage(It.IsAny<string>(), It.IsAny<string>(), nonEncodedContent, It.IsAny<CancellationToken>()));
+            }
         }
 
         [Test]

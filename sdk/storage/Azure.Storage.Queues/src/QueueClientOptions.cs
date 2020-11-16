@@ -108,6 +108,11 @@ namespace Azure.Storage.Queues
         /// </summary>
         public QueueMessageEncoding MessageEncoding { get; set; } = QueueMessageEncoding.None;
 
+        /// <summary>
+        /// TODO (kasobol-msft) add doc.
+        /// </summary>
+        public InvalidQueueMessageHandler InvalidQueueMessageHandler { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion

@@ -126,6 +126,10 @@ namespace Azure.Storage.Queues
 
         internal virtual QueueMessageEncoding MessageEncoding => _messageEncoding;
 
+        private InvalidQueueMessageHandler _invalidQueueMessageHandler;
+
+        internal virtual InvalidQueueMessageHandler InvalidQueueMessageHandler => _invalidQueueMessageHandler;
+
         /// <summary>
         /// Gets the name of the queue.
         /// </summary>
@@ -216,6 +220,7 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = conn.Credentials as StorageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
 
@@ -318,6 +323,7 @@ namespace Azure.Storage.Queues
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions);
             _storageSharedKeyCredential = storageSharedKeyCredential;
             _messageEncoding = options.MessageEncoding;
+            _invalidQueueMessageHandler = options.InvalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
 
@@ -346,13 +352,17 @@ namespace Azure.Storage.Queues
         /// <param name="messageEncoding">
         /// The encoding of the message sent over the wire.
         /// </param>
+        /// <param name="invalidQueueMessageHandler">
+        /// TODO (kasobol-msft) add doc.
+        /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipeline pipeline,
             QueueClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             ClientSideEncryptionOptions encryptionOptions,
-            QueueMessageEncoding messageEncoding)
+            QueueMessageEncoding messageEncoding,
+            InvalidQueueMessageHandler invalidQueueMessageHandler)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
@@ -361,6 +371,7 @@ namespace Azure.Storage.Queues
             _clientDiagnostics = clientDiagnostics;
             _clientSideEncryption = QueueClientSideEncryptionOptions.CloneFrom(encryptionOptions);
             _messageEncoding = messageEncoding;
+            _invalidQueueMessageHandler = invalidQueueMessageHandler;
             AssertEncodingForEncryption();
         }
         #endregion ctors
@@ -1907,8 +1918,11 @@ namespace Azure.Storage.Queues
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}\n" +
                     $"{nameof(visibilityTimeout)}: {visibilityTimeout}");
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
+
                     var response = await QueueRestClient.Messages.DequeueAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -1925,29 +1939,78 @@ namespace Azure.Storage.Queues
                     if (response.IsUnavailable())
                     {
                         return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
-                    }
-                    else if (UsingClientSideEncryption)
+                    } else
                     {
-                        return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
-                            response.GetRawResponse());
-                    }
-                    else
-                    {
-                        return Response.FromValue(response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
+                        QueueMessage[] queueMessages;
+                        if (_invalidQueueMessageHandler != null)
+                        {
+                            queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+                        } else
+                        {
+                            queueMessages = response.Value.Select(x => QueueMessage.ToQueueMessage(x, _messageEncoding)).ToArray();
+                        }
+
+                        if (UsingClientSideEncryption)
+                        {
+                            return Response.FromValue(
+                                await new QueueClientSideDecryptor(ClientSideEncryption)
+                                    .ClientSideDecryptMessagesInternal(queueMessages, async, cancellationToken).ConfigureAwait(false),
+                                response.GetRawResponse());
+                        }
+                        else
+                        {
+                            return Response.FromValue(queueMessages, response.GetRawResponse());
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
+                    scope.Failed(ex);
                     Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
+                    scope.Dispose();
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
+        }
+
+        private async Task<QueueMessage[]> ToQueueMessagesWithInvalidMessageHandling(
+            IEnumerable<DequeuedMessageItem> dequeuedMessageItems,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            List<QueueMessage> queueMessages = new List<QueueMessage>();
+
+            foreach (var dequeuedMessageItem in dequeuedMessageItems)
+            {
+                try
+                {
+                    queueMessages.Add(QueueMessage.ToQueueMessage(dequeuedMessageItem, _messageEncoding));
+                }
+                catch (FormatException)
+                {
+                    if (async)
+                    {
+                        await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                            dequeuedMessageItem.MessageId,
+                            dequeuedMessageItem.PopReceipt,
+                            dequeuedMessageItem.MessageText,
+                            cancellationToken).ConfigureAwait(false);
+                    } else
+                    {
+                        _invalidQueueMessageHandler.OnInvalidMessage(
+                            dequeuedMessageItem.MessageId,
+                            dequeuedMessageItem.PopReceipt,
+                            dequeuedMessageItem.MessageText,
+                            cancellationToken);
+                    }
+                }
+            }
+
+            return queueMessages.ToArray();
         }
 
         #endregion ReceiveMessages
@@ -2724,6 +2787,7 @@ namespace Azure.Storage.Queues.Specialized
                 client.Version,
                 client.ClientDiagnostics,
                 clientSideEncryptionOptions,
-                client.MessageEncoding);
+                client.MessageEncoding,
+                client.InvalidQueueMessageHandler);
     }
 }
