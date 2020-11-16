@@ -1,17 +1,20 @@
 # Release History
 
-## 11.2.0-beta.2 (Unreleased)
+## 11.2.0-beta.3 (Unreleased)
+
+
+## 11.2.0-beta.2 (2020-11-10)
+
+### Added
+
+- Added `EncryptionKey` to `SearchIndexer`, `SearchIndexerDataSourceConnection`, and `SearchIndexerSkillset`.
+- Added configuration options to tune the performance of `SearchIndexingBufferedSender<T>`.
 
 ### Fixed
 
 - Fixed issue calling `SearchIndexClient.GetIndexNames` that threw an exception ([#15590](https://github.com/Azure/azure-sdk-for-net/issues/15590))
 - Fixed issue where `ScoringProfile.FunctionAggregation` did not correctly handle null values ([#16570](https://github.com/Azure/azure-sdk-for-net/issues/16570))
 - Fixed overly permissive date parsing on facets ([#16412](https://github.com/Azure/azure-sdk-for-net/issues/16412))
-
-### Added
-
-- Added `EncryptionKey` to `SearchIndexer`, `SearchIndexerDataSourceConnection`, and `SearchIndexerSkillset`.
-- Added configuration options to tune the performance of `SearchIndexingBufferedSender<T>`.
 
 ## 11.2.0-beta.1 (2020-10-09)
 

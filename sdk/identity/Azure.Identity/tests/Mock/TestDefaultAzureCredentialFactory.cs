@@ -20,13 +20,13 @@ namespace Azure.Identity.Tests.Mock
             _vscAdapter = vscAdapter;
         }
 
-        public Func<IManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
+        public Func<ManagedIdentitySource> ManagedIdentitySourceFactory { get; set; }
 
         public override TokenCredential CreateEnvironmentCredential()
             => new EnvironmentCredential(Pipeline);
 
         public override TokenCredential CreateManagedIdentityCredential(string clientId)
-            => new ManagedIdentityCredential(Pipeline, CreateManagedIdentityClient(clientId));
+            => new ManagedIdentityCredential(CreateManagedIdentityClient(clientId));
 
         public override TokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
             => new SharedTokenCacheCredential(tenantId, username, default, Pipeline);

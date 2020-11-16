@@ -94,15 +94,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public void ScheduleEmptyListShouldThrow()
+        public async Task ScheduleEmptyListShouldNotThrow()
         {
             var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentException>(async () => await mock.Object.ScheduleMessagesAsync(
+
+            IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
                 new List<ServiceBusMessage>(),
-                default));
+                default);
+            Assert.IsEmpty(sequenceNums);
         }
 
         [Test]

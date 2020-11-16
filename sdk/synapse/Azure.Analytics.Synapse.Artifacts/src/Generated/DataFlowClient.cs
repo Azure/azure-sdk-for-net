@@ -260,5 +260,65 @@ namespace Azure.Analytics.Synapse.Artifacts
                 throw;
             }
         }
+
+        /// <summary> Renames a dataflow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<DataFlowRenameDataFlowOperation> StartRenameDataFlowAsync(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameDataFlowAsync(dataFlowName, request, cancellationToken).ConfigureAwait(false);
+                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataflow. </summary>
+        /// <param name="dataFlowName"> The data flow name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="request"/> is null. </exception>
+        public virtual DataFlowRenameDataFlowOperation StartRenameDataFlow(string dataFlowName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (dataFlowName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFlowName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DataFlowClient.StartRenameDataFlow");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameDataFlow(dataFlowName, request, cancellationToken);
+                return new DataFlowRenameDataFlowOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDataFlowRequest(dataFlowName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

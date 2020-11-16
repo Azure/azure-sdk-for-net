@@ -2050,6 +2050,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2146,6 +2147,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
@@ -2809,6 +2811,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CanGetParentBlobServiceClient_WithAccountSAS()
         {
             // Arrange

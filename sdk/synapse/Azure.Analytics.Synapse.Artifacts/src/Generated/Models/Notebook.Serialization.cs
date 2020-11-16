@@ -23,13 +23,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(BigDataPool))
             {
-                writer.WritePropertyName("bigDataPool");
-                writer.WriteObjectValue(BigDataPool);
+                if (BigDataPool != null)
+                {
+                    writer.WritePropertyName("bigDataPool");
+                    writer.WriteObjectValue(BigDataPool);
+                }
+                else
+                {
+                    writer.WriteNull("bigDataPool");
+                }
             }
             if (Optional.IsDefined(SessionProperties))
             {
-                writer.WritePropertyName("sessionProperties");
-                writer.WriteObjectValue(SessionProperties);
+                if (SessionProperties != null)
+                {
+                    writer.WritePropertyName("sessionProperties");
+                    writer.WriteObjectValue(SessionProperties);
+                }
+                else
+                {
+                    writer.WriteNull("sessionProperties");
+                }
             }
             writer.WritePropertyName("metadata");
             writer.WriteObjectValue(Metadata);
@@ -74,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        bigDataPool = null;
                         continue;
                     }
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
@@ -84,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sessionProperties = null;
                         continue;
                     }
                     sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
