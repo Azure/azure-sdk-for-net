@@ -5,6 +5,9 @@
 ### Added
 - `System.Text.Json.JsonConverter` implementation for the `ETag`
 
+### Fixes
+- System proxy settings are correctly applied on .NET Framework
+
 ## 1.6.0 (2020-10-28)
 
 ### Added
