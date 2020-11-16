@@ -11,9 +11,9 @@
         "Content-Length": "222",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f8d451ccd1ef1848ade05a11d8293e84-621bee7bec670347-00",
+        "traceparent": "00-acb1dd1d0dca0d4fafe0563f1d1d6422-eb9b919a00de4d4c-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201113.1",
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "a82300e8850457b9e1ddd84e5e66ebf5",
@@ -35,14 +35,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4d15a784-b33f-4d9f-b28e-0c4f294a7363",
+        "apim-request-id": "a30e606a-c8a7-4edc-8784-87b5f3f45a2b",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Fri, 13 Nov 2020 22:25:08 GMT",
+        "Date": "Mon, 16 Nov 2020 19:20:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "103"
+        "x-envoy-upstream-service-time": "106"
       },
       "ResponseBody": {
         "documents": [
