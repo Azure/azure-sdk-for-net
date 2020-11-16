@@ -25,6 +25,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 new ConverterArgumentBindingProvider<QueueMessage>(new CloudQueueMessageDirectConverter()), // $$$: Is this the best way to handle a direct CloudQueueMessage? TODO (kasobol-msft) is this needed?
                 new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter()),
                 new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter()),
+                new ConverterArgumentBindingProvider<BinaryData>(new StorageQueueMessageToBinaryDataConverter()),
                 new UserTypeArgumentBindingProvider()); // Must come last, because it will attempt to bind all types.
 
         private readonly INameResolver _nameResolver;

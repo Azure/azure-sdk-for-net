@@ -69,11 +69,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                 binding
                     .AddConverter<byte[], QueueMessage>(ConvertByteArrayToCloudQueueMessage)
                     .AddConverter<string, QueueMessage>(ConvertStringToCloudQueueMessage)
+                    .AddConverter<BinaryData, QueueMessage>(ConvertBinaryDataToCloudQueueMessage)
                     .AddOpenConverter<OpenType.Poco, QueueMessage>(ConvertPocoToCloudQueueMessage);
 
                 context // global converters, apply to multiple attributes.
                      .AddConverter<QueueMessage, byte[]>(ConvertCloudQueueMessageToByteArray)
-                     .AddConverter<QueueMessage, string>(ConvertCloudQueueMessageToString);
+                     .AddConverter<QueueMessage, string>(ConvertCloudQueueMessageToString)
+                     .AddConverter<QueueMessage, BinaryData>(ConvertCloudQueueMessageToBinaryData);
 
                 var builder = new QueueBuilder(this);
 
@@ -139,6 +141,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                 return arg.Body.ToArray();
             }
 
+            private BinaryData ConvertCloudQueueMessageToBinaryData(QueueMessage arg)
+            {
+                return arg.Body;
+            }
+
             private static string ConvertCloudQueueMessageToString(QueueMessage arg)
             {
                 return arg.Body.ToValidUTF8String();
@@ -147,6 +154,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
                 return QueuesModelFactory.QueueMessage(null, null, new BinaryData(arg), 0);
+            }
+
+            private static QueueMessage ConvertBinaryDataToCloudQueueMessage(BinaryData arg, QueueAttribute attrResolved)
+            {
+                return QueuesModelFactory.QueueMessage(null, null, arg, 0);
             }
 
             private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)

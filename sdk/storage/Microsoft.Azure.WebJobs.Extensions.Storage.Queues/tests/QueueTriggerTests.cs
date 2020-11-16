@@ -152,6 +152,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(expectedContent, result);
         }
 
+
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryData_Binds()
+        {
+            byte[] expectedContent = new byte[] { 0x31, 0x32, 0x33 };
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryDataAndMessageIsEmpty_Binds()
+        {
+            byte[] expectedContent = new byte[0];
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        [Test]
+        public async Task QueueTrigger_IfBoundToBinaryDataAndMessageIsNonUtf8_Binds()
+        {
+            byte[] expectedContent = new byte[] { 0xFF, 0x00 }; // Not a valid UTF-8 byte sequence.
+            await TestBindToBinaryData(expectedContent);
+        }
+
+        private async Task TestBindToBinaryData(byte[] expectedContent)
+        {
+            // Arrange
+            var queue = await CreateQueue(queueServiceClient, QueueName);
+            await queue.SendMessageAsync(BinaryData.FromBytes(expectedContent));
+
+            // Act
+            BinaryData result = await RunTriggerAsync<BinaryData>(typeof(BindToBinaryDataProgram),
+                (s) => BindToBinaryDataProgram.TaskSource = s);
+
+            // Assert
+            Assert.AreEqual(expectedContent, result.ToArray());
+        }
+
         [Test]
         public async Task QueueTrigger_IfBoundToPoco_Binds()
         {
@@ -749,6 +786,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             public static TaskCompletionSource<byte[]> TaskSource { get; set; }
 
             public static void Run([QueueTrigger(QueueName)] byte[] message)
+            {
+                TaskSource.TrySetResult(message);
+            }
+        }
+
+        private class BindToBinaryDataProgram
+        {
+            public static TaskCompletionSource<BinaryData> TaskSource { get; set; }
+
+            public static void Run([QueueTrigger(QueueName)] BinaryData message)
             {
                 TaskSource.TrySetResult(message);
             }
