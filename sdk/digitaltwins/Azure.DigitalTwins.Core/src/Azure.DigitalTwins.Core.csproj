@@ -13,7 +13,7 @@
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.2.0</Version>
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
   </PropertyGroup>
 
@@ -53,5 +53,4 @@
   </ItemGroup>
 
   <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
-
 </Project>
