@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using BenchmarkDotNet.Attributes;
+using OpenTelemetry.Trace;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
 {
@@ -13,6 +15,22 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         private PooledList<KeyValuePair<string, object>> PooledList_Items;
         private IEnumerable<KeyValuePair<string, object>> TagObjects_No_Item;
         private IEnumerable<KeyValuePair<string, object>> TagObjects_Items;
+        private Activity IteamActivity;
+        private Activity EmptyActivity;
+
+        static TagObjectsGetValuesBenchmarks()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
 
         [GlobalSetup]
         public void Setup()
@@ -43,38 +61,33 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
                 ["arrayKey"] = new int[] { 1, 2, 3 },
                 ["somekey"] = "value"
             };
+
+
+            using var activitySource = new ActivitySource("test");
+            this.IteamActivity = activitySource.StartActivity("WithTags");
+            this.IteamActivity.AddTag("intKey", 1);
+            this.IteamActivity.AddTag("doubleKey", 1.1);
+            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpScheme, "https");
+            this.IteamActivity.AddTag("stringKey", "test");
+            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpHost, "localhost");
+            this.IteamActivity.AddTag("boolKey", true);
+            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpHostPort, "8888");
+            this.IteamActivity.AddTag("arrayKey", new int[] { 1, 2, 3 });
+            this.IteamActivity.AddTag("somekey", "value");
+
+            this.EmptyActivity = activitySource.StartActivity("NoTags");
         }
 
         [Benchmark]
         public void GetTagValueEmptyTagObjects()
         {
             (TagObjects_No_Item as Dictionary<string, object>).TryGetValue(SemanticConventions.AttributeHttpHost, out _);
-
-            //object value;
-            //foreach (KeyValuePair<string, object> tag in TagObjects_No_Item)
-            //{
-            //    if (tag.Key == SemanticConventions.AttributeHttpHost)
-            //    {
-            //        value = tag.Value;
-            //        break;
-            //    }
-            //}
         }
 
         [Benchmark]
         public void GetTagValueNonemptyTagObjects()
         {
             (TagObjects_Items as Dictionary<string, object>).TryGetValue(SemanticConventions.AttributeHttpHost, out _);
-
-            //object value;
-            //foreach (KeyValuePair<string, object> tag in TagObjects_Items)
-            //{
-            //    if (tag.Key == SemanticConventions.AttributeHttpHost)
-            //    {
-            //        value = tag.Value;
-            //        break;
-            //    }
-            //}
         }
 
         [Benchmark]
@@ -87,6 +100,18 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         public void GetTagValueNonemptyPooledList()
         {
             object _ = PooledList_Items.GetTagValue(SemanticConventions.AttributeHttpHost);
+        }
+
+        [Benchmark]
+        public void GetTagValueEmptyActivityTags()
+        {
+            object _ = this.EmptyActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
+        }
+
+        [Benchmark]
+        public void GetTagValueNonemptyActivityTags()
+        {
+            object _ = this.IteamActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
         }
     }
 }

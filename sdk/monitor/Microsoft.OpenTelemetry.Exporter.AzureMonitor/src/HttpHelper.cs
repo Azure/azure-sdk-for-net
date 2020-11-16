@@ -112,124 +112,44 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static object GetTagValue(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
         {
-            ActivitySingleTagEnumerator state = new ActivitySingleTagEnumerator(tagName);
-            ActivityTagsEnumeratorFactory<ActivitySingleTagEnumerator>.Enumerate(ref tagObjects, ref state);
+            for (int i = 0; i < tagObjects.Count; i++)
+            {
+                if (tagObjects[i].Key == tagName)
+                {
+                    return tagObjects[i].Value;
+                }
+            }
 
-            return state.Value;
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static object[] GetTagValues(this PooledList<KeyValuePair<string, object>> tagObjects, params string[] tagNames)
         {
-            if (tagNames.Length == 0)
+            int? length = tagNames?.Count();
+            if (length == null || length == 0)
             {
                 return null;
             }
 
-            ActivityMultipleTagEnumerator state = new ActivityMultipleTagEnumerator(tagNames);
-            ActivityTagsEnumeratorFactory<ActivityMultipleTagEnumerator>.Enumerate(ref tagObjects, ref state);
+            object[] values = new object[(int)length];
 
-            return state.Values;
-        }
-
-        internal struct ActivitySingleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
-        {
-            public object Value;
-
-            private readonly string tagName;
-
-            public ActivitySingleTagEnumerator(string tagName)
+            for (int i = 0; i < tagObjects.Count; i++)
             {
-                this.tagName = tagName;
-                this.Value = null;
-            }
-
-            public bool ForEach(KeyValuePair<string, object> item)
-            {
-                if (item.Key == this.tagName)
-                {
-                    this.Value = item.Value;
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
-        internal struct ActivityMultipleTagEnumerator : IActivityEnumerator<KeyValuePair<string, object>>
-        {
-            public object[] Values;
-
-            private readonly string[] tagNames;
-            private int length;
-
-            public ActivityMultipleTagEnumerator(params string[] tagNames)
-            {
-                this.tagNames = tagNames;
-                this.length = tagNames.Length;
-                this.Values = new object[this.length];
-            }
-
-            public bool ForEach(KeyValuePair<string, object> item)
-            {
-                var index = Array.IndexOf(tagNames, item.Key);
+                var index = Array.IndexOf(tagNames, tagObjects[i].Key);
                 if (index >= 0)
                 {
-                    this.Values[index] = item.Value;
-                    this.length--;
+                    values[index] = tagObjects[i].Value;
+                    length--;
 
                     if (length == 0)
                     {
-                        return false;
+                        break;
                     }
                 }
-
-                return true;
-            }
-        }
-
-        internal static class ActivityTagsEnumeratorFactory<TState>
-           where TState : struct, IActivityEnumerator<KeyValuePair<string, object>>
-        {
-            private static readonly DictionaryEnumerator<string, object, TState>.AllocationFreeForEachDelegate
-                PooledListObjectsEnumerator = DictionaryEnumerator<string, object, TState>.BuildAllocationFreeForEachDelegate(
-                    typeof(PooledList<KeyValuePair<string, object>>).GetField("buffer", BindingFlags.Instance | BindingFlags.NonPublic).FieldType);
-
-            private static readonly DictionaryEnumerator<string, object, TState>.AllocationFreeForEachDelegate
-                KeyValuePairEnumerator = DictionaryEnumerator<string, object, TState>.BuildAllocationFreeForEachDelegate(typeof(IEnumerable<KeyValuePair<string, object>>));
-
-            private static readonly DictionaryEnumerator<string, object, TState>.ForEachDelegate ForEachTagValueCallbackRef = ForEachTagValueCallback;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static void Enumerate(ref PooledList<KeyValuePair<string, object>> tagObjects, ref TState state)
-            {
-                if (tagObjects.Count == 0)
-                {
-                    return;
-                }
-
-                PooledListObjectsEnumerator(
-                    tagObjects,
-                    ref state,
-                    ForEachTagValueCallbackRef);
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static void Enumerate(IEnumerable<KeyValuePair<string, object>> tagObjects, ref TState state)
-            {
-                if (tagObjects == null || tagObjects.Count() == 0)
-                {
-                    return;
-                }
-
-                KeyValuePairEnumerator(
-                    tagObjects,
-                    ref state,
-                    ForEachTagValueCallbackRef);
-            }
-
-            private static bool ForEachTagValueCallback(ref TState state, KeyValuePair<string, object> item)
-                => state.ForEach(item);
+            return values;
         }
     }
 }

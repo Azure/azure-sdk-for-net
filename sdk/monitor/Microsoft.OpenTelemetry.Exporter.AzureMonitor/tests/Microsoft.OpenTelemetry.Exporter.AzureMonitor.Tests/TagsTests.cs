@@ -1,13 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using OpenTelemetry.Trace;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xunit;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 {
     public class TagsTests
     {
+        static TagsTests()
+        {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+        }
         [Fact]
         public void TagObjects_NoItem()
         {
@@ -17,8 +33,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 PartCTags = PooledList<KeyValuePair<string, object>>.Create()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = null;
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity();
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -34,8 +50,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 PartCTags = PooledList<KeyValuePair<string, object>>.Create()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>();
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(new Dictionary<string, object>());
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -58,7 +74,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["key3"] = new string[] { null, null }
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -78,7 +95,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" };;
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -103,7 +121,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 [SemanticConventions.AttributeRpcSystem] = "test"
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
             Assert.Equal(4, monitorTags.PartBTags.Count);
@@ -132,7 +151,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["somekey"] = "value"
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
             Assert.Equal(3, monitorTags.PartBTags.Count);
@@ -159,7 +179,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["intArray"] = new int []{ 1, 2, 3},
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -182,7 +203,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["doubleArray"] = new double[] { 1.1, 2.2, 3.3 },
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -205,7 +227,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["strArray"] = new string[] { "test1", "test2", "test3" },
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -228,7 +251,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["boolArray"] = new bool[] { true, false, true },
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -251,7 +275,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["objArray"] = new Test[] { new Test(), new Test(), new Test() { TestProperty = 0} },
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -279,7 +304,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["arrayKey"] = new int[] {1, 2, 3}
             };
 
-            HttpHelper.ActivityTagsEnumeratorFactory<AzureMonitorConverter.TagEnumerationState>.Enumerate(tagObjects, ref monitorTags);
+            using var activity = CreateTestActivity(tagObjects);
+            activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
@@ -291,6 +317,41 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Equal(true, monitorTags.PartCTags.GetTagValue("boolKey"));
             Assert.Equal("Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test", monitorTags.PartCTags.GetTagValue("objectKey").ToString());
             Assert.Equal("1,2,3", monitorTags.PartCTags.GetTagValue("arrayKey"));
+        }
+
+        private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object>> additionalAttributes = null)
+        {
+            var startTimestamp = DateTime.UtcNow;
+            var endTimestamp = startTimestamp.AddSeconds(60);
+            var eventTimestamp = DateTime.UtcNow;
+            var traceId = ActivityTraceId.CreateRandom();
+
+            var parentSpanId = ActivitySpanId.CreateRandom();
+
+            Dictionary<string, object> attributes = null;
+            if (additionalAttributes != null)
+            {
+                attributes = new Dictionary<string, object>();
+                foreach (var attribute in additionalAttributes)
+                {
+                    attributes.Add(attribute.Key, attribute.Value);
+                }
+            }
+
+            var activitySource = new ActivitySource(nameof(CreateTestActivity));
+
+            var activity = activitySource.StartActivity(
+                "Name",
+                ActivityKind.Server,
+                parentContext: new ActivityContext(traceId, parentSpanId, ActivityTraceFlags.Recorded),
+                attributes,
+                null,
+                startTime: startTimestamp);
+
+            activity.SetEndTime(endTimestamp);
+            activity.Stop();
+
+            return activity;
         }
 
         private class Test
