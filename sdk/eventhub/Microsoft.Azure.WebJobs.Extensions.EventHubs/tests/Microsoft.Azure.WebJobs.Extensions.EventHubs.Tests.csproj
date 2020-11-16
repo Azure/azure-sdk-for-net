@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" />
     <!-- TODO: https://github.com/Azure/azure-sdk-for-net/issues/16635 -->
     <Compile Remove="EventHubConfigurationTests.cs" />

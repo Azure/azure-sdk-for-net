@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             var partitionKeys = new string[length];
             var offsets = new string[length];
             var sequenceNumbers = new long[length];
-            var enqueuedTimesUtc = new DateTimeOffset[length];
+            var enqueuedTimesUtc = new DateTime[length];
             var properties = new IDictionary<string, object>[length];
             var systemProperties = new IDictionary<string, object>[length];
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 partitionKeys[i] = events[i].PartitionKey;
                 offsets[i] = events[i].Offset.ToString(CultureInfo.InvariantCulture);
                 sequenceNumbers[i] = events[i].SequenceNumber;
-                enqueuedTimesUtc[i] = events[i].EnqueuedTime;
+                enqueuedTimesUtc[i] = events[i].EnqueuedTime.DateTime;
                 properties[i] = events[i].Properties;
                 systemProperties[i] = GetSystemPropertiesForBinding(events[i]);
             }

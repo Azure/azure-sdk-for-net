@@ -271,6 +271,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
                 // Use blob prefix support available in EPH starting in 2.2.6
                 EventProcessorHost host = new EventProcessorHost(
+                    eventHubName: eventHubName,
                     eventHubPath: actualPath,
                     consumerGroupName: consumerGroup,
                     eventHubConnectionString: sb.ToString(),

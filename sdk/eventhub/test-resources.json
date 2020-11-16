@@ -88,6 +88,15 @@
       }
     },
     {
+      "type": "Microsoft.EventHub/namespaces/eventhubs",
+      "apiVersion": "2017-04-01",
+      "name": "[concat(variables('eventHubsNamespace'), '/webjobstesthub')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubsNamespace'))]"
+      ]
+    },
+    {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-04-01",
       "name": "[variables('storageAccount')]",
@@ -175,12 +184,23 @@
         "deleteRetentionPolicy": {
           "enabled": false
         }
-      }
+      },
+      "resources": [
+        {
+          "name": "azure-webjobs-eventhub",
+          "type": "containers",
+          "apiVersion": "2019-04-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('storageAccount'), 'default')]"
+          ],
+          "properties": {}
+        }
+      ]
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'))]",
+      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'), parameters('testApplicationOid'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",
@@ -190,7 +210,7 @@
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
-      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
+      "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'), parameters('testApplicationOid'))]",
       "properties": {
         "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
         "principalId": "[parameters('testApplicationOid')]",

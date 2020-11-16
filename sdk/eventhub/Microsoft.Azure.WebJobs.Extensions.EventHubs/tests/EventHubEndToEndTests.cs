@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -18,8 +19,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    [Category("Live")]
-    public class EventHubEndToEndTests
+    public class EventHubEndToEndTests: LiveTestBase<EventHubsTestEnvironment>
     {
         private const string TestHubName = "webjobstesthub";
         private const int Timeout = 30000;
@@ -35,7 +35,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_PocoBinding()
         {
             var tuple = BuildHost<EventHubTestBindToPocoJobs>();
@@ -54,7 +53,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_StringBinding()
         {
             var tuple = BuildHost<EventHubTestBindToStringJobs>();
@@ -73,7 +71,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_SingleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestSingleDispatchJobs>();
@@ -107,7 +104,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_MultipleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestMultipleDispatchJobs>();
@@ -144,7 +140,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_PartitionKey()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubPartitionKeyTestJobs>();
@@ -304,26 +299,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private Tuple<JobHost, IHost> BuildHost<T>()
         {
-            JobHost jobHost = null;
-
-            var config = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .AddTestSettings()
-                .Build();
-
-            const string connectionName = "AzureWebJobsTestHubConnection";
-            string connection = config.GetConnectionStringOrSetting(connectionName);
-            Assert.True(!string.IsNullOrEmpty(connection), $"Required test connection string '{connectionName}' is missing.");
-
+            JobHost jobHost;
             IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(builder =>
+                {
+                    builder.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "AzureWebJobsStorage", TestEnvironment.StorageAccountConnectionString }
+                    });
+                })
                 .ConfigureDefaultTestHost<T>(b =>
                 {
                     b.AddEventHubs(options =>
                     {
                         // TODO: alternative?
                         //options.EventProcessorOptions.EnableReceiverRuntimeMetric = true;
-                        options.AddSender(TestHubName, connection);
-                        options.AddReceiver(TestHubName, connection);
+                        options.AddSender(TestHubName, TestEnvironment.EventHubsNamespaceConnectionString);
+                        options.AddReceiver(TestHubName, TestEnvironment.EventHubsNamespaceConnectionString);
                     });
                 })
                 .ConfigureLogging(b =>

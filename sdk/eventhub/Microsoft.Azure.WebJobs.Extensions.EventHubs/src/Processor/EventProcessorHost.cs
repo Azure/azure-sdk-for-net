@@ -23,17 +23,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal class EventProcessorHost
     {
-        private string EventHubPath { get; }
-        private string ConsumerGroupName { get; }
-        private string EventHubConnectionString { get; }
-        private string StorageConnectionString { get; }
+        public string EventHubName { get; }
+        public string EventHubPath { get; }
+        public string ConsumerGroupName { get; }
+        public string EventHubConnectionString { get; }
+        public string StorageConnectionString { get; }
         private string LeaseContainerName { get; }
         private string LegacyCheckpointStorageBlobPrefix { get; }
         private Processor CurrentProcessor { get; set; }
         private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
 
-        public EventProcessorHost(string eventHubPath, string consumerGroupName, string eventHubConnectionString, string storageConnectionString, string leaseContainerName, string legacyCheckpointStorageBlobPrefix, Action<ExceptionReceivedEventArgs> exceptionHandler)
+        public EventProcessorHost(string eventHubName, string eventHubPath, string consumerGroupName, string eventHubConnectionString, string storageConnectionString, string leaseContainerName, string legacyCheckpointStorageBlobPrefix, Action<ExceptionReceivedEventArgs> exceptionHandler)
         {
+            EventHubName = eventHubName;
             EventHubPath = eventHubPath;
             ConsumerGroupName = consumerGroupName;
             EventHubConnectionString = eventHubConnectionString;
