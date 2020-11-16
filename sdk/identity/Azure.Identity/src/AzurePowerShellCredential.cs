@@ -164,24 +164,26 @@ namespace Azure.Identity
 
         private void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
-            string powershellCommand = "pwsh";
+            string powershellExe = "pwsh -EncodedCommand";
 
             if (_azurePowerShellCredentialOptions != null && _azurePowerShellCredentialOptions.UsePowerShell)
             {
-                 powershellCommand = "powershell";
+                powershellExe = "powershell -EncodedCommand";
             }
 
-            string command = $"{powershellCommand} -c \"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext }}; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}\"";
+            string command = $"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext }}; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}";
+
+            string commandBase64 = Base64Encode(command);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
-                argument = $"/c \"{command}\"";
+                argument = $"/c \"{powershellExe} \"{commandBase64}\" \"";
             }
             else
             {
                 fileName = "/bin/sh";
-                argument = $"-c \"{command}\"";
+                argument = $"-c \"{powershellExe} \"{commandBase64}\" \"";
             }
         }
 
@@ -189,6 +191,12 @@ namespace Azure.Identity
         {
             var jwtSecurityToken = new JwtSecurityToken(token);
             return new AccessToken(token, jwtSecurityToken.ValidTo);
+        }
+
+        private static string Base64Encode(string text)
+        {
+            var plainTextBytes = Encoding.Unicode.GetBytes(text);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
 
     }
