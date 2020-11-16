@@ -888,6 +888,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].StringTypeProperty, Is.EqualTo(entitiesToCreate[i].StringTypeProperty), "The entities should be equivalent");
+                Assert.That(entityResults[i].ETag, Is.Not.EqualTo(default(ETag)), $"ETag value should not be default: {entityResults[i].ETag}");
             }
         }
 
