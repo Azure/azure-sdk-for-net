@@ -15,90 +15,100 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To run analyze operation in multiple documents, call `StartAnalyzeOperationBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsAnalyzeOperationAsync
-            string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                                and we adore the spot! They provide marvelous food and they have a great menu. The
-                                chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                                nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                                the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                                clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                                call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                                I have is the food didn't come fast enough. Overall I highly recommend it!";
+```C# Snippet:AnalyzeOperationBatchAsync
+    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+                        and we adore the spot! They provide marvelous food and they have a great menu. The
+                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
+                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+                        I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-            var batchDocuments = new List<TextDocumentInput>
-            {
-                new TextDocumentInput("1", document)
-                {
-                     Language = "en",
-                }
-            };
+    var batchDocuments = new List<TextDocumentInput>
+    {
+        new TextDocumentInput("1", document)
+        {
+             Language = "en",
+        }
+    };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-            {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
-                DisplayName = "AnalyzeOperationSample"
-            };
+    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    {
+        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        EntitiesTaskParameters = new EntitiesTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        PiiTaskParameters = new PiiTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        DisplayName = "AnalyzeOperationSample"
+    };
 
-            AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+    AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-						await operation.WaitForCompletionAsync();
+    await operation.WaitForCompletionAsync();
 
-            AnalyzeOperationResult resultCollection = operation.Value;
+    AnalyzeOperationResult resultCollection = operation.Value;
 
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
+    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
+    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 
-            Console.WriteLine("Recognized Entities");
+    Console.WriteLine("Recognized Entities");
 
-            foreach (RecognizeEntitiesResult result in entitiesResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+    foreach (RecognizeEntitiesResult result in entitiesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
 
-                foreach (CategorizedEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-                }
-                Console.WriteLine("");
-            }
+        foreach (CategorizedEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
 
-            Console.WriteLine("Recognized PII Entities");
+    Console.WriteLine("Recognized PII Entities");
 
-            foreach (RecognizePiiEntitiesResult result in piiResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+    foreach (RecognizePiiEntitiesResult result in piiResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
 
-                foreach (PiiEntity entity in result.Entities)
-                {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-                }
-                Console.WriteLine("");
-            }
+        foreach (PiiEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
 
-            Console.WriteLine("Key Phrases");
+    Console.WriteLine("Key Phrases");
 
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+    foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
 
-                foreach (string keyphrase in result.KeyPhrases)
-                {
-                    Console.WriteLine($"    {keyphrase}");
-                }
-                Console.WriteLine("");
-            }
+        foreach (string keyphrase in result.KeyPhrases)
+        {
+            Console.WriteLine($"    {keyphrase}");
+        }
+        Console.WriteLine("");
+    }
+}
 ```
 
 To see the full example source files, see:

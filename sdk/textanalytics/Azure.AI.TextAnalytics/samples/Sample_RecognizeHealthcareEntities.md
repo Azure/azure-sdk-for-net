@@ -16,38 +16,46 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To recognize healthcare entities in a document, use the `StarthealthcareAsyc` method.  The returned type is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
 
 ```C# Snippet:RecognizeHealthcareEntities
-string document = "Subject is taking 100mg of ibuprofen twice daily.";
+    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                        The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                        with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                        another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                        which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                        minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                        increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+    HealthcareOperation healthOperation = client.StartHealthcare(document);
 
-await healthOperation.WaitForCompletionAsync();
+    await healthOperation.WaitForCompletionAsync();
 
-RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
-Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
-Console.WriteLine("");
+    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
+    Console.WriteLine("");
 
-foreach (DocumentHealthcareResult result in results)
-{
-		Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+    foreach (DocumentHealthcareResult result in results)
+    {
+           Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-		foreach (HealthcareEntity entity in result.Entities)
-		{
-				Console.WriteLine($"    Entity: {entity.Text}");
-				Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-				Console.WriteLine($"    Offset: {entity.Offset}");
-				Console.WriteLine($"    Length: {entity.Length}");
-				Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-				Console.WriteLine($"    Links:");
+            foreach (HealthcareEntity entity in result.Entities)
+            {
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    Length: {entity.Length}");
+                Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+                Console.WriteLine($"    Links:");
 
-				foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
-				{
-						Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-						Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
-				}
-		}
-		Console.WriteLine("");
-}
+                foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                {
+                    Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                    Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                }
+            }
+            Console.WriteLine("");
+    }
 }
 ```
 
@@ -55,40 +63,138 @@ foreach (DocumentHealthcareResult result in results)
 
 To recognize healthcare entities in multiple documents, call `StartHealthcareBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsSampleRecognizeHealthcare
-string document = "Subject is taking 100mg of ibuprofen twice daily.";
+```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
+    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                        The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                        with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                        another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                        which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                        minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                        increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+    List<string> batchInput = new List<string>()
+    {
+        document,
+        document,
+    };
 
-await healthOperation.WaitForCompletionAsync();
+    HealthcareOptions options = new HealthcareOptions()
+    {
+        Top = 1,
+        Skip = 0,
+        IncludeStatistics = true
+    };
 
-RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en", options);
+
+    await healthOperation.WaitForCompletionAsync();
+
+    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+
+    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
+    Console.WriteLine("");
+
+    foreach (DocumentHealthcareResult result in results)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+        foreach (HealthcareEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
+            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+            Console.WriteLine($"    Links:");
+
+            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            {
+                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+            }
+        }
+
+        Console.WriteLine($"    Document statistics:");
+        Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
+        Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
+        Console.WriteLine("");
+    }
+    Console.WriteLine($"Request statistics:");
+    Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
+    Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
+    Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
+    Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
+    Console.WriteLine("");
+}
 ```
 
-To recognize healthcare entities in a collection of documents in different languages, call `RecognizeHealthcare EntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
+To recognize healthcare entities in a collection of documents in different languages, call `StartHealthcareBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
-```C# Snippet:TextAnalyticsSampleRecognizeHealthcare
-var documents = new List<TextDocumentInput>
-{
-    new TextDocumentInput("1", "Subject is taking 100mg of ibuprofen twice daily.")
+```C# Snippet:TextAnalyticsSampleHealthcareBatch
+    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                        The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                        with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                        another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                        which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                        minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                        increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
+
+    List<string> batchInput = new List<string>()
     {
-         Language = "en",
-    },
-    new TextDocumentInput("2", "Can cause rapid or irregular heartbeat.")
+        document,
+        document,
+    };
+
+    HealthcareOptions options = new HealthcareOptions()
     {
-         Language = "en",
-    },
-    new TextDocumentInput("3", "The patient is a 54-year-old gentleman with a history of progressive angina over the past several months")
+        IncludeStatistics = true
+    };
+
+    HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en", options);
+
+    await healthOperation.WaitForCompletionAsync();
+
+    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+
+    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
+    Console.WriteLine("");
+
+    foreach (DocumentHealthcareResult result in results)
     {
-         Language = "en",
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+
+        foreach (HealthcareEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
+            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+            Console.WriteLine($"    Links:");
+
+            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            {
+                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+            }
+        }
+
+        Console.WriteLine($"    Document statistics:");
+        Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
+        Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
+        Console.WriteLine("");
     }
-};
-
-HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
-
-await healthOperation.WaitForCompletionAsync();
-
-RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    Console.WriteLine($"Request statistics:");
+    Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
+    Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
+    Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
+    Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
+    Console.WriteLine("");
+}
 ```
 
 To see the full example source files, see:

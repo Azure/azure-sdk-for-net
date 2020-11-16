@@ -287,37 +287,46 @@ foreach (CategorizedEntity entity in entities)
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
 ```C# Snippet:RecognizeHealthcareEntitiesAsync
-string document = "Subject is taking 100mg of ibuprofen twice daily.";
+    string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
+                        The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
+                        with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
+                        another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
+                        which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
+                        minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
+                        increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
+    HealthcareOperation healthOperation = await client.StartHealthcareAsync(document);
 
-await healthOperation.WaitForCompletionAsync();
+    await healthOperation.WaitForCompletionAsync();
 
-RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
+    RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
-Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
-Console.WriteLine("");
+    Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
+    Console.WriteLine("");
 
-foreach (DocumentHealthcareResult result in results)
-{
-		Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+    foreach (DocumentHealthcareResult result in results)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-		foreach (HealthcareEntity entity in result.Entities)
-		{
-				Console.WriteLine($"    Entity: {entity.Text}");
-				Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-				Console.WriteLine($"    Offset: {entity.Offset}");
-				Console.WriteLine($"    Length: {entity.Length}");
-				Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-				Console.WriteLine($"    Links:");
+        foreach (HealthcareEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
+            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+            Console.WriteLine($"    Links:");
 
-				foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
-				{
-						Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-						Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
-				}
-		}
-		Console.WriteLine("");
+            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            {
+                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+            }
+        }
+        Console.WriteLine("");
+    }
 }
 ```
 For samples on using the production recommended options `DocumentHealthcareResult` see [here][recognize_healthcare_sample].
@@ -327,44 +336,98 @@ For samples on using the production recommended options `DocumentHealthcareResul
 In the Analyze API, you get to choose which of the supported TA features you want to call in the same API call. Currently the supported TA features are entity recognition, key phrase extraction and entity recognition PII/PHI tasks. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
 
 ```C# Snippet:AnalyzeOperationBatchAsync
-var batchDocuments = new List<TextDocumentInput>
-{
-		new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
-		{
-					Language = "en",
-		},
-		new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
-		{
-					Language = "es",
-		}
-};
+    string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
+                        and we adore the spot! They provide marvelous food and they have a great menu. The
+                        chief cook happens to be the owner (I think his name is John Doe) and he is super 
+                        nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
+                        the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
+                        clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
+                        call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
+                        I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-TextAnalyticsClient client = GetClient();
+    var batchDocuments = new List<TextDocumentInput>
+    {
+        new TextDocumentInput("1", document)
+        {
+             Language = "en",
+        }
+    };
 
-AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
-{
-		KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-};
+    AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+    {
+        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        EntitiesTaskParameters = new EntitiesTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        PiiTaskParameters = new PiiTaskParameters()
+        {
+            ModelVersion = "latest"
+        },
+        DisplayName = "AnalyzeOperationSample"
+    };
 
-AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(document, operationOptions, "en");
+    AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-await operation.WaitForCompletionAsync();
+    await operation.WaitForCompletionAsync();
 
-AnalyzeOperationResult resultCollection = operation.Value;
+    AnalyzeOperationResult resultCollection = operation.Value;
 
-ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+    RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
 
-Console.WriteLine("Key Phrases");
+    ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
 
-foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-{
-		Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+    RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
 
-		foreach (string keyphrase in result.KeyPhrases)
-		{
-				Console.WriteLine($"    {keyphrase}");
-		}
-		Console.WriteLine("");
+    Console.WriteLine("Recognized Entities");
+
+    foreach (RecognizeEntitiesResult result in entitiesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+
+        foreach (CategorizedEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
+
+    Console.WriteLine("Recognized PII Entities");
+
+    foreach (RecognizePiiEntitiesResult result in piiResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+
+        foreach (PiiEntity entity in result.Entities)
+        {
+            Console.WriteLine($"    Entity: {entity.Text}");
+            Console.WriteLine($"    Category: {entity.Category}");
+            Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
+            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+        }
+        Console.WriteLine("");
+    }
+
+    Console.WriteLine("Key Phrases");
+
+    foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
+    {
+        Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+        foreach (string keyphrase in result.KeyPhrases)
+        {
+            Console.WriteLine($"    {keyphrase}");
+        }
+        Console.WriteLine("");
+    }
 }
 ```
 For samples on using the production recommended options `AnalyzeOperationResult` see [here][analyze_operation_sample].
