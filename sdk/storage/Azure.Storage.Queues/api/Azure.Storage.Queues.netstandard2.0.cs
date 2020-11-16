@@ -1,5 +1,11 @@
 namespace Azure.Storage.Queues
 {
+    public abstract partial class InvalidQueueMessageHandler
+    {
+        protected InvalidQueueMessageHandler() { }
+        public abstract void OnInvalidMessage(string messageId, string popReceipt, string rawBody, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task OnInvalidMessageAsync(string messageId, string popReceipt, string rawBody, System.Threading.CancellationToken cancellationToken);
+    }
     public partial class QueueClient
     {
         protected QueueClient() { }
@@ -68,6 +74,7 @@ namespace Azure.Storage.Queues
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_02_10) { }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.Queues.InvalidQueueMessageHandler InvalidQueueMessageHandler { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
