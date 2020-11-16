@@ -6,7 +6,8 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Named Entity Recognition
 * Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
-* Healthcare Recognition
+* Healthcare Recognition <sup>beta</sup>
+* Analyze Operation <sup>beta</sup>
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -133,6 +134,7 @@ The following section provides several code snippets using the `client` [created
 * [Detect Language Asynchronously](#detect-language-asynchronously)
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
 * [Recognize Healthcare Entities Asyncronously](#recognize-entities-asynchronously)
+* [Run Analyze Operation Asyncronously](#analyze-operation-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -320,6 +322,54 @@ foreach (DocumentHealthcareResult result in results)
 ```
 For samples on using the production recommended options `DocumentHealthcareResult` see [here][recognize_healthcare_sample].
 
+
+### Run Analyze Operation Asynchronously
+In the Analyze API, you get to choose which of the supported TA features you want to call in the same API call. Currently the supported TA features are entity recognition, key phrase extraction and entity recognition PII/PHI tasks. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
+
+```C# Snippet:AnalyzeOperationBatchAsync
+var batchDocuments = new List<TextDocumentInput>
+{
+		new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+		{
+					Language = "en",
+		},
+		new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+		{
+					Language = "es",
+		}
+};
+
+TextAnalyticsClient client = GetClient();
+
+AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+{
+		KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+};
+
+AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(document, operationOptions, "en");
+
+await operation.WaitForCompletionAsync();
+
+AnalyzeOperationResult resultCollection = operation.Value;
+
+ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
+
+Console.WriteLine("Key Phrases");
+
+foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
+{
+		Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+		foreach (string keyphrase in result.KeyPhrases)
+		{
+				Console.WriteLine($"    {keyphrase}");
+		}
+		Console.WriteLine("");
+}
+```
+For samples on using the production recommended options `AnalyzeOperationResult` see [here][analyze_operation_sample].
+
+
 ## Troubleshooting
 
 ### General
@@ -382,6 +432,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize PII Entities][recognize_pii_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
 - [Recognize Healthcare Entities][recognize_healthcare_sample]
+- [Run Analyze Operation][analyze_operation_sample]
 
 ### Advanced samples
 - [Analyze Sentiment with Opinion Mining][analyze_sentiment_opinion_mining_sample]
@@ -410,6 +461,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
 [recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
+<!-- TODO - Update this how to once the below PR is merged and released -->
+[analyze_operation_howto]: https://github.com/MicrosoftDocs/azure-docs-pr/pull/137595
 [healthcare]: https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis

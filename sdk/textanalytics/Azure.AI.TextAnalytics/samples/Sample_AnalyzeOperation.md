@@ -1,29 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+# Running Analyze Operation Asynchronously
+This sample demonstrates how to run analyze operation in one or more documents and get them asynchronously for multiple tasks including PII, NER and KPE . To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
-using Azure.AI.TextAnalytics.Tests;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
+## Creating a `TextAnalyticsClient`
 
-namespace Azure.AI.TextAnalytics.Samples
-{
-    [LiveOnly]
-    public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
-    {
-        [Test]
-        public async Task AnalyzeOperationAsync()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
-            #region Snippet:TextAnalyticsAnalyzeOperationAsync
+```C# Snippet:TextAnalyticsSample4CreateClient
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
+## Running Analyze Operation Asynchronously in multiple documents
+
+To run analyze operation in multiple documents, call `StartAnalyzeOperationBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeOperation` which polls for the results from the API.
+
+```C# Snippet:TextAnalyticsAnalyzeOperationAsync
             string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
                                 and we adore the spot! They provide marvelous food and they have a great menu. The
                                 chief cook happens to be the owner (I think his name is John Doe) and he is super 
@@ -43,24 +35,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                EntitiesTaskParameters = new EntitiesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                PiiTaskParameters = new PiiTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                EntitiesTaskParameters = new EntitiesTaskParameters(),
+                PiiTaskParameters = new PiiTaskParameters(),
                 DisplayName = "AnalyzeOperationSample"
             };
 
             AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
 
-            await operation.WaitForCompletionAsync();
+						await operation.WaitForCompletionAsync();
 
             AnalyzeOperationResult resultCollection = operation.Value;
 
@@ -116,8 +99,12 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 Console.WriteLine("");
             }
-        }
+```
 
-        #endregion
-    }
-}
+To see the full example source files, see:
+
+* [Synchronously AnalyzeOperationBatch ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperation.cs)
+* [Asynchronously AnalyzeOperationBatch ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample_AnalyzeOperationAsync.cs)
+
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
