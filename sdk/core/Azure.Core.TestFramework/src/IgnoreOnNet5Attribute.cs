@@ -14,11 +14,12 @@ namespace Azure.Core.TestFramework
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
     public class IgnoreOnNet5Attribute : NUnitAttribute, IApplyToTest
     {
-        private readonly string _reason;
+        private readonly string _issueLink;
 
-        public IgnoreOnNet5Attribute(string reason)
+        public IgnoreOnNet5Attribute(string issueLink)
         {
-            _reason = reason;
+            Argument.AssertNotNullOrWhiteSpace(issueLink, nameof(issueLink));
+            _issueLink = issueLink;
         }
 
         public void ApplyToTest(Test test)
@@ -26,7 +27,7 @@ namespace Azure.Core.TestFramework
             if (test.RunState != RunState.NotRunnable && Environment.Version.Major == 5)
             {
                 test.RunState = RunState.Ignored;
-                test.Properties.Set(PropertyNames.SkipReason, $"This test can't' run on .NET 5. {_reason}");
+                test.Properties.Set(PropertyNames.SkipReason, $"This test can't' run on .NET 5. {_issueLink}");
             }
         }
     }
