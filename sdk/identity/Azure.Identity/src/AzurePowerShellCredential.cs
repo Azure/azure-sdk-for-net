@@ -23,14 +23,16 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private const int PowerShellProcessTimeoutMs = 10000;
-        private AzurePowerShellCredentialOptions _azurePowerShellCredentialOptions;
+        private readonly AzurePowerShellCredentialOptions _azurePowerShellCredentialOptions;
 
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
-
-        private const string AzurePowerShellNotLogIn = "Please run 'Connect-AzAccount' to set up account";
+        private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
+        private const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module is not installed";
+        private const string PowerShellNotInstalledError = "PowerShell not installed";
 
         private const string AzurePowerShellNoContext = "NoContext";
+        private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
 
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
@@ -121,6 +123,15 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
+
+                bool noPowerShell = exception.Message.IndexOf("command not found", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (noPowerShell)
+                {
+                    throw new CredentialUnavailableException(PowerShellNotInstalledError);
+                }
+
+
                 throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
 
@@ -129,9 +140,14 @@ namespace Azure.Identity
 
         private static void CheckForErrors(string output)
         {
-            if (output.Contains(AzurePowerShellNoContext))
+            if (output.IndexOf(AzurePowerShellNoContext, StringComparison.OrdinalIgnoreCase) != -1)
             {
-                throw new CredentialUnavailableException(AzurePowerShellNotLogIn);
+                throw new CredentialUnavailableException(AzurePowerShellNotLogInError);
+            }
+
+            if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
             }
         }
 
@@ -146,9 +162,16 @@ namespace Azure.Identity
                 WorkingDirectory = DefaultWorkingDir
             };
 
-        private static void GetFileNameAndArguments(string resource, out string fileName, out string argument)
+        private void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
-            string command = $"powershell -c \"$skip = $false; $c = Get-AzContext; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}\"";
+            string powershellCommand = "pwsh";
+
+            if (_azurePowerShellCredentialOptions != null && _azurePowerShellCredentialOptions.UsePowerShell)
+            {
+                 powershellCommand = "powershell";
+            }
+
+            string command = $"{powershellCommand} -c \"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext }}; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}\"";
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

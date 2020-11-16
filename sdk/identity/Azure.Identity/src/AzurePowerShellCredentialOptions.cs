@@ -15,17 +15,8 @@ namespace Azure.Identity
         private bool _usePowerShell;
 
         /// <summary>
-        /// Set this if you want to use the installer PowerShell Core for getting the token
-        /// This refers to PowerShell version 6 or greater.
-        /// </summary>
-        public bool UsePowerShellCore
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Set this if you want to use the installed PowerShell for getting the token
-        /// This refers to PowerShell Version 5 or lower.
+        /// Set this if you want to use PowerShell (version 5 or lower) for getting the token
+        /// instead of PowerShell Core (version 6 or higher), which is the default used.
         /// This works only on Windows OS.
         /// </summary>
         public bool UsePowerShell
@@ -37,6 +28,7 @@ namespace Azure.Identity
 
             set
             {
+                // Set this to true only for Windows OS
                 _usePowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && value;
             }
 
