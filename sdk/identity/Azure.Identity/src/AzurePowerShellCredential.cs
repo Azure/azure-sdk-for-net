@@ -28,8 +28,8 @@ namespace Azure.Identity
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        private const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module is not installed";
-        private const string PowerShellNotInstalledError = "PowerShell not installed";
+        private const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module is not installed.";
+        private const string PowerShellNotInstalledError = "PowerShell not installed.";
 
         private const string AzurePowerShellNoContext = "NoContext";
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
@@ -198,6 +198,5 @@ namespace Azure.Identity
             var plainTextBytes = Encoding.Unicode.GetBytes(text);
             return System.Convert.ToBase64String(plainTextBytes);
         }
-
     }
 }
