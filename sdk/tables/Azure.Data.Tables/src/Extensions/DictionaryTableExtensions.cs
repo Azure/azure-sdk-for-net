@@ -205,7 +205,7 @@ namespace Azure.Data.Tables
             }
 
             // Populate the ETag if present.
-            if (entity.TryGetValue(TableConstants.PropertyNames.ETag, out var etag))
+            if (entity.TryGetValue(TableConstants.PropertyNames.EtagOdata, out var etag))
             {
                 result.ETag = new ETag((etag as string)!);
             }
