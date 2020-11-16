@@ -105,9 +105,9 @@ namespace Azure.Core.Pipeline
         {
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
+            // Don't disable the default proxy when there is no environment proxy configured
             if (_environmentProxy != null)
             {
-                // Don't disable the default proxy when there is no environment proxy configured
                 request.Proxy = _environmentProxy;
             }
 
