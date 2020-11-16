@@ -565,8 +565,8 @@ namespace Compute.Tests
                 {
                     Source = new UserArtifactSource
                     {
-                        FileName = "test.zip",
-                        MediaLink = applicationMediaLink
+                        MediaLink = "test.zip",
+                        DefaultConfigurationLink = applicationMediaLink
                     },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
