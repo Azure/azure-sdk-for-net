@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(sources.Length, 7);
+            Assert.AreEqual(sources.Length, 8);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
