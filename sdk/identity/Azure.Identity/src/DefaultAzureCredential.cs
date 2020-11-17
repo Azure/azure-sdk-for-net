@@ -206,14 +206,14 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateAzureCliCredential();
             }
 
-            if (!options.ExcludeInteractiveBrowserCredential)
-            {
-                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
-            }
-
             if (!options.ExcludeAzurePowerShellCredential)
             {
                 chain[i++] = factory.CreateAzurePowerShellCredential(options.UsePowerShell);
+            }
+
+            if (!options.ExcludeInteractiveBrowserCredential)
+            {
+                chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
             }
 
             if (i == 0)
