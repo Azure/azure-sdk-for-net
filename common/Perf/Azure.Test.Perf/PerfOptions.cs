@@ -37,6 +37,9 @@ namespace Azure.Test.Perf
         [Option('r', "rate", HelpText = "Target throughput (ops/sec)")]
         public int? Rate { get; set; }
 
+        [Option("status-interval", Default = 1, HelpText = "Interval to write status to console in seconds")]
+        public int StatusInterval { get; set; }
+
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }
 
