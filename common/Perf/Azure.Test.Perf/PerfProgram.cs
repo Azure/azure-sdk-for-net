@@ -109,7 +109,7 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.Parallel, options.Rate, options.Warmup, options.StatusInterval,
+                            await RunTestsAsync(tests, options.Rate, options.Warmup, options.StatusInterval,
                                 "Warmup", options);
                         }
 
@@ -120,7 +120,7 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.Parallel, options.Rate, options.Duration, options.StatusInterval,
+                            await RunTestsAsync(tests, options.Rate, options.Duration, options.StatusInterval,
                                 title, options, jobStatistics: options.JobStatistics, latency: options.Latency);
                         }
                     }
@@ -162,24 +162,24 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, int parallel, int? rate,
+        private static async Task RunTestsAsync(IPerfTest[] tests, int? rate,
             int durationSeconds, int statusIntervalSeconds, string title, PerfOptions options, bool jobStatistics = false, bool latency = false)
         {
-            _completedOperations = new int[parallel];
-            _lastCompletionTimes = new TimeSpan[parallel];
+            _completedOperations = new int[options.Parallel];
+            _lastCompletionTimes = new TimeSpan[options.Parallel];
 
             if (latency)
             {
-                _latencies = new List<TimeSpan>[parallel];
-                for (var i = 0; i < parallel; i++)
+                _latencies = new List<TimeSpan>[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     _latencies[i] = new List<TimeSpan>();
                 }
 
                 if (rate.HasValue)
                 {
-                    _correctedLatencies = new List<TimeSpan>[parallel];
-                    for (var i = 0; i < parallel; i++)
+                    _correctedLatencies = new List<TimeSpan>[options.Parallel];
+                    for (var i = 0; i < options.Parallel; i++)
                     {
                         _correctedLatencies[i] = new List<TimeSpan>();
                     }
@@ -217,23 +217,23 @@ namespace Azure.Test.Perf
 
             if (options.Sync)
             {
-                var threads = new Thread[parallel];
+                var threads = new Thread[options.Parallel];
 
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     threads[i] = new Thread(() => RunLoop(tests[j], j, latency, cancellationToken));
                     threads[i].Start();
                 }
-                for (var i = 0; i < parallel; i++)
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     threads[i].Join();
                 }
             }
             else
             {
-                var tasks = new Task[parallel];
-                for (var i = 0; i < parallel; i++)
+                var tasks = new Task[options.Parallel];
+                for (var i = 0; i < options.Parallel; i++)
                 {
                     var j = i;
                     // Call Task.Run() instead of directly calling RunLoopAsync(), to ensure the requested
