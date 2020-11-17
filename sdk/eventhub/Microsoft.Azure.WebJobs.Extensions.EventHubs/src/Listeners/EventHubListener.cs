@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
@@ -209,6 +208,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // code, and capture/log/persist failed events, since they won't be retried.
                 if (messages.Any())
                 {
+                    context.CheckpointEvent = messages.Last();
                     await CheckpointAsync(context).ConfigureAwait(false);
                 }
             }

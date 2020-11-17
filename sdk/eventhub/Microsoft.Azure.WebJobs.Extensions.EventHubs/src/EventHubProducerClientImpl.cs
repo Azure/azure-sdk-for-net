@@ -24,7 +24,8 @@ namespace Microsoft.Azure.WebJobs
 
         public async Task SendAsync(IEventDataBatch batch, CancellationToken cancellationToken)
         {
-            await _client.SendAsync(((EventDataBatchImpl) batch).Batch, cancellationToken).ConfigureAwait(false);
+            var eventDataBatch = ((EventDataBatchImpl) batch).Batch;
+            await _client.SendAsync(eventDataBatch, cancellationToken).ConfigureAwait(false);
         }
     }
 }

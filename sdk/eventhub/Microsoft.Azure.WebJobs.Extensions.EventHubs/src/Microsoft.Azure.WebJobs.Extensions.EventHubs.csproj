@@ -14,4 +14,11 @@
     <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Processor/StorageManager.cs"/>
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs"/>
+    <Compile Include="../../Azure.Messaging.EventHubs.Processor/src/Storage/BlobsCheckpointStore.cs"/>
+    <Compile Include="../../Azure.Messaging.EventHubs.Processor/src/Storage/BlobMetadataKey.cs"/>
+  </ItemGroup>
+
 </Project>

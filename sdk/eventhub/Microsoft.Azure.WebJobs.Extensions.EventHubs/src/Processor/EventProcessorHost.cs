@@ -17,7 +17,6 @@ using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
@@ -52,7 +51,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 throw new InvalidOperationException("Processor has already been started");
             }
 
-            CurrentProcessor = new Processor(maxBatchSize, ConsumerGroupName, EventHubConnectionString, LegacyCheckpointStorageBlobPrefix, EventHubPath, options, factory, invokeProcessorAfterReceiveTimeout, ExceptionHandler, new BlobContainerClient(StorageConnectionString, LeaseContainerName));
+            CurrentProcessor = new Processor(maxBatchSize,
+                ConsumerGroupName,
+                EventHubConnectionString,
+                LegacyCheckpointStorageBlobPrefix,
+                EventHubPath,
+                options,
+                factory,
+                invokeProcessorAfterReceiveTimeout,
+                ExceptionHandler,
+                new BlobContainerClient(StorageConnectionString, LeaseContainerName));
             await CurrentProcessor.StartProcessingAsync().ConfigureAwait(false);
         }
 
@@ -178,8 +186,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
                 await foreach (BlobItem item in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: checkpointBlobsPrefix, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    if (long.TryParse(item.Metadata[OffsetMetadataKey], NumberStyles.Integer, CultureInfo.InvariantCulture, out long offset) &&
-                        long.TryParse(item.Metadata[SequenceNumberMetadataKey], NumberStyles.Integer, CultureInfo.InvariantCulture, out long sequenceNumber))
+                    if (item.Metadata.TryGetValue(OffsetMetadataKey, out string offsetMetadata) &&
+                        long.TryParse(offsetMetadata, NumberStyles.Integer, CultureInfo.InvariantCulture, out long offset) &&
+                        item.Metadata.TryGetValue(SequenceNumberMetadataKey, out string sequenceNumberMetadata) &&
+                        long.TryParse(sequenceNumberMetadata, NumberStyles.Integer, CultureInfo.InvariantCulture, out long sequenceNumber) &&
+                        offset < -100)
                     {
                         string partitionId = item.Name.Substring(checkpointBlobsPrefix.Length);
 
@@ -197,31 +208,34 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
                 // Check to see if there are any additional checkpoints in the older location that the V4 SDK would write to. If so, use them (this is helpful when moving from the V4 to V5 SDK,
                 // since it means we will not have to reprocess messages processed and checkpointed by the older SDK).
-                string legacyCheckpointAndOwnershipPrefix = $"{LegacyCheckpointStorageBlobPrefix}{ConsumerGroup}/";
-                await foreach (BlobItem item in ContainerClient.GetBlobsAsync(prefix: legacyCheckpointAndOwnershipPrefix, cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    string partitionId = item.Name.Substring(legacyCheckpointAndOwnershipPrefix.Length);
-                    if (!checkpoints.ContainsKey(partitionId))
-                    {
-                        using MemoryStream checkpointStream = new MemoryStream();
-                        await ContainerClient.GetBlobClient(item.Name).DownloadToAsync(checkpointStream, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        checkpointStream.Position = 0;
-                        BlobPartitionLease lease = await JsonSerializer.DeserializeAsync<BlobPartitionLease>(checkpointStream, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                        if (long.TryParse(lease.Offset, out long offset))
-                        {
-                            LeaseInfos.TryAdd(partitionId, new LeaseInfo(offset, lease.SequenceNumber ?? 0));
-                            checkpoints.Add(partitionId, new EventProcessorCheckpoint()
-                            {
-                                ConsumerGroup = ConsumerGroup,
-                                EventHubName = EventHubName,
-                                FullyQualifiedNamespace = FullyQualifiedNamespace,
-                                PartitionId = partitionId,
-                                StartingPosition = EventPosition.FromOffset(offset, isInclusive: false)
-                            });
-                        }
-                    }
-                }
+                // TODO: Reenable reading V4 checkpoints
+
+                // string legacyCheckpointAndOwnershipPrefix = $"{LegacyCheckpointStorageBlobPrefix}{ConsumerGroup}/";
+                // await foreach (BlobItem item in ContainerClient.GetBlobsAsync(prefix: legacyCheckpointAndOwnershipPrefix, cancellationToken: cancellationToken).ConfigureAwait(false))
+                // {
+                //     string partitionId = item.Name.Substring(legacyCheckpointAndOwnershipPrefix.Length);
+                //     if (!checkpoints.ContainsKey(partitionId))
+                //     {
+                //         using MemoryStream checkpointStream = new MemoryStream();
+                //         await ContainerClient.GetBlobClient(item.Name).DownloadToAsync(checkpointStream, cancellationToken: cancellationToken).ConfigureAwait(false);
+                //         checkpointStream.Position = 0;
+                //         BlobPartitionLease lease = await JsonSerializer.DeserializeAsync<BlobPartitionLease>(checkpointStream, cancellationToken: cancellationToken).ConfigureAwait(false);
+                //
+                //         if (long.TryParse(lease.Offset, out long offset))
+                //         {
+                //             LeaseInfos.TryAdd(partitionId, new LeaseInfo(offset, lease.SequenceNumber ?? 0));
+                //             checkpoints.Add(partitionId, new EventProcessorCheckpoint()
+                //             {
+                //                 ConsumerGroup = ConsumerGroup,
+                //                 EventHubName = EventHubName,
+                //                 FullyQualifiedNamespace = FullyQualifiedNamespace,
+                //                 PartitionId = partitionId,
+                //                 StartingPosition = EventPosition.FromOffset(offset, isInclusive: false)
+                //             });
+                //         }
+                //     }
+                // }
 
                 return checkpoints.Values;
             }
@@ -244,13 +258,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                         Version = blob.Properties.ETag.Value.ToString(),
                     });
                 }
-
                 return partitonOwnerships;
             }
 
             internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
             {
-                string checkpointBlob = string.Format(CultureInfo.InvariantCulture, CheckpointPrefixFormat + partitionId, FullyQualifiedNamespace.ToLowerInvariant(), EventHubName.ToLowerInvariant(), ConsumerGroup.ToLowerInvariant());
+                string checkpointBlob = string.Format(CultureInfo.InvariantCulture,
+                    CheckpointPrefixFormat + partitionId,
+                    FullyQualifiedNamespace.ToLowerInvariant(),
+                    EventHubName.ToLowerInvariant(),
+                    ConsumerGroup.ToLowerInvariant());
                 Dictionary<string, string> checkpointMetadata = new Dictionary<string, string>()
                 {
                     { OffsetMetadataKey, checkpointEvent.Offset.ToString(CultureInfo.InvariantCulture) },
@@ -273,15 +290,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 };
 
                 using MemoryStream legacyCheckpointStream = new MemoryStream();
-                await JsonSerializer.SerializeAsync(legacyCheckpointStream, lease).ConfigureAwait(false);
+                await JsonSerializer.SerializeAsync(legacyCheckpointStream, lease, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 string legacyCheckpointBlob = $"{LegacyCheckpointStorageBlobPrefix}{ConsumerGroup}/{partitionId}";
-                Dictionary<string, string> legacyCheckpoitMetadata = new Dictionary<string, string>()
+                Dictionary<string, string> legacyCheckpointMetadata = new Dictionary<string, string>()
                 {
                     { OwningHostMedataKey, Identifier }
                 };
 
-                await ContainerClient.GetBlobClient(checkpointBlob).UploadAsync(legacyCheckpointStream, metadata: legacyCheckpoitMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await ContainerClient.GetBlobClient(legacyCheckpointBlob).UploadAsync(legacyCheckpointStream, metadata: legacyCheckpointMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
             internal virtual LeaseInfo GetLeaseInfo(string partitionId)

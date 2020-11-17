@@ -169,6 +169,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
             {
+                Console.WriteLine($"Got event Offset: {systemProperties["Offset"]} SequenceNumber: {systemProperties["SequenceNumber"]} Partition {partitionKey}");
                 // filter for the ID the current test is using
                 if (evt == _testId)
                 {
@@ -320,6 +321,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 })
                 .ConfigureLogging(b =>
                 {
+                    b.AddConsole();
                     b.SetMinimumLevel(LogLevel.Debug);
                 })
                 .Build();
