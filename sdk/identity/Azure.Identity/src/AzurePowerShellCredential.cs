@@ -105,7 +105,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
-            var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs), cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs), cancellationToken);
 
             string output;
             try
