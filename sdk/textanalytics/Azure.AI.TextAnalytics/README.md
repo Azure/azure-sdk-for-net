@@ -329,13 +329,11 @@ Text Analytics for health is a containerized service that extracts and labels re
     }
 }
 ```
-For samples on using the production recommended options `DocumentHealthcareResult` see [here][recognize_healthcare_sample].
-
 
 ### Run Analyze Operation Asynchronously
 In the Analyze API, you get to choose which of the supported TA features you want to call in the same API call. Currently the supported TA features are entity recognition, key phrase extraction and entity recognition PII/PHI tasks. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
 
-```C# Snippet:AnalyzeOperationBatchAsync
+```C# Snippet:AnalyzeOperationBatchConvenience
     string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
                         and we adore the spot! They provide marvelous food and they have a great menu. The
                         chief cook happens to be the owner (I think his name is John Doe) and he is super 
@@ -345,13 +343,7 @@ In the Analyze API, you get to choose which of the supported TA features you wan
                         call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
                         I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-    var batchDocuments = new List<TextDocumentInput>
-    {
-        new TextDocumentInput("1", document)
-        {
-             Language = "en",
-        }
-    };
+    var batchDocuments = new List<string> { document };
 
     AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
     {
@@ -361,7 +353,7 @@ In the Analyze API, you get to choose which of the supported TA features you wan
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
 
     await operation.WaitForCompletionAsync();
 
@@ -421,8 +413,6 @@ In the Analyze API, you get to choose which of the supported TA features you wan
     }
 }
 ```
-For samples on using the production recommended options `AnalyzeOperationResult` see [here][analyze_operation_sample].
-
 
 ## Troubleshooting
 

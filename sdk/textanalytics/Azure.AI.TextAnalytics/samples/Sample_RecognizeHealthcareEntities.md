@@ -63,7 +63,7 @@ To recognize healthcare entities in a document, use the `StarthealthcareAsyc` me
 
 To recognize healthcare entities in multiple documents, call `StartHealthcareBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `HealthcareOperation` which polls for the results from the API.
 
-```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
+```C# Snippet:TextAnalyticsSampleHealthcareBatchConvenienceAsync
     string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -77,17 +77,9 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
     List<string> batchInput = new List<string>()
     {
         document,
-        document,
     };
 
-    HealthcareOptions options = new HealthcareOptions()
-    {
-        Top = 1,
-        Skip = 0,
-        IncludeStatistics = true
-    };
-
-    HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en", options);
+    HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en");
 
     await healthOperation.WaitForCompletionAsync();
 
@@ -130,9 +122,9 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
 }
 ```
 
-To recognize healthcare entities in a collection of documents in different languages, call `StartHealthcareBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
+To recognize healthcare entities in a single of document, call `StartHealthcareBatch` with `string`, language can be sent in the second argument or can default to English.
 
-```C# Snippet:TextAnalyticsSampleHealthcareBatch
+```C# Snippet:RecognizeHealthcareEntities
     string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                         Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                         HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -143,18 +135,7 @@ To recognize healthcare entities in a collection of documents in different langu
                         minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
                         increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
 
-    List<string> batchInput = new List<string>()
-    {
-        document,
-        document,
-    };
-
-    HealthcareOptions options = new HealthcareOptions()
-    {
-        IncludeStatistics = true
-    };
-
-    HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en", options);
+    HealthcareOperation healthOperation = client.StartHealthcare(document);
 
     await healthOperation.WaitForCompletionAsync();
 
@@ -165,35 +146,25 @@ To recognize healthcare entities in a collection of documents in different langu
 
     foreach (DocumentHealthcareResult result in results)
     {
-        Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
+           Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-        foreach (HealthcareEntity entity in result.Entities)
-        {
-            Console.WriteLine($"    Entity: {entity.Text}");
-            Console.WriteLine($"    Subcategory: {entity.Subcategory}");
-            Console.WriteLine($"    Offset: {entity.Offset}");
-            Console.WriteLine($"    Length: {entity.Length}");
-            Console.WriteLine($"    IsNegated: {entity.IsNegated}");
-            Console.WriteLine($"    Links:");
-
-            foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+            foreach (HealthcareEntity entity in result.Entities)
             {
-                Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
-                Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
-            }
-        }
+                Console.WriteLine($"    Entity: {entity.Text}");
+                Console.WriteLine($"    Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"    Offset: {entity.Offset}");
+                Console.WriteLine($"    Length: {entity.Length}");
+                Console.WriteLine($"    IsNegated: {entity.IsNegated}");
+                Console.WriteLine($"    Links:");
 
-        Console.WriteLine($"    Document statistics:");
-        Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
-        Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
-        Console.WriteLine("");
+                foreach (HealthcareEntityLink healthcareEntityLink in entity.Links)
+                {
+                    Console.WriteLine($"        ID: {healthcareEntityLink.Id}");
+                    Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
+                }
+            }
+            Console.WriteLine("");
     }
-    Console.WriteLine($"Request statistics:");
-    Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
-    Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
-    Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
-    Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
-    Console.WriteLine("");
 }
 ```
 

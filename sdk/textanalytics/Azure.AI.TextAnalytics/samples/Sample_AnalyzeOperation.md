@@ -15,7 +15,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 
 To run analyze operation in multiple documents, call `StartAnalyzeOperationBatchAsync` on an `IEnumerable` of strings.  The result is a Long Running operation of type `AnalyzeOperation` which polls for the results from the API.
 
-```C# Snippet:AnalyzeOperationBatchAsync
+```C# Snippet:AnalyzeOperationBatchConvenience
     string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
                         and we adore the spot! They provide marvelous food and they have a great menu. The
                         chief cook happens to be the owner (I think his name is John Doe) and he is super 
@@ -25,13 +25,7 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
                         call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
                         I have is the food didn't come fast enough. Overall I highly recommend it!";
 
-    var batchDocuments = new List<TextDocumentInput>
-    {
-        new TextDocumentInput("1", document)
-        {
-             Language = "en",
-        }
-    };
+    var batchDocuments = new List<string> { document };
 
     AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
     {
@@ -41,7 +35,7 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeOperation operation = await client.StartAnalyzeOperationBatchAsync(batchDocuments, operationOptions);
+    AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
 
     await operation.WaitForCompletionAsync();
 
