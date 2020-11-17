@@ -13,8 +13,8 @@ namespace Azure.Communication.Sms.Tests
 
         internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_LIVETEST_CONNECTION_STRING";
         internal const string PhoneNumberEnvironmentVariableName = "PHONE_NUMBER";
-        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
 
+        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
         public string PhoneNumber => GetRecordedVariable(PhoneNumberEnvironmentVariableName);
     }
 }
