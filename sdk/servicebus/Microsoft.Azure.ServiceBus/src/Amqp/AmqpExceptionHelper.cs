@@ -263,5 +263,18 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             return innerException == null ? null : GetClientException(innerException, null, null, connectionError);
         }
+
+        public static bool TryTranslateToRetriableException(Exception exception, out ServiceBusException retriableException)
+        {
+            retriableException = null;
+
+            // InvalidOperationException with 'connection is closing' message from AMQP layer is retriable.
+            if (exception is InvalidOperationException && exception.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                retriableException = new ServiceBusException(true, exception);
+            }
+
+            return retriableException != null;
+        }
     }
 }
