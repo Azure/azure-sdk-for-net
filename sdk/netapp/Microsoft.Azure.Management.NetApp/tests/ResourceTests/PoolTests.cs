@@ -11,11 +11,13 @@ using Xunit;
 using System;
 using Microsoft.Azure.Management.NetApp.Models;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NetApp.Tests.ResourceTests
 {
     public class PoolTests : TestBase
     {
+        private const int delay = 5000;
         [Fact]
         public void CreateDeletePool()
         {
@@ -241,7 +243,11 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal("Value1", resource.Tags["Tag1"]);
 
                 // cleanup
-                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeletePool(netAppMgmtClient);                
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
