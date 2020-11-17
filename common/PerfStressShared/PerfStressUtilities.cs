@@ -49,7 +49,7 @@ namespace Azure.Test.PerfStress
 
             foreach (var t in testTypes)
             {
-                // Test types must contain a public constructor SampleTest(baseOptionsType)
+                // Test types must contain a public constructor SampleTest(baseOptionsType, ...)
                 Type optionsType = null;
                 foreach (var ctor in t.GetConstructors())
                 {
