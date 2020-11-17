@@ -15,14 +15,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareShowStats()
+        public async Task HealthcareBatchConvenience()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSampleHealthcareShowStats
+            #region Snippet:TextAnalyticsSampleHealthcareBatchConvenience
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -36,15 +36,9 @@ namespace Azure.AI.TextAnalytics.Samples
             List<string> batchInput = new List<string>()
             {
                 document,
-                document,
             };
 
-            HealthcareOptions options = new HealthcareOptions()
-            {
-                IncludeStatistics = true
-            };
-
-            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en", options);
+            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en");
 
             await healthOperation.WaitForCompletionAsync();
 
@@ -72,18 +66,8 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
                     }
                 }
-
-                Console.WriteLine($"    Document statistics:");
-                Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
-                Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
                 Console.WriteLine("");
             }
-            Console.WriteLine($"Request statistics:");
-            Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
-            Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
-            Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
-            Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
-            Console.WriteLine("");
         }
 
         #endregion
