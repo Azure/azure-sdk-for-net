@@ -333,7 +333,7 @@ For samples on using the production recommended options `DocumentHealthcareResul
 
 
 ### Run Analyze Operation Asynchronously
-In the Analyze API, you get to choose which of the supported TA features you want to call in the same API call. Currently the supported TA features are entity recognition, key phrase extraction and entity recognition PII/PHI tasks. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
+The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
 
 ```C# Snippet:AnalyzeOperationBatchAsync
     string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
