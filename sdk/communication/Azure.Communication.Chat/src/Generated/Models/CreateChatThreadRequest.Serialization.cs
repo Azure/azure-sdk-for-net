@@ -17,9 +17,9 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("topic");
             writer.WriteStringValue(Topic);
-            writer.WritePropertyName("members");
+            writer.WritePropertyName("participants");
             writer.WriteStartArray();
-            foreach (var item in Members)
+            foreach (var item in Participants)
             {
                 writer.WriteObjectValue(item);
             }
