@@ -11,7 +11,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_Null()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
+            var PartBTags =AzMonList.Initialize();
 
             var url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
@@ -23,14 +23,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData(SemanticConventions.AttributeHttpHost)]
         public void GetUrl_NullOrEmpty(string attribute)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, null));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, null));
 
             var url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
 
-            PooledList<KeyValuePair<string, object>>.Clear(ref PartBTags);
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, string.Empty));
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, string.Empty));
             url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
         }
@@ -38,9 +38,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_With_HttpScheme_And_Null_HttpHost()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, null));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, null));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
 
             var url = HttpHelper.GetUrl(PartBTags);
 
@@ -53,10 +53,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("https", "netpeername", null)]
         public void GetUrl_NetPeerName_NullOrEmpty(string scheme, string peerName, string peerPort)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
 
             var url = HttpHelper.GetUrl(PartBTags);
 
@@ -76,10 +76,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("https", "localhost", "443")]
         public void GetUrl_HttpPort_NullEmptyOrDefault(string scheme, string httpHost, string hostPort)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
 
             var url = HttpHelper.GetUrl(PartBTags);
 
@@ -93,11 +93,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("https", "localhost", "8888", "/test")]
         public void GetUrl_HttpPort_RandomPort_With_HttpTarget(string scheme, string httpHost, string hostPort, string target)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
             var url = HttpHelper.GetUrl(PartBTags);
 
@@ -110,11 +110,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("https", "10.0.0.1", "443", "/test")]
         public void GetUrl_NetPeerIP_Success(string scheme, string peerIp, string peerPort, string target)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, peerIp));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, peerIp));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
             var url = HttpHelper.GetUrl(PartBTags);
 
@@ -126,11 +126,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("https", "localhost", "443", "/test")]
         public void GetUrl_NetPeerName_Success(string scheme, string peerName, string peerPort, string target)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
             var url = HttpHelper.GetUrl(PartBTags);
             Assert.Equal($"https://localhost:443{target}", url);
@@ -143,18 +143,18 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("localhost", null, null)]
         public void GetUrl_HttpHost_Success(string httpHost, string hostPort, string target)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
+            var PartBTags =AzMonList.Initialize();
 
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
 
             if (hostPort != "")
             {
-                PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
+               AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
             }
 
             if (target != "")
             {
-                PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
+               AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
             }
 
             var url = HttpHelper.GetUrl(PartBTags);
@@ -165,8 +165,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_HttpUrl_Success()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
 
             var url = HttpHelper.GetUrl(PartBTags);
             Assert.Equal("https://www.wiki.com/", url);
@@ -180,8 +180,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [InlineData("500")]
         public void GetHttpStatusCode_Success(string statusCode)
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, statusCode));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, statusCode));
 
             Assert.Equal(statusCode, HttpHelper.GetHttpStatusCode(PartBTags));
         }
@@ -189,10 +189,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetHttpStatusCode_Failure()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
+            var PartBTags =AzMonList.Initialize();
             Assert.Equal("0", HttpHelper.GetHttpStatusCode(PartBTags));
 
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, null));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, null));
             Assert.Equal("0", HttpHelper.GetHttpStatusCode(PartBTags));
         }
 
@@ -217,29 +217,29 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetHostTests()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "test"));
+            var PartBTags =AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "test"));
             Assert.Equal("test", HttpHelper.GetHost(PartBTags));
 
-            PooledList<KeyValuePair<string, object>>.Clear(ref PartBTags);
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
             Assert.Null(HttpHelper.GetHost(PartBTags));
 
-            PooledList<KeyValuePair<string, object>>.Clear(ref PartBTags);
+           AzMonList.Clear(ref PartBTags);
             Assert.Null(HttpHelper.GetHost(PartBTags));
         }
 
         [Fact]
         public void GetMessagingUrl_Tests()
         {
-            var PartBTags = PooledList<KeyValuePair<string, object>>.Create();
+            var PartBTags =AzMonList.Initialize();
             Assert.Null(HttpHelper.GetMessagingUrl(PartBTags));
 
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, null));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, null));
             Assert.Null(HttpHelper.GetMessagingUrl(PartBTags));
 
-            PooledList<KeyValuePair<string, object>>.Clear(ref PartBTags);
-            PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, "test"));
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, "test"));
             Assert.Equal("test", HttpHelper.GetMessagingUrl(PartBTags));
         }
     }

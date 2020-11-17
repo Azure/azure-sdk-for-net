@@ -171,8 +171,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             var telemetryType = activity.GetTelemetryType();
             var monitorTags = new TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             activity.EnumerateTags(ref monitorTags);
@@ -223,19 +223,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, PooledList<KeyValuePair<string, object>> PartCTags)
+        internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, AzMonList PartCTags)
         {
             // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            foreach (var tag in PartCTags)
+            for (int i = 0; i < PartCTags.Length; i++)
             {
-                destination.Add(tag.Key, tag.Value?.ToString());
+                destination.Add(PartCTags[i].Key, PartCTags[i].Value?.ToString());
             }
         }
 
         internal struct TagEnumerationState : IActivityEnumerator<KeyValuePair<string, object>>
         {
-            public PooledList<KeyValuePair<string, object>> PartBTags;
-            public PooledList<KeyValuePair<string, object>> PartCTags;
+            public AzMonList PartBTags;
+            public AzMonList PartCTags;
 
             private PartBType tempActivityType;
             public PartBType activityType;
@@ -265,13 +265,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                         sw.Length--;
                     }
 
-                    PooledList<KeyValuePair<string, object>>.Add(ref PartCTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
+                   AzMonList.Add(ref PartCTags, new KeyValuePair<string, object>(activityTag.Key, sw.ToString()));
                     return true;
                 }
 
                 if (!Part_B_Mapping.TryGetValue(activityTag.Key, out tempActivityType))
                 {
-                    PooledList<KeyValuePair<string, object>>.Add(ref PartCTags, activityTag);
+                   AzMonList.Add(ref PartCTags, activityTag);
                     return true;
                 }
 
@@ -282,11 +282,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
                 if (tempActivityType == activityType || tempActivityType == PartBType.Common)
                 {
-                    PooledList<KeyValuePair<string, object>>.Add(ref PartBTags, activityTag);
+                   AzMonList.Add(ref PartBTags, activityTag);
                 }
                 else
                 {
-                    PooledList<KeyValuePair<string, object>>.Add(ref PartCTags, activityTag);
+                   AzMonList.Add(ref PartCTags, activityTag);
                 }
 
                 return true;

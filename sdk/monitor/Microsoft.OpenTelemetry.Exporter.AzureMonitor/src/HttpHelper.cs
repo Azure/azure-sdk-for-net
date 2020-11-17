@@ -22,7 +22,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         /// <param name="tagObjects">Activity Tags</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetUrl(this PooledList<KeyValuePair<string, object>> tagObjects)
+        internal static string GetUrl(this AzMonList tagObjects)
         {
             var httpurl = tagObjects.GetTagValue(SemanticConventions.AttributeHttpUrl);
 
@@ -84,7 +84,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHttpStatusCode(this PooledList<KeyValuePair<string, object>> tagObjects)
+        internal static string GetHttpStatusCode(this AzMonList tagObjects)
         {
             _ = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode);
             var status = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString();
@@ -92,7 +92,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetMessagingUrl(this PooledList<KeyValuePair<string, object>> tagObjects)
+        internal static string GetMessagingUrl(this AzMonList tagObjects)
         {
             return tagObjects.GetTagValue(SemanticConventions.AttributeMessagingUrl)?.ToString();
         }
@@ -104,15 +104,15 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHost(this PooledList<KeyValuePair<string, object>> tagObjects)
+        internal static string GetHost(this AzMonList tagObjects)
         {
             return tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost)?.ToString();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static object GetTagValue(this PooledList<KeyValuePair<string, object>> tagObjects, string tagName)
+        internal static object GetTagValue(this AzMonList tagObjects, string tagName)
         {
-            for (int i = 0; i < tagObjects.Count; i++)
+            for (int i = 0; i < tagObjects.Length; i++)
             {
                 if (tagObjects[i].Key == tagName)
                 {
@@ -124,7 +124,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static object[] GetTagValues(this PooledList<KeyValuePair<string, object>> tagObjects, params string[] tagNames)
+        internal static object[] GetTagValues(this AzMonList tagObjects, params string[] tagNames)
         {
             int? length = tagNames?.Count();
             if (length == null || length == 0)
@@ -134,7 +134,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             object[] values = new object[(int)length];
 
-            for (int i = 0; i < tagObjects.Count; i++)
+            for (int i = 0; i < tagObjects.Length; i++)
             {
                 var index = Array.IndexOf(tagNames, tagObjects[i].Key);
                 if (index >= 0)

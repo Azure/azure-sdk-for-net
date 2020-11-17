@@ -29,8 +29,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             using var activity = CreateTestActivity();
@@ -46,8 +46,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             using var activity = CreateTestActivity(new Dictionary<string, object>());
@@ -63,8 +63,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -79,7 +79,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
-            Assert.Equal(2, monitorTags.PartCTags.Count);
+            Assert.Equal(2, monitorTags.PartCTags.Length);
             Assert.Null(monitorTags.PartCTags.GetTagValue("key1"));
             Assert.Equal("test", monitorTags.PartCTags.GetTagValue("key2"));
             Assert.Equal(string.Empty, monitorTags.PartCTags.GetTagValue("key3"));
@@ -90,8 +90,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" };;
@@ -108,8 +108,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -125,7 +125,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
-            Assert.Equal(4, monitorTags.PartBTags.Count);
+            Assert.Equal(4, monitorTags.PartBTags.Length);
             Assert.Equal("https", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpScheme));
             Assert.Equal("localhost", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHost));
             Assert.Equal("8888", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHostPort));
@@ -139,8 +139,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -155,7 +155,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
-            Assert.Equal(3, monitorTags.PartBTags.Count);
+            Assert.Equal(3, monitorTags.PartBTags.Length);
             Assert.Single(monitorTags.PartCTags);
 
             Assert.Equal("https", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpScheme));
@@ -170,8 +170,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -194,8 +194,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -218,8 +218,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -242,8 +242,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -266,8 +266,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -290,8 +290,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -309,7 +309,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
-            Assert.Equal(6, monitorTags.PartCTags.Count);
+            Assert.Equal(6, monitorTags.PartCTags.Length);
 
             Assert.Equal(1, monitorTags.PartCTags.GetTagValue("intKey"));
             Assert.Equal(1.1, monitorTags.PartCTags.GetTagValue("doubleKey"));

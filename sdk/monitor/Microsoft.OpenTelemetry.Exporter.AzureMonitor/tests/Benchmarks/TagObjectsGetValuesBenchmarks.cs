@@ -11,11 +11,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
     [MemoryDiagnoser]
     public class TagObjectsGetValuesBenchmarks
     {
-        private PooledList<KeyValuePair<string, object>> PooledList_No_Item;
-        private PooledList<KeyValuePair<string, object>> PooledList_Items;
+        private AzMonList AzMonList_No_Item;
+        private AzMonList AzMonList_Items;
         private IEnumerable<KeyValuePair<string, object>> TagObjects_No_Item;
         private IEnumerable<KeyValuePair<string, object>> TagObjects_Items;
-        private Activity IteamActivity;
+        private Activity ItemActivity;
         private Activity EmptyActivity;
 
         static TagObjectsGetValuesBenchmarks()
@@ -35,19 +35,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            PooledList_No_Item = PooledList<KeyValuePair<string, object>>.Create();
+            AzMonList_No_Item = AzMonList.Initialize();
             TagObjects_No_Item = new Dictionary<string, object>();
 
-            PooledList_Items = PooledList<KeyValuePair<string, object>>.Create();
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("intKey", 1));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("stringKey", "test"));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("boolKey", true));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
-            PooledList<KeyValuePair<string, object>>.Add(ref PooledList_Items, new KeyValuePair<string, object>("somekey", "value"));
+            AzMonList_Items =AzMonList.Initialize();
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("intKey", 1));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("stringKey", "test"));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "localhost"));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("boolKey", true));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, "8888"));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("arrayKey", new int[] { 1, 2, 3 }));
+           AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("somekey", "value"));
 
             TagObjects_Items = new Dictionary<string, object>
             {
@@ -64,16 +64,16 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
 
 
             using var activitySource = new ActivitySource("test");
-            this.IteamActivity = activitySource.StartActivity("WithTags");
-            this.IteamActivity.AddTag("intKey", 1);
-            this.IteamActivity.AddTag("doubleKey", 1.1);
-            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpScheme, "https");
-            this.IteamActivity.AddTag("stringKey", "test");
-            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpHost, "localhost");
-            this.IteamActivity.AddTag("boolKey", true);
-            this.IteamActivity.AddTag(SemanticConventions.AttributeHttpHostPort, "8888");
-            this.IteamActivity.AddTag("arrayKey", new int[] { 1, 2, 3 });
-            this.IteamActivity.AddTag("somekey", "value");
+            this.ItemActivity = activitySource.StartActivity("WithTags");
+            this.ItemActivity.AddTag("intKey", 1);
+            this.ItemActivity.AddTag("doubleKey", 1.1);
+            this.ItemActivity.AddTag(SemanticConventions.AttributeHttpScheme, "https");
+            this.ItemActivity.AddTag("stringKey", "test");
+            this.ItemActivity.AddTag(SemanticConventions.AttributeHttpHost, "localhost");
+            this.ItemActivity.AddTag("boolKey", true);
+            this.ItemActivity.AddTag(SemanticConventions.AttributeHttpHostPort, "8888");
+            this.ItemActivity.AddTag("arrayKey", new int[] { 1, 2, 3 });
+            this.ItemActivity.AddTag("somekey", "value");
 
             this.EmptyActivity = activitySource.StartActivity("NoTags");
         }
@@ -91,15 +91,15 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         }
 
         [Benchmark]
-        public void GetTagValueEmptyPooledList()
+        public void GetTagValueEmptyAzMonList()
         {
-            object _ = PooledList_No_Item.GetTagValue(SemanticConventions.AttributeHttpHost);
+            object _ = AzMonList_No_Item.GetTagValue(SemanticConventions.AttributeHttpHost);
         }
 
         [Benchmark]
-        public void GetTagValueNonemptyPooledList()
+        public void GetTagValueNonemptyAzMonList()
         {
-            object _ = PooledList_Items.GetTagValue(SemanticConventions.AttributeHttpHost);
+            object _ = AzMonList_Items.GetTagValue(SemanticConventions.AttributeHttpHost);
         }
 
         [Benchmark]
@@ -111,7 +111,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [Benchmark]
         public void GetTagValueNonemptyActivityTags()
         {
-            object _ = this.IteamActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
+            object _ = this.ItemActivity.GetTagValue(SemanticConventions.AttributeHttpHost);
         }
     }
 }

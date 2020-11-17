@@ -41,8 +41,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         {
             monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags = PooledList<KeyValuePair<string, object>>.Create(),
-                PartCTags = PooledList<KeyValuePair<string, object>>.Create()
+                PartBTags =AzMonList.Initialize(),
+                PartCTags =AzMonList.Initialize()
             };
 
             tagObjects = new Dictionary<string, object>();
@@ -87,25 +87,25 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         }
 
         [Benchmark]
-        public void Enumerate_PooledList_NoItem()
+        public void Enumerate_AzMonList_NoItem()
         {
             NoItemActivity.EnumerateTags(ref monitorTags);
         }
 
         [Benchmark]
-        public void Enumerate_PooledList_Part_B()
+        public void Enumerate_AzMonList_Part_B()
         {
             PartBActivity.EnumerateTags(ref monitorTags);
         }
 
         [Benchmark]
-        public void Enumerate_PooledList_Part_C()
+        public void Enumerate_AzMonList_Part_C()
         {
             PartCActivity.EnumerateTags(ref monitorTags);
         }
 
         [Benchmark]
-        public void Enumerate_PooledList_PartB_And_C()
+        public void Enumerate_AzMonList_PartB_And_C()
         {
             PartBAndCActivity.EnumerateTags(ref monitorTags);
         }
