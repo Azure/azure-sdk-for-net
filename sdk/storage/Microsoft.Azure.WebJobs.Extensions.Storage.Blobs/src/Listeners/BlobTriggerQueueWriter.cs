@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public async Task<(string QueueName, string MessageId)> EnqueueAsync(BlobTriggerMessage message, CancellationToken cancellationToken)
         {
             string contents = JsonConvert.SerializeObject(message, JsonSerialization.Settings);
-            var receipt = await _queue.AddMessageAndCreateIfNotExistsAsync(contents, cancellationToken).ConfigureAwait(false);
+            var receipt = await _queue.AddMessageAndCreateIfNotExistsAsync(BinaryData.FromString(contents), cancellationToken).ConfigureAwait(false);
             _watcher.Notify(_queue.Name);
             return (QueueName: _queue.Name, MessageId: receipt.MessageId);
         }

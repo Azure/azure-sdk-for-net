@@ -140,13 +140,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests
             });
         }
 
-        public QueueServiceClient GetQueueServiceClient()
+        public QueueServiceClient GetQueueServiceClient(QueueClientOptions queueClientOptions = default)
         {
-            var transport = GetTransport();
-            return new QueueServiceClient(account.ConnectionString, new QueueClientOptions()
+            if (queueClientOptions == default)
             {
-                Transport = transport
-            });
+                queueClientOptions = new QueueClientOptions()
+                {
+                    MessageEncoding = QueueMessageEncoding.Base64
+                };
+            }
+
+            queueClientOptions.Transport = GetTransport();
+            return new QueueServiceClient(account.ConnectionString, queueClientOptions);
         }
 
         public HttpClientTransport GetTransport()

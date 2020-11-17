@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<FunctionResult> ExecuteAsync(QueueMessage value, CancellationToken cancellationToken)
         {
-            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.MessageText, JsonSerialization.Settings);
+            BlobTriggerMessage message = JsonConvert.DeserializeObject<BlobTriggerMessage>(value.Body.ToValidUTF8String(), JsonSerialization.Settings);
 
             if (message == null)
             {

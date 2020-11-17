@@ -374,7 +374,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                     })
                     .Build();
 
-                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
+                var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+                this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
                 this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 

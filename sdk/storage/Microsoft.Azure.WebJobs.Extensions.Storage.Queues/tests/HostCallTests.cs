@@ -87,23 +87,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public async Task Queue_IfBoundToIAsyncCollectorByteArray_CanCall()
         {
             // Act
-            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorByteArray"); // TODO (kasobol-msft) revisit when BinaryData is in SDK
+            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorByteArray");
 
             // Assert
             var queue = queueServiceClient.GetQueueClient(OutputQueueName);
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.AreEqual(3, messages.Count());
-            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            // TODO (kasobol-msft) revisit this when base64/BinaryData is in the SDK
-            Assert.AreEqual("test1", sortedMessages[0].MessageText);
-            Assert.AreEqual("test2", sortedMessages[1].MessageText);
-            Assert.AreEqual("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
         }
 
         [Test]
-        public async Task Queue_IfBoundToICollectorByteArray_CanCall() // TODO (kasobol-msft) revisit when BinaryData is in SDK
+        public async Task Queue_IfBoundToICollectorByteArray_CanCall()
         {
             // Act
             await CallAsync(typeof(QueueProgram), "BindToICollectorByteArray");
@@ -113,11 +112,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
             Assert.NotNull(messages);
             Assert.AreEqual(3, messages.Count());
-            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.MessageText).ToArray();
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
 
-            Assert.AreEqual("test1", sortedMessages[0].MessageText);
-            Assert.AreEqual("test2", sortedMessages[1].MessageText);
-            Assert.AreEqual("test3", sortedMessages[2].MessageText);
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+        }
+
+        [Test]
+        public async Task Queue_IfBoundToIAsyncCollectorBinaryData_CanCall()
+        {
+            // Act
+            await CallAsync(typeof(QueueProgram), "BindToIAsyncCollectorBinaryData");
+
+            // Assert
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
+            Assert.NotNull(messages);
+            Assert.AreEqual(3, messages.Count());
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
+
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+        }
+
+        [Test]
+        public async Task Queue_IfBoundToICollectorBinaryData_CanCall()
+        {
+            // Act
+            await CallAsync(typeof(QueueProgram), "BindToICollectorBinaryData");
+
+            // Assert
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
+            Assert.NotNull(messages);
+            Assert.AreEqual(3, messages.Count());
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
+
+            Assert.AreEqual("test1", sortedMessages[0].Body.ToString());
+            Assert.AreEqual("test2", sortedMessages[1].Body.ToString());
+            Assert.AreEqual("test3", sortedMessages[2].Body.ToString());
+        }
+
+        [Test]
+        public async Task Queue_IfBoundToBinaryData_CanCall()
+        {
+            // Act
+            await CallAsync(typeof(QueueProgram), "BindToBinaryData");
+
+            // Assert
+            var queue = queueServiceClient.GetQueueClient(OutputQueueName);
+            QueueMessage[] messages = await queue.ReceiveMessagesAsync(32);
+            Assert.NotNull(messages);
+            Assert.AreEqual(1, messages.Count());
+            QueueMessage[] sortedMessages = messages.OrderBy((m) => m.Body.ToString()).ToArray();
+
+            Assert.AreEqual("test", sortedMessages[0].Body.ToString());
         }
 
         [Test]
@@ -390,6 +441,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 output.Add(Encoding.UTF8.GetBytes("test1"));
                 output.Add(Encoding.UTF8.GetBytes("test2"));
                 output.Add(Encoding.UTF8.GetBytes("test3"));
+            }
+
+            public static async Task BindToIAsyncCollectorBinaryData(
+                [Queue(OutputQueueName)] IAsyncCollector<BinaryData> output)
+            {
+                await output.AddAsync(BinaryData.FromString("test1"));
+                await output.AddAsync(BinaryData.FromString("test2"));
+                await output.AddAsync(BinaryData.FromString("test3"));
+            }
+
+            public static void BindToICollectorBinaryData(
+                [Queue(OutputQueueName)] ICollector<BinaryData> output)
+            {
+                output.Add(BinaryData.FromString("test1"));
+                output.Add(BinaryData.FromString("test2"));
+                output.Add(BinaryData.FromString("test3"));
+            }
+
+            public static void BindToBinaryData(
+                [Queue(OutputQueueName)] out BinaryData output)
+            {
+                output = BinaryData.FromString("test");
             }
 
             public static async Task BindToIAsyncCollectorEnqueuesImmediately(

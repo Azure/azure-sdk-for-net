@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Hosting;
@@ -33,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host
         private TimeSpan _maxPollingInterval = QueuePollingIntervals.DefaultMaximum;
         private TimeSpan _visibilityTimeout = TimeSpan.Zero;
         private int _maxDequeueCount = DefaultMaxDequeueCount;
+        private QueueMessageEncoding _messageEncoding = QueueMessageEncoding.Base64;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueuesOptions"/> class.
@@ -159,6 +161,22 @@ namespace Microsoft.Azure.WebJobs.Host
             }
         }
 
+        /// <summary>
+        /// Gets or sets a message encoding that determines how queue message body is represented in HTTP requests and responses.
+        /// The default is <see cref="QueueMessageEncoding.Base64"/>.
+        /// </summary>
+        public QueueMessageEncoding MessageEncoding
+        {
+            get
+            {
+                return _messageEncoding;
+            }
+            set
+            {
+                _messageEncoding = value;
+            }
+        }
+
         /// <inheritdoc/>
         public string Format()
         {
@@ -168,7 +186,8 @@ namespace Microsoft.Azure.WebJobs.Host
                 { nameof(NewBatchThreshold), NewBatchThreshold },
                 { nameof(MaxPollingInterval), MaxPollingInterval },
                 { nameof(MaxDequeueCount), MaxDequeueCount },
-                { nameof(VisibilityTimeout), VisibilityTimeout }
+                { nameof(VisibilityTimeout), VisibilityTimeout },
+                { nameof(MessageEncoding), MessageEncoding.ToString() }
             };
 
             return options.ToString(Formatting.Indented);

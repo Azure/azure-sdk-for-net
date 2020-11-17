@@ -20,13 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class QueueTriggerAttributeBindingProvider : ITriggerBindingProvider
     {
-        private static readonly IQueueTriggerArgumentBindingProvider InnerProvider =
-            new CompositeArgumentBindingProvider(
-                new ConverterArgumentBindingProvider<QueueMessage>(new CloudQueueMessageDirectConverter()), // $$$: Is this the best way to handle a direct CloudQueueMessage? TODO (kasobol-msft) is this needed?
-                new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter()),
-                new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter()),
-                new UserTypeArgumentBindingProvider()); // Must come last, because it will attempt to bind all types.
-
+        private readonly IQueueTriggerArgumentBindingProvider _innerProvider;
         private readonly INameResolver _nameResolver;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueuesOptions _queueOptions;
@@ -34,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly SharedQueueWatcher _messageEnqueuedWatcherSetter;
         private readonly ILoggerFactory _loggerFactory;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
         public QueueTriggerAttributeBindingProvider(INameResolver nameResolver,
             QueueServiceClientProvider queueServiceClientProvider,
@@ -41,16 +36,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
             ILoggerFactory loggerFactory,
-            IQueueProcessorFactory queueProcessorFactory)
+            IQueueProcessorFactory queueProcessorFactory,
+            QueueCausalityManager queueCausalityManager)
         {
             _queueServiceClientProvider = queueServiceClientProvider ?? throw new ArgumentNullException(nameof(queueServiceClientProvider));
             _queueOptions = (queueOptions ?? throw new ArgumentNullException(nameof(queueOptions))).Value;
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
+            _queueCausalityManager = queueCausalityManager ?? throw new ArgumentNullException(nameof(queueCausalityManager));
 
             _nameResolver = nameResolver;
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
+
+            _innerProvider =
+            new CompositeArgumentBindingProvider(
+                new ConverterArgumentBindingProvider<QueueMessage>(new CloudQueueMessageDirectConverter(), loggerFactory), // $$$: Is this the best way to handle a direct CloudQueueMessage? TODO (kasobol-msft) is this needed?
+                new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter(), loggerFactory),
+                new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter(), loggerFactory),
+                new ConverterArgumentBindingProvider<BinaryData>(new StorageQueueMessageToBinaryDataConverter(), loggerFactory),
+                new UserTypeArgumentBindingProvider(loggerFactory)); // Must come last, because it will attempt to bind all types.
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -66,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             string queueName = Resolve(queueTrigger.QueueName);
             queueName = NormalizeAndValidate(queueName);
 
-            ITriggerDataArgumentBinding<QueueMessage> argumentBinding = InnerProvider.TryCreate(parameter);
+            ITriggerDataArgumentBinding<QueueMessage> argumentBinding = _innerProvider.TryCreate(parameter);
 
             if (argumentBinding == null)
             {
@@ -79,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 
             ITriggerBinding binding = new QueueTriggerBinding(parameter.Name, client, queue, argumentBinding,
                 _queueOptions, _exceptionHandler, _messageEnqueuedWatcherSetter,
-                _loggerFactory, _queueProcessorFactory);
+                _loggerFactory, _queueProcessorFactory, _queueCausalityManager);
             return Task.FromResult(binding);
         }
 
