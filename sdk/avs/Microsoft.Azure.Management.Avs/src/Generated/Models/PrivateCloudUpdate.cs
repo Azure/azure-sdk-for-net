@@ -34,19 +34,27 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the PrivateCloudUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="managementCluster">The default cluster used for
         /// management</param>
         /// <param name="internet">Connectivity to internet is enabled or
         /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="identitySources">vCenter Single Sign On Identity
         /// Sources</param>
-        public PrivateCloudUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>))
+        /// <param name="vcenterPassword">Indicate to rotate the vCenter admin
+        /// password for the private cloud. Possible values include:
+        /// 'OnetimeRotate'</param>
+        /// <param name="nsxtPassword">Indicate to rotate the NSX-T Manager
+        /// password for the private cloud. Possible values include:
+        /// 'OnetimeRotate'</param>
+        public PrivateCloudUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string vcenterPassword = default(string), string nsxtPassword = default(string))
         {
             Tags = tags;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
+            VcenterPassword = vcenterPassword;
+            NsxtPassword = nsxtPassword;
             CustomInit();
         }
 
@@ -56,7 +64,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
+        /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
@@ -79,6 +87,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.identitySources")]
         public IList<IdentitySource> IdentitySources { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate to rotate the vCenter admin password for the
+        /// private cloud. Possible values include: 'OnetimeRotate'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vcenterPassword")]
+        public string VcenterPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate to rotate the NSX-T Manager password for the
+        /// private cloud. Possible values include: 'OnetimeRotate'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nsxtPassword")]
+        public string NsxtPassword { get; set; }
 
     }
 }

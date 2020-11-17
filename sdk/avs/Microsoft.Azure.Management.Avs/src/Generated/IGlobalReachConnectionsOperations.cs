@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Avs
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AuthorizationsOperations operations.
+    /// GlobalReachConnectionsOperations operations.
     /// </summary>
-    public partial interface IAuthorizationsOperations
+    public partial interface IGlobalReachConnectionsOperations
     {
         /// <summary>
-        /// List ExpressRoute Circuit Authorizations in a private cloud
+        /// List global reach connections in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -47,10 +47,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExpressRouteAuthorization>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GlobalReachConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get an ExpressRoute Circuit Authorization by name in a private
-        /// cloud
+        /// Get a global reach connection by name in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -58,8 +57,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// Name of the private cloud
         /// </param>
-        /// <param name='authorizationName'>
-        /// Name of the ExpressRoute Circuit Authorization in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,10 +75,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExpressRouteAuthorization>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalReachConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private
-        /// cloud
+        /// Create or update a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -87,8 +85,11 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// The name of the private cloud.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Name of the ExpressRoute Circuit Authorization in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
+        /// </param>
+        /// <param name='globalReachConnection'>
+        /// A global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -105,9 +106,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExpressRouteAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalReachConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an ExpressRoute Circuit Authorization in a private cloud
+        /// Delete a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -115,8 +116,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// Name of the private cloud
         /// </param>
-        /// <param name='authorizationName'>
-        /// Name of the ExpressRoute Circuit Authorization in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -130,10 +131,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update an ExpressRoute Circuit Authorization in a private
-        /// cloud
+        /// Create or update a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -141,8 +141,11 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// The name of the private cloud.
         /// </param>
-        /// <param name='authorizationName'>
-        /// Name of the ExpressRoute Circuit Authorization in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
+        /// </param>
+        /// <param name='globalReachConnection'>
+        /// A global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -159,9 +162,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ExpressRouteAuthorization>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GlobalReachConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, GlobalReachConnection globalReachConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an ExpressRoute Circuit Authorization in a private cloud
+        /// Delete a global reach connection in a private cloud
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -169,8 +172,8 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='privateCloudName'>
         /// Name of the private cloud
         /// </param>
-        /// <param name='authorizationName'>
-        /// Name of the ExpressRoute Circuit Authorization in the private cloud
+        /// <param name='globalReachConnectionName'>
+        /// Name of the global reach connection in the private cloud
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -184,9 +187,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string privateCloudName, string globalReachConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List ExpressRoute Circuit Authorizations in a private cloud
+        /// List global reach connections in a private cloud
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -206,6 +209,6 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ExpressRouteAuthorization>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GlobalReachConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

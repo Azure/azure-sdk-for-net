@@ -50,6 +50,12 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="identitySources">vCenter Single Sign On Identity
         /// Sources</param>
+        /// <param name="vcenterPassword">Indicate to rotate the vCenter admin
+        /// password for the private cloud. Possible values include:
+        /// 'OnetimeRotate'</param>
+        /// <param name="nsxtPassword">Indicate to rotate the NSX-T Manager
+        /// password for the private cloud. Possible values include:
+        /// 'OnetimeRotate'</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Cancelled', 'Pending',
         /// 'Building', 'Deleting', 'Updating'</param>
@@ -61,21 +67,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// migration, cloning, and snapshot migration</param>
         /// <param name="vmotionNetwork">Used for live migration of virtual
         /// machines</param>
-        /// <param name="vcenterPassword">Optionally, set the vCenter admin
-        /// password when the private cloud is created</param>
-        /// <param name="nsxtPassword">Optionally, set the NSX-T Manager
-        /// password when the private cloud is created</param>
         /// <param name="vcenterCertificateThumbprint">Thumbprint of the
         /// vCenter Server SSL certificate</param>
         /// <param name="nsxtCertificateThumbprint">Thumbprint of the NSX-T
         /// Manager SSL certificate</param>
-        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterPassword = default(string), string nsxtPassword = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string))
+        public PrivateCloud(Sku sku, string networkBlock, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagementCluster managementCluster = default(ManagementCluster), string internet = default(string), IList<IdentitySource> identitySources = default(IList<IdentitySource>), string vcenterPassword = default(string), string nsxtPassword = default(string), string provisioningState = default(string), Circuit circuit = default(Circuit), Endpoints endpoints = default(Endpoints), string managementNetwork = default(string), string provisioningNetwork = default(string), string vmotionNetwork = default(string), string vcenterCertificateThumbprint = default(string), string nsxtCertificateThumbprint = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
+            VcenterPassword = vcenterPassword;
+            NsxtPassword = nsxtPassword;
             ProvisioningState = provisioningState;
             Circuit = circuit;
             Endpoints = endpoints;
@@ -83,8 +87,6 @@ namespace Microsoft.Azure.Management.Avs.Models
             ManagementNetwork = managementNetwork;
             ProvisioningNetwork = provisioningNetwork;
             VmotionNetwork = vmotionNetwork;
-            VcenterPassword = vcenterPassword;
-            NsxtPassword = nsxtPassword;
             VcenterCertificateThumbprint = vcenterCertificateThumbprint;
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             CustomInit();
@@ -119,6 +121,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.identitySources")]
         public IList<IdentitySource> IdentitySources { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate to rotate the vCenter admin password for the
+        /// private cloud. Possible values include: 'OnetimeRotate'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vcenterPassword")]
+        public string VcenterPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicate to rotate the NSX-T Manager password for the
+        /// private cloud. Possible values include: 'OnetimeRotate'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nsxtPassword")]
+        public string NsxtPassword { get; set; }
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
@@ -167,20 +183,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmotionNetwork")]
         public string VmotionNetwork { get; private set; }
-
-        /// <summary>
-        /// Gets or sets optionally, set the vCenter admin password when the
-        /// private cloud is created
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.vcenterPassword")]
-        public string VcenterPassword { get; set; }
-
-        /// <summary>
-        /// Gets or sets optionally, set the NSX-T Manager password when the
-        /// private cloud is created
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.nsxtPassword")]
-        public string NsxtPassword { get; set; }
 
         /// <summary>
         /// Gets thumbprint of the vCenter Server SSL certificate
