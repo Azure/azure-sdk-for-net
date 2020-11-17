@@ -11,6 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisfileDirectory)CheckpointStore\*.cs" Link="CheckpointStore\Processor\%(Filename)%(Extension)" />
+    <Compile Include="$(MSBuildThisfileDirectory)BlobCheckpointStore\*.cs" Link="SharedSource\BlobCheckpointStore\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

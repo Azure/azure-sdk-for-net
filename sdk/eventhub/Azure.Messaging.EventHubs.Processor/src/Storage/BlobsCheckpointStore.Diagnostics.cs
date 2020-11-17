@@ -5,8 +5,22 @@ using Azure.Messaging.EventHubs.Processor.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
+    /// <summary>
+    ///   A storage blob service that keeps track of checkpoints and ownership.
+    /// </summary>
+    ///
     internal sealed partial class BlobsCheckpointStore
     {
+        /// <summary>
+        /// Initializes the <see cref="BlobsCheckpointStore"/> type.
+        /// </summary>
+#pragma warning disable CA1810 // Initialize static fields inline
+        static BlobsCheckpointStore()
+        {
+            BlobsResourceDoesNotExist = Resources.BlobsResourceDoesNotExist;
+        }
+#pragma warning restore CA1810
+
         /// <summary>
         ///   The instance of <see cref="BlobEventStoreEventSource" /> which can be mocked for testing.
         /// </summary>

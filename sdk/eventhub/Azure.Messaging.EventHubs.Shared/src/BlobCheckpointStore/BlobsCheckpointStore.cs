@@ -23,7 +23,10 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     internal sealed partial class BlobsCheckpointStore : StorageManager
     {
-        private const string BlobsResourceDoesNotExist = "The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.";
+#pragma warning disable CA1802 // Use a constant field
+        /// <summary>A message to use when throwing exception when checkpoint container or blob does not exists.</summary>
+        private static readonly string BlobsResourceDoesNotExist = "The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.";
+#pragma warning restore CA1810
 
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
