@@ -38,7 +38,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
             AzMonList_No_Item = AzMonList.Initialize();
             TagObjects_No_Item = new Dictionary<string, object>();
 
-            AzMonList_Items =AzMonList.Initialize();
+            AzMonList_Items = AzMonList.Initialize();
            AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("intKey", 1));
            AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>("doubleKey", 1.1));
            AzMonList.Add(ref AzMonList_Items, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, "https"));

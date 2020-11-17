@@ -41,8 +41,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         {
             monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             tagObjects = new Dictionary<string, object>();

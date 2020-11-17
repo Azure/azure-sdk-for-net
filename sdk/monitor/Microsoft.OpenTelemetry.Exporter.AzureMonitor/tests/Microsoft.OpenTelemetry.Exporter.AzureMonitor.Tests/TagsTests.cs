@@ -29,8 +29,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             using var activity = CreateTestActivity();
@@ -46,8 +46,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             using var activity = CreateTestActivity(new Dictionary<string, object>());
@@ -63,8 +63,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -90,8 +90,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" };;
@@ -108,8 +108,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -139,8 +139,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -170,8 +170,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -194,8 +194,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -218,8 +218,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -242,8 +242,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -266,8 +266,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
@@ -290,8 +290,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         {
             var monitorTags = new AzureMonitorConverter.TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>

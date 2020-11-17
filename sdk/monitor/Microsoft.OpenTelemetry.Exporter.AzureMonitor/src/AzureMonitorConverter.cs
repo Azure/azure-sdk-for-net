@@ -171,8 +171,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             var telemetryType = activity.GetTelemetryType();
             var monitorTags = new TagEnumerationState
             {
-                PartBTags =AzMonList.Initialize(),
-                PartCTags =AzMonList.Initialize()
+                PartBTags = AzMonList.Initialize(),
+                PartCTags = AzMonList.Initialize()
             };
 
             activity.EnumerateTags(ref monitorTags);
