@@ -40,7 +40,7 @@ namespace Azure.Test.PerfStress
         }
 
         // Dynamically create option types with a "Verb" attribute
-        internal static Type[] GetOptionTypes(IEnumerable<Type> testTypes)
+        internal static Type[] GetOptionTypes(IEnumerable<Type> testTypes, Type baseOptionsType)
         {
             var optionTypes = new List<Type>();
 
@@ -49,8 +49,25 @@ namespace Azure.Test.PerfStress
 
             foreach (var t in testTypes)
             {
-                var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
-                var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
+                // Test types must contain a public constructor where the first parameter extends PerfOptions or StressOptions
+                Type optionsType = null;
+                foreach (var ctor in t.GetConstructors())
+                {
+                    var parameters = ctor.GetParameters();
+                    if (parameters.Length >= 1 && baseOptionsType.IsAssignableFrom(parameters[0].ParameterType))
+                    {
+                        optionsType = parameters[0].ParameterType;
+                        break;
+                    }
+                }
+
+                if (optionsType == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Class '{t.Name}' does not contain a public constructor '{t.Name}({baseOptionsType.Name}, ...)'");
+                }
+
+                var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, optionsType);
 
                 var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
                 var verbName = GetVerbName(t.Name);

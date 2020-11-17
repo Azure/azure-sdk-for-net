@@ -31,7 +31,7 @@ namespace Azure.Test.Perf
 
             if (testTypes.Any())
             {
-                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
+                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes, typeof(PerfOptions));
                 await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
                     async o =>
                     {
@@ -50,6 +50,24 @@ namespace Azure.Test.Perf
 
         private static async Task Run(Type testType, PerfOptions options)
         {
+            // Test types must contain a public constructor SampleTest(SampleOptions)
+            bool foundCtor = false;
+            foreach (var ctor in testType.GetConstructors())
+            {
+                var parameters = ctor.GetParameters();
+                if (parameters.Length == 1 && parameters[0].ParameterType.IsAssignableFrom(options.GetType()))
+                {
+                    foundCtor = true;
+                    break;
+                }
+            }
+
+            if (!foundCtor)
+            {
+                throw new InvalidOperationException(
+                    $"Class '{testType.Name}' does not contain a public constructor '{testType.Name}({options.GetType().BaseType.Name})'");
+            }
+
             // Require Server GC, since most performance-sensitive usage will be in ASP.NET apps which
             // enable Server GC by default.  Though Server GC is disabled on 1-core machines as of
             // .NET Core 3.0 (https://github.com/dotnet/runtime/issues/12484).

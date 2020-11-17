@@ -24,7 +24,7 @@ namespace Azure.Test.Stress
 
             if (testTypes.Any())
             {
-                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
+                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes, typeof(StressOptions));
 
                 await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<StressOptions, Task>(
                     async o =>
@@ -44,6 +44,26 @@ namespace Azure.Test.Stress
 
         private static async Task Run(Type testType, StressOptions options)
         {
+            // Test types must contain a public constructor SampleTest(SampleOptions, SampleMetrics)
+            Type metricsType = null;
+            foreach (var ctor in testType.GetConstructors())
+            {
+                var parameters = ctor.GetParameters();
+                if (parameters.Length == 2 &&
+                    parameters[0].ParameterType.IsAssignableFrom(options.GetType()) &&
+                    typeof(StressMetrics).IsAssignableFrom(parameters[1].ParameterType))
+                {
+                    metricsType = parameters[1].ParameterType;
+                    break;
+                }
+            }
+
+            if (metricsType == null)
+            {
+                throw new InvalidOperationException(
+                    $"Class '{testType.Name}' does not contain a public constructor '{testType.Name}({options.GetType().BaseType.Name}, StressMetrics)'");
+            }
+
             var header = HeaderString(testType, options);
             Console.WriteLine(header);
 
@@ -53,7 +73,6 @@ namespace Azure.Test.Stress
             using var cleanupStatusCts = new CancellationTokenSource();
             Thread cleanupStatusThread = null;
 
-            var metricsType = testType.GetConstructors().First().GetParameters()[1].ParameterType;
             var metrics = (StressMetrics)Activator.CreateInstance(metricsType);
             metrics.Duration = TimeSpan.FromSeconds(options.Duration);
             metrics.Options = options;
