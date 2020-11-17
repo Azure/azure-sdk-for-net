@@ -65,9 +65,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                 content.WriteNewLine();
             }
             request.Content = RequestContent.Create(content.ToBytes());
-#if DEBUG
-            TelemetryDebugWriter.WriteTelemetry(content.ToString());
-#endif
+            TelemetryDebugWriter.WriteTelemetry(content);
             return message;
         }
 
@@ -85,9 +83,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();
             request.Content = RequestContent.Create(body);
-#if DEBUG
-            TelemetryDebugWriter.WriteTelemetry(content.ToString());
-#endif
+            TelemetryDebugWriter.WriteTelemetry(content);
             return message;
         }
     }

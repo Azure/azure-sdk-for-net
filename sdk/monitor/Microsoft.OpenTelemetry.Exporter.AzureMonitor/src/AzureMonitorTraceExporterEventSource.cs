@@ -4,10 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-#if DEBUG
-using System.Diagnostics;
 using Azure.Core.Shared;
-#endif
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
@@ -16,9 +13,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
     {
         private const string EventSourceName = "Microsoft-OpenTelemetry-TraceExporter-AzureMonitor";
         public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
-#if DEBUG
         public static AzureMonitorTraceExporterEventListener Listener = new AzureMonitorTraceExporterEventListener();
-#endif
 
         public readonly IReadOnlyDictionary<string, EventLevel> EventLevelMap = new Dictionary<string, EventLevel>
         {
@@ -80,7 +75,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             return value is Exception exception ? exception.ToInvariantString() : value.ToString();
         }
 
-#if DEBUG
         public class AzureMonitorTraceExporterEventListener : EventListener
         {
             private readonly List<EventSource> eventSources = new List<EventSource>();
@@ -110,9 +104,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             protected override void OnEventWritten(EventWrittenEventArgs eventData)
             {
                 string message = EventSourceEventFormatting.Format(eventData);
-                Debug.WriteLine($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
             }
         }
-#endif
     }
 }
