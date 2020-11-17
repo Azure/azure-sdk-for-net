@@ -109,7 +109,7 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.StatusInterval, "Warmup", options, warmup: true);
+                            await RunTestsAsync(tests, "Warmup", options, warmup: true);
                         }
 
                         for (var i = 0; i < options.Iterations; i++)
@@ -119,8 +119,7 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.StatusInterval,
-                                title, options, jobStatistics: options.JobStatistics, latency: options.Latency, warmup: false);
+                            await RunTestsAsync(tests, title, options, jobStatistics: options.JobStatistics, latency: options.Latency, warmup: false);
                         }
                     }
                     finally
@@ -161,7 +160,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, int statusIntervalSeconds, string title, PerfOptions options, bool jobStatistics = false, bool latency = false, bool warmup = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, string title, PerfOptions options, bool jobStatistics = false, bool latency = false, bool warmup = false)
         {
             var durationSeconds = warmup ? options.Warmup : options.Duration;
 
@@ -205,7 +204,7 @@ namespace Azure.Test.Perf
                 },
                 newLine: true,
                 progressStatusCts.Token,
-                statusIntervalSeconds
+                options.StatusInterval
                 );
 
             Thread pendingOperationsThread = null;
