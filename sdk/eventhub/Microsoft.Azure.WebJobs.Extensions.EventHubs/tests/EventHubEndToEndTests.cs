@@ -27,7 +27,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static string _testId;
         private static List<string> _results;
 
-        public EventHubEndToEndTests()
+        [SetUp]
+        public void SetUp()
         {
             _results = new List<string>();
             _testId = Guid.NewGuid().ToString();
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = tuple.Item2.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
 
-                CollectionAssert.Contains($"PocoValues(foo,{_testId})", logs);
+                CollectionAssert.Contains(logs, $"PocoValues(foo,{_testId})");
             }
         }
 
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = tuple.Item2.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
 
-                CollectionAssert.Contains($"Input({_testId})", logs);
+                CollectionAssert.Contains(logs, $"Input({_testId})");
             }
         }
 
@@ -169,7 +170,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
             {
-                Console.WriteLine($"Got event Offset: {systemProperties["Offset"]} SequenceNumber: {systemProperties["SequenceNumber"]} Partition {partitionKey}");
                 // filter for the ID the current test is using
                 if (evt == _testId)
                 {

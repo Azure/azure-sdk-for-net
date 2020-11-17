@@ -125,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             SafeAddValue(() => bindingData.Add("PartitionKey", eventData.PartitionKey));
             SafeAddValue(() => bindingData.Add("Offset", eventData.Offset));
             SafeAddValue(() => bindingData.Add("SequenceNumber", eventData.SequenceNumber));
-            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", eventData.EnqueuedTime.Date));
+            SafeAddValue(() => bindingData.Add("EnqueuedTimeUtc", eventData.EnqueuedTime.DateTime));
             SafeAddValue(() => bindingData.Add("Properties", eventData.Properties));
             SafeAddValue(() => bindingData.Add("SystemProperties", GetSystemPropertiesForBinding(eventData)));
         }

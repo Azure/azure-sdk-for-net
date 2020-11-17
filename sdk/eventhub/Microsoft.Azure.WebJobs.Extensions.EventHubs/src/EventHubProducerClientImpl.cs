@@ -4,6 +4,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -11,10 +13,12 @@ namespace Microsoft.Azure.WebJobs
     internal class EventHubProducerClientImpl : IEventHubProducerClient
     {
         private readonly EventHubProducerClient _client;
+        private readonly ILogger _logger;
 
-        public EventHubProducerClientImpl(EventHubProducerClient client)
+        public EventHubProducerClientImpl(EventHubProducerClient client, ILoggerFactory loggerFactory)
         {
             _client = client;
+            _logger = loggerFactory?.CreateLogger(LogCategories.Executor);
         }
 
         public async Task<IEventDataBatch> CreateBatchAsync(CancellationToken cancellationToken)
@@ -24,6 +28,7 @@ namespace Microsoft.Azure.WebJobs
 
         public async Task SendAsync(IEventDataBatch batch, CancellationToken cancellationToken)
         {
+            _logger?.LogDebug("Sending events to EventHub");
             var eventDataBatch = ((EventDataBatchImpl) batch).Batch;
             await _client.SendAsync(eventDataBatch, cancellationToken).ConfigureAwait(false);
         }
