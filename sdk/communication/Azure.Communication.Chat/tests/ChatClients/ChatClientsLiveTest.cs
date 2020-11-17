@@ -36,9 +36,9 @@ namespace Azure.Communication.Chat.Tests
         }
 
         /// <summary>
-        /// Thread      : Create, Get, Update, Delete
-        /// Participant      : Add, Update, Remove
-        /// Message     : Get, Send, update
+        /// Thread: Create, Get, Update, Delete
+        /// Participant: Add, Update, Remove
+        /// Message: Get, Send, update
         /// Notification: Typing
         /// </summary>
         [SyncOnly]
@@ -56,7 +56,7 @@ namespace Azure.Communication.Chat.Tests
 
             var topic = "Thread sync from C# sdk";
             var displayNameMessage = "DisplayName sender message 1";
-            var participants = new List<ChatParticipant>
+            var participants = new[]
             {
                 new ChatParticipant(user1),
                 new ChatParticipant(user2),
@@ -177,7 +177,7 @@ namespace Azure.Communication.Chat.Tests
             Pageable<ChatParticipant> chatParticipantsAfterTwoAdded = chatThreadClient.GetParticipants();
             var chatParticipantsAfterTwoAddedCount = chatParticipantsAfterTwoAdded.Count();
 
-            CommunicationUser participantToBeRemoved = user4; //Better name for the snippet
+            CommunicationUser participantToBeRemoved = user4;
             #region Snippet:Azure_Communication_Chat_Tests_E2E_RemoveParticipant
             chatThreadClient.RemoveParticipant(user: participantToBeRemoved);
             #endregion Snippet:Azure_Communication_Chat_Tests_E2E_RemoveParticipant
@@ -265,9 +265,9 @@ namespace Azure.Communication.Chat.Tests
         }
 
         /// <summary>
-        /// Thread      : Create, Get, Update, Delete
-        /// Participant : Add, Update, Remove
-        /// Message     : Get, Send, update
+        /// Thread: Create, Get, Update, Delete
+        /// Participant: Add, Update, Remove
+        /// Message: Get, Send, update
         /// Notification: Typing
         /// </summary>
         [AsyncOnly]

@@ -18,24 +18,22 @@ namespace Azure.Communication.Chat.Tests.samples
         public async Task GetAddRemoveMembersAsync()
         {
             CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
-            Response<CommunicationUser> user1 = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationUser> user2 = await communicationIdentityClient.CreateUserAsync();
-            Response<CommunicationUser> user3 = await communicationIdentityClient.CreateUserAsync();
+            Response<CommunicationUser> joshResponse = await communicationIdentityClient.CreateUserAsync();
+            CommunicationUser josh = joshResponse.Value;
+            Response<CommunicationUser> gloriaResponse = await communicationIdentityClient.CreateUserAsync();
+            CommunicationUser gloria = gloriaResponse.Value;
+            Response<CommunicationUser> amyResponse = await communicationIdentityClient.CreateUserAsync();
+            CommunicationUser amy = amyResponse.Value;
 
-            CommunicationUserToken communicationUserToken1 = await communicationIdentityClient.IssueTokenAsync(user1.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken2 = await communicationIdentityClient.IssueTokenAsync(user2.Value, new[] { CommunicationTokenScope.Chat });
-            CommunicationUserToken communicationUserToken3 = await communicationIdentityClient.IssueTokenAsync(user3.Value, new[] { CommunicationTokenScope.Chat });
-            string userToken = communicationUserToken1.Token;
-            string endpoint = TestEnvironment.ChatApiUrl();
-            string theadCreatorUserId = communicationUserToken1.User.Id;
+            CommunicationUserToken joshTokenResponse = await communicationIdentityClient.IssueTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
 
             ChatClient chatClient = new ChatClient(
-                new Uri(endpoint),
-                new CommunicationUserCredential(userToken));
+                new Uri(TestEnvironment.ChatApiUrl()),
+                new CommunicationUserCredential(joshTokenResponse.Token));
 
-            var chatParticipant = new ChatParticipant(new CommunicationUser(theadCreatorUserId))
+            var chatParticipant = new ChatParticipant(josh)
             {
-                DisplayName = "UserDisplayName",
+                DisplayName = "Josh",
                 ShareHistoryTime = DateTime.MinValue
             };
             ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
@@ -49,27 +47,22 @@ namespace Azure.Communication.Chat.Tests.samples
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_GetMembers
 
-            var participantId1 = theadCreatorUserId;
-            var participantId2 = communicationUserToken2.User.Id;
-            var participantId3 = communicationUserToken3.User.Id;
-
             #region Snippet:Azure_Communication_Chat_Tests_Samples_AddParticipants
             var participants = new[]
             {
-                new ChatParticipant(new CommunicationUser(participantId1)) { DisplayName ="display name participant 1"},
-                new ChatParticipant(new CommunicationUser(participantId2)) { DisplayName ="display name participant 2"},
-                new ChatParticipant(new CommunicationUser(participantId3)) { DisplayName ="display name participant 3"}
+                new ChatParticipant(josh) { DisplayName ="Josh"},
+                new ChatParticipant(gloria) { DisplayName ="Gloria"},
+                new ChatParticipant(amy) { DisplayName ="Amy"}
             };
+
             await chatThreadClient.AddParticipantsAsync(participants);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_AddParticipants
 
-            var participantId = participantId2;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant
-            await chatThreadClient.RemoveParticipantAsync(new CommunicationUser(participantId));
+            await chatThreadClient.RemoveParticipantAsync(gloria);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant
 
             await chatClient.DeleteChatThreadAsync(threadId);
-
         }
     }
 }

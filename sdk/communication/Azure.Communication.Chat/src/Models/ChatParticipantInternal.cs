@@ -9,8 +9,6 @@ namespace Azure.Communication.Chat
     internal partial class ChatParticipantInternal
     {
         internal ChatParticipant ToChatParticipant()
-        {
-            return new ChatParticipant(this);
-        }
+            => new ChatParticipant(this);
     }
 }

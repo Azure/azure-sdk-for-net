@@ -30,8 +30,9 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationUserCredential(userToken));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
+            var threadCreator = new CommunicationUser(threadCreatorId);
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatParticipant = new ChatParticipant(new CommunicationUser(threadCreatorId))
+            var chatParticipant = new ChatParticipant(threadCreator)
             {
                 DisplayName = "UserDisplayName"
             };
@@ -60,11 +61,11 @@ namespace Azure.Communication.Chat.Tests.samples
             await chatClient.DeleteChatThreadAsync(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
 
+            var josh = new ChatParticipant(new CommunicationUser("invalid user"));
             #region Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
             try
             {
-                /*@@*/ chatParticipant = new ChatParticipant(new CommunicationUser("invalid user"));
-                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
             }
             catch (RequestFailedException ex)
             {

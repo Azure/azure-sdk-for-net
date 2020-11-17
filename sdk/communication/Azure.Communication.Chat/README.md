@@ -168,7 +168,7 @@ ChatClient chatClient = new ChatClient(
     new CommunicationUserCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatParticipant = new ChatParticipant(new CommunicationUser(threadCreatorId))
+var chatParticipant = new ChatParticipant(threadCreator)
 {
     DisplayName = "UserDisplayName"
 };
@@ -287,7 +287,7 @@ await foreach (ChatParticipant participant in allParticipants)
 ```
 ### Add thread participants
 
-Use `AddParticipants` to add participants to the chat thread. The following are the supported attributes for each thread participant:
+Use `AddParticipants` to add one or more participants to the chat thread. The following are the supported attributes for each thread participant(s):
 - `communicationUser`, required, it is the identification for the thread participant.
 - `displayName`, optional, is the display name for the thread participant.
 - `shareHistoryTime`, optional, time from which the chat history is shared with the participant.
@@ -295,10 +295,11 @@ Use `AddParticipants` to add participants to the chat thread. The following are 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_AddParticipants
 var participants = new[]
 {
-    new ChatParticipant(new CommunicationUser(participantId1)) { DisplayName ="display name participant 1"},
-    new ChatParticipant(new CommunicationUser(participantId2)) { DisplayName ="display name participant 2"},
-    new ChatParticipant(new CommunicationUser(participantId3)) { DisplayName ="display name participant 3"}
+    new ChatParticipant(josh) { DisplayName ="Josh"},
+    new ChatParticipant(gloria) { DisplayName ="Gloria"},
+    new ChatParticipant(amy) { DisplayName ="Amy"}
 };
+
 await chatThreadClient.AddParticipantsAsync(participants);
 ```
 
@@ -308,7 +309,7 @@ Use `RemoveParticipant` to remove a thread participant from the thread.
 `communicationUser` is the identification of the chat participant.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant
-await chatThreadClient.RemoveParticipantAsync(new CommunicationUser(participantId));
+await chatThreadClient.RemoveParticipantAsync(gloria);
 ```
 
 ## Events Operations
@@ -347,7 +348,7 @@ A `RequestFailedException` is thrown as a service response for any unsuccessful 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
 try
 {
-    ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+    ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
 }
 catch (RequestFailedException ex)
 {

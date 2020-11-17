@@ -20,6 +20,7 @@ namespace Azure.Communication.Chat
             }
             User = communicationUser;
         }
+
         internal ChatParticipant(ChatParticipantInternal chatThreadMemberInternal)
         {
             User = new CommunicationUser(chatThreadMemberInternal.Id);
