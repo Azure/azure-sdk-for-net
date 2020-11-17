@@ -1963,6 +1963,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
         public async Task GetDeletedPathsAsync()
         {
             // Arrange

@@ -2360,7 +2360,7 @@ namespace Azure.Storage.Files.DataLake
                         prefix: path,
                         marker: continuation,
                         maxResults: maxResults,
-                        include: ListBlobsShowOnly.Deleted,
+                        showonly: ListBlobsShowOnly.Deleted,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)

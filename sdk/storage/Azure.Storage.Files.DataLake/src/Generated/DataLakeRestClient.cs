@@ -1076,6 +1076,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
+            /// <param name="showonly">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
@@ -1091,7 +1092,8 @@ namespace Azure.Storage.Files.DataLake
                 string delimiter = default,
                 string marker = default,
                 int? maxResults = default,
-                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem> include = default,
+                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? showonly = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
@@ -1112,6 +1114,7 @@ namespace Azure.Storage.Files.DataLake
                         marker,
                         maxResults,
                         include,
+                        showonly,
                         timeout,
                         requestId))
                     {
@@ -1153,6 +1156,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
             /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
+            /// <param name="showonly">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The FileSystem.ListBlobsHierarchySegmentAsync Message.</returns>
@@ -1164,7 +1168,8 @@ namespace Azure.Storage.Files.DataLake
                 string delimiter = default,
                 string marker = default,
                 int? maxResults = default,
-                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem> include = default,
+                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? showonly = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -1191,7 +1196,8 @@ namespace Azure.Storage.Files.DataLake
                 if (delimiter != null) { _request.Uri.AppendQuery("delimiter", delimiter); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
                 if (maxResults != null) { _request.Uri.AppendQuery("maxResults", maxResults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (include != null) { _request.Uri.AppendQuery("include", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(include.Value)); }
+                if (include != null) { _request.Uri.AppendQuery("include", string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(item)))); }
+                if (showonly != null) { _request.Uri.AppendQuery("showonly", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(showonly.Value)); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -4313,14 +4319,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal Properties { get; internal set; }
 
         /// <summary>
-        /// RemainingRetentionDays
+        /// DeletionId
         /// </summary>
-        public int? RemainingRetentionDays { get; internal set; }
-
-        /// <summary>
-        /// DeleteTime
-        /// </summary>
-        public System.DateTimeOffset? DeleteTime { get; internal set; }
+        public string DeletionId { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobItemInternal instance
@@ -4382,15 +4383,10 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 _value.Properties = Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal.FromXml(_child);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletionId", ""));
             if (_child != null)
             {
-                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DeleteTime", ""));
-            if (_child != null)
-            {
-                _value.DeleteTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.DeletionId = _child.Value;
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -4600,9 +4596,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.DateTimeOffset? LastAccessedOn { get; internal set; }
 
         /// <summary>
-        /// DeletionId
+        /// DeleteTime
         /// </summary>
-        public string DeletionId { get; internal set; }
+        public System.DateTimeOffset? DeleteTime { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of BlobPropertiesInternal instances.
@@ -4765,10 +4761,10 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 _value.LastAccessedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
-            _child = element.Element(System.Xml.Linq.XName.Get("DeletionId", ""));
+            _child = element.Element(System.Xml.Linq.XName.Get("DeleteTime", ""));
             if (_child != null)
             {
-                _value.DeletionId = _child.Value;
+                _value.DeleteTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
