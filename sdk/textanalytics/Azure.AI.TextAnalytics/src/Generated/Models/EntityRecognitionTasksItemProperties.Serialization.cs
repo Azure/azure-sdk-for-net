@@ -14,21 +14,16 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static EntityRecognitionTasksItemProperties DeserializeEntityRecognitionTasksItemProperties(JsonElement element)
         {
-            Optional<EntitiesResult> results = default;
+            EntitiesResult results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
             }
-            return new EntityRecognitionTasksItemProperties(results.Value);
+            return new EntityRecognitionTasksItemProperties(results);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private readonly QueueServiceClient _queueServiceClient;
 
         public FakeQueueServiceClientProvider(QueueServiceClient queueServiceClient)
-            : base(null, null, null)
+            : base(null, null, null, null)
         {
             _queueServiceClient = queueServiceClient;
         }

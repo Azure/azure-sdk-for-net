@@ -15,31 +15,27 @@ namespace Azure.AI.TextAnalytics
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        /// <param name="resultsInternal"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, JobStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
+            if (resultsInternal == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(resultsInternal));
             }
+
+            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, KeyPhraseResult results) : base(lastUpdateDateTime, name, status)
+        /// <param name="resultsInternal"> . </param>
+        internal KeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, KeyPhraseResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Results = results;
+            ResultsInternal = resultsInternal;
         }
     }
 }

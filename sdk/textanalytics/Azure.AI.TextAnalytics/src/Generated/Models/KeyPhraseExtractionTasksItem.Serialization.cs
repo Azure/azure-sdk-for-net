@@ -16,19 +16,14 @@ namespace Azure.AI.TextAnalytics
     {
         internal static KeyPhraseExtractionTasksItem DeserializeKeyPhraseExtractionTasksItem(JsonElement element)
         {
-            Optional<KeyPhraseResult> results = default;
+            KeyPhraseResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            string name = default;
+            Optional<string> name = default;
             JobStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
@@ -48,7 +43,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new KeyPhraseExtractionTasksItem(lastUpdateDateTime, name, status, results.Value);
+            return new KeyPhraseExtractionTasksItem(lastUpdateDateTime, name.Value, status, results);
         }
     }
 }

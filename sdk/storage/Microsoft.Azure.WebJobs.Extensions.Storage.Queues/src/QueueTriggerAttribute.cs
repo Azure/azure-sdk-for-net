@@ -20,6 +20,7 @@ namespace Microsoft.Azure.WebJobs
     /// <item><description><see cref="QueueMessage"/></description></item>
     /// <item><description><see cref="string"/></description></item>
     /// <item><description><see cref="T:byte[]"/></description></item>
+    /// <item><description><see cref="BinaryData"/></description></item>
     /// <item><description>A user-defined type (serialized as JSON)</description></item>
     /// </list>
     /// </remarks>

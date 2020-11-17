@@ -16,17 +16,17 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// EntityRecognitionTasks
         /// </summary>
-        public IList<EntitiesTask> EntityRecognitionTasks { get; }
+        public IList<EntitiesTask> EntityRecognitionTasks { get; internal set; }
 
         /// <summary>
         /// EntityRecognitionPiiTasks
         /// </summary>
-        public IList<PiiTask> EntityRecognitionPiiTasks { get; }
+        public IList<PiiTask> EntityRecognitionPiiTasks { get; internal set; }
 
         /// <summary>
         /// KeyPhraseExtractionTasks
         /// </summary>
-        public IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; }
+        public IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; internal set; }
 
     }
 }
