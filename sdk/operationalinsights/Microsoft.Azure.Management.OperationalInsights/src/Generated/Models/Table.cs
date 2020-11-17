@@ -11,45 +11,40 @@
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Tracked Resource
+    /// Workspace data table definition.
     /// </summary>
-    /// <remarks>
-    /// The resource model definition for an Azure Resource Manager tracked top
-    /// level resource which has 'tags' and a 'location'
-    /// </remarks>
-    public partial class TrackedResource : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class Table : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the Table class.
         /// </summary>
-        public TrackedResource()
+        public Table()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the Table class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="tags">Resource tags.</param>
-        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="retentionInDays">The data table data retention in
+        /// days, between 30 and 730. Setting this property to null will
+        /// default to the workspace retention.</param>
+        public Table(string id = default(string), string name = default(string), string type = default(string), int? retentionInDays = default(int?))
             : base(id, name, type)
         {
-            Tags = tags;
-            Location = location;
+            RetentionInDays = retentionInDays;
             CustomInit();
         }
 
@@ -59,16 +54,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
+        /// Gets or sets the data table data retention in days, between 30 and
+        /// 730. Setting this property to null will default to the workspace
+        /// retention.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the geo-location where the resource lives
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "properties.retentionInDays")]
+        public int? RetentionInDays { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -78,9 +69,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
+            if (RetentionInDays > 730)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RetentionInDays", 730);
+            }
+            if (RetentionInDays < 30)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RetentionInDays", 30);
             }
         }
     }

@@ -39,8 +39,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// copied from the Properties entry of the destination resource in
         /// Azure.</param>
         /// <param name="dataExportId">The data export rule ID.</param>
-        /// <param name="allTables">When ‘true’, all workspace's tables are
-        /// exported.</param>
         /// <param name="tableNames">An array of tables to export, for example:
         /// [“Heartbeat, SecurityEvent”].</param>
         /// <param name="dataExportType">The type of the destination resource.
@@ -52,10 +50,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// time.</param>
         /// <param name="lastModifiedDate">Date and time when the export was
         /// last modified.</param>
-        public DataExport(string resourceId, string dataExportId = default(string), bool? allTables = default(bool?), IList<string> tableNames = default(IList<string>), string dataExportType = default(string), string eventHubName = default(string), bool? enable = default(bool?), string createdDate = default(string), string lastModifiedDate = default(string))
+        public DataExport(string resourceId, string dataExportId = default(string), IList<string> tableNames = default(IList<string>), string dataExportType = default(string), string eventHubName = default(string), bool? enable = default(bool?), string createdDate = default(string), string lastModifiedDate = default(string))
         {
             DataExportId = dataExportId;
-            AllTables = allTables;
             TableNames = tableNames;
             ResourceId = resourceId;
             DataExportType = dataExportType;
@@ -76,12 +73,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataExportId")]
         public string DataExportId { get; set; }
-
-        /// <summary>
-        /// Gets or sets when ‘true’, all workspace's tables are exported.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.allTables")]
-        public bool? AllTables { get; set; }
 
         /// <summary>
         /// Gets or sets an array of tables to export, for example:
