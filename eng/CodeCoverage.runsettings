@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <ExcludeByAttribute>CompilerGeneratedAttribute,ExcludeFromCodeCoverage,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
+          <SingleHit>false</SingleHit>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <SkipAutoProps>true</SkipAutoProps>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

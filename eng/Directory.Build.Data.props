@@ -55,7 +55,6 @@
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
-    <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
     <InheritDocEnabled>false</InheritDocEnabled>
   </PropertyGroup>
 
@@ -82,6 +81,18 @@
   <!-- CodeAnalysis RuleSet -->
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <!--
+    Code Coverage
+    Enable using MSBuild integration since it's easier to use in build pipelines
+    and likely easier to remember than the VSTest platform integration.
+    Also: https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/KnownIssues.md#1-vstest-stops-process-execution-earlydotnet-test
+  -->
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true'">
+    <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
+    <!-- Override this property in your projects' or solutions' Directory.Build.props to further customize code coverage. -->
+    <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->

@@ -119,6 +119,8 @@ jobs:
         Windows_NetCoreApp:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            CollectCoverage: true
         Windows_NetCoreApp_ProjectReferences:
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
@@ -166,7 +168,7 @@ jobs:
         condition: and(succeeded(), eq(variables['CollectCoverage'], 'true'))
         displayName: ReportGenerator
         inputs:
-          reports: '**/*coverage.netcoreapp2.1.cobertura.xml'
+          reports: 'sdk/**/coverage.cobertura.xml'
           targetdir: '$(Build.SourcesDirectory)'
           reporttypes: Cobertura
       - task: PublishCodeCoverageResults@1
