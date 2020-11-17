@@ -1,5 +1,3 @@
-. (Join-Path $PSScriptRoot common.ps1)
-
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
 
 # Posts a github release for each item of the pkgList variable. SilentlyContinue
@@ -93,7 +91,7 @@ function RetrieveReleaseTag($artifactLocation, $continueOnError = $true) {
 
 function RetrievePackages($artifactLocation) {
   $pkgs = Get-ChildItem -Path $artifactLocation -Include $packagePattern -Recurse -File
-  if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $GetPackageInfoFromPackageFileFn }).Count -gt 0)
+  if ($GetPackageInfoFromPackageFileFn -and (Test-Path "Function:$GetPackageInfoFromPackageFileFn"))
   {
     return $pkgs, $GetPackageInfoFromPackageFileFn
   }
