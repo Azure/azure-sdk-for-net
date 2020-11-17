@@ -489,5 +489,24 @@ namespace Azure.Storage.Files.DataLake
                 Position = options.Position
             };
         }
+
+        internal static PathHierarchyDeletedItem ToPathHierarchyDeletedItem(this BlobItemInternal blobItemInternal)
+        {
+            if (blobItemInternal == null)
+            {
+                return null;
+            }
+
+            return new PathHierarchyDeletedItem
+            {
+                Path = new PathDeletedItem
+                {
+                    Name = blobItemInternal.Name,
+                    DeletionId = blobItemInternal.Properties.DeletionId,
+                    DeletedOn = blobItemInternal.Properties.DeletedTime,
+                    RemainingRetentionDays = blobItemInternal.RemainingRetentionDays
+                }
+            };
+        }
     }
 }

@@ -1062,6 +1062,201 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion FileSystem.ListPathsAsync
+
+            #region FileSystem.ListBlobHierarchySegmentAsync
+            /// <summary>
+            /// [Update] The List Blobs operation returns a list of the blobs under the specified container
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="delimiter">When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="prefix">Filters results to filesystems within the specified prefix.</param>
+            /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
+            /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
+            /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult>> ListBlobHierarchySegmentAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string delimiter,
+                string version,
+                string prefix = default,
+                string marker = default,
+                int? maxResults = default,
+                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? include = default,
+                int? timeout = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "FileSystemClient.ListBlobHierarchySegment",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = ListBlobHierarchySegmentAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        delimiter,
+                        version,
+                        prefix,
+                        marker,
+                        maxResults,
+                        include,
+                        timeout,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListBlobHierarchySegmentAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the FileSystem.ListBlobHierarchySegmentAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="delimiter">When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="prefix">Filters results to filesystems within the specified prefix.</param>
+            /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
+            /// <param name="maxResults">An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.</param>
+            /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The FileSystem.ListBlobHierarchySegmentAsync Message.</returns>
+            internal static Azure.Core.HttpMessage ListBlobHierarchySegmentAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string delimiter,
+                string version,
+                string prefix = default,
+                string marker = default,
+                int? maxResults = default,
+                Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly? include = default,
+                int? timeout = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (delimiter == null)
+                {
+                    throw new System.ArgumentNullException(nameof(delimiter));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Get;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "list", escapeValue: false);
+                _request.Uri.AppendQuery("delimiter", delimiter);
+                if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
+                if (maxResults != null) { _request.Uri.AppendQuery("maxResults", maxResults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (include != null) { _request.Uri.AppendQuery("include", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(include.Value)); }
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the FileSystem.ListBlobHierarchySegmentAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The FileSystem.ListBlobHierarchySegmentAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult> ListBlobHierarchySegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult _value = new Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult();
+                        _value.Body = Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse.FromXml(_xml.Root);
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("Content-Type", out _header))
+                        {
+                            _value.ContentType = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemListBlobHierarchySegmentResult>(response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion FileSystem.ListBlobHierarchySegmentAsync
         }
         #endregion FileSystem operations
 
@@ -4087,6 +4282,760 @@ namespace Azure.Storage.Files.DataLake.Models
 }
 #endregion class AclFailedEntry
 
+#region class BlobHierarchyListSegment
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// BlobHierarchyListSegment
+    /// </summary>
+    public partial class BlobHierarchyListSegment
+    {
+        /// <summary>
+        /// BlobPrefixes
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobPrefix> BlobPrefixes { get; internal set; }
+
+        /// <summary>
+        /// BlobItems
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobItemInternal> BlobItems { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobHierarchyListSegment instance
+        /// </summary>
+        internal BlobHierarchyListSegment()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobHierarchyListSegment instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobHierarchyListSegment(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                BlobPrefixes = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.BlobPrefix>();
+                BlobItems = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.BlobItemInternal>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobHierarchyListSegment instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobHierarchyListSegment instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment _value = new Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment(true);
+            _value.BlobPrefixes = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("BlobPrefix", "")),
+                    e => Azure.Storage.Files.DataLake.Models.BlobPrefix.FromXml(e)));
+            _value.BlobItems = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("Blob", "")),
+                    e => Azure.Storage.Files.DataLake.Models.BlobItemInternal.FromXml(e)));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobHierarchyListSegment instance for mocking.
+        /// </summary>
+        public static BlobHierarchyListSegment BlobHierarchyListSegment(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobItemInternal> blobItems,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.BlobPrefix> blobPrefixes = default)
+        {
+            return new BlobHierarchyListSegment()
+            {
+                BlobItems = blobItems,
+                BlobPrefixes = blobPrefixes,
+            };
+        }
+    }
+}
+#endregion class BlobHierarchyListSegment
+
+#region class BlobItemInternal
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// An Azure Storage blob
+    /// </summary>
+    public partial class BlobItemInternal
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Deleted
+        /// </summary>
+        public bool Deleted { get; internal set; }
+
+        /// <summary>
+        /// Snapshot
+        /// </summary>
+        public string Snapshot { get; internal set; }
+
+        /// <summary>
+        /// VersionId
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// IsCurrentVersion
+        /// </summary>
+        public bool? IsCurrentVersion { get; internal set; }
+
+        /// <summary>
+        /// Properties of a blob
+        /// </summary>
+        public Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal Properties { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// DeleteTime
+        /// </summary>
+        public System.DateTimeOffset? DeleteTime { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobItemInternal instance
+        /// </summary>
+        internal BlobItemInternal()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobItemInternal instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobItemInternal(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Properties = new Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobItemInternal instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobItemInternal instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.BlobItemInternal FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.DataLake.Models.BlobItemInternal _value = new Azure.Storage.Files.DataLake.Models.BlobItemInternal(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
+            if (_child != null)
+            {
+                _value.Deleted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Snapshot", ""));
+            if (_child != null)
+            {
+                _value.Snapshot = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("VersionId", ""));
+            if (_child != null)
+            {
+                _value.VersionId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IsCurrentVersion", ""));
+            if (_child != null)
+            {
+                _value.IsCurrentVersion = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
+            if (_child != null)
+            {
+                _value.Properties = Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal.FromXml(_child);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeleteTime", ""));
+            if (_child != null)
+            {
+                _value.DeleteTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobItemInternal value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItemInternal instance for mocking.
+        /// </summary>
+        public static BlobItemInternal BlobItemInternal(
+            string name,
+            bool deleted,
+            string snapshot,
+            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal properties,
+            string versionId = default,
+            bool? isCurrentVersion = default,
+            int? remainingRetentionDays = default,
+            System.DateTimeOffset? deleteTime = default)
+        {
+            return new BlobItemInternal()
+            {
+                Name = name,
+                Deleted = deleted,
+                Snapshot = snapshot,
+                Properties = properties,
+                VersionId = versionId,
+                IsCurrentVersion = isCurrentVersion,
+                RemainingRetentionDays = remainingRetentionDays,
+                DeleteTime = deleteTime,
+            };
+        }
+    }
+}
+#endregion class BlobItemInternal
+
+#region class BlobPrefix
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// BlobPrefix
+    /// </summary>
+    public partial class BlobPrefix
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobPrefix instances.
+        /// You can use DataLakeModelFactory.BlobPrefix instead.
+        /// </summary>
+        internal BlobPrefix() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobPrefix instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobPrefix instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.BlobPrefix FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.DataLake.Models.BlobPrefix _value = new Azure.Storage.Files.DataLake.Models.BlobPrefix();
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobPrefix value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobPrefix instance for mocking.
+        /// </summary>
+        public static BlobPrefix BlobPrefix(
+            string name)
+        {
+            return new BlobPrefix()
+            {
+                Name = name,
+            };
+        }
+    }
+}
+#endregion class BlobPrefix
+
+#region class BlobPropertiesInternal
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Properties of a blob
+    /// </summary>
+    public partial class BlobPropertiesInternal
+    {
+        /// <summary>
+        /// Creation-Time
+        /// </summary>
+        public System.DateTimeOffset? CreationTime { get; internal set; }
+
+        /// <summary>
+        /// Last-Modified
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Etag
+        /// </summary>
+        public Azure.ETag Etag { get; internal set; }
+
+        /// <summary>
+        /// Size in bytes
+        /// </summary>
+        public long? ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Content-Type
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// Content-Encoding
+        /// </summary>
+        public string ContentEncoding { get; internal set; }
+
+        /// <summary>
+        /// Content-Language
+        /// </summary>
+        public string ContentLanguage { get; internal set; }
+
+        /// <summary>
+        /// Content-MD5
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentMD5 { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// Content-Disposition
+        /// </summary>
+        public string ContentDisposition { get; internal set; }
+
+        /// <summary>
+        /// Cache-Control
+        /// </summary>
+        public string CacheControl { get; internal set; }
+
+        /// <summary>
+        /// x-ms-blob-sequence-number
+        /// </summary>
+        public long? BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// BlobType
+        /// </summary>
+        public Azure.Storage.Files.DataLake.Models.BlobType? BlobType { get; internal set; }
+
+        /// <summary>
+        /// CopyId
+        /// </summary>
+        public string CopyId { get; internal set; }
+
+        /// <summary>
+        /// CopySource
+        /// </summary>
+        public string CopySource { get; internal set; }
+
+        /// <summary>
+        /// CopyProgress
+        /// </summary>
+        public string CopyProgress { get; internal set; }
+
+        /// <summary>
+        /// CopyCompletionTime
+        /// </summary>
+        public System.DateTimeOffset? CopyCompletionTime { get; internal set; }
+
+        /// <summary>
+        /// CopyStatusDescription
+        /// </summary>
+        public string CopyStatusDescription { get; internal set; }
+
+        /// <summary>
+        /// ServerEncrypted
+        /// </summary>
+        public bool? ServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// IncrementalCopy
+        /// </summary>
+        public bool? IncrementalCopy { get; internal set; }
+
+        /// <summary>
+        /// DestinationSnapshot
+        /// </summary>
+        public string DestinationSnapshot { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime
+        /// </summary>
+        public System.DateTimeOffset? DeletedTime { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// AccessTierInferred
+        /// </summary>
+        public bool? AccessTierInferred { get; internal set; }
+
+        /// <summary>
+        /// CustomerProvidedKeySha256
+        /// </summary>
+        public string CustomerProvidedKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// The name of the encryption scope under which the blob is encrypted.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// AccessTierChangeTime
+        /// </summary>
+        public System.DateTimeOffset? AccessTierChangeTime { get; internal set; }
+
+        /// <summary>
+        /// TagCount
+        /// </summary>
+        public int? TagCount { get; internal set; }
+
+        /// <summary>
+        /// Expiry-Time
+        /// </summary>
+        public System.DateTimeOffset? ExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// Sealed
+        /// </summary>
+        public bool? IsSealed { get; internal set; }
+
+        /// <summary>
+        /// LastAccessTime
+        /// </summary>
+        public System.DateTimeOffset? LastAccessedOn { get; internal set; }
+
+        /// <summary>
+        /// DeletionId
+        /// </summary>
+        public string DeletionId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobPropertiesInternal instances.
+        /// You can use DataLakeModelFactory.BlobPropertiesInternal instead.
+        /// </summary>
+        internal BlobPropertiesInternal() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobPropertiesInternal instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobPropertiesInternal instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal _value = new Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal();
+            _child = element.Element(System.Xml.Linq.XName.Get("Creation-Time", ""));
+            if (_child != null)
+            {
+                _value.CreationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
+            if (_child != null)
+            {
+                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
+            if (_child != null)
+            {
+                _value.Etag = new Azure.ETag(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
+            if (_child != null)
+            {
+                _value.ContentLength = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Type", ""));
+            if (_child != null)
+            {
+                _value.ContentType = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Encoding", ""));
+            if (_child != null)
+            {
+                _value.ContentEncoding = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Language", ""));
+            if (_child != null)
+            {
+                _value.ContentLanguage = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-MD5", ""));
+            if (_child != null)
+            {
+                _value.ContentMD5 = System.Convert.FromBase64String(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Disposition", ""));
+            if (_child != null)
+            {
+                _value.ContentDisposition = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Cache-Control", ""));
+            if (_child != null)
+            {
+                _value.CacheControl = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("x-ms-blob-sequence-number", ""));
+            if (_child != null)
+            {
+                _value.BlobSequenceNumber = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("BlobType", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.BlobType = (Azure.Storage.Files.DataLake.Models.BlobType)System.Enum.Parse(typeof(Azure.Storage.Files.DataLake.Models.BlobType), _child.Value, false);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyId", ""));
+            if (_child != null)
+            {
+                _value.CopyId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopySource", ""));
+            if (_child != null)
+            {
+                _value.CopySource = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyProgress", ""));
+            if (_child != null)
+            {
+                _value.CopyProgress = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyCompletionTime", ""));
+            if (_child != null)
+            {
+                _value.CopyCompletionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyStatusDescription", ""));
+            if (_child != null)
+            {
+                _value.CopyStatusDescription = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ServerEncrypted", ""));
+            if (_child != null)
+            {
+                _value.ServerEncrypted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IncrementalCopy", ""));
+            if (_child != null)
+            {
+                _value.IncrementalCopy = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DestinationSnapshot", ""));
+            if (_child != null)
+            {
+                _value.DestinationSnapshot = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierInferred", ""));
+            if (_child != null)
+            {
+                _value.AccessTierInferred = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CustomerProvidedKeySha256", ""));
+            if (_child != null)
+            {
+                _value.CustomerProvidedKeySha256 = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("EncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.EncryptionScope = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
+            if (_child != null)
+            {
+                _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
+            if (_child != null)
+            {
+                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Sealed", ""));
+            if (_child != null)
+            {
+                _value.IsSealed = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LastAccessTime", ""));
+            if (_child != null)
+            {
+                _value.LastAccessedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletionId", ""));
+            if (_child != null)
+            {
+                _value.DeletionId = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.BlobPropertiesInternal value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobPropertiesInternal instance for mocking.
+        /// </summary>
+        public static BlobPropertiesInternal BlobPropertiesInternal(
+            Azure.ETag etag,
+            System.DateTimeOffset lastModified,
+            System.DateTimeOffset? copyCompletionTime = default,
+            long? contentLength = default,
+            string contentType = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            byte[] contentMD5 = default,
+            string contentDisposition = default,
+            string cacheControl = default,
+            long? blobSequenceNumber = default,
+            Azure.Storage.Files.DataLake.Models.BlobType? blobType = default,
+            string copyId = default,
+            string copySource = default,
+            string copyProgress = default,
+            System.DateTimeOffset? creationTime = default,
+            string copyStatusDescription = default,
+            bool? serverEncrypted = default,
+            bool? incrementalCopy = default,
+            string destinationSnapshot = default,
+            System.DateTimeOffset? deletedTime = default,
+            int? remainingRetentionDays = default,
+            bool? accessTierInferred = default,
+            string customerProvidedKeySha256 = default,
+            string encryptionScope = default,
+            System.DateTimeOffset? accessTierChangeTime = default,
+            int? tagCount = default,
+            System.DateTimeOffset? expiresOn = default,
+            bool? isSealed = default,
+            System.DateTimeOffset? lastAccessedOn = default,
+            string deletionId = default)
+        {
+            return new BlobPropertiesInternal()
+            {
+                Etag = etag,
+                LastModified = lastModified,
+                CopyCompletionTime = copyCompletionTime,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentMD5 = contentMD5,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                CopyId = copyId,
+                CopySource = copySource,
+                CopyProgress = copyProgress,
+                CreationTime = creationTime,
+                CopyStatusDescription = copyStatusDescription,
+                ServerEncrypted = serverEncrypted,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                DeletedTime = deletedTime,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTierInferred = accessTierInferred,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTierChangeTime = accessTierChangeTime,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                LastAccessedOn = lastAccessedOn,
+                DeletionId = deletionId,
+            };
+        }
+    }
+}
+#endregion class BlobPropertiesInternal
+
+#region enum BlobType
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// BlobType values
+    /// </summary>
+    public enum BlobType
+    {
+        /// <summary>
+        /// BlockBlob
+        /// </summary>
+        BlockBlob,
+
+        /// <summary>
+        /// PageBlob
+        /// </summary>
+        PageBlob,
+
+        /// <summary>
+        /// AppendBlob
+        /// </summary>
+        AppendBlob
+    }
+}
+#endregion enum BlobType
+
 #region class FileSystem
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -4219,6 +5168,62 @@ namespace Azure.Storage.Files.DataLake.Models
 }
 #endregion class FileSystemGetPropertiesResult
 
+#region class FileSystemListBlobHierarchySegmentResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// FileSystem ListBlobHierarchySegmentResult
+    /// </summary>
+    public partial class FileSystemListBlobHierarchySegmentResult
+    {
+        /// <summary>
+        /// The media type of the body of the response. For List Blobs this is 'application/xml'
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// An enumeration of blobs
+        /// </summary>
+        public Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse Body { get; internal set; }
+
+        /// <summary>
+        /// Creates a new FileSystemListBlobHierarchySegmentResult instance
+        /// </summary>
+        public FileSystemListBlobHierarchySegmentResult()
+        {
+            Body = new Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse();
+        }
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileSystemListBlobHierarchySegmentResult instance for mocking.
+        /// </summary>
+        public static FileSystemListBlobHierarchySegmentResult FileSystemListBlobHierarchySegmentResult(
+            string contentType,
+            string clientRequestId,
+            Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse body)
+        {
+            return new FileSystemListBlobHierarchySegmentResult()
+            {
+                ContentType = contentType,
+                ClientRequestId = clientRequestId,
+                Body = body,
+            };
+        }
+    }
+}
+#endregion class FileSystemListBlobHierarchySegmentResult
+
 #region class FileSystemListPathsResult
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -4337,6 +5342,294 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class FileSystemList
+
+#region class ListBlobsHierarchySegmentResponse
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// An enumeration of blobs
+    /// </summary>
+    public partial class ListBlobsHierarchySegmentResponse
+    {
+        /// <summary>
+        /// ServiceEndpoint
+        /// </summary>
+        public string ServiceEndpoint { get; internal set; }
+
+        /// <summary>
+        /// ContainerName
+        /// </summary>
+        public string ContainerName { get; internal set; }
+
+        /// <summary>
+        /// Prefix
+        /// </summary>
+        public string Prefix { get; internal set; }
+
+        /// <summary>
+        /// Marker
+        /// </summary>
+        public string Marker { get; internal set; }
+
+        /// <summary>
+        /// MaxResults
+        /// </summary>
+        public int? MaxResults { get; internal set; }
+
+        /// <summary>
+        /// Delimiter
+        /// </summary>
+        public string Delimiter { get; internal set; }
+
+        /// <summary>
+        /// Segment
+        /// </summary>
+        public Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment Segment { get; internal set; }
+
+        /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// Creates a new ListBlobsHierarchySegmentResponse instance
+        /// </summary>
+        internal ListBlobsHierarchySegmentResponse()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ListBlobsHierarchySegmentResponse instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ListBlobsHierarchySegmentResponse(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Segment = new Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new ListBlobsHierarchySegmentResponse instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized ListBlobsHierarchySegmentResponse instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
+            Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse _value = new Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse(true);
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ContainerName", ""));
+            if (_attribute != null)
+            {
+                _value.ContainerName = _attribute.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Prefix", ""));
+            if (_child != null)
+            {
+                _value.Prefix = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Marker", ""));
+            if (_child != null)
+            {
+                _value.Marker = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MaxResults", ""));
+            if (_child != null)
+            {
+                _value.MaxResults = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Delimiter", ""));
+            if (_child != null)
+            {
+                _value.Delimiter = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
+            if (_child != null)
+            {
+                _value.Segment = Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment.FromXml(_child);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.ListBlobsHierarchySegmentResponse value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new ListBlobsHierarchySegmentResponse instance for mocking.
+        /// </summary>
+        public static ListBlobsHierarchySegmentResponse ListBlobsHierarchySegmentResponse(
+            string serviceEndpoint,
+            string containerName,
+            Azure.Storage.Files.DataLake.Models.BlobHierarchyListSegment segment,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            string delimiter = default,
+            string nextMarker = default)
+        {
+            return new ListBlobsHierarchySegmentResponse()
+            {
+                ServiceEndpoint = serviceEndpoint,
+                ContainerName = containerName,
+                Segment = segment,
+                Prefix = prefix,
+                Marker = marker,
+                MaxResults = maxResults,
+                Delimiter = delimiter,
+                NextMarker = nextMarker,
+            };
+        }
+    }
+}
+#endregion class ListBlobsHierarchySegmentResponse
+
+#region enum ListBlobsIncludeItem
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// ListBlobsIncludeItem values
+    /// </summary>
+    public enum ListBlobsIncludeItem
+    {
+        /// <summary>
+        /// copy
+        /// </summary>
+        Copy,
+
+        /// <summary>
+        /// deleted
+        /// </summary>
+        Deleted,
+
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata,
+
+        /// <summary>
+        /// snapshots
+        /// </summary>
+        Snapshots,
+
+        /// <summary>
+        /// uncommittedblobs
+        /// </summary>
+        Uncommittedblobs,
+
+        /// <summary>
+        /// versions
+        /// </summary>
+        Versions,
+
+        /// <summary>
+        /// tags
+        /// </summary>
+        Tags
+    }
+}
+
+namespace Azure.Storage.Files.DataLake
+{
+    internal static partial class DataLakeRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Copy => "copy",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Deleted => "deleted",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Metadata => "metadata",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Snapshots => "snapshots",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Uncommittedblobs => "uncommittedblobs",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Versions => "versions",
+                    Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Tags => "tags",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem value.")
+                };
+            }
+
+            public static Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem ParseListBlobsIncludeItem(string value)
+            {
+                return value switch
+                {
+                    "copy" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Copy,
+                    "deleted" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Deleted,
+                    "metadata" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Metadata,
+                    "snapshots" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Snapshots,
+                    "uncommittedblobs" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Uncommittedblobs,
+                    "versions" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Versions,
+                    "tags" => Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem.Tags,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListBlobsIncludeItem value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListBlobsIncludeItem
+
+#region enum ListBlobsShowOnly
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Include this parameter to specify one or more datasets to include in the response.
+    /// </summary>
+    public enum ListBlobsShowOnly
+    {
+        /// <summary>
+        /// deleted
+        /// </summary>
+        Deleted
+    }
+}
+
+namespace Azure.Storage.Files.DataLake
+{
+    internal static partial class DataLakeRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly.Deleted => "deleted",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly value.")
+                };
+            }
+
+            public static Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly ParseListBlobsShowOnly(string value)
+            {
+                return value switch
+                {
+                    "deleted" => Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly.Deleted,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListBlobsShowOnly
 
 #region class Path
 namespace Azure.Storage.Files.DataLake.Models

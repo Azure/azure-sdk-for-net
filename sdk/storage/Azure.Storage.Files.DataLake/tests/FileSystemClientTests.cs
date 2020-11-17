@@ -1962,6 +1962,30 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
+        [Test]
+        public async Task GetDeletedPathsAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string fileName = GetNewFileName();
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await fileClient.CreateAsync();
+            await fileClient.DeleteAsync();
+
+            // Act
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, paths.Count);
+            Assert.IsTrue(paths[0].IsPath);
+            Assert.IsNull(paths[0].Prefix);
+            Assert.AreEqual(fileName, paths[0].Path.Name);
+            Assert.IsNotNull(paths[0].Path.DeletedOn);
+            Assert.IsNotNull(paths[0].Path.DeletionId);
+            Assert.IsNotNull(paths[0].Path.RemainingRetentionDays);
+        }
+
         private IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]
             {

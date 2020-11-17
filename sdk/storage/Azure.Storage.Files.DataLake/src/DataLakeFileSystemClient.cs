@@ -2277,5 +2277,117 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion SetAccessPolicy
+
+        #region Get Deleted Paths
+        /// <summary>
+        /// Gets the paths that have recently been soft deleted in this file system.
+        /// </summary>
+        /// <param name="path">
+        /// Filters results to paths within the specified directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathHierarchyDeletedItem}"/>
+        /// describing the deleted paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PathHierarchyDeletedItem> GetDeletedPaths(
+            string path = default,
+            CancellationToken cancellationToken = default)
+            => new GetDeletedPathAsyncCollection(
+                this,
+                path,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// Gets the paths that have recently been soft deleted in this file system.
+        /// </summary>
+        /// <param name="path">
+        /// Filters results to paths within the specified directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{PathHierarchyDeletedItem}"/>
+        /// describing the deleted paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PathHierarchyDeletedItem> GetDeletedPathsAsync(
+            string path = default,
+            CancellationToken cancellationToken = default)
+            => new GetDeletedPathAsyncCollection(
+                this,
+                path,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
+                .ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<PathDeletedSegment>> GetDeletedPathsInternal(
+            string path,
+            string continuation,
+            int? maxResults,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakeFileSystemClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(continuation)}: {continuation}\n" +
+                    $"{nameof(maxResults)}: {maxResults})");
+                try
+                {
+                    Response<FileSystemListBlobHierarchySegmentResult> response = await DataLakeRestClient.FileSystem.ListBlobHierarchySegmentAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: _blobUri,
+                        delimiter: default,
+                        version: Version.ToVersionString(),
+                        prefix: path,
+                        marker: continuation,
+                        maxResults: maxResults,
+                        include: ListBlobsShowOnly.Deleted,
+                        async: async,
+                        operationName: operationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathDeletedSegment
+                        {
+                            Continuation = response.Value.Body.NextMarker,
+                            DeletedPaths = response.Value.Body.Segment.BlobItems.Select(blobItem => blobItem.ToPathHierarchyDeletedItem())
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
+                }
+            }
+        }
+        #endregion Get Deleted Paths
+
+        #region Restore Path
+        #endregion Restore Path
     }
 }

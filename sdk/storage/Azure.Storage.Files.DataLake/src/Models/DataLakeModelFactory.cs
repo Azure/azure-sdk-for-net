@@ -431,5 +431,37 @@ namespace Azure.Storage.Files.DataLake.Models
                 Position = position
             };
         #endregion DataLakeQueryError
+
+        #region PathDeletedItem
+        /// <summary>
+        /// Creates a new PathDeletedItem for mocking.
+        /// </summary>
+        public static PathDeletedItem PathDeletedItem(
+            string name,
+            string deletionId,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
+            => new PathDeletedItem
+            {
+                Name = name,
+                DeletionId = deletionId,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+        #endregion PathDeletedItem
+
+        #region PathHierarchyDeletedItem
+        /// <summary>
+        /// Creates a new PathHierarchyDeletedItem for mocking.
+        /// </summary>
+        public static PathHierarchyDeletedItem PathHierarchyDeletedItem(
+            string prefix,
+            PathDeletedItem path)
+            => new PathHierarchyDeletedItem
+            {
+                Prefix = prefix,
+                Path = path
+            };
+        #endregion PathHierarchyDeletedItem
     }
 }
