@@ -45,8 +45,15 @@ namespace Azure.Search.Documents.Batching
         /// The number of bytes to use when tuning the behavior of the
         /// publisher.
         /// </param>
-        /// <param name="retryCount">
+        /// <param name="maxRetries">
         /// The number of times to retry a failed document.
+        /// </param>
+        /// <param name="retryDelay">
+        /// The initial retry delay on which to base calculations for a
+        /// backoff-based approach.
+        /// </param>
+        /// <param name="maxRetryDelay">
+        /// The maximum permissible delay between retry attempts.
         /// </param>
         /// <param name="publisherCancellationToken">
         /// A <see cref="CancellationToken"/> to use when publishing.
@@ -57,9 +64,19 @@ namespace Azure.Search.Documents.Batching
             TimeSpan? autoFlushInterval,
             int? batchActionSize,
             int? batchPayloadSize,
-            int? retryCount,
+            int maxRetries,
+            TimeSpan retryDelay,
+            TimeSpan maxRetryDelay,
             CancellationToken publisherCancellationToken)
-            : base(autoFlush, autoFlushInterval, batchActionSize, batchPayloadSize, retryCount, publisherCancellationToken)
+            : base(
+                autoFlush,
+                autoFlushInterval,
+                batchActionSize,
+                batchPayloadSize,
+                maxRetries,
+                retryDelay,
+                maxRetryDelay,
+                publisherCancellationToken)
         {
             _sender = sender;
         }

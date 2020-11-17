@@ -7,11 +7,17 @@ namespace Azure.Identity.Tests
 {
     public abstract class IdentityRecordedTestBase : RecordedTestBase<IdentityTestEnvironment>
     {
-        protected IdentityRecordedTestBase(bool isAsync) : this(isAsync, RecordedTestMode.Playback)
+        protected IdentityRecordedTestBase(bool isAsync) : base(isAsync)
         {
+            InitialzeRecordingSettings();
         }
 
         protected IdentityRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+            InitialzeRecordingSettings();
+        }
+
+        private void InitialzeRecordingSettings()
         {
             // the following headers are added by MSAL and need to be excluded from matching for recordings
             Matcher.ExcludeHeaders.Add("Content-Length");

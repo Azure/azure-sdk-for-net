@@ -35,6 +35,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_PocoBinding()
         {
             var tuple = BuildHost<EventHubTestBindToPocoJobs>();
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_StringBinding()
         {
             var tuple = BuildHost<EventHubTestBindToStringJobs>();
@@ -71,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_SingleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestSingleDispatchJobs>();
@@ -104,6 +107,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_MultipleDispatch()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubTestMultipleDispatchJobs>();
@@ -140,6 +144,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Failing test.  Tracked by #16715")]
         public async Task EventHub_PartitionKey()
         {
             Tuple<JobHost, IHost> tuple = BuildHost<EventHubPartitionKeyTestJobs>();

@@ -1,8 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Contains the BinaryData type, which is useful for converting between strings, streams, JSON, and bytes.</Description>
     <AssemblyTitle>System.Memory.Data</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>

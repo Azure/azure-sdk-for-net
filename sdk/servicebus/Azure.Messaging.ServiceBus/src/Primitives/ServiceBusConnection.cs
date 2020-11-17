@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId = default,

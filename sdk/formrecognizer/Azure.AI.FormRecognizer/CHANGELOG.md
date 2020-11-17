@@ -6,6 +6,7 @@
 - It defaults to the latest supported API version, which currently is `2.1-preview.1`.
 
 ### New Features
+- Added integration for ASP.NET Core.
 - Added support for pre-built business card recognition.
 - Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.

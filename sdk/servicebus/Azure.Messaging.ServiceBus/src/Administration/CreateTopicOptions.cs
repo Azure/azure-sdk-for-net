@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnableBatchedOperations { get; set; } = true;
 
         /// <summary>
-        /// Custom metdata that user can associate with the topic.
+        /// Custom metadata that user can associate with the topic.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata

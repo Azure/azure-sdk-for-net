@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
         internal ChatThreadInternal()
         {
-            Members = new ChangeTrackingList<ChatThreadMemberInternal>();
+            Participants = new ChangeTrackingList<ChatParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of ChatThreadInternal. </summary>
@@ -25,14 +25,16 @@ namespace Azure.Communication.Chat
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="createdOn"> The timestamp when the chat thread was created. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="createdBy"> Id of the chat thread owner. </param>
-        /// <param name="members"> Chat thread members. </param>
-        internal ChatThreadInternal(string id, string topic, DateTimeOffset? createdOn, string createdBy, IReadOnlyList<ChatThreadMemberInternal> members)
+        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="participants"> Chat participants. </param>
+        internal ChatThreadInternal(string id, string topic, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? deletedOn, IReadOnlyList<ChatParticipantInternal> participants)
         {
             Id = id;
             Topic = topic;
             CreatedOn = createdOn;
             CreatedBy = createdBy;
-            Members = members;
+            DeletedOn = deletedOn;
+            Participants = participants;
         }
 
         /// <summary> Chat thread id. </summary>
@@ -43,7 +45,9 @@ namespace Azure.Communication.Chat
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Id of the chat thread owner. </summary>
         public string CreatedBy { get; }
-        /// <summary> Chat thread members. </summary>
-        public IReadOnlyList<ChatThreadMemberInternal> Members { get; }
+        /// <summary> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
+        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> Chat participants. </summary>
+        public IReadOnlyList<ChatParticipantInternal> Participants { get; }
     }
 }

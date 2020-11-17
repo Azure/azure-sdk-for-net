@@ -11,323 +11,236 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         [Fact]
         public void GetUrl_Null()
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>());
+            var PartBTags = AzMonList.Initialize();
+
+            var url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
         }
 
-        [Fact]
-        public void GetUrl_HttpUrl_NullOrEmpty()
+        [Theory]
+        [InlineData(SemanticConventions.AttributeHttpUrl)]
+        [InlineData(SemanticConventions.AttributeHttpScheme)]
+        [InlineData(SemanticConventions.AttributeHttpHost)]
+        public void GetUrl_NullOrEmpty(string attribute)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = null });
-            Assert.Null(url);
-            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = string.Empty });
-            Assert.Null(url);
-        }
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, null));
 
-        [Fact]
-        public void GetUrl_HttpScheme_NullOrEmpty()
-        {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = null });
+            var url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
-            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpScheme] = string.Empty });
-            Assert.Null(url);
-        }
 
-        [Fact]
-        public void GetUrl_HttpHost_NullOrEmpty()
-        {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null });
-            Assert.Null(url);
-            url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = string.Empty });
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(attribute, string.Empty));
+            url = HttpHelper.GetUrl(PartBTags);
             Assert.Null(url);
         }
 
         [Fact]
         public void GetUrl_With_HttpScheme_And_Null_HttpHost()
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-                      { [SemanticConventions.AttributeHttpScheme] = "https",
-                        [SemanticConventions.AttributeHttpHost] = null});
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, null));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
+
+            var url = HttpHelper.GetUrl(PartBTags);
 
             Assert.Null(url);
         }
 
-        [Fact]
-        public void GetUrl_NetPeerName_NullOrEmpty()
+        [Theory]
+        [InlineData("https", null, null)]
+        [InlineData("https", "", null)]
+        [InlineData("https", "netpeername", null)]
+        public void GetUrl_NetPeerName_NullOrEmpty(string scheme, string peerName, string peerPort)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+
+            var url = HttpHelper.GetUrl(PartBTags);
+
+            if (string.IsNullOrEmpty(peerName))
             {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerName] = null,
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
-
-            Assert.Null(url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
+                Assert.Null(url);
+            }
+            else
             {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerName] = string.Empty,
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
-
-            Assert.Null(url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerName] = "netpeername",
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
-
-            Assert.Equal("https://netpeername", url);
+                Assert.Equal("https://netpeername", url);
+            }
         }
 
-        [Fact]
-        public void GetUrl_NetPeerIP_NullOrEmpty()
+        [Theory]
+        [InlineData("https", "localhost", null)]
+        [InlineData("https", "localhost", "80")]
+        [InlineData("https", "localhost", "443")]
+        public void GetUrl_HttpPort_NullEmptyOrDefault(string scheme, string httpHost, string hostPort)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerIp] = null,
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
 
-            Assert.Null(url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerIp] = string.Empty,
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
-
-            Assert.Null(url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerIp] = "127.0.0.1",
-                [SemanticConventions.AttributeNetPeerPort] = null
-            });
-
-            Assert.Equal("https://127.0.0.1", url);
-        }
-
-        [Fact]
-        public void GetUrl_HttpPort_NullEmptyOrDefault()
-        {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = null
-            });
-
-            Assert.Equal("https://localhost", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "http",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "80"
-            });
-
-            Assert.Equal("http://localhost", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "443"
-            });
+            var url = HttpHelper.GetUrl(PartBTags);
 
             Assert.Equal("https://localhost", url);
         }
 
-        [Fact]
-        public void GetUrl_HttpPort_RandomPort_With_HttpTarget()
+        [Theory]
+        [InlineData("https", "localhost", "8888", null)]
+        [InlineData("http", "localhost", "80", "/test")]
+        [InlineData("https", "localhost", "443", "/test")]
+        [InlineData("https", "localhost", "8888", "/test")]
+        public void GetUrl_HttpPort_RandomPort_With_HttpTarget(string scheme, string httpHost, string hostPort, string target)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "8888"
-            });
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
-            Assert.Equal("https://localhost:8888", url);
+            var url = HttpHelper.GetUrl(PartBTags);
 
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "http",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "80",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("http://localhost/test", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "443",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("https://localhost/test", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "8888",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("https://localhost:8888/test", url);
+            hostPort = hostPort == "8888" ? ":8888" : null;
+            Assert.Equal($"{scheme}://localhost{hostPort}{target}", url);
         }
 
-        [Fact]
-        public void GetUrl_NetPeerIP_Success()
+        [Theory]
+        [InlineData("https", "10.0.0.1", "443", null)]
+        [InlineData("https", "10.0.0.1", "443", "/test")]
+        public void GetUrl_NetPeerIP_Success(string scheme, string peerIp, string peerPort, string target)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerIp] = "10.0.0.1",
-                [SemanticConventions.AttributeNetPeerPort] = "443"
-            });
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerIp, peerIp));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
-            Assert.Equal("https://10.0.0.1:443", url);
+            var url = HttpHelper.GetUrl(PartBTags);
 
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerIp] = "10.0.0.1",
-                [SemanticConventions.AttributeNetPeerPort] = "443",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("https://10.0.0.1:443/test", url);
+            Assert.Equal($"https://10.0.0.1:443{target}", url);
         }
 
-        [Fact]
-        public void GetUrl_NetPeerName_Success()
+        [Theory]
+        [InlineData("https", "localhost", "443", null)]
+        [InlineData("https", "localhost", "443", "/test")]
+        public void GetUrl_NetPeerName_Success(string scheme, string peerName, string peerPort, string target)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerName] = "localhost",
-                [SemanticConventions.AttributeNetPeerPort] = "443"
-            });
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpScheme, scheme));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerName, peerName));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeNetPeerPort, peerPort));
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
 
-            Assert.Equal("https://localhost:443", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpScheme] = "https",
-                [SemanticConventions.AttributeNetPeerName] = "localhost",
-                [SemanticConventions.AttributeNetPeerPort] = "443",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("https://localhost:443/test", url);
+            var url = HttpHelper.GetUrl(PartBTags);
+            Assert.Equal($"https://localhost:443{target}", url);
         }
 
-        [Fact]
-        public void GetUrl_HttpHost_Success()
+        [Theory]
+        [InlineData("localhost", "", "")]
+        [InlineData("localhost", "8888", "")]
+        [InlineData("localhost", "8888", "/test")]
+        [InlineData("localhost", null, null)]
+        public void GetUrl_HttpHost_Success(string httpHost, string hostPort, string target)
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string>
+            var PartBTags = AzMonList.Initialize();
+
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, httpHost));
+
+            if (hostPort != "")
             {
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-            });
+               AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHostPort, hostPort));
+            }
 
-            Assert.Equal("localhost", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
+            if (target != "")
             {
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "8888",
-            });
+               AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpTarget, target));
+            }
 
-            Assert.Equal("localhost:8888", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = "8080",
-                [SemanticConventions.AttributeHttpTarget] = "/test"
-            });
-
-            Assert.Equal("localhost:8080/test", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = null,
-                [SemanticConventions.AttributeHttpTarget] = null
-            });
-
-            Assert.Equal("localhost", url);
-
-            url = HttpHelper.GetUrl(new Dictionary<string, string>
-            {
-                [SemanticConventions.AttributeHttpHost] = "localhost",
-                [SemanticConventions.AttributeHttpHostPort] = string.Empty,
-                [SemanticConventions.AttributeHttpTarget] = string.Empty
-            });
-
-            Assert.Equal("localhost", url);
+            var url = HttpHelper.GetUrl(PartBTags);
+            hostPort = hostPort == "8888" ? ":8888" : null;
+            Assert.Equal($"localhost{hostPort}{target}", url);
         }
 
         [Fact]
         public void GetUrl_HttpUrl_Success()
         {
-            var url = HttpHelper.GetUrl(new Dictionary<string, string> { [SemanticConventions.AttributeHttpUrl] = "https://www.wiki.com" });
-            Assert.Equal("https://www.wiki.com", url);
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpUrl, "https://www.wiki.com"));
+
+            var url = HttpHelper.GetUrl(PartBTags);
+            Assert.Equal("https://www.wiki.com/", url);
         }
 
         // TODO: Order of precedence.
 
-        [Fact]
-        public void GetHttpStatusCode_Success()
+        [Theory]
+        [InlineData("200")]
+        [InlineData("Ok")]
+        [InlineData("500")]
+        public void GetHttpStatusCode_Success(string statusCode)
         {
-            Assert.Equal("200", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "200" }));
-            Assert.Equal("Ok", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "Ok" }));
-            Assert.Equal("500", HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = "500" }));
-            Assert.Null(HttpHelper.GetHttpStatusCode(new Dictionary<string, string> { [SemanticConventions.AttributeHttpStatusCode] = null }));
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, statusCode));
+
+            Assert.Equal(statusCode, HttpHelper.GetHttpStatusCode(PartBTags));
         }
 
         [Fact]
         public void GetHttpStatusCode_Failure()
         {
-            Assert.Equal("0", HttpHelper.GetHttpStatusCode(null));
-            Assert.Equal("0", HttpHelper.GetHttpStatusCode(new Dictionary<string, string>()));
+            var PartBTags = AzMonList.Initialize();
+            Assert.Equal("0", HttpHelper.GetHttpStatusCode(PartBTags));
+
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpStatusCode, null));
+            Assert.Equal("0", HttpHelper.GetHttpStatusCode(PartBTags));
         }
 
-        [Fact]
-        public void GetSuccessFromHttpStatusCode_Success()
+        [Theory]
+        [InlineData("200")]
+        [InlineData("Ok")]
+        public void GetSuccessFromHttpStatusCode_Success(string statusCode)
         {
-            Assert.True(HttpHelper.GetSuccessFromHttpStatusCode("200"));
-            Assert.True(HttpHelper.GetSuccessFromHttpStatusCode("Ok"));
+            Assert.True(HttpHelper.GetSuccessFromHttpStatusCode(statusCode));
         }
 
-        [Fact]
-        public void GetSuccessFromHttpStatusCode_Failure()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("500")]
+        [InlineData("0")]
+        public void GetSuccessFromHttpStatusCode_Failure(string statusCode)
         {
-            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(null));
-            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(string.Empty));
-            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("500"));
-            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode("0"));
+            Assert.False(HttpHelper.GetSuccessFromHttpStatusCode(statusCode));
         }
 
         [Fact]
         public void GetHostTests()
         {
-            Assert.Equal("test", HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = "test" }));
-            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string> { [SemanticConventions.AttributeHttpHost] = null }));
-            Assert.Null(HttpHelper.GetHost(new Dictionary<string, string>()));
-            Assert.Null(HttpHelper.GetHost(null));
+            var PartBTags = AzMonList.Initialize();
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, "test"));
+            Assert.Equal("test", HttpHelper.GetHost(PartBTags));
+
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeHttpHost, null));
+            Assert.Null(HttpHelper.GetHost(PartBTags));
+
+           AzMonList.Clear(ref PartBTags);
+            Assert.Null(HttpHelper.GetHost(PartBTags));
+        }
+
+        [Fact]
+        public void GetMessagingUrl_Tests()
+        {
+            var PartBTags = AzMonList.Initialize();
+            Assert.Null(HttpHelper.GetMessagingUrl(PartBTags));
+
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, null));
+            Assert.Null(HttpHelper.GetMessagingUrl(PartBTags));
+
+           AzMonList.Clear(ref PartBTags);
+           AzMonList.Add(ref PartBTags, new KeyValuePair<string, object>(SemanticConventions.AttributeMessagingUrl, "test"));
+            Assert.Equal("test", HttpHelper.GetMessagingUrl(PartBTags));
         }
     }
 }
