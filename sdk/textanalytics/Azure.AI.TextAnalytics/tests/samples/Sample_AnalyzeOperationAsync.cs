@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSampleHealthcareAsync
+            #region Snippet:AnalyzeOperationBatchAsync
             string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
                                 and we adore the spot! They provide marvelous food and they have a great menu. The
                                 chief cook happens to be the owner (I think his name is John Doe) and he is super 
@@ -43,18 +43,9 @@ namespace Azure.AI.TextAnalytics.Samples
 
             AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                EntitiesTaskParameters = new EntitiesTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
-                PiiTaskParameters = new PiiTaskParameters()
-                {
-                    ModelVersion = "latest"
-                },
+                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+                EntitiesTaskParameters = new EntitiesTaskParameters(),
+                PiiTaskParameters = new PiiTaskParameters(),
                 DisplayName = "AnalyzeOperationSample"
             };
 

@@ -11,7 +11,7 @@
         "Content-Length": "265",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-839e09a6bf971e4bab9019bdd47e44f8-7d7c3bc2ebe3494c-00",
+        "traceparent": "00-e96c4465d2c9db4197d791db3bedfe30-ab12e561376fae43-00",
         "User-Agent": [
           "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
@@ -46,18 +46,18 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "490c1041-dc7b-4f9f-94b1-bd24d17f66c1",
-        "Date": "Mon, 16 Nov 2020 19:17:49 GMT",
-        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000",
+        "apim-request-id": "82aea681-0907-4fa2-86da-7a27c20ed41e",
+        "Date": "Tue, 17 Nov 2020 20:14:36 GMT",
+        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "208"
+        "x-envoy-upstream-service-time": "158"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000?showStats=false",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -75,24 +75,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4b92be57-2656-4f41-b7f4-d37e961d57d1",
+        "apim-request-id": "23a4015d-9808-49cf-bd1f-cf7bf30d3619",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 Nov 2020 19:17:49 GMT",
+        "Date": "Tue, 17 Nov 2020 20:14:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
-        "jobId": "51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000",
-        "lastUpdateDateTime": "2020-11-16T19:17:49Z",
-        "createdDateTime": "2020-11-16T19:17:49Z",
-        "expirationDateTime": "2020-11-17T19:17:49Z",
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:36Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
         "status": "notStarted",
         "errors": [],
         "tasks": {
           "details": {
-            "lastUpdateDateTime": "2020-11-16T19:17:49Z"
+            "lastUpdateDateTime": "2020-11-17T20:14:36Z"
           },
           "completed": 0,
           "failed": 0,
@@ -102,7 +102,7 @@
       }
     },
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000?showStats=false",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -120,24 +120,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "69dd6d12-198e-45d4-923d-3ea0c70e4a9b",
+        "apim-request-id": "72416979-443f-414d-8881-674ec6b9c12a",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 Nov 2020 19:17:50 GMT",
+        "Date": "Tue, 17 Nov 2020 20:14:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "43"
+        "x-envoy-upstream-service-time": "58"
       },
       "ResponseBody": {
-        "jobId": "51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000",
-        "lastUpdateDateTime": "2020-11-16T19:17:50Z",
-        "createdDateTime": "2020-11-16T19:17:49Z",
-        "expirationDateTime": "2020-11-17T19:17:49Z",
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:37Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
         "status": "running",
         "errors": [],
         "tasks": {
           "details": {
-            "lastUpdateDateTime": "2020-11-16T19:17:50Z"
+            "lastUpdateDateTime": "2020-11-17T20:14:37Z"
           },
           "completed": 0,
           "failed": 0,
@@ -147,7 +147,7 @@
       }
     },
     {
-      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000?showStats=false",
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": [
@@ -165,24 +165,24 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "777a662a-6628-4ccc-b0d0-8ef42780f402",
+        "apim-request-id": "db8b62ba-a322-4a76-9436-30fc5bd4ced6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 Nov 2020 19:17:52 GMT",
+        "Date": "Tue, 17 Nov 2020 20:14:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "91"
+        "x-envoy-upstream-service-time": "100"
       },
       "ResponseBody": {
-        "jobId": "51b62dcc-4191-4d9a-aeeb-eb6f9c557863_637410816000000000",
-        "lastUpdateDateTime": "2020-11-16T19:17:50Z",
-        "createdDateTime": "2020-11-16T19:17:49Z",
-        "expirationDateTime": "2020-11-17T19:17:49Z",
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:37Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
         "status": "succeeded",
         "errors": [],
         "tasks": {
           "details": {
-            "lastUpdateDateTime": "2020-11-16T19:17:50Z"
+            "lastUpdateDateTime": "2020-11-17T20:14:37Z"
           },
           "completed": 1,
           "failed": 0,
@@ -190,7 +190,7 @@
           "total": 1,
           "keyPhraseExtractionTasks": [
             {
-              "lastUpdateDateTime": "2020-11-16T19:17:50.4261733Z",
+              "lastUpdateDateTime": "2020-11-17T20:14:37.168255Z",
               "results": {
                 "inTerminalState": true,
                 "documents": [

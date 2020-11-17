@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.Tests;
@@ -16,14 +15,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task HealthcareAsyncShowStats()
+        public async Task HealthcareBatch()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSampleHealthcareAsyncShowStats
+            #region Snippet:TextAnalyticsSampleHealthcareBatch
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
                                 Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
                                 HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
@@ -42,18 +41,16 @@ namespace Azure.AI.TextAnalytics.Samples
 
             HealthcareOptions options = new HealthcareOptions()
             {
-                Top = 1,
-                Skip = 0,
                 IncludeStatistics = true
             };
 
-            HealthcareOperation healthOperation = await client.StartHealthcareBatchAsync(batchInput, "en", options);
+            HealthcareOperation healthOperation = client.StartHealthcareBatch(batchInput, "en", options);
 
             await healthOperation.WaitForCompletionAsync();
 
             RecognizeHealthcareEntitiesResultCollection results = healthOperation.Value;
 
-            Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{results.ModelVersion}\"");
+            Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{results.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (DocumentHealthcareResult result in results)
