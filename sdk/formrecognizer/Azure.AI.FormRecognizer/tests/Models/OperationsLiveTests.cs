@@ -46,7 +46,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
@@ -65,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public async Task RecognizeInoicesOperationCanPollFromNewObject()
+        public async Task RecognizeInvoicesOperationCanPollFromNewObject()
         {
             // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
             // making the test fail.

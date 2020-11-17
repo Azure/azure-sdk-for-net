@@ -527,8 +527,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported")]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -638,8 +638,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported")]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -752,8 +752,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported")]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -808,7 +808,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -840,7 +839,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -893,7 +891,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public void StartRecognizeReceiptsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -912,7 +909,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [Ignore("Not supported")]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -923,8 +919,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase("en-US", Ignore = "Not supported")]
-        [TestCase("", Ignore = "Not supported")]
+        [TestCase("en-US")]
+        [TestCase("")]
         public async Task StartRecognizeReceiptsWithSupportedLocale(string locale)
         {
             var client = CreateFormRecognizerClient();
@@ -961,7 +957,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public void StartRecognizeReceiptsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -976,8 +971,8 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeBusinessCards
 
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported") ]
+        [TestCase(true)]
+        [TestCase(false) ]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1083,8 +1078,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported")]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1190,7 +1185,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public async Task StartRecognizeBusinessCardsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1215,7 +1209,6 @@ namespace Azure.AI.FormRecognizer.Tests
        }
 
         [Test]
-        [Ignore("Not supported")]
         public async Task StartRecognizeBusinessCardsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1248,7 +1241,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("Not supported")]
         public void StartRecognizeBusinessCardsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1267,7 +1259,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
-        [Ignore("Not supported")]
         public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1278,8 +1269,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true, Ignore = "Not supported")]
-        [TestCase(false, Ignore = "Not supported")]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
