@@ -23,7 +23,6 @@ namespace Azure.Communication.Chat
         private readonly Uri _endpointUrl;
         private readonly CommunicationUserCredential _communicationUserCredential;
         private readonly ChatClientOptions _chatClientOptions;
-        private const string MultiStatusThreadResourceType = "THREAD";
 
         /// <summary> Initializes a new instance of <see cref="ChatClient"/>.</summary>
         /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
@@ -54,18 +53,18 @@ namespace Azure.Communication.Chat
         #region Thread Operations
         /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
         /// <param name="topic">Topic for the chat thread</param>
-        /// <param name="members">Members to be included in the chat thread</param>
+        /// <param name="participants">Participants to be included in the chat thread</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "ChatThreadClient needs to be created by the ChatClient parent object")]
-        public virtual async Task<ChatThreadClient> CreateChatThreadAsync(string topic, IEnumerable<ChatThreadMember> members, CancellationToken cancellationToken = default)
+        public virtual async Task<ChatThreadClient> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
             try
             {
-                Response<MultiStatusResponse> threadResponse =  await _chatRestClient.CreateChatThreadAsync(topic, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
-                string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
+                Response<ChatThreadInternal> threadResponse = await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), cancellationToken).ConfigureAwait(false);
+                string threadId = threadResponse.Value.Id;
                 return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
             }
             catch (Exception ex)
@@ -77,17 +76,17 @@ namespace Azure.Communication.Chat
 
         /// <summary>Creates a ChatThreadClient synchronously.<see cref="ChatThreadClient"/>.</summary>
         /// <param name="topic">Topic for the chat thread</param>
-        /// <param name="members">Members to be included in the chat thread</param>
+        /// <param name="participants">Participants to be included in the chat thread</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual ChatThreadClient CreateChatThread(string topic, IEnumerable<ChatThreadMember> members, CancellationToken cancellationToken = default)
+        public virtual ChatThreadClient CreateChatThread(string topic, IEnumerable<ChatParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
             try
             {
-                Response<MultiStatusResponse> threadResponse =  _chatRestClient.CreateChatThread(topic, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken);
-                string threadId = threadResponse.Value.MultipleStatus.First(x => x.Type.ToUpperInvariant() == MultiStatusThreadResourceType).Id;
+                Response<ChatThreadInternal> threadResponse = _chatRestClient.CreateChatThread(topic, participants.Select(x => x.ToChatParticipantInternal()), cancellationToken);
+                string threadId = threadId = threadResponse.Value.Id;
                 return new ChatThreadClient(threadId, _endpointUrl, _communicationUserCredential, _chatClientOptions);
             }
             catch (Exception ex)

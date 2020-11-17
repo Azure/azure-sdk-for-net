@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class AddChatThreadMembersRequest : IUtf8JsonSerializable
+    internal partial class AddChatParticipantsRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("members");
+            writer.WritePropertyName("participants");
             writer.WriteStartArray();
-            foreach (var item in Members)
+            foreach (var item in Participants)
             {
                 writer.WriteObjectValue(item);
             }

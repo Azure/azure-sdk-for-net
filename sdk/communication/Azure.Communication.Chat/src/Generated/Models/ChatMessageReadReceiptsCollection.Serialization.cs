@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ReadReceiptsCollection
+    internal partial class ChatMessageReadReceiptsCollection
     {
-        internal static ReadReceiptsCollection DeserializeReadReceiptsCollection(JsonElement element)
+        internal static ChatMessageReadReceiptsCollection DeserializeChatMessageReadReceiptsCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ReadReceipt>> value = default;
+            Optional<IReadOnlyList<ChatMessageReadReceipt>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReadReceipt> array = new List<ReadReceipt>();
+                    List<ChatMessageReadReceipt> array = new List<ChatMessageReadReceipt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReadReceipt.DeserializeReadReceipt(item));
+                        array.Add(ChatMessageReadReceipt.DeserializeChatMessageReadReceipt(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ReadReceiptsCollection(Optional.ToList(value), nextLink.Value);
+            return new ChatMessageReadReceiptsCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }
