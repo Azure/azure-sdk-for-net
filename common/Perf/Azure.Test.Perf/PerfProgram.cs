@@ -109,8 +109,8 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Warmup, options.StatusInterval,
-                                "Warmup");
+                            await RunTestsAsync(tests, options.Parallel, options.Rate, options.Warmup, options.StatusInterval,
+                                "Warmup", options);
                         }
 
                         for (var i = 0; i < options.Iterations; i++)
@@ -120,8 +120,8 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.Sync, options.Parallel, options.Rate, options.Duration, options.StatusInterval,
-                                title, options.JobStatistics, options.Latency);
+                            await RunTestsAsync(tests, options.Parallel, options.Rate, options.Duration, options.StatusInterval,
+                                title, options, jobStatistics: options.JobStatistics, latency: options.Latency);
                         }
                     }
                     finally
@@ -162,8 +162,8 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, bool sync, int parallel, int? rate,
-            int durationSeconds, int statusIntervalSeconds, string title, bool jobStatistics = false, bool latency = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, int parallel, int? rate,
+            int durationSeconds, int statusIntervalSeconds, string title, PerfOptions options, bool jobStatistics = false, bool latency = false)
         {
             _completedOperations = new int[parallel];
             _lastCompletionTimes = new TimeSpan[parallel];
@@ -215,7 +215,7 @@ namespace Azure.Test.Perf
                 pendingOperationsThread = WritePendingOperations(rate.Value, cancellationToken);
             }
 
-            if (sync)
+            if (options.Sync)
             {
                 var threads = new Thread[parallel];
 
