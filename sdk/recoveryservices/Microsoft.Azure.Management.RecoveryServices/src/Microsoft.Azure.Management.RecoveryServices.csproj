@@ -9,7 +9,7 @@
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices</AssemblyName>
 		<Version>4.3.1-preview</Version>
 		<PackageTags>Management.RecoveryServices;Azure RecoveryServices;</PackageTags>
-		<PackageReleaseNotes>Adding support for identity in patch for Microsoft.RecoveryServices</PackageReleaseNotes>
+		<PackageReleaseNotes>Adding support for identity in Patch for Microsoft.RecoveryServices/Vaults</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
