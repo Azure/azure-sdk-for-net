@@ -109,7 +109,7 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, options.Rate, options.Warmup, options.StatusInterval,
+                            await RunTestsAsync(tests, options.Warmup, options.StatusInterval,
                                 "Warmup", options);
                         }
 
@@ -120,7 +120,7 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, options.Rate, options.Duration, options.StatusInterval,
+                            await RunTestsAsync(tests, options.Duration, options.StatusInterval,
                                 title, options, jobStatistics: options.JobStatistics, latency: options.Latency);
                         }
                     }
@@ -162,8 +162,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, int? rate,
-            int durationSeconds, int statusIntervalSeconds, string title, PerfOptions options, bool jobStatistics = false, bool latency = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, int durationSeconds, int statusIntervalSeconds, string title, PerfOptions options, bool jobStatistics = false, bool latency = false)
         {
             _completedOperations = new int[options.Parallel];
             _lastCompletionTimes = new TimeSpan[options.Parallel];
@@ -176,7 +175,7 @@ namespace Azure.Test.Perf
                     _latencies[i] = new List<TimeSpan>();
                 }
 
-                if (rate.HasValue)
+                if (options.Rate.HasValue)
                 {
                     _correctedLatencies = new List<TimeSpan>[options.Parallel];
                     for (var i = 0; i < options.Parallel; i++)
@@ -209,10 +208,10 @@ namespace Azure.Test.Perf
                 );
 
             Thread pendingOperationsThread = null;
-            if (rate.HasValue)
+            if (options.Rate.HasValue)
             {
                 _pendingOperations = Channel.CreateUnbounded<ValueTuple<TimeSpan, Stopwatch>>();
-                pendingOperationsThread = WritePendingOperations(rate.Value, cancellationToken);
+                pendingOperationsThread = WritePendingOperations(options.Rate.Value, cancellationToken);
             }
 
             if (options.Sync)
