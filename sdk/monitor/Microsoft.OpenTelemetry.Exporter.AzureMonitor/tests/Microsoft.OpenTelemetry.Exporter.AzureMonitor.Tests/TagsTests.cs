@@ -70,7 +70,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
             {
                 ["key1"] = null,
-                ["key2"] = new string[] {"test", null},
+                ["key2"] = new string[] { "test", null },
                 ["key3"] = new string[] { null, null }
             };
 
@@ -80,9 +80,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
             Assert.Equal(2, monitorTags.PartCTags.Length);
-            Assert.Null(monitorTags.PartCTags.GetTagValue("key1"));
-            Assert.Equal("test", monitorTags.PartCTags.GetTagValue("key2"));
-            Assert.Equal(string.Empty, monitorTags.PartCTags.GetTagValue("key3"));
+            Assert.Null(AzMonList.GetTagValue(ref monitorTags.PartCTags, "key1"));
+            Assert.Equal("test", AzMonList.GetTagValue(ref monitorTags.PartCTags, "key2"));
+            Assert.Equal(string.Empty, AzMonList.GetTagValue(ref monitorTags.PartCTags, "key3"));
         }
 
         [Fact]
@@ -94,13 +94,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 PartCTags = AzMonList.Initialize()
             };
 
-            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" };;
+            IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object> { ["somekey"] = "value" }; ;
             using var activity = CreateTestActivity(tagObjects);
             activity.EnumerateTags(ref monitorTags);
 
             Assert.Equal(PartBType.Unknown, monitorTags.activityType);
             Assert.Empty(monitorTags.PartBTags);
-            Assert.Equal("value", monitorTags.PartCTags.GetTagValue("somekey"));
+            Assert.Equal("value", AzMonList.GetTagValue(ref monitorTags.PartCTags, "somekey"));
         }
 
         [Fact]
@@ -126,12 +126,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 
             Assert.Equal(PartBType.Http, monitorTags.activityType);
             Assert.Equal(4, monitorTags.PartBTags.Length);
-            Assert.Equal("https", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpScheme));
-            Assert.Equal("localhost", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHost));
-            Assert.Equal("8888", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHostPort));
-            Assert.Equal("127.0.0.1", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeNetHostIp));
+            Assert.Equal("https", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpScheme));
+            Assert.Equal("localhost", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpHost));
+            Assert.Equal("8888", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpHostPort));
+            Assert.Equal("127.0.0.1", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeNetHostIp));
             Assert.Single(monitorTags.PartCTags);
-            Assert.Equal("test", monitorTags.PartCTags.GetTagValue(SemanticConventions.AttributeRpcSystem));
+            Assert.Equal("test", AzMonList.GetTagValue(ref monitorTags.PartCTags, SemanticConventions.AttributeRpcSystem));
         }
 
         [Fact]
@@ -158,11 +158,11 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Equal(3, monitorTags.PartBTags.Length);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("https", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpScheme));
-            Assert.Equal("localhost", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHost));
-            Assert.Equal("8888", monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpHostPort));
+            Assert.Equal("https", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpScheme));
+            Assert.Equal("localhost", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpHost));
+            Assert.Equal("8888", AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpHostPort));
 
-            Assert.Equal("value", monitorTags.PartCTags.GetTagValue("somekey"));
+            Assert.Equal("value", AzMonList.GetTagValue(ref monitorTags.PartCTags, "somekey"));
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
             {
-                ["intArray"] = new int []{ 1, 2, 3},
+                ["intArray"] = new int[] { 1, 2, 3 },
             };
 
             using var activity = CreateTestActivity(tagObjects);
@@ -186,7 +186,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("1,2,3", monitorTags.PartCTags.GetTagValue("intArray"));
+            Assert.Equal("1,2,3", AzMonList.GetTagValue(ref monitorTags.PartCTags, "intArray"));
         }
 
         [Fact]
@@ -210,7 +210,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("1.1,2.2,3.3", monitorTags.PartCTags.GetTagValue("doubleArray"));
+            Assert.Equal("1.1,2.2,3.3", AzMonList.GetTagValue(ref monitorTags.PartCTags, "doubleArray"));
         }
 
         [Fact]
@@ -234,7 +234,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("test1,test2,test3", monitorTags.PartCTags.GetTagValue("strArray"));
+            Assert.Equal("test1,test2,test3", AzMonList.GetTagValue(ref monitorTags.PartCTags, "strArray"));
         }
 
         [Fact]
@@ -258,7 +258,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("True,False,True", monitorTags.PartCTags.GetTagValue("boolArray"));
+            Assert.Equal("True,False,True", AzMonList.GetTagValue(ref monitorTags.PartCTags, "boolArray"));
         }
 
         [Fact]
@@ -272,7 +272,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
 
             IEnumerable<KeyValuePair<string, object>> tagObjects = new Dictionary<string, object>
             {
-                ["objArray"] = new Test[] { new Test(), new Test(), new Test() { TestProperty = 0} },
+                ["objArray"] = new Test[] { new Test(), new Test(), new Test() { TestProperty = 0 } },
             };
 
             using var activity = CreateTestActivity(tagObjects);
@@ -282,7 +282,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Single(monitorTags.PartCTags);
 
-            Assert.Equal("Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test,Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test,Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test", monitorTags.PartCTags.GetTagValue("objArray"));
+            Assert.Equal("Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test,Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test,Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.PartCTags, "objArray"));
         }
 
         [Fact]
@@ -301,7 +301,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
                 ["stringKey"] = "test",
                 ["boolKey"] = true,
                 ["objectKey"] = new Test(),
-                ["arrayKey"] = new int[] {1, 2, 3}
+                ["arrayKey"] = new int[] { 1, 2, 3 }
             };
 
             using var activity = CreateTestActivity(tagObjects);
@@ -311,12 +311,12 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
             Assert.Empty(monitorTags.PartBTags);
             Assert.Equal(6, monitorTags.PartCTags.Length);
 
-            Assert.Equal(1, monitorTags.PartCTags.GetTagValue("intKey"));
-            Assert.Equal(1.1, monitorTags.PartCTags.GetTagValue("doubleKey"));
-            Assert.Equal("test", monitorTags.PartCTags.GetTagValue("stringKey"));
-            Assert.Equal(true, monitorTags.PartCTags.GetTagValue("boolKey"));
-            Assert.Equal("Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test", monitorTags.PartCTags.GetTagValue("objectKey").ToString());
-            Assert.Equal("1,2,3", monitorTags.PartCTags.GetTagValue("arrayKey"));
+            Assert.Equal(1, AzMonList.GetTagValue(ref monitorTags.PartCTags, "intKey"));
+            Assert.Equal(1.1, AzMonList.GetTagValue(ref monitorTags.PartCTags, "doubleKey"));
+            Assert.Equal("test", AzMonList.GetTagValue(ref monitorTags.PartCTags, "stringKey"));
+            Assert.Equal(true, AzMonList.GetTagValue(ref monitorTags.PartCTags, "boolKey"));
+            Assert.Equal("Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests.TagsTests+Test", AzMonList.GetTagValue(ref monitorTags.PartCTags, "objectKey").ToString());
+            Assert.Equal("1,2,3", AzMonList.GetTagValue(ref monitorTags.PartCTags, "arrayKey"));
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object>> additionalAttributes = null)

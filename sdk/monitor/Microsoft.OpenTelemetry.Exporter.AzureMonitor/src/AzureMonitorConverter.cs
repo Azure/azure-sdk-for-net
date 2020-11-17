@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
@@ -40,9 +39,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
         private static readonly IReadOnlyDictionary<string, PartBType> Part_B_Mapping = new Dictionary<string, PartBType>()
         {
+            [SemanticConventions.AttributeDbStatement] = PartBType.Db,
             [SemanticConventions.AttributeDbSystem] = PartBType.Db,
-            [SemanticConventions.AttributeDbConnectionString] = PartBType.Db,
-            [SemanticConventions.AttributeDbUser] = PartBType.Db,
 
             [SemanticConventions.AttributeHttpMethod] = PartBType.Http,
             [SemanticConventions.AttributeHttpUrl] = PartBType.Http,
@@ -61,9 +59,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeNetHostName] = PartBType.Common,
             [SemanticConventions.AttributeComponent] = PartBType.Common,
 
-            [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
             [SemanticConventions.AttributeRpcService] = PartBType.Rpc,
-            [SemanticConventions.AttributeRpcMethod] = PartBType.Rpc,
+            [SemanticConventions.AttributeRpcSystem] = PartBType.Rpc,
+            [SemanticConventions.AttributeRpcStatus] = PartBType.Rpc,
 
             [SemanticConventions.AttributeFaasTrigger] = PartBType.FaaS,
             [SemanticConventions.AttributeFaasExecution] = PartBType.FaaS,
@@ -76,9 +74,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             [SemanticConventions.AttributeFaasTime] = PartBType.FaaS,
 
             [SemanticConventions.AttributeAzureNameSpace] = PartBType.Azure,
-            [SemanticConventions.AttributeEndpointAddress] = PartBType.Azure,
             [SemanticConventions.AttributeMessageBusDestination] = PartBType.Azure,
 
+            [SemanticConventions.AttributeEndpointAddress] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingSystem] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingDestination] = PartBType.Messaging,
             [SemanticConventions.AttributeMessagingDestinationKind] = PartBType.Messaging,
@@ -184,14 +182,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             if (telemetryType == TelemetryType.Request)
             {
-                var url = activity.Kind == ActivityKind.Server ? monitorTags.PartBTags.GetUrl() : monitorTags.PartBTags.GetMessagingUrl();
-                var statusCode = monitorTags.PartBTags.GetHttpStatusCode();
-                var success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
+                var statusCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+                var success = activity.GetStatus() != Status.Error;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
                     Name = activity.DisplayName,
                     Url = url,
-                    // TODO: Handle request.source.
+                    Source = urlAuthority
                 };
 
                 // TODO: Handle activity.TagObjects, extract well-known tags
@@ -202,19 +200,37 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             {
                 var dependency = new RemoteDependencyData(2, activity.DisplayName, activity.Duration.ToString("c", CultureInfo.InvariantCulture))
                 {
-                    Id = activity.Context.SpanId.ToHexString()
+                    Id = activity.Context.SpanId.ToHexString(),
+                    Success = activity.GetStatus() != Status.Error
                 };
 
-                if (monitorTags.activityType == PartBType.Http)
+                switch (monitorTags.activityType)
                 {
-                    dependency.Data = HttpHelper.GetUrl(monitorTags.PartBTags);
-                    dependency.Type = "HTTP";
-                    var statusCode = HttpHelper.GetHttpStatusCode(monitorTags.PartBTags);
-                    dependency.ResultCode = statusCode;
-                    dependency.Success = HttpHelper.GetSuccessFromHttpStatusCode(statusCode);
+                    case PartBType.Http:
+                        monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
+                        dependency.Data = url;
+                        dependency.Target = urlAuthority;
+                        dependency.Type = "Http";
+                        dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+                        break;
+                    case PartBType.Db:
+                        var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+                        dependency.Data = depDataAndType[0]?.ToString();
+                        dependency.Type = depDataAndType[1]?.ToString();
+                        break;
+                    case PartBType.Rpc:
+                        var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
+                        dependency.Data = depInfo[0]?.ToString();
+                        dependency.Type = depInfo[1]?.ToString();
+                        dependency.ResultCode = depInfo[2]?.ToString();
+                        break;
+                    case PartBType.Messaging:
+                        depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
+                        dependency.Data = depDataAndType[0]?.ToString();
+                        dependency.Type = depDataAndType[1]?.ToString();
+                        break;
                 }
 
-                // TODO: Handle dependency.target.
                 AddPropertiesToTelemetry(dependency.Properties, monitorTags.PartCTags);
                 telemetry.BaseData = dependency;
             }
