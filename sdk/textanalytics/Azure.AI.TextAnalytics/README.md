@@ -133,8 +133,8 @@ The following section provides several code snippets using the `client` [created
 ### Async examples
 * [Detect Language Asynchronously](#detect-language-asynchronously)
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
-* [Recognize Healthcare Entities Asyncronously](#recognize-entities-asynchronously)
-* [Run Analyze Operation Asyncronously](#analyze-operation-asynchronously)
+* [Recognize Healthcare Entities Asyncronously](#recognize-healthcare-entities-asynchronously)
+* [Run Analyze Operation Asyncronously](#run-analyze-operation-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -355,18 +355,9 @@ In the Analyze API, you get to choose which of the supported TA features you wan
 
     AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
     {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
-        EntitiesTaskParameters = new EntitiesTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
-        PiiTaskParameters = new PiiTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
+        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        PiiTaskParameters = new PiiTaskParameters(),
         DisplayName = "AnalyzeOperationSample"
     };
 

@@ -35,18 +35,9 @@ To run analyze operation in multiple documents, call `StartAnalyzeOperationBatch
 
     AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
     {
-        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
-        EntitiesTaskParameters = new EntitiesTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
-        PiiTaskParameters = new PiiTaskParameters()
-        {
-            ModelVersion = "latest"
-        },
+        KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
+        EntitiesTaskParameters = new EntitiesTaskParameters(),
+        PiiTaskParameters = new PiiTaskParameters(),
         DisplayName = "AnalyzeOperationSample"
     };
 
