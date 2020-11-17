@@ -30,9 +30,7 @@ param (
   $Configs
 )
 
-# import artifact parsing and semver handling
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
-. (Join-Path $PSScriptRoot SemVer.ps1)
+. (Join-Path $PSScriptRoot common.ps1)
 
 # Updates a python CI configuration json.
 # For "latest", the version attribute is cleared, as default behavior is to pull latest "non-preview".
@@ -235,8 +233,7 @@ $targets = ($Configs | ConvertFrom-Json).targets
 #}
 
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgs = VerifyPackages -pkgRepository $Repository `
-  -artifactLocation $ArtifactLocation `
+$pkgs = VerifyPackages -artifactLocation $ArtifactLocation `
   -workingDirectory $WorkDirectory `
   -apiUrl $apiUrl `
   -continueOnError $True 
