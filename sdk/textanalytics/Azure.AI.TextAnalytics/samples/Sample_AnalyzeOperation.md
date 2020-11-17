@@ -1,5 +1,5 @@
 # Running Analyze Operation Asynchronously
-This sample demonstrates how to run analyze operation in one or more documents and get them asynchronously for multiple tasks including PII, NER and KPE . To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to run analyze operation in one or more documents and get them asynchronously for multiple tasks including entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
