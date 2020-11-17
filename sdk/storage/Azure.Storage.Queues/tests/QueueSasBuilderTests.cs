@@ -210,6 +210,53 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
+        [Test]
+        public void QueueUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1/sharename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", fileUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", fileUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.QueueName);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(10000, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void QueueUriBuilder_CustomUri_AccountShareFileTest()
+        {
+            // Arrange
+            var uriString = "https://www.mycustomname.com/queuename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("www.mycustomname.com", fileUriBuilder.Host);
+            Assert.AreEqual(String.Empty, fileUriBuilder.AccountName);
+            Assert.AreEqual("queuename", fileUriBuilder.QueueName);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)
         {
             var queueSasBuilder = new QueueSasBuilder

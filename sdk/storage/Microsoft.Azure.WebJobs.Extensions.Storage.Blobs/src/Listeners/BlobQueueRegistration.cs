@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Host.Executors;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     /// <summary>
     /// Class containing registration data used by the <see cref="SharedBlobQueueListener"/>.

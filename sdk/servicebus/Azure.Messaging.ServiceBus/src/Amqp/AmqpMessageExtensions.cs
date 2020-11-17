@@ -15,16 +15,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public static AmqpMessage ToAmqpMessage(this ServiceBusMessage message)
         {
-            return AmqpMessage.Create(((AmqpDataMessageBody)message.AmqpMessage.Body).Data.AsAmqpData());
+            if (message.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                return AmqpMessage.Create(dataBody.AsAmqpData());
+            }
+            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
-        private static IEnumerable<Data> AsAmqpData(this IEnumerable<BinaryData> binaryData)
+        private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)
         {
-            foreach (BinaryData data in binaryData)
+            foreach (ReadOnlyMemory<byte> data in binaryData)
             {
                 yield return new Data
                 {
-                    Value = new ArraySegment<byte>(data.ToBytes().IsEmpty ? Array.Empty<byte>() : data.ToBytes().ToArray())
+                    Value = new ArraySegment<byte>(data.IsEmpty ? Array.Empty<byte>() : data.ToArray())
                 };
             }
         }
@@ -51,9 +55,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        public static IList<BinaryData> GetDataViaDataBody(this AmqpMessage message)
+        public static IList<ReadOnlyMemory<byte>> GetDataViaDataBody(this AmqpMessage message)
         {
-            IList<BinaryData> dataList = new List<BinaryData>();
+            IList<ReadOnlyMemory<byte>> dataList = new List<ReadOnlyMemory<byte>>();
             foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
             {
                 dataList.Add(BinaryData.FromBytes(data.GetByteArray()));
@@ -64,20 +68,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         // Returns via the out parameter the flattened collection of bytes.
         // A majority of the time, data will only contain 1 element.
         // The method is optimized for this situation to return the pre-existing array.
-        public static BinaryData ConvertAndFlattenData(this IEnumerable<BinaryData> dataList)
+        public static BinaryData ConvertAndFlattenData(this IEnumerable<ReadOnlyMemory<byte>> dataList)
         {
             var writer = new ArrayBufferWriter<byte>();
             Memory<byte> memory;
-            foreach (BinaryData data in dataList)
+            foreach (ReadOnlyMemory<byte> data in dataList)
             {
-                ReadOnlyMemory<byte> bytes = data.ToBytes();
-                memory = writer.GetMemory(bytes.Length);
-                bytes.CopyTo(memory);
-                writer.Advance(bytes.Length);
+                memory = writer.GetMemory(data.Length);
+                data.CopyTo(memory);
+                writer.Advance(data.Length);
             }
             if (writer.WrittenCount == 0)
             {
-                return new BinaryData();
+                return new BinaryData(Array.Empty<byte>());
             }
             return BinaryData.FromBytes(writer.WrittenMemory);
         }
@@ -123,6 +126,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return (DateTime)val;
             }
             return default;
+        }
+
+        public static BinaryData GetBody(this AmqpAnnotatedMessage message)
+        {
+            if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
+            {
+                return dataBody.ConvertAndFlattenData();
+            }
+            throw new NotSupportedException($"{message.Body.BodyType} is not a supported message body type.");
         }
     }
 }

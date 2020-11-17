@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAtScopeAsync(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtScope");
             scope0.Start();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The resource scope. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistenceAtScope(string scope, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtScope");
             scope0.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAtTenantScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtTenantScope");
             scope0.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistenceAtTenantScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtTenantScope");
             scope0.Start();
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAtManagementGroupScopeAsync(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtManagementGroupScope");
             scope0.Start();
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="groupId"> The management group ID. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistenceAtManagementGroupScope(string groupId, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtManagementGroupScope");
             scope0.Start();
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAtSubscriptionScopeAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtSubscriptionScope");
             scope0.Start();
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Checks whether the deployment exists. </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistenceAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistenceAtSubscriptionScope(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistenceAtSubscriptionScope");
             scope0.Start();
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to check. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckExistenceAsync(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistence");
             scope0.Start();
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceGroupName"> The name of the resource group with the deployment to check. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckExistence(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckExistence(string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope0 = _clientDiagnostics.CreateScope("DeploymentsOperations.CheckExistence");
             scope0.Start();

@@ -109,14 +109,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The entity path to send the message to.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         public override TransportSender CreateSender(
             string entityPath,
-            string viaEntityPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
@@ -125,7 +123,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new AmqpSender
             (
                 entityPath,
-                viaEntityPath,
                 ConnectionScope,
                 retryPolicy,
                 identifier
@@ -139,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
@@ -150,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId,

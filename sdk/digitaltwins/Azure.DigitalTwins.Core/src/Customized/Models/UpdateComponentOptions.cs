@@ -7,7 +7,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <inheritdoc />
     [CodeGenModel("DigitalTwinsUpdateComponentOptions")]
-    public partial class UpdateComponentOptions
+    internal partial class UpdateComponentOptions
     {
         // This class contains two properties (TraceParent ,TraceState) that are not intended to be used by the Track 2 SDKs.
         // Marking these properties as internal.
