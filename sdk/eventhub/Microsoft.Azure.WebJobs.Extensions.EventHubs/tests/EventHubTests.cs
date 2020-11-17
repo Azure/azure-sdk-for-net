@@ -252,7 +252,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var processor = new EventProcessorHost.Processor(Int32.MaxValue,
                 consumerGroupName,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                "",
                 eventHubPath,
                 new EventProcessorOptions(),
                 null,

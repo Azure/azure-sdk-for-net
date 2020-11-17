@@ -198,7 +198,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 null,
                 consumerGroup,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
-                "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net", null, null, null);
+                "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net", null, null);
             var listener = new EventHubListener(
                                     functionId,
                                     new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict).Object,

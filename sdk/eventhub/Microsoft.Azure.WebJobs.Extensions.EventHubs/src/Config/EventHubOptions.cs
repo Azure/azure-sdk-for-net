@@ -277,7 +277,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     eventHubConnectionString: sb.ToString(),
                     storageConnectionString: storageConnectionString,
                     leaseContainerName: LeaseContainerName,
-                    legacyCheckpointStorageBlobPrefix: blobPrefix,
                     exceptionHandler: _exceptionHandler);
 
                 return host;
