@@ -109,7 +109,7 @@ namespace Azure.Test.Perf
 
                         if (options.Warmup > 0)
                         {
-                            await RunTestsAsync(tests, "Warmup", options, warmup: true);
+                            await RunTestsAsync(tests, options, "Warmup", warmup: true);
                         }
 
                         for (var i = 0; i < options.Iterations; i++)
@@ -119,7 +119,7 @@ namespace Azure.Test.Perf
                             {
                                 title += " " + (i + 1);
                             }
-                            await RunTestsAsync(tests, title, options);
+                            await RunTestsAsync(tests, options, title);
                         }
                     }
                     finally
@@ -160,7 +160,7 @@ namespace Azure.Test.Perf
             }
         }
 
-        private static async Task RunTestsAsync(IPerfTest[] tests, string title, PerfOptions options, bool warmup = false)
+        private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
         {
             var durationSeconds = warmup ? options.Warmup : options.Duration;
 
