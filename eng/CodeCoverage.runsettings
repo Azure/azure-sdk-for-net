@@ -5,7 +5,7 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>cobertura</Format>
-          <ExcludeByAttribute>CompilerGeneratedAttribute,ExcludeFromCodeCoverage,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
+          <ExcludeByAttribute>ExcludeFromCodeCoverage,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
           <SingleHit>false</SingleHit>
           <IncludeTestAssembly>false</IncludeTestAssembly>
           <SkipAutoProps>true</SkipAutoProps>
