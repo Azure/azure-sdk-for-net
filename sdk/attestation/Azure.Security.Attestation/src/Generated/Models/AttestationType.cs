@@ -24,15 +24,12 @@ namespace Azure.Security.Attestation.Models
 
         private const string SgxEnclaveValue = "SgxEnclave";
         private const string OpenEnclaveValue = "OpenEnclave";
-        private const string SevSnpVmValue = "SevSnpVm";
         private const string TpmValue = "Tpm";
 
         /// <summary> Intel Software Guard eXtensions. </summary>
         public static AttestationType SgxEnclave { get; } = new AttestationType(SgxEnclaveValue);
         /// <summary> OpenEnclave extensions to SGX. </summary>
         public static AttestationType OpenEnclave { get; } = new AttestationType(OpenEnclaveValue);
-        /// <summary> AMD SEV SNP Virtual Machine. </summary>
-        public static AttestationType SevSnpVm { get; } = new AttestationType(SevSnpVmValue);
         /// <summary> Edge TPM Virtualization Based Security. </summary>
         public static AttestationType Tpm { get; } = new AttestationType(TpmValue);
         /// <summary> Determines if two <see cref="AttestationType"/> values are the same. </summary>

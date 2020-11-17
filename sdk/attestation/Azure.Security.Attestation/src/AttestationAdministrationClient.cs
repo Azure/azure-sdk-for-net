@@ -19,10 +19,9 @@ namespace Azure.Security.Attestation
     ///
     /// The Attestation client contains the implementation of the "Attest" family of MAA apis.
     /// </summary>
-    public class AttestationAdministrativeClient
+    public class AttestationAdministrationClient
     {
         private readonly AttestationClientOptions _options;
-        private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly PolicyRestClient _policyClient;
@@ -32,12 +31,18 @@ namespace Azure.Security.Attestation
         private AttestationSigner[] _signers;
 
         /// <summary>
+        /// Returns the URI used to communicate with the service.
+        /// </summary>
+        public Uri Endpoint { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
         /// </summary>
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
 #pragma warning disable CA1801
-        public AttestationAdministrativeClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
+        public AttestationAdministrationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new AttestationClientOptions())
         {
         }
 #pragma warning restore
@@ -49,7 +54,7 @@ namespace Azure.Security.Attestation
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
 #pragma warning disable CA1801
-        public AttestationAdministrativeClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
+        public AttestationAdministrationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -63,22 +68,23 @@ namespace Azure.Security.Attestation
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _endpoint = endpoint;
+            Endpoint = endpoint;
 
             // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri, options.Version);
+            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
 
             // Initialize the Certificates Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
         }
 #pragma warning restore
+
         /// <summary>
         /// Parameterless constructor for mocking.
         /// </summary>
-        protected AttestationAdministrativeClient()
+        protected AttestationAdministrationClient()
         {
         }
 
@@ -92,7 +98,7 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="AttestationResponse{StoredAttestationPolicy}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<StoredAttestationPolicy> GetPolicy(AttestationType attestationType, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrativeClient)}.{nameof(GetPolicy)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(GetPolicy)}");
             scope.Start();
             try
             {
@@ -115,17 +121,18 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="AttestationResponse{StoredAttestationPolicy}"/> with the policy for the specified attestation type.</returns>
         public virtual async Task<AttestationResponse<StoredAttestationPolicy>> GetPolicyAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrativeClient)}.{nameof(GetPolicy)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(GetPolicy)}");
             scope.Start();
             try
             {
                 var result = await _policyClient.GetAsync(attestationType, cancellationToken).ConfigureAwait(false);
-                var token = new AttestationToken<StoredAttestationPolicy>(result.Value.Token);
+                var token = new AttestationToken<PolicyResult>(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners());
                 }
-                return new AttestationResponse<StoredAttestationPolicy>(result.GetRawResponse(), token);
+                var policyToken = new AttestationToken<StoredAttestationPolicy>(token.Value.Policy.RawValue);
+                return new AttestationResponse<StoredAttestationPolicy>(result.GetRawResponse(), policyToken);
             }
             catch (Exception ex)
             {
@@ -135,10 +142,10 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
+        /// Sets the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet">Attestation Type to retrive.</param>
+        /// <param name="policyToSet"><see cref="AttestationToken{TBodyType}"/> specifying the new stored attestation policy.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<PolicyResult> SetPolicy(AttestationType attestationType, AttestationToken<StoredAttestationPolicy> policyToSet, CancellationToken cancellationToken = default)
@@ -147,10 +154,10 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
+        /// Sets the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet">Attestation Type to retrive.</param>
+        /// <param name="policyToSet"><see cref="AttestationToken{TBodyType}"/> specifying the new stored attestation policy.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         public virtual Task<AttestationResponse<PolicyResult>> SetPolicyAsync(AttestationType attestationType, AttestationToken<StoredAttestationPolicy> policyToSet, CancellationToken cancellationToken = default)
@@ -159,25 +166,25 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
+        /// Resets the policy for the specified <see cref="AttestationType"/> to the default value.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet">Attestation Type to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be reset.</param>
+        /// <param name="authorizationToken">Signed JSON Web Token signed by one of the policy management certificates used to verify the caller is authorized to reset policy to the default value..</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
-        public virtual AttestationResponse<PolicyResult> ResetPolicy(AttestationType attestationType, AttestationToken policyToSet = default, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<PolicyResult> ResetPolicy(AttestationType attestationType, AttestationToken authorizationToken = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
+        /// Resets the policy for the specified <see cref="AttestationType"/> to the default value.
         /// </summary>
-        /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet">Attestation Type to retrive.</param>
+        /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be reset.</param>
+        /// <param name="authorizationToken">Signed JSON Web Token signed by one of the policy management certificates used to verify the caller is authorized to reset policy to the default value..</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
-        public virtual Task<AttestationResponse<PolicyResult>> ResetPolicyAsync(AttestationType attestationType, AttestationToken policyToSet = default, CancellationToken cancellationToken = default)
+        public virtual Task<AttestationResponse<PolicyResult>> ResetPolicyAsync(AttestationType attestationType, AttestationToken authorizationToken = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

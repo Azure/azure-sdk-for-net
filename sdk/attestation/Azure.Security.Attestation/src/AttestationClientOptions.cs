@@ -20,19 +20,24 @@ namespace Azure.Security.Attestation
         internal bool ValidateAttestationTokens { get; }
 
         /// <summary>
-        /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken{TBodyType}"/>.
+        /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken{T}"/>.
         /// </summary>
         public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
-            ServiceVersion version = ServiceVersion.V20201001,
+            ServiceVersion version = ServiceVersion.V2020_10_01,
             Func<AttestationToken, AttestationSigner, bool> validationCallback = null,
             bool validateAttestationTokens = true)
         {
+            if (version == default)
+            {
+                throw new ArgumentException("The service version {version} is not supported by this library");
+            }
+
             Version = version switch
             {
-                ServiceVersion.V20201001 => "2020-10-01",
+                ServiceVersion.V2020_10_01 => "2020-10-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
             ValidationCallback = validationCallback;
@@ -42,12 +47,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// The Microsoft Azure Attestation service version.
         /// </summary>
+#pragma warning disable CA1707 // Identifiers should not contain underscores
         public enum ServiceVersion
         {
             /// <summary>
             /// Version 2020-10-01 of the Microsoft Azure Attestation Service - corresponds to the General Availability of the MAA service.
             /// </summary>
-            V20201001 = 0,
+            V2020_10_01 = 1,
         };
+#pragma warning restore CA1707
     }
 }

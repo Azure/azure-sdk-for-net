@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Security.Cryptography.X509Certificates;
-
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> The result of a policy certificate modification. </summary>
@@ -18,11 +15,17 @@ namespace Azure.Security.Attestation.Models
         {
         }
 
-        /// <summary> The result of the operation. </summary>
-        public PolicyModification? PolicyResolution { get; }
-        /// <summary> The SHA256 hash of the policy object modified. </summary>
-        public byte[] PolicyTokenHash { get; }
-        /// <summary> A JSON Web Token containing a StoredAttestationPolicy object with the attestation policy. </summary>
-        public string Policy { get; }
+        /// <summary> Initializes a new instance of PolicyResult. </summary>
+        /// <param name="policyResolution"> The result of the operation. </param>
+        /// <param name="basePolicyTokenHash"> The SHA256 hash of the policy object modified. </param>
+        /// <param name="basePolicySigner"> The certificate used to sign the policy object, if specified. </param>
+        /// <param name="basePolicy"> A JSON Web Token containing a StoredAttestationPolicy object with the attestation policy. </param>
+        internal PolicyResult(PolicyModification policyResolution, string basePolicyTokenHash, string basePolicySigner, string basePolicy)
+        {
+            PolicyResolution = policyResolution;
+            BasePolicyTokenHash = basePolicyTokenHash;
+            BasePolicySigner = basePolicySigner;
+            BasePolicy = basePolicy;
+        }
     }
 }

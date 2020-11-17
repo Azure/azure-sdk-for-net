@@ -1,0 +1,82 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
+    "tenantIdAad": {
+      "type": "string",
+      "defaultValue": "attestaadsdktests",
+      "metadata": {
+        "description": "The AAD tenant ID to which the application and resources belong."
+      }
+    },
+    "tenantIdIsolated": {
+      "type": "string",
+      "defaultValue": "attestisosdktests",
+      "metadata": {
+        "description": "The Isolated tenant ID to which the application and resources belong."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resource. By default, this is the same as the resource group."
+      }
+    },
+    "policySigningCertificates": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "locationShortName": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "isolatedUri": "[format('https://{0}.{1}.attest.azure.net', parameters('tenantIdIsolated'), parameters('locationShortName'))]",
+    "aadUri": "[format('https://{0}.{1}.attest.azure.net', parameters('tenantIdAad'), parameters('locationShortName'))]",
+    "PolicySigningCertificates": {
+      "PolicySigningCertificates": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "use": "sig",
+            "x5c": [ "[parameters('policySigningCertificates')]" ]
+          }
+        ]
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Attestation/attestationProviders",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('tenantIdAad')]",
+      "location": "[parameters('location')]",
+    },
+    {
+      "type": "Microsoft.Attestation/attestationProviders",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('tenantIdIsolated')]",
+      "location": "[parameters('location')]",
+      "properties": "[variables('PolicySigningCertificates')]"
+    }
+  ],
+  "outputs": {
+    "ISOLATED_ATTESTATION_URL": {
+      "type": "string",
+      "value": "[variables('isolatedUri')]"
+    },
+    "AAD_ATTESTATION_URL": {
+      "type": "string",
+      "value": "[variables('aadUri')]"
+    }
+  }
+}

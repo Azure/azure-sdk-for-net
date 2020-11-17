@@ -66,6 +66,8 @@ namespace Azure.Security.Attestation.Models
         public object DeprecatedSgxCollateral { get; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
         public byte[] DeprecatedEnclaveHeldData { get; }
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
+        public byte[] DeprecatedEnclaveHeldData2 { get; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-product-id. </summary>
         public float? DeprecatedProductId { get; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrenclave. </summary>

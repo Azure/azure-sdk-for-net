@@ -5,6 +5,8 @@ using System;
 using Azure.Core;
 using Azure.Security.Attestation.Models;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Security.Attestation.Common;
+using System.Text;
 
 namespace Azure.Security.Attestation
 {
@@ -22,6 +24,14 @@ namespace Azure.Security.Attestation
         internal AttestationToken(string token)
         {
             _token = token;
+            string[] decomposedToken = token.Split('.');
+            if (decomposedToken.Length != 3)
+            {
+                throw new ArgumentException("JSON Web Tokens must have 3 components delimited by '.' characters.");
+            }
+            TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
+            TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
+            TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
         }
 
         /// <summary>
@@ -42,17 +52,32 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Decoded header for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenHeader { get; }
+        public byte[] TokenHeaderBytes { get; }
 
         /// <summary>
         /// Decoded body for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenBody { get; }
+        public byte[] TokenBodyBytes { get; }
 
         /// <summary>
         /// Decoded signature for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenSignature { get; }
+        public byte[] TokenSignatureBytes { get; }
+
+        /// <summary>
+        /// Represents the body of the token encoded as a string.
+        /// </summary>
+        public string TokenBody {
+            get => Encoding.UTF8.GetString(TokenBodyBytes);
+        }
+
+        /// <summary>
+        /// Represents the body of the token encoded as a string.
+        /// </summary>
+        public string TokenHeader
+        {
+            get => Encoding.UTF8.GetString(TokenHeaderBytes);
+        }
 
         /// <summary>
         /// Creates a new Attestation token based on the supplied body and certificate.
@@ -120,7 +145,7 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken"/> class with an empty body.
-        /// Used for the <see cref="AttestationAdministrativeClient.ResetPolicy(AttestationType, AttestationToken, System.Threading.CancellationToken)"/> API.
+        /// Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, AttestationToken, System.Threading.CancellationToken)"/> API.
         /// </summary>
         /// <param name="signingKey"></param>
         /// <param name="signingCertificate"></param>
@@ -144,7 +169,8 @@ namespace Azure.Security.Attestation
             {
                 return validationCallback(_token);
             }
-            throw new NotImplementedException();
+            return true;
+//            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

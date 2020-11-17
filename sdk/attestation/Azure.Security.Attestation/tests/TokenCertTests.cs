@@ -15,12 +15,11 @@ namespace Azure.Security.Attestation.Tests
 {
     public class TokenCertTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
-        public TokenCertTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Live)
+        public TokenCertTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetCertificates()
         {
             AttestationClient attestationClient = GetAttestationClient();
@@ -36,20 +35,15 @@ namespace Azure.Security.Attestation.Tests
         public async Task AttestSgx()
         {
             AttestationServiceAttestationSamples samples = new AttestationServiceAttestationSamples();
-            await Task.Yield();
-            samples.SettingAttestationPolicy();
-            return;
+            await samples.AttestingAnSgxEnclave();
         }
 
         private AttestationClient GetAttestationClient()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
-
-            /*TokenCredential credential = TestEnvironment.Credential;*/
+            string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
-            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new InteractiveBrowserCredential(null, powerShellClientId), options));
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
         }
     }
 }

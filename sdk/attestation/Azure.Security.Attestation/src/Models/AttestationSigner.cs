@@ -33,5 +33,28 @@ namespace Azure.Security.Attestation.Models
         /// Returns the Key ID for the returned signing certificate.
         /// </summary>
         public string CertificateKeyId { get; internal set; }
+
+        internal static AttestationSigner[] FromJsonWebKeySet(JsonWebKeySet keys)
+        {
+            List<AttestationSigner> returnedCertificates = new List<AttestationSigner>();
+            foreach (var key in keys.Keys)
+            {
+                List<X509Certificate2> certificates = new List<X509Certificate2>();
+                string keyId = key.Kid;
+
+                if (key.X5C != null)
+                {
+                    foreach (string x5c in key.X5C)
+                    {
+                        certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
+                    }
+                }
+
+                returnedCertificates.Add(new AttestationSigner(certificates.ToArray(), keyId));
+
+            }
+            return returnedCertificates.ToArray();
+
+        }
     }
 }

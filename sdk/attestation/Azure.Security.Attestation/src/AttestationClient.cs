@@ -24,11 +24,15 @@ namespace Azure.Security.Attestation
     public class AttestationClient
     {
 
-        private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
         private readonly SigningCertificatesRestClient _metadataClient;
+
+        /// <summary>
+        /// Returns the URI used to communicate with the service.
+        /// </summary>
+        public Uri Endpoint { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
@@ -38,6 +42,7 @@ namespace Azure.Security.Attestation
 #pragma warning disable CA1801
         public AttestationClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
         {
+            Endpoint = endpoint;
         }
 #pragma warning restore
 
@@ -60,12 +65,12 @@ namespace Azure.Security.Attestation
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _endpoint = endpoint;
+            Endpoint = endpoint;
 
             // Initialize the Rest Client.
-            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri, options.Version);
+            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
 
-            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 #pragma warning restore
         /// <summary>
@@ -81,20 +86,37 @@ namespace Azure.Security.Attestation
         /// <param name="quote">An Intel SGX "quote".
         /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.</param>
         /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
+        /// <param name="initTimeDataIsObject">true if the initTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
+        /// <param name="runTimeData">Data provided when the quote was generated.</param>
+        /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
 #pragma warning disable CA1822
-        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(byte[] quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(quote, nameof(quote));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
+            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
             {
-                throw new NotImplementedException();
+                var response = _restClient.AttestSgxEnclave(
+                    new AttestSgxEnclaveRequest
+                    {
+                        Quote = quote,
+                        InitTimeData = initTimeData != null ? new InitTimeData
+                        {
+                            Data = initTimeData.ToArray(),
+                            DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                        RuntimeData = runTimeData != null ? new RuntimeData
+                        {
+                            Data = runTimeData.ToArray(),
+                            DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                    },
+                    cancellationToken);
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), new AttestationToken<AttestationResult>(response.Value.Token));
             }
             catch (Exception ex)
             {
@@ -109,20 +131,36 @@ namespace Azure.Security.Attestation
         /// <param name="quote">An Intel SGX "quote".
         /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html for more information.</param>
         /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
+        /// <param name="initTimeDataIsObject">true if the initTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
+        /// <param name="runTimeData">Data provided when the quote was generated.</param>
+        /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(byte[] quote, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(byte[] quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(quote, nameof(quote));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
+            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
             {
-                await Task.Yield();
-            throw new NotImplementedException();
+                var response = await _restClient.AttestSgxEnclaveAsync(
+                    new AttestSgxEnclaveRequest
+                    {
+                        Quote = quote,
+                        InitTimeData = initTimeData != null ? new InitTimeData
+                        {
+                            Data = initTimeData.ToArray(),
+                            DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                        RuntimeData = runTimeData != null ? new RuntimeData
+                        {
+                            Data = runTimeData.ToArray(),
+                            DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                    },
+                    cancellationToken).ConfigureAwait(false);
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), new AttestationToken<AttestationResult>(response.Value.Token));
             }
             catch (Exception ex)
             {
@@ -137,70 +175,16 @@ namespace Azure.Security.Attestation
         /// <param name="report">An OpenEnclave "report".
         /// See https://github.com/openenclave/openenclave for more information.</param>
         /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
+        /// <param name="initTimeDataIsObject"></param>
+        /// <param name="runTimeData">Data provided when the quote was generated.</param>
+        /// <param name="runTimeDataIsObject"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            /* Argument.AssertNotNull(initTimeData, nameof(initTimeData)); */
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            /* Argument.AssertNotNull(initTimeData, nameof(initTimeData));*/
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
+            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
             try
@@ -220,271 +204,22 @@ namespace Azure.Security.Attestation
         /// <param name="report">An Open Enclave "report".
         /// See https://github.com/openenclave/openenclave for more information.</param>
         /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
+        /// <param name="initTimeDataIsObject"></param>
+        /// <param name="runTimeData">Data provided when the quote was generated.</param>
+        /// <param name="runTimeDataIsObject"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
+            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
             try
             {
                 await Task.Yield();
             throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                await Task.Yield();
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                await Task.Yield();
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            /* Argument.AssertNotNull(initTimeData, nameof(initTimeData)); */
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="runtimeData">Data provided when the quote was generated.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestSevSnpVm(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            /* Argument.AssertNotNull(initTimeData, nameof(initTimeData));*/
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, InitTimeData initTimeData, RuntimeData runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                await Task.Yield();
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both binary blobs.</remarks>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, byte[] initTimeData, byte[] runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                await Task.Yield();
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Attest an Open Enclave enclave.
-        /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="runtimeData"></param>
-        /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns></returns>
-        /// <remarks>Convenience method used when the InitTime and RuntimeData are both serialized objects.</remarks>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSevSnpVmAsync(byte[] report, object initTimeData, object runtimeData, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
-            Argument.AssertNotNull(runtimeData, nameof(runtimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
-            scope.Start();
-            try
-            {
-                await Task.Yield();
-                throw new NotImplementedException();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-
-        /// <summary>
-        /// Attest a TPM based enclave.
-        /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="TpmAttestationResponse"/>.</returns>
-        public virtual Response<byte[]> AttestTpm(byte[] request, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(request, nameof(request));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
-            scope.Start();
-            try
-            {
-                throw new NotImplementedException();
             }
             catch (Exception ex)
             {
@@ -500,15 +235,45 @@ namespace Azure.Security.Attestation
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="TpmAttestationResponse"/>.</returns>
-        public virtual async Task<Response<byte[]>> AttestTpmAsync(byte[] request, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> AttestTpm(BinaryData request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
             scope.Start();
             try
             {
-                await Task.Yield();
-            throw new NotImplementedException();
+                var response = _restClient.AttestTpm(new TpmAttestationRequest { Data = request.ToArray() }, cancellationToken);
+
+                BinaryData responseData = new BinaryData(response.Value);
+
+                return Response.FromValue(responseData, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Attest a TPM based enclave.
+        /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
+        /// </summary>
+        /// <param name="request">Incoming request to send to the TPM attestation service.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="BinaryData"/> structure containing the value of <see cref="TpmAttestationResponse.Data"/>.</returns>
+        public virtual async Task<Response<BinaryData>> AttestTpmAsync(BinaryData request, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.AttestTpmAsync(new TpmAttestationRequest { Data = request.ToArray() }, cancellationToken).ConfigureAwait(false);
+
+                BinaryData responseData = new BinaryData(response.Value.Data);
+
+                return  Response.FromValue(responseData, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -531,25 +296,7 @@ namespace Azure.Security.Attestation
             {
                 var keys = _metadataClient.Get(cancellationToken);
 
-                List<AttestationSigner> returnedCertificates = new List<AttestationSigner>();
-                foreach (var key in keys.Value.Keys)
-                {
-                    List<X509Certificate2> certificates = new List<X509Certificate2>();
-                    string keyId = key.Kid;
-
-                    if (key.X5C != null)
-                    {
-                        foreach (string x5c in key.X5C)
-                        {
-                            certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
-                        }
-                    }
-
-                    returnedCertificates.Add(new AttestationSigner(certificates.ToArray(), keyId));
-
-                }
-
-                return Response.FromValue(returnedCertificates.ToArray(), keys.GetRawResponse());
+                return Response.FromValue(AttestationSigner.FromJsonWebKeySet(keys), keys.GetRawResponse());
             }
             catch (Exception ex)
             {
