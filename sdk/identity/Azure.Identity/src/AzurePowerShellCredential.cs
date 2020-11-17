@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
@@ -29,12 +28,10 @@ namespace Azure.Identity
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
         private const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
         private const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module is not installed.";
-        private const string PowerShellNotInstalledError = "PowerShell not installed.";
+        private const string PowerShellNotInstalledError = "PowerShell is not installed.";
 
         private const string AzurePowerShellNoContext = "NoContext";
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
-
-
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         //private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
         private const string DefaultWorkingDirNonWindows = "/bin/";
@@ -124,7 +121,7 @@ namespace Azure.Identity
             catch (InvalidOperationException exception)
             {
 
-                bool noPowerShell = exception.Message.IndexOf("command not found", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1;
+                bool noPowerShell = exception.Message.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 || exception.Message.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (noPowerShell)
                 {
@@ -171,7 +168,7 @@ namespace Azure.Identity
                 powershellExe = "powershell -EncodedCommand";
             }
 
-            string command = $"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext }}; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}";
+            string command = $"$ErrorActionPreference = 'Stop'; $skip = $false; $m = Get-Module Az.Accounts -ListAvailable; if (! $m) {{$skip = $true; Write-Output '{AzurePowerShellNoAzAccountModule}'}}; if (! $skip) {{ $c = Get-AzContext ; if (! $c) {{$skip = $true; Write-Output '{AzurePowerShellNoContext}'}}}} ; if (! $skip) {{$token = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($c.Account, $c.Environment, $c.Tenant.Id, $null, $null, $null, '{resource}'); return $token.AccessToken}}";
 
             string commandBase64 = Base64Encode(command);
 
