@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
@@ -22,9 +23,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
     /// Id is not filled out until after the message is queued,
     /// but then there's a race between updating the aux storage and another function picking up the message.
     /// </remarks>
-    internal static class QueueCausalityManager
+    internal class QueueCausalityManager
     {
         private const string ParentGuidFieldName = "$AzureWebJobsParentId";
+
+        private readonly ILogger<QueueCausalityManager> _logger;
+
+        public QueueCausalityManager(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<QueueCausalityManager>();
+        }
 
         public static void SetOwner(Guid functionOwner, JObject token)
         {
@@ -40,9 +48,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [DebuggerNonUserCode]
-        public static Guid? GetOwner(QueueMessage msg)
+        public Guid? GetOwner(QueueMessage msg)
         {
-            string text = msg.Body.TryGetAsString();
+            string text = msg.TryGetAsString(_logger);
 
             if (text == null)
             {

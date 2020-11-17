@@ -19,33 +19,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             }
             return encoding.GetString(binaryData.ToArray());
         }
-
-        public static string TryGetAsString(this BinaryData binaryData)
-        {
-            if (binaryData == null)
-            {
-                throw new ArgumentNullException(nameof(binaryData));
-            }
-
-            string value;
-
-            try
-            {
-                value = binaryData.ToValidUTF8String();
-            }
-            catch (Exception ex)
-            {
-                if (ex is DecoderFallbackException || ex is FormatException)
-                {
-                    value = null;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return value;
-        }
     }
 }

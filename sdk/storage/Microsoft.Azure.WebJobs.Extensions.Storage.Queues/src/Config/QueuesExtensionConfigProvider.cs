@@ -24,13 +24,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
         private readonly IContextGetter<IMessageEnqueuedWatcher> _contextGetter;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueueTriggerAttributeBindingProvider _triggerProvider;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
         public QueuesExtensionConfigProvider(QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
-            QueueTriggerAttributeBindingProvider triggerProvider)
+            QueueTriggerAttributeBindingProvider triggerProvider, QueueCausalityManager queueCausalityManager)
         {
             _contextGetter = contextGetter;
             _queueServiceClientProvider = queueServiceClientProvider;
             _triggerProvider = triggerProvider;
+            _queueCausalityManager = queueCausalityManager;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             context.AddBindingRule<QueueTriggerAttribute>().BindToTrigger(_triggerProvider);
 
             var config = new PerHostConfig();
-            config.Initialize(context, _queueServiceClientProvider, _contextGetter);
+            config.Initialize(context, _queueServiceClientProvider, _contextGetter, _queueCausalityManager);
         }
 
         // $$$ Get rid of PerHostConfig part?
@@ -59,10 +61,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             // This is per-host (not per-config)
             private IContextGetter<IMessageEnqueuedWatcher> _messageEnqueuedWatcherGetter;
 
-            public void Initialize(ExtensionConfigContext context, QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter)
+            private QueueCausalityManager _queueCausalityManager;
+
+            public void Initialize(
+                ExtensionConfigContext context,
+                QueueServiceClientProvider queueServiceClientProvider,
+                IContextGetter<IMessageEnqueuedWatcher> contextGetter,
+                QueueCausalityManager queueCausalityManager)
             {
                 _queueServiceClientProvider = queueServiceClientProvider;
                 _messageEnqueuedWatcherGetter = contextGetter;
+                _queueCausalityManager = queueCausalityManager;
 
                 // IStorageQueueMessage is the core testing interface
                 var binding = context.AddBindingRule<QueueAttribute>();
