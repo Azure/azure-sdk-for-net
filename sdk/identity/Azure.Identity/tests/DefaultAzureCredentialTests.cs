@@ -34,7 +34,8 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
             Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
             Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsNull(sources[6]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
+            Assert.IsNull(sources[7]);
         }
 
         [Test]

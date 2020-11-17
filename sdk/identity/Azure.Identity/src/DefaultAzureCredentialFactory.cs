@@ -52,9 +52,9 @@ namespace Azure.Identity
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
         }
 
-        public virtual TokenCredential CreateAzurePowerShellCredential()
+        public virtual TokenCredential CreateAzurePowerShellCredential(bool usePowerShell)
         {
-            return new AzurePowerShellCredential();
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { UsePowerShell = usePowerShell }, Pipeline, default);
         }
     }
 }

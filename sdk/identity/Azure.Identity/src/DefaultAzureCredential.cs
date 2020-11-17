@@ -211,6 +211,11 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
             }
 
+            if (!options.ExcludeAzurePowerShellCredential)
+            {
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.UsePowerShell);
+            }
+
             if (i == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", nameof(options));

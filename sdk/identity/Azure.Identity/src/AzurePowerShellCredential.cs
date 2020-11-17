@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private const int PowerShellProcessTimeoutMs = 10000;
-        private readonly AzurePowerShellCredentialOptions _azurePowerShellCredentialOptions;
+        private readonly bool _usePowerShell;
 
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
@@ -55,7 +55,7 @@ namespace Azure.Identity
 
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
-            _azurePowerShellCredentialOptions = options;
+            _usePowerShell = options?.UsePowerShell ?? new AzurePowerShellCredentialOptions().UsePowerShell;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
         }
@@ -163,7 +163,7 @@ namespace Azure.Identity
         {
             string powershellExe = "pwsh -EncodedCommand";
 
-            if (_azurePowerShellCredentialOptions != null && _azurePowerShellCredentialOptions.UsePowerShell)
+            if (_usePowerShell)
             {
                 powershellExe = "powershell -EncodedCommand";
             }
