@@ -93,13 +93,13 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Benchmarks
         [Benchmark]
         public void GetTagValueEmptyAzMonList()
         {
-            object _ = AzMonList_No_Item.GetTagValue(SemanticConventions.AttributeHttpHost);
+            object _ = AzMonList.GetTagValue(ref AzMonList_No_Item, SemanticConventions.AttributeHttpHost);
         }
 
         [Benchmark]
         public void GetTagValueNonemptyAzMonList()
         {
-            object _ = AzMonList_Items.GetTagValue(SemanticConventions.AttributeHttpHost);
+            object _ = AzMonList.GetTagValue(ref AzMonList_Items, SemanticConventions.AttributeHttpHost);
         }
 
         [Benchmark]

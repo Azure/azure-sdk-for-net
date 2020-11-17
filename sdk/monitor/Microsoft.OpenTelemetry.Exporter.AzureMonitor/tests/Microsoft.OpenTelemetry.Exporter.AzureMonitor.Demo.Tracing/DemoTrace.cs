@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenTelemetry.Resources;
 using System.Diagnostics;
-
-// This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Monitor.OpenTelemetry.Sdk" which doesn't exist.
-using OpenTelemetrySdk = OpenTelemetry.Sdk;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 {
@@ -16,7 +14,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         public static void Main()
         {
             var resource = Resources.CreateServiceResource("my-service", "roleinstance1", "my-namespace");
-            using var tracerProvider = OpenTelemetrySdk.CreateTracerProviderBuilder()
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetResource(resource)
                 .AddSource("Demo.DemoServer")
                 .AddSource("Demo.DemoClient")
