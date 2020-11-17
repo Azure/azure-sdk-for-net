@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTA2Nj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "69d29401-72e1-4cc3-813c-fd779fd419fa"
+          "ba7bbe7c-ec9b-4619-bb11-cf9726d887a8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "0f5442cd-8bdc-403a-9c36-99a6818ef4bf"
         ],
         "x-ms-correlation-request-id": [
-          "119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "0f5442cd-8bdc-403a-9c36-99a6818ef4bf"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:119ff0bd-7cf9-4728-8b42-215f42d38548"
+          "WESTCENTRALUS:20201117T201855Z:0f5442cd-8bdc-403a-9c36-99a6818ef4bf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,10 +45,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 17 Nov 2020 20:18:55 GMT"
         ],
         "Content-Length": [
-          "146"
+          "148"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,26 +57,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586\",\r\n  \"tagName\": \"csmtg586\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066\",\r\n  \"tagName\": \"csmtg5066\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2L3RhZ1ZhbHVlcy9jc210Z3Y0NzI4P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066/tagValues/csmtgv268?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTA2Ni90YWdWYWx1ZXMvY3NtdGd2MjY4P2FwaS12ZXJzaW9uPTIwMjAtMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a856f6cc-98f3-4b5a-8c4b-a649b45d8683"
+          "6aff07de-bf15-48cf-a4a6-b974245db0f7"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,13 +90,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "e0a009ec-32a3-4067-8c83-d7cb8431fc96"
         ],
         "x-ms-correlation-request-id": [
-          "dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "e0a009ec-32a3-4067-8c83-d7cb8431fc96"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:dcc8d2c2-594c-41a5-af3f-6079b78663df"
+          "WESTCENTRALUS:20201117T201856Z:e0a009ec-32a3-4067-8c83-d7cb8431fc96"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,10 +105,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 17 Nov 2020 20:18:56 GMT"
         ],
         "Content-Length": [
-          "158"
+          "157"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -117,26 +117,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728\",\r\n  \"tagValue\": \"csmtgv4728\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066/tagValues/csmtgv268\",\r\n  \"tagValue\": \"csmtgv268\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMjAtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ddfbb702-25e3-4631-9a66-06b60d23d17e"
+          "4399a9cf-d857-4eb6-9e95-d3e3b68a1069"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -150,13 +150,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "5117370d-95d7-497a-a3ed-d5331dd39012"
+          "8cc55abb-9cc5-4c3b-b76b-7bf59f5464dd"
         ],
         "x-ms-correlation-request-id": [
-          "5117370d-95d7-497a-a3ed-d5331dd39012"
+          "8cc55abb-9cc5-4c3b-b76b-7bf59f5464dd"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153257Z:5117370d-95d7-497a-a3ed-d5331dd39012"
+          "WESTCENTRALUS:20201117T201856Z:8cc55abb-9cc5-4c3b-b76b-7bf59f5464dd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -165,7 +165,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:56 GMT"
+          "Tue, 17 Nov 2020 20:18:56 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -174,29 +174,29 @@
           "-1"
         ],
         "Content-Length": [
-          "2910"
+          "14113"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah\",\r\n      \"tagName\": \"Blah\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah/tagValues/Tataaaa\",\r\n          \"tagValue\": \"Tataaaa\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1\",\r\n      \"tagName\": \"tag1\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1/tagValues/tag2\",\r\n          \"tagValue\": \"tag2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong\",\r\n      \"tagName\": \"TagAlong\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong/tagValues/TagOver\",\r\n          \"tagValue\": \"TagOver\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname\",\r\n      \"tagName\": \"tagname\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname/tagValues/tagvalue\",\r\n          \"tagValue\": \"tagvalue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage\",\r\n      \"tagName\": \"ms-resource-usage\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage/tagValues/azure-cloud-shell\",\r\n          \"tagValue\": \"azure-cloud-shell\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS\",\r\n      \"tagName\": \"AZ_SCRIPTS_STATUS\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586\",\r\n      \"tagName\": \"csmtg586\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728\",\r\n          \"tagValue\": \"csmtgv4728\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory\",\r\n      \"tagName\": \"ServiceDirectory\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory/tagValues/resources\",\r\n          \"tagValue\": \"resources\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator\",\r\n      \"tagName\": \"Creator\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator/tagValues/stuartko\",\r\n          \"tagValue\": \"stuartko\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah\",\r\n      \"tagName\": \"Blah\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Blah/tagValues/Tataaaa\",\r\n          \"tagValue\": \"Tataaaa\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1\",\r\n      \"tagName\": \"tag1\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 31\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1/tagValues/tag2\",\r\n          \"tagValue\": \"tag2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1/tagValues/value1\",\r\n          \"tagValue\": \"value1\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag1/tagValues/tag1\",\r\n          \"tagValue\": \"tag1\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong\",\r\n      \"tagName\": \"TagAlong\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 29\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/TagAlong/tagValues/TagOver\",\r\n          \"tagValue\": \"TagOver\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 29\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname\",\r\n      \"tagName\": \"tagname\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 30\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tagname/tagValues/tagvalue\",\r\n          \"tagValue\": \"tagvalue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 30\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/department\",\r\n      \"tagName\": \"department\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/department/tagValues/finance\",\r\n          \"tagValue\": \"finance\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag2\",\r\n      \"tagName\": \"tag2\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag2/tagValues/value2\",\r\n          \"tagValue\": \"value2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag3\",\r\n      \"tagName\": \"tag3\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tag3/tagValues/value3\",\r\n          \"tagValue\": \"value3\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/archv2\",\r\n      \"tagName\": \"archv2\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 16\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/archv2/tagValues/\",\r\n          \"tagValue\": \"\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 16\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tier\",\r\n      \"tagName\": \"tier\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 16\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/tier/tagValues/production\",\r\n          \"tagValue\": \"production\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 16\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS\",\r\n      \"tagName\": \"AZ_SCRIPTS_STATUS\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/MyDeploymentScriptTest:Completed\",\r\n          \"tagValue\": \"MyDeploymentScriptTest:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 2\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-5e8bc379-b02b-4e18-961f-3f7af2638839:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-5e8bc379-b02b-4e18-961f-3f7af2638839:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-763cbb38-6353-4391-9d5b-ce2032f1c7f3:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-763cbb38-6353-4391-9d5b-ce2032f1c7f3:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-1bdd5f7b-5177-48f3-a7f7-5bf45b5a1fe0:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-1bdd5f7b-5177-48f3-a7f7-5bf45b5a1fe0:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-f29b9c16-237c-4743-82ed-2c39fac556e1:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-f29b9c16-237c-4743-82ed-2c39fac556e1:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-7f2375b1-8913-4261-b744-4e3e8801a89a:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-7f2375b1-8913-4261-b744-4e3e8801a89a:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-e711e393-0cbc-4823-8a01-9013d2a0ecdc:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-e711e393-0cbc-4823-8a01-9013d2a0ecdc:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-962570b8-58b1-4b2d-824c-1221c412e147:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-962570b8-58b1-4b2d-824c-1221c412e147:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-deb23486-298b-48c4-a471-c01db9429b52:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-deb23486-298b-48c4-a471-c01db9429b52:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-af47bee3-886c-4513-989c-e6c6247f2399:Completed\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-af47bee3-886c-4513-989c-e6c6247f2399:Completed\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/AZ_SCRIPTS_STATUS/tagValues/PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"tagValue\": \"PsTest-DeploymentScripts-6a1d6107-00c7-4860-ac68-5d980e7285cc:Running\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/aksEngineVersion\",\r\n      \"tagName\": \"aksEngineVersion\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/aksEngineVersion/tagValues/v0.47.0-aks-gomod-at-aks\",\r\n          \"tagValue\": \"v0.47.0-aks-gomod-at-aks\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 10\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/aksEngineVersion/tagValues/v0.47.0-aks-gomod-as-aks\",\r\n          \"tagValue\": \"v0.47.0-aks-gomod-as-aks\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 2\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource\",\r\n      \"tagName\": \"creationSource\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool123-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool123-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool145-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool145-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool186-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool186-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool194-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool194-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool5-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool5-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool2-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool2-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 5\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/creationSource/tagValues/aks-aks-nodepool1-36552431-vmss\",\r\n          \"tagValue\": \"aks-aks-nodepool1-36552431-vmss\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 2\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/orchestrator\",\r\n      \"tagName\": \"orchestrator\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/orchestrator/tagValues/Kubernetes:1.17.13\",\r\n          \"tagValue\": \"Kubernetes:1.17.13\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 12\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName\",\r\n      \"tagName\": \"poolName\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool123\",\r\n          \"tagValue\": \"nodepool123\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool145\",\r\n          \"tagValue\": \"nodepool145\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool186\",\r\n          \"tagValue\": \"nodepool186\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool194\",\r\n          \"tagValue\": \"nodepool194\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool5\",\r\n          \"tagValue\": \"nodepool5\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool2\",\r\n          \"tagValue\": \"nodepool2\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 5\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/poolName/tagValues/nodepool1\",\r\n          \"tagValue\": \"nodepool1\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 2\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/resourceNameSuffix\",\r\n      \"tagName\": \"resourceNameSuffix\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 12\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/resourceNameSuffix/tagValues/36552431\",\r\n          \"tagValue\": \"36552431\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 12\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/owner\",\r\n      \"tagName\": \"owner\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 17\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/owner/tagValues/kubernetes\",\r\n          \"tagValue\": \"kubernetes\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 17\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/type\",\r\n      \"tagName\": \"type\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 17\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/type/tagValues/aks-slb-managed-outbound-ip\",\r\n          \"tagValue\": \"aks-slb-managed-outbound-ip\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 17\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage\",\r\n      \"tagName\": \"ms-resource-usage\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ms-resource-usage/tagValues/azure-cloud-shell\",\r\n          \"tagValue\": \"azure-cloud-shell\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/testtag\",\r\n      \"tagName\": \"testtag\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/testtag/tagValues/testval\",\r\n          \"tagValue\": \"testval\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066\",\r\n      \"tagName\": \"csmtg5066\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066/tagValues/csmtgv268\",\r\n          \"tagValue\": \"csmtgv268\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/product\",\r\n      \"tagName\": \"product\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 5\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/product/tagValues/azurecli\",\r\n          \"tagValue\": \"azurecli\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 5\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/cause\",\r\n      \"tagName\": \"cause\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 5\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/cause/tagValues/automation\",\r\n          \"tagValue\": \"automation\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 5\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date\",\r\n      \"tagName\": \"date\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 5\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date/tagValues/2020-09-16T12:24:27Z\",\r\n          \"tagValue\": \"2020-09-16T12:24:27Z\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date/tagValues/2020-09-16T12:44:07Z\",\r\n          \"tagValue\": \"2020-09-16T12:44:07Z\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date/tagValues/2020-09-16T12:46:32Z\",\r\n          \"tagValue\": \"2020-09-16T12:46:32Z\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date/tagValues/2020-09-16T12:46:58Z\",\r\n          \"tagValue\": \"2020-09-16T12:46:58Z\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/date/tagValues/2020-09-16T12:50:29Z\",\r\n          \"tagValue\": \"2020-09-16T12:50:29Z\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory\",\r\n      \"tagName\": \"ServiceDirectory\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/ServiceDirectory/tagValues/resources\",\r\n          \"tagValue\": \"resources\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator\",\r\n      \"tagName\": \"Creator\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/Creator/tagValues/stuartko\",\r\n          \"tagValue\": \"stuartko\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586/tagValues/csmtgv4728?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2L3RhZ1ZhbHVlcy9jc210Z3Y0NzI4P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066/tagValues/csmtgv268?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTA2Ni90YWdWYWx1ZXMvY3NtdGd2MjY4P2FwaS12ZXJzaW9uPTIwMjAtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "72940f30-8aa7-42e4-9323-5f8a636e0c0e"
+          "2819462e-5940-43bd-ac5d-7ab4c5b8a01a"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -210,13 +210,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "c629836b-f065-4d98-be2f-9041adff1d1a"
+          "da5dc08a-761b-4e7d-87f7-151e84b9c30b"
         ],
         "x-ms-correlation-request-id": [
-          "c629836b-f065-4d98-be2f-9041adff1d1a"
+          "da5dc08a-761b-4e7d-87f7-151e84b9c30b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153258Z:c629836b-f065-4d98-be2f-9041adff1d1a"
+          "WESTCENTRALUS:20201117T201856Z:da5dc08a-761b-4e7d-87f7-151e84b9c30b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -225,7 +225,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:58 GMT"
+          "Tue, 17 Nov 2020 20:18:56 GMT"
         ],
         "Expires": [
           "-1"
@@ -238,22 +238,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg586?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTg2P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/tagNames/csmtg5066?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3RhZ05hbWVzL2NzbXRnNTA2Nj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2e6332aa-e335-4a3c-b273-99b47ff28933"
+          "08b84447-6c1f-4167-a5f7-35cec46500df"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -267,13 +267,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "6341a513-584c-4f15-8dc1-87749ef67316"
+          "d08b3167-ac3f-4b8c-992e-ed3ea091513f"
         ],
         "x-ms-correlation-request-id": [
-          "6341a513-584c-4f15-8dc1-87749ef67316"
+          "d08b3167-ac3f-4b8c-992e-ed3ea091513f"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153258Z:6341a513-584c-4f15-8dc1-87749ef67316"
+          "WESTCENTRALUS:20201117T201857Z:d08b3167-ac3f-4b8c-992e-ed3ea091513f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -282,7 +282,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:32:58 GMT"
+          "Tue, 17 Nov 2020 20:18:57 GMT"
         ],
         "Expires": [
           "-1"
@@ -297,8 +297,8 @@
   ],
   "Names": {
     "CreateListAndDeleteSubscriptionTagValue": [
-      "csmtg586",
-      "csmtgv4728"
+      "csmtg5066",
+      "csmtgv268"
     ]
   },
   "Variables": {
