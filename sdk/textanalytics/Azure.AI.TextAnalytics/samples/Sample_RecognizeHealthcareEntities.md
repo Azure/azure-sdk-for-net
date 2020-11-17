@@ -107,18 +107,8 @@ To recognize healthcare entities in multiple documents, call `StartHealthcareBat
                 Console.WriteLine($"        DataSource: {healthcareEntityLink.DataSource}");
             }
         }
-
-        Console.WriteLine($"    Document statistics:");
-        Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.Value.CharacterCount}");
-        Console.WriteLine($"        Transaction count: {result.Statistics.Value.TransactionCount}");
         Console.WriteLine("");
     }
-    Console.WriteLine($"Request statistics:");
-    Console.WriteLine($"    Document Count: {results.Statistics.DocumentCount}");
-    Console.WriteLine($"    Valid Document Count: {results.Statistics.ValidDocumentCount}");
-    Console.WriteLine($"    Transaction Count: {results.Statistics.TransactionCount}");
-    Console.WriteLine($"    Invalid Document Count: {results.Statistics.InvalidDocumentCount}");
-    Console.WriteLine("");
 }
 ```
 
