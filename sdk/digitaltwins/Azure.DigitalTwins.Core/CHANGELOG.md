@@ -1,12 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+
+## 1.2.0 (2020-11-16)
 
 ### New Features
 
+- Added `DigitalTwinsModelFactory` to allow for the creation of certain model objects to enable mocking them for unit tests.
+
 ### Breaking changes
 
+- None
+
 ### Fixes and improvements
+
+- None
 
 ## 1.0.1 (2020-11-04)
 

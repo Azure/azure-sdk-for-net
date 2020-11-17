@@ -20,7 +20,8 @@ namespace Azure.Communication.Chat
             Optional<string> topic = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<string> createdBy = default;
-            Optional<IReadOnlyList<ChatThreadMemberInternal>> members = default;
+            Optional<DateTimeOffset> deletedOn = default;
+            Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -48,23 +49,33 @@ namespace Azure.Communication.Chat
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("members"))
+                if (property.NameEquals("deletedOn"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ChatThreadMemberInternal> array = new List<ChatThreadMemberInternal>();
+                    deletedOn = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("participants"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatThreadMemberInternal.DeserializeChatThreadMemberInternal(item));
+                        array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
                     }
-                    members = array;
+                    participants = array;
                     continue;
                 }
             }
-            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToList(members));
+            return new ChatThreadInternal(id.Value, topic.Value, Optional.ToNullable(createdOn), createdBy.Value, Optional.ToNullable(deletedOn), Optional.ToList(participants));
         }
     }
 }

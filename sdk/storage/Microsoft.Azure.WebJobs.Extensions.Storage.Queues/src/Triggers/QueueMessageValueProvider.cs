@@ -4,7 +4,9 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
@@ -13,8 +15,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly QueueMessage _message;
         private readonly object _value;
         private readonly Type _valueType;
+        private readonly ILogger<QueueMessageValueProvider> _logger;
 
-        public QueueMessageValueProvider(QueueMessage message, object value, Type valueType)
+        public QueueMessageValueProvider(QueueMessage message, object value, Type valueType, ILoggerFactory loggerFactory)
         {
             if (value != null && !valueType.IsAssignableFrom(value.GetType()))
             {
@@ -24,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             _message = message;
             _value = value;
             _valueType = valueType;
+            _logger = loggerFactory.CreateLogger<QueueMessageValueProvider>();
         }
 
         public Type Type
@@ -38,9 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 
         public string ToInvokeString()
         {
-            // Potential enhancement: Base64-encoded AsBytes might replay correctly when use to create a new message.
-            // return _message.TryGetAsString() ?? Convert.ToBase64String(_message.AsBytes);
-            return _message.MessageText; // TODO (kasobol-msft) revisit this when Base64/BinaryData is added to SDK
+            return _message.TryGetAsString(_logger);
         }
     }
 }

@@ -222,8 +222,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 BlobServiceClient1 = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
                 BlobServiceClient2 = new BlobServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
-                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
-                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
+                var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
+                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString, queueOptions);
 
                 await CleanContainersAsync();
 

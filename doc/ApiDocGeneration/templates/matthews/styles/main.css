@@ -255,7 +255,31 @@ article h4 {
 .navbar-inverse .navbar-link:hover {
   color: #ecdbff;
 }
-
+.versionarrow {
+  margin-left: 0.8em;
+  margin-top: -1.5em;
+  margin-bottom: -1em;
+  padding: 1em;
+}
+.versionarrow::before {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border: .5em solid transparent;
+  border-left-color: gray;
+  transform-origin: 0 50%;
+  transition: transform .1s;
+  margin-top: 0.2em;
+}
+.versionarrow.disable {
+  text-decoration: line-through;
+}
+.versionarrow.down::before {
+  transform: rotate(90deg);
+  margin-top: 0em;
+  transition: transform .1s;
+}
 @media (max-width: 767px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
     color: #ffffff;

@@ -21,9 +21,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
         /// <param name="tasks"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, TasksStateTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
             if (tasks == null)
             {
                 throw new ArgumentNullException(nameof(tasks));
@@ -44,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="tasks"> . </param>
         /// <param name="nextLink"> . </param>
-        internal AnalyzeJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, TasksStateTasks tasks, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
+        internal AnalyzeJobState(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<TextAnalyticsErrorInternal> errors, TextDocumentBatchStatistics statistics, AnalyzeTasks tasks, string nextLink) : base(createdDateTime, displayName, expirationDateTime, jobId, lastUpdateDateTime, status)
         {
             Errors = errors;
             Statistics = statistics;
@@ -55,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Models
         public IReadOnlyList<TextAnalyticsErrorInternal> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public TextDocumentBatchStatistics Statistics { get; }
-        public TasksStateTasks Tasks { get; }
+        public AnalyzeTasks Tasks { get; }
         public string NextLink { get; }
     }
 }

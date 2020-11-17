@@ -403,9 +403,9 @@ namespace NetApp.Tests.ResourceTests
                     attempts++;
                     if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                     {
-                        Thread.Sleep(100);
+                        Thread.Sleep(1000);
                     }
-                } while (replicationStatus.Healthy.Value || attempts == 5);
+                } while (replicationStatus.Healthy.Value || attempts == 10);
             }
             Assert.True(replicationStatus.Healthy);
         }
@@ -444,16 +444,16 @@ namespace NetApp.Tests.ResourceTests
                 var dpVolume = ResourceUtils.CreateDpVolume(netAppMgmtClient, sourceVolume);
                 Assert.Equal(ResourceUtils.remoteVolumeName1, dpVolume.Name.Substring(dpVolume.Name.LastIndexOf('/') + 1));
                 Assert.NotNull(dpVolume.DataProtection);
-
-                var authorizeRequest = new AuthorizeRequest
-                {
-                    RemoteVolumeResourceId = dpVolume.Id
-                };
-
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(30000);
                 }
+
+                var getDPVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                var authorizeRequest = new AuthorizeRequest
+                {
+                    RemoteVolumeResourceId = dpVolume.Id
+                };
 
                 netAppMgmtClient.Volumes.AuthorizeReplication(ResourceUtils.repResourceGroup, ResourceUtils.accountName1Repl, ResourceUtils.poolName1Repl, ResourceUtils.volumeName1Repl, authorizeRequest);
 

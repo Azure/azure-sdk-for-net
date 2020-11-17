@@ -1,12 +1,17 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+
+## 1.0.0-beta.3 (2020-11-16)
+
 ### Added
-- Support for mocking all client methods that use models with internal constructors
+- Support for mocking all client methods that use models with internal constructors.
+- Added unit test for pagination.
 
 
 ## 1.0.0-beta.2 (2020-10-06)
-Updated `Azure.Communication.Chat` version
+Updated `Azure.Communication.Chat` version.
 
 ## 1.0.0-beta.1 (2020-09-22)
 This is the first release of Azure Communication Services for chat. For more information, please see the [README][read_me] and [documentation][documentation].
