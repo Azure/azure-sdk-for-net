@@ -108,20 +108,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         }
 
         [Fact]
-        public void GetMessagingUrl_Success()
-        {
-            Assert.Equal("test", AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = "test" }));
-            Assert.Null(AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string> { [SemanticConventions.AttributeMessagingUrl] = null }));
-        }
-
-        [Fact]
-        public void GetMessagingUrl_Failure()
-        {
-            Assert.Null(AzureMonitorConverter.GetMessagingUrl(null));
-            Assert.Null(AzureMonitorConverter.GetMessagingUrl(new Dictionary<string, string>()));
-        }
-
-        [Fact]
         public void GeneratePartAEnvelope_DefaultActivity()
         {
             var activity = CreateTestActivity();

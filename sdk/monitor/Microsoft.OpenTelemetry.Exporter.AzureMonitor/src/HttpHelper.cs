@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using OpenTelemetry.Trace;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
-    internal class HttpHelper
+    internal static class HttpHelper
     {
         private const string SchemePostfix = "://";
         private const string Colon = ":";
@@ -16,68 +19,82 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         /// This method follows OpenTelemetry specification to retrieve http URL.
         /// Reference: https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/semantic_conventions/http.md#http-client.
         /// </summary>
-        /// <param name="tags">Activity Tags</param>
+        /// <param name="tagObjects">Activity Tags</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetUrl(Dictionary<string, string> tags)
+        internal static string GetUrl(this AzMonList tagObjects)
         {
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpUrl, out var url))
+            var httpurl = tagObjects.GetTagValue(SemanticConventions.AttributeHttpUrl);
+
+            if (httpurl != null && Uri.TryCreate(httpurl.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
             {
-                if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
-                {
-                    return url;
-                }
+                return uri.AbsoluteUri;
             }
 
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpScheme, out var httpScheme))
+            string url = null;
+
+            var httpScheme = tagObjects.GetTagValue(SemanticConventions.AttributeHttpScheme);
+
+            if (httpScheme != null)
             {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var httpHost) && !string.IsNullOrWhiteSpace(httpHost))
+                var httpHost = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost);
+
+                if (httpHost != null)
                 {
-                    tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
-                    if (httpPort != null && httpPort != "80" && httpPort != "443")
+                    var httpPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeHttpHostPort, SemanticConventions.AttributeHttpTarget);
+
+                    if (httpPortAndTarget[0] != null && httpPortAndTarget[0].ToString() != "80" && httpPortAndTarget[0].ToString() != "443")
                     {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{Colon}{httpPort}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}:{httpPortAndTarget[0]}{httpPortAndTarget[1]}";
                     }
                     else
                     {
-                        url = $"{httpScheme}{SchemePostfix}{httpHost}{httpTarget}";
+                        url = $"{httpScheme}://{httpHost}{httpPortAndTarget[1]}";
                     }
 
                     return url;
                 }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerName, out var netPeerName)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out var netPeerPort))
+
+                var netPeerName = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerName);
+
+                if (netPeerName != null)
                 {
-                    return string.IsNullOrWhiteSpace(netPeerName) ? null :  $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var netPeerPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeNetPeerPort, SemanticConventions.AttributeHttpTarget);
+                    return string.IsNullOrWhiteSpace(netPeerName?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerName}{(string.IsNullOrWhiteSpace(netPeerPortAndTarget[0]?.ToString()) ? null : Colon)}{netPeerPortAndTarget[0]}{netPeerPortAndTarget[1]}";
                 }
-                else if (tags.TryGetValue(SemanticConventions.AttributeNetPeerIp, out var netPeerIP)
-                         && tags.TryGetValue(SemanticConventions.AttributeNetPeerPort, out netPeerPort))
+
+                var netPeerIP = tagObjects.GetTagValue(SemanticConventions.AttributeNetPeerIp);
+
+                if (netPeerIP != null)
                 {
-                    return string.IsNullOrWhiteSpace(netPeerIP) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPort) ? null : Colon)}{netPeerPort}{httpTarget}";
+                    var netPeerPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeNetPeerPort, SemanticConventions.AttributeHttpTarget);
+                    return string.IsNullOrWhiteSpace(netPeerIP?.ToString()) ? null : $"{httpScheme}{SchemePostfix}{netPeerIP}{(string.IsNullOrWhiteSpace(netPeerPortAndTarget[0]?.ToString()) ? null : Colon)}{netPeerPortAndTarget[0]}{netPeerPortAndTarget[1]}";
                 }
             }
 
-            if (tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host) && !string.IsNullOrWhiteSpace(host))
+            var host = tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost);
+
+            if (host != null)
             {
-                tags.TryGetValue(SemanticConventions.AttributeHttpTarget, out var httpTarget);
-                tags.TryGetValue(SemanticConventions.AttributeHttpHostPort, out var httpPort);
-                url = $"{host}{(string.IsNullOrWhiteSpace(httpPort) ? null : Colon)}{httpPort}{httpTarget}";
-                return url;
+                var httpPortAndTarget = tagObjects.GetTagValues(SemanticConventions.AttributeHttpHostPort, SemanticConventions.AttributeHttpTarget);
+                url = $"{host}{(string.IsNullOrWhiteSpace(httpPortAndTarget[0]?.ToString()) ? null : ":")}{httpPortAndTarget[0]}{httpPortAndTarget[1]}";
             }
 
             return string.IsNullOrWhiteSpace(url) ? null : url;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHttpStatusCode(Dictionary<string, string> tags)
+        internal static string GetHttpStatusCode(this AzMonList tagObjects)
         {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpStatusCode, out var status))
-            {
-                return status;
-            }
+            _ = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode);
+            var status = tagObjects.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString();
+            return status ?? "0";
+        }
 
-            return "0";
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string GetMessagingUrl(this AzMonList tagObjects)
+        {
+            return tagObjects.GetTagValue(SemanticConventions.AttributeMessagingUrl)?.ToString();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -87,14 +104,52 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string GetHost(Dictionary<string, string> tags)
+        internal static string GetHost(this AzMonList tagObjects)
         {
-            if (tags != null && tags.TryGetValue(SemanticConventions.AttributeHttpHost, out var host))
+            return tagObjects.GetTagValue(SemanticConventions.AttributeHttpHost)?.ToString();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static object GetTagValue(this AzMonList tagObjects, string tagName)
+        {
+            for (int i = 0; i < tagObjects.Length; i++)
             {
-                return host;
+                if (tagObjects[i].Key == tagName)
+                {
+                    return tagObjects[i].Value;
+                }
             }
 
             return null;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static object[] GetTagValues(this AzMonList tagObjects, params string[] tagNames)
+        {
+            int? length = tagNames?.Count();
+            if (length == null || length == 0)
+            {
+                return null;
+            }
+
+            object[] values = new object[(int)length];
+
+            for (int i = 0; i < tagObjects.Length; i++)
+            {
+                var index = Array.IndexOf(tagNames, tagObjects[i].Key);
+                if (index >= 0)
+                {
+                    values[index] = tagObjects[i].Value;
+                    length--;
+
+                    if (length == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return values;
         }
     }
 }
