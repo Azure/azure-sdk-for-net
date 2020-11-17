@@ -183,7 +183,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             if (telemetryType == TelemetryType.Request)
             {
                 monitorTags.PartBTags.GenerateUrlAndAuthority(out var url, out var urlAuthority);
-                var statusCode = monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+                var statusCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
                 var success = activity.GetStatus() != Status.Error;
                 var request = new RequestData(2, activity.Context.SpanId.ToHexString(), activity.Duration.ToString("c", CultureInfo.InvariantCulture), success, statusCode)
                 {
@@ -211,21 +211,21 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                         dependency.Data = url;
                         dependency.Target = urlAuthority;
                         dependency.Type = "Http";
-                        dependency.ResultCode = monitorTags.PartBTags.GetTagValue(SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
+                        dependency.ResultCode = AzMonList.GetTagValue(ref monitorTags.PartBTags, SemanticConventions.AttributeHttpStatusCode)?.ToString() ?? "0";
                         break;
                     case PartBType.Db:
-                        var depDataAndType = monitorTags.PartBTags.GetTagValues(SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+                        var depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                         dependency.Data = depDataAndType[0]?.ToString();
                         dependency.Type = depDataAndType[1]?.ToString();
                         break;
                     case PartBType.Rpc:
-                        var depInfo = monitorTags.PartBTags.GetTagValues(SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
+                        var depInfo = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
                         dependency.Data = depInfo[0]?.ToString();
                         dependency.Type = depInfo[1]?.ToString();
                         dependency.ResultCode = depInfo[2]?.ToString();
                         break;
                     case PartBType.Messaging:
-                        depDataAndType = monitorTags.PartBTags.GetTagValues(SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
+                        depDataAndType = AzMonList.GetTagValues(ref monitorTags.PartBTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
                         dependency.Data = depDataAndType[0]?.ToString();
                         dependency.Type = depDataAndType[1]?.ToString();
                         break;
