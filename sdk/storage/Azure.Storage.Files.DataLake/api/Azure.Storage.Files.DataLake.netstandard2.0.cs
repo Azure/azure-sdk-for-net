@@ -176,6 +176,8 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy> GetAccessPolicy(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathHierarchyDeletedItem> GetDeletedPaths(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathHierarchyDeletedItem> GetDeletedPathsAsync(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -445,6 +447,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.PathAccessControl PathAccessControl(string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> acl) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathContentInfo PathContentInfo(string contentHash, Azure.ETag eTag, System.DateTimeOffset lastModified, string acceptRanges, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, long contentLength, string contentRange, string contentType, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathCreateInfo PathCreateInfo(Azure.Storage.Files.DataLake.Models.PathInfo pathInfo, string continuation) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathDeletedItem PathDeletedItem(string name, string deletionId, System.DateTimeOffset? deletedOn, int? remainingRetentionDays) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathHierarchyDeletedItem PathHierarchyDeletedItem(string prefix, Azure.Storage.Files.DataLake.Models.PathDeletedItem path) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathInfo PathInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -650,10 +654,26 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Continuation { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.PathInfo PathInfo { get { throw null; } }
     }
+    public partial class PathDeletedItem
+    {
+        internal PathDeletedItem() { }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public string DeletionId { get { throw null; } }
+        public string Name { get { throw null; } }
+        public int? RemainingRetentionDays { get { throw null; } }
+    }
     public enum PathGetPropertiesAction
     {
         GetAccessControl = 0,
         GetStatus = 1,
+    }
+    public partial class PathHierarchyDeletedItem
+    {
+        internal PathHierarchyDeletedItem() { }
+        public bool IsPath { get { throw null; } }
+        public bool IsPrefix { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.PathDeletedItem Path { get { throw null; } }
+        public string Prefix { get { throw null; } }
     }
     public partial class PathHttpHeaders
     {

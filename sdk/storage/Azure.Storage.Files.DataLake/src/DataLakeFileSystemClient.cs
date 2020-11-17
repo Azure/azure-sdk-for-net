@@ -2351,7 +2351,7 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(maxResults)}: {maxResults})");
                 try
                 {
-                    Response<FileSystemListBlobHierarchySegmentResult> response = await DataLakeRestClient.FileSystem.ListBlobHierarchySegmentAsync(
+                    Response<FileSystemListBlobsHierarchySegmentResult> response = await DataLakeRestClient.FileSystem.ListBlobsHierarchySegmentAsync(
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _blobUri,
@@ -2370,7 +2370,7 @@ namespace Azure.Storage.Files.DataLake
                         new PathDeletedSegment
                         {
                             Continuation = response.Value.Body.NextMarker,
-                            DeletedPaths = response.Value.Body.Segment.BlobItems.Select(blobItem => blobItem.ToPathHierarchyDeletedItem())
+                            DeletedPaths = response.Value.Body.BlobItems.Select(blobItem => blobItem.ToPathHierarchyDeletedItem())
                         },
                         response.GetRawResponse());
                 }

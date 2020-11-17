@@ -284,4 +284,88 @@ directive:
     $.PathExpiryOptions["x-az-public"] = false;
 ```
 
+### /{filesystem}?restype=container&comp=list&hierarchy
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    if (!$.BlobsHierarchySegment) {
+        $.BlobsHierarchySegment = $.ListBlobsHierarchySegmentResponse;
+        delete $.ListBlobsHierarchySegmentResponse;
+        $.BlobsHierarchySegment["x-ms-client-name"] = "BlobsHierarchySegment";
+        $.BlobsHierarchySegment["x-az-public"] = false;
+        $.BlobsHierarchySegment.required.push("NextMarker");
+        const path = $.BlobsHierarchySegment.properties.Segment.$ref.replace(/[#].*$/, "#/definitions/");
+        $.BlobsHierarchySegment.properties.BlobItems = {
+            "type": "array",
+            "xml": { "name": "Blobs", "wrapped": true },
+            "items": { "$ref": path + "BlobItemInternal" }
+        };
+        $.BlobsHierarchySegment.properties.BlobPrefixes = {
+            "type": "array",
+            "xml": { "name": "Blobs", "wrapped": true },
+            "items": { "$ref": path + "BlobPrefix" }
+        };
+        delete $.BlobsHierarchySegment.properties.Segment;
+        delete $.BlobHierarchyListSegment;
+    }
+    $.BlobPrefix["x-az-public"] = false;
+- from: swagger-document
+  where: $.parameters.Delimiter
+  transform: >
+    $.required = false;
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}?restype=container&comp=list&hierarchy"]
+  transform: >
+    $.get.operationId = "FileSystem_ListBlobsHierarchySegment";
+    $.get.responses["200"].headers["Content-Type"]["x-az-demote-header"] = true;
+    $.get.responses["200"]["x-az-public"] = false;
+    const def = $.get.responses["200"].schema;
+    if (def && def["$ref"] && !def["$ref"].endsWith("BlobsHierarchySegment")) {
+        const path = def["$ref"].replace(/[#].*$/, "#/definitions/BlobsHierarchySegment");
+        $.get.responses["200"].schema = { "$ref": path };
+    }
+```
+
+### /{filesystem}/{path}?comp=undelete"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?comp=undelete"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+```
+
+### Hide BlobItemInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobItemInternal
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide BlobPropertiesInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.BlobPropertiesInternal
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide various Include types
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ListBlobsShowOnly
+  transform: >
+    $["x-az-public"] = false;
+- from: swagger-document
+  where: $.parameters.ListBlobsInclude
+  transform: >
+    $.items["x-az-public"] = false;
+```
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)
