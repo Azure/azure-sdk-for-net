@@ -3,6 +3,8 @@
 ## 5.1.0-beta.3 (Unreleased)
 ### Breaking changes
 - Modified the way to turn on Opinion Mining feature in `AnalyzeSentiment` to a bool property called `IncludeOpinionMining`.
+- Added `HealthcareOperation` long running operation for `/entities/health/jobs` endpoint released in v3.1-preview.3 as a gated preview in S tier.
+- Added `AnalyzeOperation` long running operation for `/analyze` endpoint releasing in v3.1-preview.3 in S tier.
 
 ## 5.1.0-beta.2 (2020-10-06)
 ### Breaking changes
