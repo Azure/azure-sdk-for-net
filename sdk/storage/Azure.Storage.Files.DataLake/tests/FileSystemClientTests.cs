@@ -1987,6 +1987,48 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(paths[0].Path.RemainingRetentionDays);
         }
 
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetDeletedPathsAsync_Path()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+            string fileName = GetNewFileName();
+            DataLakeFileClient fileClient1 = InstrumentClient(directoryClient.GetFileClient(fileName));
+            await fileClient1.CreateAsync();
+            await fileClient1.DeleteAsync();
+
+            DataLakeFileClient fileClient2 = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient2.CreateAsync();
+            await fileClient2.DeleteAsync();
+
+            // Act
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
+                path: directoryName);
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, paths.Count);
+            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path.Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetDeletedPaths_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = service.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.GetDeletedPathsAsync().ToListAsync(),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
         private IEnumerable<AccessConditionParameters> Conditions_Data
             => new[]
             {
