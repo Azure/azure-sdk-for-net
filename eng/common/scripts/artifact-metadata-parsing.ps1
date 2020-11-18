@@ -1,3 +1,5 @@
+. (Join-Path $EngCommonScriptsDir SemVer.ps1)
+
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
 
 # Posts a github release for each item of the pkgList variable. SilentlyContinue
