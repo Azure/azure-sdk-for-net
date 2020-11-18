@@ -1111,10 +1111,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             string endPointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.file.{endPointSuffix}/{test.Share.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(subDirectoryName)}");
-<<<<<<< HEAD
-=======
-
->>>>>>> Diff sovereign cloud live test updates, merged with cloud configuration
 
             ShareDirectoryClient directoryFromConstructor = new ShareDirectoryClient(
                 TestConfigDefault.ConnectionString,
