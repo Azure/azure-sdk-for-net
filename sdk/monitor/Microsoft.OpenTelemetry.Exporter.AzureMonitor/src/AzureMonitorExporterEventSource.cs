@@ -9,11 +9,11 @@ using Azure.Core.Shared;
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureMonitorTraceExporterEventSource : EventSource
+    internal sealed class AzureMonitorExporterEventSource : EventSource
     {
-        private const string EventSourceName = "Microsoft-OpenTelemetry-TraceExporter-AzureMonitor";
-        public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
-        public static AzureMonitorTraceExporterEventListener Listener = new AzureMonitorTraceExporterEventListener();
+        private const string EventSourceName = "Microsoft-OpenTelemetry-Exporter-AzureMonitor";
+        public static AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+        public static AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
         public readonly IReadOnlyDictionary<string, EventLevel> EventLevelMap = new Dictionary<string, EventLevel>
         {
@@ -75,7 +75,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             return value is Exception exception ? exception.ToInvariantString() : value.ToString();
         }
 
-        public class AzureMonitorTraceExporterEventListener : EventListener
+        public class AzureMonitorExporterEventListener : EventListener
         {
             private readonly List<EventSource> eventSources = new List<EventSource>();
 
