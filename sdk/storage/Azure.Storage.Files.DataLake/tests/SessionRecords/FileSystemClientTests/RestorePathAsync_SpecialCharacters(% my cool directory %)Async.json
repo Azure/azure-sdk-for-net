@@ -1,0 +1,240 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1a0a85ef5aa4794b9e8e76bea5dd11a2-1935ca52609e4444-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "8680eaa5-c149-e668-9a19-e43ace8a8df9",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:26 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "ETag": "\u00220x8D88C09724A38AE\u0022",
+        "Last-Modified": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "8680eaa5-c149-e668-9a19-e43ace8a8df9",
+        "x-ms-request-id": "44dca649-801e-000c-51f2-bda441000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.dfs.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3/ my cool directory ?resource=directory",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0e9ec585dfa3dd479937a0ec96c39e97-e8782bfcf7074942-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "a97fd15f-c602-5f99-e677-38ef8dacf232",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:26 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "ETag": "\u00220x8D88C097262AB0D\u0022",
+        "Last-Modified": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-HDFS/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "a97fd15f-c602-5f99-e677-38ef8dacf232",
+        "x-ms-request-id": "15689d14-101f-0002-74f2-bd484a000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.dfs.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3/ my cool directory ?recursive=true",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c734b67f3f0e4543a303a5e4be89a920-efe1198df0eea346-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fcdb92ad-e40b-86f6-ddc8-cd58e6c240a6",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:26 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-HDFS/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "fcdb92ad-e40b-86f6-ddc8-cd58e6c240a6",
+        "x-ms-delete-type-permanent": "false",
+        "x-ms-deletion-id": "132502087475042468",
+        "x-ms-request-id": "15689d15-101f-0002-75f2-bd484a000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3?restype=container\u0026comp=list\u0026showonly=deleted",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "fb41a579-f6d0-a426-a1c0-23951020a175",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "fb41a579-f6d0-a426-a1c0-23951020a175",
+        "x-ms-request-id": "44dca650-801e-000c-56f2-bda441000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/\u0022 ContainerName=\u0022test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3\u0022\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003E my cool directory \u003C/Name\u003E\u003CDeletionId\u003E132502087475042468\u003C/DeletionId\u003E\u003CDeleted\u003Etrue\u003C/Deleted\u003E\u003CProperties\u003E\u003CCreation-Time\u003EWed, 18 Nov 2020 21:32:27 GMT\u003C/Creation-Time\u003E\u003CLast-Modified\u003EWed, 18 Nov 2020 21:32:27 GMT\u003C/Last-Modified\u003E\u003CExpiry-Time\u003EWed, 25 Nov 2020 21:32:27 GMT\u003C/Expiry-Time\u003E\u003CEtag\u003E0x8D88C097262AB0D\u003C/Etag\u003E\u003CContent-Length\u003E0\u003C/Content-Length\u003E\u003CContent-Type\u003Eapplication/octet-stream\u003C/Content-Type\u003E\u003CContent-Encoding /\u003E\u003CContent-Language /\u003E\u003CContent-CRC64\u003EAAAAAAAAAAA=\u003C/Content-CRC64\u003E\u003CContent-MD5 /\u003E\u003CCache-Control /\u003E\u003CContent-Disposition /\u003E\u003CBlobType\u003EBlockBlob\u003C/BlobType\u003E\u003CAccessTier\u003ECool\u003C/AccessTier\u003E\u003CAccessTierInferred\u003Etrue\u003C/AccessTierInferred\u003E\u003CServerEncrypted\u003Etrue\u003C/ServerEncrypted\u003E\u003CDeletedTime\u003EWed, 18 Nov 2020 21:32:27 GMT\u003C/DeletedTime\u003E\u003CRemainingRetentionDays\u003E6\u003C/RemainingRetentionDays\u003E\u003C/Properties\u003E\u003COrMetadata /\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3/ my cool directory ?comp=undelete",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-d46590fe29b2a84baa5dd1e0d3cb646b-b2a9c81fb1e46141-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "40de5e1b-4481-7bd5-b5c3-ae00465d7037",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-undelete-source": "?deletionid=132502087475042468",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "40de5e1b-4481-7bd5-b5c3-ae00465d7037",
+        "x-ms-request-id": "44dca654-801e-000c-5af2-bda441000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3/ my cool directory ",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "b17af9cc-6142-2df3-b8f9-1f4cffd0fe42",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "Content-Length": "0",
+        "Content-Type": "application/octet-stream",
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "ETag": "\u00220x8D88C097262AB0D\u0022",
+        "Last-Modified": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-access-tier": "Cool",
+        "x-ms-access-tier-inferred": "true",
+        "x-ms-blob-type": "BlockBlob",
+        "x-ms-client-request-id": "b17af9cc-6142-2df3-b8f9-1f4cffd0fe42",
+        "x-ms-creation-time": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "x-ms-group": "$superuser",
+        "x-ms-lease-state": "available",
+        "x-ms-lease-status": "unlocked",
+        "x-ms-meta-hdi_isfolder": "true",
+        "x-ms-owner": "$superuser",
+        "x-ms-permissions": "rwxr-x---",
+        "x-ms-request-id": "44dca659-801e-000c-5df2-bda441000000",
+        "x-ms-server-encrypted": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/test-filesystem-cb24383f-7a07-e49b-d9f0-1b2593834de3?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e733c7616c004144b26d15ebead0afc8-7dae0a9a2f966748-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4c33b292-bee2-f4f5-08af-4a45b712cc04",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Date": "Wed, 18 Nov 2020 21:32:27 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "4c33b292-bee2-f4f5-08af-4a45b712cc04",
+        "x-ms-request-id": "44dca65d-801e-000c-5ff2-bda441000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1350189133",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n1dsxscnapsn4prde12h\nU2FuaXRpemVk\nhttps://1dsxscnapsn4prde12h.blob.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.file.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.queue.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.table.preprod.core.windows.net\n\n\n\n\nhttps://1dsxscnapsn4prde12h-secondary.blob.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.file.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.queue.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/;QueueEndpoint=https://1dsxscnapsn4prde12h.queue.preprod.core.windows.net/;FileEndpoint=https://1dsxscnapsn4prde12h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.file.preprod.core.windows.net/;AccountName=1dsxscnapsn4prde12h;AccountKey=Sanitized\n"
+  }
+}

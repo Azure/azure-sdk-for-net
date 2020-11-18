@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-26fe25991c83314f9ab093b10637e37b-317d5f343d314640-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "89e5ece4-643d-4633-523d-b2f4f7e463ef",
+        "x-ms-date": "Wed, 18 Nov 2020 21:32:28 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Wed, 18 Nov 2020 21:32:28 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "89e5ece4-643d-4633-523d-b2f4f7e463ef",
+        "x-ms-request-id": "7f00d1ef-201e-000a-0bf2-bd5339000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E1\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003CAllowPermanentDelete\u003Efalse\u003C/AllowPermanentDelete\u003E\u003C/DeleteRetentionPolicy\u003E\u003C/StorageServiceProperties\u003E"
+    },
+    {
+      "RequestUri": "https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Content-Length": "661",
+        "Content-Type": "application/xml",
+        "traceparent": "00-7f2bf812a0e9134f92d6713864ee2252-e938516b244c8d4a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.5.0-alpha.20201118.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "47d0c9e8-955c-39b0-9fd6-94a083cfc6a1",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2020-06-12"
+      },
+      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CLogging\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CDelete\u003Efalse\u003C/Delete\u003E\u003CRead\u003Efalse\u003C/Read\u003E\u003CWrite\u003Efalse\u003C/Write\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/Logging\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E1\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E2\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003CDeleteRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/DeleteRetentionPolicy\u003E\u003C/StorageServiceProperties\u003E",
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Content-Length": "302",
+        "Content-Type": "application/xml",
+        "Date": "Wed, 18 Nov 2020 21:32:29 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": "Bearer authorization_uri=https://login.windows-ppe.net/1b3464ab-a862-4da6-90ed-0536fbbbe0d8/oauth2/authorize resource_id=https://storage.azure.com",
+        "x-ms-client-request-id": "47d0c9e8-955c-39b0-9fd6-94a083cfc6a1",
+        "x-ms-error-code": "NoAuthenticationInformation",
+        "x-ms-request-id": "44dca68c-801e-000c-03f2-bda441000000",
+        "x-ms-version": "2020-06-12"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ENoAuthenticationInformation\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Please refer to the information in the www-authenticate header.\n",
+        "RequestId:44dca68c-801e-000c-03f2-bda441000000\n",
+        "Time:2020-11-18T21:32:29.2159810Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1559858827",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n1dsxscnapsn4prde12h\nU2FuaXRpemVk\nhttps://1dsxscnapsn4prde12h.blob.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.file.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.queue.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h.table.preprod.core.windows.net\n\n\n\n\nhttps://1dsxscnapsn4prde12h-secondary.blob.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.file.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.queue.preprod.core.windows.net\nhttps://1dsxscnapsn4prde12h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://1dsxscnapsn4prde12h.blob.preprod.core.windows.net/;QueueEndpoint=https://1dsxscnapsn4prde12h.queue.preprod.core.windows.net/;FileEndpoint=https://1dsxscnapsn4prde12h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://1dsxscnapsn4prde12h-secondary.file.preprod.core.windows.net/;AccountName=1dsxscnapsn4prde12h;AccountKey=Sanitized\n"
+  }
+}
