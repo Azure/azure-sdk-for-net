@@ -55,7 +55,11 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         private async Task<BlobClient> GetBlobClient(string name)
         {
             var client = new BlobServiceClient(
+<<<<<<< HEAD
                 new Uri($"https://{TestEnvironment.StorageAccountName}.blob.{TestEnvironment.StorageEndpointSuffix}/"),
+=======
+                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.{DataProtectionTestEnvironment.Instance.StorageEndpointSuffix}/"),
+>>>>>>> Diff sovereign cloud live test updates, merged with cloud configuration
                 new StorageSharedKeyCredential(
                     TestEnvironment.StorageAccountName,
                     TestEnvironment.StorageAccountKey));
