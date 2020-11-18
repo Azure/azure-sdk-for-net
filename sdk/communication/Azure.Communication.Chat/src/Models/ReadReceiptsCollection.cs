@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenModel("ChatMessageReadReceiptsCollection")]
-    internal partial class ChatMessageReadReceiptsCollection
+    [CodeGenModel("ReadReceiptsCollection")]
+    internal partial class ReadReceiptsCollection
     {
     }
 }

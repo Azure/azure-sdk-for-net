@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatParticipantsCollection
+    internal partial class ChatThreadMembersCollection
     {
-        internal static ChatParticipantsCollection DeserializeChatParticipantsCollection(JsonElement element)
+        internal static ChatThreadMembersCollection DeserializeChatThreadMembersCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ChatParticipantInternal>> value = default;
+            Optional<IReadOnlyList<ChatThreadMemberInternal>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
+                    List<ChatThreadMemberInternal> array = new List<ChatThreadMemberInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
+                        array.Add(ChatThreadMemberInternal.DeserializeChatThreadMemberInternal(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantsCollection(Optional.ToList(value), nextLink.Value);
+            return new ChatThreadMembersCollection(Optional.ToList(value), nextLink.Value);
         }
     }
 }

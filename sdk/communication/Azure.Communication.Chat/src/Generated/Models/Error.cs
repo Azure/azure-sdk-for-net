@@ -20,10 +20,10 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Initializes a new instance of Error. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Description of the error. </param>
-        /// <param name="target"> If applicable, would be used to indicate the property causing the error. </param>
-        /// <param name="innerErrors"> If applicable, inner errors would be returned for more details on the error. </param>
+        /// <param name="code"> . </param>
+        /// <param name="message"> . </param>
+        /// <param name="target"> . </param>
+        /// <param name="innerErrors"> . </param>
         internal Error(string code, string message, string target, IReadOnlyList<Error> innerErrors)
         {
             Code = code;
@@ -32,13 +32,9 @@ namespace Azure.Communication.Chat
             InnerErrors = innerErrors;
         }
 
-        /// <summary> Error code. </summary>
         public string Code { get; }
-        /// <summary> Description of the error. </summary>
         public string Message { get; }
-        /// <summary> If applicable, would be used to indicate the property causing the error. </summary>
         public string Target { get; }
-        /// <summary> If applicable, inner errors would be returned for more details on the error. </summary>
         public IReadOnlyList<Error> InnerErrors { get; }
     }
 }

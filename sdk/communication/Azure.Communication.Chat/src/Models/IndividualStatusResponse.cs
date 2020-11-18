@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [CodeGenModel("ChatParticipantsCollection")]
-    internal partial class ChatParticipantsCollection
+    [CodeGenModel("IndividualStatusResponse")]
+    internal partial class IndividualStatusResponse
     {
     }
 }

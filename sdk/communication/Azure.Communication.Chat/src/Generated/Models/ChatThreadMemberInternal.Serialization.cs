@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatParticipantInternal : IUtf8JsonSerializable
+    internal partial class ChatThreadMemberInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
+        internal static ChatThreadMemberInternal DeserializeChatThreadMemberInternal(JsonElement element)
         {
             string id = default;
             Optional<string> displayName = default;
@@ -59,7 +59,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(id, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatThreadMemberInternal(id, displayName.Value, Optional.ToNullable(shareHistoryTime));
         }
     }
 }

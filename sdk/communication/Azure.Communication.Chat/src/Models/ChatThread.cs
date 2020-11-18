@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat
             Topic = chatThreadInternal.Topic;
             CreatedOn = chatThreadInternal.CreatedOn;
             CreatedBy = new CommunicationUser(chatThreadInternal.CreatedBy);
-            Participants = chatThreadInternal.Participants.Select(x => x.ToChatParticipant()).ToList();
+            Members = chatThreadInternal.Members.Select(x => x.ToChatThreadMember()).ToList();
         }
 
         /// <summary> Chat thread id. </summary>
@@ -28,6 +28,6 @@ namespace Azure.Communication.Chat
         /// <summary> Id of the chat thread owner. </summary>
         public CommunicationUser CreatedBy { get; }
         /// <summary> Chat thread members. </summary>
-        public IReadOnlyList<ChatParticipant> Participants { get; }
+        public IReadOnlyList<ChatThreadMember> Members { get; }
     }
 }

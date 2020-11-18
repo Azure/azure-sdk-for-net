@@ -32,21 +32,21 @@ namespace Azure.Communication.Chat.Models
         /// </summary>
         /// <param name="id"> Chat thread id. </param>
         /// <param name="topic"> Chat thread topic. </param>
-        /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="isDeleted"> Flag if a chat thread is soft deleted. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <returns>A new <see cref="ChatThreadInfo"/> instance for mocking.</returns>
-        public static ChatThreadInfo ChatThreadInfo(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
-            => new ChatThreadInfo(id, topic, deletedOn, lastMessageReceivedOn);
+        public static ChatThreadInfo ChatThreadInfo(string id, string topic, bool? isDeleted, DateTimeOffset? lastMessageReceivedOn)
+            => new ChatThreadInfo(id, topic, isDeleted, lastMessageReceivedOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.
+        /// Initializes a new instance of the <see cref="ReadReceipt"/> class.
         /// </summary>
         /// <param name="senderId"> Id of the of message sender. </param>
         /// <param name="chatMessageId"> Id for the chat message that has been read. </param>
         /// <param name="readOn"> Read receipt timestamp. </param>
-        /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
-        public static ChatMessageReadReceipt ChatMessageReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
-            => new ChatMessageReadReceipt(senderId, chatMessageId, readOn);
+        /// <returns>A new <see cref="ReadReceipt"/> instance for mocking.</returns>
+        public static ReadReceipt ReadReceipt(string senderId, string chatMessageId, DateTimeOffset? readOn)
+            => new ReadReceipt(senderId, chatMessageId, readOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
