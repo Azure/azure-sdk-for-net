@@ -44,6 +44,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId2 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -90,6 +95,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// Gets the IPolicyMetadataOperations.
         /// </summary>
         public virtual IPolicyMetadataOperations PolicyMetadata { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicyRestrictionsOperations.
+        /// </summary>
+        public virtual IPolicyRestrictionsOperations PolicyRestrictions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PolicyInsightsClient class.
@@ -338,6 +348,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             PolicyStates = new PolicyStatesOperations(this);
             Operations = new Operations(this);
             PolicyMetadata = new PolicyMetadataOperations(this);
+            PolicyRestrictions = new PolicyRestrictionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
