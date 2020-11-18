@@ -186,7 +186,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                "allClaims",
                new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-            TopicProperties createdTopic = await client.CreateTopicAsync(options);
+            Response<TopicProperties> createdTopicResponse = await client.CreateTopicAsync(options);
+            Response rawResponse = createdTopicResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            TopicProperties createdTopic = createdTopicResponse.Value;
+
             if (Mode == RecordedTestMode.Playback)
             {
                 // Auth rules use a randomly generated key, but we don't want to store
@@ -201,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
 
-            Response rawResponse = getTopicResponse.GetRawResponse();
+            rawResponse = getTopicResponse.GetRawResponse();
             Assert.NotNull(rawResponse.ClientRequestId);
             Assert.IsTrue(rawResponse.ContentStream.CanRead);
             Assert.AreEqual(0, rawResponse.ContentStream.Position);

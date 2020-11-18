@@ -1026,7 +1026,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var topic = new TopicProperties(options);
                 var atomRequest = topic.Serialize().ToString();
 
-                using Response response = await _httpRequestAndResponse.PutEntityAsync(
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
                     topic.Name,
                     atomRequest,
                     false,
@@ -1279,7 +1279,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 var atomRequest = topic.Serialize().ToString();
 
-                using Response response = await _httpRequestAndResponse.PutEntityAsync(
+                Response response = await _httpRequestAndResponse.PutEntityAsync(
                     topic.Name,
                     atomRequest,
                     true,
@@ -1582,14 +1582,6 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         #endregion
-
-        private static async Task<string> ReadAsString(Response response)
-        {
-            string exceptionMessage;
-            using StreamReader reader = new StreamReader(response.ContentStream);
-            exceptionMessage = await reader.ReadToEndAsync().ConfigureAwait(false);
-            return exceptionMessage;
-        }
 
         /// <summary>
         /// Builds the audience for use in the signature.
