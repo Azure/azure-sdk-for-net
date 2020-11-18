@@ -12,11 +12,11 @@ using OpenTelemetry.Resources;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
 {
-    public class AzureMonitorConverterTests
+    public class TelemetryPartATests
     {
         private const string ResourcePropertyName = "OTel.Resource";
 
-        static AzureMonitorConverterTests()
+        static TelemetryPartATests()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
@@ -30,19 +30,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             ActivitySource.AddActivityListener(listener);
         }
 
-        public AzureMonitorConverterTests()
+        public TelemetryPartATests()
         {
-            AzureMonitorConverter.RoleName = null;
-            AzureMonitorConverter.RoleInstance = null;
+            TelemetryPartA.RoleName = null;
+            TelemetryPartA.RoleInstance = null;
         }
 
         [Fact]
         public void InitRoleInfo_NullResource()
         {
-            AzureMonitorConverter.InitRoleInfo(null);
+            TelemetryPartA.InitRoleInfo(null);
 
-            Assert.Null(AzureMonitorConverter.RoleName);
-            Assert.Null(AzureMonitorConverter.RoleInstance);
+            Assert.Null(TelemetryPartA.RoleName);
+            Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -51,9 +51,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             using var activity = new Activity("InitRoleInfo_Empty");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null));
 
-            AzureMonitorConverter.InitRoleInfo(activity);
-            Assert.Null(AzureMonitorConverter.RoleName);
-            Assert.Null(AzureMonitorConverter.RoleInstance);
+            TelemetryPartA.InitRoleInfo(activity);
+            Assert.Null(TelemetryPartA.RoleName);
+            Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -61,9 +61,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         {
             using var activity = new Activity("InitRoleInfo_ServiceName");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service"));
-            AzureMonitorConverter.InitRoleInfo(activity);
-            Assert.Equal("my-service", AzureMonitorConverter.RoleName);
-            Assert.True(Guid.TryParse(AzureMonitorConverter.RoleInstance, out var guid));
+            TelemetryPartA.InitRoleInfo(activity);
+            Assert.Equal("my-service", TelemetryPartA.RoleName);
+            Assert.True(Guid.TryParse(TelemetryPartA.RoleInstance, out var guid));
         }
 
         [Fact]
@@ -71,10 +71,10 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         {
             using var activity = new Activity("InitRoleInfo_ServiceInstance");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, "roleInstance_1"));
-            AzureMonitorConverter.InitRoleInfo(activity);
+            TelemetryPartA.InitRoleInfo(activity);
 
-            Assert.Null(AzureMonitorConverter.RoleName);
-            Assert.Null(AzureMonitorConverter.RoleInstance);
+            Assert.Null(TelemetryPartA.RoleName);
+            Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -82,9 +82,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         {
             using var activity = new Activity("InitRoleInfo_ServiceNamespace");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource(null, null, "my-namespace"));
-            AzureMonitorConverter.InitRoleInfo(activity);
-            Assert.Null(AzureMonitorConverter.RoleName);
-            Assert.Null(AzureMonitorConverter.RoleInstance);
+            TelemetryPartA.InitRoleInfo(activity);
+            Assert.Null(TelemetryPartA.RoleName);
+            Assert.Null(TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -92,9 +92,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         {
             using var activity = new Activity("InitRoleInfo_ServiceNameAndInstance");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1"));
-            AzureMonitorConverter.InitRoleInfo(activity);
-            Assert.Equal("my-service", AzureMonitorConverter.RoleName);
-            Assert.Equal("roleInstance_1", AzureMonitorConverter.RoleInstance);
+            TelemetryPartA.InitRoleInfo(activity);
+            Assert.Equal("my-service", TelemetryPartA.RoleName);
+            Assert.Equal("roleInstance_1", TelemetryPartA.RoleInstance);
         }
 
         [Fact]
@@ -102,16 +102,16 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
         {
             using var activity = new Activity("InitRoleInfo_ServiceNameAndInstanceAndNamespace");
             activity.SetCustomProperty(ResourcePropertyName, Resources.CreateServiceResource("my-service", "roleInstance_1", "my-namespace"));
-            AzureMonitorConverter.InitRoleInfo(activity);
-            Assert.Equal("my-namespace.my-service", AzureMonitorConverter.RoleName);
-            Assert.Equal("roleInstance_1", AzureMonitorConverter.RoleInstance);
+            TelemetryPartA.InitRoleInfo(activity);
+            Assert.Equal("my-namespace.my-service", TelemetryPartA.RoleName);
+            Assert.Equal("roleInstance_1", TelemetryPartA.RoleInstance);
         }
 
         [Fact]
         public void GeneratePartAEnvelope_DefaultActivity()
         {
             var activity = CreateTestActivity();
-            var telemetryItem = AzureMonitorConverter.GeneratePartAEnvelope(activity);
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, null);
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
             Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
@@ -127,7 +127,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Demo.Tracing
             var activity = CreateTestActivity(
                 resource: Resources.CreateServiceResource("BusyWorker", "TEST3650724"));
 
-            var telemetryItem = AzureMonitorConverter.GeneratePartAEnvelope(activity);
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, null);
             Assert.Equal("RemoteDependency", telemetryItem.Name);
             Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
             Assert.Equal("BusyWorker", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
