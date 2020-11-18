@@ -508,5 +508,191 @@ namespace Azure.Storage.Files.DataLake
                 }
             };
         }
+
+        internal static DataLakeServiceProperties ToDataLakeServiceProperties(this BlobServiceProperties blobServiceProperties)
+        {
+            if (blobServiceProperties == null)
+            {
+                return null;
+            }
+
+            return new DataLakeServiceProperties
+            {
+                Logging = blobServiceProperties.Logging.ToDataLakeAnalyticsLogging(),
+                HourMetrics = blobServiceProperties.HourMetrics.ToDataLakeMetrics(),
+                MinuteMetrics = blobServiceProperties.MinuteMetrics.ToDataLakeMetrics(),
+                Cors = blobServiceProperties.Cors.ToDataLakeCorsRules(),
+                DefaultServiceVersion = blobServiceProperties.DefaultServiceVersion,
+                DeleteRetentionPolicy = blobServiceProperties.DeleteRetentionPolicy.ToDataLakeRetentionPolicy(),
+            };
+        }
+
+        internal static DataLakeAnalyticsLogging ToDataLakeAnalyticsLogging(this BlobAnalyticsLogging blobAnalyticsLogging)
+        {
+            if (blobAnalyticsLogging == null)
+            {
+                return null;
+            }
+
+            return new DataLakeAnalyticsLogging
+            {
+                Version = blobAnalyticsLogging.Version,
+                Delete = blobAnalyticsLogging.Delete,
+                Read = blobAnalyticsLogging.Read,
+                Write = blobAnalyticsLogging.Write,
+                RetentionPolicy = blobAnalyticsLogging.RetentionPolicy.ToDataLakeRetentionPolicy()
+            };
+        }
+
+        internal static DataLakeMetrics ToDataLakeMetrics(this BlobMetrics blobMetrics)
+        {
+            if (blobMetrics == null)
+            {
+                return null;
+            }
+
+            return new DataLakeMetrics
+            {
+                Version = blobMetrics.Version,
+                Enabled = blobMetrics.Enabled,
+                RetentionPolicy = blobMetrics.RetentionPolicy.ToDataLakeRetentionPolicy(),
+                IncludeApis = blobMetrics.IncludeApis
+            };
+        }
+
+        internal static DataLakeRetentionPolicy ToDataLakeRetentionPolicy(this BlobRetentionPolicy blobRetentionPolicy)
+        {
+            if (blobRetentionPolicy == null)
+            {
+                return null;
+            }
+
+            return new DataLakeRetentionPolicy
+            {
+                Enabled = blobRetentionPolicy.Enabled,
+                Days = blobRetentionPolicy.Days
+            };
+        }
+
+        internal static IList<DataLakeCorsRule> ToDataLakeCorsRules(this IList<BlobCorsRule> blobCorsRules)
+        {
+            if (blobCorsRules == null)
+            {
+                return null;
+            }
+
+            return blobCorsRules.Select(blobCorsRule => blobCorsRule.ToDataLakeCorsRule()).ToList();
+        }
+
+        internal static DataLakeCorsRule ToDataLakeCorsRule(this BlobCorsRule blobCorsRule)
+        {
+            if (blobCorsRule == null)
+            {
+                return null;
+            }
+
+            return new DataLakeCorsRule
+            {
+                AllowedOrigins = blobCorsRule.AllowedOrigins,
+                AllowedMethods = blobCorsRule.AllowedMethods,
+                AllowedHeaders = blobCorsRule.AllowedHeaders,
+                ExposedHeaders = blobCorsRule.ExposedHeaders,
+                MaxAgeInSeconds = blobCorsRule.MaxAgeInSeconds
+            };
+        }
+
+        internal static BlobServiceProperties ToBlobServiceProperties(this DataLakeServiceProperties dataLakeServiceProperties)
+        {
+            if (dataLakeServiceProperties == null)
+            {
+                return null;
+            }
+
+            return new BlobServiceProperties
+            {
+                Logging = dataLakeServiceProperties.Logging.ToBlobAnalyticsLogging(),
+                HourMetrics = dataLakeServiceProperties.HourMetrics.ToBlobMetrics(),
+                MinuteMetrics = dataLakeServiceProperties.MinuteMetrics.ToBlobMetrics(),
+                Cors = dataLakeServiceProperties.Cors.ToBlobCorsRules(),
+                DefaultServiceVersion = dataLakeServiceProperties.DefaultServiceVersion,
+                DeleteRetentionPolicy = dataLakeServiceProperties.DeleteRetentionPolicy.ToBlobRetentionPolicy(),
+                // HNS enabled accounts do not support static website.
+                StaticWebsite = null
+            };
+        }
+
+        internal static BlobMetrics ToBlobMetrics(this DataLakeMetrics dataLakeMetrics)
+        {
+            if (dataLakeMetrics == null)
+            {
+                return null;
+            }
+
+            return new BlobMetrics
+            {
+                Version = dataLakeMetrics.Version,
+                Enabled = dataLakeMetrics.Enabled,
+                RetentionPolicy = dataLakeMetrics.RetentionPolicy.ToBlobRetentionPolicy(),
+                IncludeApis = dataLakeMetrics.IncludeApis
+            };
+        }
+
+        internal static BlobRetentionPolicy ToBlobRetentionPolicy(this DataLakeRetentionPolicy dataLakeRetentionPolicy)
+        {
+            if (dataLakeRetentionPolicy == null)
+            {
+                return null;
+            }
+
+            return new BlobRetentionPolicy
+            {
+                Enabled = dataLakeRetentionPolicy.Enabled,
+                Days = dataLakeRetentionPolicy.Days
+            };
+        }
+
+        internal static IList<BlobCorsRule> ToBlobCorsRules(this IList<DataLakeCorsRule> dataLakeCorsRules)
+        {
+            if (dataLakeCorsRules == null)
+            {
+                return null;
+            }
+
+            return dataLakeCorsRules.Select(dataLakeCorsRule => dataLakeCorsRule.ToBlobCorsRule()).ToList();
+        }
+
+        internal static BlobCorsRule ToBlobCorsRule(this DataLakeCorsRule dataLakeCorsRule)
+        {
+            if (dataLakeCorsRule == null)
+            {
+                return null;
+            }
+
+            return new BlobCorsRule
+            {
+                AllowedOrigins = dataLakeCorsRule.AllowedOrigins,
+                AllowedMethods = dataLakeCorsRule.AllowedMethods,
+                AllowedHeaders = dataLakeCorsRule.AllowedHeaders,
+                ExposedHeaders = dataLakeCorsRule.ExposedHeaders,
+                MaxAgeInSeconds = dataLakeCorsRule.MaxAgeInSeconds
+            };
+        }
+
+        internal static BlobAnalyticsLogging ToBlobAnalyticsLogging(this DataLakeAnalyticsLogging dataLakeAnalyticsLogging)
+        {
+            if (dataLakeAnalyticsLogging == null)
+            {
+                return null;
+            }
+
+            return new BlobAnalyticsLogging
+            {
+                Version = dataLakeAnalyticsLogging.Version,
+                Delete = dataLakeAnalyticsLogging.Delete,
+                Read = dataLakeAnalyticsLogging.Read,
+                Write = dataLakeAnalyticsLogging.Write,
+                RetentionPolicy = dataLakeAnalyticsLogging.RetentionPolicy.ToBlobRetentionPolicy()
+            };
+        }
     }
 }
