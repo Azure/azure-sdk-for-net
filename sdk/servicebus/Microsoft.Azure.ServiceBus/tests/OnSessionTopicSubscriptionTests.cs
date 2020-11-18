@@ -175,7 +175,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     testSessionHandler.RegisterSessionHandler(
                        async (session, message, token) =>
                        {
-                           await Task.Delay(TimeSpan.FromSeconds(8));
+                           await Task.Delay(TimeSpan.FromSeconds(15));
                            TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
 
                            if (subscriptionClient.ReceiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                        },
                        sessionHandlerOptions);
 
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await Task.Delay(TimeSpan.FromSeconds(10));
                     // UnregisterSessionHandler should wait up to the provided timeout to finish the message handling tasks
-                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(10));
+                    await testSessionHandler.UnregisterSessionHandler(TimeSpan.FromSeconds(25));
                     Assert.True(count == maxConcurrentCalls);
 
                     testSessionHandler.ClearData();

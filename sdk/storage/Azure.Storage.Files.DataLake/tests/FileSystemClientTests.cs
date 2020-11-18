@@ -1897,8 +1897,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
-            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}");
-            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}");
+
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}");
 
             // Act
             Response<PathInfo> createResponse = await directory.CreateAsync();
@@ -1935,8 +1937,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
-            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(fileName)}");
-            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{Uri.EscapeDataString(fileName)}");
+
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
+            Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(fileName)}");
+            Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(fileName)}");
 
             // Act
             Response<PathInfo> createResponse = await file.CreateAsync();
