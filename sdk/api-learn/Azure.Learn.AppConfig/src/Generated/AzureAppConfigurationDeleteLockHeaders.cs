@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Learn.AppConfig
 {
-    internal class ServiceDeleteKeyValueHeaders
+    internal class AzureAppConfigurationDeleteLockHeaders
     {
         private readonly Response _response;
-        public ServiceDeleteKeyValueHeaders(Response response)
+        public AzureAppConfigurationDeleteLockHeaders(Response response)
         {
             _response = response;
         }

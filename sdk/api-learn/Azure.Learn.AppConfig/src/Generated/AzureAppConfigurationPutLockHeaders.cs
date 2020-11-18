@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Learn.AppConfig
 {
-    internal class ServiceGetRevisionsHeaders
+    internal class AzureAppConfigurationPutLockHeaders
     {
         private readonly Response _response;
-        public ServiceGetRevisionsHeaders(Response response)
+        public AzureAppConfigurationPutLockHeaders(Response response)
         {
             _response = response;
         }

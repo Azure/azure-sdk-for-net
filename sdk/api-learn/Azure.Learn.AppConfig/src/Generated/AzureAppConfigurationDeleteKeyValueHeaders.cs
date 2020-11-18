@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Learn.AppConfig
 {
-    internal class ServiceGetLabelsHeaders
+    internal class AzureAppConfigurationDeleteKeyValueHeaders
     {
         private readonly Response _response;
-        public ServiceGetLabelsHeaders(Response response)
+        public AzureAppConfigurationDeleteKeyValueHeaders(Response response)
         {
             _response = response;
         }
