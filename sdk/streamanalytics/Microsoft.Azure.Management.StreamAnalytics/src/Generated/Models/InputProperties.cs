@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
     /// <summary>
     /// The properties that are associated with an input.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("InputProperties")]
     public partial class InputProperties
     {
         /// <summary>
