@@ -215,6 +215,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 case TimeoutException _:
                     return new ServiceBusTimeoutException(message, aggregateException);
 
+                case InvalidOperationException ex when ex.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != -1:
+                    return new ServiceBusException(true, aggregateException);
+
                 case InvalidOperationException _ when connectionError:
                     return new ServiceBusCommunicationException(message, aggregateException);
             }
@@ -262,19 +265,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return innerException == null ? null : GetClientException(innerException, null, null, connectionError);
-        }
-
-        public static bool TryTranslateToRetriableException(Exception exception, out ServiceBusException retriableException)
-        {
-            retriableException = null;
-
-            // InvalidOperationException with 'connection is closing' message from AMQP layer is retriable.
-            if (exception is InvalidOperationException && exception.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != -1)
-            {
-                retriableException = new ServiceBusException(true, exception);
-            }
-
-            return retriableException != null;
         }
     }
 }

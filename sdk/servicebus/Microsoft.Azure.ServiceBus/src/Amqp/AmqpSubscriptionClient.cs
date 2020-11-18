@@ -129,14 +129,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                {
-                    throw retriableEx;
-                }
-                else
-                {
-                    throw AmqpExceptionHelper.GetClientException(exception);
-                }
+                throw AmqpExceptionHelper.GetClientException(exception);
             }
         }
 
@@ -160,14 +153,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                {
-                    throw retriableEx;
-                }
-                else
-                {
-                    throw AmqpExceptionHelper.GetClientException(exception);
-                }
+                throw AmqpExceptionHelper.GetClientException(exception);
             }
         }
 
@@ -208,14 +194,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                {
-                    throw retriableEx;
-                }
-                else
-                {
-                    throw AmqpExceptionHelper.GetClientException(exception);
-                }
+                throw AmqpExceptionHelper.GetClientException(exception);
             }
         }
     }

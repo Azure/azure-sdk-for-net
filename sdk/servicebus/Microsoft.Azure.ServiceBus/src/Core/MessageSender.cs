@@ -573,14 +573,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
                 catch (Exception exception)
                 {
-                    if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                    {
-                        throw retriableEx;
-                    }
-                    else
-                    {
-                        throw AmqpExceptionHelper.GetClientException(exception, amqpLink?.GetTrackingId(), null, amqpLink?.Session.IsClosing() ?? false);
-                    }
+                    throw AmqpExceptionHelper.GetClientException(exception, amqpLink?.GetTrackingId(), null, amqpLink?.Session.IsClosing() ?? false);
                 }
             }
         }
@@ -649,14 +642,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
                 catch (Exception exception)
                 {
-                    if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                    {
-                        throw retriableEx;
-                    }
-                    else
-                    {
-                        throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
-                    }
+                    throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
                 }
             }
         }
@@ -689,14 +675,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             catch (Exception exception)
             {
-                if (AmqpExceptionHelper.TryTranslateToRetriableException(exception, out var retriableEx))
-                {
-                    throw retriableEx;
-                }
-                else
-                {
-                    throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
-                }
+                throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
             }
         }
 
