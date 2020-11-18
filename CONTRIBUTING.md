@@ -11,7 +11,7 @@
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
 - Install **.NET Core 3.1.301 SDK** for your specific platform. (or a higher version within the 3.1.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [NodeJS](https://nodejs.org/en/) (13.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [NodeJS](https://nodejs.org/en/) (14.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 
 ## GENERAL THINGS TO KNOW:
 
@@ -304,7 +304,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 
 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
+3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
 6. **MANDATORY**: Add or update tests for the newly generated code.
@@ -353,7 +353,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
    | PackageReleaseNotes |
    |                     |
 
-> PackageReleaseNotes are important because this information is displayed on www.nuget.org when your nuget package is published
+> PackageReleaseNotes are important because this information is displayed on https://www.nuget.org when your nuget package is published
 
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
@@ -374,7 +374,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet build /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 14).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 

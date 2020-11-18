@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         public WorkloadMonitorAPIClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of possible operations
+        /// Get a list of all available REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -148,11 +148,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         }
 
         /// <summary>
-        /// Gets a list of possible operations
+        /// Get a list of all available REST API operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -316,11 +316,11 @@ namespace Microsoft.Azure.Management.WorkloadMonitor
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new DefaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DefaultError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

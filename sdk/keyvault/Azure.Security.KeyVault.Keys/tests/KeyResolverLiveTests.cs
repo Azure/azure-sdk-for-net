@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -17,7 +16,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
-        public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public SecretClient GetSecretClient()
         {
-            return InstrumentClient(new SecretClient(VaultUri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions())));
+            return InstrumentClient(new SecretClient(Uri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions())));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Reset(VaultUri);
+            uriBuilder.Reset(Uri);
 
             uriBuilder.AppendPath($"/keys/", escape: false);
 
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             var uriBuilder = new RequestUriBuilder();
 
-            uriBuilder.Reset(VaultUri);
+            uriBuilder.Reset(Uri);
 
             uriBuilder.AppendPath($"/secrets/", escape: false);
 

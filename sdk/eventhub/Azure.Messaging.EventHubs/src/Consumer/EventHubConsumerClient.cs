@@ -222,6 +222,35 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        internal EventHubConsumerClient(string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        EventHubsSharedAccessKeyCredential credential,
+                                        EventHubConsumerClientOptions clientOptions = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
+
+            OwnsConnection = true;
+            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
@@ -258,6 +287,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(connection, nameof(connection));
+
             clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
 
             OwnsConnection = false;
@@ -506,7 +536,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
-        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions compete to publish
         ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
         ///   bias for a given partition or subset of partitions.
         ///
@@ -537,7 +567,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   This method is not recommended for production use; the <c>EventProcessorClient</c> should be used for reading events from all partitions in a
         ///   production scenario, as it offers a much more robust experience with higher throughput.
         ///
-        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions competes to publish
+        ///   It is important to note that this method does not guarantee fairness amongst the partitions during iteration; each of the partitions compete to publish
         ///   events to be read by the enumerator.  Depending on service communication, there may be a clustering of events per partition and/or there may be a noticeable
         ///   bias for a given partition or subset of partitions.
         ///

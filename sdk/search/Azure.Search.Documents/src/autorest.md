@@ -13,8 +13,8 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d61b283066c03650ad434e62c29f9e1c2633673a/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d61b283066c03650ad434e62c29f9e1c2633673a/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks
@@ -104,6 +104,7 @@ directive:
   where: $.definitions.ScoringProfile
   transform: >
     $.properties.text["x-nullable"] = true;
+    $.properties.functionAggregation["x-nullable"] = true;
 ```
 
 ``` yaml

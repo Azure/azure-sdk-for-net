@@ -68,8 +68,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
             };
@@ -434,5 +434,19 @@ namespace Azure.Storage.Files.DataLake.Tests
                 }
             }
         }
-    }
+
+        public string[] PathNames
+        => new[]
+            {
+                "foo",
+                "bar",
+                "baz",
+                "baz/bar",
+                "foo/foo",
+                "foo/bar",
+                "baz/foo",
+                "baz/foo/bar",
+                "baz/bar/foo"
+            };
+        }
 }

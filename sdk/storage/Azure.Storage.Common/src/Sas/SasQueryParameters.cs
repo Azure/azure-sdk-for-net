@@ -43,8 +43,14 @@ namespace Azure.Storage.Sas
         // st
         private DateTimeOffset _startTime;
 
+        // st as a string
+        private string _startTimeString;
+
         // se
         private DateTimeOffset _expiryTime;
+
+        // se as a string
+        private string _expiryTimeString;
 
         // sip
         private SasIPRange _ipRange;
@@ -120,11 +126,16 @@ namespace Azure.Storage.Sas
         /// </summary>
         public DateTimeOffset StartsOn => _startTime;
 
+        internal string StartsOnString => _startTimeString;
+
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
         public DateTimeOffset ExpiresOn => _expiryTime;
+
+        internal string ExpiresOnString => _expiryTimeString;
+
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
         /// to accept requests.  When specifying a range, note that the range
@@ -270,10 +281,12 @@ namespace Azure.Storage.Sas
                         _protocol = SasExtensions.ParseProtocol(kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
-                        _startTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _startTimeString = kv.Value;
+                        _startTime = ParseSasTime(kv.Value);
                         break;
                     case Constants.Sas.Parameters.ExpiryTimeUpper:
-                        _expiryTime = DateTimeOffset.ParseExact(kv.Value, Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+                        _expiryTimeString = kv.Value;
+                        _expiryTime = ParseSasTime(kv.Value);
                         break;
                     case Constants.Sas.Parameters.IPRangeUpper:
                         _ipRange = SasIPRange.Parse(kv.Value);
@@ -358,7 +371,9 @@ namespace Azure.Storage.Sas
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
+            _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
+            _expiryTimeString = expiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _ipRange = ipRange;
             _identifier = identifier;
             _resource = resource;
@@ -405,7 +420,9 @@ namespace Azure.Storage.Sas
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
+            _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
+            _expiryTimeString = expiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _ipRange = ipRange;
             _identifier = identifier;
             _resource = resource;
@@ -526,8 +543,135 @@ namespace Azure.Storage.Sas
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            this.AppendProperties(sb);
+            AppendProperties(sb);
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Builds the query parameter string for the SasQueryParameters instance.
+        /// </summary>
+        /// <param name="stringBuilder">
+        /// StringBuilder instance to add the query params to
+        /// </param>
+        protected internal void AppendProperties(StringBuilder stringBuilder)
+        {
+            if (!string.IsNullOrWhiteSpace(Version))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Version, Version);
+            }
+
+            if (Services != null)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+            }
+
+            if (ResourceTypes != null)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, ResourceTypes.Value.ToPermissionsString());
+            }
+
+            if (Protocol != default)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
+            }
+
+            if (StartsOn != DateTimeOffset.MinValue)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOnString));
+            }
+
+            if (ExpiresOn != DateTimeOffset.MinValue)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOnString));
+            }
+
+            var ipr = IPRange.ToString();
+            if (ipr.Length > 0)
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.IPRange, ipr);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Identifier))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Identifier, Identifier);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Resource))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Resource, Resource);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Permissions))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Permissions, Permissions);
+            }
+
+            if (!string.IsNullOrWhiteSpace(CacheControl))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(CacheControl));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentDisposition))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(ContentDisposition));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentEncoding))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(ContentEncoding));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentLanguage))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(ContentLanguage));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ContentType))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(ContentType));
+            }
+
+            if (!string.IsNullOrWhiteSpace(PreauthorizedAgentObjectId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.PreauthorizedAgentObjectId, WebUtility.UrlEncode(PreauthorizedAgentObjectId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(AgentObjectId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.AgentObjectId, WebUtility.UrlEncode(AgentObjectId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(CorrelationId))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CorrelationId, WebUtility.UrlEncode(CorrelationId));
+            }
+
+            if (!(DirectoryDepth == default))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.DirectoryDepth, WebUtility.UrlEncode(DirectoryDepth.ToString()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Signature))
+            {
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
+            }
+        }
+
+        private static DateTimeOffset ParseSasTime(string dateTimeString)
+        {
+            if (string.IsNullOrEmpty(dateTimeString))
+            {
+                return DateTimeOffset.MinValue;
+            }
+
+            return DateTimeOffset.ParseExact(dateTimeString, s_sasTimeFormats, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+        }
+
+        private static readonly string[] s_sasTimeFormats = {
+            Constants.SasTimeFormatSeconds,
+            Constants.SasTimeFormatSubSeconds,
+            Constants.SasTimeFormatMinutes,
+            Constants.SasTimeFormatDays
+        };
     }
 }
