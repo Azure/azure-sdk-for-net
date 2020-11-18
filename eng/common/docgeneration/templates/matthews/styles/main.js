@@ -6,6 +6,8 @@ containers.addClass("container-fluid");
 WINDOW_CONTENTS = window.location.href.split('/')
 var SELECTED_LANGUAGE = ''
 var INDEX_HTML = ''
+var PACKAGE_REGEX = ''
+var PACKAGE_REPLACEMENT = ''
 
 ATTR1 = '[<span class="hljs-meta">System.ComponentModel.EditorBrowsable</span>]\n<'
 
@@ -91,6 +93,21 @@ function httpGetAsync(targetUrl, callback) {
     xmlHttp.send(null);
 }
 
+function httpGetAsyncFallbackOnFail(targetUrl, successCallback, failureCallback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+                successCallback(xmlHttp.responseText);
+            } else {
+                failureCallback(xmlHttp.status)
+            }
+        }
+    }
+    xmlHttp.open("GET", targetUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
 function populateOptions(selector, packageName) {
     var versionRequestUrl = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
 
@@ -120,7 +137,9 @@ function populateOptions(selector, packageName) {
             targetVersion = $(this).val()
             url = WINDOW_CONTENTS.slice()
             url[6] = targetVersion
-            window.location.href = url.join('/')
+            var targetUrl = url.join('/')
+            httpGetAsyncFallbackOnFail(targetUrl, (unused) => window.location.href = url.join('/'),
+                (failureStatus) => window.location.href = getPackageUrl(SELECTED_LANGUAGE, packageName, targetVersion))
         });
 
     })
@@ -188,7 +207,7 @@ $(function () {
         console.log("Run PopulateList")
 
         $('h4').each(function () {
-            var pkgName = $(this).text()
+            var pkgName = $(this).text().replace(PACKAGE_REGEX, PACKAGE_REPLACEMENT)
             populateIndexList($(this), pkgName)
         })
     }
