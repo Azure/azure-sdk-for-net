@@ -557,9 +557,9 @@ namespace Azure.Identity.Tests
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
                 {
-                    calledCredentials.Add(typeof(AzureCliCredential));
+                    calledCredentials.Add(typeof(AzurePowerShellCredential));
 
-                    return (availableCredential == typeof(AzurePowerShellCredentialOptions)) ? expToken : throw new CredentialUnavailableException("Unavailable");
+                    return (availableCredential == typeof(AzurePowerShellCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
                 };
             };
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
