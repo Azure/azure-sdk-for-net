@@ -8,13 +8,18 @@
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphTopologyListRequest. </summary>
-    public partial class MediaGraphTopologyListRequest : ItemNonSetRequestBase
+    public partial class MediaGraphTopologyListRequest : OperationBase
     {
+        /// <summary> Initializes a new instance of MediaGraphTopologyListRequest. </summary>
+        public MediaGraphTopologyListRequest()
+        {
+            MethodName = "GraphTopologyList";
+        }
 
         /// <summary> Initializes a new instance of MediaGraphTopologyListRequest. </summary>
         /// <param name="methodName"> method name. </param>
-        /// <param name="data"> Operation object with name and API version. </param>
-        internal MediaGraphTopologyListRequest(string methodName, ItemOperationBase data) : base(methodName, data)
+        /// <param name="apiVersion"> api version. </param>
+        internal MediaGraphTopologyListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "GraphTopologyList";
         }

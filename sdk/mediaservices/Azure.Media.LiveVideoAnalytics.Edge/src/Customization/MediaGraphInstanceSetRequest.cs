@@ -5,13 +5,18 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     public partial class MediaGraphInstanceSetRequest
     {
+        internal MediaGraphInstanceSetRequestBody InstanceBody;
+
         /// <summary>
         ///  Serialize .
         /// </summary>
         /// <returns></returns>
         public override string GetPayloadAsJSON()
         {
-            return Instance.Serialize();
+            InstanceBody = new MediaGraphInstanceSetRequestBody(Instance.Name);
+            InstanceBody.SystemData = Instance.SystemData;
+            InstanceBody.Properties = Instance.Properties;
+            return InstanceBody.GetPayloadAsJSON();
         }
     }
 }

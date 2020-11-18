@@ -20,42 +20,43 @@ namespace Azure.Template.Tests.Samples
 {
     public class Sample
     {
+        private ServiceClient _serviceClient;
+        private String _deviceId = "<Enter the device Id>">;
+        private String _moduleId = "<Enter the module Id>";
+
+        public Sample()
+        {
+            var connectionString = "<Enter the connection string>";
+            this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+        }
         [Test]
         public async Task GettingASecret()
         {
-            var deviceId = "etshea-rainier";
-            var moduleId = "lvaEdge";
-            var connectionString = "HostName=amsuswe1iotmediadev11.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=c73AqBWTLodtcf+oj0tXrXGpLFHkoSlF1dbjz/wUtG0=";
-
             try
             {
                 // create a graph
-                var serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-                var graphTopology = this.Build();
+                var graphTopology = Build();
+                var result = await InvokeDirectMethodHelper(new MediaGraphTopologySetRequest(graphTopology));
 
-                var graphCreateRequest = new MediaGraphTopologySetRequest(graphTopology);
-                var directMethod = new CloudToDeviceMethod(graphCreateRequest.MethodName);
-                directMethod.SetPayloadJson(graphCreateRequest.GetPayloadAsJSON());
-                var result = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, directMethod);
-
-                var getAllRequest = new MediaGraphTopologyListRequest();
-                var getAllMethod = new CloudToDeviceMethod(getAllRequest.MethodName);
-                getAllMethod.SetPayloadJson(getAllRequest.GetPayloadAsJSON());
-                var getAllResult = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, getAllMethod);
+                // get all graphs
+                var getAllResult = await InvokeDirectMethodHelper(new MediaGraphTopologyListRequest());
                 var getAllGraphs = MediaGraphTopologyCollection.Deserialize(getAllResult.GetPayloadAsJson());
 
-
                 // get a graph
-                var graphGetRequest = new MediaGraphTopologyGetRequest(graphTopology.Name);
-                var getDirectMethod = new CloudToDeviceMethod(graphGetRequest.MethodName);
-                getDirectMethod.SetPayloadJson(graphGetRequest.GetPayloadAsJSON());
-                var getResult = await serviceClient.InvokeDeviceMethodAsync(deviceId, moduleId, getDirectMethod);
+                var getResult = await InvokeDirectMethodHelper(new MediaGraphTopologyGetRequest(graphTopology.Name));
                 var resultGraph = MediaGraphTopology.Deserialize(getResult.GetPayloadAsJson());
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private async Task<CloudToDeviceMethodResult> InvokeDirectMethodHelper(OperationBase bc)
+        {
+            var directMethod = new CloudToDeviceMethod(bc.MethodName);
+            directMethod.SetPayloadJson(bc.GetPayloadAsJSON());
+            return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
         private MediaGraphTopology Build()
@@ -76,15 +77,18 @@ namespace Azure.Template.Tests.Samples
         // Add parameters to Topology
         private void SetParameters(MediaGraphTopologyProperties graphProperties)
         {
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String) {
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
+            {
                 Description = "rtsp source user name.",
                 Default = "dummyUserName"
             });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString) {
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
+            {
                 Description = "rtsp source password.",
                 Default = "dummyPassword"
             });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String) {
+            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
+            {
                 Description = "rtsp Url"
             });
         }
@@ -93,12 +97,12 @@ namespace Azure.Template.Tests.Samples
         private void SetSources(MediaGraphTopologyProperties graphProperties)
         {
             graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
+            {
+                Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
                 {
-                        Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}")
-                        {
-                            Password = "${rtspPassword}"
-                        }
-                })
+                    Password = "${rtspPassword}"
+                }
+            })
                 );
         }
 

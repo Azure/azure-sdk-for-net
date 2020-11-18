@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Describes a graph topology. </summary>
-    public partial class MediaGraphTopology
+    /// <summary> The MediaGraphTopologySetRequestBody. </summary>
+    internal partial class MediaGraphTopologySetRequestBody : OperationBase
     {
-        /// <summary> Initializes a new instance of MediaGraphTopology. </summary>
+        /// <summary> Initializes a new instance of MediaGraphTopologySetRequestBody. </summary>
         /// <param name="name"> name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MediaGraphTopology(string name)
+        public MediaGraphTopologySetRequestBody(string name)
         {
             if (name == null)
             {
@@ -23,17 +23,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             }
 
             Name = name;
+            MethodName = "MediaGraphTopologySetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of MediaGraphTopology. </summary>
+        /// <summary> Initializes a new instance of MediaGraphTopologySetRequestBody. </summary>
+        /// <param name="methodName"> method name. </param>
+        /// <param name="apiVersion"> api version. </param>
         /// <param name="name"> name. </param>
         /// <param name="systemData"> Graph system data. </param>
         /// <param name="properties"> Describes the properties of a graph topology. </param>
-        internal MediaGraphTopology(string name, MediaGraphSystemData systemData, MediaGraphTopologyProperties properties)
+        internal MediaGraphTopologySetRequestBody(string methodName, string apiVersion, string name, MediaGraphSystemData systemData, MediaGraphTopologyProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
+            MethodName = methodName ?? "MediaGraphTopologySetRequestBody";
         }
 
         /// <summary> name. </summary>

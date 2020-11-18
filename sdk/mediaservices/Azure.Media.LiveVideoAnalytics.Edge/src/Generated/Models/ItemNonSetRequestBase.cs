@@ -5,27 +5,38 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The ItemNonSetRequestBase. </summary>
     public partial class ItemNonSetRequestBase : OperationBase
     {
         /// <summary> Initializes a new instance of ItemNonSetRequestBase. </summary>
-        public ItemNonSetRequestBase()
+        /// <param name="name"> method name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ItemNonSetRequestBase(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
             MethodName = "ItemNonSetRequestBase";
         }
 
         /// <summary> Initializes a new instance of ItemNonSetRequestBase. </summary>
         /// <param name="methodName"> method name. </param>
-        /// <param name="data"> Operation object with name and API version. </param>
-        internal ItemNonSetRequestBase(string methodName, ItemOperationBase data) : base(methodName)
+        /// <param name="apiVersion"> api version. </param>
+        /// <param name="name"> method name. </param>
+        internal ItemNonSetRequestBase(string methodName, string apiVersion, string name) : base(methodName, apiVersion)
         {
-            Data = data;
+            Name = name;
             MethodName = methodName ?? "ItemNonSetRequestBase";
         }
 
-        /// <summary> Operation object with name and API version. </summary>
-        public ItemOperationBase Data { get; set; }
+        /// <summary> method name. </summary>
+        public string Name { get; set; }
     }
 }

@@ -13,13 +13,18 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         /// <summary> Initializes a new instance of OperationBase. </summary>
         public OperationBase()
         {
+            ApiVersion = "1.0";
         }
 
         /// <summary> Initializes a new instance of OperationBase. </summary>
         /// <param name="methodName"> method name. </param>
-        internal OperationBase(string methodName)
+        /// <param name="apiVersion"> api version. </param>
+        internal OperationBase(string methodName, string apiVersion)
         {
             MethodName = methodName;
+            ApiVersion = apiVersion;
         }
+        /// <summary> api version. </summary>
+        public string ApiVersion { get; set; }
     }
 }

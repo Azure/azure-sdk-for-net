@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    /// <summary> Represents a Media Graph instance. </summary>
-    public partial class MediaGraphInstance
+    /// <summary> The MediaGraphInstanceSetRequestBody. </summary>
+    internal partial class MediaGraphInstanceSetRequestBody : OperationBase
     {
-        /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
+        /// <summary> Initializes a new instance of MediaGraphInstanceSetRequestBody. </summary>
         /// <param name="name"> name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MediaGraphInstance(string name)
+        public MediaGraphInstanceSetRequestBody(string name)
         {
             if (name == null)
             {
@@ -23,17 +23,21 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             }
 
             Name = name;
+            MethodName = "MediaGraphInstanceSetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of MediaGraphInstance. </summary>
+        /// <summary> Initializes a new instance of MediaGraphInstanceSetRequestBody. </summary>
+        /// <param name="methodName"> method name. </param>
+        /// <param name="apiVersion"> api version. </param>
         /// <param name="name"> name. </param>
         /// <param name="systemData"> Graph system data. </param>
         /// <param name="properties"> Properties of a Media Graph instance. </param>
-        internal MediaGraphInstance(string name, MediaGraphSystemData systemData, MediaGraphInstanceProperties properties)
+        internal MediaGraphInstanceSetRequestBody(string methodName, string apiVersion, string name, MediaGraphSystemData systemData, MediaGraphInstanceProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
+            MethodName = methodName ?? "MediaGraphInstanceSetRequestBody";
         }
 
         /// <summary> name. </summary>

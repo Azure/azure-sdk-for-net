@@ -15,6 +15,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("@apiVersion");
+                writer.WriteStringValue(ApiVersion);
+            }
             writer.WriteEndObject();
         }
 
@@ -35,9 +40,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     case "GraphTopologyList": return MediaGraphTopologyListRequest.DeserializeMediaGraphTopologyListRequest(element);
                     case "GraphTopologySet": return MediaGraphTopologySetRequest.DeserializeMediaGraphTopologySetRequest(element);
                     case "ItemNonSetRequestBase": return ItemNonSetRequestBase.DeserializeItemNonSetRequestBase(element);
+                    case "MediaGraphTopologySetRequestBody": return MediaGraphTopologySetRequestBody.DeserializeMediaGraphTopologySetRequestBody(element);
+                    case "MediaGraphInstanceSetRequestBody": return MediaGraphInstanceSetRequestBody.DeserializeMediaGraphInstanceSetRequestBody(element);
                 }
             }
             Optional<string> methodName = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"))
@@ -45,8 +53,13 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     methodName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("@apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new OperationBase(methodName.Value);
+            return new OperationBase(methodName.Value, apiVersion.Value);
         }
     }
 }

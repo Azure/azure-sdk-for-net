@@ -10,13 +10,23 @@ using Azure.Core;
 
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
-    public partial class MediaGraphTopologyGetRequest : IUtf8JsonSerializable
+    internal partial class MediaGraphTopologySetRequestBody : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData");
+                writer.WriteObjectValue(SystemData);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion");
@@ -25,9 +35,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static MediaGraphTopologyGetRequest DeserializeMediaGraphTopologyGetRequest(JsonElement element)
+        internal static MediaGraphTopologySetRequestBody DeserializeMediaGraphTopologySetRequestBody(JsonElement element)
         {
             string name = default;
+            Optional<MediaGraphSystemData> systemData = default;
+            Optional<MediaGraphTopologyProperties> properties = default;
             Optional<string> methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -35,6 +47,16 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = MediaGraphSystemData.DeserializeMediaGraphSystemData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    properties = MediaGraphTopologyProperties.DeserializeMediaGraphTopologyProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("methodName"))
@@ -48,7 +70,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphTopologyGetRequest(methodName.Value, apiVersion.Value, name);
+            return new MediaGraphTopologySetRequestBody(methodName.Value, apiVersion.Value, name, systemData.Value, properties.Value);
         }
     }
 }

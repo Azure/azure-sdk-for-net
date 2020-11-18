@@ -17,6 +17,11 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("graph");
             writer.WriteObjectValue(Graph);
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("@apiVersion");
+                writer.WriteStringValue(ApiVersion);
+            }
             writer.WriteEndObject();
         }
 
@@ -24,6 +29,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         {
             MediaGraphTopology graph = default;
             Optional<string> methodName = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("graph"))
@@ -36,8 +42,13 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     methodName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("@apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MediaGraphTopologySetRequest(methodName.Value, graph);
+            return new MediaGraphTopologySetRequest(methodName.Value, apiVersion.Value, graph);
         }
     }
 }

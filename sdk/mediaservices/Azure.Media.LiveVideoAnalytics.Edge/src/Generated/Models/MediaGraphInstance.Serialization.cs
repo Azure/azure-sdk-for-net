@@ -17,11 +17,6 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(ApiVersion))
-            {
-                writer.WritePropertyName("@apiVersion");
-                writer.WriteStringValue(ApiVersion);
-            }
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData");
@@ -38,7 +33,6 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         internal static MediaGraphInstance DeserializeMediaGraphInstance(JsonElement element)
         {
             string name = default;
-            Optional<string> apiVersion = default;
             Optional<MediaGraphSystemData> systemData = default;
             Optional<MediaGraphInstanceProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -46,11 +40,6 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("@apiVersion"))
-                {
-                    apiVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -64,7 +53,7 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     continue;
                 }
             }
-            return new MediaGraphInstance(name, apiVersion.Value, systemData.Value, properties.Value);
+            return new MediaGraphInstance(name, systemData.Value, properties.Value);
         }
     }
 }

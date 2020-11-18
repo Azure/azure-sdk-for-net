@@ -11,27 +11,6 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
     public partial class MediaGraphTopology
     {
         /// <summary>
-        ///  Serialize MediaGraphTopology.
-        /// </summary>
-        /// <returns></returns>
-        public string Serialize()
-        {
-            return SerializeMediaGraphTopologyInternal(this);
-        }
-
-        internal static string SerializeMediaGraphTopologyInternal(IUtf8JsonSerializable serializable)
-        {
-            using var memoryStream = new MemoryStream();
-
-            using (var writer = new Utf8JsonWriter(memoryStream))
-            {
-                serializable.Write(writer);
-            }
-
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
-        }
-
-        /// <summary>
         ///  Deserialize MediaGraphTopology.
         /// </summary>
         /// <param name="json"></param>

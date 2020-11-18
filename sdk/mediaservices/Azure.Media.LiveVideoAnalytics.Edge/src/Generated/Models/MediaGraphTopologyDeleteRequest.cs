@@ -5,16 +5,31 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphTopologyDeleteRequest. </summary>
     public partial class MediaGraphTopologyDeleteRequest : ItemNonSetRequestBase
     {
+        /// <summary> Initializes a new instance of MediaGraphTopologyDeleteRequest. </summary>
+        /// <param name="name"> method name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public MediaGraphTopologyDeleteRequest(string name) : base(name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            MethodName = "GraphTopologyDelete";
+        }
 
         /// <summary> Initializes a new instance of MediaGraphTopologyDeleteRequest. </summary>
         /// <param name="methodName"> method name. </param>
-        /// <param name="data"> Operation object with name and API version. </param>
-        internal MediaGraphTopologyDeleteRequest(string methodName, ItemOperationBase data) : base(methodName, data)
+        /// <param name="apiVersion"> api version. </param>
+        /// <param name="name"> method name. </param>
+        internal MediaGraphTopologyDeleteRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
         {
             MethodName = methodName ?? "GraphTopologyDelete";
         }

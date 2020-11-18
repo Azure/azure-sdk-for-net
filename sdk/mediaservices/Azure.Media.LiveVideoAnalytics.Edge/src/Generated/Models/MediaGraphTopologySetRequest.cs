@@ -28,8 +28,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphTopologySetRequest. </summary>
         /// <param name="methodName"> method name. </param>
+        /// <param name="apiVersion"> api version. </param>
         /// <param name="graph"> Describes a graph topology. </param>
-        internal MediaGraphTopologySetRequest(string methodName, MediaGraphTopology graph) : base(methodName)
+        internal MediaGraphTopologySetRequest(string methodName, string apiVersion, MediaGraphTopology graph) : base(methodName, apiVersion)
         {
             Graph = graph;
             MethodName = methodName ?? "GraphTopologySet";

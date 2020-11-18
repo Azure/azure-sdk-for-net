@@ -8,13 +8,18 @@
 namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 {
     /// <summary> The MediaGraphInstanceListRequest. </summary>
-    public partial class MediaGraphInstanceListRequest : ItemNonSetRequestBase
+    public partial class MediaGraphInstanceListRequest : OperationBase
     {
+        /// <summary> Initializes a new instance of MediaGraphInstanceListRequest. </summary>
+        public MediaGraphInstanceListRequest()
+        {
+            MethodName = "GraphInstanceList";
+        }
 
         /// <summary> Initializes a new instance of MediaGraphInstanceListRequest. </summary>
         /// <param name="methodName"> method name. </param>
-        /// <param name="data"> Operation object with name and API version. </param>
-        internal MediaGraphInstanceListRequest(string methodName, ItemOperationBase data) : base(methodName, data)
+        /// <param name="apiVersion"> api version. </param>
+        internal MediaGraphInstanceListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "GraphInstanceList";
         }

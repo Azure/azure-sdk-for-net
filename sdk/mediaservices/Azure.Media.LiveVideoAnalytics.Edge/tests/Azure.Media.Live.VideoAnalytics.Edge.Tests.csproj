@@ -4,7 +4,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Azure.Devices" />
     <PackageReference Include="Microsoft.Azure.Devices.Client"/>
     <PackageReference Include="nunit" />

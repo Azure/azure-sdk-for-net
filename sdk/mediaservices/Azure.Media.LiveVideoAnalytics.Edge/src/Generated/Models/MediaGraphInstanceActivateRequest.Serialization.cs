@@ -15,23 +15,26 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+                writer.WritePropertyName("@apiVersion");
+                writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
         }
 
         internal static MediaGraphInstanceActivateRequest DeserializeMediaGraphInstanceActivateRequest(JsonElement element)
         {
-            Optional<ItemOperationBase> data = default;
+            string name = default;
             Optional<string> methodName = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("name"))
                 {
-                    data = ItemOperationBase.DeserializeItemOperationBase(property.Value);
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("methodName"))
@@ -39,8 +42,13 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     methodName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("@apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MediaGraphInstanceActivateRequest(methodName.Value, data.Value);
+            return new MediaGraphInstanceActivateRequest(methodName.Value, apiVersion.Value, name);
         }
     }
 }

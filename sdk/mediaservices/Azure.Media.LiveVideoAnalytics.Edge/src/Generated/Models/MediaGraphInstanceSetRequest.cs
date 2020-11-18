@@ -28,8 +28,9 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
 
         /// <summary> Initializes a new instance of MediaGraphInstanceSetRequest. </summary>
         /// <param name="methodName"> method name. </param>
+        /// <param name="apiVersion"> api version. </param>
         /// <param name="instance"> Represents a Media Graph instance. </param>
-        internal MediaGraphInstanceSetRequest(string methodName, MediaGraphInstance instance) : base(methodName)
+        internal MediaGraphInstanceSetRequest(string methodName, string apiVersion, MediaGraphInstance instance) : base(methodName, apiVersion)
         {
             Instance = instance;
             MethodName = methodName ?? "GraphInstanceSet";

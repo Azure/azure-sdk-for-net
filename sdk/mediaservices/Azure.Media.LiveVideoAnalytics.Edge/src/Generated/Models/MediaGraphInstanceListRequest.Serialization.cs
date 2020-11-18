@@ -15,32 +15,32 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+                writer.WritePropertyName("@apiVersion");
+                writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
         }
 
         internal static MediaGraphInstanceListRequest DeserializeMediaGraphInstanceListRequest(JsonElement element)
         {
-            Optional<ItemOperationBase> data = default;
             Optional<string> methodName = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
-                {
-                    data = ItemOperationBase.DeserializeItemOperationBase(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("methodName"))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("@apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MediaGraphInstanceListRequest(methodName.Value, data.Value);
+            return new MediaGraphInstanceListRequest(methodName.Value, apiVersion.Value);
         }
     }
 }

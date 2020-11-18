@@ -15,10 +15,12 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("data");
-                writer.WriteObjectValue(Data);
+                writer.WritePropertyName("@apiVersion");
+                writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
         }
@@ -33,19 +35,18 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     case "GraphInstanceDeactivate": return MediaGraphInstanceDeActivateRequest.DeserializeMediaGraphInstanceDeActivateRequest(element);
                     case "GraphInstanceDelete": return MediaGraphInstanceDeleteRequest.DeserializeMediaGraphInstanceDeleteRequest(element);
                     case "GraphInstanceGet": return MediaGraphInstanceGetRequest.DeserializeMediaGraphInstanceGetRequest(element);
-                    case "GraphInstanceList": return MediaGraphInstanceListRequest.DeserializeMediaGraphInstanceListRequest(element);
                     case "GraphTopologyDelete": return MediaGraphTopologyDeleteRequest.DeserializeMediaGraphTopologyDeleteRequest(element);
                     case "GraphTopologyGet": return MediaGraphTopologyGetRequest.DeserializeMediaGraphTopologyGetRequest(element);
-                    case "GraphTopologyList": return MediaGraphTopologyListRequest.DeserializeMediaGraphTopologyListRequest(element);
                 }
             }
-            Optional<ItemOperationBase> data = default;
+            string name = default;
             Optional<string> methodName = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("name"))
                 {
-                    data = ItemOperationBase.DeserializeItemOperationBase(property.Value);
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("methodName"))
@@ -53,8 +54,13 @@ namespace Azure.Media.LiveVideoAnalytics.Edge.Models
                     methodName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("@apiVersion"))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ItemNonSetRequestBase(methodName.Value, data.Value);
+            return new ItemNonSetRequestBase(methodName.Value, apiVersion.Value, name);
         }
     }
 }
