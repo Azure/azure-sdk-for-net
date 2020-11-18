@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <inheritdoc/>>
     [CodeGenModel("RoleAssignmentPropertiesWithScope")]

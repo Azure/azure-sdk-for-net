@@ -48,7 +48,10 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Replace(SamplesConstants.RelationshipName, "containedIn");
 
             await client.CreateModelsAsync(new[] { floorModelPayload });
-            Console.WriteLine($"Created model '{sampleFloorModelId}'");
+
+            // Get the model we just created
+            Response<DigitalTwinsModelData> getFloorModelResponse = await client.GetModelAsync(sampleFloorModelId).ConfigureAwait(false);
+            Console.WriteLine($"Created model '{getFloorModelResponse.Value.Id}'");
 
             // Create a building digital twin.
             var buildingDigitalTwin = new BasicDigitalTwin
@@ -153,10 +156,9 @@ namespace Azure.DigitalTwins.Core.Samples
 
             #region Snippet:DigitalTwinsSampleGetAllRelationships
 
-            AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
-            await foreach (var relationshipJson in relationships)
+            AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>("buildingTwinId");
+            await foreach (BasicRelationship relationship in relationships)
             {
-                BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
                 Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
                     $"target {relationship.TargetId}.\n\t" +
                     $"Prop1: {relationship.Properties["Prop1"]}\n\t" +

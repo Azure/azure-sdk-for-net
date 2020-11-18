@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Storage.Blobs;
 
-namespace Azure.WebJobs.Extensions.Storage.Blobs.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class FakeBlobServiceClientProvider : BlobServiceClientProvider
     {

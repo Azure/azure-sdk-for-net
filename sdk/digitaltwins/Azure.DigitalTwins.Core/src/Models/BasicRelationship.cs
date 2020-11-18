@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -82,6 +83,13 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipName)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// A string representing a weak ETag for the entity that this request performs an operation against, as per RFC7232.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
+        [JsonConverter(typeof(OptionalETagConverter))] // TODO: Remove when #16272 is fixed
+        public ETag? ETag { get; set; }
 
         /// <summary>
         /// Additional, custom properties defined in the DTDL model.

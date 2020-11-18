@@ -69,7 +69,7 @@ AsyncPageable<DigitalTwinsModelData> allModels = client.GetModelsAsync();
 await foreach (DigitalTwinsModelData model in allModels)
 {
     Console.WriteLine($"Retrieved model '{model.Id}', " +
-        $"display name '{model.DisplayName["en"]}', " +
+        $"display name '{model.LanguageDisplayNames["en"]}', " +
         $"uploaded on '{model.UploadedOn}', " +
         $"and decommissioned '{model.Decommissioned}'");
 }
@@ -185,22 +185,19 @@ It works well for basic stuff, but as you can see it gets more difficult when de
 
 ```C# Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
-if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-{
-    BasicDigitalTwin basicDt = getBasicDtResponse.Value;
+BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
-    // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-    string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
-    IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+// Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
+var component1 = JsonSerializer.Deserialize<BasicDigitalTwinComponent>(component1RawText);
 
-    Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
-        $"ETag: {basicDt.ETag}\n\t" +
-        $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
-        $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
-        $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
-        $"Component1.Prop1: {component1["ComponentProp1"]}\n\t" +
-        $"ComponentProp2: {component1["ComponentProp2"]}");
-}
+Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
+    $"ETag: {basicDt.ETag}\n\t" +
+    $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
+    $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
+    $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
 ```
 
 Getting and deserializing a digital twin into a custom data type is extremely easy.
@@ -211,10 +208,11 @@ Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsy
 CustomDigitalTwin customDt = getCustomDtResponse.Value;
 Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
     $"ETag: {customDt.ETag}\n\t" +
-    $"Prop1: {customDt.Prop1}\n\t" +
-    $"Prop2: {customDt.Prop2}\n\t" +
-    $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-    $"ComponentProp2: {customDt.Component1.ComponentProp2}");
+    $"ModelId: {customDt.Metadata.ModelId}\n\t" +
+    $"Prop1: [{customDt.Prop1}] last updated on {customDt.Metadata.Prop1.LastUpdatedOn}\n\t" +
+    $"Prop2: [{customDt.Prop2}] last updated on {customDt.Metadata.Prop2.LastUpdatedOn}\n\t" +
+    $"ComponentProp1: [{customDt.Component1.ComponentProp1}] last updated {customDt.Component1.Metadata.ComponentProp1.LastUpdatedOn}\n\t" +
+    $"ComponentProp2: [{customDt.Component1.ComponentProp2}] last updated {customDt.Component1.Metadata.ComponentProp2.LastUpdatedOn}");
 ```
 
 ### Query digital twins
@@ -224,14 +222,13 @@ Query the Azure Digital Twins instance for digital twins using the [Azure Digita
 ```C# Snippet:DigitalTwinsSampleQueryTwins
 // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
 // happens under the covers.
-AsyncPageable<string> asyncPageableResponse = client.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 
 // Iterate over the twin instances in the pageable response.
 // The "await" keyword here is required because new pages will be fetched when necessary,
 // which involves a request to the service.
-await foreach (string response in asyncPageableResponse)
+await foreach (BasicDigitalTwin twin in asyncPageableResponse)
 {
-    BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
     Console.WriteLine($"Found digital twin '{twin.Id}'");
 }
 ```
@@ -243,11 +240,11 @@ The SDK also allows you to extract the `query-charge` header from the pageable r
 // the query API. It iterates over the response pages first to access to the query-charge header,
 // and then the digital twin results within each page.
 
-AsyncPageable<string> asyncPageableResponseWithCharge = client.QueryAsync("SELECT * FROM digitaltwins");
+AsyncPageable<BasicDigitalTwin> asyncPageableResponseWithCharge = client.QueryAsync<BasicDigitalTwin>("SELECT * FROM digitaltwins");
 int pageNum = 0;
 
 // The "await" keyword here is required as a call is made when fetching a new page.
-await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
+await foreach (Page<BasicDigitalTwin> page in asyncPageableResponseWithCharge.AsPages())
 {
     Console.WriteLine($"Page {++pageNum} results:");
 
@@ -259,9 +256,8 @@ await foreach (Page<string> page in asyncPageableResponseWithCharge.AsPages())
 
     // Iterate over the twin instances.
     // The "await" keyword is not required here as the paged response is local.
-    foreach (string response in page.Values)
+    foreach (BasicDigitalTwin twin in page.Values)
     {
-        BasicDigitalTwin twin = JsonSerializer.Deserialize<BasicDigitalTwin>(response);
         Console.WriteLine($"Found digital twin '{twin.Id}'");
     }
 }
@@ -382,10 +378,9 @@ Console.WriteLine($"Retrieved and deserialized relationship '{getCustomRelations
 `GetRelationshipsAsync` lists all the relationships of a digital twin. You can get digital twin relationships and deserialize them into `BasicRelationship`.
 
 ```C# Snippet:DigitalTwinsSampleGetAllRelationships
-AsyncPageable<string> relationships = client.GetRelationshipsAsync("buildingTwinId");
-await foreach (var relationshipJson in relationships)
+AsyncPageable<BasicRelationship> relationships = client.GetRelationshipsAsync<BasicRelationship>("buildingTwinId");
+await foreach (BasicRelationship relationship in relationships)
 {
-    BasicRelationship relationship = JsonSerializer.Deserialize<BasicRelationship>(relationshipJson);
     Console.WriteLine($"Retrieved relationship '{relationship.Id}' with source {relationship.SourceId}' and " +
         $"target {relationship.TargetId}.\n\t" +
         $"Prop1: {relationship.Properties["Prop1"]}\n\t" +

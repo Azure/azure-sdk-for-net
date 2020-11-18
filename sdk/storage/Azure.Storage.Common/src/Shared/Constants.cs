@@ -85,6 +85,9 @@ namespace Azure.Storage
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
 
+        public const string FalseName = "false";
+        public const string TrueName = "true";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
@@ -192,6 +195,7 @@ namespace Azure.Storage
 
             internal static class Container
             {
+                public const string Name = "Blob Container";
                 /// <summary>
                 /// The Azure Storage name used to identify a storage account's root container.
                 /// </summary>
@@ -232,6 +236,9 @@ namespace Azure.Storage
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
 
+            public const string SmbProtocol = "SMB";
+            public const string NfsProtocol = "NFS";
+
             internal static class Lease
             {
                 /// <summary>
@@ -247,6 +254,11 @@ namespace Azure.Storage
 
                 public const string LeaseNotPresentWithFileOperation =
                     "LeaseNotPresentWithFileOperation";
+            }
+
+            internal static class Share
+            {
+                public const string Name = "Share";
             }
         }
 
@@ -307,7 +319,10 @@ namespace Azure.Storage
             /// </summary>
             public const string IsDirectoryKey = "hdi_isFolder";
 
+            public const string FileSystemName = "FileSystem";
+
             public const string DeletionId = "deletionid";
+
         }
 
         /// <summary>
@@ -527,7 +542,15 @@ namespace Azure.Storage
                 Sas.Permissions.Update,
                 Sas.Permissions.Process,
                 Sas.Permissions.FilterByTags,
+                Sas.Permissions.Move,
+                Sas.Permissions.Execute
             };
+
+            /// <summary>
+            /// List of ports used for path style addressing.
+            /// Copied from Microsoft.Azure.Storage.Core.Util
+            /// </summary>
+            internal static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
         }
 
         internal static class ClientSideEncryption

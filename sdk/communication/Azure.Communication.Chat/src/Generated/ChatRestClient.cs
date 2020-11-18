@@ -29,7 +29,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-09-21-preview2")
+        public ChatRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-11-01-preview3")
         {
             if (endpoint == null)
             {
@@ -62,11 +62,11 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Gets read receipts for a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to get the read receipts for. </param>
+        /// <summary> Gets chat message read receipts for a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to get the chat message read receipts for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response<ReadReceiptsCollection>> ListChatReadReceiptsAsync(string chatThreadId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatMessageReadReceiptsCollection>> ListChatReadReceiptsAsync(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -79,9 +79,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ReadReceiptsCollection value = default;
+                        ChatMessageReadReceiptsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReadReceiptsCollection.DeserializeReadReceiptsCollection(document.RootElement);
+                        value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,11 +89,11 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets read receipts for a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to get the read receipts for. </param>
+        /// <summary> Gets chat message read receipts for a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to get the chat message read receipts for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response<ReadReceiptsCollection> ListChatReadReceipts(string chatThreadId, CancellationToken cancellationToken = default)
+        public Response<ChatMessageReadReceiptsCollection> ListChatReadReceipts(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -106,9 +106,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ReadReceiptsCollection value = default;
+                        ChatMessageReadReceiptsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReadReceiptsCollection.DeserializeReadReceiptsCollection(document.RootElement);
+                        value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,7 +460,7 @@ namespace Azure.Communication.Chat
             uri.AppendPath(chatMessageId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Headers.Add("Accept", "application/json");
             var model = new UpdateChatMessageRequest()
             {
@@ -495,7 +495,7 @@ namespace Azure.Communication.Chat
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -524,7 +524,7 @@ namespace Azure.Communication.Chat
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -662,7 +662,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateListChatThreadMembersRequest(string chatThreadId)
+        internal HttpMessage CreateListChatParticipantsRequest(string chatThreadId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -671,33 +671,33 @@ namespace Azure.Communication.Chat
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/chat/threads/", false);
             uri.AppendPath(chatThreadId, true);
-            uri.AppendPath("/members", false);
+            uri.AppendPath("/participants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the members of a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to get members for. </param>
+        /// <summary> Gets the participants of a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to get participants for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response<ChatThreadMembersCollection>> ListChatThreadMembersAsync(string chatThreadId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatParticipantsCollection>> ListChatParticipantsAsync(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateListChatThreadMembersRequest(chatThreadId);
+            using var message = CreateListChatParticipantsRequest(chatThreadId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChatThreadMembersCollection value = default;
+                        ChatParticipantsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChatThreadMembersCollection.DeserializeChatThreadMembersCollection(document.RootElement);
+                        value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -705,26 +705,26 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets the members of a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to get members for. </param>
+        /// <summary> Gets the participants of a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to get participants for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response<ChatThreadMembersCollection> ListChatThreadMembers(string chatThreadId, CancellationToken cancellationToken = default)
+        public Response<ChatParticipantsCollection> ListChatParticipants(string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateListChatThreadMembersRequest(chatThreadId);
+            using var message = CreateListChatParticipantsRequest(chatThreadId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChatThreadMembersCollection value = default;
+                        ChatParticipantsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChatThreadMembersCollection.DeserializeChatThreadMembersCollection(document.RootElement);
+                        value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -732,7 +732,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateAddChatThreadMembersRequest(string chatThreadId, IEnumerable<ChatThreadMemberInternal> members)
+        internal HttpMessage CreateAddChatParticipantsRequest(string chatThreadId, IEnumerable<ChatParticipantInternal> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -741,73 +741,73 @@ namespace Azure.Communication.Chat
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/chat/threads/", false);
             uri.AppendPath(chatThreadId, true);
-            uri.AppendPath("/members", false);
+            uri.AppendPath("/participants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var model = new AddChatThreadMembersRequest(members);
+            var model = new AddChatParticipantsRequest(participants);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Adds thread members to a thread. If members already exist, no change occurs. </summary>
-        /// <param name="chatThreadId"> Id of the thread to add members to. </param>
-        /// <param name="members"> Members to add to a chat thread. </param>
+        /// <summary> Adds thread participants to a thread. If participants already exist, no change occurs. </summary>
+        /// <param name="chatThreadId"> Id of the thread to add participants to. </param>
+        /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="members"/> is null. </exception>
-        public async Task<Response> AddChatThreadMembersAsync(string chatThreadId, IEnumerable<ChatThreadMemberInternal> members, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response> AddChatParticipantsAsync(string chatThreadId, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
-            if (members == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(members));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateAddChatThreadMembersRequest(chatThreadId, members);
+            using var message = CreateAddChatParticipantsRequest(chatThreadId, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 207:
+                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Adds thread members to a thread. If members already exist, no change occurs. </summary>
-        /// <param name="chatThreadId"> Id of the thread to add members to. </param>
-        /// <param name="members"> Members to add to a chat thread. </param>
+        /// <summary> Adds thread participants to a thread. If participants already exist, no change occurs. </summary>
+        /// <param name="chatThreadId"> Id of the thread to add participants to. </param>
+        /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="members"/> is null. </exception>
-        public Response AddChatThreadMembers(string chatThreadId, IEnumerable<ChatThreadMemberInternal> members, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="participants"/> is null. </exception>
+        public Response AddChatParticipants(string chatThreadId, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
-            if (members == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(members));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateAddChatThreadMembersRequest(chatThreadId, members);
+            using var message = CreateAddChatParticipantsRequest(chatThreadId, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 207:
+                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRemoveChatThreadMemberRequest(string chatThreadId, string chatMemberId)
+        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, string chatParticipantId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -816,31 +816,31 @@ namespace Azure.Communication.Chat
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/chat/threads/", false);
             uri.AppendPath(chatThreadId, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(chatMemberId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(chatParticipantId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Remove a member from a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to remove the member from. </param>
-        /// <param name="chatMemberId"> Id of the thread member to remove from the thread. </param>
+        /// <summary> Remove a participant from a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to remove the participant from. </param>
+        /// <param name="chatParticipantId"> Id of the thread participant to remove from the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMemberId"/> is null. </exception>
-        public async Task<Response> RemoveChatThreadMemberAsync(string chatThreadId, string chatMemberId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatParticipantId"/> is null. </exception>
+        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, string chatParticipantId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
-            if (chatMemberId == null)
+            if (chatParticipantId == null)
             {
-                throw new ArgumentNullException(nameof(chatMemberId));
+                throw new ArgumentNullException(nameof(chatParticipantId));
             }
 
-            using var message = CreateRemoveChatThreadMemberRequest(chatThreadId, chatMemberId);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, chatParticipantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -851,23 +851,23 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Remove a member from a thread. </summary>
-        /// <param name="chatThreadId"> Thread id to remove the member from. </param>
-        /// <param name="chatMemberId"> Id of the thread member to remove from the thread. </param>
+        /// <summary> Remove a participant from a thread. </summary>
+        /// <param name="chatThreadId"> Thread id to remove the participant from. </param>
+        /// <param name="chatParticipantId"> Id of the thread participant to remove from the thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMemberId"/> is null. </exception>
-        public Response RemoveChatThreadMember(string chatThreadId, string chatMemberId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatParticipantId"/> is null. </exception>
+        public Response RemoveChatParticipant(string chatThreadId, string chatParticipantId, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
-            if (chatMemberId == null)
+            if (chatParticipantId == null)
             {
-                throw new ArgumentNullException(nameof(chatMemberId));
+                throw new ArgumentNullException(nameof(chatParticipantId));
             }
 
-            using var message = CreateRemoveChatThreadMemberRequest(chatThreadId, chatMemberId);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, chatParticipantId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -878,7 +878,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateCreateChatThreadRequest(string topic, IEnumerable<ChatThreadMemberInternal> members)
+        internal HttpMessage CreateCreateChatThreadRequest(string topic, IEnumerable<ChatParticipantInternal> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -890,7 +890,7 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
-            var model = new CreateChatThreadRequest(topic, members);
+            var model = new CreateChatThreadRequest(topic, participants);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
@@ -899,29 +899,29 @@ namespace Azure.Communication.Chat
 
         /// <summary> Creates a chat thread. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="members"> Members to be added to the chat thread. </param>
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="members"/> is null. </exception>
-        public async Task<Response<MultiStatusResponse>> CreateChatThreadAsync(string topic, IEnumerable<ChatThreadMemberInternal> members, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response<ChatThreadInternal>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
-            if (members == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(members));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, members);
+            using var message = CreateCreateChatThreadRequest(topic, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 207:
+                case 201:
                     {
-                        MultiStatusResponse value = default;
+                        ChatThreadInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MultiStatusResponse.DeserializeMultiStatusResponse(document.RootElement);
+                        value = ChatThreadInternal.DeserializeChatThreadInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -931,29 +931,29 @@ namespace Azure.Communication.Chat
 
         /// <summary> Creates a chat thread. </summary>
         /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="members"> Members to be added to the chat thread. </param>
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="members"/> is null. </exception>
-        public Response<MultiStatusResponse> CreateChatThread(string topic, IEnumerable<ChatThreadMemberInternal> members, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> or <paramref name="participants"/> is null. </exception>
+        public Response<ChatThreadInternal> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
                 throw new ArgumentNullException(nameof(topic));
             }
-            if (members == null)
+            if (participants == null)
             {
-                throw new ArgumentNullException(nameof(members));
+                throw new ArgumentNullException(nameof(participants));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, members);
+            using var message = CreateCreateChatThreadRequest(topic, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 207:
+                case 201:
                     {
-                        MultiStatusResponse value = default;
+                        ChatThreadInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MultiStatusResponse.DeserializeMultiStatusResponse(document.RootElement);
+                        value = ChatThreadInternal.DeserializeChatThreadInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1038,7 +1038,7 @@ namespace Azure.Communication.Chat
             uri.AppendPath(chatThreadId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Headers.Add("Accept", "application/json");
             var model = new UpdateChatThreadRequest()
             {
@@ -1066,7 +1066,7 @@ namespace Azure.Communication.Chat
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1089,7 +1089,7 @@ namespace Azure.Communication.Chat
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1237,12 +1237,12 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Gets read receipts for a thread. </summary>
+        /// <summary> Gets chat message read receipts for a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="chatThreadId"> Thread id to get the read receipts for. </param>
+        /// <param name="chatThreadId"> Thread id to get the chat message read receipts for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response<ReadReceiptsCollection>> ListChatReadReceiptsNextPageAsync(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatMessageReadReceiptsCollection>> ListChatReadReceiptsNextPageAsync(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1259,9 +1259,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ReadReceiptsCollection value = default;
+                        ChatMessageReadReceiptsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReadReceiptsCollection.DeserializeReadReceiptsCollection(document.RootElement);
+                        value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1269,12 +1269,12 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets read receipts for a thread. </summary>
+        /// <summary> Gets chat message read receipts for a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="chatThreadId"> Thread id to get the read receipts for. </param>
+        /// <param name="chatThreadId"> Thread id to get the chat message read receipts for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
-        public Response<ReadReceiptsCollection> ListChatReadReceiptsNextPage(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
+        public Response<ChatMessageReadReceiptsCollection> ListChatReadReceiptsNextPage(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1291,9 +1291,9 @@ namespace Azure.Communication.Chat
             {
                 case 200:
                     {
-                        ReadReceiptsCollection value = default;
+                        ChatMessageReadReceiptsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReadReceiptsCollection.DeserializeReadReceiptsCollection(document.RootElement);
+                        value = ChatMessageReadReceiptsCollection.DeserializeChatMessageReadReceiptsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1382,7 +1382,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateListChatThreadMembersNextPageRequest(string nextLink, string chatThreadId)
+        internal HttpMessage CreateListChatParticipantsNextPageRequest(string nextLink, string chatThreadId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1395,12 +1395,12 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Gets the members of a thread. </summary>
+        /// <summary> Gets the participants of a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="chatThreadId"> Thread id to get members for. </param>
+        /// <param name="chatThreadId"> Thread id to get participants for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response<ChatThreadMembersCollection>> ListChatThreadMembersNextPageAsync(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChatParticipantsCollection>> ListChatParticipantsNextPageAsync(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1411,15 +1411,15 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateListChatThreadMembersNextPageRequest(nextLink, chatThreadId);
+            using var message = CreateListChatParticipantsNextPageRequest(nextLink, chatThreadId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChatThreadMembersCollection value = default;
+                        ChatParticipantsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChatThreadMembersCollection.DeserializeChatThreadMembersCollection(document.RootElement);
+                        value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1427,12 +1427,12 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets the members of a thread. </summary>
+        /// <summary> Gets the participants of a thread. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="chatThreadId"> Thread id to get members for. </param>
+        /// <param name="chatThreadId"> Thread id to get participants for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
-        public Response<ChatThreadMembersCollection> ListChatThreadMembersNextPage(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
+        public Response<ChatParticipantsCollection> ListChatParticipantsNextPage(string nextLink, string chatThreadId, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1443,15 +1443,15 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateListChatThreadMembersNextPageRequest(nextLink, chatThreadId);
+            using var message = CreateListChatParticipantsNextPageRequest(nextLink, chatThreadId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChatThreadMembersCollection value = default;
+                        ChatParticipantsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChatThreadMembersCollection.DeserializeChatThreadMembersCollection(document.RootElement);
+                        value = ChatParticipantsCollection.DeserializeChatParticipantsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

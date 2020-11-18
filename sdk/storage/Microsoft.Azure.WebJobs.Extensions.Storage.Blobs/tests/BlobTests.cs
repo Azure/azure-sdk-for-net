@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Hosting;
-using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using Azure.WebJobs.Extensions.Storage.Blobs.Tests;
-using System.Collections.Generic;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     public class BlobTests
     {
@@ -50,6 +49,35 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
             await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+
+            var result = prog.Result;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(BlobName, result.Name);
+            Assert.NotNull(result.BlobContainerName);
+            Assert.AreEqual(ContainerName, result.BlobContainerName);
+            var container = GetContainerReference(blobServiceClient, ContainerName);
+            Assert.True(await container.ExistsAsync());
+            var blob = container.GetBlockBlobClient(BlobName);
+            Assert.False(await blob.ExistsAsync());
+        }
+
+        [Test]
+        public async Task Blob_IfBoundToBlobClient_BindsAndCreatesContainerButNotBlob()
+        {
+            // Act
+            var prog = new BindToBlobClientProgram();
+            IHost host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToBlobClientProgram>(prog, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServices(blobServiceClient, queueServiceClient);
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToBlobClientProgram>();
+            await jobHost.CallAsync(nameof(BindToBlobClientProgram.Run));
 
             var result = prog.Result;
 
@@ -118,6 +146,17 @@ namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
 
             public void Run(
                 [Blob(BlobPath)] BlockBlobClient blob)
+            {
+                this.Result = blob;
+            }
+        }
+
+        private class BindToBlobClientProgram
+        {
+            public BlobClient Result { get; set; }
+
+            public void Run(
+                [Blob(BlobPath)] BlobClient blob)
             {
                 this.Result = blob;
             }

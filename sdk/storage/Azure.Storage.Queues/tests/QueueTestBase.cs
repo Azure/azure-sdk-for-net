@@ -42,8 +42,8 @@ namespace Azure.Storage.Queues.Tests
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
                 Transport = GetTransport()
         };
@@ -141,12 +141,24 @@ namespace Azure.Storage.Queues.Tests
                     GetOAuthCredential(config),
                     GetOptions()));
 
-        public async Task<DisposingQueue> GetTestQueueAsync(QueueServiceClient service = default, IDictionary<string, string> metadata = default)
+        public async Task<DisposingQueue> GetTestQueueAsync(
+            QueueServiceClient service = default,
+            IDictionary<string, string> metadata = default)
         {
             service ??= GetServiceClient_SharedKey();
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             QueueClient queue = InstrumentClient(service.GetQueueClient(GetNewQueueName()));
             return await DisposingQueue.CreateAsync(queue, metadata);
+        }
+
+        public QueueClient GetEncodingClient(
+            string queueName,
+            QueueMessageEncoding encoding)
+        {
+            var options = GetOptions();
+            options.MessageEncoding = encoding;
+            var service = GetServiceClient_SharedKey(options);
+            return InstrumentClient(service.GetQueueClient(queueName));
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()

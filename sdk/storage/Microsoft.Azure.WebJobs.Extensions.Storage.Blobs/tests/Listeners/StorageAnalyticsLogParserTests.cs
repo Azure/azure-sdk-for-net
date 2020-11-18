@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Blobs.Listeners;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     public class StorageAnalyticsLogParserTests
     {

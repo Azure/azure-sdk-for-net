@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.TimeSeriesInsights", "src\Azure.Iot.TimeSeriesInsights.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.TimeSeriesInsights.Tests", "tests\Azure.Iot.TimeSeriesInsights.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E58C2830-EF72-433E-A60E-3D20DBED196D}"
+	ProjectSection(SolutionItems) = preProject
+		api\Azure.Iot.TimeSeriesInsights.netstandard2.0.cs = api\Azure.Iot.TimeSeriesInsights.netstandard2.0.cs
+		..\ci.yml = ..\ci.yml
+		..\Export-TsiApis.ps1 = ..\Export-TsiApis.ps1
+		..\Print-MyEnvData.ps1 = ..\Print-MyEnvData.ps1
+		..\test-resources.json = ..\test-resources.json
+		..\tests.yml = ..\tests.yml
+		..\Update-TsiSnippets.ps1 = ..\Update-TsiSnippets.ps1
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSeriesInsightsClientSample", "samples\TimeSeriesInsightsClientSample\TimeSeriesInsightsClientSample.csproj", "{D243481B-0944-4F60-9B1F-35EDFC7769BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33D09D9-D809-472C-82E6-6A26BDB86FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8052009B-2126-44A3-88CD-4F3B17894C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8052009B-2126-44A3-88CD-4F3B17894C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8052009B-2126-44A3-88CD-4F3B17894C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8052009B-2126-44A3-88CD-4F3B17894C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D243481B-0944-4F60-9B1F-35EDFC7769BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}
+	EndGlobalSection
+EndGlobal

@@ -1,7 +1,17 @@
 # Release History
 
-## 4.2.0-beta.3 (Unreleased)
+## 4.2.0-beta.4 (Unreleased)
 
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `DownloadCertificate` and `DownloadCertificateAsync` methods to get `X509Certificate2` with private key if permitted ([#12083](https://github.com/Azure/azure-sdk-for-net/issues/12083))
+
+### Changed
+
+- Clarified in documentation that `LifetimeActions` requires a single value at this time.
 
 ## 4.2.0-beta.2 (2020-10-06)
 

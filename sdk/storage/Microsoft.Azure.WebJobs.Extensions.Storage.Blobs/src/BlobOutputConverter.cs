@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Converters;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
     internal class BlobOutputConverter<TInput> : IAsyncObjectToTypeConverter<BlobBaseClient>
         where TInput : class
