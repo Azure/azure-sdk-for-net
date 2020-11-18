@@ -48,7 +48,7 @@
             "defaultValue": "azconfig-net",
             "type": "string"
         },
-        "endpointSuffix": {
+        "azConfigEndpointSuffix": {
             "defaultValue": ".azconfig.io",
             "type": "string"
         }
@@ -56,7 +56,7 @@
     "variables": {
         "roleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b', subscription().subscriptionId)]",
         "uniqueAzConfigName": "[format('{0}-{1}', parameters('baseName'), parameters('azConfigPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}.azconfig.io', parameters('baseName'), parameters('azConfigPrefix'))]"        
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('azConfigPrefix'), parameters('azConfigEndpointSuffix'))]"
     },
     "resources": [
         {

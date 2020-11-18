@@ -55,9 +55,13 @@ namespace Azure.Search.Documents.Tests
         public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
+        /// The storage endpoint suffix.
+        /// </summary>
+        public string StorageEndpointSuffix => TestFixture.TestEnvironment.StorageEndpointSuffix;
+        /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix=core.windows.net";
+        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
 
         /// <summary>
         /// The Cognitive Services key.
@@ -93,9 +97,14 @@ namespace Azure.Search.Documents.Tests
         private string _indexName = null;
 
         /// <summary>
+        /// The search endpoint suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => TestFixture.TestEnvironment.SearchEndpointSuffix;
+
+        /// <summary>
         /// The URI of the Search service.
         /// </summary>
-        public Uri Endpoint => new Uri($"https://{SearchServiceName}.search.windows.net");
+        public Uri Endpoint => new Uri($"https://{SearchServiceName}.{SearchEndpointSuffix}");
 
         /// <summary>
         /// The Primary or Admin API key to authenticate requests to the

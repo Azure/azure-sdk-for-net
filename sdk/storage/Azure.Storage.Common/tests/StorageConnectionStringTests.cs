@@ -118,20 +118,21 @@ namespace Azure.Storage.Test
         [Description("Regular account with HTTP")]
         public void DefaultStorageAccountWithHttp()
         {
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = TestExtensions.CreateStorageConnectionString(cred, false);
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             _ = conn.ToString();
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
@@ -144,20 +145,21 @@ namespace Azure.Storage.Test
         [Description("Regular account with HTTPS")]
         public void DefaultStorageAccountWithHttps()
         {
+            string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = TestExtensions.CreateStorageConnectionString(cred, true);
             Assert.AreEqual(conn.BlobEndpoint,
-                new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
-                new Uri(string.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
-                new Uri(string.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
+                new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, endpointSuffix)));
 
             var storageConnectionStringToStringWithSecrets = conn.ToString(true);
             var testAccount = StorageConnectionString.Parse(storageConnectionStringToStringWithSecrets);
