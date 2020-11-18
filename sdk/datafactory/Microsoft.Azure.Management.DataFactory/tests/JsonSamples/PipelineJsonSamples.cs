@@ -599,7 +599,10 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""AzureSqlSource"",
                         sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
-                        parallelOption: ""DynamicRange"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         partitionSettings: 
                         {
                             partitionColumnName: ""partitionColumnName"",
@@ -5610,13 +5613,11 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""TeradataSource"",
-            ""partitionOption"": ""DynamicRange"",
-                        ""partitionSettings"": {
-                            ""partitionColumnName"": ""EmployeeKey"",
-                            ""partitionUpperBound"": ""1"",
-                            ""partitionLowerBound"": ""500""
-                        }
-          },
+            ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+               }
+           },
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
@@ -5873,7 +5874,10 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""SapTableSource"",
                         rowCount: 3,
                         sapDataColumnDelimiter: ""|"",
-                        partitionOption: ""PartitionOnCalendarDate"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         partitionSettings: 
                         {
                              ""partitionColumnName"": ""fakeColumn"",
@@ -6042,7 +6046,10 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""NetezzaSource"",
-                        partitionOption: ""DataSlice""
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                     },
                     sink:
                     {
@@ -6785,7 +6792,10 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         ""type"": ""SapHanaSource"",
                         ""query"": ""$select=Column0"",
-                        ""partitionOption"": ""SapHanaDynamicRange"",
+                        ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         ""partitionSettings"": {
                             ""partitionColumnName"": ""INTEGERTYPE""
                         }                        

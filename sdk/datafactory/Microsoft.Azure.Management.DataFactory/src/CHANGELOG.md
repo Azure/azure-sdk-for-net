@@ -8,7 +8,7 @@
 - Added authenticationType and sessionToken properties into AmazonS3 linkedService
 - Added support for more frequency types for TumblingWindowTrigger
 - Set computeType, coreCount to object type to allow expressions
-- Change PartitionOption to object to allow expression
+- Change property PartitionOption type to object for NetezzaSource, OracleSource, SapHanaSource, SapTableSource, SqlDWSource, SqlMISource, SqlServerSource, SqlSource, TeradataSource. 
 
 ## Version 4.12.0
 ###  Feature Additions
