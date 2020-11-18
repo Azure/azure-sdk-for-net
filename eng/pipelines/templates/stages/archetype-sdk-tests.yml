@@ -55,6 +55,7 @@ parameters:
     Linux_NetCore:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
+<<<<<<< HEAD
     Windows_NetCore:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
@@ -74,6 +75,11 @@ parameters:
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
+=======
+    Windows_NetFramework:
+      OSVmImage: "windows-2019"
+      TestTargetFramework: net461
+>>>>>>> Use test keyvault subscription configuration values
 - name: PlatformPreSteps
   type: object
   default:
