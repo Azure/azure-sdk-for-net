@@ -11,7 +11,6 @@
     <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="2.2.0" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />

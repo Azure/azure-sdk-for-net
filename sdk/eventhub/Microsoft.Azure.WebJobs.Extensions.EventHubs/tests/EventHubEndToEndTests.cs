@@ -361,7 +361,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 })
                 .ConfigureLogging(b =>
                 {
-                    b.AddConsole();
                     b.SetMinimumLevel(LogLevel.Debug);
                 })
                 .Build();
