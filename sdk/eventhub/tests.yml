@@ -3,7 +3,7 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 6
+    MaxParallel: 1
     ServiceDirectory: eventhub
-    TimeoutInMinutes: 300
+    TimeoutInMinutes: 130
     Clouds: 'Public,Canary'
