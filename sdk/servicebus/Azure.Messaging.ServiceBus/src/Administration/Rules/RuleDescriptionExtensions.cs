@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
-        public static async Task<RuleProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<RuleProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static async Task<List<RuleProperties>> ParseCollectionFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<RuleProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {

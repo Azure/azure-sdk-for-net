@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class TopicRuntimePropertiesExtensions
     {
-        public static async Task<TopicRuntimeProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<TopicRuntimeProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return topicRuntimeInfo;
         }
 
-        public static async Task<List<TopicRuntimeProperties>> ParseCollectionFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<TopicRuntimeProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {

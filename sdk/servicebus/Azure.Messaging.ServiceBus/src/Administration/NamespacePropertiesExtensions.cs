@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal class NamespacePropertiesExtensions
     {
-        public static async Task<NamespaceProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<NamespaceProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {

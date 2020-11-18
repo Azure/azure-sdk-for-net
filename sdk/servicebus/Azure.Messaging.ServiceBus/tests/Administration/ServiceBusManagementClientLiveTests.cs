@@ -83,7 +83,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 "allClaims",
                 new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-            QueueProperties createdQueue = await client.CreateQueueAsync(queueOptions);
+            Response<QueueProperties> createdQueueResponse = await client.CreateQueueAsync(queueOptions);
+            Response rawResponse = createdQueueResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            QueueProperties createdQueue = createdQueueResponse.Value;
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -93,7 +99,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             {
                 Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
             }
-            QueueProperties getQueue = await client.GetQueueAsync(queueOptions.Name);
+            Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
+            rawResponse = createdQueueResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            QueueProperties getQueue = getQueueResponse.Value;
             Assert.AreEqual(createdQueue, getQueue);
 
             getQueue.EnableBatchedOperations = false;
@@ -123,8 +135,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Assert.AreEqual(getQueue, updatedQueue);
 
             }
-            bool isExists = await client.QueueExistsAsync(queueName);
-            Assert.True(isExists);
+            Response<bool> isExistsResponse = await client.QueueExistsAsync(queueName);
+            rawResponse = createdQueueResponse.GetRawResponse();
+
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+            Assert.True(isExistsResponse.Value);
 
             List<QueueProperties> queueList = new List<QueueProperties>();
             await foreach (QueueProperties queue in client.GetQueuesAsync())
@@ -143,8 +160,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                    await client.GetQueueAsync(queueOptions.Name),
                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
 
-            isExists = await client.QueueExistsAsync(queueName);
-            Assert.False(isExists);
+            isExistsResponse = await client.QueueExistsAsync(queueName);
+            Assert.False(isExistsResponse.Value);
         }
 
         [Test]
@@ -182,7 +199,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic));
             }
 
-            TopicProperties getTopic = await client.GetTopicAsync(options.Name);
+            Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
+
+            Response rawResponse = getTopicResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            TopicProperties getTopic = getTopicResponse.Value;
+
             Assert.AreEqual(createdTopic, getTopic);
 
             getTopic.EnableBatchedOperations = false;
@@ -191,7 +216,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             getTopic.EnableBatchedOperations = false;
             getTopic.MaxSizeInMegabytes = 1024;
 
-            TopicProperties updatedTopic = await client.UpdateTopicAsync(getTopic);
+            Response<TopicProperties> updatedTopicResponse = await client.UpdateTopicAsync(getTopic);
+            rawResponse = updatedTopicResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            TopicProperties updatedTopic = updatedTopicResponse.Value;
             Assert.AreEqual(getTopic, updatedTopic);
 
             bool exists = await client.TopicExistsAsync(topicName);
@@ -206,7 +237,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.True(topicList.Count == 1, $"Expected 1 topic but {topicList.Count} topics returned");
             Assert.AreEqual(topicList.First().Name, topicName);
 
-            await client.DeleteTopicAsync(updatedTopic.Name);
+            Response response = await client.DeleteTopicAsync(updatedTopic.Name);
+            Assert.NotNull(response.ClientRequestId);
+            Assert.IsTrue(response.ContentStream.CanRead);
+            Assert.AreEqual(0, response.ContentStream.Position);
 
             Assert.That(
                   async () =>
@@ -241,7 +275,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 UserMetadata = nameof(BasicSubscriptionCrudOperations)
             };
 
-            SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(options);
+            Response<SubscriptionProperties> createdSubscriptionResponse = await client.CreateSubscriptionAsync(options);
+            Response rawResponse = createdSubscriptionResponse.GetRawResponse();
+            Assert.NotNull(rawResponse.ClientRequestId);
+            Assert.IsTrue(rawResponse.ContentStream.CanRead);
+            Assert.AreEqual(0, rawResponse.ContentStream.Position);
+
+            SubscriptionProperties createdSubscription = createdSubscriptionResponse.Value;
+
             Assert.AreEqual(options, new CreateSubscriptionOptions(createdSubscription));
 
             SubscriptionProperties getSubscription = await client.GetSubscriptionAsync(options.TopicName, options.SubscriptionName);
@@ -257,9 +298,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.True(exists);
 
             List<SubscriptionProperties> subscriptionList = new List<SubscriptionProperties>();
-            await foreach (SubscriptionProperties subscription in client.GetSubscriptionsAsync(topicName))
+            await foreach (Page<SubscriptionProperties> subscriptionPage in client.GetSubscriptionsAsync(topicName).AsPages())
             {
-                subscriptionList.Add(subscription);
+                Assert.NotNull(subscriptionPage.GetRawResponse().ClientRequestId);
+                Assert.IsTrue(subscriptionPage.GetRawResponse().ContentStream.CanRead);
+                Assert.AreEqual(0, subscriptionPage.GetRawResponse().ContentStream.Position);
+                subscriptionList.AddRange(subscriptionPage.Values);
             }
             subscriptionList = subscriptionList.Where(e => e.TopicName.StartsWith(nameof(BasicSubscriptionCrudOperations).ToLower())).ToList();
             Assert.True(subscriptionList.Count == 1, $"Expected 1 subscription but {subscriptionList.Count} subscriptions returned");

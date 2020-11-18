@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class QueueRuntimePropertiesExtensions
     {
-        public static async Task<QueueRuntimeProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<QueueRuntimeProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return qRuntime;
         }
 
-        public static async Task<List<QueueRuntimeProperties>> ParseCollectionFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<QueueRuntimeProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {

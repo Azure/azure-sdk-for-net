@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return forwardToUri.AbsoluteUri;
         }
 
-        public static async Task<SubscriptionProperties> ParseFromContentAsync(string topicName, Response response, ClientDiagnostics diagnostics)
+        public static async Task<SubscriptionProperties> ParseResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static async Task<List<SubscriptionProperties>> ParseCollectionFromContentAsync(string topicName, Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<SubscriptionProperties>> ParsePagedResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
         {
             try
             {

@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         ///
         /// </summary>
-        public static async Task<QueueProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<QueueProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return properties;
         }
 
-        public static async Task<List<QueueProperties>> ParseCollectionFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<QueueProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {

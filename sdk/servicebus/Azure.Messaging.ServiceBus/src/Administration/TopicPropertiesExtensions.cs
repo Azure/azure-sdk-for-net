@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class TopicPropertiesExtensions
     {
-        public static async Task<TopicProperties> ParseFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<TopicProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static async Task<List<TopicProperties>> ParseCollectionFromContentAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<TopicProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
