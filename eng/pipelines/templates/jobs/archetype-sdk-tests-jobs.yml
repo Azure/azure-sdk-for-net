@@ -35,6 +35,9 @@ parameters:
 - name: UsePlatformContainer
   type: boolean
   default: false
+- name: RunCoverage
+  type: boolean
+  default: ne(varaibles['CoverageArg'], '--disablecov')
 
 jobs:
   - job:
@@ -110,5 +113,9 @@ jobs:
           testRunTitle: "$(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+
+      - template: publish-coverage.yml
+        parameters:
+          RunCoverage: ${{ parameters.RunCoverage }}
 
       - ${{ parameters.PostSteps }}
