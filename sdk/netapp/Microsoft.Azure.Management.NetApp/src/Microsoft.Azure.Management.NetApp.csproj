@@ -18,9 +18,9 @@
           - Removed constraints on baremetalTenantId
 					- Added id, Name  Type, Tags to backupPolicyPatch
 					- Breaking changes: 
-					  1. Added backupId to Backup and BackupPatch. 
-						    Backup contructor now acceps BackupId. Users do not need to provide this value as it has default and is returned to be used in restore operation, 
-							  but they will need to recompile for binary compatabiltiy due to changed signature.
+					  1. Added backupId to Backup and BackupPatch, this value is needed for restore operation
+						    Backup contructor now accepts BackupId. Users do not need to provide this value as it has a default value and is returned by the service. 
+								But they will need to recompile for binary compatabiltiy due to changed constructor signature.
 					
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
