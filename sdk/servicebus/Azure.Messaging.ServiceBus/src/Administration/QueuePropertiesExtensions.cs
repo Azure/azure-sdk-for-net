@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Globalization;
+using Azure.Core.Pipeline;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -51,28 +53,32 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         ///
         /// </summary>
-        public static QueueProperties ParseFromContent(string xml)
+        public static async Task<QueueProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return ParseFromEntryElement(xDoc);
+                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
                     }
                 }
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
-
-            throw new ServiceBusException("Queue was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+            response.ContentStream.Position = 0;
+            throw new ServiceBusException(
+                "Queue was not found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        private static QueueProperties ParseFromEntryElement(XElement xEntry)
+        private static async Task<QueueProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var properties = new QueueProperties(name);
@@ -82,7 +88,10 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Queue was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException(
+                    "Queue was not found",
+                    ServiceBusFailureReason.MessagingEntityNotFound,
+                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
             }
 
             foreach (var element in qdXml.Elements())
@@ -167,10 +176,11 @@ namespace Azure.Messaging.ServiceBus.Administration
             return properties;
         }
 
-        public static List<QueueProperties> ParseCollectionFromContent(string xml)
+        public static async Task<List<QueueProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -181,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            queueList.Add(ParseFromEntryElement(entry));
+                            queueList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
                         }
 
                         return queueList;
@@ -190,10 +200,13 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
 
-            throw new ServiceBusException("No queues were found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "No queues were found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
         public static void NormalizeDescription(this QueueProperties description, string baseAddress)
