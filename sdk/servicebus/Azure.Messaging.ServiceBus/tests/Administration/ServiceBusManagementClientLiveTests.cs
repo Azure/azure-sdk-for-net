@@ -368,6 +368,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
+        [LiveOnly]
         public async Task GetQueueRuntimeInfo()
         {
             var queueName = nameof(GetQueueRuntimeInfo).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -426,6 +427,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
+        [LiveOnly]
         public async Task GetSubscriptionRuntimeInfoTest()
         {
             var topicName = nameof(GetSubscriptionRuntimeInfoTest).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
@@ -675,6 +677,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [Test]
+        [LiveOnly]
         public async Task ForwardingEntity()
         {
             // queueName--Fwd to--> destinationName--fwd dlq to-- > dqlDestinationName
