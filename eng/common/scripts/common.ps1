@@ -33,3 +33,4 @@ if (-not $LanguageShort)
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
+$UpdateDocCIFn = "Update-${Language}-CIConfig"
