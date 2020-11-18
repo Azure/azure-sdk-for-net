@@ -29,6 +29,9 @@ jobs:
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
+      - script: |
+          ./eng/scripts/Track1CodeChecks.ps1
+        displayName: "Code-gen Force Check"
 
   - job: Test
 

@@ -1,0 +1,503 @@
+{
+    "addons": {
+        "Addons": "Addons"
+    },
+    "adhybridhealthservice": {
+        "ADHybridHealthService": "ADHybridHealthService"
+    },
+    "adp": {
+        "adp": "AutonomousDevelopmentPlatform"
+    },
+    "advisor": {
+        "advisor": "Advisor"
+    },
+    "alertsmanagement": {
+        "alertsmanagement": "AlertsManagement"
+    },
+    "analysisservices": {
+        "analysisservices": "AnalysisServices"
+    },
+    "apimanagement": {
+        "apimanagement": "ApiManagement"
+    },
+    "appconfiguration": {
+        "appconfiguration": "AppConfiguration"
+    },
+    "applicationinsights": {
+        "applicationinsights": "ApplicationInsights"
+    },
+    "appplatform": {
+        "appplatform": "AppPlatform"
+    },
+    "attestation": {
+        "attestation": "Attestation"
+    },
+    "authorization": {
+        "authorization": "Authorization"
+    },
+    "automanage": {
+        "automanage": "Automanage"
+    },
+    "automation": {
+        "automation": "Automation"
+    },
+    "vmware": {
+        "avs": "Avs"
+    },
+    "azsadmin": {
+        "azsadmin": "azsadmin"
+    },
+    "azureactivedirectory": {
+        "azureactivedirectory": "Aadiam"
+    },
+    "azuredata": {
+        "azuredata": "AzureData"
+    },
+    "azure-kusto": {
+        "kusto": "Kusto"
+    },
+    "azurestack": {
+        "azurestack": "AzureStack"
+    },
+    "azurestackhci": {
+        "azurestackhci": "AzureStackHCI"
+    },
+    "batch": {
+        "batch": "Batch"
+    },
+    "batchai": {
+        "batchai": "BatchAI"
+    },
+    "blockchain": {
+        "blockchain": "Blockchain"
+    },
+    "billing": {
+        "billing": "Billing"
+    },
+    "blueprint": {
+        "blueprint": "Blueprint"
+    },
+    "botservice": {
+        "botservice": "BotService"
+    },
+    "cdn": {
+        "cdn": "Cdn"
+    },
+    "changeanalysis": {
+        "changeanalysis": "ChangeAnalysis"
+    },
+    "cloudshell": {
+        "portal": "Portal"
+    },
+    "cognitiveservices": {
+        "cognitiveservices": "CognitiveServices"
+    },
+    "commerce": {
+        "commerce": "Commerce"
+    },
+    "common-types": {
+        "commontypes": "CommonTypes"
+    },
+    "communication": {
+        "communication": "Communication"
+    },
+    "compute": {
+        "compute": "Compute"
+    },
+    "confluent": {
+        "confluent": "Confluent"
+    },
+    "consumption": {
+        "consumption": "Consumption"
+    },
+    "containerinstance": {
+        "containerinstance": "ContainerInstance"
+    },
+    "containerregistry": {
+        "containerregistry": "ContainerRegistry"
+    },
+    "containerservice": {
+        "containerservice": "ContainerService"
+    },
+    "cosmos-db": {
+        "cosmosdb": "CosmosDB"
+    },
+    "cost-management": {
+        "cost-management": "CostManagement"
+    },
+    "cpim": {
+        "cpim": "AzureActiveDirectory"
+    },
+    "customer-insights": {
+        "customer-insights": "CustomerInsights"
+    },
+    "customerlockbox": {
+        "customerlockbox": "CustomerLockbox"
+    },
+    "customproviders": {
+        "customproviders": "CustomProviders"
+    },
+    "databox": {
+        "databox": "DataBox"
+    },
+    "databoxedge": {
+        "databoxedge": "DataBoxEdge"
+    },
+    "databricks": {
+        "databricks": "Databricks"
+    },
+    "datacatalog": {
+        "datacatalog": "DataCatalog"
+    },
+    "datadog": {
+        "datadog": "Datadog"
+    },
+    "datafactory": {
+        "datafactory": "DataFactory"
+    },
+    "datalake-analytics": {
+        "datalake-analytics": "DataLake.Analytics"
+    },
+    "datalake-store": {
+        "datalake-store": "DataLake.Store"
+    },
+    "datamigration": {
+        "datamigration": "DataMigration"
+    },
+    "datashare": {
+        "datashare": "DataShare"
+    },
+    "deploymentmanager": {
+        "deploymentmanager": "DeploymentManager"
+    },
+    "desktopvirtualization": {
+        "desktopvirtualization": "DesktopVirtualization"
+    },
+    "deviceprovisioningservices": {
+        "deviceprovisioningservices": "DeviceProvisioningServices"
+    },
+    "devops": {
+        "devops": "DevOps"
+    },
+    "devspaces": {
+        "devspaces": "DevSpaces"
+    },
+    "devtestlabs": {
+        "devtestlabs": "DevTestLabs"
+    },
+    "digitaltwins": {
+        "digitaltwins": "DigitalTwins"
+    },
+    "dnc": {
+        "dnc": "DelegatedNetwork"
+    },
+    "dns": {
+        "dns": "Dns"
+    },
+    "domainservices": {
+        "domainservices": "AAD"
+    },
+    "dynamicstelemetry": {
+        "dynamicstelemetry": "DynamicsTelemetry"
+    },
+    "engagementfabric": {
+        "engagementfabric": "EngagementFabric"
+    },
+    "EnterpriseKnowledgeGraph": {
+        "EnterpriseKnowledgeGraph": "EnterpriseKnowledgeGraph"
+    },
+    "eventgrid": {
+        "eventgrid": "EventGrid"
+    },
+    "eventhub": {
+        "eventhub": "EventHubs"
+    },
+    "frontdoor": {
+        "frontdoor": "FrontDoor"
+    },
+    "graphrbac": {
+        "graphrbac": "Graph.RBAC"
+    },
+    "guestconfiguration": {
+        "guestconfiguration": "GuestConfiguration"
+    },
+    "hanaonazure": {
+        "hanaonazure": "HanaOnAzure"
+    },
+    "hardwaresecuritymodules": {
+        "hardwaresecuritymodules": "HardwareSecurityModules"
+    },
+    "hdinsight": {
+        "hdinsight": "HDInsight"
+    },
+    "healthcareapis": {
+        "healthcareapis": "HealthcareApis"
+    },
+    "hybridcompute": {
+        "hybridcompute": "HybridCompute"
+    },
+    "hybriddatamanager": {
+        "hybriddatamanager": "HybridDataManager"
+    },
+    "hybridkubernetes": {
+        "hybridkubernetes": "Kubernetes"
+    },
+    "hybridnetwork": {
+        "hybridnetwork": "HybridNetwork"
+    },
+    "imagebuilder": {
+        "imagebuilder": "VirtualMachineImages"
+    },
+    "intune": {
+        "intune": "Intune"
+    },
+    "identity": {
+        "identity": "Identity"
+    },
+    "iotcentral": {
+        "iotcentral": "IotCentral"
+    },
+    "iothub": {
+        "iothub": "IotHub"
+    },
+    "iotspaces": {
+        "iotspaces": "IoTSpaces"
+    },
+    "keyvault": {
+        "keyvault": "KeyVault"
+    },
+    "kubernetesconfiguration": {
+        "kubernetesconfiguration": "KubernetesConfiguration"
+    },
+    "labservices": {
+        "labservices": "LabServices"
+    },
+    "logic": {
+        "logic": "Logic"
+    },
+    "machinelearning": {
+        "machinelearning": "MachineLearning"
+    },
+    "machinelearningcompute": {
+        "machinelearningcompute": "MachineLearningCompute"
+    },
+    "machinelearningexperimentation": {
+        "machinelearningexperimentation": "MachineLearningExperimentation"
+    },
+    "machinelearningservices": {
+        "machinelearningservices": "MachineLearningServices"
+    },
+    "maintenance": {
+        "maintenance": "Maintenance"
+    },
+    "managednetwork": {
+        "managednetwork": "ManagedNetwork"
+    },
+    "msi": {
+        "managedserviceidentity": "ManagedServiceIdentity"
+    },
+    "managedservices": {
+        "managedservices": "ManagedServices"
+    },
+    "managementgroups": {
+        "managementgroups": "ManagementGroups"
+    },
+    "managementpartner": {
+        "managementpartner": "ManagementPartner"
+    },
+    "maps": {
+        "maps": "Maps"
+    },
+    "mariadb": {
+        "mariadb": "DBforMariaDB"
+    },
+    "marketplace": {
+        "marketplace": "Marketplace"
+    },
+    "marketplaceordering": {
+        "marketplaceordering": "MarketplaceOrdering"
+    },
+    "mediaservices": {
+        "mediaservices": "Media"
+    },
+    "migrate": {
+        "migrate": "Migrate"
+    },
+    "migrateprojects": {
+        "migrateprojects": "Migrate"
+    },
+    "mixedreality": {
+        "mixedreality": "MixedReality"
+    },
+    "monitor": {
+        "insights": "Insights"
+    },
+    "mysql": {
+        "mysql": "MySQL"
+    },
+    "netapp": {
+        "netapp": "NetApp"
+    },
+    "network": {
+        "network": "Network"
+    },
+    "notebooks": {
+        "notebooks": "Notebooks"
+    },
+    "notificationhubs": {
+        "notificationhubs": "NotificationHubs"
+    },
+    "operationalinsights": {
+        "operationalinsights": "OperationalInsights"
+    },
+    "operationsmanagement": {
+        "operationsmanagement": "OperationsManagement"
+    },
+    "peering": {
+        "peering": "Peering"
+    },
+    "policyinsights": {
+        "policyinsights": "PolicyInsights"
+    },
+    "postgresql": {
+        "postgresql": "PostgreSQL"
+    },
+    "powerbidedicated": {
+        "powerbidedicated": "PowerBIDedicated"
+    },
+    "powerbiembedded": {
+        "powerbiembedded": "PowerBI"
+    },
+    "powerplatform": {
+        "powerplatform": "PowerPlatform"
+    },
+    "privatedns": {
+        "privatedns": "PrivateDns"
+    },
+    "recoveryservices": {
+        "recoveryservices": "RecoveryServices"
+    },
+    "recoveryservicesbackup": {
+        "recoveryservices-backup": "RecoveryServices.Backup"
+    },
+    "recoveryservicessiterecovery": {
+        "recoveryservices-siterecovery": "RecoveryServices.SiteRecovery"
+    },
+    "redhatopenshift": {
+        "redhatopenshift": "RedHatOpenShift"
+    },
+    "redis": {
+        "redis": "RedisCache"
+    },
+    "relay": {
+        "relay": "Relay"
+    },
+    "reservations": {
+        "reservations": "Reservations"
+    },
+    "resourcegraph": {
+        "resourcegraph": "ResourceGraph"
+    },
+    "resourcehealth": {
+        "resourcehealth": "ResourceHealth"
+    },
+    "resourcemover": {
+        "resourcemover": "Migrate"
+    },
+    "resources": {
+        "resources": "Resources"
+    },
+    "scheduler": {
+        "scheduler": "Scheduler"
+    },
+    "search": {
+        "search": "Search"
+    },
+    "security": {
+        "securitycenter": "SecurityCenter"
+    },
+    "securityinsights": {
+        "securityinsights": "SecurityInsights"
+    },
+    "serialconsole": {
+        "serialconsole": "SerialConsole"
+    },
+    "servicebus": {
+        "servicebus": "ServiceBus"
+    },
+    "servicefabric": {
+        "servicefabric": "ServiceFabric"
+    },
+    "servicefabricmesh": {
+        "servicefabricmesh": "ServiceFabricMesh"
+    },
+    "service-map": {
+        "servicemap": "OperationalInsights"
+    },
+    "signalr": {
+        "signalr": "SignalR"
+    },
+    "softwareplan": {
+        "softwareplan": "SoftwarePlan"
+    },
+    "sql": {
+        "sqlmanagement": "Sql"
+    },
+    "sqlvirtualmachine": {
+        "sqlvirtualmachine": "SqlVirtualMachine"
+    },
+    "storage": {
+        "storage": "Storage"
+    },
+    "storagecache": {
+        "storagecache": "StorageCache"
+    },
+    "storageimportexport": {
+        "storageimportexport": "ImportExport"
+    },
+    "storagesync": {
+        "storagesync": "StorageSync"
+    },
+    "storSimple1200Series": {
+        "storsimple": "StorSimple"
+    },
+    "storsimple8000series": {
+        "storsimple8000series": "StorSimple8000Series"
+    },
+    "streamanalytics": {
+        "streamanalytics": "StreamAnalytics"
+    },
+    "subscription": {
+        "subscription": "Subscription"
+    },
+    "support": {
+        "support": "Support"
+    },
+    "synapse": {
+        "synapse": "Synapse"
+    },
+    "timeseriesinsights": {
+        "timeseriesinsights": "TimeSeriesInsights"
+    },
+    "trafficmanager": {
+        "trafficmanager": "TrafficManager"
+    },
+    "visualstudio": {
+        "visualstudio": "VisualStudio"
+    },
+    "vmwarecloudsimple": {
+        "vmwarecloudsimple": "VMwareCloudSimple"
+    },
+    "web": {
+        "websites": "WebSites"
+    },
+    "windowsesu": {
+        "windowsesu": "WindowsESU"
+    },
+    "windowsiot": {
+        "windowsiot": "WindowsIoT"
+    },
+    "workloadmonitor": {
+        "workloadmonitor": "WorkloadMonitor"
+    }
+}
