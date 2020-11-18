@@ -10,14 +10,16 @@ using Azure.Core;
 
 namespace Azure.Learn.AppConfig
 {
-    internal class ServicePutKeyValueHeaders
+    internal class AzureAppConfigurationGetKeyValueHeaders
     {
         private readonly Response _response;
-        public ServicePutKeyValueHeaders(Response response)
+        public AzureAppConfigurationGetKeyValueHeaders(Response response)
         {
             _response = response;
         }
         /// <summary> Enables real-time consistency between requests by providing the returned value in the next request made to the server. </summary>
         public string SyncToken => _response.Headers.TryGetValue("Sync-Token", out string value) ? value : null;
+        /// <summary> A UTC datetime that specifies the last time the resource was modified. </summary>
+        public string LastModified => _response.Headers.TryGetValue("Last-Modified", out string value) ? value : null;
     }
 }

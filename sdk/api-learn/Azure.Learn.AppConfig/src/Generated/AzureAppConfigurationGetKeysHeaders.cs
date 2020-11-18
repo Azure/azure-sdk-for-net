@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Learn.AppConfig
 {
-    internal class ServiceCheckKeyValuesHeaders
+    internal class AzureAppConfigurationGetKeysHeaders
     {
         private readonly Response _response;
-        public ServiceCheckKeyValuesHeaders(Response response)
+        public AzureAppConfigurationGetKeysHeaders(Response response)
         {
             _response = response;
         }
