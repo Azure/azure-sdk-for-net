@@ -12,10 +12,8 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ChatRecordedTestSanitizer();
-        }
+        public ChatLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+            =>  Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -45,9 +43,9 @@ namespace Azure.Communication.Chat.Tests
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 
-        protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
+        protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatParticipant> participants)
         {
-            return InstrumentClient(chatClient.CreateChatThread(topic, members));
+            return InstrumentClient(chatClient.CreateChatThread(topic, participants));
         }
 
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
@@ -55,9 +53,9 @@ namespace Azure.Communication.Chat.Tests
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
         }
 
-        protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
+        protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatParticipant> participants)
         {
-            return InstrumentClient(await chatClient.CreateChatThreadAsync(topic, members));
+            return InstrumentClient(await chatClient.CreateChatThreadAsync(topic, participants));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
     internal class HttpWebRequestTransport : HttpPipelineTransport
     {
         public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
-        private readonly IWebProxy? _proxy;
+        private readonly IWebProxy? _environmentProxy;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
         {
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                _proxy = webProxy;
+                _environmentProxy = webProxy;
             }
         }
 
@@ -105,7 +105,11 @@ namespace Azure.Core.Pipeline
         {
             var request = WebRequest.CreateHttp(messageRequest.Uri.ToUri());
             request.Method = messageRequest.Method.Method;
-            request.Proxy = _proxy;
+            // Don't disable the default proxy when there is no environment proxy configured
+            if (_environmentProxy != null)
+            {
+                request.Proxy = _environmentProxy;
+            }
 
             foreach (var messageRequestHeader in messageRequest.Headers)
             {

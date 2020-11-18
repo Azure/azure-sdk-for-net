@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
-        /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
+        /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <remarks>
         /// This operation can only be performed on a message that was received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
         /// and receive it using ReceiveDeferredMessageBatchAsync(IEnumerable, CancellationToken).
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <remarks>
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
-            IList<long> sequenceNumbers,
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default);
 
         /// <summary>

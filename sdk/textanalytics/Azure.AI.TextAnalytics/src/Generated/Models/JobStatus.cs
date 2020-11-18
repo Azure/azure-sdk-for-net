@@ -22,28 +22,31 @@ namespace Azure.AI.TextAnalytics
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NotstartedValue = "notstarted";
+        private const string NotStartedValue = "notStarted";
         private const string RunningValue = "running";
         private const string SucceededValue = "succeeded";
         private const string FailedValue = "failed";
+        private const string RejectedValue = "rejected";
         private const string CancelledValue = "cancelled";
         private const string CancellingValue = "cancelling";
-        private const string PartiallycompletedValue = "partiallycompleted";
+        private const string PartiallyCompletedValue = "partiallyCompleted";
 
-        /// <summary> notstarted. </summary>
-        public static JobStatus Notstarted { get; } = new JobStatus(NotstartedValue);
+        /// <summary> notStarted. </summary>
+        public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
         /// <summary> running. </summary>
         public static JobStatus Running { get; } = new JobStatus(RunningValue);
         /// <summary> succeeded. </summary>
         public static JobStatus Succeeded { get; } = new JobStatus(SucceededValue);
         /// <summary> failed. </summary>
         public static JobStatus Failed { get; } = new JobStatus(FailedValue);
+        /// <summary> rejected. </summary>
+        public static JobStatus Rejected { get; } = new JobStatus(RejectedValue);
         /// <summary> cancelled. </summary>
         public static JobStatus Cancelled { get; } = new JobStatus(CancelledValue);
         /// <summary> cancelling. </summary>
         public static JobStatus Cancelling { get; } = new JobStatus(CancellingValue);
-        /// <summary> partiallycompleted. </summary>
-        public static JobStatus Partiallycompleted { get; } = new JobStatus(PartiallycompletedValue);
+        /// <summary> partiallyCompleted. </summary>
+        public static JobStatus PartiallyCompleted { get; } = new JobStatus(PartiallyCompletedValue);
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>

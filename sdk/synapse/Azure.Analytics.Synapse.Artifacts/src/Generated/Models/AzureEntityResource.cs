@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The resource model definition for a Azure Resource Manager resource with an etag. </summary>
+    /// <summary> The resource model definition for an Azure Resource Manager resource with an etag. </summary>
     public partial class AzureEntityResource : Resource
     {
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
@@ -16,9 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
         internal AzureEntityResource(string id, string name, string type, string etag) : base(id, name, type)
         {

@@ -171,13 +171,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Priority > 20000)
+            if (Priority != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 20000);
-            }
-            if (Priority < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
+                if (Priority > 20000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Priority", 20000);
+                }
+                if (Priority < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Priority", 1);
+                }
             }
         }
     }

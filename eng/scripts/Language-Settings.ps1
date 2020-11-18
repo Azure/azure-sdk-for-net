@@ -82,6 +82,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   return New-Object PSObject -Property @{
     PackageId      = $pkgId
     PackageVersion = $pkgVersion
+    ReleaseTag     = "$($pkgId)_$($pkgVersion)"
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent

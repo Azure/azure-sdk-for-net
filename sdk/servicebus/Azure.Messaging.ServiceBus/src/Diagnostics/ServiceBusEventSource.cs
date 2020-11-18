@@ -285,12 +285,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [NonEvent]
-        public virtual void ReceiveDeferredMessageStart(string identifier, IList<long> sequenceNumbers)
+        public virtual void ReceiveDeferredMessageStart(string identifier, long[] sequenceNumbers)
         {
             if (IsEnabled())
             {
                 var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Count, formattedSequenceNumbers);
+                ReceiveDeferredMessageStartCore(identifier, sequenceNumbers.Length, formattedSequenceNumbers);
             }
         }
 

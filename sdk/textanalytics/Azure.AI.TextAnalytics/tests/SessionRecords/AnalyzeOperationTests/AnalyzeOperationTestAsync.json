@@ -1,0 +1,229 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Content-Length": "265",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-e96c4465d2c9db4197d791db3bedfe30-ab12e561376fae43-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "f64d021068f23b47239dc64d32ac0d55",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Elon Musk is the CEO of SpaceX and Tesla.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Tesla stock is up by 400% this year.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": {
+          "keyPhraseExtractionTasks": [
+            {
+              "parameters": {
+                "model-version": "latest"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "82aea681-0907-4fa2-86da-7a27c20ed41e",
+        "Date": "Tue, 17 Nov 2020 20:14:36 GMT",
+        "operation-location": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "158"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "326f6a53ce870c398bb9ee51f13f5560",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "23a4015d-9808-49cf-bd1f-cf7bf30d3619",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 17 Nov 2020 20:14:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
+      },
+      "ResponseBody": {
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:36Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "lastUpdateDateTime": "2020-11-17T20:14:36Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "4d2db5835d6ee56b0a068d1cd4f24286",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "72416979-443f-414d-8881-674ec6b9c12a",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 17 Nov 2020 20:14:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "58"
+      },
+      "ResponseBody": {
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:37Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "lastUpdateDateTime": "2020-11-17T20:14:37Z"
+          },
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/analyze/jobs/b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": [
+          "application/json",
+          "text/json"
+        ],
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20201116.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "84470c68f8b742c6c8406a3979f549e3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "db8b62ba-a322-4a76-9436-30fc5bd4ced6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 17 Nov 2020 20:14:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "100"
+      },
+      "ResponseBody": {
+        "jobId": "b849396a-cd13-47b4-98d5-136089ea0619_637411680000000000",
+        "lastUpdateDateTime": "2020-11-17T20:14:37Z",
+        "createdDateTime": "2020-11-17T20:14:36Z",
+        "expirationDateTime": "2020-11-18T20:14:36Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "details": {
+            "lastUpdateDateTime": "2020-11-17T20:14:37Z"
+          },
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "keyPhraseExtractionTasks": [
+            {
+              "lastUpdateDateTime": "2020-11-17T20:14:37.168255Z",
+              "results": {
+                "inTerminalState": true,
+                "documents": [
+                  {
+                    "id": "0",
+                    "keyPhrases": [
+                      "CEO of SpaceX",
+                      "Elon Musk",
+                      "Tesla"
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "1",
+                    "keyPhrases": [
+                      "Tesla stock",
+                      "year"
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2020-07-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1355402112",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://textanalytics-westeurope.ppe.cognitiveservices.azure.com"
+  }
+}

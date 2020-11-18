@@ -18,6 +18,8 @@ namespace Azure.Messaging.EventHubs
         ///   service.
         /// </summary>
         ///
+        /// <value>The default transport is AMQP over TCP.</value>
+        ///
         public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>

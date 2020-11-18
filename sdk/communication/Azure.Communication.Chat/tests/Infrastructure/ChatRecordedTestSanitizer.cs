@@ -24,7 +24,7 @@ namespace Azure.Communication.Chat.Tests
         {
             if (headers.ContainsKey(HttpHeader.Names.Authorization))
             {
-                if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x=>x.Contains("Communication.Chat")))
+                if (headers.ContainsKey(HttpHeader.Names.UserAgent) && headers[HttpHeader.Names.UserAgent].Any(x => x.Contains("Communication.Chat")))
                 {
                     headers[HttpHeader.Names.Authorization] = new[] { SanitizedChatAuthHeaderValue };
                     return;
@@ -34,13 +34,11 @@ namespace Azure.Communication.Chat.Tests
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            return variableName switch
+            => variableName switch
             {
                 ChatTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
-        }
 
         private static string SanitizeConnectionString(string connectionString)
         {
