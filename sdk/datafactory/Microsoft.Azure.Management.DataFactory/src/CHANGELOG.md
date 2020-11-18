@@ -8,6 +8,7 @@
 - Added authenticationType and sessionToken properties into AmazonS3 linkedService
 - Added support for more frequency types for TumblingWindowTrigger
 - Set computeType, coreCount to object type to allow expressions
+- Change PartitionOption to object to allow expression
 
 ## Version 4.12.0
 ###  Feature Additions
