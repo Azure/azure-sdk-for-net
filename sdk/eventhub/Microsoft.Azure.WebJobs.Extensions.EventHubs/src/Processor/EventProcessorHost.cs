@@ -17,7 +17,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
     internal class EventProcessorHost
     {
         public string EventHubName { get; }
-        public string EventHubPath { get; }
         public string ConsumerGroupName { get; }
         public string EventHubConnectionString { get; }
         public string StorageConnectionString { get; }
@@ -25,10 +24,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         private Processor CurrentProcessor { get; set; }
         private Action<ExceptionReceivedEventArgs> ExceptionHandler { get; }
 
-        public EventProcessorHost(string eventHubName, string eventHubPath, string consumerGroupName, string eventHubConnectionString, string storageConnectionString, string leaseContainerName, Action<ExceptionReceivedEventArgs> exceptionHandler)
+        public EventProcessorHost(string eventHubName, string consumerGroupName, string eventHubConnectionString, string storageConnectionString, string leaseContainerName, Action<ExceptionReceivedEventArgs> exceptionHandler)
         {
             EventHubName = eventHubName;
-            EventHubPath = eventHubPath;
             ConsumerGroupName = consumerGroupName;
             EventHubConnectionString = eventHubConnectionString;
             StorageConnectionString = storageConnectionString;
@@ -46,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             CurrentProcessor = new Processor(maxBatchSize,
                 ConsumerGroupName,
                 EventHubConnectionString,
-                EventHubPath,
+                EventHubName,
                 options,
                 factory,
                 invokeProcessorAfterReceiveTimeout,

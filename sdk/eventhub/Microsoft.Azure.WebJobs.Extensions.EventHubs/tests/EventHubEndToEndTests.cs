@@ -342,7 +342,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 .ConfigureServices(services =>
                 {
                     // Speedup shutdown
-                    services.Configure<EventHubOptions>(options => options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5));
+                    services.Configure<EventHubOptions>(options =>
+                    {
+                        options.LeaseContainerName = _storageScope.ContainerName;
+                        options.EventProcessorOptions.MaximumWaitTime = TimeSpan.FromSeconds(5);
+                    });
                 })
                 .ConfigureDefaultTestHost<T>(b =>
                 {

@@ -195,7 +195,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var testLogger = new TestLogger("Test");
             var host = new EventProcessorHost(
                 eventHubName,
-                null,
                 consumerGroup,
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 "DefaultEndpointsProtocol=https;AccountName=EventHubScaleMonitorFakeTestAccount;AccountKey=ABCDEFG;EndpointSuffix=core.windows.net", null, null);
