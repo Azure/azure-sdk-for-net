@@ -4,12 +4,12 @@
 using CommandLine;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Test.PerfStress
 {
@@ -83,9 +83,9 @@ namespace Azure.Test.PerfStress
                 {
                     try
                     {
-                        Sleep(TimeSpan.FromSeconds(intervalSeconds), token);
+                        Task.Delay(TimeSpan.FromSeconds(intervalSeconds), token).Wait();
                     }
-                    catch (OperationCanceledException)
+                    catch (Exception e) when (ContainsOperationCanceledException(e))
                     {
                     }
 
@@ -113,21 +113,6 @@ namespace Azure.Test.PerfStress
             thread.Start();
 
             return thread;
-        }
-
-        internal static void Sleep(TimeSpan timeout, CancellationToken token)
-        {
-            var sw = Stopwatch.StartNew();
-            while (sw.Elapsed < timeout)
-            {
-                if (token.IsCancellationRequested)
-                {
-                    // Simulate behavior of Task.Delay(TimeSpan, CancellationToken)
-                    throw new OperationCanceledException();
-                }
-
-                Thread.Sleep(TimeSpan.FromMilliseconds(10));
-            }
         }
     }
 }

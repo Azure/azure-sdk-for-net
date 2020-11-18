@@ -19,6 +19,7 @@ pr:
   paths:
     include:
     - common/Perf/
+    - common/PerfStressShared/
     - common/Stress/
     - sdk/template/
 
