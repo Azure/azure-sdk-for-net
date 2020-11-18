@@ -177,6 +177,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithDeviceCodeCallbackThrowsAsync()
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
@@ -189,7 +190,7 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, ClientId, options: options));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { testEnvironment.KeyvaultScope }), cancelSource.Token));
 
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
@@ -197,11 +198,12 @@ namespace Azure.Identity.Tests
         [Test]
         public void DisableAutomaticAuthenticationException()
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
 
-            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
+            var expTokenRequestContext = new TokenRequestContext(new string[] { testEnvironment.KeyvaultScope }, Guid.NewGuid().ToString());
 
             var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
 
@@ -210,29 +212,29 @@ namespace Azure.Identity.Tests
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/discovery/instance"))
+            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/common/discovery/instance"))
             {
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/v2.0/.well-known/openid-configuration"))
             {
                 return OpenIdConfigurationResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"))
+            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/oauth2/v2.0/devicecode") || requestUrl.StartsWith("https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/devicecode"))
             {
                 return CreateDeviceCodeResponse(code);
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith($"{testEnvironment.AuthorityHostUrl}/organizations/oauth2/v2.0/token") || requestUrl.StartsWith($"https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
 
             }
-
             throw new InvalidOperationException();
         }
 

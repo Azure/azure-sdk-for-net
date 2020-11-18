@@ -9,7 +9,7 @@
                 "description": "The base resource name."
             }
         },
-        "location": {
+        "formRecognizerLocation": {
             "type": "string",
             "defaultValue": "westcentralus",
             "metadata": {
@@ -20,7 +20,7 @@
             "defaultValue": "formrecognizer",
             "type": "string"
         },
-        "endpointSuffix": {
+        "cognitiveServicesEndpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string"
         },
@@ -48,7 +48,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
@@ -88,7 +88,7 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
             "name": "[variables('uniqueSubDomainName')]",
-            "location":"[parameters('location')]",
+            "location":"[parameters('formRecognizerLocation')]",
             "sku": {
                 "name": "S0"
             },
@@ -130,7 +130,7 @@
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_REGION": {
             "type": "string",
-            "value": "[parameters('location')]"
+            "value": "[parameters('formRecognizerLocation')]"
         },
         "FORM_RECOGNIZER_TARGET_RESOURCE_ID": {
             "type": "string",

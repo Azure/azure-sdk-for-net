@@ -6,6 +6,4 @@ extends:
     ServiceDirectory: keyvault
     TimeoutInMinutes: 120
     EnvVars:
-      # Runs samples with live tests.
-      # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT
       AZURE_KEYVAULT_TEST_MODE: Live

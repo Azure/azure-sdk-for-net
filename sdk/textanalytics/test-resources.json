@@ -44,9 +44,19 @@
             "defaultValue": "textanalytics",
             "type": "string"
         },
-        "endpointSuffix": {
+        "cognitiveServicesEndpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.cognitiveservices.azure.com)"
+            }
+        },
+        "textAnalyticsSku": {
+            "type": "string",
+            "defaultValue": "S0",
+            "metadata": {
+                "description": "Text Analytics SKU to deploy. The default is 'S0'"
+            }
         }
     },
     "variables": {
@@ -59,7 +69,7 @@
             "name": "[variables('uniqueSubDomainName')]",
             "location":"[parameters('location')]",
             "sku": {
-                "name": "S0"
+                "name": "[parameters('textAnalyticsSku')]"
             },
             "kind": "TextAnalytics",
             "properties": {
