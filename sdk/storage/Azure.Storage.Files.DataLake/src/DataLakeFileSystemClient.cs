@@ -2388,6 +2388,130 @@ namespace Azure.Storage.Files.DataLake
         #endregion Get Deleted Paths
 
         #region Restore Path
+        /// <summary>
+        /// Restores a soft deleted path.
+        /// </summary>
+        /// <param name="deletedPath">
+        /// Required.  The path of the deleted path.
+        /// </param>
+        /// <param name="deletionId">
+        /// Required.  The deletion ID associated with the soft deleted path.
+        /// You can get soft deleted paths and their assocaited deletion IDs with <see cref="GetDeletedPathsAsync"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> pointed at the newly
+        /// restored path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakePathClient> RestorePath(
+            string deletedPath,
+            string deletionId,
+            CancellationToken cancellationToken = default)
+            => RestorePathInternal(
+                deletedPath,
+                deletionId,
+                operationName: $"{nameof(DataLakeFileSystemClient)}.{nameof(RestorePath)}",
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a soft deleted path.
+        /// </summary>
+        /// <param name="deletedPath">
+        /// Required.  The path of the deleted path.
+        /// </param>
+        /// <param name="deletionId">
+        /// Required.  The deletion ID associated with the soft deleted path.
+        /// You can get soft deleted paths and their associated deletion IDs with <see cref="GetDeletedPathsAsync"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> pointed at the newly
+        /// restored path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakePathClient>> RestorePathAsync(
+            string deletedPath,
+            string deletionId,
+            CancellationToken cancellationToken = default)
+            => await RestorePathInternal(
+                deletedPath,
+                deletionId,
+                operationName: $"{nameof(DataLakeFileSystemClient)}.{nameof(RestorePath)}",
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+
+        internal async Task<Response<DataLakePathClient>> RestorePathInternal(
+            string deletedPath,
+            string deletionId,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
+            {
+                try
+                {
+                    DataLakePathClient pathClient = GetPathClient(deletedPath);
+
+                    string undeleteSource = $"?{Constants.DataLake.DeletionId}={deletionId}";
+
+                    Response<PathUndeleteResult> response = await DataLakeRestClient.Path.UndeleteAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: pathClient.BlobUri,
+                        version: Version.ToVersionString(),
+                        undeleteSource: undeleteSource,
+                        async: async,
+                        operationName: operationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        pathClient,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
+                }
+            }
+        }
         #endregion Restore Path
+
+        internal virtual DataLakePathClient GetPathClient(string path)
+        {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri)
+            {
+                DirectoryOrFilePath = path
+            };
+
+            return new DataLakePathClient(
+                uriBuilder.ToDfsUri(),
+                Pipeline,
+                Version,
+                ClientDiagnostics);
+        }
     }
 }

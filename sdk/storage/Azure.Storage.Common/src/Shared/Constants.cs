@@ -306,6 +306,8 @@ namespace Azure.Storage
             /// Metadata key for isFolder property.
             /// </summary>
             public const string IsDirectoryKey = "hdi_isFolder";
+
+            public const string DeletionId = "deletionid";
         }
 
         /// <summary>
