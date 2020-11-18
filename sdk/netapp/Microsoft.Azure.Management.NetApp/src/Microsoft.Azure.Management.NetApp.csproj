@@ -17,7 +17,10 @@
           - Added aesEncryption, ldapSigning properties to ActiveDirectory
           - Removed constraints on baremetalTenantId
 					- Added id, Name  Type, Tags to backupPolicyPatch
-					- Added backupId to Backup and BackupPatch
+					- Breaking changes: 
+					  1. Added backupId to Backup and BackupPatch. 
+						    Backup contructor now acceps BackupId. Users do not need to provide this value as it has default and is returned to be used in restore operation, 
+							  but they will need to recompile for binary compatabiltiy due to changed signature.
 					
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
