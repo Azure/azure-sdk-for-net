@@ -68,7 +68,7 @@ namespace Azure.Test.Stress
                     setupStatusCts.Cancel();
                     setupStatusThread.Join();
 
-                    await RunTestAsync(test, options.Duration, options.StatusInterval, metrics);
+                    await RunTestAsync(test, options, metrics);
                 }
                 finally
                 {
@@ -184,9 +184,9 @@ namespace Azure.Test.Stress
             }
         }
 
-        private static async Task RunTestAsync(IStressTest test, int durationSeconds, int statusIntervalSeconds, StressMetrics metrics)
+        private static async Task RunTestAsync(IStressTest test, StressOptions options, StressMetrics metrics)
         {
-            var duration = TimeSpan.FromSeconds(durationSeconds);
+            var duration = TimeSpan.FromSeconds(options.Duration);
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
 
@@ -198,7 +198,7 @@ namespace Azure.Test.Stress
                 () => metrics.ToString(),
                 newLine: true,
                 progressStatusCts.Token,
-                statusIntervalSeconds);
+                options.StatusInterval);
 
             try
             {
