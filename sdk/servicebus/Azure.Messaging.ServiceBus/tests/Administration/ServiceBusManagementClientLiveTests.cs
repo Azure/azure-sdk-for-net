@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -20,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         public ServiceBusManagementClientLiveTests(bool isAsync) :
-            base(isAsync: true, RecordedTestMode.Live)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
