@@ -31,7 +31,8 @@ namespace Sql.Tests
                 if (isProd)
                 {
                     ResourceGroup resourceGroup = context.CreateResourceGroup();
-                    Server server = context.CreateServer(resourceGroup);                    
+                    Server server = context.CreateServer(resourceGroup);
+                    storageAccountInformation = await CreateStorageAccountAsync(context, resourceGroup);
 
                     resourceGroupName = resourceGroup.Name;
                     serverName = server.Name;
@@ -40,17 +41,9 @@ namespace Sql.Tests
                 {
                     resourceGroupName = "Default-SQL-SoutheastAsia";
                     serverName = "lubaseaserver";
-                }
 
-                if (isProd)
-                {
-                    storageAccountInformation = new StorageAccountInformation();
-                    // storageAccountInformation = await CreateStorageAccountAsync(context, resourceGroup);
-                }
-                else
-                {
-                    storageAccountInformation = new StorageAccountInformation 
-                    { 
+                    storageAccountInformation = new StorageAccountInformation
+                    {
                         Name = "olsternbstorageaccount",
                         Endpoint = "https://olsternbstorageaccount.blob.core.windows.net/",
                         PrimaryKey = "RDyxx3ORhww2iA6todWBYfNQor15ScEC4mF1VDrbwHz0q/smzD1GVMEBpODRz0yvaV1T8wi2CfG1cQYyEiPx3w=="
