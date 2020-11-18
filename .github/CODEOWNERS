@@ -496,13 +496,16 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # Client
 # PRLabel: %Service Bus
-/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire @MiYanni
+/sdk/servicebus/                                @JoshLove-msft @ShivangiReja @jsquire
 
 # ServiceLabel: %Service Bus %Service Attention
 /sdk/servicebus/Microsoft.*/                    @axisc
 
 # ServiceLabel: %Service Fabric %Service Attention
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/           @QingChenmsft @vaishnavk @juhacket
+
+# PRLabel: %Schema Registry
+/sdk/schemaregistry/            @jsquire @AlexGhiondea
 
 # ServiceLabel: %Schema Registry %Service Attention
 /sdk/schemaregistry/            @arerlend
