@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -17,14 +18,28 @@ namespace Azure.Identity.Tests
         {
         }
 
+        //[Test]
+        //public async Task AuthenticateWithAzurePowerShellCredential()
+        //{
+        //    AzurePowerShellCredential apc = new AzurePowerShellCredential();
+        //    var result =
+        //        await apc.GetTokenAsync(new TokenRequestContext(new[] {"https://backup.blob.core.windows.net"}));
+
+        //    Assert.IsNotNull(result);
+        //}
+
         [Test]
         public async Task AuthenticateWithAzurePowerShellCredential()
         {
-            AzurePowerShellCredential apc = new AzurePowerShellCredential();
-            var result =
-                await apc.GetTokenAsync(new TokenRequestContext(new[] {"https://backup.blob.core.windows.net"}));
+            var (expectedToken, expectedExpiresOn) = CredentialTestHelpers.CreateTokenForAzurePowerShell(new TimeSpan(30));
 
-            Assert.IsNotNull(result);
+            var testProcess = new TestProcess { Output = expectedToken };
+            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential
+                (new AzurePowerShellCredentialOptions() ,CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -35,6 +36,20 @@ namespace Azure.Identity.Tests
             var token = Guid.NewGuid().ToString();
             var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": {seconds} }}";
             return (token, expiresOn, json);
+        }
+
+
+        public static (string token, DateTimeOffset expiresOn) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
+        {
+
+            var expiresOn = DateTime.Now.Add(expiresOffset);
+
+            var token = new JwtSecurityToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, expiresOn);
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.WriteToken(token);
+            var jwtSecurityToken = new JwtSecurityToken(jwt);
+
+            return (jwt , jwtSecurityToken.ValidTo);
         }
 
         public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
