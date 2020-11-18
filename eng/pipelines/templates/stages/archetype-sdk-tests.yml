@@ -39,45 +39,25 @@ parameters:
   type: object
   default:
     Public:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-test)
     Preview:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
     Canary:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-test)
       Location: 'eastus2euap'
     UsGov:
-      SubscriptionConfiguration: $(sub-config-gov-test-resources)
+      SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
     China:
-      SubscriptionConfiguration: $(sub-config-cn-test-resources)
+      SubscriptionConfiguration: $(sub-config-cn-test-resources-test)
 - name: Platforms
   type: object
   default:
     Linux_NetCore:
       OSVmImage: "ubuntu-18.04"
       TestTargetFramework: netcoreapp2.1
-    Windows_NetCore:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-    Windows_NetCore_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: netcoreapp2.1
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
     Windows_NetFramework:
       OSVmImage: "windows-2019"
       TestTargetFramework: net461
-    Windows_NetFramework_ProjectRefAzureClients:
-      OSVmImage: "windows-2019"
-      TestTargetFramework: net461
-      AdditionalTestArguments: "/p:UseProjectReferenceToAzureClients=true"
-    MacOS:
-      OSVmImage: "macOS-10.15"
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
-    Windows_NetCore_Record:
-      OSVmImage: "windows-2019"
-      TestMode: Record
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
 - name: PlatformPreSteps
   type: object
   default:
