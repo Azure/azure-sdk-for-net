@@ -16,7 +16,7 @@ namespace Azure.Learn.AppConfig.Samples
         [Test]
         public async Task GetConfigurationSettingIfChanged()
         {
-            string endpoint = Environment.GetEnvironmentVariable("API-LEARN_ENDPOINT");
+            string endpoint = Environment.GetEnvironmentVariable("API_LEARN_ENDPOINT");
 
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
