@@ -93,7 +93,8 @@ namespace Microsoft.Azure.Management.Security
             }
             string apiVersion = "2015-06-01-preview";
             // Tracing
-            // Some Manual Change
+            // Some Manual Change Foo
+            // This is expected?? 
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
