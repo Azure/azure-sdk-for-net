@@ -50,5 +50,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFr
             Assert.Equal(expectedVars.Name, data.Name);
             Assert.Equal(expectedVars.CustomProperties, data.Properties);
         }
+
+        public static void VerifyEvent(TelemetryItem telemetryItem, ExpectedTelemetryItemValues expectedVars)
+        {
+            Assert.Equal("Event", telemetryItem.Name);
+            Assert.Equal("EventData", telemetryItem.Data.BaseType);
+
+            var data = (TelemetryEventData)telemetryItem.Data.BaseData;
+            Assert.Equal(expectedVars.Name, data.Name);
+        }
     }
 }

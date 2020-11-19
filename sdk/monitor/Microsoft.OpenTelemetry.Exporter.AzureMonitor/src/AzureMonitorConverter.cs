@@ -10,6 +10,7 @@ using System.Text;
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -98,6 +99,32 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                 telemetryItem = GeneratePartAEnvelope(activity);
                 telemetryItem.InstrumentationKey = instrumentationKey;
                 telemetryItem.Data = GenerateTelemetryData(activity);
+                telemetryItems.Add(telemetryItem);
+            }
+
+            return telemetryItems;
+        }
+
+        internal static List<TelemetryItem> Convert(Batch<LogRecord> batchLogRecord, string instrumentationKey)
+        {
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            TelemetryItem telemetryItem;
+
+            foreach (var logRecord in batchLogRecord)
+            {
+                // TODO: THESE VALUES ARE NOT FINAL. THESE VALUES ARE PLACEHOLDERS WHILE I'M BUILDING THE TEST INFRA.
+                var name = PartA_Name_Mapping[TelemetryType.Event];
+                var time = logRecord.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture);
+
+                telemetryItem = new TelemetryItem(name, time)
+                {
+                    InstrumentationKey = instrumentationKey,
+                    Data = new MonitorBase
+                    {
+                        BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Event],
+                        BaseData = new TelemetryEventData(version: 2, name: logRecord.State.ToString()),
+                    }
+                };
                 telemetryItems.Add(telemetryItem);
             }
 
