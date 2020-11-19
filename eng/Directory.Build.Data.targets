@@ -77,7 +77,7 @@
     and likely easier to remember than the VSTest platform integration.
     Also: https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/KnownIssues.md#1-vstest-stops-process-execution-earlydotnet-test
   -->
-  <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(IsMgmtClientLibrary)' != 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <_ImportCodeCoverage>true</_ImportCodeCoverage>
     <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
     <!-- Override this property in your projects' or solutions' Directory.Build.props to further customize code coverage. -->
