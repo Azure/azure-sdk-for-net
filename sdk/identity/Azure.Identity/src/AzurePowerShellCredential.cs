@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
         private const int PowerShellProcessTimeoutMs = 10000;
-        private readonly bool _usePowerShell;
+        internal bool UsePowerShell { get; }
 
         private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error.";
         private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
@@ -33,7 +33,6 @@ namespace Azure.Identity
         private const string AzurePowerShellNoContext = "NoContext";
         private const string AzurePowerShellNoAzAccountModule = "NoAzAccountModule";
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
-        //private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
 
@@ -55,7 +54,7 @@ namespace Azure.Identity
 
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
-            _usePowerShell = options?.UsePowerShell ?? new AzurePowerShellCredentialOptions().UsePowerShell;
+            UsePowerShell = options?.UsePowerShell ?? new AzurePowerShellCredentialOptions().UsePowerShell;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
         }
@@ -162,7 +161,7 @@ namespace Azure.Identity
         {
             string powershellExe = "pwsh -EncodedCommand";
 
-            if (_usePowerShell)
+            if (UsePowerShell)
             {
                 powershellExe = "powershell -EncodedCommand";
             }

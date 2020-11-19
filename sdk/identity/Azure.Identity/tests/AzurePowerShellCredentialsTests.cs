@@ -92,5 +92,30 @@ namespace Azure.Identity.Tests
             AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cts.Token));
         }
+
+
+        [Test]
+        public void ValidateConstructorOverload1()
+        {
+            // tests the AzurePowerShellCredential constructor overload
+            // public AzurePowerShellCredential(AzurePowerShellCredentialOptions options)
+
+            // null
+            var credential = new AzurePowerShellCredential(null);
+
+            AssertOptionsHonored(new AzurePowerShellCredentialOptions(), credential);
+
+            // with options
+            var options = new AzurePowerShellCredentialOptions() {UsePowerShell = true};
+
+            credential = new AzurePowerShellCredential(options);
+
+            AssertOptionsHonored(options, credential);
+        }
+
+        public void AssertOptionsHonored(AzurePowerShellCredentialOptions options, AzurePowerShellCredential credential)
+        {
+            Assert.AreEqual(options.UsePowerShell, credential.UsePowerShell);
+        }
     }
 }
