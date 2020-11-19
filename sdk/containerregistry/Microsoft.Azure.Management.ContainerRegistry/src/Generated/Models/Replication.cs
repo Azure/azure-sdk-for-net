@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// replication at the time the operation was called. Possible values
         /// include: 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed',
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// routed to a replication whose regional endpoint is disabled,
         /// however its data will continue to be synced with other
         /// replications.</param>
-        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status status = default(Status), bool? regionEndpointEnabled = default(bool?))
-            : base(location, id, name, type, tags)
+        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string provisioningState = default(string), Status status = default(Status), bool? regionEndpointEnabled = default(bool?))
+            : base(location, id, name, type, tags, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;

@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// archiving is enabled for the run or not.</param>
         /// <param name="agentPoolName">The dedicated agent pool for the
         /// run.</param>
+        /// <param name="logTemplate">The template that describes the
+        /// repository and tag information for run log artifact.</param>
         /// <param name="overrideTaskStepProperties">Set of overridable
         /// parameters that can be passed when running a Task.</param>
-        public TaskRunRequest(string taskId, bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string), OverrideTaskStepProperties overrideTaskStepProperties = default(OverrideTaskStepProperties))
-            : base(isArchiveEnabled, agentPoolName)
+        public TaskRunRequest(string taskId, bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string), string logTemplate = default(string), OverrideTaskStepProperties overrideTaskStepProperties = default(OverrideTaskStepProperties))
+            : base(isArchiveEnabled, agentPoolName, logTemplate)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;

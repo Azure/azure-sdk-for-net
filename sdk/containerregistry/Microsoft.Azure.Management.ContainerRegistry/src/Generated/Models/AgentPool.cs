@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="count">The count of agent machine</param>
         /// <param name="tier">The Tier of agent machine</param>
         /// <param name="os">The OS of agent machine. Possible values include:
@@ -50,8 +52,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="provisioningState">The provisioning state of this
         /// agent pool. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Canceled'</param>
-        public AgentPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? count = default(int?), string tier = default(string), string os = default(string), string virtualNetworkSubnetResourceId = default(string), string provisioningState = default(string))
-            : base(location, id, name, type, tags)
+        public AgentPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), int? count = default(int?), string tier = default(string), string os = default(string), string virtualNetworkSubnetResourceId = default(string), string provisioningState = default(string))
+            : base(location, id, name, type, tags, systemData)
         {
             Count = count;
             Tier = tier;
