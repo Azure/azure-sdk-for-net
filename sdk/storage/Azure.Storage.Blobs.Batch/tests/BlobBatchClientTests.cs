@@ -369,6 +369,24 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(404, response2, response3);
             await scenario.AssertDeleted(good);
         }
+
+        [Test]
+        public async Task Delete_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
+                GetServiceClient_SharedKey().Uri,
+                GetOptions()));
+            BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
+            using BlobBatch batch = blobBatchClient.CreateBatch();
+            batch.DeleteBlob(new Uri("https://account.blob.core.windows.net/container/blob"));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blobBatchClient.SubmitBatchAsync(batch),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+        }
         #endregion Delete
 
         #region SetBlobAccessTier
@@ -617,6 +635,24 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(202, response);
             scenario.AssertStatus(200, responses);
             await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [Test]
+        public async Task SetBlobAccessTier_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceClient invalidServiceClient = InstrumentClient(new BlobServiceClient(
+                GetServiceClient_SharedKey().Uri,
+                GetOptions()));
+            BlobBatchClient blobBatchClient = invalidServiceClient.GetBlobBatchClient();
+            using BlobBatch batch = blobBatchClient.CreateBatch();
+            batch.SetBlobAccessTier(new Uri("https://account.blob.core.windows.net/container/blob"), AccessTier.Archive);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blobBatchClient.SubmitBatchAsync(batch),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
         }
         #endregion SetBlobAccessTier
 
