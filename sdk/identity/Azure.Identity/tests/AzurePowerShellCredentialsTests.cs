@@ -41,5 +41,15 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
         }
+
+        [Test]
+        public void AuthenticateWithCliCredential_AzurePowerShellNotInstalled([Values("'pwsh' is not recognized", "pwsh: command not found", "pwsh: not found", "'powershell' is not recognized", "pwspowershellh: command not found", "powershell: not found")] string errorMessage)
+        {
+            string expectedMessage = "PowerShell is not installed.";
+            var testProcess = new TestProcess { Error = errorMessage };
+            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.AreEqual(expectedMessage, ex.Message);
+        }
     }
 }
