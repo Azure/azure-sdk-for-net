@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        public string TransactionPartitionKey
+        internal string TransactionPartitionKey
         {
             get
             {

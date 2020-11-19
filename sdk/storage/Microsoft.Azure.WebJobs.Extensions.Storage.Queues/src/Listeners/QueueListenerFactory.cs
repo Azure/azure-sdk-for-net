@@ -31,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly FunctionDescriptor _descriptor;
         private readonly IQueueProcessorFactory _queueProcessorFactory;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
         public QueueListenerFactory(
             QueueServiceClient queueServiceClient,
@@ -41,7 +42,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             ILoggerFactory loggerFactory,
             ITriggeredFunctionExecutor executor,
             IQueueProcessorFactory queueProcessorFactory,
-            FunctionDescriptor descriptor)
+            QueueCausalityManager queueCausalityManager,
+            FunctionDescriptor descriptor
+            )
         {
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
             _executor = executor ?? throw new ArgumentNullException(nameof(executor));
             _descriptor = descriptor ?? throw new ArgumentNullException(nameof(descriptor));
+            _queueCausalityManager = queueCausalityManager ?? throw new ArgumentNullException(nameof(queueCausalityManager));
 
             _poisonQueue = CreatePoisonQueueReference(queueServiceClient, queue.Name);
             _loggerFactory = loggerFactory;
@@ -58,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public Task<IListener> CreateAsync(CancellationToken cancellationToken)
         {
-            QueueTriggerExecutor triggerExecutor = new QueueTriggerExecutor(_executor);
+            QueueTriggerExecutor triggerExecutor = new QueueTriggerExecutor(_executor, _queueCausalityManager);
 
             var queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, _loggerFactory, _queueProcessorFactory, _queueOptions, _messageEnqueuedWatcherSetter);
             IListener listener = new QueueListener(_queue, _poisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,

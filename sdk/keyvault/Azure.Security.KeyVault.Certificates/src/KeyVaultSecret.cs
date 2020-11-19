@@ -7,11 +7,14 @@ namespace Azure.Security.KeyVault.Certificates
 {
     internal class KeyVaultSecret : IJsonDeserializable
     {
+        private const string ContentTypePropertyName = "contentType";
         private const string ValuePropertyName = "value";
 
         internal KeyVaultSecret()
         {
         }
+
+        public CertificateContentType? ContentType { get; internal set; }
 
         public string Value { get; internal set; }
 
@@ -19,6 +22,10 @@ namespace Azure.Security.KeyVault.Certificates
         {
             switch (prop.Name)
             {
+                case ContentTypePropertyName:
+                    ContentType = prop.Value.GetString();
+                    break;
+
                 case ValuePropertyName:
                     Value = prop.Value.GetString();
                     break;

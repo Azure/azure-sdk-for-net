@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete
+                    AutoCompleteMessages = autoComplete
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
@@ -213,7 +213,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentSessions = 1,
                     MaxAutoLockRenewalDuration = lockDuration,
-                    AutoComplete = false
+                    AutoCompleteMessages = false
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 bool receivedDelayMsg = false;
@@ -282,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = true
+                    AutoCompleteMessages = true
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
@@ -367,7 +367,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete,
+                    AutoCompleteMessages = autoComplete,
                     PrefetchCount = 5
                 };
 
@@ -447,6 +447,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
                 {
+                    Assert.IsNotNull(args.CancellationToken);
                     Assert.NotNull(args);
                     Assert.NotNull(args.Exception);
                     if (args.Exception is InvalidOperationException)
@@ -539,7 +540,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete,
+                    AutoCompleteMessages = autoComplete,
                     // using the last sessionId from the loop
                     SessionIds = { sessionId }
                 };
@@ -611,7 +612,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
                     MaxConcurrentCallsPerSession = maxCallsPerSession
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
@@ -688,7 +689,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
@@ -770,7 +771,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    AutoComplete = true
+                    AutoCompleteMessages = true
                 });
                 var tcs = new TaskCompletionSource<bool>();
 
@@ -901,7 +902,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoComplete = autoComplete,
+                    AutoCompleteMessages = autoComplete,
                 };
                 for (int i = 0; i < specifiedSessionCount; i++)
                 {
@@ -1226,11 +1227,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
         [Test]
         [TestCase(ServiceBusErrorSource.Abandon)]
-        [TestCase(ServiceBusErrorSource.AcceptMessageSession)]
-        [TestCase(ServiceBusErrorSource.CloseMessageSession)]
+        [TestCase(ServiceBusErrorSource.AcceptSession)]
+        [TestCase(ServiceBusErrorSource.CloseSession)]
         [TestCase(ServiceBusErrorSource.Complete)]
         [TestCase(ServiceBusErrorSource.Receive)]
-        [TestCase(ServiceBusErrorSource.UserCallback)]
+        [TestCase(ServiceBusErrorSource.ProcessMessageCallback)]
         public async Task ErrorSourceRespected(ServiceBusErrorSource errorSource)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -1247,7 +1248,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var sessionId = Guid.NewGuid().ToString();
                 await sender.SendMessageAsync(GetMessage(sessionId));
 
-                if (errorSource == ServiceBusErrorSource.AcceptMessageSession)
+                if (errorSource == ServiceBusErrorSource.AcceptSession)
                 {
                     var receiver = await client.AcceptSessionAsync(
                         scope.QueueName,
@@ -1274,7 +1275,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += SessionErrorHandler;
-                if (errorSource == ServiceBusErrorSource.CloseMessageSession)
+                if (errorSource == ServiceBusErrorSource.CloseSession)
                 {
                     processor.SessionClosingAsync += CloseSessionHandler;
                 }
@@ -1307,7 +1308,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                 }
                                 else
                                 {
-                                    Assert.AreEqual(ServiceBusErrorSource.UserCallback, eventArgs.ErrorSource);
+                                    Assert.AreEqual(ServiceBusErrorSource.ProcessMessageCallback, eventArgs.ErrorSource);
                                 }
                             }
                             else
@@ -1331,7 +1332,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     finally
                     {
 
-                        if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseMessageSession)
+                        if (eventArgs.ErrorSource != ServiceBusErrorSource.CloseSession)
                         {
                             if (errorSource != ServiceBusErrorSource.Abandon ||
                                 sessionErrorEventCt == 2)
@@ -1339,8 +1340,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                 tcs.SetResult(true);
                             }
                         }
-                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptMessageSession ||
-                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseMessageSession ||
+                        if (eventArgs.ErrorSource == ServiceBusErrorSource.AcceptSession ||
+                            eventArgs.ErrorSource == ServiceBusErrorSource.CloseSession ||
                             eventArgs.ErrorSource == ServiceBusErrorSource.Receive)
                         {
                             // add small delay to prevent race condition that can result in error handler
@@ -1371,7 +1372,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                                     args.SessionId,
                                     cancellationToken: args.CancellationToken);
                                 break;
-                            case ServiceBusErrorSource.UserCallback:
+                            case ServiceBusErrorSource.ProcessMessageCallback:
                                 await Task.Delay(delayDuration);
                                 await args.CompleteMessageAsync(message);
                                 break;
@@ -1390,7 +1391,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
                 await processor.StopProcessingAsync();
-                if (errorSource != ServiceBusErrorSource.AcceptMessageSession)
+                if (errorSource != ServiceBusErrorSource.AcceptSession)
                 {
                     Assert.AreEqual(1, messageCt);
 
@@ -1580,7 +1581,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendMessageAsync(GetMessage("sessionId"));
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
                 {
-                    AutoComplete = false,
+                    AutoCompleteMessages = false,
                     MaxConcurrentSessions = 1
                 });
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);

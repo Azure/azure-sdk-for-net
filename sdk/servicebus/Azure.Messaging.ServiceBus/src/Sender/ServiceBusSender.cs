@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     using DiagnosticScope messageScope = _scopeFactory.CreateScope(
                         DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.SenderKind);
+                        DiagnosticProperty.ProducerKind);
                     messageScope.Start();
 
                     Activity activity = Activity.Current;
@@ -477,7 +477,6 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             return sequenceNumbers;
         }
 
@@ -507,27 +506,28 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            IReadOnlyList<long> sequenceList = sequenceNumbers switch
+            // the sequence numbers MUST be in array form for them to be encoded correctly
+            long[] sequenceArray = sequenceNumbers switch
             {
-                IReadOnlyList<long> alreadyList => alreadyList,
-                _ => sequenceNumbers.ToList()
+                long[] alreadyArray => alreadyArray,
+                _ => sequenceNumbers.ToArray()
             };
 
-            if (sequenceList.Count == 0)
+            if (sequenceArray.Length == 0)
             {
                 return;
             }
 
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceList);
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
+
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
-
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             scope.Start();
+
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceList, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceArray, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -542,11 +542,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
         /// </summary>
-        /// <param name="closeMode">The mode indicating what should happen to the link when closing.</param>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
-            LinkCloseMode closeMode = LinkCloseMode.Detach,
             CancellationToken cancellationToken = default)
         {
             IsClosed = true;

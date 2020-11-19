@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual(received.SessionId, sentMessage.SessionId);
                     Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
                     Assert.AreEqual(received.To, sentMessage.To);
-                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.TransactionPartitionKey);
+                    Assert.AreEqual(received.TransactionPartitionKey, sentMessage.TransactionPartitionKey);
                 }
             }
         }

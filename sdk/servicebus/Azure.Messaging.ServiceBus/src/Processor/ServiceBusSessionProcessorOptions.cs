@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>true to complete the message automatically on successful execution of the event handler;
         /// otherwise, false.</value>
-        public bool AutoComplete { get; set; } = true;
+        public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                AutoComplete = AutoComplete,
+                AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime
             };
