@@ -43,6 +43,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             AuthorizationRules = options.AuthorizationRules;
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
