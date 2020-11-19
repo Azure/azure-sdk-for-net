@@ -67,7 +67,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         {
             // SETUP
             var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
-            var activitySource = new ActivitySource(ActivitySourceName);
+            using var activitySource = new ActivitySource(ActivitySourceName);
 
             var transmitter = new MockTransmitter();
             var processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
