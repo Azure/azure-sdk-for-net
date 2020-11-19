@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// 'Enabled', 'Disabled'</param>
         /// <param name="apiProperties">The api properties for special
         /// APIs.</param>
-        public CognitiveServicesAccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), IList<SkuCapability> capabilities = default(IList<SkuCapability>), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Encryption encryption = default(Encryption), IList<UserOwnedStorage> userOwnedStorage = default(IList<UserOwnedStorage>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), CognitiveServicesAccountApiProperties apiProperties = default(CognitiveServicesAccountApiProperties))
+        /// <param name="dateCreated">Gets the date of cognitive services
+        /// account creation.</param>
+        public CognitiveServicesAccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), IList<SkuCapability> capabilities = default(IList<SkuCapability>), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Encryption encryption = default(Encryption), IList<UserOwnedStorage> userOwnedStorage = default(IList<UserOwnedStorage>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string), CognitiveServicesAccountApiProperties apiProperties = default(CognitiveServicesAccountApiProperties), string dateCreated = default(string))
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -71,6 +73,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             ApiProperties = apiProperties;
+            DateCreated = dateCreated;
             CustomInit();
         }
 
@@ -153,6 +156,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "apiProperties")]
         public CognitiveServicesAccountApiProperties ApiProperties { get; set; }
+
+        /// <summary>
+        /// Gets the date of cognitive services account creation.
+        /// </summary>
+        [JsonProperty(PropertyName = "dateCreated")]
+        public string DateCreated { get; private set; }
 
         /// <summary>
         /// Validate the object.
