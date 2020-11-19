@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.8.0-beta.1 (Unreleased)
-
+- Added ContentMd5 to BlobUploadFromUriOptions used in SyncUploadFromUri()
 
 ## 12.7.0 (2020-11-10)
 - Includes all features from 12.7.0-preview.1

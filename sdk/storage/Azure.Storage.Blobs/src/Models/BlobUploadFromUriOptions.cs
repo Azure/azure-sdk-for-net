@@ -53,5 +53,13 @@ namespace Azure.Storage.Blobs.Models
         /// Block Blob.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// Optional. An MD5 hash of the block content. This hash is used to verify the integrity of the block during
+        /// transport.When this header is specified, the storage service compares the hash of the content that has arrived
+        /// with this header value. Note that this MD5 hash is not stored with the blob.If the two hashes do not match, the
+        /// operation will fail.
+        /// </summary>
+        public byte[] ContentMd5 { get; set; }
     }
 }
