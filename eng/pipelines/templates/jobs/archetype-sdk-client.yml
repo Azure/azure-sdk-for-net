@@ -110,6 +110,8 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
+      - name: disable.coverage.autogenerate
+        value: true
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
@@ -168,12 +170,11 @@ jobs:
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
-          reports: >-
-            $(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml;
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
           targetdir: $(Build.SourcesDirectory)
           reporttypes: Cobertura;HtmlSummary
-          filefilters: >-
-            +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**;
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
       - task: PublishCodeCoverageResults@1
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         displayName: Publish Code Coverage Reports
