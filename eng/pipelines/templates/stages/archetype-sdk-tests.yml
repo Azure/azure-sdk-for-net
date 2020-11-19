@@ -82,7 +82,7 @@ parameters:
   type: object
   default:
     - task: CopyFiles@2
-      condition: and(succeededOrFailed(), eq(variables['Record'], 'true'), eq(variables['Agent.JobName'], 'Windows_NetCore'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Copy Test Recordings"
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
@@ -91,7 +91,7 @@ parameters:
         contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
     - task: PublishBuildArtifacts@1
-      condition: and(succeededOrFailed(), eq(variables['Record'], 'true'), eq(variables['Agent.JobName'], 'Windows_NetCore'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Publish Test Recordings"
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
