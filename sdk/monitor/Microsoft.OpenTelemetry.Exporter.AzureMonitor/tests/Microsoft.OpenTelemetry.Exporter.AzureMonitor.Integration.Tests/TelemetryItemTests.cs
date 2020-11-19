@@ -7,10 +7,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework;
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 
 using Xunit;
@@ -63,6 +66,19 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 });
         }
 
+        [Fact]
+        public void VerifyILogger()
+        {
+            var telemetryItem = this.RunLoggerTest(x => x.LogInformation("Hello World!"));
+
+            VerifyTelemetryItem.VerifyEvent(
+                telemetryItem: telemetryItem,
+                expectedVars: new ExpectedTelemetryItemValues
+                {
+                    Name = "Hello World!",
+                });
+        }
+
         private TelemetryItem RunActivityTest(Action<ActivitySource> testScenario)
         {
             // SETUP
@@ -85,6 +101,36 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // ACT
             testScenario(activitySource);
+
+            // CLEANUP
+            processor.ForceFlush();
+            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
+
+            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return transmitter.TelemetryItems.Single();
+        }
+
+        private TelemetryItem RunLoggerTest(Action<ILogger<TelemetryItemTests>> testScenario)
+        {
+            // SETUP
+            var transmitter = new MockTransmitter();
+            var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
+                options: new AzureMonitorExporterOptions
+                {
+                    ConnectionString = EmptyConnectionString,
+                },
+                transmitter: transmitter));
+
+            var serviceCollection = new ServiceCollection().AddLogging(builder =>
+            {
+                builder.AddOpenTelemetry(options => options
+                    .AddProcessor(processor));
+            });
+
+            // ACT
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            var logger = serviceProvider.GetRequiredService<ILogger<TelemetryItemTests>>();
+            testScenario(logger);
 
             // CLEANUP
             processor.ForceFlush();
