@@ -347,7 +347,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x=>x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
+                return await _chatRestClient.AddChatThreadMembersAsync(Id, members.Select(x => x.ToChatThreadMemberInternal()), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -588,9 +588,9 @@ namespace Azure.Communication.Chat
 
         private static HttpPipeline CreatePipelineFromOptions(ChatClientOptions options, CommunicationUserCredential communicationUserCredential)
         {
-            var httpPipelinePolicy = new CommunicationUserAuthenticationPolicy(communicationUserCredential);
-            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            return httpPipeline;
+            var tokenCredential = new CommunicationTokenCredential(communicationUserCredential);
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "");
+            return HttpPipelineBuilder.Build(options, authenticationPolicy);
         }
     }
 }
