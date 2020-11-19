@@ -5,31 +5,32 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse top-level resource. </summary>
-    internal partial class Resource
+    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
+    public partial class Resource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
-        internal Resource()
+        public Resource()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The resource identifier. </summary>
+        /// <summary> Initializes a new instance of Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        internal Resource(string id, string name, string type)
+        {
+            Id = id;
+            Name = name;
+            Type = type;
+        }
+
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
         public string Id { get; }
-        /// <summary> The resource name. </summary>
+        /// <summary> The name of the resource. </summary>
         public string Name { get; }
-        /// <summary> The resource type. </summary>
+        /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
         public string Type { get; }
-        /// <summary> The resource location. </summary>
-        public string Location { get; }
-        /// <summary> The resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> Etag identifies change in the resource. </summary>
-        public string ETag { get; }
     }
 }

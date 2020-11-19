@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.3/training/projects/8fb9159c-8761-4ceb-9d41-e4c245faa9e0/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9wcm9qZWN0cy84ZmI5MTU5Yy04NzYxLTRjZWItOWQ0MS1lNGMyNDVmYWE5ZTAvaW1hZ2VzL3VudGFnZ2VkP3Rha2U9NTAmc2tpcD0w",
+      "RequestUri": "//customvision/v3.4-preview/training/projects/70c80e4a-ac33-4ee2-879e-d8fd6a005d52/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL3Byb2plY3RzLzcwYzgwZTRhLWFjMzMtNGVlMi04NzllLWQ4ZmQ2YTAwNWQ1Mi9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Request-Id": [
-          "e2732a28-b7a7-4a0c-8b61-c92f9f658483"
+          "68f4f921-c211-459c-969e-dbe4f70fa386"
         ],
         "apim-request-id": [
-          "e2732a28-b7a7-4a0c-8b61-c92f9f658483"
+          "68f4f921-c211-459c-969e-dbe4f70fa386"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -30,7 +30,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 06 Jun 2020 16:51:01 GMT"
+          "Fri, 06 Nov 2020 17:34:49 GMT"
         ],
         "Content-Length": [
           "2"

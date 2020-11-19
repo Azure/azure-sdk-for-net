@@ -6,11 +6,13 @@
 - It defaults to the latest supported API version, which currently is `2.1-preview.1`.
 
 ### New Features
+- Added integration for ASP.NET Core.
 - Added support for pre-built business card recognition.
+- Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
+- Added ability to pass parameter `ModelName` to `StartTraining` methods.
 - Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
-- Added property `ModelName` to `TrainingOptions` and new type `CreateComposedModelOptions`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.

@@ -116,13 +116,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PeerAsn > 4294967295)
+            if (PeerAsn != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "PeerAsn", 4294967295);
-            }
-            if (PeerAsn < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 0);
+                if (PeerAsn > 4294967295)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "PeerAsn", 4294967295);
+                }
+                if (PeerAsn < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 0);
+                }
             }
         }
     }

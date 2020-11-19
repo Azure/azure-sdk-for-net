@@ -11,6 +11,8 @@ namespace QnAMaker.Tests
 {
     public class QnAMakerPreviewRuntimeTests : BaseTests
     {
+        private static readonly string KbId = "0667a3c4-fd61-4f13-9ada-a7fc0e257112";
+
         [Fact]
         public void QnAMakerPreviewRuntimeGenerateAnswerTest()
         {
@@ -18,12 +20,21 @@ namespace QnAMaker.Tests
             {
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerPreviewRuntimeGenerateAnswerTest");
 
-                var client = GetQnAMakerPreviewRuntimeClient(HttpMockServer.CreateInstance());
+                var client = GetQnAMakerClient(HttpMockServer.CreateInstance());
                 var queryDTO = new QueryDTO();
                 queryDTO.Question = "new question";
+                queryDTO.Top = 3;
                 queryDTO.IsTest = true;
-                var answer = client.Runtime.GenerateAnswerAsync("192233e1-0ec8-44dc-8285-57a541b7c79c", queryDTO).Result;
+                queryDTO.AnswerSpanRequest = new QueryDTOAnswerSpanRequest()
+                {
+                    Enable = true,
+                    ScoreThreshold = 5.0,
+                    TopAnswersWithSpan = 1
+                };
+
+                var answer = client.Knowledgebase.GenerateAnswerAsync(KbId , queryDTO).Result;
                 Assert.Equal(1, answer.Answers.Count);
+                Assert.NotEmpty(answer.Answers[0].AnswerSpan.Text);                
                 Assert.Equal(100, answer.Answers[0].Score);
             }
         }

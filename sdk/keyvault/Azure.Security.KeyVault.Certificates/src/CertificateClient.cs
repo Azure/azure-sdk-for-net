@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -151,6 +152,120 @@ namespace Azure.Security.KeyVault.Certificates
                 throw;
             }
         }
+
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version);
+                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
+
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
+                }
+
+                byte[] rawData = Convert.FromBase64String(value);
+
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="KeyVaultCertificate.Cer"/> contains only the public key, this method attempts to download the managed secret
+        /// that contains the full certificate. If you do not have permissions to get the secret,
+        /// <see cref="RequestFailedException"/> will be thrown with an appropriate error response.
+        /// If you want an <see cref="X509Certificate2"/> with only the public key, instantiate it passing only the
+        /// <see cref="KeyVaultCertificate.Cer"/> property.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to download.</param>
+        /// <param name="version">Optional version of a certificate to download.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="X509Certificate2"/> from the specified certificate.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The managed secret did not contain a certificate.</exception>
+        /// <exception cref="NotSupportedException">Downloading PEM-formatted certificates is not supported.</exception>
+        /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
+            scope.AddAttribute("certificate", certificateName);
+            scope.Start();
+
+            try
+            {
+                KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, certificateName, "/", version).ConfigureAwait(false);
+                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
+
+                KeyVaultSecret secret = secretResponse.Value;
+                string value = secret.Value;
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new InvalidOperationException($"Secret {certificate.SecretId} contains no value");
+                }
+
+                if (secret.ContentType == CertificateContentType.Pem)
+                {
+                    throw new NotSupportedException($"PEM-formatted certificates are not supported");
+                }
+
+                byte[] rawData = Convert.FromBase64String(value);
+
+                return Response.FromValue(new X509Certificate2(rawData), secretResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
@@ -668,7 +783,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -697,7 +812,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM-format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>

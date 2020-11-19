@@ -94,7 +94,36 @@ namespace Azure.Storage.Blobs.Test
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
-            Assert.AreEqual(dataSource.Requests.Count, 10);
+            Assert.AreEqual(dataSource.Requests.Count, 9);
+            AssertContent(100, stream);
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task RespectsInitialTransferSizeBeforeDownloadingInBlocks()
+        {
+            MemoryStream stream = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientDiagnostics).CallBase();
+            BlobProperties smallLengthProperties = new BlobProperties()
+            {
+                ContentLength = 100
+            };
+
+            SetupDownload(blockClient, dataSource);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 40,
+                    InitialTransferLength = 10
+                });
+
+            Response result = await InvokeDownloadToAsync(downloader, stream);
+
+            Assert.AreEqual(dataSource.Requests.Count, 4);
             AssertContent(100, stream);
             Assert.NotNull(result);
         }

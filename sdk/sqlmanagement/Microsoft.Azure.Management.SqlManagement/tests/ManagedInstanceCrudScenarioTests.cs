@@ -23,7 +23,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 Random r = new Random();
-                string managedInstanceName = "sqlcl-crudtestswithdnszone-dotnetsdk1";
+                string managedInstanceName = "sqlcl-crudtestswithfmw-dotnetsdk1";
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -42,6 +42,8 @@ namespace Sql.Tests
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
                 string storageAccountType = "GRS";
+                string publicResourceName = "MI_Sat_12AM_6AM";
+                string maintenanceConfigurationId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/" + publicResourceName;
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
@@ -52,12 +54,13 @@ namespace Sql.Tests
                     SubnetId = subnetId,
                     Tags = tags,
                     Location = location,
-                    StorageAccountType = storageAccountType
+                    StorageAccountType = storageAccountType,
+                    MaintenanceConfigurationId = maintenanceConfigurationId
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
                 // Create second server
-                string managedInstanceName2 = "sqlcl-crudtestswithdnszone-dotnetsdk2";
+                string managedInstanceName2 = "sqlcl-crudtestswithfmw-dotnetsdk2";
                 var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
                 {
                     AdministratorLogin = login,
@@ -69,7 +72,8 @@ namespace Sql.Tests
                     DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/{1}", resourceGroup.Name, managedInstanceName),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
                     ProxyOverride = proxyOverride,
-                    StorageAccountType = storageAccountType
+                    StorageAccountType = storageAccountType,
+                    MaintenanceConfigurationId = maintenanceConfigurationId
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
 
@@ -80,6 +84,10 @@ namespace Sql.Tests
                 // Get second server
                 var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName2);
                 SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId, shouldCheckState: true);
+
+                // Verify that maintenanceConfigurationId value is correctly set
+                Assert.Equal(publicResourceName, getMI1.MaintenanceConfigurationId);
+                Assert.Equal(publicResourceName, getMI2.MaintenanceConfigurationId);
 
                 // Verify that storageAccountType value is correctly set
                 Assert.Equal(storageAccountType, getMI1.StorageAccountType);
@@ -106,12 +114,12 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName).ConfigureAwait(true);
+                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
-                Assert.Equal(1, listMI2.Count());
+                Assert.Single(listMI2);
 
-                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2).ConfigureAwait(true);
+                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName2);
                 var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Empty(listMI3);
             }

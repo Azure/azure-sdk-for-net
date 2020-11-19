@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             await TestUtility.SendMessagesAsync(messageSender, messageCount);
             var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount, TimeSpan.FromSeconds(10));
-            Assert.Equal(receivedMessages.Count, messageCount);
+            Assert.Equal(messageCount, receivedMessages.Count);
         }
 
         internal async Task PeekLockWithAbandonTestCase(IMessageSender messageSender, IMessageReceiver messageReceiver, int messageCount)

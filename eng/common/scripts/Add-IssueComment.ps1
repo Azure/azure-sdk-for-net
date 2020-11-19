@@ -16,13 +16,13 @@ param(
   [string]$AuthToken
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 try {
-  Add-IssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+  Add-GithubIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
   -IssueNumber $IssueNumber -Comment $Comment -AuthToken $AuthToken
 }
 catch {
-  LogError "Add-IssueComment failed with exception:`n$_"
+  LogError "Add-GithubIssueComment failed with exception:`n$_"
   exit 1
 }

@@ -5,14 +5,14 @@ param(
   $AuthToken
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 LogDebug "Operating on Repo [ $RepoName ]"
 try{
-  $branches = (List-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref "heads/$BranchPrefix").ref
+  $branches = (Get-GitHubSourceReferences -RepoOwner $RepoOwner -RepoName $RepoName -Ref "heads/$BranchPrefix" -AuthToken $AuthToken).ref 
 }
 catch {
-  LogError "List-References failed with exception:`n$_"
+  LogError "Get-GitHubSourceReferences failed with exception:`n$_"
   exit 1
 }
 
@@ -22,22 +22,24 @@ foreach ($branch in $branches)
     $branchName = $branch.Replace("refs/heads/","")
     $head = "${RepoOwner}/${RepoName}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
-    $pullRequests = List-PullRequests -RepoOwner $RepoOwner -RepoName $RepoName -head $head
+    $pullRequests = Get-GitHubPullRequests -RepoOwner $RepoOwner -RepoName $RepoName -State "all" -Head $head -AuthToken $AuthToken
   }
   catch
   {
-    LogError "List-PullRequests failed with exception:`n$_"
+    LogError "Get-GitHubPullRequests failed with exception:`n$_"
     exit 1
   }
 
-  if ($pullRequests.Count -eq 0)
+  $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
+
+  if ($openPullRequests.Count -eq 0)
   {
-    LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated Pull Request. Deleting Branch"
+    LogDebug "Branch [ $branchName ] in repo [ $RepoName ] has no associated open Pull Request. Deleting Branch"
     try{
-      Delete-References -RepoOwner $RepoOwner -RepoName $RepoName -Ref ($branch.Remove(0,5)) -AuthToken $AuthToken
+      Remove-GitHubSourceReferences -RepoOwner $RepoOwner -RepoName $RepoName -Ref ($branch.Remove(0,5)) -AuthToken $AuthToken
     }
     catch {
-      LogError "Delete-References failed with exception:`n$_"
+      LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
       exit 1
     }
   }

@@ -14,13 +14,13 @@ namespace Azure.Messaging.ServiceBus
         None = 0,
 
         /// <summary>
-        /// The dead-letter subqueue contains messages that have been deadlettered.
+        /// The dead-letter subqueue contains messages that have been dead-lettered.
         /// <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues#moving-messages-to-the-dlq"/>
         /// </summary>
         DeadLetter = 1,
 
         /// <summary>
-        /// The transfer dead-letter subqueue contains messages that have been deadlettered when
+        /// The transfer dead-letter subqueue contains messages that have been dead-lettered when
         /// the following conditions apply:
         /// <list type="bullet">
         /// <item>

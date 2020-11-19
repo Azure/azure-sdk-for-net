@@ -8,18 +8,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-            Matcher.ExcludeHeaders.Add("x-client-Ver");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]

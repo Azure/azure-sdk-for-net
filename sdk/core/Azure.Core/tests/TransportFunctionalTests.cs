@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,6 +95,35 @@ namespace Azure.Core.Tests
             Assert.AreEqual(50, contentLength);
         }
 
+        [Test]
+        public async Task CanSetContentLenghtOverMaxInt()
+        {
+            long contentLength = 0;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    contentLength = context.Request.ContentLength.Value;
+                });
+
+            var requestContentLength = long.MaxValue;
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Post;
+            request.Uri.Reset(testServer.Address);
+            request.Content = RequestContent.Create(new byte[10]);
+            request.Headers.Add("Content-Length", requestContentLength.ToString());
+
+            try
+            {
+                await ExecuteRequest(request, transport);
+            }
+            catch (Exception)
+            {
+                // Sending the request would fail because of length mismatch
+            }
+
+            Assert.AreEqual(requestContentLength, requestContentLength);
+        }
 
         [Test]
         public async Task HostHeaderSetFromUri()
@@ -668,6 +698,44 @@ namespace Azure.Core.Tests
                 Environment.SetEnvironmentVariable(envVar, null);
             }
         }
+
+#if NET461 // GlobalProxySelection.Select not supported on netcoreapp
+        [NonParallelizable]
+        [Test]
+        public async Task DefaultProxySettingsArePreserved()
+        {
+#pragma warning disable 618 // Use of obsolete symbol
+            var oldGlobalProxySelection = GlobalProxySelection.Select;
+#pragma warning restore 618
+            try
+            {
+                using (TestServer testServer = new TestServer(async context =>
+                {
+                    context.Response.Headers["Via"] = "Test-Proxy";
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                }))
+                {
+#pragma warning disable 618 // Use of obsolete symbol
+                    GlobalProxySelection.Select = new WebProxy(testServer.Address.ToString());
+#pragma warning restore 618
+
+                    var transport = GetTransport();
+                    Request request = transport.CreateRequest();
+                    request.Uri.Reset(new Uri("http://microsoft.com"));
+                    Response response = await ExecuteRequest(request, transport);
+                    Assert.True(response.Headers.TryGetValue("Via", out var via));
+                    Assert.AreEqual("Test-Proxy", via);
+                }
+            }
+            finally
+            {
+#pragma warning disable 618 // Use of obsolete symbol
+                GlobalProxySelection.Select = oldGlobalProxySelection;
+#pragma warning restore 618
+            }
+        }
+#endif
 
         [Test]
         public async Task ResponseHeadersAreSplit()

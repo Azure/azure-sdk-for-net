@@ -8,6 +8,8 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
+        private string _tenantId = null;
+
         /// <summary>
         /// The client id of the application registration used to authenticate users in the cache.
         /// </summary>
@@ -23,7 +25,11 @@ namespace Azure.Identity
         /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
-        public string TenantId { get; set; }
+        public string TenantId
+        {
+            get { return _tenantId; }
+            set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
+        }
 
         /// <summary>
         /// When set to true the <see cref="SharedTokenCacheCredential"/> can be used to authenticate to tenants other than the home tenant, requiring <see cref="Username"/> and <see cref="TenantId"/> also to be specified as well.

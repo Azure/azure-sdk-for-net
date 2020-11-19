@@ -314,7 +314,7 @@ namespace Azure.Storage.Queues.Test
                 // download without decrypting
                 var receivedMessages = (await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials())).ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
-                var encryptedMessage = receivedMessages[0].MessageText; // json of message and metadata
+                var encryptedMessage = receivedMessages[0].Body; // json of message and metadata
                 var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(encryptedMessage);
 
                 // encrypt original data manually for comparison

@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
@@ -36,31 +38,35 @@ namespace Azure.Messaging.ServiceBus.Administration
             return forwardToUri.AbsoluteUri;
         }
 
-        public static SubscriptionProperties ParseFromContent(string topicName, string xml)
+        public static async Task<SubscriptionProperties> ParseResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return ParseFromEntryElement(topicName, xDoc);
+                        return await ParseFromEntryElementAsync(topicName, xDoc, response, diagnostics).ConfigureAwait(false);
                     }
                 }
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
-
-            throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "Subscription was not found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static List<SubscriptionProperties> ParseCollectionFromContent(string topicName, string xml)
+        public static async Task<List<SubscriptionProperties>> ParsePagedResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -71,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            subscriptionList.Add(ParseFromEntryElement(topicName, entry));
+                            subscriptionList.Add(await ParseFromEntryElementAsync(topicName, entry, response, diagnostics).ConfigureAwait(false));
                         }
 
                         return subscriptionList;
@@ -80,13 +86,16 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
 
-            throw new ServiceBusException("No subscriptions were found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "No subscriptions were found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry)
+        private static async Task<SubscriptionProperties> ParseFromEntryElementAsync(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var subscriptionDesc = new SubscriptionProperties(topicName, name);
@@ -96,7 +105,10 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Subscription was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException(
+                    "Subscription was not found",
+                    ServiceBusFailureReason.MessagingEntityNotFound,
+                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
             }
 
             foreach (var element in qdXml.Elements())

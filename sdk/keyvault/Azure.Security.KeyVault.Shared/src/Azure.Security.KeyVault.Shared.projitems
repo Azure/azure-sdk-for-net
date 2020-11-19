@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Base64Url.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ChallengeBasedAuthenticationPolicy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientDiagnostics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IJsonSerializable.cs" />

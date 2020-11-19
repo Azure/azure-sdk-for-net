@@ -44,14 +44,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="licenseType">The license type to apply for this
         /// elastic pool. Possible values include: 'LicenseIncluded',
         /// 'BasePrice'</param>
+        /// <param name="maintenanceConfigurationId">Maintenance configuration
+        /// id assigned to the elastic pool. This configuration defines the
+        /// period when the maintenance updates will be rolled out.</param>
         /// <param name="tags">Resource tags.</param>
-        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), string maintenanceConfigurationId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
             PerDatabaseSettings = perDatabaseSettings;
             ZoneRedundant = zoneRedundant;
             LicenseType = licenseType;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             Tags = tags;
             CustomInit();
         }
@@ -93,6 +97,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
         public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets maintenance configuration id assigned to the elastic
+        /// pool. This configuration defines the period when the maintenance
+        /// updates will be rolled out.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maintenanceConfigurationId")]
+        public string MaintenanceConfigurationId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

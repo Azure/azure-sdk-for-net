@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private TokenCredential Credential { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubTokenCredential"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubTokenCredential" /> class.
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
@@ -56,8 +56,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             Resource = eventHubResource;
 
             IsSharedAccessSignatureCredential =
-                (tokenCredential is EventHubSharedKeyCredential)
-                || (tokenCredential is SharedAccessSignatureCredential)
+                (tokenCredential is SharedAccessSignatureCredential)
                 || ((tokenCredential as EventHubTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 

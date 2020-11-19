@@ -12,8 +12,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Message abandon operation</summary>
         Abandon,
 
-        /// <summary>User message handler invocation</summary>
-        UserCallback,
+        /// <summary>Process message handler invocation</summary>
+        ProcessMessageCallback,
 
         /// <summary>Message receive operation</summary>
         Receive,
@@ -22,9 +22,9 @@ namespace Azure.Messaging.ServiceBus
         RenewLock,
 
         /// <summary>Session start operation</summary>
-        AcceptMessageSession,
+        AcceptSession,
 
         /// <summary>Session close operation</summary>
-        CloseMessageSession
+        CloseSession
     }
 }

@@ -4,38 +4,45 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class TopicPropertiesExtensions
     {
-        public static TopicProperties ParseFromContent(string xml)
+        public static async Task<TopicProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return ParseFromEntryElement(xDoc);
+                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
                     }
                 }
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
 
-            throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "Topic was not found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        public static List<TopicProperties> ParseCollectionFromContent(string xml)
+        public static async Task<List<TopicProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
         {
             try
             {
+                string xml = await response.ReadAsStringAsync().ConfigureAwait(false);
                 var xDoc = XElement.Parse(xml);
                 if (!xDoc.IsEmpty)
                 {
@@ -46,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            topicList.Add(ParseFromEntryElement(entry));
+                            topicList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
                         }
 
                         return topicList;
@@ -55,13 +62,16 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
             catch (Exception ex) when (!(ex is ServiceBusException))
             {
-                throw new ServiceBusException(false, ex.Message);
+                throw new ServiceBusException(false, ex.Message, innerException: ex);
             }
 
-            throw new ServiceBusException("No topics were found", ServiceBusFailureReason.MessagingEntityNotFound);
+            throw new ServiceBusException(
+                "No topics were found",
+                ServiceBusFailureReason.MessagingEntityNotFound,
+                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
         }
 
-        private static TopicProperties ParseFromEntryElement(XElement xEntry)
+        private static async Task<TopicProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var topicDesc = new TopicProperties(name);
@@ -71,7 +81,10 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             if (qdXml == null)
             {
-                throw new ServiceBusException("Topic was not found", ServiceBusFailureReason.MessagingEntityNotFound);
+                throw new ServiceBusException(
+                    "Topic was not found",
+                    ServiceBusFailureReason.MessagingEntityNotFound,
+                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
             }
 
             foreach (var element in qdXml.Elements())

@@ -14,8 +14,8 @@ namespace Azure.Identity
         public TokenCache TokenCache { get; set; }
 
         /// <summary>
-        /// Will include x5c header to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
+        /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        public bool IncludeX5CCliamHeader { get; set; }
+        public bool SendCertificateChain { get; set; }
     }
 }
