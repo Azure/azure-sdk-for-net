@@ -58,6 +58,7 @@ parameters:
     Windows_NetCore:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
+      SupportsRecording: true
     Windows_NetCore_ProjectRefAzureClients:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
