@@ -1,6 +1,6 @@
 # Release History
 
-## 5.1.0-beta.3 (Unreleased)
+## 5.1.0-beta.3 (2020-11-19)
 ### New Features
 - Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing.
 - Added `AnalyzeOperation` long running operation for new asynchronous `Analyze API` to support batch processing of Named entity recognition, Personally Identifiable Information and Key phrase extraction.
