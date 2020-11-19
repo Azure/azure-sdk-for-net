@@ -71,8 +71,20 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Collect Code Coverage -->
-  <Import Condition="'$(CollectCoverage)' == 'true'"  Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
+  <!--
+    Code Coverage for Track 2
+    Enable using MSBuild integration since it's easier to use in build pipelines
+    and likely easier to remember than the VSTest platform integration.
+    Also: https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/KnownIssues.md#1-vstest-stops-process-execution-earlydotnet-test
+  -->
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
+    <_ImportCodeCoverage>true</_ImportCodeCoverage>
+    <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
+    <!-- Override this property in your projects' or solutions' Directory.Build.props to further customize code coverage. -->
+    <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
+  </PropertyGroup>
+
+  <Import Condition="'$(_ImportCodeCoverage)' == 'true'" Project="$(MSBuildThisFileDirectory)\CodeCoverage.targets" />
 
   <!-- Add StyleCop Analyzers -->
   <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >

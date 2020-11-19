@@ -1,10 +1,41 @@
 <Project>
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+  <PropertyGroup>
+    <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
+    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and '$(ContinuousIntegrationBuild)' == 'true'">true</SkipCoverageReport>
+    <TestResultsDirectory>$(MSBuildProjectDirectory)\TestResults</TestResultsDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Use VSTest integration to work around blocking issues
+      https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md
+    -->
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <!-- Clean up previous TestResults so reports are recent -->
+  <Target Name="CleanPreviousCodeCoverage"
+          BeforeTargets="VSTest">
+    <RemoveDir Directories="$(TestResultsDirectory)" />
+  </Target>
+
+  <!-- Should be similar to what's in the pipelines, though generate a full HTML report -->
+  <Target Name="GenerateCodeCoverageReport"
+          AfterTargets="VSTest"
+          Condition="'$(SkipCoverageReport)' != 'true'">
+    <PropertyGroup>
+      <CoverageReportCommandLine>dotnet tool run reportgenerator --</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) -reporttypes:Html</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-targetdir:$(TestResultsDirectory)"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-filefilters:+$(CodeCoverageDirectory)\**"</CoverageReportCommandLine>
+    </PropertyGroup>
+    <Exec Command="$(CoverageReportCommandLine)"
+          IgnoreExitCode="true" />
+  </Target>
 
   <!--
     Allows Collection of Code Coverage for Deterministic Builds
@@ -19,7 +50,8 @@
           Returns="@(_LocalTopLevelSourceRoot)"
           Condition="'$(DeterministicSourcePaths)' == 'true'">
     <ItemGroup>
-      <_LocalTopLevelSourceRoot Include="@(SourceRoot)" Condition="'%(SourceRoot.NestedRoot)' == ''"/>
+      <_LocalTopLevelSourceRoot Include="@(SourceRoot)"
+                                Condition="'%(SourceRoot.NestedRoot)' == ''"/>
     </ItemGroup>
   </Target>
 </Project>

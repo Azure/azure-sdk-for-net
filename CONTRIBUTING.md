@@ -55,8 +55,11 @@ Nuget package will be created in root directory under \artifacts\packages\Debug 
 ### Using the command line:
 
 Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
-In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI
-`dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj`
+In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
+
+```bash
+dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
+```
 
 ### Non-Windows command line build
 
@@ -66,6 +69,17 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 - `dotnet msbuild eng\mgmt.proj /t:RunTests /p:scope=Compute`
 - `dotnet msbuild eng\mgmt.proj /t:CreateNugetPackage /p:scope=Compute`
 - `dotnet msbuild build.proj /t:Util /p:UtilityName=InstallPsModules`
+
+### Code Coverage
+
+If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
+
+```bash
+dotnet test /p:CollectCoverage=true
+```
+
+On developers' machines, you can open `index.html` from within the `TestResults` directory in your test projects.
+Coverage reports can also be found in Azure Pipelines on the "Code Coverage" tab after a pull request validation build completes.
 
 ### Update build tools
 

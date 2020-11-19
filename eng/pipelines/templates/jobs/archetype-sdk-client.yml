@@ -150,7 +150,8 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{parameters.ServiceToTest}}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
-          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -165,14 +166,16 @@ jobs:
           mergeTestResults: true
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
-        displayName: ReportGenerator
+        displayName: Generate Code Coverage Reports
         inputs:
-          reports: 'sdk/**/coverage.cobertura.xml'
-          targetdir: '$(Build.SourcesDirectory)'
-          reporttypes: 'Cobertura;HtmlSummary'
+          reports: sdk/**/coverage.cobertura.xml
+          targetdir: $(Build.SourcesDirectory)
+          reporttypes: Cobertura;HtmlSummary
+          filefilters: >-
+            +sdk/${{parameters.ServiceDirectory}}
       - task: PublishCodeCoverageResults@1
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
-        displayName: 'Publish code coverage report'
+        displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: 'Cobertura'
-          summaryFileLocation: 'Cobertura.xml'
+          codeCoverageTool: Cobertura
+          summaryFileLocation: Cobertura.xml
