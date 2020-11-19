@@ -54,4 +54,4 @@ To light up App Insights, add the InstrumentationKey key and value to the Applic
 
 # Azure Monitor
 You can view an end-to-end transaction in the portal by going to your App. Click on the Search icon, and then click See all data.
-After selecting a grouped result, you will be able to see something like this ![Monitor](assets/monitor.PNG).
+After selecting a grouped result, you will be able to see a timeline of the grouped requests: ![Monitor](assets/monitor.PNG).
