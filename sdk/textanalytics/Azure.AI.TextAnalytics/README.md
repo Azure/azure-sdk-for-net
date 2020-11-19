@@ -19,7 +19,6 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
-**Note:** This package version targets Azure Text Analytics service API version v3.0 and above.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -331,7 +330,7 @@ Text Analytics for health is a containerized service that extracts and labels re
 ```
 
 ### Run Analyze Operation Asynchronously
-The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation].
+The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationBatchConvenience
     string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
@@ -500,14 +499,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/README.md
-[textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0/operations/Languages
+[textanalytics_rest_api]: https://westcentralus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1-Preview-3/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
 [recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
-[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
-<!-- TODO - Update this how to once the below PR is merged and released -->
-[analyze_operation_howto]: https://github.com/MicrosoftDocs/azure-docs-pr/pull/137595
+[analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeOperation.md
+[analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=analyze
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
