@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Security
             // This is expected?? 
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
-            if (_shouldTrace)
+            if (!_shouldTrace)
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
