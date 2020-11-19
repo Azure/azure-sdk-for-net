@@ -156,6 +156,17 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      # BEGIN: Temporarily publish TestResults for manual analysis
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: sdk/${{parameters.ServiceDirectory}}
+          contents: '**\coverage.cobertura.xml'
+          targetFolder: $(Build.ArtifactStagingDirectory)\TestResults
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)\TestResults
+          artifactName: TestResults
+      # END: Temporarily publish TestResults for manual analysis
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
