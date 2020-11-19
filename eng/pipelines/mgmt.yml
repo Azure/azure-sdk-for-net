@@ -4,6 +4,7 @@ pr:
     include:
     - master
     - '*-preview'
+    - minghao/track1sdkvalidation
   paths:
     include:
     - sdk/advisor/Microsoft.Azure.Management.Advisor
