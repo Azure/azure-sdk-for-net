@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+        [ForwardsClientCalls]
         public virtual Response SubmitBatch(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -196,7 +196,7 @@ namespace Azure.Storage.Blobs.Specialized
             SubmitBatchInternal(
                 batch,
                 throwOnAnyFailure,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -223,7 +223,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failures will only throw if <paramref name="throwOnAnyFailure"/> is
         /// true and be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-[ForwardsClientCalls] // TODO: Throwing exceptions fails tests
+        [ForwardsClientCalls]
         public virtual async Task<Response> SubmitBatchAsync(
             BlobBatch batch,
             bool throwOnAnyFailure = false,
@@ -231,7 +231,7 @@ namespace Azure.Storage.Blobs.Specialized
             await SubmitBatchInternal(
                 batch,
                 throwOnAnyFailure,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -267,61 +267,76 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            batch = batch ?? throw new ArgumentNullException(nameof(batch));
-            if (batch.Submitted)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}");
+            try
             {
-                throw BatchErrors.CannotResubmitBatch(nameof(batch));
-            }
-            else if (!batch.IsAssociatedClient(this))
-            {
-                throw BatchErrors.BatchClientDoesNotMatch(nameof(batch));
-            }
+                scope.Start();
 
-            // Get the sub-operation messages to submit
-            IList<HttpMessage> messages = batch.GetMessagesToSubmit();
-            if (messages.Count == 0)
-            {
-                throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
-            }
-            // TODO: Consider validating the upper limit of 256 messages
+                batch = batch ?? throw new ArgumentNullException(nameof(batch));
+                if (batch.Submitted)
+                {
+                    throw BatchErrors.CannotResubmitBatch(nameof(batch));
+                }
+                else if (!batch.IsAssociatedClient(this))
+                {
+                    throw BatchErrors.BatchClientDoesNotMatch(nameof(batch));
+                }
 
-            // Merge the sub-operations into a single multipart/mixed Stream
-            (Stream content, string contentType) =
-                await MergeOperationRequests(
+                // Get the sub-operation messages to submit
+                IList<HttpMessage> messages = batch.GetMessagesToSubmit();
+                if (messages.Count == 0)
+                {
+                    throw BatchErrors.CannotSubmitEmptyBatch(nameof(batch));
+                }
+                // TODO: Consider validating the upper limit of 256 messages
+
+                // Merge the sub-operations into a single multipart/mixed Stream
+                (Stream content, string contentType) =
+                    await MergeOperationRequests(
+                        messages,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+
+                // Send the batch request
+                Response<BlobBatchResult> batchResult =
+                    await BatchRestClient.Service.SubmitBatchAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        multipartContentType: contentType,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                // Split the responses apart and update the sub-operation responses
+                Response raw = batchResult.GetRawResponse();
+                await UpdateOperationResponses(
                     messages,
+                    raw,
+                    batchResult.Value.Content,
+                    batchResult.Value.ContentType,
+                    throwOnAnyFailure,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
 
-            // Send the batch request
-            Response<BlobBatchResult> batchResult =
-                await BatchRestClient.Service.SubmitBatchAsync(
-                    ClientDiagnostics,
-                    Pipeline,
-                    Uri,
-                    body: content,
-                    contentLength: content.Length,
-                    multipartContentType: contentType,
-                    version: Version.ToVersionString(),
-                    async: async,
-                    operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-            // Split the responses apart and update the sub-operation responses
-            Response raw = batchResult.GetRawResponse();
-            await UpdateOperationResponses(
-                messages,
-                raw,
-                batchResult.Value.Content,
-                batchResult.Value.ContentType,
-                throwOnAnyFailure,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            // Return the batch result
-            return raw;
+                // Return the batch result
+                return raw;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
