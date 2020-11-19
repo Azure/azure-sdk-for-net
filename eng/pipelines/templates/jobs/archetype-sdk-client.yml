@@ -110,8 +110,6 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true))
     variables:
       - template: ../variables/globals.yml
-      # - name: disable.coverage.autogenerate
-      #   value: true
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
