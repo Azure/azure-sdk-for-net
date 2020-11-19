@@ -2515,6 +2515,183 @@ namespace Azure.Storage.Blobs
             }
             #endregion Container.RestoreAsync
 
+            #region Container.SubmitBatchAsync
+            /// <summary>
+            /// The Batch operation allows multiple API calls to be embedded into a single HTTP request.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="body">Initial data</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="multipartContentType">Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_{GUID}</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult>> SubmitBatchAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                System.IO.Stream body,
+                long contentLength,
+                string multipartContentType,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "ContainerClient.SubmitBatch",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SubmitBatchAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        body,
+                        contentLength,
+                        multipartContentType,
+                        version,
+                        timeout,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SubmitBatchAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Container.SubmitBatchAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="body">Initial data</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="multipartContentType">Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_{GUID}</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The Container.SubmitBatchAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SubmitBatchAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                System.IO.Stream body,
+                long contentLength,
+                string multipartContentType,
+                string version,
+                int? timeout = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (body == null)
+                {
+                    throw new System.ArgumentNullException(nameof(body));
+                }
+                if (multipartContentType == null)
+                {
+                    throw new System.ArgumentNullException(nameof(multipartContentType));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Post;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "batch", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("Content-Type", multipartContentType);
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                // Create the body
+                _request.Content = Azure.Core.RequestContent.Create(body);
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Container.SubmitBatchAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Container.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 202:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.BlobBatchResult _value = new Azure.Storage.Blobs.Models.BlobBatchResult();
+                        _value.Content = response.ContentStream; // You should manually wrap with RetriableStream!
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("Content-Type", out _header))
+                        {
+                            _value.ContentType = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Container.SubmitBatchAsync
+
             #region Container.AcquireLeaseAsync
             /// <summary>
             /// [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
@@ -4722,6 +4899,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -4742,6 +4920,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
                 string requestId = default,
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default,
                 bool async = true,
                 string operationName = "BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -4765,7 +4944,8 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         ifTags,
-                        requestId))
+                        requestId,
+                        blobDeleteType))
                     {
                         if (async)
                         {
@@ -4811,6 +4991,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="ifTags">Specify a SQL where clause on blob tags to operate only on blobs with a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobDeleteType">Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.</param>
             /// <returns>The Blob.DeleteAsync Message.</returns>
             internal static Azure.Core.HttpMessage DeleteAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4826,7 +5007,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string ifTags = default,
-                string requestId = default)
+                string requestId = default,
+                Azure.Storage.Blobs.Models.BlobDeleteType? blobDeleteType = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -4848,6 +5030,7 @@ namespace Azure.Storage.Blobs
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
                 if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (blobDeleteType != null) { _request.Uri.AppendQuery("deletetype", blobDeleteType.Value.ToString()); }
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
@@ -17456,6 +17639,22 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobCorsRule
 
+#region enum BlobDeleteType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
+    /// </summary>
+    internal enum BlobDeleteType
+    {
+        /// <summary>
+        /// Permanent
+        /// </summary>
+        Permanent
+    }
+}
+#endregion enum BlobDeleteType
+
 #region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models
 {
@@ -19476,6 +19675,11 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
+        /// Indicates whether permanent delete is allowed on this storage account.
+        /// </summary>
+        public bool? AllowPermanentDelete { get; set; }
+
+        /// <summary>
         /// Creates a new BlobRetentionPolicy instance
         /// </summary>
         public BlobRetentionPolicy() { }
@@ -19502,6 +19706,14 @@ namespace Azure.Storage.Blobs.Models
                     System.Xml.Linq.XName.Get("Days", ""),
                     value.Days.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
             }
+            if (value.AllowPermanentDelete != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("AllowPermanentDelete", ""),
+                    #pragma warning disable CA1308 // Normalize strings to uppercase
+                    value.AllowPermanentDelete.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                    #pragma warning restore CA1308 // Normalize strings to uppercase
+            }
             return _element;
         }
 
@@ -19524,6 +19736,11 @@ namespace Azure.Storage.Blobs.Models
             if (_child != null)
             {
                 _value.Days = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AllowPermanentDelete", ""));
+            if (_child != null)
+            {
+                _value.AllowPermanentDelete = bool.Parse(_child.Value);
             }
             CustomizeFromXml(element, _value);
             return _value;
