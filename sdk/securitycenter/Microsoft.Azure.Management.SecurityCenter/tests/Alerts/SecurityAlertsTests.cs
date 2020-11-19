@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -37,9 +38,18 @@ namespace SecurityCenter.Tests
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
-            securityCenterClient.AscLocation = "centralus";
+            securityCenterClient.AscLocation = "westeurope";
 
             return securityCenterClient;
+        }
+
+        private static SecurityCenterClient GetSecurityCenterClientWithLocation(MockContext context, string location)
+        {
+            var client = GetSecurityCenterClient(context);
+
+            client.AscLocation = location;
+
+            return client;
         }
 
         #endregion
@@ -64,16 +74,16 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
-                securityCenterClient.AscLocation = "centralus"; // Alert is in central us
-
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
-
+                
                 var firstAlert = alerts.First();
+				var alertLocation = GetAlertLocation(firstAlert.Id);
+				var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
                 var alertName = firstAlert.Name;
                 var resourceGroupName = Regex.Match(firstAlert.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value;
 
-                var foundAlert = await securityCenterClient.Alerts.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName);
+                var foundAlert = await clientWithLocation.Alerts.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName);
                 ValidateAlert(foundAlert);
             }
         }
@@ -88,10 +98,18 @@ namespace SecurityCenter.Tests
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
 
-                var alert = await securityCenterClient.Alerts.GetSubscriptionLevelAlertAsync(alerts.First().Name);
+                var firstAlert = alerts.First();
+                var alertLocation = GetAlertLocation(firstAlert.Id);
+                var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
+                var alert = clientWithLocation.Alerts.GetSubscriptionLevelAlert(firstAlert.Name);
 
                 ValidateAlert(alert);
             }
+        }
+
+        private string GetAlertLocation(string id)
+        {
+            return Regex.Match(id, @"(?<=locations/)[^/]+?(?=/)").Value;
         }
 
         [Fact]
