@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues.Test
     public class QueueClientTests : QueueTestBase
     {
         public QueueClientTests(bool async)
-            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -818,12 +818,12 @@ namespace Azure.Storage.Queues.Test
             if (IsAsync)
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessageAsync(It.IsAny<string>(), It.IsAny<string>(), nonEncodedContent, It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessageAsync(It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
             else
             {
                 invalidQueueMessageHandlerMock.Verify(
-                    m => m.OnInvalidMessage(It.IsAny<string>(), It.IsAny<string>(), nonEncodedContent, It.IsAny<CancellationToken>()));
+                    m => m.OnInvalidMessage(It.Is<object>(m => ((QueueMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
             }
         }
 

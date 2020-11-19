@@ -1995,16 +1995,12 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         await _invalidQueueMessageHandler.OnInvalidMessageAsync(
-                            dequeuedMessageItem.MessageId,
-                            dequeuedMessageItem.PopReceipt,
-                            dequeuedMessageItem.MessageText,
+                            QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             cancellationToken).ConfigureAwait(false);
                     } else
                     {
                         _invalidQueueMessageHandler.OnInvalidMessage(
-                            dequeuedMessageItem.MessageId,
-                            dequeuedMessageItem.PopReceipt,
-                            dequeuedMessageItem.MessageText,
+                            QueueMessage.ToQueueMessage(dequeuedMessageItem, QueueMessageEncoding.None),
                             cancellationToken);
                     }
                 }
