@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="identity">The identity of the container
         /// registry.</param>
         /// <param name="loginServer">The URL that can be used to log into the
@@ -72,8 +74,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="publicNetworkAccess">Whether or not public network
         /// access is allowed for the container registry. Possible values
         /// include: 'Enabled', 'Disabled'</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
-            : base(location, id, name, type, tags)
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), IList<string> dataEndpointHostNames = default(IList<string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
+            : base(location, id, name, type, tags, systemData)
         {
             Sku = sku;
             Identity = identity;
