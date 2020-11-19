@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatMessageReadReceipt
+    public partial class ReadReceipt
     {
-        internal static ChatMessageReadReceipt DeserializeChatMessageReadReceipt(JsonElement element)
+        internal static ReadReceipt DeserializeReadReceipt(JsonElement element)
         {
             Optional<string> senderId = default;
             Optional<string> chatMessageId = default;
@@ -41,7 +41,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageReadReceipt(senderId.Value, chatMessageId.Value, Optional.ToNullable(readOn));
+            return new ReadReceipt(senderId.Value, chatMessageId.Value, Optional.ToNullable(readOn));
         }
     }
 }
