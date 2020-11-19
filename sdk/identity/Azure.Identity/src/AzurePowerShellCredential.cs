@@ -128,7 +128,6 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(PowerShellNotInstalledError);
                 }
 
-
                 throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
             }
 
