@@ -17474,7 +17474,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional.  Only possible value is 'permanent', which specifies to permanently delete a blob if blob soft delete is enabled.
     /// </summary>
-    public enum BlobDeleteType
+    internal enum BlobDeleteType
     {
         /// <summary>
         /// Permanent

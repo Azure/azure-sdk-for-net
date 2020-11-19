@@ -388,10 +388,6 @@ namespace Azure.Storage.Blobs.Models
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
     }
-    public enum BlobDeleteType
-    {
-        Permanent = 0,
-    }
     public partial class BlobDownloadDetails
     {
         public BlobDownloadDetails() { }
