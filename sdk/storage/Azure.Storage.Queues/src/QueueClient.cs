@@ -2258,8 +2258,11 @@ namespace Azure.Storage.Queues
                     message:
                     $"Uri: {MessagesUri}\n" +
                     $"{nameof(maxMessages)}: {maxMessages}");
+                DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
                 try
                 {
+                    scope.Start();
+
                     Response<IEnumerable<PeekedMessageItem>> response = await QueueRestClient.Messages.PeekAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -2276,29 +2279,78 @@ namespace Azure.Storage.Queues
                     {
                         return response.GetRawResponse().AsNoBodyResponse<PeekedMessage[]>();
                     }
-                    else if (UsingClientSideEncryption)
-                    {
-                        return Response.FromValue(
-                            await new QueueClientSideDecryptor(ClientSideEncryption)
-                                .ClientSideDecryptMessagesInternal(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), async, cancellationToken).ConfigureAwait(false),
-                            response.GetRawResponse());
-                    }
                     else
                     {
-                        return Response.FromValue(response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray(), response.GetRawResponse());
+                        PeekedMessage[] peekedMessages;
+                        if (_invalidQueueMessageHandler != null)
+                        {
+                            peekedMessages = await ToPeekedMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            peekedMessages = response.Value.Select(x => PeekedMessage.ToPeekedMessage(x, _messageEncoding)).ToArray();
+                        }
+
+                        if (UsingClientSideEncryption)
+                        {
+                            return Response.FromValue(
+                                await new QueueClientSideDecryptor(ClientSideEncryption)
+                                    .ClientSideDecryptMessagesInternal(peekedMessages, async, cancellationToken).ConfigureAwait(false),
+                                response.GetRawResponse());
+                        }
+                        else
+                        {
+                            return Response.FromValue(peekedMessages, response.GetRawResponse());
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
+                    scope.Failed(ex);
                     Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
+                    scope.Dispose();
                     Pipeline.LogMethodExit(nameof(QueueClient));
                 }
             }
         }
+
+        private async Task<PeekedMessage[]> ToPeekedMessagesWithInvalidMessageHandling(
+            IEnumerable<PeekedMessageItem> peekedMessageItems,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            List<PeekedMessage> peekedMessages = new List<PeekedMessage>();
+
+            foreach (var peekedMessageItem in peekedMessageItems)
+            {
+                try
+                {
+                    peekedMessages.Add(PeekedMessage.ToPeekedMessage(peekedMessageItem, _messageEncoding));
+                }
+                catch (FormatException)
+                {
+                    if (async)
+                    {
+                        await _invalidQueueMessageHandler.OnInvalidMessageAsync(
+                            PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
+                            cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _invalidQueueMessageHandler.OnInvalidMessage(
+                            PeekedMessage.ToPeekedMessage(peekedMessageItem, QueueMessageEncoding.None),
+                            cancellationToken);
+                    }
+                }
+            }
+
+            return peekedMessages.ToArray();
+        }
+
         #endregion PeekMessages
 
         /// <summary>

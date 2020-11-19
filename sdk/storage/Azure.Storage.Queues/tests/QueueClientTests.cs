@@ -759,6 +759,54 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task FailsOnInvalidPeekedMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.PeekMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [Test]
+        public async Task CanHandleInvalidPeekedMessageAndReturnValid()
+        {
+            // Arrange
+            Mock<InvalidQueueMessageHandler> invalidQueueMessageHandlerMock = new Mock<InvalidQueueMessageHandler>();
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64, invalidQueueMessageHandlerMock.Object);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            PeekedMessage[] peekedMessages = await encodingClient.PeekMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, peekedMessages.Count());
+            if (IsAsync)
+            {
+                invalidQueueMessageHandlerMock.Verify(
+                    m => m.OnInvalidMessageAsync(It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+            }
+            else
+            {
+                invalidQueueMessageHandlerMock.Verify(
+                    m => m.OnInvalidMessage(It.Is<object>(m => ((PeekedMessage)m).Body.ToString() == nonEncodedContent), It.IsAny<CancellationToken>()));
+            }
+        }
+
+        [Test]
         public async Task CanSendAndReceiveNonUTFBytes()
         {
             // Arrange
