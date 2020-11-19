@@ -172,7 +172,7 @@ jobs:
           targetdir: $(Build.SourcesDirectory)
           reporttypes: Cobertura;HtmlSummary
           filefilters: >-
-            +sdk/${{parameters.ServiceDirectory}}/**;
+            +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**;
       - task: PublishCodeCoverageResults@1
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         displayName: Publish Code Coverage Reports
