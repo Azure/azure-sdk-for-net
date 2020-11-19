@@ -103,7 +103,7 @@ try {
         $path = ($path -replace "\\", "/") + "/sdk"
 
         Invoke-Block {
-            & npm install -g @autorest/autorest
+            & npm install -g autorest
         }
         
         Invoke-Block {
