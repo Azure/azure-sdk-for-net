@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Minimum properties that should be present in each individual validation
-    /// response.
+    /// User assigned identity properties.
     /// </summary>
-    public partial class ValidationInputResponse
+    public partial class UserAssignedProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ValidationInputResponse class.
+        /// Initializes a new instance of the UserAssignedProperties class.
         /// </summary>
-        public ValidationInputResponse()
+        public UserAssignedProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ValidationInputResponse class.
+        /// Initializes a new instance of the UserAssignedProperties class.
         /// </summary>
-        /// <param name="error">Error code and message of validation
-        /// response.</param>
-        public ValidationInputResponse(CloudError error = default(CloudError))
+        /// <param name="resourceId">Arm resource id for user assigned identity
+        /// to be used to fetch MSI token.</param>
+        public UserAssignedProperties(string resourceId = default(string))
         {
-            Error = error;
+            ResourceId = resourceId;
             CustomInit();
         }
 
@@ -44,10 +43,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code and message of validation response.
+        /// Gets or sets arm resource id for user assigned identity to be used
+        /// to fetch MSI token.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public CloudError Error { get; private set; }
+        [JsonProperty(PropertyName = "resourceId")]
+        public string ResourceId { get; set; }
 
     }
 }
