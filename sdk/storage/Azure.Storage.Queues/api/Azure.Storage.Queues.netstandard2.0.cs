@@ -3,8 +3,8 @@ namespace Azure.Storage.Queues
     public abstract partial class InvalidQueueMessageHandler
     {
         protected InvalidQueueMessageHandler() { }
-        public abstract void OnInvalidMessage(string messageId, string popReceipt, string rawBody, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task OnInvalidMessageAsync(string messageId, string popReceipt, string rawBody, System.Threading.CancellationToken cancellationToken);
+        public abstract void OnInvalidMessage(object rawMessage, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task OnInvalidMessageAsync(object rawMessage, System.Threading.CancellationToken cancellationToken);
     }
     public partial class QueueClient
     {
