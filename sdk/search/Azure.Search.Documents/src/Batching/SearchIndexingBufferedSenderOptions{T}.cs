@@ -40,12 +40,13 @@ namespace Azure.Search.Documents
         public CancellationToken FlushCancellationToken { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating the number of actions to group into
-        /// a batch when tuning the behavior of the sender.  The default value
-        /// is 512.  The current service maximum is 32000.
+        /// Gets or sets a value indicating the initial number of actions to
+        /// group into a batch when tuning the behavior of the sender.  The
+        /// default value will be 512 if unset.  The current service maximum is
+        /// 32000.
         /// </summary>
-        internal int? BatchActionSize { get; set; } = DefaultBatchActionSize;
-        internal const int DefaultBatchActionSize = 512;
+        public int? InitialBatchActionCount { get; set; } = null;
+        internal const int DefaultInitialBatchActionCount = 512;
 
         /// <summary>
         /// Gets or sets a value indicating the number of bytes to use when
@@ -56,10 +57,32 @@ namespace Azure.Search.Documents
         internal const int DefaultBatchPayloadSize = 500 * 1024;
 
         /// <summary>
-        /// Gets or sets the number of times to retry a failed document.
+        /// Gets or sets the number of times to retry a failed document.  Note
+        /// that this is different than <see cref="Azure.Core.RetryOptions.MaxRetries"/>
+        /// which will try to resend the same request.  This property is used
+        /// to control the number of attempts we will make to submit an indexing
+        /// action.
         /// </summary>
-        internal int? RetryCount { get; set; } = DefaultRetryCount;
-        internal const int DefaultRetryCount = 3;
+        public int MaxRetries { get; set; } = 3;
+
+        /// <summary>
+        /// The initial retry delay. The delay will increase exponentially with
+        /// subsequent retries and add random jitter.  Note that this is
+        /// different than <see cref="Azure.Core.RetryOptions.Delay"/> which
+        /// will only delay before resending the same request.  This property
+        /// is used to add delay between additional batch submissions when our
+        /// requests are being throttled by the service.
+        /// </summary>
+        public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(0.8);
+
+        /// <summary>
+        /// The maximum permissible delay between retry attempts.  Note that
+        /// this is different than <see cref="Azure.Core.RetryOptions.MaxDelay"/>
+        /// which will only delay before resending the same request.  This
+        /// property is used to add delay between additional batch
+        /// submissions when our requests are being throttled by the service.
+        /// </summary>
+        public TimeSpan MaxRetryDelay { get; set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         /// Gets or sets a function that can be used to access the index key

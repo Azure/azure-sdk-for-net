@@ -6,23 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
 {
     public class BlobExtensionSamples
     {
         [TestCase(typeof(BlobFunction_String))]
         [TestCase(typeof(BlobFunction_ReadStream))]
         [TestCase(typeof(BlobFunction_WriteStream))]
-        [TestCase(typeof(BlobFunction_BlobBaseClient))]
+        [TestCase(typeof(BlobFunction_BlobClient))]
         public async Task Run_BlobFunction(Type programType)
         {
             var containerClient = AzuriteNUnitFixture.Instance.GetBlobServiceClient().GetBlobContainerClient("sample-container");
@@ -96,13 +96,13 @@ namespace Azure.WebJobs.Extensions.Storage.Blobs.Samples.Tests
     }
     #endregion
 
-    #region Snippet:BlobFunction_BlobBaseClient
-    public static class BlobFunction_BlobBaseClient
+    #region Snippet:BlobFunction_BlobClient
+    public static class BlobFunction_BlobClient
     {
         [FunctionName("BlobFunction")]
         public static async Task Run(
-            [BlobTrigger("sample-container/sample-blob-1")] BlobBaseClient blobTriggerClient,
-            [Blob("sample-container/sample-blob-2")] BlobBaseClient blobClient,
+            [BlobTrigger("sample-container/sample-blob-1")] BlobClient blobTriggerClient,
+            [Blob("sample-container/sample-blob-2")] BlobClient blobClient,
             ILogger logger)
         {
             BlobProperties blobTriggerProperties = await blobTriggerClient.GetPropertiesAsync();

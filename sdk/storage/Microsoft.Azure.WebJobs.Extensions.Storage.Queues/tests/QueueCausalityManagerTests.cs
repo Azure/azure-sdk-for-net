@@ -2,16 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Azure.WebJobs.Host.Queues;
-using Newtonsoft.Json.Linq;
 using Azure.Storage.Queues.Models;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Extensions.Logging.Abstractions;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueCausalityManagerTests
     {
+        private QueueCausalityManager queueCausalityManager;
+
+        [SetUp]
+        public void Setup()
+        {
+            queueCausalityManager = new QueueCausalityManager(new NullLoggerFactory());
+        }
+
         [Test]
         public void SetOwner_IfEmptyOwner_DoesNotAddOwner()
         {
@@ -96,13 +104,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             TestOwnerEqual(expected, json.ToString());
         }
 
-        private static void AssertOwnerEqual(Guid expectedOwner, string message)
+        private void AssertOwnerEqual(Guid expectedOwner, string message)
         {
             Guid? owner = GetOwner(message);
             Assert.AreEqual(expectedOwner, owner);
         }
 
-        private static void TestOwnerEqual(Guid expectedOwner, string message)
+        private void TestOwnerEqual(Guid expectedOwner, string message)
         {
             // Act
             Guid? owner = GetOwner(message);
@@ -111,29 +119,29 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Queues
             Assert.AreEqual(expectedOwner, owner);
         }
 
-        private static void TestOwnerIsNull(string message)
+        private void TestOwnerIsNull(string message)
         {
             TestOwnerIsNull(CreateMessage(message));
         }
 
-        private static void TestOwnerIsNull(QueueMessage message)
+        private void TestOwnerIsNull(QueueMessage message)
         {
             // Act
-            Guid? owner = QueueCausalityManager.GetOwner(message);
+            Guid? owner = queueCausalityManager.GetOwner(message);
 
             // Assert
             Assert.Null(owner);
         }
 
-        private static void AssertOwnerIsNull(string message)
+        private void AssertOwnerIsNull(string message)
         {
             Guid? owner = GetOwner(message);
             Assert.Null(owner);
         }
 
-        private static Guid? GetOwner(string message)
+        private Guid? GetOwner(string message)
         {
-            return QueueCausalityManager.GetOwner(CreateMessage(message));
+            return queueCausalityManager.GetOwner(CreateMessage(message));
         }
 
         private static JObject CreateJsonObject(object value)

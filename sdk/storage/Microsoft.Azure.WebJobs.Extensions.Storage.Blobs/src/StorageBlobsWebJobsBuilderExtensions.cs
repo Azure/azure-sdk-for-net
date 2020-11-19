@@ -2,18 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using Azure.WebJobs.Extensions.Storage.Blobs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.Blobs;
-using Microsoft.Azure.WebJobs.Host.Blobs.Bindings;
-using Microsoft.Azure.WebJobs.Host.Queues;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,16 +16,15 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Microsoft.Extensions.Hosting
 {
     /// <summary>
-    /// TODO.
+    /// Extension methods for Storage Blobs integration.
     /// </summary>
     public static class StorageBlobsWebJobsBuilderExtensions
     {
         /// <summary>
-        /// TODO.
+        /// Adds the Storage Blobs extension to the provided <see cref="IWebJobsBuilder"/>.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="configureBlobs"></param>
-        /// <returns></returns>
+        /// <param name="builder">The <see cref="IWebJobsBuilder"/> to configure.</param>
+        /// <param name="configureBlobs">Optional. An action to configure <see cref="BlobsOptions"/>.</param>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
             builder.Services.AddAzureClientsCore();

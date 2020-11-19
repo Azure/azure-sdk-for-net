@@ -3,18 +3,19 @@
 
 using System;
 using System.Globalization;
+using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Host
 {
-    /// <summary>
-    /// TODO.
-    /// </summary>
 #if STORAGE_WEBJOBS_PUBLIC_QUEUE_PROCESSOR
+    /// <summary>
+    /// Represents configuration for <see cref="QueueTriggerAttribute"/>.
+    /// </summary>
     public class QueuesOptions : IOptionsFormatter
 #else
     internal class QueuesOptions : IOptionsFormatter
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Host
 
         // Azure Queues currently limits the number of messages retrieved to 32. We enforce this constraint here because
         // the runtime error message the user would receive from the SDK otherwise is not as helpful.
-        private const int MaxBatchSize = 32;
+        internal const int MaxBatchSize = 32;
 
         private int _batchSize = DefaultBatchSize;
         private int _newBatchThreshold;
@@ -33,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Host
         private TimeSpan _maxPollingInterval = QueuePollingIntervals.DefaultMaximum;
         private TimeSpan _visibilityTimeout = TimeSpan.Zero;
         private int _maxDequeueCount = DefaultMaxDequeueCount;
+        private QueueMessageEncoding _messageEncoding = QueueMessageEncoding.Base64;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueuesOptions"/> class.
@@ -159,6 +161,22 @@ namespace Microsoft.Azure.WebJobs.Host
             }
         }
 
+        /// <summary>
+        /// Gets or sets a message encoding that determines how queue message body is represented in HTTP requests and responses.
+        /// The default is <see cref="QueueMessageEncoding.Base64"/>.
+        /// </summary>
+        public QueueMessageEncoding MessageEncoding
+        {
+            get
+            {
+                return _messageEncoding;
+            }
+            set
+            {
+                _messageEncoding = value;
+            }
+        }
+
         /// <inheritdoc/>
         public string Format()
         {
@@ -168,7 +186,8 @@ namespace Microsoft.Azure.WebJobs.Host
                 { nameof(NewBatchThreshold), NewBatchThreshold },
                 { nameof(MaxPollingInterval), MaxPollingInterval },
                 { nameof(MaxDequeueCount), MaxDequeueCount },
-                { nameof(VisibilityTimeout), VisibilityTimeout }
+                { nameof(VisibilityTimeout), VisibilityTimeout },
+                { nameof(MessageEncoding), MessageEncoding.ToString() }
             };
 
             return options.ToString(Formatting.Indented);

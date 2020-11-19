@@ -10,17 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientCertificateCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientCertificateCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -108,7 +101,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var certPath = TestEnvironment.ServicePrincipalSniCertificatePath;
 
-            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { IncludeX5CClaimHeader = true });
+            var options = InstrumentClientOptions(new ClientCertificateCredentialOptions { SendCertificateChain = true });
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certPath, options);
 

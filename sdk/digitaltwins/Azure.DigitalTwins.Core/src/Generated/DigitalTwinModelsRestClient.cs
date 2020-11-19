@@ -53,14 +53,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/models", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsAddOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsAddOptions.TraceParent);
-            }
-            if (digitalTwinModelsAddOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsAddOptions.TraceState);
-            }
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (models != null)
@@ -171,14 +163,6 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsListOptions.TraceParent);
-            }
-            if (digitalTwinModelsListOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsListOptions.TraceState);
-            }
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {
                 request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage.Value);
@@ -266,14 +250,6 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsGetByIdOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsGetByIdOptions.TraceParent);
-            }
-            if (digitalTwinModelsGetByIdOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsGetByIdOptions.TraceState);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -365,14 +341,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsUpdateOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsUpdateOptions.TraceParent);
-            }
-            if (digitalTwinModelsUpdateOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsUpdateOptions.TraceState);
-            }
             request.Headers.Add("Content-Type", "application/json-patch+json");
             request.Headers.Add("Accept", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -477,14 +445,6 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsDeleteOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsDeleteOptions.TraceParent);
-            }
-            if (digitalTwinModelsDeleteOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsDeleteOptions.TraceState);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -566,14 +526,6 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.TraceParent != null)
-            {
-                request.Headers.Add("traceparent", digitalTwinModelsListOptions.TraceParent);
-            }
-            if (digitalTwinModelsListOptions?.TraceState != null)
-            {
-                request.Headers.Add("tracestate", digitalTwinModelsListOptions.TraceState);
-            }
             if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
             {
                 request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage.Value);

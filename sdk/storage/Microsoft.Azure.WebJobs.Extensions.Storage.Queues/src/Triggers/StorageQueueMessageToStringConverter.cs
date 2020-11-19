@@ -3,8 +3,9 @@
 
 using System;
 using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
 {
     internal class StorageQueueMessageToStringConverter : IConverter<QueueMessage, string>
     {
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Triggers
                 throw new ArgumentNullException(nameof(input));
             }
 
-            return input.MessageText;
+            return input.Body.ToValidUTF8String();
         }
     }
 }

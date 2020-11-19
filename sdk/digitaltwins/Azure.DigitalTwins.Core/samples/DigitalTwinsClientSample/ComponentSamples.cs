@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
 using static Azure.DigitalTwins.Core.Samples.UniqueIdHelper;
 
@@ -42,7 +39,13 @@ namespace Azure.DigitalTwins.Core.Samples
                     newComponentModelPayload,
                     newModelPayload
                 });
-            Console.WriteLine($"Created models {componentModelId} and {modelId}.");
+
+            // Get the models we just created
+            AsyncPageable<DigitalTwinsModelData> models = client.GetModelsAsync();
+            await foreach (DigitalTwinsModelData model in models)
+            {
+                Console.WriteLine($"Created model {model.Id}.");
+            }
 
             #region Snippet:DigitalTwinsSampleCreateBasicTwin
 
@@ -53,7 +56,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 Id = basicDtId,
                 // model Id of digital twin
                 Metadata = { ModelId = modelId },
-                CustomProperties =
+                Contents =
                 {
                     // digital twin properties
                     { "Prop1", "Value1" },
@@ -61,10 +64,10 @@ namespace Azure.DigitalTwins.Core.Samples
                     // component
                     {
                         "Component1",
-                        new ModelProperties
+                        new BasicDigitalTwinComponent
                         {
                             // component properties
-                            CustomProperties =
+                            Contents =
                             {
                                 { "ComponentProp1", "Component value 1" },
                                 { "ComponentProp2", 123 },
@@ -74,7 +77,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 },
             };
 
-            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateDigitalTwinAsync<BasicDigitalTwin>(basicDtId, basicTwin);
+            Response<BasicDigitalTwin> createDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(basicDtId, basicTwin);
             Console.WriteLine($"Created digital twin '{createDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateBasicTwin
@@ -86,21 +89,19 @@ namespace Azure.DigitalTwins.Core.Samples
             #region Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 
             Response<BasicDigitalTwin> getBasicDtResponse = await client.GetDigitalTwinAsync<BasicDigitalTwin>(basicDtId);
-            if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
-            {
-                BasicDigitalTwin basicDt = getBasicDtResponse.Value;
+            BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 
-                // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
-                string component1RawText = ((JsonElement)basicDt.CustomProperties["Component1"]).GetRawText();
-                IDictionary<string, object> component1 = JsonSerializer.Deserialize<IDictionary<string, object>>(component1RawText);
+            // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+            string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
+            var component1 = JsonSerializer.Deserialize<BasicDigitalTwinComponent>(component1RawText);
 
-                Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
-                    $"ETag: {basicDt.ETag}\n\t" +
-                    $"Prop1: {basicDt.CustomProperties["Prop1"]}\n\t" +
-                    $"Prop2: {basicDt.CustomProperties["Prop2"]}\n\t" +
-                    $"ComponentProp1: {component1["ComponentProp1"]}\n\t" +
-                    $"ComponentProp2: {component1["ComponentProp2"]}");
-            }
+            Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
+                $"ETag: {basicDt.ETag}\n\t" +
+                $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
+                $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
+                $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
+                $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+                $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
 
             #endregion Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 
@@ -122,9 +123,9 @@ namespace Azure.DigitalTwins.Core.Samples
                 {
                     ComponentProp1 = "Component prop1 val",
                     ComponentProp2 = 123,
-                }
+                },
             };
-            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateDigitalTwinAsync<CustomDigitalTwin>(customDtId, customTwin);
+            Response<CustomDigitalTwin> createCustomDigitalTwinResponse = await client.CreateOrReplaceDigitalTwinAsync(customDtId, customTwin);
             Console.WriteLine($"Created digital twin '{createCustomDigitalTwinResponse.Value.Id}'.");
 
             #endregion Snippet:DigitalTwinsSampleCreateCustomTwin
@@ -138,10 +139,11 @@ namespace Azure.DigitalTwins.Core.Samples
             CustomDigitalTwin customDt = getCustomDtResponse.Value;
             Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
                 $"ETag: {customDt.ETag}\n\t" +
-                $"Prop1: {customDt.Prop1}\n\t" +
-                $"Prop2: {customDt.Prop2}\n\t" +
-                $"ComponentProp1: {customDt.Component1.ComponentProp1}\n\t" +
-                $"ComponentProp2: {customDt.Component1.ComponentProp2}");
+                $"ModelId: {customDt.Metadata.ModelId}\n\t" +
+                $"Prop1: [{customDt.Prop1}] last updated on {customDt.Metadata.Prop1.LastUpdatedOn}\n\t" +
+                $"Prop2: [{customDt.Prop2}] last updated on {customDt.Metadata.Prop2.LastUpdatedOn}\n\t" +
+                $"ComponentProp1: [{customDt.Component1.ComponentProp1}] last updated {customDt.Component1.Metadata.ComponentProp1.LastUpdatedOn}\n\t" +
+                $"ComponentProp2: [{customDt.Component1.ComponentProp2}] last updated {customDt.Component1.Metadata.ComponentProp2.LastUpdatedOn}");
 
             #endregion Snippet:DigitalTwinsSampleGetCustomDigitalTwin
 

@@ -12,16 +12,20 @@ namespace Azure.Identity
         /// <summary>
         /// If set to true the credential will store tokens in a cache persisted to the machine, protected to the current user, which can be shared by other credentials and processes.
         /// </summary>
-        public bool EnablePersistentCache { get; set; }
+        internal bool EnablePersistentCache { get; set; }
 
         /// <summary>
         /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
         /// </summary>
-        public bool AllowUnencryptedCache { get; set; }
+        internal bool AllowUnencryptedCache { get; set; }
 
         /// <summary>
-        /// Will include x5c header to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
+        /// Will include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        public bool IncludeX5CClaimHeader { get; set; }
+        public bool SendCertificateChain { get; set; }
+
+        bool ITokenCacheOptions.EnablePersistentCache => EnablePersistentCache;
+
+        bool ITokenCacheOptions.AllowUnencryptedCache => AllowUnencryptedCache;
     }
 }

@@ -16,7 +16,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const int PagedSecretCount = 50;
 
-        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

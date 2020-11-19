@@ -30,7 +30,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             _serviceVersion = serviceVersion;
         }

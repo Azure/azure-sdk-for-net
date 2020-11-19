@@ -4,7 +4,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
 {

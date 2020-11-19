@@ -43,17 +43,27 @@ namespace Azure.Messaging.ServiceBus
             long enqueuedSequenceNumber = default,
             DateTimeOffset enqueuedTime = default)
         {
-            var amqpMessage = new AmqpAnnotatedMessage(new BinaryData[] { body });
-            amqpMessage.Properties.CorrelationId = correlationId;
+            var amqpMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body }));
+
+            if (correlationId != default)
+            {
+                amqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
+            }
             amqpMessage.Properties.Subject = subject;
-            amqpMessage.Properties.To = to;
+            if (to != default)
+            {
+                amqpMessage.Properties.To = new AmqpAddress(to);
+            }
             amqpMessage.Properties.ContentType = contentType;
-            amqpMessage.Properties.ReplyTo = replyTo;
+            if (replyTo != default)
+            {
+                amqpMessage.Properties.ReplyTo = new AmqpAddress(replyTo);
+            }
             amqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
 
             if (messageId != default)
             {
-                amqpMessage.Properties.MessageId = messageId;
+                amqpMessage.Properties.MessageId = new AmqpMessageId(messageId);
             }
             if (partitionKey != default)
             {
@@ -77,7 +87,10 @@ namespace Azure.Messaging.ServiceBus
             }
             if (properties != default)
             {
-                amqpMessage.ApplicationProperties = properties;
+                foreach (KeyValuePair<string, object> kvp in properties)
+                {
+                    amqpMessage.ApplicationProperties.Add(kvp);
+                }
             }
             amqpMessage.Header.DeliveryCount = (uint)deliveryCount;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;

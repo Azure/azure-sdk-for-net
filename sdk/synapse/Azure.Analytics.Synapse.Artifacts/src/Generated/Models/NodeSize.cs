@@ -28,6 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string LargeValue = "Large";
         private const string XLargeValue = "XLarge";
         private const string XXLargeValue = "XXLarge";
+        private const string XXXLargeValue = "XXXLarge";
 
         /// <summary> None. </summary>
         public static NodeSize None { get; } = new NodeSize(NoneValue);
@@ -41,6 +42,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static NodeSize XLarge { get; } = new NodeSize(XLargeValue);
         /// <summary> XXLarge. </summary>
         public static NodeSize XXLarge { get; } = new NodeSize(XXLargeValue);
+        /// <summary> XXXLarge. </summary>
+        public static NodeSize XXXLarge { get; } = new NodeSize(XXXLargeValue);
         /// <summary> Determines if two <see cref="NodeSize"/> values are the same. </summary>
         public static bool operator ==(NodeSize left, NodeSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeSize"/> values are not the same. </summary>
