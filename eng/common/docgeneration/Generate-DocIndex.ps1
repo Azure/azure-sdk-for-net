@@ -142,7 +142,13 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force    
 }
 
-function Mutate_Files([String]$lang, [String]$appTitle, [String]$indexhtmlloc, [String]$packageRegex, [String]$regexReplacement) {
+function Mutate_Files{
+    Params(
+        [Parameter(Mandatory=$true)] [String]$lang,
+        [Parameter(Mandatory=$true)] [String]$indexhtmlloc,
+        [Parameter(Mandatory=$false)] [String]$packageRegex,
+        [Parameter(Mandatory=$false)] [String]$regexReplacement
+    )
     # Update docfx.json
     $docfxContent = Get-Content -Path $DocfxJsonPath -Raw
     $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"$appTitle`""
