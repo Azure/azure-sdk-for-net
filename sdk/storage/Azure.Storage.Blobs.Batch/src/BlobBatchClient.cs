@@ -565,25 +565,40 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            var responses = new List<Response>();
-
-            // Create the batch
-            BlobBatch batch = CreateBatch();
-            foreach (Uri uri in blobUris)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(DeleteBlobs)}");
+            try
             {
-                responses.Add(batch.DeleteBlob(uri, snapshotsOption));
+                scope.Start();
+
+                blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
+                var responses = new List<Response>();
+
+                // Create the batch
+                BlobBatch batch = CreateBatch();
+                foreach (Uri uri in blobUris)
+                {
+                    responses.Add(batch.DeleteBlob(uri, snapshotsOption));
+                }
+
+                // Submit the batch
+                await SubmitBatchInternal(
+                    batch,
+                    true,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return responses.ToArray();
             }
-
-            // Submit the batch
-            await SubmitBatchInternal(
-                batch,
-                true,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            return responses.ToArray();
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion DeleteBlobs
 
@@ -703,25 +718,40 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
-            var responses = new List<Response>();
-
-            // Create the batch
-            BlobBatch batch = CreateBatch();
-            foreach (Uri uri in blobUris)
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobBatchClient)}.{nameof(SetBlobsAccessTier)}");
+            try
             {
-                responses.Add(batch.SetBlobAccessTier(uri, accessTier, rehydratePriority));
+                scope.Start();
+
+                blobUris = blobUris ?? throw new ArgumentNullException(nameof(blobUris));
+                var responses = new List<Response>();
+
+                // Create the batch
+                BlobBatch batch = CreateBatch();
+                foreach (Uri uri in blobUris)
+                {
+                    responses.Add(batch.SetBlobAccessTier(uri, accessTier, rehydratePriority));
+                }
+
+                // Submit the batch
+                await SubmitBatchInternal(
+                    batch,
+                    true,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return responses.ToArray();
             }
-
-            // Submit the batch
-            await SubmitBatchInternal(
-                batch,
-                true,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-            return responses.ToArray();
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion SetBlobsAccessTier
     }
