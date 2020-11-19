@@ -11,28 +11,29 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Exchange request properties
+    /// </summary>
+    public partial class ExchangeRequestProperties
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExchangeRequestProperties class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public ExchangeRequestProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ExchangeRequestProperties class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="sessionId">SessionId that was returned by
+        /// CalculateExchange API.</param>
+        public ExchangeRequestProperties(string sessionId = default(string))
         {
-            Scopes = scopes;
+            SessionId = sessionId;
             CustomInit();
         }
 
@@ -42,9 +43,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets sessionId that was returned by CalculateExchange API.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "sessionId")]
+        public string SessionId { get; set; }
 
     }
 }

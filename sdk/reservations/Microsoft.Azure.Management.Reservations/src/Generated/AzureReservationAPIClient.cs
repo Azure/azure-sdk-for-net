@@ -94,6 +94,16 @@ namespace Microsoft.Azure.Management.Reservations
         public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
+        /// Gets the ICalculateExchangeOperations.
+        /// </summary>
+        public virtual ICalculateExchangeOperations CalculateExchange { get; private set; }
+
+        /// <summary>
+        /// Gets the IExchangeOperations.
+        /// </summary>
+        public virtual IExchangeOperations Exchange { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AzureReservationAPIClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -340,6 +350,8 @@ namespace Microsoft.Azure.Management.Reservations
             Reservation = new ReservationOperations(this);
             ReservationOrder = new ReservationOrderOperations(this);
             Operation = new OperationOperations(this);
+            CalculateExchange = new CalculateExchangeOperations(this);
+            Exchange = new ExchangeOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -419,7 +431,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservedResourceType");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -608,7 +620,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

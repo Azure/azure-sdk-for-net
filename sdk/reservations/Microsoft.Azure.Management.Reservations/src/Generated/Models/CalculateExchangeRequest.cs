@@ -11,28 +11,27 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Calculate exchange request
+    /// </summary>
+    public partial class CalculateExchangeRequest
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the CalculateExchangeRequest class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public CalculateExchangeRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the CalculateExchangeRequest class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        public CalculateExchangeRequest(CalculateExchangeRequestProperties properties = default(CalculateExchangeRequestProperties))
         {
-            Scopes = scopes;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,8 +42,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public CalculateExchangeRequestProperties Properties { get; set; }
 
     }
 }
