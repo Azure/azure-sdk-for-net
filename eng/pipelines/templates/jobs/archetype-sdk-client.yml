@@ -168,7 +168,8 @@ jobs:
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
-          reports: sdk/**/coverage.cobertura.xml
+          reports: >-
+            $(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml;
           targetdir: $(Build.SourcesDirectory)
           reporttypes: Cobertura;HtmlSummary
           filefilters: >-
