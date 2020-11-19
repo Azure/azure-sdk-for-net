@@ -1,6 +1,11 @@
 # Release History
 
 ## 5.1.0-beta.3 (Unreleased)
+### New Features
+- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing.
+- Added `AnalyzeOperation` long running operation for new asynchronous `Analyze API` to support batch processing of Named entity recognition, Personally Identifiable Information and Key phrase extraction.
+- Both new features listed above are available in `West US2`, `East US2`, `Central US`, `North Europe` and `West Europe` regions. Also, both the new features are available in Standard tier.
+
 ### Breaking changes
 - Modified the way to turn on Opinion Mining feature in `AnalyzeSentiment` to a bool property called `IncludeOpinionMining`.
 

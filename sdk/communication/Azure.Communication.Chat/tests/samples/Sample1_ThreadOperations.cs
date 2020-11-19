@@ -30,13 +30,12 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationUserCredential(userToken));
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
-            var threadCreator = new CommunicationUser(threadCreatorId);
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatParticipant = new ChatParticipant(threadCreator)
+            var chatThreadMember = new ChatThreadMember(new CommunicationUser(threadCreatorId))
             {
                 DisplayName = "UserDisplayName"
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
             string threadId = chatThreadClient.Id;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
@@ -54,18 +53,18 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
             var topic = "new topic";
-            await chatThreadClient.UpdateTopicAsync(topic);
+            await chatThreadClient.UpdateThreadAsync(topic);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
             await chatClient.DeleteChatThreadAsync(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
 
-            var josh = new ChatParticipant(new CommunicationUser("invalid user"));
             #region Snippet:Azure_Communication_Chat_Tests_Samples_Troubleshooting
             try
             {
-                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { josh });
+                /*@@*/ chatThreadMember = new ChatThreadMember(new CommunicationUser("invalid user"));
+                ChatThreadClient chatThreadClient_ = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
             }
             catch (RequestFailedException ex)
             {
