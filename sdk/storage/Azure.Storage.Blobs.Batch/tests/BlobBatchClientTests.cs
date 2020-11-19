@@ -222,6 +222,30 @@ namespace Azure.Storage.Blobs.Test
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
+
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.DeleteBlob(blobs[0].Uri),
+                batch.DeleteBlob(blobs[1].Uri),
+                batch.DeleteBlob(blobs[2].Uri)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task Delete_ContainerScoped_Basic()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+
             using BlobBatch batch = client.CreateBatch();
             Response[] responses = new Response[]
             {
@@ -668,6 +692,7 @@ namespace Azure.Storage.Blobs.Test
             public BlobServiceClient Service { get; }
             private readonly BlobBatchClientTests _test = null;
             private int _blobId = 0;
+            public List<DisposingContainer> Containers => _containers;
             private readonly List<DisposingContainer> _containers = new List<DisposingContainer>();
 
             public TestScenario(BlobBatchClientTests test, BlobServiceClient service)
@@ -730,8 +755,9 @@ namespace Azure.Storage.Blobs.Test
             public Uri[] GetInvalidBlobUris(int count) =>
                 GetInvalidBlobUris(Service.GetBlobContainerClient("invalidcontainer"), count);
 
-            public BlobBatchClient GetBlobBatchClient() =>
-                _test.InstrumentClient(Service.GetBlobBatchClient());
+            public BlobBatchClient GetBlobBatchClient(string containerName = null)
+                => _test.InstrumentClient(Service.GetBlobBatchClient(containerName));
+
 
             public async Task AssertDeleted(BlobClient blob)
             {

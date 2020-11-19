@@ -25,6 +25,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual Uri Uri { get; }
 
+        private readonly bool _isContainerScoped;
+
+        /// <summary>
+        /// If this BlobBatchClient is scoped to a container.
+        /// </summary>
+        public virtual bool IsContainerScoped => _isContainerScoped;
+
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
@@ -65,6 +72,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         public BlobBatchClient(BlobServiceClient client)
+            : this(client, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBatchClient"/>
+        /// class for the same account as the <see cref="BlobServiceClient"/>.
+        /// The new <see cref="BlobBatchClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobServiceClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
+        /// <param name="containerName">
+        /// The name of the container to scope the batch requests to.
+        /// </param>
+        public BlobBatchClient(BlobServiceClient client, string containerName)
         {
             Uri = client.Uri;
             Pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
@@ -78,7 +100,18 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
                 Version);
+
+            if (containerName == null)
+            {
+                _isContainerScoped = false;
+            }
+            else
+            {
+                _isContainerScoped = true;
+            }
+
         }
+
 
         /// <summary>
         /// Creates a pipeline to use for processing sub-operations before they
@@ -299,11 +332,14 @@ namespace Azure.Storage.Blobs.Specialized
                         .ConfigureAwait(false);
 
                 // Send the batch request
-                Response<BlobBatchResult> batchResult =
-                    await BatchRestClient.Service.SubmitBatchAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
+                Response<BlobBatchResult> batchResult;
+
+                if (_isContainerScoped)
+                {
+                    batchResult = await BatchRestClient.Container.SubmitBatchAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
                         body: content,
                         contentLength: content.Length,
                         multipartContentType: contentType,
@@ -312,6 +348,22 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+                }
+                else
+                {
+                    batchResult = await BatchRestClient.Service.SubmitBatchAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        multipartContentType: contentType,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
 
                 // Split the responses apart and update the sub-operation responses
                 Response raw = batchResult.GetRawResponse();
@@ -786,6 +838,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
         /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
         public static BlobBatchClient GetBlobBatchClient(this BlobServiceClient client)
-            => new BlobBatchClient(client);
+            => GetBlobBatchClient(client, null);
+
+        /// <summary>
+        /// Create a new <see cref="BlobBatchClient"/> object for the same
+        /// account as the <see cref="BlobServiceClient"/>.  The new
+        /// <see cref="BlobBatchClient"/> uses the same request policy pipeline
+        /// as the <see cref="BlobServiceClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobServiceClient"/>.</param>
+        /// <param name="containerName">The name of the container to scope the batch request to.</param>
+        /// <returns>A new <see cref="BlobBatchClient"/> instance.</returns>
+        public static BlobBatchClient GetBlobBatchClient(this BlobServiceClient client, string containerName)
+            => new BlobBatchClient(client, containerName);
     }
 }
