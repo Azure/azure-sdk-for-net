@@ -14,41 +14,22 @@ param (
   $DocRepoContentLocation = "docs-ref-services/" # within the doc repo, where does our readme go?
 )
 
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
-. (Join-Path $PSScriptRoot SemVer.ps1)
+. (Join-Path $PSScriptRoot common.ps1)
 
 $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)master"
 
-function GetMetaData($lang){
-  switch ($lang) {
-    "java" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/java-packages.csv"
-      break
-    }
-    ".net" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
-      break
-    }
-    "python" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/python-packages.csv"
-      break
-    }
-    "javascript" {
-      $metadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/js-packages.csv"
-      break
-    }
-    default {
-      Write-Host "Unrecognized Language: $language"
-      exit(1)
-    }
+function GetMetaData {
+  if (Test-Path Variable:MetadataUri) {
+    $metadataResponse = Invoke-RestMethod -Uri $MetadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
   }
-
-  $metadataResponse = Invoke-RestMethod -Uri $metadataUri -method "GET" -MaximumRetryCount 3 -RetryIntervalSec 10 | ConvertFrom-Csv
+  else {
+    LogError "The variable '$MetadataUri' was not found."
+  }
 
   return $metadataResponse
 }
 
-function GetAdjustedReadmeContent($pkgInfo, $lang){
+function GetAdjustedReadmeContent($pkgInfo){
     $date = Get-Date -Format "MM/dd/yyyy"
     $service = ""
 
@@ -56,7 +37,7 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
     $pkgId = $pkgInfo.PackageId.Replace("@azure/", "")
 
     try {
-      $metadata = GetMetaData -lang $lang
+      $metadata = GetMetaData
 
       $service = $metadata | ? { $_.Package -eq $pkgId }
 
@@ -93,8 +74,7 @@ function GetAdjustedReadmeContent($pkgInfo, $lang){
 }
 
 $apiUrl = "https://api.github.com/repos/$repoId"
-$pkgs = VerifyPackages -pkgRepository $Repository `
-  -artifactLocation $ArtifactLocation `
+$pkgs = VerifyPackages -artifactLocation $ArtifactLocation `
   -workingDirectory $WorkDirectory `
   -apiUrl $apiUrl `
   -releaseSha $ReleaseSHA `
@@ -116,7 +96,7 @@ if ($pkgs) {
     $readmeLocation = Join-Path $DocRepoLocation $DocRepoContentLocation $readmeName
 
     if ($packageInfo.ReadmeContent) {
-      $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo -lang $Language
+      $adjustedContent = GetAdjustedReadmeContent -pkgInfo $packageInfo
     }
 
     if ($adjustedContent) {

@@ -21,8 +21,7 @@ param(
   [string]$Base64EncodedAuthToken
 )
 
-. "${PSScriptRoot}\logging.ps1"
-. "${PSScriptRoot}\Invoke-DevOpsAPI.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 if ($CancelPreviousBuilds)
 {

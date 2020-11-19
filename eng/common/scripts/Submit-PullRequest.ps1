@@ -59,7 +59,7 @@ param(
   [boolean]$CloseAfterOpenForTesting=$false
 )
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 try {
   $resp = Get-GitHubPullRequests -RepoOwner $RepoOwner -RepoName $RepoName `
