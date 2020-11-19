@@ -103,6 +103,10 @@ try {
         $path = ($path -replace "\\", "/") + "/sdk"
 
         Invoke-Block {
+            & npm install -g @autorest/autorest
+        }
+        
+        Invoke-Block {
             & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
         }
 
