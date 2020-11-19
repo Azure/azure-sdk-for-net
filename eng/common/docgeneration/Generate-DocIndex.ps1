@@ -142,7 +142,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force    
 }
 
-function Mutate_Files([String]$lang, [String]$appTitle, [String]$indexhtmlloc) {
+function Mutate_Files([String]$lang, [String]$appTitle, [String]$indexhtmlloc, [String]$packageRegex, [String]$regexReplacement) {
     # Update docfx.json
     $docfxContent = Get-Content -Path $DocfxJsonPath -Raw
     $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"$appTitle`""
@@ -150,9 +150,12 @@ function Mutate_Files([String]$lang, [String]$appTitle, [String]$indexhtmlloc) {
     Set-Content -Path $DocfxJsonPath -Value $docfxContent
     # Update main.js var lang
     $mainJsContent = Get-Content -Path $MainJsPath -Raw
-    $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = 'java'"
-    # Update main.js vat index html
-    $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = 'index.html'"
+    $mainJsContent = $mainJsContent -replace "var SELECTED_LANGUAGE = ''", "var SELECTED_LANGUAGE = '$lang'"
+    # Update main.js var index html
+    $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = '$indexhtmlloc'"
+    # Update main.js package regex and replacement
+    $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = '$packageRegex'"
+    $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = '$regexReplacement'"
     Set-Content -Path $MainJsPath -Value $mainJsContent
 }
 
