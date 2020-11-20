@@ -152,6 +152,11 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
+
+
+          -verbosity:diagnostic -bl:msbuild.binlog --diag:log.txt
+
+
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -162,6 +167,13 @@ jobs:
         inputs:
           sourceFolder: sdk/${{parameters.ServiceDirectory}}
           contents: '**\coverage.cobertura.xml'
+          targetFolder: $(Build.ArtifactStagingDirectory)\TestResults
+      - task: CopyFiles@2
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
+        inputs:
+          contents: |
+            msbuild.binlog
+            log*.txt
           targetFolder: $(Build.ArtifactStagingDirectory)\TestResults
       - task: PublishBuildArtifacts@1
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
