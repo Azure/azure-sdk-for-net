@@ -11,6 +11,9 @@
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
+			- Support data exfilteration
+			- Support customer managed key
+			- Add workspace managed SQL Server proxy APIs
       ]]>
 		</PackageReleaseNotes>
     
