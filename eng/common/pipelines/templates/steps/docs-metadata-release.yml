@@ -8,8 +8,8 @@ parameters:
   ScriptDirectory: eng/common/scripts
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
-  PRBranchName: 'master-rdme'
-  SourceBranchName: 'master'
+  PRBranchName: 'smoke-test-rdme'
+  SourceBranchName: 'smoke-test'
   PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
