@@ -58,6 +58,7 @@ parameters:
     Windows_NetCore:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
+      SupportsRecording: true
     Windows_NetCore_ProjectRefAzureClients:
       OSVmImage: "windows-2019"
       TestTargetFramework: netcoreapp2.1
@@ -73,11 +74,6 @@ parameters:
       OSVmImage: "macOS-10.15"
       TestTargetFramework: netcoreapp2.1
       SupportedClouds: 'Public'
-    Windows_NetCore_Record:
-      OSVmImage: "windows-2019"
-      TestMode: Record
-      TestTargetFramework: netcoreapp2.1
-      SupportedClouds: 'Public'
 - name: PlatformPreSteps
   type: object
   default:
@@ -86,7 +82,7 @@ parameters:
   type: object
   default:
     - task: CopyFiles@2
-      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Copy Test Recordings"
       inputs:
         sourceFolder: '$(Build.SourcesDirectory)'
@@ -95,7 +91,7 @@ parameters:
         contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
     - task: PublishBuildArtifacts@1
-      condition: and(succeededOrFailed(), eq(variables['Agent.JobName'], 'Windows_NetCore_Record'))
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
       displayName: "Publish Test Recordings"
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
