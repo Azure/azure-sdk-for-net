@@ -164,6 +164,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
 
 function Mutate-Files {
     Param (
+        [Parameter(Mandatory=$true)] [String]$#,
         [Parameter(Mandatory=$true)] [String]$lang,
         [Parameter(Mandatory=$true)] [String]$indexhtmlloc,
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
