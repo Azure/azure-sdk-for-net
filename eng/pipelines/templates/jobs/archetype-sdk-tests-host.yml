@@ -20,7 +20,7 @@ jobs:
       UsePlatformContainer: false
       Platforms:
         ${{ each platform in parameters.Platforms }}:
-          ${{ if eq(platform.value.Container, '') }}:
+          ${{ if not(platform.value.Container) }}:
             ${{ platform.key }}: ${{ platform.value }}
       CloudConfig: ${{ parameters.CloudConfig }}
       ${{ each param in parameters.AdditionalParameters }}:
@@ -33,7 +33,7 @@ jobs:
         UsePlatformContainer: true
         Platforms:
           ${{ each platform in parameters.Platforms }}:
-            ${{ if ne(platform.value.Container, '') }}:
+            ${{ if platform.value.Container }}:
               ${{ platform.key }}: ${{ platform.value }}
         CloudConfig: ${{ parameters.CloudConfig }}
         ${{ each param in parameters.AdditionalParameters }}:
