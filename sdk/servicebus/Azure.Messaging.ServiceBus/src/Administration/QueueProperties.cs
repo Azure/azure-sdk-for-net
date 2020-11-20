@@ -51,6 +51,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = options.Status;
             ForwardTo = options.ForwardTo;
             ForwardDeadLetteredMessagesTo = options.ForwardDeadLetteredMessagesTo;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;

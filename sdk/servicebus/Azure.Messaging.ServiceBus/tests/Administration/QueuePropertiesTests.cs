@@ -114,7 +114,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 EntityStatus.Active,
                 "forward",
                 "dlq",
-                "metadata");
+                "metadata",
+                true);
             Assert.AreEqual("queueName", properties.Name);
             Assert.AreEqual(TimeSpan.FromSeconds(30), properties.LockDuration);
             Assert.AreEqual(100, properties.MaxSizeInMegabytes);
@@ -130,6 +131,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual("forward", properties.ForwardTo);
             Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
             Assert.AreEqual("metadata", properties.UserMetadata);
+            Assert.IsTrue(properties.EnablePartitioning);
+        }
+
+        [Test]
+        public void CanCreateQueuePropertiesFromOptions()
+        {
+            var options = new CreateQueueOptions("queue")
+            {
+                LockDuration = TimeSpan.FromSeconds(60),
+                MaxSizeInMegabytes = 1024,
+                RequiresDuplicateDetection = true,
+                RequiresSession = true,
+                DefaultMessageTimeToLive = TimeSpan.FromSeconds(120),
+                AutoDeleteOnIdle = TimeSpan.FromMinutes(10),
+                DeadLetteringOnMessageExpiration = true,
+                DuplicateDetectionHistoryTimeWindow = TimeSpan.FromSeconds(100),
+                MaxDeliveryCount = 5,
+                EnableBatchedOperations = true,
+                AuthorizationRules = { new SharedAccessAuthorizationRule("key", new AccessRights[] { AccessRights.Listen }) },
+                Status = EntityStatus.Disabled,
+                ForwardDeadLetteredMessagesTo = "dlqForward",
+                ForwardTo = "forward",
+                EnablePartitioning = true,
+                UserMetadata = "metadata"
+            };
+            var properties = new QueueProperties(options);
+
+            Assert.AreEqual(options, new CreateQueueOptions(properties));
         }
     }
 }

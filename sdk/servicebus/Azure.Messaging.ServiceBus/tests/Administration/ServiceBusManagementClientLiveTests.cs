@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         public ServiceBusManagementClientLiveTests(bool isAsync) :
-            base(isAsync: true)
+            base(isAsync: true, RecordedTestMode.Record)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
                 EnableBatchedOperations = true,
                 EnablePartitioning = false,
-                MaxSizeInMegabytes = 2048,
+                MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 UserMetadata = nameof(BasicTopicCrudOperations)
             };

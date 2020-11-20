@@ -93,5 +93,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual("dlq", properties.ForwardDeadLetteredMessagesTo);
             Assert.AreEqual("metadata", properties.UserMetadata);
         }
+
+        [Test]
+        public void CanCreateSubscriptionPropertiesFromOptions()
+        {
+            var options = new CreateSubscriptionOptions("topic", "subscription")
+            {
+                LockDuration = TimeSpan.FromSeconds(60),
+                RequiresSession = true,
+                DefaultMessageTimeToLive = TimeSpan.FromSeconds(120),
+                AutoDeleteOnIdle = TimeSpan.FromMinutes(10),
+                DeadLetteringOnMessageExpiration = true,
+                MaxDeliveryCount = 5,
+                EnableBatchedOperations = true,
+                Status = EntityStatus.Disabled,
+                ForwardDeadLetteredMessagesTo = "dlqForward",
+                ForwardTo = "forward",
+                UserMetadata = "metadata"
+            };
+            var properties = new SubscriptionProperties(options);
+
+            Assert.AreEqual(options, new CreateSubscriptionOptions(properties));
+        }
     }
 }
