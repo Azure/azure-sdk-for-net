@@ -66,13 +66,9 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             //InitRoleInfo(activity);
             //telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
             //telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
-            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
 
-            // TODO: HOW TO HANDLE PARENT CONDITION?
-            //if (activity.Parent != null)
-            //{
-                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
-            //}
+            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+            telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 

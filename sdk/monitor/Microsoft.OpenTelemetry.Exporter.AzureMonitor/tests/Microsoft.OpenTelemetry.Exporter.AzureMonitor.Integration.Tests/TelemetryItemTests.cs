@@ -75,13 +75,15 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         [InlineData(LogLevel.Trace, "Verbose")]
         public void VerifyILogger(LogLevel logLevel, string expectedSeverityLevel)
         {
-            var telemetryItem = this.RunLoggerTest(x => x.Log(logLevel: logLevel, message: "Hello World!"));
+            var message = "Hello World!";
+
+            var telemetryItem = this.RunLoggerTest(x => x.Log(logLevel: logLevel, message: message));
 
             VerifyTelemetryItem.VerifyEvent(
                 telemetryItem: telemetryItem,
                 expectedVars: new ExpectedTelemetryItemValues
                 {
-                    Message = "Hello World!",
+                    Message = message,
                     SeverityLevel = expectedSeverityLevel,
                 });
         }
