@@ -197,7 +197,12 @@
   </ItemGroup>
 
   <!-- InheritDoc-->
-  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true'">
+  <ItemGroup>
     <PackageReference Update="SauceControl.InheritDoc" Version="1.1.1" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
+  </ItemGroup>
+
 </Project>

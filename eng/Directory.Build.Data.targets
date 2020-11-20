@@ -201,14 +201,14 @@
   </Target>
 
   <!-- InheritDoc-->
-  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true'">
+  <ItemGroup Condition="'$(EnableInheritDoc)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
-  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true' and '$(TargetFramework)'=='netstandard2.0'">
-    <PackageDownload Include="NETStandard.Library.Ref" Version="[2.1.0]" />
-    <InheritDocReference Include="$([MSBuild]::EnsureTrailingSlash('$(NugetPackageRoot)'))netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
+  <ItemGroup Condition="'$(EnableInheritDoc)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Include="NETStandard.Library.Ref" />
+    <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
   </ItemGroup>
 
 <!-- Additional PackageReferences should be placed above this PropertyGroup -->
