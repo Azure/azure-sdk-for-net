@@ -66,16 +66,23 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 });
         }
 
-        [Fact]
-        public void VerifyILogger()
+        [Theory]
+        [InlineData(LogLevel.Information, "Information")]
+        [InlineData(LogLevel.Warning, "Warning")]
+        [InlineData(LogLevel.Error, "Error")]
+        [InlineData(LogLevel.Critical, "Critical")]
+        [InlineData(LogLevel.Debug, "Verbose")]
+        [InlineData(LogLevel.Trace, "Verbose")]
+        public void VerifyILogger(LogLevel logLevel, string expectedSeverityLevel)
         {
-            var telemetryItem = this.RunLoggerTest(x => x.LogInformation("Hello World!"));
+            var telemetryItem = this.RunLoggerTest(x => x.Log(logLevel: logLevel, message: "Hello World!"));
 
             VerifyTelemetryItem.VerifyEvent(
                 telemetryItem: telemetryItem,
                 expectedVars: new ExpectedTelemetryItemValues
                 {
-                    Name = "Hello World!",
+                    Message = "Hello World!",
+                    SeverityLevel = expectedSeverityLevel,
                 });
         }
 
@@ -123,7 +130,8 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
             {
-                builder.AddOpenTelemetry(options => options
+                builder.SetMinimumLevel(LogLevel.Trace)
+                    .AddOpenTelemetry(options => options
                     .AddProcessor(processor));
             });
 
