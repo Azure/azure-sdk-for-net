@@ -9,7 +9,7 @@ jobs:
         displayName: "Code-gen Force Check"
         env:
           REPOSITORY_NAME: $(Build.Repository.Name)
-          PULLREQUEST_ID: $(System.PullRequest.PullRequestId)
+          PULLREQUEST_ID: $(System.PullRequest.PullRequestNumber)
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
