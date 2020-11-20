@@ -232,7 +232,10 @@ namespace Azure.Identity
 
             if (Updated != null)
             {
-                await Updated.Invoke(new TokenCacheUpdatedArgs(this)).ConfigureAwait(false);
+                foreach (Func<TokenCacheUpdatedArgs, Task> handler in Updated.GetInvocationList())
+                {
+                    await handler(new TokenCacheUpdatedArgs(this)).ConfigureAwait(false);
+                }
             }
         }
 

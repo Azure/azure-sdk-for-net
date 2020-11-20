@@ -26,7 +26,7 @@ var credential = new DeviceCodeCredential();
 
 var client = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
 ```
-Similiarly to the `InteractiveBrowserCredential` the `DeviceCodeCredential` will also initiate the user interaction automatically as needed. To instantiate the `DeviceCodeCredential` the application must provide a callback which is called to display the device code along with details on how to authenticate to the user. In the above sample a lambda is provided which prints the full device code message to the console.
+Similarly to the `InteractiveBrowserCredential` the `DeviceCodeCredential` will also initiate the user interaction automatically as needed. To instantiate the `DeviceCodeCredential` the application must provide a callback which is called to display the device code along with details on how to authenticate to the user. In the above sample a lambda is provided which prints the full device code message to the console.
 
 
 ## Controlling user interaction
@@ -77,7 +77,7 @@ var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredenti
 
 ### Persisting the AuthenticationRecord
 
-The `AuthenticationRecord` which is returned from the `Authenticate` and `AuthenticateAsync`, contains data identifying an authenticated account. It is needed to identify the appropriate entry in the `TokenCache` to silently on subsequent executions. There is no sensitive data in the `AuthenticationRecord` so it can be persisted in a non-protected state.
+The `AuthenticationRecord` which is returned from the `Authenticate` and `AuthenticateAsync`, contains data identifying an authenticated account. It is needed to identify the appropriate entry in the `TokenCache` to silently authenticate on subsequent executions. There is no sensitive data in the `AuthenticationRecord` so it can be persisted in a non-protected state.
 
 Here is an example of an application storing the `AuthenticationRecord` to the local file system after authenticating the user.
 

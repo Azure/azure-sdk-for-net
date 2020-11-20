@@ -25,7 +25,7 @@ namespace Azure.Identity
         private readonly string _name;
 
         /// <summary>
-        /// Creation.
+        /// Creates a new instance of <see cref="PersistentTokenCache"/>.
         /// </summary>
         /// <param name="allowUnencryptedStorage"></param>
         public PersistentTokenCache(bool allowUnencryptedStorage = true)
