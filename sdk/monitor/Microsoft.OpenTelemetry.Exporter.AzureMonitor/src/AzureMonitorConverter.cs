@@ -36,7 +36,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                 {
                     case TelemetryType.Request:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Request];
-                        telemetryData.BaseData = TelemetryPartB.GetRequestTelemetry(activity);
+                        telemetryData.BaseData = TelemetryPartB.GetRequestData(activity);
                         break;
                     case TelemetryType.Dependency:
                         telemetryData.BaseType = Telemetry_Base_Type_Mapping[TelemetryType.Dependency];

@@ -10,9 +10,14 @@ using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
+    /// <summary>
+    /// Part B are the Azure Monitor domain specific schemas.
+    /// These properties are unique to individual telemetry types.
+    /// For example, Request telemetry has Url and Message telemetry has Severity Level.
+    /// </summary>
     internal class TelemetryPartB
     {
-        internal static RequestData GetRequestTelemetry(Activity activity)
+        internal static RequestData GetRequestData(Activity activity)
         {
             string url = null;
             string urlAuthority = null;

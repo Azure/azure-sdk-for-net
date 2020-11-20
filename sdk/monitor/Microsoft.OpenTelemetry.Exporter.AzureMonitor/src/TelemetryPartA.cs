@@ -10,6 +10,9 @@ using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
+    /// <summary>
+    /// Part A are the common data that apply to OTel Trace, OTel Logs and OTel Metrics.
+    /// </summary>
     internal class TelemetryPartA
     {
         private static readonly IReadOnlyDictionary<TelemetryType, string> PartA_Name_Mapping = new Dictionary<TelemetryType, string>
