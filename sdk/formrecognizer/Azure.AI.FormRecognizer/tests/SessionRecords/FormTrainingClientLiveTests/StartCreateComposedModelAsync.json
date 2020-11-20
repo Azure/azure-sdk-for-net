@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "42",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4898519091f4f542bb8bb907f4dffb3e-44334240b9522d4b-00",
+        "traceparent": "00-2d38d9cf65192c469020238c689a1ba3-0c19831c5e58094b-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "cbe99057356706f7070829518bd8d7fe",
         "x-ms-return-client-request-id": "true"
@@ -22,25 +22,25 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "55f365a5-3ee5-49c1-ba5b-f0ff4f6f8df2",
+        "apim-request-id": "456f7aec-5d33-4aca-ba7d-d52e1266ca6c",
         "Content-Length": "0",
-        "Date": "Sat, 26 Sep 2020 00:00:22 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+        "Date": "Fri, 30 Oct 2020 13:23:42 GMT",
+        "Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/7da24fa3-6696-477e-9cd8-f00bd708ce41",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "135"
+        "x-envoy-upstream-service-time": "151"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/7da24fa3-6696-477e-9cd8-f00bd708ce41?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "a977d2c10ad2726888d361488cd7b125",
         "x-ms-return-client-request-id": "true"
@@ -48,32 +48,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "50fcd415-861a-4cbe-82e6-98bf55a51e05",
+        "apim-request-id": "f7861397-85ac-4b29-9f42-3c15c106010b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:23 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+          "modelId": "7da24fa3-6696-477e-9cd8-f00bd708ce41",
           "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:23Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:23Z"
+          "createdDateTime": "2020-10-30T13:23:41Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:41Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/7da24fa3-6696-477e-9cd8-f00bd708ce41?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "2ade40209704faedfc744fcc80f0827b",
         "x-ms-return-client-request-id": "true"
@@ -81,32 +81,32 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4ad4ad4e-61e2-4cd8-92f2-57970bc2a07c",
+        "apim-request-id": "2d9c4ad4-41b5-4b4e-89eb-d8e982454883",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:24 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "140"
+        "x-envoy-upstream-service-time": "23"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+          "modelId": "7da24fa3-6696-477e-9cd8-f00bd708ce41",
           "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:23Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:23Z"
+          "createdDateTime": "2020-10-30T13:23:41Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:41Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/7da24fa3-6696-477e-9cd8-f00bd708ce41?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "8d4d5bfdc14f4c1028774293d3af7a30",
         "x-ms-return-client-request-id": "true"
@@ -114,56 +114,23 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "286cce86-4935-4ba9-8873-8246336bd7d6",
+        "apim-request-id": "4bd8ed8a-6ad0-449c-a063-cc98867fccf8",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:25 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "99"
+        "x-envoy-upstream-service-time": "50"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
-          "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:23Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:23Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "4b310457acfa2af9e57cad5dba9cf298",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "00a97c08-a4c0-4075-b1bb-68ea3a9d9cf1",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:26 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "66"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+          "modelId": "7da24fa3-6696-477e-9cd8-f00bd708ce41",
           "attributes": {
             "isComposed": false
           },
           "status": "ready",
-          "createdDateTime": "2020-09-26T00:00:23Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:26Z"
+          "createdDateTime": "2020-10-30T13:23:41Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:43Z"
         },
         "trainResult": {
           "averageModelAccuracy": 0.96,
@@ -261,19 +228,19 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "42",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-3e9b36cc526ef6408394feaccef095d9-416e48e97de0604d-00",
+        "traceparent": "00-5c26e1524f5cf74387e2c39c10598b80-fe916d4f17f78b4a-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "304be551238a5fd52f92028d5459264c",
+        "x-ms-client-request-id": "4b310457acfa2af9e57cad5dba9cf298",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -282,25 +249,58 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "3fecd35a-3860-45ab-ae6a-fd4049e1d477",
+        "apim-request-id": "e4d55a79-4876-48e9-9bd3-744e1eb76a0b",
         "Content-Length": "0",
-        "Date": "Sat, 26 Sep 2020 00:00:26 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
+        "Date": "Fri, 30 Oct 2020 13:23:44 GMT",
+        "Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/8017943e-8836-4219-8056-26297c056b39",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "576"
+        "x-envoy-upstream-service-time": "80"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/66bad6a4-7db3-4f45-81f1-fb89f9e3c97c?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/8017943e-8836-4219-8056-26297c056b39?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "304be551238a5fd52f92028d5459264c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1305a5b7-d4e4-477e-a1d6-8ab2bdd66ee6",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Oct 2020 13:23:44 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "8017943e-8836-4219-8056-26297c056b39",
+          "status": "creating",
+          "createdDateTime": "2020-10-30T13:23:44Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:44Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/8017943e-8836-4219-8056-26297c056b39?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "7b751ff936bf51816122a8d214b2918b",
         "x-ms-return-client-request-id": "true"
@@ -308,89 +308,23 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cb5c817e-431d-43c8-9cf9-9eebc8057104",
+        "apim-request-id": "40b50875-d59e-4965-8282-de90a65af745",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:27 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "35"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
-          "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:27Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:27Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/66bad6a4-7db3-4f45-81f1-fb89f9e3c97c?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "ee42aa844a6433a62ed11b67a96bd58b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "0c152f7a-bb72-42b2-87ef-6e8f57f3d687",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:28 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
-          "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:27Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:27Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/66bad6a4-7db3-4f45-81f1-fb89f9e3c97c?includeKeys=true",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "9b63605676271ad963f9cf677b034b7d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3b67adc7-5c93-4d89-bf57-acbfb7570f03",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:29 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
-      },
-      "ResponseBody": {
-        "modelInfo": {
-          "modelId": "66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
+          "modelId": "8017943e-8836-4219-8056-26297c056b39",
           "attributes": {
             "isComposed": false
           },
           "status": "ready",
-          "createdDateTime": "2020-09-26T00:00:27Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:29Z"
+          "createdDateTime": "2020-10-30T13:23:44Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:46Z"
         },
         "trainResult": {
           "averageModelAccuracy": 0.96,
@@ -488,7 +422,7 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/compose",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/compose",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": [
@@ -498,101 +432,101 @@
         "Content-Length": "124",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6972f2a0b5f1dc4187b9bb3fabd8af1e-d0647bcb6f566947-00",
+        "traceparent": "00-a4de04151aaf2e4f86ad01f4a8ec6b05-8bf7fed1160e0e4f-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "a90976003816afe879414ced1a19a7f6",
+        "x-ms-client-request-id": "ee42aa844a6433a62ed11b67a96bd58b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "modelIds": [
-          "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
-          "66bad6a4-7db3-4f45-81f1-fb89f9e3c97c"
+          "7da24fa3-6696-477e-9cd8-f00bd708ce41",
+          "8017943e-8836-4219-8056-26297c056b39"
         ],
         "modelName": "My composed model"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "402dd48c-94f0-4385-bbff-d4554d4228ae",
+        "apim-request-id": "c4d47574-a7e9-441b-b12e-29d8cb22e767",
         "Content-Length": "0",
-        "Date": "Sat, 26 Sep 2020 00:00:29 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/e485ef2c-c9e1-49b1-b440-0be798a7d681",
+        "Date": "Fri, 30 Oct 2020 13:23:46 GMT",
+        "Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/b7af13d6-8a7c-4254-ab2f-1ccd03d26f97",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "204"
+        "x-envoy-upstream-service-time": "158"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/e485ef2c-c9e1-49b1-b440-0be798a7d681?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/b7af13d6-8a7c-4254-ab2f-1ccd03d26f97?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "b47c1d4cf64e0d64d1288a6a7a3eb82b",
+        "x-ms-client-request-id": "9b63605676271ad963f9cf677b034b7d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4366f7a9-78ed-40bb-a1c0-4c96a26c31ce",
+        "apim-request-id": "5d0b022a-5e6a-4470-8aec-f44653ffda25",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:29 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:46 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e485ef2c-c9e1-49b1-b440-0be798a7d681",
+          "modelId": "b7af13d6-8a7c-4254-ab2f-1ccd03d26f97",
           "modelName": "My composed model",
           "status": "creating",
-          "createdDateTime": "2020-09-26T00:00:30Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:30Z"
+          "createdDateTime": "2020-10-30T13:23:46Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:46Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/e485ef2c-c9e1-49b1-b440-0be798a7d681?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/b7af13d6-8a7c-4254-ab2f-1ccd03d26f97?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "33679e852b621d7477b422e52aebff4a",
+        "x-ms-client-request-id": "a90976003816afe879414ced1a19a7f6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2345ca4e-8f0d-43ef-97ed-055aefe79244",
+        "apim-request-id": "fc9c6f2a-fbb0-4ba4-84fd-c0207a805bca",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 26 Sep 2020 00:00:30 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "36"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "e485ef2c-c9e1-49b1-b440-0be798a7d681",
+          "modelId": "b7af13d6-8a7c-4254-ab2f-1ccd03d26f97",
           "modelName": "My composed model",
           "attributes": {
             "isComposed": true
           },
           "status": "ready",
-          "createdDateTime": "2020-09-26T00:00:30Z",
-          "lastUpdatedDateTime": "2020-09-26T00:00:30Z"
+          "createdDateTime": "2020-10-30T13:23:46Z",
+          "lastUpdatedDateTime": "2020-10-30T13:23:47Z"
         },
         "composedTrainResults": [
           {
@@ -686,7 +620,7 @@
                 "accuracy": 1.0
               }
             ],
-            "modelId": "81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+            "modelId": "7da24fa3-6696-477e-9cd8-f00bd708ce41",
             "errors": []
           },
           {
@@ -780,61 +714,61 @@
                 "accuracy": 1.0
               }
             ],
-            "modelId": "66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
+            "modelId": "8017943e-8836-4219-8056-26297c056b39",
             "errors": []
           }
         ]
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/66bad6a4-7db3-4f45-81f1-fb89f9e3c97c",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/8017943e-8836-4219-8056-26297c056b39",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-98db2540b5cc894faaa9d42209b3cbf1-bfbb03ba3c9a104e-00",
+        "traceparent": "00-4199eb31ca464c43b3458861877f1481-b081fe033a395343-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "5d1ad8529787092e12fbd8eeae7e343a",
+        "x-ms-client-request-id": "b47c1d4cf64e0d64d1288a6a7a3eb82b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "95832564-97db-4f22-a1ed-f2c7758a9782",
+        "apim-request-id": "4bbe9ed7-3ede-4bf6-8373-af371fc47e4e",
         "Content-Length": "0",
-        "Date": "Sat, 26 Sep 2020 00:00:30 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "56"
+        "x-envoy-upstream-service-time": "30"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/81be4e4a-ec2d-4cc6-949d-bb4f5a177cff",
+      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/7da24fa3-6696-477e-9cd8-f00bd708ce41",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-6e37f359cdfe2143b048070e80537d9a-0c358f98f06bd54a-00",
+        "traceparent": "00-5be2884d404cda46b90da6df5386ad08-13eaaa5974e8a645-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200925.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "7c68218974b22093a85e3c9ad47fe3e5",
+        "x-ms-client-request-id": "33679e852b621d7477b422e52aebff4a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "074ce24b-cf7f-4999-bf83-c33301dbd1a0",
+        "apim-request-id": "6d2f5e11-2101-4ad8-84d7-e000ea55ce24",
         "Content-Length": "0",
-        "Date": "Sat, 26 Sep 2020 00:00:31 GMT",
+        "Date": "Fri, 30 Oct 2020 13:23:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "136"
+        "x-envoy-upstream-service-time": "34"
       },
       "ResponseBody": []
     }
@@ -842,7 +776,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
     "RandomSeed": "1411350031"
   }
 }

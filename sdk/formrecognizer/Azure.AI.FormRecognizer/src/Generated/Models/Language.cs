@@ -24,11 +24,29 @@ namespace Azure.AI.FormRecognizer.Models
 
         private const string EnValue = "en";
         private const string EsValue = "es";
+        private const string DeValue = "de";
+        private const string FrValue = "fr";
+        private const string ItValue = "it";
+        private const string NlValue = "nl";
+        private const string PtValue = "pt";
+        private const string ZhHansValue = "zh-Hans";
 
         /// <summary> en. </summary>
         public static Language En { get; } = new Language(EnValue);
         /// <summary> es. </summary>
         public static Language Es { get; } = new Language(EsValue);
+        /// <summary> de. </summary>
+        public static Language De { get; } = new Language(DeValue);
+        /// <summary> fr. </summary>
+        public static Language Fr { get; } = new Language(FrValue);
+        /// <summary> it. </summary>
+        public static Language It { get; } = new Language(ItValue);
+        /// <summary> nl. </summary>
+        public static Language Nl { get; } = new Language(NlValue);
+        /// <summary> pt. </summary>
+        public static Language Pt { get; } = new Language(PtValue);
+        /// <summary> zh-Hans. </summary>
+        public static Language ZhHans { get; } = new Language(ZhHansValue);
         /// <summary> Determines if two <see cref="Language"/> values are the same. </summary>
         public static bool operator ==(Language left, Language right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Language"/> values are not the same. </summary>
