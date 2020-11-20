@@ -74,12 +74,10 @@ namespace Azure.Messaging.ServiceBus.Administration
         private static async Task<TopicProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
-            var topicDesc = new TopicProperties(name);
-
-            var qdXml = xEntry.Element(XName.Get("content", AdministrationClientConstants.AtomNamespace))?
+            var topicXml = xEntry.Element(XName.Get("content", AdministrationClientConstants.AtomNamespace))?
                 .Element(XName.Get("TopicDescription", AdministrationClientConstants.ServiceBusNamespace));
 
-            if (qdXml == null)
+            if (topicXml == null)
             {
                 throw new ServiceBusException(
                     "Topic was not found",
@@ -87,10 +85,14 @@ namespace Azure.Messaging.ServiceBus.Administration
                     innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
             }
 
-            foreach (var element in qdXml.Elements())
+            var topicDesc = new TopicProperties(name);
+            foreach (var element in topicXml.Elements())
             {
                 switch (element.Name.LocalName)
                 {
+                    case "DefaultMessageTimeToLive":
+                        topicDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
+                        break;
                     case "MaxSizeInMegabytes":
                         topicDesc.MaxSizeInMegabytes = long.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
@@ -100,17 +102,32 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "DuplicateDetectionHistoryTimeWindow":
                         topicDesc.DuplicateDetectionHistoryTimeWindow = XmlConvert.ToTimeSpan(element.Value);
                         break;
-                    case "DefaultMessageTimeToLive":
-                        topicDesc.DefaultMessageTimeToLive = XmlConvert.ToTimeSpan(element.Value);
-                        break;
                     case "EnableBatchedOperations":
                         topicDesc.EnableBatchedOperations = bool.Parse(element.Value);
+                        break;
+                    case "FilteringMessagesBeforePublishing":
+                        topicDesc.FilteringMessagesBeforePublishing = bool.Parse(element.Value);
+                        break;
+                    case "IsAnonymousAccessible":
+                        topicDesc.IsAnonymousAccessible = bool.Parse(element.Value);
+                        break;
+                    case "AuthorizationRules":
+                        topicDesc.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
                         break;
                     case "Status":
                         topicDesc.Status = element.Value;
                         break;
+                    case "ForwardTo":
+                        if (!string.IsNullOrWhiteSpace(element.Value))
+                        {
+                            topicDesc.ForwardTo = element.Value;
+                        }
+                        break;
                     case "UserMetadata":
                         topicDesc.UserMetadata = element.Value;
+                        break;
+                    case "SupportOrdering":
+                        topicDesc.SupportOrdering = bool.Parse(element.Value);
                         break;
                     case "AutoDeleteOnIdle":
                         topicDesc.AutoDeleteOnIdle = XmlConvert.ToTimeSpan(element.Value);
@@ -118,11 +135,11 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "EnablePartitioning":
                         topicDesc.EnablePartitioning = bool.Parse(element.Value);
                         break;
-                    case "SupportOrdering":
-                        topicDesc.SupportOrdering = bool.Parse(element.Value);
+                    case "EnableSubscriptionPartitioning":
+                        topicDesc.EnableSubscriptionPartitioning = bool.Parse(element.Value);
                         break;
-                    case "AuthorizationRules":
-                        topicDesc.AuthorizationRules = AuthorizationRules.ParseFromXElement(element);
+                    case "EnableExpress":
+                        topicDesc.EnableExpress = bool.Parse(element.Value);
                         break;
                     case "AccessedAt":
                     case "CreatedAt":
@@ -131,6 +148,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "UpdatedAt":
                     case "CountDetails":
                     case "SubscriptionCount":
+                    case "EntityAvailabilityStatus":
+                    case "SkippedUpdate":
                         // Ignore known properties
                         // Do nothing
                         break;
@@ -160,14 +179,21 @@ namespace Azure.Messaging.ServiceBus.Administration
                     new XElement(XName.Get("DuplicateDetectionHistoryTimeWindow", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.DuplicateDetectionHistoryTimeWindow))
                     : null,
                 new XElement(XName.Get("EnableBatchedOperations", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableBatchedOperations)),
+                new XElement(XName.Get("FilteringMessagesBeforePublishing", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.FilteringMessagesBeforePublishing)),
+                new XElement(XName.Get("IsAnonymousAccessible", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.IsAnonymousAccessible)),
                 description.AuthorizationRules?.Serialize(),
                 new XElement(XName.Get("Status", AdministrationClientConstants.ServiceBusNamespace), description.Status.ToString()),
+                description.ForwardTo != null ? new XElement(XName.Get("ForwardTo", AdministrationClientConstants.ServiceBusNamespace), description.ForwardTo) : null,
                 description.UserMetadata != null ? new XElement(XName.Get("UserMetadata", AdministrationClientConstants.ServiceBusNamespace), description.UserMetadata) : null,
                 new XElement(XName.Get("SupportOrdering", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.SupportOrdering)),
                 description.AutoDeleteOnIdle != TimeSpan.MaxValue ? new XElement(XName.Get("AutoDeleteOnIdle", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.AutoDeleteOnIdle)) : null,
-                new XElement(XName.Get("EnablePartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning))
+                new XElement(XName.Get("EnablePartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnablePartitioning)),
+                new XElement(XName.Get("EnableSubscriptionPartitioning", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableSubscriptionPartitioning)),
+                new XElement(XName.Get("EnableExpress", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.EnableExpress))
             };
 
+            // Insert unknown properties in the exact order they were in the received xml.
+            // Expectation is that servicebus will add any new elements only at the bottom of the xml tree.
             if (description.UnknownProperties != null)
             {
                 topicDescriptionElements.AddRange(description.UnknownProperties);

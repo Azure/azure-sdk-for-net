@@ -191,6 +191,17 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; } = false;
+
+        internal bool FilteringMessagesBeforePublishing { get; set; } = false;
+
+        internal string ForwardTo { get; set; } = null;
+
+        internal bool EnableExpress { get; set; } = false;
+
+        internal bool EnableSubscriptionPartitioning { get; set; } = false;
+
+
         /// <summary>
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.
@@ -226,6 +237,11 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
                 && Status.Equals(otherDescription.Status)
                 && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && EnableExpress == other.EnableExpress
+                && IsAnonymousAccessible == other.IsAnonymousAccessible
+                && FilteringMessagesBeforePublishing == other.FilteringMessagesBeforePublishing
+                && EnableSubscriptionPartitioning == other.EnableSubscriptionPartitioning
                 && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
                     || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules)))

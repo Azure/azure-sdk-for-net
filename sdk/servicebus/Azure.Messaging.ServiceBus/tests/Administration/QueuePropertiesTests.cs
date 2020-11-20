@@ -4,6 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 
@@ -159,6 +164,59 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var properties = new QueueProperties(options);
 
             Assert.AreEqual(options, new CreateQueueOptions(properties));
+        }
+
+        [Test]
+        public async Task UnknownElementsInAtomXmlHandledCorrectly()
+        {
+            string queueDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">testqueue1</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<QueueDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"">" +
+                $"<LockDuration>{XmlConvert.ToString(TimeSpan.FromMinutes(1))}</LockDuration>" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<RequiresDuplicateDetection>true</RequiresDuplicateDetection>" +
+                $"<RequiresSession>true</RequiresSession>" +
+                $"<DefaultMessageTimeToLive>{XmlConvert.ToString(TimeSpan.FromMinutes(60))}</DefaultMessageTimeToLive>" +
+                $"<DeadLetteringOnMessageExpiration>false</DeadLetteringOnMessageExpiration>" +
+                $"<DuplicateDetectionHistoryTimeWindow>{XmlConvert.ToString(TimeSpan.FromMinutes(2))}</DuplicateDetectionHistoryTimeWindow>" +
+                $"<MaxDeliveryCount>10</MaxDeliveryCount>" +
+                $"<EnableBatchedOperations>true</EnableBatchedOperations>" +
+                $"<IsAnonymousAccessible>false</IsAnonymousAccessible>" +
+                $"<AuthorizationRules />" +
+                $"<Status>Active</Status>" +
+                $"<ForwardTo>fq1</ForwardTo>" +
+                $"<UserMetadata></UserMetadata>" +
+                $"<SupportOrdering>true</SupportOrdering>" +
+                $"<AutoDeleteOnIdle>{XmlConvert.ToString(TimeSpan.FromMinutes(60))}</AutoDeleteOnIdle>" +
+                $"<EnablePartitioning>false</EnablePartitioning>" +
+                $"<EnableExpress>false</EnableExpress>" +
+                $"<UnknownElement1>prop1</UnknownElement1>" +
+                $"<UnknownElement2>prop2</UnknownElement2>" +
+                $"<UnknownElement3>prop3</UnknownElement3>" +
+                $"<UnknownElement4>prop4</UnknownElement4>" +
+                $"<UnknownElement5><PropertyValue>prop5</PropertyValue></UnknownElement5>" +
+                $"</QueueDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(queueDescriptionXml);
+            QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+            Assert.NotNull(queueDesc.UnknownProperties);
+            XDocument doc = QueuePropertiesExtensions.Serialize(queueDesc);
+
+            XName queueDescriptionElementName = XName.Get("QueueDescription", AdministrationClientConstants.ServiceBusNamespace);
+            XElement expectedQueueDecriptionElement = XElement.Parse(queueDescriptionXml).Descendants(queueDescriptionElementName).FirstOrDefault();
+            XElement serializedQueueDescritionElement = doc.Descendants(queueDescriptionElementName).FirstOrDefault();
+            XNode expectedChildNode = expectedQueueDecriptionElement.FirstNode;
+            XNode actualChildNode = serializedQueueDescritionElement.FirstNode;
+            while (expectedChildNode != null)
+            {
+                Assert.NotNull(actualChildNode);
+                Assert.True(XNode.DeepEquals(expectedChildNode, actualChildNode), $"QueueDescrition parsing and serialization combo didn't work as expected. {expectedChildNode.ToString()}");
+                expectedChildNode = expectedChildNode.NextNode;
+                actualChildNode = actualChildNode.NextNode;
+            }
         }
     }
 }
