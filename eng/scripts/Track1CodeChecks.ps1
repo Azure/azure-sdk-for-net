@@ -127,9 +127,10 @@ try {
         }
 
         if ($exitCode -ne 0) {
-            $status = git status -s | Out-String
-            $status = $status -replace "`n", "`n    "
-            Write-Output "Git Diff is:" 
+            Invoke-Block {
+                & git -c core.safecrlf=false diff HEAD --ignore-space-at-eol
+            }
+            Write-Output "Git Diff file is:" 
             $diffResult | ForEach-Object {
                 Write-Output $_
             }
