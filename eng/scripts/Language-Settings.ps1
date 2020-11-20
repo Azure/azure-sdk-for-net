@@ -4,6 +4,8 @@ $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
+$IndexHtmlLoc = "api/index.html"
+$AppTitleLang = "NET"
 
 function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
 {
@@ -120,6 +122,8 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 }
 
 function Get-dotnet-GithubIoDocIndex() {
+  # Fill in language specific information using script.
+  UpdateDocIndexFiles -appTitleLang $AppTitleLang -lang $Language -indexhtmlloc $IndexHtmlLoc
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
