@@ -37,6 +37,16 @@ param environmentTimeSeriesIdProperties array {
         description: 'Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite.'
     }
     maxLength: 3
+    default: [
+        {
+            'name': 'timeseriesinsights.id'
+            'type': 'string'
+        }
+        {
+            'name': 'id'
+            'type': 'string'
+        }
+    ]
 }
 
 param eventSourceName string {
