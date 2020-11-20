@@ -1486,7 +1486,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                     throw new MessageLockLostException(Resources.MessageLockLost);
                 }
-
+                
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
         }
