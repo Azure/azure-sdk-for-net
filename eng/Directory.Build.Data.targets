@@ -222,4 +222,15 @@
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
+
+  <!-- InheritDoc-->
+  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true'">
+    <PackageReference Include="SauceControl.InheritDoc" Version="1.1.1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
+  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true' and '$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Include="NETStandard.Library.Ref" Version="[2.1.0]" />
+    <InheritDocReference Include="$([MSBuild]::EnsureTrailingSlash('$(NugetPackageRoot)'))netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
+  </ItemGroup>
 </Project>
