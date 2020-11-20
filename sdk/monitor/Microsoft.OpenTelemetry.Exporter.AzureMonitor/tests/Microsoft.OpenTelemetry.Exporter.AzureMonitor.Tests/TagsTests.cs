@@ -27,7 +27,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_NoItem()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -44,7 +44,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_Empty()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -61,7 +61,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_NullItem()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -88,7 +88,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_PartC()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -106,7 +106,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_PartB()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -137,7 +137,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_PartB_PartC()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -168,7 +168,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_IntArray()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -192,7 +192,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_DoubleArray()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -216,7 +216,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_StringArray()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -240,7 +240,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_BooleanArray()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -264,7 +264,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_ObjectArray()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
@@ -288,7 +288,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Tests
         [Fact]
         public void TagObjects_Diff_DataTypes()
         {
-            var monitorTags = new AzureMonitorConverter.TagEnumerationState
+            var monitorTags = new TagEnumerationState
             {
                 PartBTags = AzMonList.Initialize(),
                 PartCTags = AzMonList.Initialize()
