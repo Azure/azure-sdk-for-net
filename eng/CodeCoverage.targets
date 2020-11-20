@@ -1,13 +1,16 @@
 <Project>
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(IsMgmtClientLibrary)' != 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
     <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and '$(ContinuousIntegrationBuild)' == 'true'">true</SkipCoverageReport>
-    <TestResultsDirectory>$(MSBuildProjectDirectory)\TestResults</TestResultsDirectory>
+    <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
+    <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
+    <_CollectCoverage>true</_CollectCoverage>
+    <_TestResultsDirectory>$(MSBuildProjectDirectory)\TestResults</_TestResultsDirectory>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(_CollectCoverage)' == 'true'">
     <!--
-      Use VSTest integration to work around blocking issues
+      Use VSTest integration to work around test host crashes on larger collections:
       https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md
     -->
     <PackageReference Include="coverlet.collector">
@@ -16,21 +19,22 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Clean up previous TestResults so reports are recent -->
+  <!-- Clean up previous TestResults so reports are recent. -->
   <Target Name="CleanPreviousCodeCoverage"
-          BeforeTargets="VSTest">
-    <RemoveDir Directories="$(TestResultsDirectory)" />
+          BeforeTargets="VSTest"
+          Condition="'$(_CollectCoverage)' == 'true'">
+    <RemoveDir Directories="$(_TestResultsDirectory)" />
   </Target>
 
-  <!-- Should be similar to what's in the pipelines, though generate a full HTML report -->
+  <!-- Should be similar to what's in the pipelines, though generate a full HTML report. -->
   <Target Name="GenerateCodeCoverageReport"
           AfterTargets="VSTest"
-          Condition="'$(SkipCoverageReport)' != 'true'">
+          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true'">
     <PropertyGroup>
       <CoverageReportCommandLine>dotnet tool run reportgenerator --</CoverageReportCommandLine>
-      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(_TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
       <CoverageReportCommandLine>$(CoverageReportCommandLine) -reporttypes:Html</CoverageReportCommandLine>
-      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-targetdir:$(TestResultsDirectory)"</CoverageReportCommandLine>
+      <CoverageReportCommandLine>$(CoverageReportCommandLine) "-targetdir:$(_TestResultsDirectory)"</CoverageReportCommandLine>
       <CoverageReportCommandLine>$(CoverageReportCommandLine) "-filefilters:+$(CodeCoverageDirectory)\**"</CoverageReportCommandLine>
     </PropertyGroup>
     <Exec Command="$(CoverageReportCommandLine)"
@@ -40,8 +44,10 @@
   </Target>
 
   <!--
-    Allows Collection of Code Coverage for Deterministic Builds
+    Allows Collection of Code Coverage for Deterministic Builds:
     https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/DeterministicBuild.md
+
+    This needs to be available in all projects.
   -->
   <ItemGroup>
     <SourceRoot Include="$(NuGetPackageRoot)" />

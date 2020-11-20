@@ -154,7 +154,7 @@ jobs:
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
 
 
-          -verbosity:diagnostic -bl:msbuild.binlog --diag:log.txt
+          /bl:$(Build.SourcesDirectory)/msbuild.binlog --diag:$(Build.SourcesDirectory)/log.txt
 
 
         displayName: "Build & Test ($(TestTargetFramework))"
@@ -171,6 +171,7 @@ jobs:
       - task: CopyFiles@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         inputs:
+          sourceFolder: $(Build.SourcesDirectory)
           contents: |
             msbuild.binlog
             log*.txt
