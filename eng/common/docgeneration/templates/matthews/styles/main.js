@@ -164,7 +164,7 @@ function populateIndexList(selector, packageName) {
     var publishedVersions = $('<ul style="display: none;"></ul>')
     var collapsible = $('<div class="versionarrow">&nbsp;&nbsp;&nbsp;Other versions</div>')
 
-    $(selector).after(latestVersions)
+    $(selector).next().after(latestVersions)
     $(latestVersions).after(collapsible)
     $(collapsible).after(publishedVersions)
     // Add collapsible arrows on versioned docs.
