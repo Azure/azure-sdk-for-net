@@ -23,7 +23,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
-    public abstract class StorageTestBase : RecordedTestBase
+    public abstract class StorageTestBase : RecordedTestBase<StorageEnviroment>
     {
         static StorageTestBase()
         {
