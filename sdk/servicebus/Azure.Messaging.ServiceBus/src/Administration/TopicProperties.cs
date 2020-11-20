@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -206,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         /// <summary>
         ///   Returns a hash code for this instance.

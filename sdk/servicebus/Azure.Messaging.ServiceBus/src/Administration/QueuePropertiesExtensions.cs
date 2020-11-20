@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     {
         public static XDocument Serialize(this QueueProperties description)
         {
-            var queueDescriptionElements = new List<object>()
+            var queueDescriptionElements = new List<XElement>()
             {
                 new XElement(XName.Get("LockDuration", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.LockDuration)),
                 new XElement(XName.Get("MaxSizeInMegabytes", AdministrationClientConstants.ServiceBusNamespace), XmlConvert.ToString(description.MaxSizeInMegabytes)),
