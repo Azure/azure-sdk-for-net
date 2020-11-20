@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         // decision would have to be made as to whether the event should
                         // be dropped or published on its own.
 
-                        return;
+                        break;
                     }
                 }
 
