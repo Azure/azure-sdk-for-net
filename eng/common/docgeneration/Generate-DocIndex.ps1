@@ -108,9 +108,9 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     LogDebug "Start generating the docfx toc and build docfx site..."
 
     LogDebug "Initializing Default DocFx Site..."
-    & $($DocFx) init -q -o "${DocOutDir}"
+    #& $($DocFx) init -q -o "${DocOutDir}"
     # The line below is used for testing in local
-    #docfx init -q -o "${DocOutDir}"
+    docfx init -q -o "${DocOutDir}"
     LogDebug "Copying template and configuration..."
     New-Item -Path "${DocOutDir}" -Name "templates" -ItemType "directory" -Force
     Copy-Item "${DocGenDir}/templates/*" -Destination "${DocOutDir}/templates" -Force -Recurse
@@ -156,9 +156,9 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     Copy-Item "$($RepoRoot)/CONTRIBUTING.md" -Destination "${DocOutDir}/api/CONTRIBUTING.md" -Force
 
     LogDebug "Building site..."
-    & $($DocFx) build "${DocOutDir}/docfx.json"
+    #& $($DocFx) build "${DocOutDir}/docfx.json"
     # The line below is used for testing in local
-    #docfx build "${DocOutDir}/docfx.json"
+    docfx build "${DocOutDir}/docfx.json"
     Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force    
 }
 
@@ -166,8 +166,8 @@ function Mutate-Files {
     Param (
         [Parameter(Mandatory=$true)] [String]$lang,
         [Parameter(Mandatory=$true)] [String]$indexhtmlloc,
-        [Parameter(Mandatory=$false)] [String]$packageRegex,
-        [Parameter(Mandatory=$false)] [String]$regexReplacement
+        [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
+        [Parameter(Mandatory=$false)] [String]$regexReplacement = ""
     )
     # Update docfx.json
     $docfxContent = Get-Content -Path $DocfxJsonPath -Raw
