@@ -40,12 +40,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="eTag">Optional ETag.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        public PatchVault(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityData identity = default(IdentityData), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku))
+        public PatchVault(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku), IdentityData identity = default(IdentityData))
             : base(id, name, type, eTag, location, tags)
         {
-            Identity = identity;
             Properties = properties;
             Sku = sku;
+            Identity = identity;
             CustomInit();
         }
 
@@ -53,11 +53,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public IdentityData Identity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -70,6 +65,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityData Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -77,13 +77,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Identity != null)
-            {
-                Identity.Validate();
-            }
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }
