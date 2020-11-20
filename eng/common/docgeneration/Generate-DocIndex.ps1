@@ -182,10 +182,10 @@ function Mutate-Files {
     # Update main.js package regex and replacement
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = $packageRegex"
     $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = `"$regexReplacement`""
-    Set-Content -Path $MainJsPath -Value $mainJsContent
+    Set-Content -Path $MainJsPath -Value $mainJsContent -NoNewline
 }
 
-if ($GetGithubIoDocIndexFn -and Test-Path "function:$GetGithubIoDocIndexFn")
+if ($GetGithubIoDocIndexFn -and (Test-Path "function:$GetGithubIoDocIndexFn"))
 {
     &$GetGithubIoDocIndexFn
 }
