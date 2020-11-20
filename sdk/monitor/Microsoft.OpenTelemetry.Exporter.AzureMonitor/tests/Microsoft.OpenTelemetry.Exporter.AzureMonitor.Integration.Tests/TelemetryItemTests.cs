@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests.TestFramework;
+using Microsoft.OpenTelemetry.Exporter.AzureMonitor.Models;
 
 using OpenTelemetry;
 using OpenTelemetry.Trace;
@@ -20,8 +22,6 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
     /// </summary>
     public class TelemetryItemTests
     {
-        private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
-        private static readonly ActivitySource MyActivitySource = new ActivitySource(ActivitySourceName);
         private const string EmptyConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
         /// <summary>
@@ -38,21 +38,17 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
         [InlineData(ActivityKind.Server)]
         public void VerifyActivity(ActivityKind activityKind)
         {
-            this.Setup(processor: out BatchExportProcessor<Activity> processor, transmitter: out MockTransmitter transmitter);
-
             var activityName = "TestActivity";
-            using (var activity = MyActivitySource.StartActivity(name: activityName, kind: activityKind))
+
+            var telemetryItem = this.RunActivityTest((activitySource) =>
             {
-                activity.SetTag("integer", 1);
-                activity.SetTag("message", "Hello World!");
-                activity.SetTag("intArray", new int[] { 1, 2, 3 });
-            }
-
-            processor.ForceFlush();
-            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
-
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = transmitter.TelemetryItems.First();
+                using (var activity = activitySource.StartActivity(name: activityName, kind: activityKind))
+                {
+                    activity.SetTag("integer", 1);
+                    activity.SetTag("message", "Hello World!");
+                    activity.SetTag("intArray", new int[] { 1, 2, 3 });
+                }
+            });
 
             VerifyTelemetryItem.Verify(
                 telemetryItem: telemetryItem,
@@ -67,13 +63,14 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 });
         }
 
-        // TODO: ADD THIS TEST AFTER IMPLEMENTING ILOGGER EXPORTER
-        //public void VerifyILoggerAsTelemetryItem
-
-        private void Setup(out BatchExportProcessor<Activity> processor, out MockTransmitter transmitter )
+        private TelemetryItem RunActivityTest(Action<ActivitySource> testScenario)
         {
-            transmitter = new MockTransmitter();
-            processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+            // SETUP
+            var ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
+            using var activitySource = new ActivitySource(ActivitySourceName);
+
+            var transmitter = new MockTransmitter();
+            var processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
@@ -85,6 +82,16 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
                 .AddSource(ActivitySourceName)
                 .AddProcessor(processor)
                 .Build();
+
+            // ACT
+            testScenario(activitySource);
+
+            // CLEANUP
+            processor.ForceFlush();
+            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
+
+            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
+            return transmitter.TelemetryItems.Single();
         }
     }
 }

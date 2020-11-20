@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Stress", "st
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Stress", "..\..\..\common\Stress\Azure.Test.Stress\Azure.Test.Stress.csproj", "{0B991CA1-E570-4292-BABF-E011D9613C7B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Perf", "perf\Azure.Template.Perf.csproj", "{6D3ADBD7-B0FA-4B4C-9FD4-A79B8B645467}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{0ED9C8A0-9A19-4750-8DD3-61D086288283}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{0B991CA1-E570-4292-BABF-E011D9613C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B991CA1-E570-4292-BABF-E011D9613C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B991CA1-E570-4292-BABF-E011D9613C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3ADBD7-B0FA-4B4C-9FD4-A79B8B645467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3ADBD7-B0FA-4B4C-9FD4-A79B8B645467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3ADBD7-B0FA-4B4C-9FD4-A79B8B645467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3ADBD7-B0FA-4B4C-9FD4-A79B8B645467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED9C8A0-9A19-4750-8DD3-61D086288283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED9C8A0-9A19-4750-8DD3-61D086288283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED9C8A0-9A19-4750-8DD3-61D086288283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED9C8A0-9A19-4750-8DD3-61D086288283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

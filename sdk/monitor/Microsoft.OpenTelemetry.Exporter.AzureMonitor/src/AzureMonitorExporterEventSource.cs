@@ -4,14 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using Azure.Core.Shared;
 
 namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureMonitorTraceExporterEventSource : EventSource
+    internal sealed class AzureMonitorExporterEventSource : EventSource
     {
-        private const string EventSourceName = "OpenTelemetry-TraceExporter-AzureMonitor";
-        public static AzureMonitorTraceExporterEventSource Log = new AzureMonitorTraceExporterEventSource();
+        private const string EventSourceName = "Microsoft-OpenTelemetry-Exporter-AzureMonitor";
+        public static AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+        public static AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+
         public readonly IReadOnlyDictionary<string, EventLevel> EventLevelMap = new Dictionary<string, EventLevel>
         {
             [EventLevelSuffix.Critical] = EventLevel.Critical,
@@ -70,6 +73,39 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         private static string GetMessage(object value)
         {
             return value is Exception exception ? exception.ToInvariantString() : value.ToString();
+        }
+
+        public class AzureMonitorExporterEventListener : EventListener
+        {
+            private readonly List<EventSource> eventSources = new List<EventSource>();
+
+            public override void Dispose()
+            {
+                foreach (EventSource eventSource in this.eventSources)
+                {
+                    this.DisableEvents(eventSource);
+                }
+
+                base.Dispose();
+                GC.SuppressFinalize(this);
+            }
+
+            protected override void OnEventSourceCreated(EventSource eventSource)
+            {
+                if (eventSource?.Name == EventSourceName)
+                {
+                    this.eventSources.Add(eventSource);
+                    this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
+                }
+
+                base.OnEventSourceCreated(eventSource);
+            }
+
+            protected override void OnEventWritten(EventWrittenEventArgs eventData)
+            {
+                string message = EventSourceEventFormatting.Format(eventData);
+                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+            }
         }
     }
 }
