@@ -3,7 +3,13 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
+      # - script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
+      - script: |
+          pwsh eng/scripts/Track1CodeChecks.ps1
+        displayName: "Code-gen Force Check"
+        env:
+          REPOSITORY_NAME: $(Build.Repository.Name)
+          PULLREQUEST_ID: $(System.PullRequest.PullRequestId)
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
@@ -29,9 +35,6 @@ jobs:
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
         condition: ne(variables['System.TeamProject'], 'public')
-      - script: |
-          pwsh eng/scripts/Track1CodeChecks.ps1
-        displayName: "Code-gen Force Check"
 
   - job: Test
 

@@ -42,7 +42,7 @@ function Get-ObjectMembers {
 
 try {
     # For pipeline
-    $Response = Invoke-WebRequest -URI https://api.github.com/repos/${env:Build.Repository.Name}/pulls/${env:System.PullRequest.PullRequestId}/files
+    $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
 
     #$Response = Invoke-WebRequest -URI https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/16267/files
     $changeList = $Response.Content | ConvertFrom-Json
