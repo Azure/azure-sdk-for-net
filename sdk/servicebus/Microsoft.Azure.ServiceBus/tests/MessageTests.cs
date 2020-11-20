@@ -4,15 +4,25 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
-    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Management;
     using Xunit;
 
     public class MessageTests
     {
+        [Fact]
+        public async Task Daxi()
+        {
+            string connectionStr = "Endpoint=sb://contoso.servicebus.onebox.windows-int.net/;SharedAccessKeyName=DefaultNamespaceSasAllKeyName;SharedAccessKey=8864/auVd3qDC75iTjBL1GJ4D2oXC6bIttRd0jzDZ+g=";
+            ManagementClient mc = new ManagementClient(connectionStr);
+            TopicDescription td = new TopicDescription("fourthapp") { EnablePartitioning = true }; //codedelay delayindelete partofcreate2 notone nomoreop goodnight anyluck refresh twice
+            await mc.CreateTopicAsync(td);
+            //await mc.DeleteTopicAsync("nomoreop"); //updatetopic
+        }
+
         [Fact]
         [DisplayTestMethodName]
         public void TestClone()
