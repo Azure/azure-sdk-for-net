@@ -1,5 +1,8 @@
 # Release History
 
+## 5.1.0-beta.4 (Unreleased)
+
+
 ## 5.1.0-beta.3 (2020-11-19)
 ### New Features
 - Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing. Note this is a currently in a gated preview where AAD is not supported. More information [here](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
