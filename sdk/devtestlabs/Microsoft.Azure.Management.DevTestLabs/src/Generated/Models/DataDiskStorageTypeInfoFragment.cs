@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         /// <param name="lun">Disk Lun</param>
         /// <param name="storageType">Disk Storage Type. Possible values
-        /// include: 'Standard', 'Premium'</param>
+        /// include: 'Standard', 'Premium', 'StandardSSD'</param>
         public DataDiskStorageTypeInfoFragment(string lun = default(string), string storageType = default(string))
         {
             Lun = lun;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets disk Storage Type. Possible values include:
-        /// 'Standard', 'Premium'
+        /// 'Standard', 'Premium', 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "storageType")]
         public string StorageType { get; set; }

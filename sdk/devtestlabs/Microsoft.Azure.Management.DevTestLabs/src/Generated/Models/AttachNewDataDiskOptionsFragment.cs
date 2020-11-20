@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// GibiBytes.</param>
         /// <param name="diskName">The name of the disk to be attached.</param>
         /// <param name="diskType">The storage type for the disk (i.e.
-        /// Standard, Premium). Possible values include: 'Standard',
-        /// 'Premium'</param>
+        /// Standard, Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'</param>
         public AttachNewDataDiskOptionsFragment(int? diskSizeGiB = default(int?), string diskName = default(string), string diskType = default(string))
         {
             DiskSizeGiB = diskSizeGiB;
@@ -64,7 +64,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the storage type for the disk (i.e. Standard,
-        /// Premium). Possible values include: 'Standard', 'Premium'
+        /// Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "diskType")]
         public string DiskType { get; set; }

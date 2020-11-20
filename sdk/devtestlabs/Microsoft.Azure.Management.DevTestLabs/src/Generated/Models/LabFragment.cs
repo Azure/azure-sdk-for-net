@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="tags">The tags of the resource.</param>
         /// <param name="labStorageType">Type of storage used by the lab. It
         /// can be either Premium or Standard. Default is Premium. Possible
-        /// values include: 'Standard', 'Premium'</param>
+        /// values include: 'Standard', 'Premium', 'StandardSSD'</param>
         /// <param name="mandatoryArtifactsResourceIdsLinux">The ordered list
         /// of artifact resource IDs that should be applied on all Linux VM
         /// creations by default, prior to the artifacts specified by the
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Gets or sets type of storage used by the lab. It can be either
         /// Premium or Standard. Default is Premium. Possible values include:
-        /// 'Standard', 'Premium'
+        /// 'Standard', 'Premium', 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "properties.labStorageType")]
         public string LabStorageType { get; set; }

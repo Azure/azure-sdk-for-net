@@ -88,7 +88,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// (i.e. Standard, Premium).</param>
         /// <param name="virtualMachineCreationSource">Tells source of creation
         /// of lab virtual machine. Output property only. Possible values
-        /// include: 'FromCustomImage', 'FromGalleryImage'</param>
+        /// include: 'FromCustomImage', 'FromGalleryImage',
+        /// 'FromSharedGalleryImage'</param>
         /// <param name="environmentId">The resource ID of the environment that
         /// contains this virtual machine, if any.</param>
         /// <param name="dataDiskParameters">New or existing data disks to
@@ -324,7 +325,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Gets or sets tells source of creation of lab virtual machine.
         /// Output property only. Possible values include: 'FromCustomImage',
-        /// 'FromGalleryImage'
+        /// 'FromGalleryImage', 'FromSharedGalleryImage'
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineCreationSource")]
         public string VirtualMachineCreationSource { get; set; }

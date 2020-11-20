@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="vaultName">The lab's Key vault.</param>
         /// <param name="labStorageType">Type of storage used by the lab. It
         /// can be either Premium or Standard. Default is Premium. Possible
-        /// values include: 'Standard', 'Premium'</param>
+        /// values include: 'Standard', 'Premium', 'StandardSSD'</param>
         /// <param name="mandatoryArtifactsResourceIdsLinux">The ordered list
         /// of artifact resource IDs that should be applied on all Linux VM
         /// creations by default, prior to the artifacts specified by the
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="support">The properties of any lab support message
         /// associated with this lab</param>
         /// <param name="vmCreationResourceGroup">The resource group in which
-        /// lab virtual machines will be created in.</param>
+        /// all new lab virtual machines will be created. To let DevTest Labs
+        /// manage resource group creation, set this value to null.</param>
         /// <param name="publicIpId">The public IP address for the lab's load
         /// balancer.</param>
         /// <param name="loadBalancerId">The load balancer used to for lab VMs
@@ -152,7 +153,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Gets or sets type of storage used by the lab. It can be either
         /// Premium or Standard. Default is Premium. Possible values include:
-        /// 'Standard', 'Premium'
+        /// 'Standard', 'Premium', 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "properties.labStorageType")]
         public string LabStorageType { get; set; }
@@ -212,8 +213,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public LabSupportProperties Support { get; set; }
 
         /// <summary>
-        /// Gets the resource group in which lab virtual machines will be
-        /// created in.
+        /// Gets the resource group in which all new lab virtual machines will
+        /// be created. To let DevTest Labs manage resource group creation, set
+        /// this value to null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmCreationResourceGroup")]
         public string VmCreationResourceGroup { get; private set; }

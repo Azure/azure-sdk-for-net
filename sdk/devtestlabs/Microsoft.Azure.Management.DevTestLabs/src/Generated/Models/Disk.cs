@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <param name="location">The location of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
         /// <param name="diskType">The storage type for the disk (i.e.
-        /// Standard, Premium). Possible values include: 'Standard',
-        /// 'Premium'</param>
+        /// Standard, Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'</param>
         /// <param name="diskSizeGiB">The size of the disk in
         /// GibiBytes.</param>
         /// <param name="leasedByLabVmId">The resource ID of the VM to which
@@ -82,7 +82,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Gets or sets the storage type for the disk (i.e. Standard,
-        /// Premium). Possible values include: 'Standard', 'Premium'
+        /// Premium). Possible values include: 'Standard', 'Premium',
+        /// 'StandardSSD'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskType")]
         public string DiskType { get; set; }

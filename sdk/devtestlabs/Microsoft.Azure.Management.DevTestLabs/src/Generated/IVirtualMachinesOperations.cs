@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse<LabVirtualMachine>> GetWithHttpMessagesAsync(string resourceGroupName, string labName, string name, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Virtual machine. This operation can
+        /// Create or replace an existing virtual machine. This operation can
         /// take a while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -143,7 +143,8 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Modify properties of virtual machines.
+        /// Allows modifying tags of virtual machines. All other properties
+        /// will be ignored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -530,7 +531,7 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </exception>
         Task<AzureOperationResponse> UnClaimWithHttpMessagesAsync(string resourceGroupName, string labName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace an existing Virtual machine. This operation can
+        /// Create or replace an existing virtual machine. This operation can
         /// take a while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
