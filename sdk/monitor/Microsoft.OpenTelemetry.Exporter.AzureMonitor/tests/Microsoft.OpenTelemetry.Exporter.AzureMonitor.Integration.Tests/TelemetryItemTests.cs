@@ -111,7 +111,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // CLEANUP
             processor.ForceFlush();
-            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
+            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
             Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
             return transmitter.TelemetryItems.Single();
@@ -142,7 +142,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
 
             // CLEANUP
             processor.ForceFlush();
-            Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
+            //Task.Delay(100).Wait(); //TODO: HOW TO REMOVE THIS WAIT?
 
             Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
             return transmitter.TelemetryItems.Single();
