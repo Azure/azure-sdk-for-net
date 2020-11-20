@@ -1185,6 +1185,95 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 Assert.False(runResult.ReceivedEvents.Any(kvp => kvp.Value.Count != 1), "Didn't receive exactly 1 event.");
             }
         }
+
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task CheckpointOnShutdown()
+        {
+            int checkpointFailureCount = 0;
+            int checkpointSuccessCount = 0;
+            int receivedEventCount = 0;
+
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+
+                // Use a randomly generated container name so that initial offset provider will be respected.
+                var eventProcessorHost = new EventProcessorHost(
+                string.Empty,
+                PartitionReceiver.DefaultConsumerGroupName,
+                connectionString,
+                TestUtility.StorageConnectionString,
+                Guid.NewGuid().ToString());
+
+                var processorOptions = new EventProcessorOptions
+                {
+                    ReceiveTimeout = TimeSpan.FromSeconds(10),
+                    InitialOffsetProvider = partitionId => EventPosition.FromEnd(),
+                    InvokeProcessorAfterReceiveTimeout = false
+                };
+
+                var processorFactory = new TestEventProcessorFactory();
+                processorFactory.OnCreateProcessor += (f, createArgs) =>
+                {
+                    var processor = createArgs.Item2;
+                    string partitionId = createArgs.Item1.PartitionId;
+                    string hostName = createArgs.Item1.Owner;
+                    processor.OnOpen += (_, partitionContext) => TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor opened");
+                    processor.OnClose += (_, closeArgs) =>
+                    {
+                        TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor closing: {closeArgs.Item2}");
+                        if (closeArgs.Item2 != CloseReason.Shutdown)
+                        {
+                            return;
+                        }
+
+                        try
+                        {
+                            // Checkpoint at close.
+                            closeArgs.Item1.CheckpointAsync().GetAwaiter().GetResult();
+                            Interlocked.Increment(ref checkpointSuccessCount);
+                        }
+                        catch (Exception)
+                        {
+                            Interlocked.Increment(ref checkpointFailureCount);
+                            throw;
+                        }
+                    };
+
+                    processor.OnProcessError += (_, errorArgs) => TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor process error {errorArgs.Item2.Message}");
+                    processor.OnProcessEvents += (_, eventsArgs) =>
+                    {
+                        int eventCount = eventsArgs.Item2.events != null ? eventsArgs.Item2.events.Count() : 0;
+                        if (eventCount > 0)
+                        {
+                            TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor processing {eventCount} event(s)");
+                            Interlocked.Increment(ref receivedEventCount);
+                        }
+                    };
+                };
+
+                await eventProcessorHost.RegisterEventProcessorFactoryAsync(processorFactory, processorOptions);
+
+                // Now send some number of messages.
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                await TestUtility.SendToEventhubAsync(ehClient, 10);
+                await Task.Delay(TimeSpan.FromSeconds(30));
+
+                // Now unregister processor 
+                await eventProcessorHost.UnregisterEventProcessorAsync();
+
+                // At least one message received.
+                Assert.True(receivedEventCount > 0, "Didn't receive any events.");
+
+                // At least one successful checkpoint call.
+                Assert.True(checkpointSuccessCount > 0, $"checkpointSuccessCount == 0, checkpointFailureCount={checkpointFailureCount}");
+
+                // No failed checkpoint call.
+                Assert.True(checkpointFailureCount == 0, $"checkpointFailureCount == {checkpointFailureCount}");
+            }
+        }
     }
 }
 

@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "47",
         "Content-Type": "application/json",
-        "traceparent": "00-e3ff810b5d5d304a8d773f53c0e8d1ca-2aa4b81b3d4eb942-00",
+        "traceparent": "00-3b1c07114dacbd4681c1df6c598007d3-10f6158383b4b64a-00",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "40ee58496c42aa4d34c8f1ce399dc9fb",
@@ -25,34 +25,34 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "21",
         "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6301/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7850/sqlDatabases/databaseName1413/throughputSettings/default?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:36 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6301/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7850/sqlDatabases/databaseName1413/throughputSettings/default/operationResults/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Date": "Fri, 25 Sep 2020 02:42:26 GMT",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6301/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7850/sqlDatabases/databaseName1413/throughputSettings/default/operationResults/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "8e32f615-d872-4b9f-9f13-7e1b8f92c0ab",
+        "x-ms-correlation-request-id": "4aabcc2d-57e5-444f-9f81-b7f912a8448d",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-writes": "1179",
-        "x-ms-request-id": "455c2125-6ded-473e-80e4-b41480768be5",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005436Z:8e32f615-d872-4b9f-9f13-7e1b8f92c0ab"
+        "x-ms-ratelimit-remaining-subscription-writes": "1162",
+        "x-ms-request-id": "45930a34-0f92-48cc-b237-c5698f0fe082",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024226Z:4aabcc2d-57e5-444f-9f81-b7f912a8448d"
       },
       "ResponseBody": {
         "status": "Enqueued"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "bbb6d210127e55f20f5e6832fb775ad8",
@@ -63,30 +63,30 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "21",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:36 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:26 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9f1e80eb-c695-4aa4-9c45-7a9325d8b141",
+        "x-ms-correlation-request-id": "559ed627-8a70-4ee0-9521-071df90e1bdb",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10720",
-        "x-ms-request-id": "9f1e80eb-c695-4aa4-9c45-7a9325d8b141",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005436Z:9f1e80eb-c695-4aa4-9c45-7a9325d8b141"
+        "x-ms-ratelimit-remaining-subscription-reads": "8739",
+        "x-ms-request-id": "559ed627-8a70-4ee0-9521-071df90e1bdb",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024226Z:559ed627-8a70-4ee0-9521-071df90e1bdb"
       },
       "ResponseBody": {
         "status": "Enqueued"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "f122aa8f143e9b6979893d73a41d3248",
@@ -97,30 +97,30 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "21",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:37 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:27 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2505f7bc-6ee8-4127-9ff6-110dc2a74a13",
+        "x-ms-correlation-request-id": "c9ae078b-454a-488e-8751-3f65cb7c750d",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10719",
-        "x-ms-request-id": "2505f7bc-6ee8-4127-9ff6-110dc2a74a13",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005437Z:2505f7bc-6ee8-4127-9ff6-110dc2a74a13"
+        "x-ms-ratelimit-remaining-subscription-reads": "8738",
+        "x-ms-request-id": "c9ae078b-454a-488e-8751-3f65cb7c750d",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024227Z:c9ae078b-454a-488e-8751-3f65cb7c750d"
       },
       "ResponseBody": {
         "status": "Enqueued"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "67be3d9b0ee6697d7e6e73a445ac698b",
@@ -131,30 +131,30 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "21",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:38 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:28 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "828e05d0-c6e4-4894-8efb-e2fc7e67c7e8",
+        "x-ms-correlation-request-id": "9cbf15be-9b37-4f72-a6cb-93ad0da93445",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10718",
-        "x-ms-request-id": "828e05d0-c6e4-4894-8efb-e2fc7e67c7e8",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005438Z:828e05d0-c6e4-4894-8efb-e2fc7e67c7e8"
+        "x-ms-ratelimit-remaining-subscription-reads": "8737",
+        "x-ms-request-id": "9cbf15be-9b37-4f72-a6cb-93ad0da93445",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024228Z:9cbf15be-9b37-4f72-a6cb-93ad0da93445"
       },
       "ResponseBody": {
         "status": "Enqueued"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "cd9ff0753ac9fb75691b41f5d57fb1f1",
@@ -165,30 +165,30 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "21",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:39 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:29 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c0850f6f-82ec-4e90-9289-22161ecbd1ad",
+        "x-ms-correlation-request-id": "982d5f9c-099e-486b-aeb2-bdc5adcec0b5",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10717",
-        "x-ms-request-id": "c0850f6f-82ec-4e90-9289-22161ecbd1ad",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005439Z:c0850f6f-82ec-4e90-9289-22161ecbd1ad"
+        "x-ms-ratelimit-remaining-subscription-reads": "8736",
+        "x-ms-request-id": "982d5f9c-099e-486b-aeb2-bdc5adcec0b5",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024229Z:982d5f9c-099e-486b-aeb2-bdc5adcec0b5"
       },
       "ResponseBody": {
         "status": "Dequeued"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "be97202bf2b981f12db873cfa1c455cd",
@@ -199,18 +199,18 @@
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "22",
-        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/455c2125-6ded-473e-80e4-b41480768be5?api-version=2020-04-01",
+        "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/eastus/operationsStatus/45930a34-0f92-48cc-b237-c5698f0fe082?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:40 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:31 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4df0542b-611a-4bf4-a908-2572dbc5e7d2",
+        "x-ms-correlation-request-id": "3aef9ccc-ded0-41b5-8bc8-633f45679384",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10716",
-        "x-ms-request-id": "4df0542b-611a-4bf4-a908-2572dbc5e7d2",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005440Z:4df0542b-611a-4bf4-a908-2572dbc5e7d2"
+        "x-ms-ratelimit-remaining-subscription-reads": "8735",
+        "x-ms-request-id": "3aef9ccc-ded0-41b5-8bc8-633f45679384",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024231Z:3aef9ccc-ded0-41b5-8bc8-633f45679384"
       },
       "ResponseBody": {
         "status": "Succeeded"
@@ -222,7 +222,7 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200923.1",
+          "azsdk-net-ResourceManager.CosmosDB/1.0.0-alpha.20200924.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "b4fdb21f657e607fc7c3fdcbcc8794ff",
@@ -235,21 +235,21 @@
         "Content-Length": "380",
         "Content-Location": "https://management.documents.azure.com:450/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6301/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7850/sqlDatabases/databaseName1413/throughputSettings/default?api-version=2020-04-01",
         "Content-Type": "application/json",
-        "Date": "Thu, 24 Sep 2020 00:54:40 GMT",
+        "Date": "Fri, 25 Sep 2020 02:42:31 GMT",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "15b7e3bb-2071-4eed-b8a0-bc2ef72aec30",
+        "x-ms-correlation-request-id": "a9030a34-bb28-4d56-ae52-6fd1b132d9c7",
         "x-ms-gatewayversion": "version=2.11.0",
-        "x-ms-ratelimit-remaining-subscription-reads": "10715",
-        "x-ms-request-id": "15b7e3bb-2071-4eed-b8a0-bc2ef72aec30",
-        "x-ms-routing-request-id": "WESTUS2:20200924T005441Z:15b7e3bb-2071-4eed-b8a0-bc2ef72aec30"
+        "x-ms-ratelimit-remaining-subscription-reads": "8734",
+        "x-ms-request-id": "a9030a34-bb28-4d56-ae52-6fd1b132d9c7",
+        "x-ms-routing-request-id": "WESTUS2:20200925T024231Z:a9030a34-bb28-4d56-ae52-6fd1b132d9c7"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-CosmosDB-6301/providers/Microsoft.DocumentDB/databaseAccounts/cosmosdb7850/sqlDatabases/databaseName1413/throughputSettings/default",
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings",
-        "name": "4lDV",
+        "name": "eaM4",
         "properties": {
           "resource": {
             "throughput": 1000,

@@ -4,14 +4,14 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.DigitalTwins.Tests
 {
     [ClientTestFixture]
-    public abstract class E2eTestBase : ManagementRecordedTestBase<DigitalTwinsManagementTestEnvironment>
+    public abstract class E2eTestBase : RecordedTestBase<DigitalTwinsManagementTestEnvironment>
     {
         // This should be checked in as Playback, and changed to Record or Live locally, if needed.
         private const RecordedTestMode TestMode = RecordedTestMode.Playback;

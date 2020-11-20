@@ -3,12 +3,11 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Insights.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class InsightsManagementClientBase : ManagementRecordedTestBase<InsightsManagementTestEnvironment>
+    public abstract class InsightsManagementClientBase : RecordedTestBase<InsightsManagementTestEnvironment>
     {
         protected static readonly string RgName = "rg1";
 

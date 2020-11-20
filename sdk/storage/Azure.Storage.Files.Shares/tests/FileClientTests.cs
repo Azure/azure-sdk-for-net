@@ -12,14 +12,13 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class FileClientTests : FileTestBase
     {
@@ -494,6 +493,21 @@ namespace Azure.Storage.Files.Shares.Test
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
             ShareFileClient file = InstrumentClient(share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            // Act
+            Response<bool> response = await file.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_ParentDirectoryNotExists()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient parentDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            ShareFileClient file = InstrumentClient(parentDirectory.GetFileClient(GetNewFileName()));
 
             // Act
             Response<bool> response = await file.DeleteIfExistsAsync();
@@ -1934,7 +1948,6 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task GetRangeListDiffAsync()
         {
             // Arrange
@@ -1979,7 +1992,6 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task GetRangeListDiffAsync_Error()
         {
             // Arrange
@@ -3543,6 +3555,53 @@ namespace Azure.Storage.Files.Shares.Test
             TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
         }
 
+        [Test]
+        // lower position within _buffer
+        [TestCase(400)]
+        // higher positiuon within _buffer
+        [TestCase(500)]
+        // lower position below _buffer
+        [TestCase(250)]
+        // higher position above _buffer
+        [TestCase(550)]
+        public async Task OpenReadAsync_SetPosition(long position)
+        {
+            int size = Constants.KB;
+            int initalPosition = 450;
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(size);
+            byte[] expectedData = new byte[size - position];
+            Array.Copy(data, position, expectedData, 0, size - position);
+            ShareFileClient file = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
+            await file.CreateAsync(size);
+            using Stream stream = new MemoryStream(data);
+            await file.UploadAsync(stream);
+
+            ShareFileOpenReadOptions options = new ShareFileOpenReadOptions(allowModifications: false)
+            {
+                BufferSize = 128
+            };
+
+            // Act
+            Stream openReadStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
+            int readbytes = initalPosition;
+            while (readbytes > 0)
+            {
+                readbytes -= await openReadStream.ReadAsync(new byte[readbytes], 0, readbytes);
+            }
+
+            openReadStream.Position = position;
+
+            using MemoryStream outputStream = new MemoryStream();
+            await openReadStream.CopyToAsync(outputStream);
+
+            // Assert
+            Assert.AreEqual(expectedData.Length, outputStream.ToArray().Length);
+            TestHelper.AssertSequenceEqual(expectedData, outputStream.ToArray());
+        }
+
         public async Task GetFileClient_AsciiName()
         {
             // Arrange
@@ -3912,6 +3971,196 @@ namespace Azure.Storage.Files.Shares.Test
                      options: options),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
+
+        #region GenerateSasTests
+        [Test]
+        public void CanGenerateSas_ClientConstructors()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
+            ShareFileClient directory = new ShareFileClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName());
+            Assert.IsTrue(directory.CanGenerateSasUri);
+
+            // Act - ShareFileClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            ShareFileClient directory2 = new ShareFileClient(
+                connectionString,
+                GetNewShareName(),
+                GetNewDirectoryName(),
+                GetOptions());
+            Assert.IsTrue(directory2.CanGenerateSasUri);
+
+            // Act - ShareFileClient(Uri blobContainerUri, BlobClientOptions options = default)
+            ShareFileClient directory3 = new ShareFileClient(
+                blobEndpoint,
+                GetOptions());
+            Assert.IsFalse(directory3.CanGenerateSasUri);
+
+            // Act - ShareFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            ShareFileClient directory4 = new ShareFileClient(
+                blobEndpoint,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+            Assert.IsTrue(directory4.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void GenerateSas_RequiredParameters()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string shareName = GetNewShareName();
+            string fileName = GetNewFileName();
+            ShareFileClient fileClient = new ShareFileClient(
+                connectionString,
+                shareName,
+                fileName,
+                GetOptions());
+
+            // Act
+            Uri sasUri = fileClient.GenerateSasUri(permissions, expiresOn);
+
+            // Assert
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = fileName,
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(blobEndpoint)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName,
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_Builder()
+        {
+            var constants = new TestConstants(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
+            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+            string shareName = GetNewShareName();
+            string fileName = GetNewFileName();
+
+            ShareFileClient directoryClient = new ShareFileClient(
+                connectionString,
+                shareName,
+                fileName,
+                GetOptions());
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = fileName,
+                StartsOn = startsOn
+            };
+
+            // Act
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = fileName,
+                StartsOn = startsOn
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(blobEndpoint)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongShareName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            UriBuilder uriBuilder = new UriBuilder(blobEndpoint);
+            string fileName = GetNewFileName();
+            uriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName() + "/" + fileName;
+            ShareFileClient fileClient = new ShareFileClient(
+                uriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
+            {
+                ShareName = GetNewShareName(), // different share name
+                FilePath = fileName
+            };
+
+            // Act
+            try
+            {
+                fileClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("ShareFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+
+        [Test]
+        public void GenerateSas_BuilderWrongFileName()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("http://127.0.0.1/");
+            string shareName = GetNewShareName();
+            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            blobUriBuilder.Path += constants.Sas.Account + "/" + shareName + "/" + GetNewFileName();
+            ShareFileClient containerClient = new ShareFileClient(
+                blobUriBuilder.Uri,
+                constants.Sas.SharedKeyCredential,
+                GetOptions());
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.All, Recording.UtcNow.AddHours(+1))
+            {
+                ShareName = shareName,
+                FilePath = GetNewFileName() // different file name
+            };
+
+            // Act
+            try
+            {
+                containerClient.GenerateSasUri(sasBuilder);
+
+                Assert.Fail("ShareFileClient.GenerateSasUri should have failed with an ArgumentException.");
+            }
+            catch (InvalidOperationException)
+            {
+                //the correct exception came back
+            }
+        }
+        #endregion
 
         private async Task WaitForCopy(ShareFileClient file, int milliWait = 200)
         {

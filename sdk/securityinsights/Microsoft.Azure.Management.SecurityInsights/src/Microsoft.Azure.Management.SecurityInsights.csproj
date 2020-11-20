@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Microsoft.Azure.Management.SecurityInsights</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider SecurityInsights</Description>
+    <PackageTags>azure;management;arm;resource manager;securityinsights</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

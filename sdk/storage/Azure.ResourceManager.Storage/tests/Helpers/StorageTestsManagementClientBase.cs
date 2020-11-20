@@ -6,18 +6,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.TestFramework;
 using Sku = Azure.ResourceManager.Storage.Models.Sku;
-
+using StorageProvisioningState = Azure.ResourceManager.Storage.Models.ProvisioningState;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests.Helpers
 {
     [ClientTestFixture]
-    public abstract class StorageTestsManagementClientBase : ManagementRecordedTestBase<StorageManagementTestEnvironment>
+    public abstract class StorageTestsManagementClientBase : RecordedTestBase<StorageManagementTestEnvironment>
     {
         public static bool IsTestTenant = false;
         // These are used to create default accounts
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                 }
             }
 
-            Assert.AreEqual(ProvisioningState.Succeeded, account.ProvisioningState);
+            Assert.AreEqual(StorageProvisioningState.Succeeded, account.ProvisioningState);
             Assert.Null(account.LastGeoFailoverTime);
 
             if (account.Sku.Name == SkuName.StandardLRS || account.Sku.Name == SkuName.StandardZRS || account.Sku.Name == SkuName.PremiumLRS)

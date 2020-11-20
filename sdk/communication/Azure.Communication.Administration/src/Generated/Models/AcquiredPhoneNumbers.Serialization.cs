@@ -21,6 +21,11 @@ namespace Azure.Communication.Administration.Models
             {
                 if (property.NameEquals("phoneNumbers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AcquiredPhoneNumber> array = new List<AcquiredPhoneNumber>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

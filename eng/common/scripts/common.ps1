@@ -9,6 +9,9 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir ChangeLog-Operations.ps1)
 . (Join-Path $EngCommonScriptsDir Package-Properties.ps1)
 . (Join-Path $EngCommonScriptsDir logging.ps1)
+. (Join-Path $EngCommonScriptsDir Invoke-GitHubAPI.ps1)
+. (Join-Path $EngCommonScriptsDir Invoke-DevOpsAPI.ps1)
+. (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -30,3 +33,4 @@ if (-not $LanguageShort)
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
+$UpdateDocCIFn = "Update-${Language}-CIConfig"

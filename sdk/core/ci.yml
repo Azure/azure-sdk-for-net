@@ -46,6 +46,10 @@ extends:
       safeName: MicrosoftAzureCoreSpatial
     - name: Microsoft.Azure.Core.Spatial.NewtonsoftJson
       safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
+    - name: System.Memory.Data
+      safeName: SystemMemoryData
+    - name: Azure.Core.Amqp
+      safeName: AzureCoreAmqp
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

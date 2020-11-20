@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net47</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <Reference Include="System.Web" />
+    <ProjectReference Include="../../../resources/Azure.ResourceManager.Resources/src/Azure.ResourceManager.Resources.csproj" />
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
   <ItemGroup>

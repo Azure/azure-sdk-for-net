@@ -40,6 +40,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("areaCodes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -50,6 +55,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("capabilities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PhoneNumberCapability> array = new List<PhoneNumberCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -60,6 +70,11 @@ namespace Azure.Communication.Administration.Models
                 }
                 if (property.NameEquals("maximumSearchSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maximumSearchSize = property.Value.GetInt32();
                     continue;
                 }

@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
-using Azure.ResourceManager.TestFramework;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class CosmosDBManagementClientBase : ManagementRecordedTestBase<CosmosDBManagementTestEnvironment>
+    public abstract class CosmosDBManagementClientBase : RecordedTestBase<CosmosDBManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }

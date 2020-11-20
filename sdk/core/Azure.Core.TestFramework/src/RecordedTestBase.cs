@@ -6,12 +6,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
+
 
 namespace Azure.Core.TestFramework
 {
     [Category("Recorded")]
-    public abstract class RecordedTestBase : ClientTestBase
+    public abstract class RecordedTestBase<TEnvironment> : ClientTestBase
+    where TEnvironment : TestEnvironment, new()
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
 
@@ -19,8 +26,11 @@ namespace Azure.Core.TestFramework
 
         public TestRecording Recording { get; private set; }
 
-        public RecordedTestMode Mode { get; set; }
+        private static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
+        protected ResourceGroupCleanupPolicy CleanupPolicy { get; set; }
+
+        public TEnvironment TestEnvironment { get; }
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
         // as it is the most restrictive of all platforms
         private static readonly HashSet<char> s_invalidChars = new HashSet<char>(new char[]
@@ -32,16 +42,27 @@ namespace Azure.Core.TestFramework
             (char)31, ':', '*', '?', '\\', '/'
         });
 
-#if DEBUG
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
         /// and debug/re-run at the point of failure without re-running
         /// potentially lengthy live tests.  This should never be checked in
-        /// and will be compiled out of release builds to help make that easier
+        /// and will throw an exception from CI builds to help make that easier
         /// to spot.
         /// </summary>
-        public bool SaveDebugRecordingsOnFailure { get; set; } = false;
-#endif
+        public bool SaveDebugRecordingsOnFailure
+        {
+            get => _saveDebugRecordingsOnFailure;
+            set
+            {
+                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
+                {
+                    throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
+                }
+
+                _saveDebugRecordingsOnFailure = value;
+            }
+        }
+        private bool _saveDebugRecordingsOnFailure;
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -52,6 +73,8 @@ namespace Azure.Core.TestFramework
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
             Mode = mode;
+            TestEnvironment = new TEnvironment();
+            TestEnvironment.Mode = Mode;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
@@ -75,10 +98,15 @@ namespace Azure.Core.TestFramework
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
                 null;
 
-            string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+            // Use the current class name instead of the name of the class that declared a test.
+            // This can be used in inherited tests that, for example, use a different endpoint for the same tests.
+            string className = GetType().Name;
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
-            return Path.Combine(TestContext.CurrentContext.TestDirectory,
+
+            string path = ((AssemblyMetadataAttribute)GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+
+            return Path.Combine(path,
                 "SessionRecords",
                 additionalParameterName == null ? className : $"{className}({additionalParameterName})",
                 fileName);
@@ -117,24 +145,87 @@ namespace Azure.Core.TestFramework
         [SetUp]
         public virtual void StartTestRecording()
         {
+            TestEnvironment.Mode = Mode;
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
+                        // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
+            TestEnvironment.SetRecording(Recording);
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
-            bool save = TestContext.CurrentContext.Result.FailCount == 0;
+            bool save = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 #if DEBUG
             save |= SaveDebugRecordingsOnFailure;
 #endif
             Recording?.Dispose(save);
+        }
+
+        protected ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return operation.WaitForCompletionAsync(ZeroPollingInterval, default);
+            }
+            else
+            {
+                return operation.WaitForCompletionAsync();
+            }
+        }
+
+        protected ResourcesManagementClient GetResourceManagementClient()
+        {
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
+            CleanupPolicy = new ResourceGroupCleanupPolicy();
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<ResourcesManagementClient>(
+                TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                options);
+        }
+
+        protected async Task CleanupResourceGroupsAsync()
+        {
+            if (CleanupPolicy != null && Mode != RecordedTestMode.Playback)
+            {
+                var resourceGroupsClient = new ResourcesManagementClient(
+                    TestEnvironment.SubscriptionId,
+                    TestEnvironment.Credential,
+                    new ResourcesManagementClientOptions()).ResourceGroups;
+                foreach (var resourceGroup in CleanupPolicy.ResourceGroupsCreated)
+                {
+                    await resourceGroupsClient.StartDeleteAsync(resourceGroup);
+                }
+            }
+        }
+
+        protected async Task<string> GetFirstUsableLocationAsync(ProvidersOperations providersClient, string resourceProviderNamespace, string resourceType)
+        {
+            var provider = (await providersClient.GetAsync(resourceProviderNamespace)).Value;
+            return provider.ResourceTypes.Where(
+                (resType) =>
+                {
+                    if (resType.ResourceType == resourceType)
+                        return true;
+                    else
+                        return false;
+                }
+                ).First().Locations.FirstOrDefault();
+        }
+
+        protected void SleepInTest(int milliSeconds)
+        {
+            if (Mode == RecordedTestMode.Playback)
+                return;
+            Thread.Sleep(milliSeconds);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Core.TestFramework
             {
                 test = test.Parent;
             }
-            if (test.Fixture is RecordedTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
+            if (test.Fixture is ClientTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
             {
                 return new FallbackCommand(command);
             }
@@ -48,13 +48,13 @@ namespace Azure.Core.TestFramework
                     var originalResult = context.CurrentResult;
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
                     // Run the test again after setting the RecordedTestMode to Record
-                    SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
+                    SetRecordMode(context.TestObject as ClientTestBase, RecordedTestMode.Record);
                     context.CurrentResult = innerCommand.Execute(context);
 
                     // If the recording succeeded, set an error result.
                     if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                     {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run). Please copy updated recordings to SessionFiles using `dotnet msbuild /t:UpdateSessionRecords`.");
+                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run).");
                     }
                     else
                     {
@@ -65,7 +65,7 @@ namespace Azure.Core.TestFramework
                     }
 
                     // revert RecordTestMode to Playback
-                    SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
+                    SetRecordMode(context.TestObject as ClientTestBase, RecordedTestMode.Playback);
                 }
                 return context.CurrentResult;
             }
@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
+        private static void SetRecordMode(ClientTestBase fixture, RecordedTestMode mode)
         {
             fixture.Mode = mode;
         }

@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.SecurityCenter</PackageId>
     <Description>Provides developers with libraries for the updated Azure Security Center platform under Azure Resource manager to view and manage security posture in and outside Azure.</Description>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.SecurityCenter</AssemblyName>
     <PackageTags>management;security center;security;IoT security;</PackageTags>
-    <PackageReleaseNotes>Updated Information Protection SDK clients</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated SDK client. Added Secure score</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

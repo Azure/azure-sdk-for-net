@@ -8,6 +8,8 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
+        private string _tenantId = null;
+
         /// <summary>
         /// Specifies the preferred authentication account username, or UPN, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
@@ -18,17 +20,23 @@ namespace Azure.Identity
         /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
         /// development tools, in the case multiple accounts are found in the shared token.
         /// </summary>
-        public string TenantId { get; set; }
+        public string TenantId
+        {
+            get { return _tenantId; }
+            set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
+        }
 
         /// <summary>
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication with an interactive credential, such as the <see cref="InteractiveBrowserCredential"/> or <see cref="DeviceCodeCredential"/>.
         /// </summary>
-        public AuthenticationRecord AuthenticationRecord { get; set; }
+        internal AuthenticationRecord AuthenticationRecord { get; set; }
 
         /// <summary>
         /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
         /// </summary>
-        public bool AllowUnencryptedCache { get; set; }
+        internal bool AllowUnencryptedCache { get; set; }
+
+        bool ITokenCacheOptions.AllowUnencryptedCache => AllowUnencryptedCache;
 
         bool ITokenCacheOptions.EnablePersistentCache => true;
     }

@@ -4,12 +4,11 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
-using Azure.Management.Storage;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Tests;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Operations = Azure.ResourceManager.Compute.Operations;
 
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager
     [RunFrequency(RunTestFrequency.Manually)]
     [ClientTestFixture]
     [NonParallelizable]
-    public abstract class ComputeClientBase : ManagementRecordedTestBase<ComputeManagementTestEnvironment>
+    public abstract class ComputeClientBase : RecordedTestBase<ComputeManagementTestEnvironment>
     {
         protected string DefaultLocation = "southeastasia";
         protected string LocationEastUs2UpperCase = "EastUS2";

@@ -4,12 +4,11 @@
 using System;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resource.Tests;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class ResourceOperationsTestsBase : ManagementRecordedTestBase<ResourceManagementTestEnvironment>
+    public abstract class ResourceOperationsTestsBase : RecordedTestBase<ResourceManagementTestEnvironment>
     {
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }

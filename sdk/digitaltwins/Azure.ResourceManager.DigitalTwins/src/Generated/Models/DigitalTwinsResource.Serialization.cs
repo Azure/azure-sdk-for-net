@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = DigitalTwinsSkuInfo.DeserializeDigitalTwinsSkuInfo(property.Value);
                     continue;
                 }

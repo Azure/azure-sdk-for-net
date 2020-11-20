@@ -33,16 +33,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("principalId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new IdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }

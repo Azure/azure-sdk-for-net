@@ -183,10 +183,20 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("metadata"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
@@ -197,6 +207,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("TTL"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             tTL = property0.Value.GetInt64();
                             continue;
                         }
@@ -212,11 +227,21 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("targetResource"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             targetResource = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ARecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ARecord> array = new List<ARecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -227,6 +252,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("AAAARecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<AaaaRecord> array = new List<AaaaRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -237,6 +267,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("MXRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<MxRecord> array = new List<MxRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -247,6 +282,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("NSRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<NsRecord> array = new List<NsRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -257,6 +297,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("PTRRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<PtrRecord> array = new List<PtrRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -267,6 +312,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("SRVRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SrvRecord> array = new List<SrvRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -277,6 +327,11 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("TXTRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<TxtRecord> array = new List<TxtRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -287,16 +342,31 @@ namespace Azure.ResourceManager.Dns.Models
                         }
                         if (property0.NameEquals("CNAMERecord"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             cNAMERecord = CnameRecord.DeserializeCnameRecord(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("SOARecord"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sOARecord = SoaRecord.DeserializeSoaRecord(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("caaRecords"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<CaaRecord> array = new List<CaaRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

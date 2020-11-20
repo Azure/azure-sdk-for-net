@@ -58,11 +58,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _identifier;
 
         /// <summary>
-        /// An optional entity path to route the message through. Useful for transactions.
-        /// </summary>
-        private readonly string _viaEntityPath;
-
-        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -92,7 +87,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The name of the entity to which messages will be sent.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
@@ -108,7 +102,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public AmqpSender(
             string entityPath,
-            string viaEntityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
@@ -119,7 +112,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _entityPath = entityPath;
             _identifier = identifier;
-            _viaEntityPath = viaEntityPath;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
@@ -312,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
-            IList<ServiceBusMessage> messages,
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
             AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
@@ -382,8 +374,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<long[]> ScheduleMessagesAsync(
-            IList<ServiceBusMessage> messages,
+        public override async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
             long[] seqNumbers = null;
@@ -407,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<long[]> ScheduleMessageInternalAsync(
-            IList<ServiceBusMessage> messages,
+            IReadOnlyList<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
@@ -595,7 +587,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
                     _entityPath,
-                    _viaEntityPath,
                     timeout,
                     cancellationToken).ConfigureAwait(false);
 

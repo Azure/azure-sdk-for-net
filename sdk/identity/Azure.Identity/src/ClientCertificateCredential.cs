@@ -125,7 +125,7 @@ namespace Azure.Identity
 
         internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider certificateProvider, TokenCredentialOptions options, CredentialPipeline pipeline, MsalConfidentialClient client)
         {
-            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
 
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
@@ -133,7 +133,7 @@ namespace Azure.Identity
 
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
 
-            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.IncludeX5CCliamHeader ?? false, options as ITokenCacheOptions);
+            _client = client ?? new MsalConfidentialClient(_pipeline, tenantId, clientId, certificateProvider, (options as ClientCertificateCredentialOptions)?.SendCertificateChain ?? false, options as ITokenCacheOptions);
         }
 
         /// <summary>

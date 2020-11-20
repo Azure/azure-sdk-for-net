@@ -43,6 +43,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             AuthorizationRules = options.AuthorizationRules;
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -172,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnableBatchedOperations { get; set; } = true;
 
         /// <summary>
-        /// Custom metdata that user can associate with the description.
+        /// Custom metadata that user can associate with the description.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata

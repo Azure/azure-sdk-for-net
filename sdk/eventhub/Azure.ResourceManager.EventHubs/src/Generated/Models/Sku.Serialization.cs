@@ -44,11 +44,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("tier"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     tier = new SkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     capacity = property.Value.GetInt32();
                     continue;
                 }

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedFamilies"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceFamilyCapability> array = new List<ManagedInstanceFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -38,6 +43,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

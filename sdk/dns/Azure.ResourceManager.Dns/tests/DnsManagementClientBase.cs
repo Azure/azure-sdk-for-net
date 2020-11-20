@@ -4,14 +4,14 @@
 using System.Threading.Tasks;
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Dns.Tests
 {
 
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class DnsManagementClientBase : ManagementRecordedTestBase<DnsManagementTestEnvironment>
+    public abstract class DnsManagementClientBase : RecordedTestBase<DnsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }

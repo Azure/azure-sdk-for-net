@@ -66,7 +66,7 @@
 
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
-    <None Include="$(RepoEngPath)/images/pkgicon.png" Pack="true" PackagePath=""/>
+    <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
@@ -119,12 +119,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
-    <!-- Find all Azure projects -->
-    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
     <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
 
     <!-- Compute set of projects that intersect with the PackageReference's -->
     <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
     <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
 
     <!-- Remove PackageReferences -->
@@ -173,6 +174,30 @@
 
     <Error Condition="'$(UseProjectReferenceToAzureClients)' == 'true' and '@(ShouldBeProjectReference)' != ''"
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
+  </Target>
+
+  <!-- Added layer of checks to make sure release packages don't have preview dependencies -->
+  <Target Name="VerifyProjectReferencesReferences" Condition="'$(HasReleaseVersion)' == 'true' AND '$(IsPackable)' == 'true'" BeforeTargets="GenerateNuspec">
+  
+    <Msbuild
+      Projects="@(_ProjectReferencesFromAssetsFile)"
+      Targets="_GetProjectVersion"
+      SkipNonexistentTargets="true"
+      SkipNonexistentProjects="true"
+      Properties="BuildProjectReferences=false;SkipDevBuildNumber=true">
+      <Output
+        TaskParameter="TargetOutputs"
+        ItemName="_ProjectReferencesWithoutDevVersions"/>
+    </Msbuild>
+
+    <ItemGroup>
+      <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
+      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+
+      <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
+    </ItemGroup>
+
+    <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
   <PropertyGroup>

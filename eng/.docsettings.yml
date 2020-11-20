@@ -7,7 +7,9 @@ omitted_paths:
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
   - samples/*
+  - common/Perf/*
   - common/SmokeTests/*
+  - common/Stress/*
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
@@ -126,6 +128,8 @@ known_content_issues:
   - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#5499']
   - ['sdk/core/Azure.Core/README.md', '#5499']
   - ['sdk/core/Azure.Core.Experimental/README.md', '#5499']
+  - ['sdk/core/Azure.Core.Amqp/README.md', '#5499']
+  - ['sdk/core/System.Memory.Data/README.md', '#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']

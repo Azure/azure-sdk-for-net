@@ -3,14 +3,13 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
-using Azure.ResourceManager.TestFramework;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class AppConfigurationClientBase : ManagementRecordedTestBase<AppConfigurationManagementTestEnvironment>
+    public abstract class AppConfigurationClientBase : RecordedTestBase<AppConfigurationManagementTestEnvironment>
     {
         public AppConfigurationManagementClient AppConfigurationManagementClient { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public string ResourceGroupPrefix { get; set; }
         public NetworkManagementClient NetworkManagementClient { get; set; }
         public VirtualNetworksOperations VirtualNetworksOperations { get; set; }
-        public SubnetsOperations SubnetsOperations {get;set; }
+        public SubnetsOperations SubnetsOperations { get; set; }
         public PrivateEndpointsOperations PrivateEndpointsOperations { get; set; }
         protected AppConfigurationClientBase(bool isAsync)
             : base(isAsync)

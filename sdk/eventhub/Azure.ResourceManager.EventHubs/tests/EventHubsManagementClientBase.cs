@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class EventHubsManagementClientBase : ManagementRecordedTestBase<EventHubsManagementTestEnvironment>
+    public abstract class EventHubsManagementClientBase : RecordedTestBase<EventHubsManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ResourcesManagementClient ResourcesManagementClient { get; set; }

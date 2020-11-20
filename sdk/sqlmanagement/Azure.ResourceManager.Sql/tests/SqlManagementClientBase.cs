@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests
@@ -11,7 +10,7 @@ namespace Azure.ResourceManager.Sql.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     [ClientTestFixture]
     [NonParallelizable]
-    public abstract class SqlManagementClientBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
+    public abstract class SqlManagementClientBase : RecordedTestBase<SqlManagementTestEnvironment>
     {
         protected string DefaultLocation = "westus2";
 

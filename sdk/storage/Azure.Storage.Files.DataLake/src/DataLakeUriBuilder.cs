@@ -101,7 +101,11 @@ namespace Azure.Storage.Files.DataLake
             set
             {
                 ResetUri();
-                if (value == "/")
+                if (value == null)
+                {
+                    _directoryOrFilePath = null;
+                }
+                else if (value == "/")
                 {
                     _directoryOrFilePath = value;
                 }

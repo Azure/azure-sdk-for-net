@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DeletedVault> array = new List<DeletedVault>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

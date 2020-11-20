@@ -1,5 +1,20 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 18.0.0-beta
+- Upgrade to rest api version 2020-08-01-preview
+- Support enanble ContainerDeleteRetentionPolicy in BlobServices properties
+- Support enable LastAccessTimeTrackingPolicy in BlobServices properties
+- Support DaysAfterLastAccessTimeGreaterThan,EnableAutoTierToHotFromCool in ManagementPolicy BaseBlob Actions
+- Support List deleted containers
+- Support enable ProtocolSettings.Smb.Multichannel on FileServices properties
+- Support ResourceAccessRule in Microsoft.Azure.Management.Storage.Models.NetworkRuleSet
+- Support Set ExtendedLocation in create storage account
+- Support Blob Inventory rule of storage account
+
+**Breaking changes**
+
+- In StorageManagementClient.FileServices.SetServiceProperties(), add a madatory parameter with type Microsoft.Azure.Management.Storage.Models.FileServiceProperties, to input all FileService properties, and remove 2 parameters to input FileService properties: cors， shareDeleteRetentionPolicy.
+
 ### Changes in 17.2.0
 - Update BlobServiceProperties.RestorePolicy: add new property "MinRestoreTime", deprecate old property "LastEnabledTime"
 

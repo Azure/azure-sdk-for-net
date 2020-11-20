@@ -5,13 +5,13 @@ using System;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public abstract class CommunicationManagementClientLiveTestBase : ManagementRecordedTestBase<CommunicationManagementTestEnvironment>
+    public abstract class CommunicationManagementClientLiveTestBase : RecordedTestBase<CommunicationManagementTestEnvironment>
     {
         public string ResourceGroupPrefix { get; }
         public string ResourceLocation { get; }
