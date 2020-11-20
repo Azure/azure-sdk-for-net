@@ -347,7 +347,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
                 && RequiresSession.Equals(otherDescription.RequiresSession)
                 && Status.Equals(otherDescription.Status)
-                && _internalSupportOrdering.Equals(other.SupportOrdering)
+                && SupportOrdering.Equals(other.SupportOrdering)
                 && EnableExpress == other.EnableExpress
                 && IsAnonymousAccessible == other.IsAnonymousAccessible
                 && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)

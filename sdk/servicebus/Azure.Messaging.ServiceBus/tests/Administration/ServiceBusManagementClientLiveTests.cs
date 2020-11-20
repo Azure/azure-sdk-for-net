@@ -94,10 +94,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             if (Mode == RecordedTestMode.Playback)
             {
                 Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue) { AuthorizationRules = queueOptions.AuthorizationRules.Clone() });
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions) { AuthorizationRules = createdQueue.AuthorizationRules });
             }
             else
             {
                 Assert.AreEqual(queueOptions, new CreateQueueOptions(createdQueue));
+                Assert.AreEqual(createdQueue, new QueueProperties(queueOptions));
             }
             Response<QueueProperties> getQueueResponse = await client.GetQueueAsync(queueOptions.Name);
             rawResponse = createdQueueResponse.GetRawResponse();
@@ -200,10 +202,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 // these in our test recordings, so we skip the auth rule comparison
                 // when in playback mode.
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic) { AuthorizationRules = options.AuthorizationRules.Clone() });
+                Assert.AreEqual(createdTopic, new TopicProperties(options) { AuthorizationRules = createdTopic.AuthorizationRules.Clone() });
+
             }
             else
             {
                 Assert.AreEqual(options, new CreateTopicOptions(createdTopic));
+                Assert.AreEqual(createdTopic, new TopicProperties(options));
             }
 
             Response<TopicProperties> getTopicResponse = await client.GetTopicAsync(options.Name);
