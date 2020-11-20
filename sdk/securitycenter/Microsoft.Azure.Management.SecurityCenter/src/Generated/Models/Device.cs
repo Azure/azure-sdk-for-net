@@ -269,16 +269,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (RiskScore != null)
+            if (RiskScore > 100)
             {
-                if (RiskScore > 100)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "RiskScore", 100);
-                }
-                if (RiskScore < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "RiskScore", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RiskScore", 100);
+            }
+            if (RiskScore < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RiskScore", 0);
             }
         }
     }

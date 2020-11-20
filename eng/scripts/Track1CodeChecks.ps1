@@ -42,12 +42,7 @@ function Get-ObjectMembers {
 
 try {
     # For pipeline
-    Write-Output "RepoName: $Env:REPOSITORY_NAME"
-    Write-Output "PRID: $Env:PULLREQUEST_ID"
-
     $Response = Invoke-WebRequest -URI https://api.github.com/repos/$Env:REPOSITORY_NAME/pulls/$Env:PULLREQUEST_ID/files
-
-    #$Response = Invoke-WebRequest -URI https://api.github.com/repos/Azure/azure-sdk-for-net/pulls/16267/files
     $changeList = $Response.Content | ConvertFrom-Json
     $rpMapping = Get-Content "./eng/scripts/RPMapping.json" | ConvertFrom-Json
     $mataPath = @()
@@ -93,7 +88,7 @@ try {
         $commit = ''
         $readme = ''
         [string]$path = Get-Location
-        $metaData | % {
+        $metaData | ForEach-Object {
             if ($_ -match 'Commit') {
                 $commit = $_.substring($_.length - 40, 40)
             }
@@ -133,7 +128,10 @@ try {
         if ($exitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n", "`n    "
-            Write-Output "Git Diff is `n $diffResult" 
+            Write-Output "Git Diff is: `n" 
+            $diffResult | ForEach-Object {
+                Write-Output $_
+            }
             LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
         }
     }
