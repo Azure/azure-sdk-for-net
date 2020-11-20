@@ -10,7 +10,6 @@ using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
