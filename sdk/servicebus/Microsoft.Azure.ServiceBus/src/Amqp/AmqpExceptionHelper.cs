@@ -226,8 +226,15 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 return new ServiceBusCommunicationException(message, aggregateException);
             }
-
-            return aggregateException;
+            else if (aggregateException == exception)
+            {
+                // Wrap it in an AggregateException so that if the caller throws it, we preserve the original stack trace.
+                return new AggregateException(exception);
+            }
+            else
+            {
+                return aggregateException;
+            }
         }
 
         public static string GetTrackingId(this AmqpLink link)
