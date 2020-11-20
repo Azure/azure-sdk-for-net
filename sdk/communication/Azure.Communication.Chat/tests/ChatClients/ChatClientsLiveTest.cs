@@ -134,7 +134,7 @@ namespace Azure.Communication.Chat.Tests
             var expectedPageSize = 2;
             var messagesCounterTotal = 0;
             var messagesCounter = 0;
-            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken,2))
+            foreach (Page<ChatMessage> messagesPage in messagesPaginationTest.AsPages(continuationToken, 2))
             {
                 messagesCounter = 0;
                 foreach (ChatMessage messagePage in messagesPage.Values)

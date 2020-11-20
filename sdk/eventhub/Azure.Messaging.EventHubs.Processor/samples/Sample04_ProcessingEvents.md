@@ -213,7 +213,6 @@ async Task processEventHandler(ProcessEventArgs args)
             args.Partition,
             args.CancellationToken);
 
-
         // If the number of events that have been processed
         // since the last checkpoint was created exceeds the
         // checkpointing threshold, a new checkpoint will be

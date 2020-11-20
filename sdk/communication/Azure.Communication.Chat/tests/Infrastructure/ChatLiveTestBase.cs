@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.Administration;
 using Azure.Communication.Identity;
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 
 namespace Azure.Communication.Chat.Tests

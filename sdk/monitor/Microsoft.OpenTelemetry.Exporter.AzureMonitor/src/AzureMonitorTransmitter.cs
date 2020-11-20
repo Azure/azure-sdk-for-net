@@ -57,7 +57,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
                     // TODO: Network issue. Send Telemetry Items To Storage
                 }
 
-                AzureMonitorTraceExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
 
             return itemsAccepted;
