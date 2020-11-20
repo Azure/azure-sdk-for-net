@@ -42,7 +42,6 @@ jobs:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix: ${{ parameters.Platforms }}
 
-    condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('$(TestMode)', 'Record')))
     variables:
       - template: ../variables/globals.yml
       # ServiceDirectory references must get passed down by the caller as variable references
@@ -52,6 +51,8 @@ jobs:
         value: ''
       - name: ArmTemplateParameters
         value: '@{}'
+      - name: TestMode
+        value: 'None'
 
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
@@ -77,6 +78,13 @@ jobs:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           ArmTemplateParameters: $(ArmTemplateParameters)
 
+      - pwsh: |
+          if ($env:SupportsRecording -and $env:Record) {
+            Write-Host "Enabling Record mode"
+            Write-Host "##vso[task.setvariable variable=TestMode]Record"
+          }
+        displayName: Set Test Mode
+
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
@@ -93,7 +101,7 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "${{ coalesce(variables['TestMode'], 'None') }}"
+          AZURE_TEST_MODE: $(TestMode)
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
 
