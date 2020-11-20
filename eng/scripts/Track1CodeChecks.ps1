@@ -104,6 +104,7 @@ try {
             & npm install -g autorest
         }
         
+        Write-Output "Ready to execute code: autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path"
         Invoke-Block {
             & autorest $readme --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=$path
         }
@@ -128,7 +129,7 @@ try {
         if ($exitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n", "`n    "
-            Write-Output "Git Diff is: `n" 
+            Write-Output "Git Diff is:" 
             $diffResult | ForEach-Object {
                 Write-Output $_
             }
