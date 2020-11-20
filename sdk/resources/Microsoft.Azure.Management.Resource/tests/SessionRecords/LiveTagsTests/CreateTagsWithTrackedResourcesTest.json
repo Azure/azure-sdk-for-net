@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4bed7a17-121e-4c2b-9387-4a96f13801a1"
+          "c2235a6f-c010-4453-b951-487997246355"
         ],
         "Accept-Language": [
           "en-US"
@@ -32,17 +32,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-failure-cause": [
-          "gateway"
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
         ],
         "x-ms-request-id": [
-          "cb29e163-ad07-4aa9-83b8-289168e7ef84"
+          "693f71a7-f3a2-49c6-b3b8-d28fd51e8db2"
         ],
         "x-ms-correlation-request-id": [
-          "cb29e163-ad07-4aa9-83b8-289168e7ef84"
+          "693f71a7-f3a2-49c6-b3b8-d28fd51e8db2"
         ],
         "x-ms-routing-request-id": [
-          "WESTCENTRALUS:20201117T202034Z:cb29e163-ad07-4aa9-83b8-289168e7ef84"
+          "WESTCENTRALUS:20201118T225116Z:693f71a7-f3a2-49c6-b3b8-d28fd51e8db2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,20 +51,20 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 17 Nov 2020 20:20:34 GMT"
+          "Wed, 18 Nov 2020 22:51:16 GMT"
+        ],
+        "Content-Length": [
+          "302"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "225"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Compute/virtualMachines/TagTestVM' under resource group 'TagsApiSDK' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
-      "StatusCode": 404
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM/providers/Microsoft.Resources/tags/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Resources/tags\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
+      "StatusCode": 200
     }
   ],
   "Names": {},
