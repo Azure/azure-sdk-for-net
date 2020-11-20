@@ -17,4 +17,9 @@ directive:
   transform: >
       $["x-csharp-usage"] = "model,output";
       $["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.AttestationResult
+  transform: >
+      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-formats"] = "json";
 ```

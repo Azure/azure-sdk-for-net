@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Security.Attestation.Models;
 using System.Security.Cryptography.X509Certificates;
@@ -16,6 +19,7 @@ namespace Azure.Security.Attestation
     public class AttestationToken
     {
         protected private string _token;
+        private JsonSerializerOptions _options = new JsonSerializerOptions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken"/> class.
@@ -32,6 +36,10 @@ namespace Azure.Security.Attestation
             TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
             TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
             TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
+
+            _options.Converters.Add(new PolicyResultConverter());
+            _options.Converters.Add(new AttestationResultConverter());
+
         }
 
         /// <summary>
@@ -45,30 +53,56 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the thumbprint of the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationSigner[], Func{string, bool})"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(IReadOnlyList{AttestationSigner}, Func{AttestationToken, AttestationSigner, bool})"/> method has been called.
         /// </summary>
-        public string VerifyingCertificateThumbprint { get; }
+        public string CertificateThumbprint { get; }
 
         /// <summary>
         /// Decoded header for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenHeaderBytes { get; }
+        public ReadOnlyMemory<byte> TokenHeaderBytes { get; }
 
         /// <summary>
         /// Decoded body for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenBodyBytes { get; }
+        public ReadOnlyMemory<byte> TokenBodyBytes { get; }
 
         /// <summary>
         /// Decoded signature for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public byte[] TokenSignatureBytes { get; }
+        public ReadOnlyMemory<byte> TokenSignatureBytes { get; }
+
+        /// <summary>
+        /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
+        /// </summary>
+        public JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
+
+        /// <summary>
+        /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
+        /// </summary>
+        public JsonWebTokenBody Payload { get => JsonSerializer.Deserialize<JsonWebTokenBody>(TokenBodyBytes.ToArray()); }
+
+        /// <summary>
+        /// Expiration time for the token.
+        /// </summary>
+        public DateTime ExpirationTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.ExpirationTime).DateTime; }
+
+        /// <summary>
+        /// Time before which this token is not valid.
+        /// </summary>
+        public DateTime NotBeforeTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.NotBeforeTime).DateTime; }
+
+        /// <summary>
+        /// Time at which this token was issued.
+        /// </summary>
+        public DateTime IssuedAtTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.IssuedAtTime).DateTime; }
+
 
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
         public string TokenBody {
-            get => Encoding.UTF8.GetString(TokenBodyBytes);
+            get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray());
         }
 
         /// <summary>
@@ -76,84 +110,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         public string TokenHeader
         {
-            get => Encoding.UTF8.GetString(TokenHeaderBytes);
-        }
-
-        /// <summary>
-        /// Creates a new Attestation token based on the supplied body and certificate.
-        /// </summary>
-        /// <typeparam name="TBodyType"></typeparam>
-        /// <param name="body"></param>
-        /// <param name="signingCertificate">Signing certificate used to create the key. Note that the PrivateKey of the certificate must be set.</param>
-        /// <returns></returns>
-        public static AttestationToken<TBodyType> CreateToken<TBodyType>(TBodyType body, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate)
-            where TBodyType : class
-        {
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
-            Argument.AssertNotNull(signingCertificate.PrivateKey, nameof(signingCertificate.PrivateKey));
-            throw new NotImplementedException();
-
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttestationToken{TBodyType}"/> class.
-        /// </summary>
-        /// <param name="body"></param>
-        /// <param name="signingKey"></param>
-        /// <param name="signingCertificate"></param>
-        public static AttestationToken<TBodyType> CreateToken<TBodyType>(TBodyType body, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, X509Certificate2 signingCertificate = null)
-            where TBodyType : class
-        {
-            Argument.AssertNotNull(body, nameof(body));
-            if (signingKey != null)
-            {
-                Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
-            }
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttestationToken{X509Certificate2}"/>.
-        /// </summary>
-        /// <param name="body"></param>
-        /// <param name="signingKey"></param>
-        /// <param name="signingCertificate"></param>
-        public static AttestationToken<X509Certificate2> CreateToken(X509Certificate2 body, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, X509Certificate2 signingCertificate = null)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-            if (signingKey != null)
-            {
-                Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
-            }
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a new Attestation token based off of an X.509 Certificate.
-        /// </summary>
-        /// <param name="body"></param>
-        /// <param name="signingCertificate">Signing certificate used to create the key. Note that the PrivateKey of the certificate must be set.</param>
-        /// <returns></returns>
-        public static AttestationToken<X509Certificate2> CreateToken(X509Certificate2 body, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
-            Argument.AssertNotNull(signingCertificate.PrivateKey, nameof(signingCertificate.PrivateKey));
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttestationToken"/> class with an empty body.
-        /// Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, AttestationToken, System.Threading.CancellationToken)"/> API.
-        /// </summary>
-        /// <param name="signingKey"></param>
-        /// <param name="signingCertificate"></param>
-        public static AttestationToken CreateToken(System.Security.Cryptography.AsymmetricAlgorithm signingKey, X509Certificate2 signingCertificate)
-        {
-            Argument.AssertNotNull(signingKey, nameof(signingKey));
-            Argument.AssertNotNull(signingCertificate, nameof(signingCertificate));
-            throw new NotImplementedException();
+            get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray());
         }
 
         /// <summary>
@@ -162,21 +119,31 @@ namespace Azure.Security.Attestation
         /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
         /// <param name="validationCallback">User provided callback which allows the customer to validate the token.</param>
         /// <returns></returns>
-        public virtual bool ValidateToken(AttestationSigner[] attestationSigningCertificates, Func<string, bool> validationCallback = default)
+        public virtual bool ValidateToken(IReadOnlyList<AttestationSigner> attestationSigningCertificates, Func<AttestationToken, AttestationSigner, bool> validationCallback = default)
         {
             Argument.AssertNotNull(attestationSigningCertificates, nameof(attestationSigningCertificates));
             if (validationCallback != null)
             {
-                return validationCallback(_token);
+                return validationCallback(this, attestationSigningCertificates[0]);
             }
             return true;
-//            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Retrieves the body of the AttestationToken as the specified type.
+        /// </summary>
+        /// <typeparam name="T">Underlying type for the token body.</typeparam>
+        /// <returns></returns>
+        public T GetBody<T>()
+            where T: class
+        {
+            return JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _options);
         }
 
         /// <inheritdoc/>
-        internal string GetJsonWebToken()
+        public override string ToString()
         {
-            return string.Empty;
+            return _token ??  GetType().Name;
         }
 
     }

@@ -24,18 +24,11 @@ namespace Azure.Security.Attestation.Tests
         {
             AttestationClient attestationClient = GetAttestationClient();
 
-            AttestationSigner[] certs = await attestationClient.GetSigningCertificatesAsync();
+            IReadOnlyList<AttestationSigner> certs = (await attestationClient.GetSigningCertificatesAsync()).Value;
 
-            Assert.AreNotEqual(0, certs.Length);
+            Assert.AreNotEqual(0, certs.Count);
 
             return;
-        }
-
-        [RecordedTest]
-        public async Task AttestSgx()
-        {
-            AttestationServiceAttestationSamples samples = new AttestationServiceAttestationSamples();
-            await samples.AttestingAnSgxEnclave();
         }
 
         private AttestationClient GetAttestationClient()

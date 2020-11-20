@@ -9,11 +9,15 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Models
 {
-    internal class PolicyResultConverter : JsonConverter<PolicyResult>
+    internal sealed class PolicyResultConverter : JsonConverter<PolicyResult>
     {
         public override PolicyResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            string serializedReader = Utilities.SerializeJsonObject(ref reader, options);
+
+            using var document = JsonDocument.Parse(serializedReader);
+            return PolicyResult.DeserializePolicyResult(document.RootElement);
+
         }
 
         public override void Write(Utf8JsonWriter writer, PolicyResult value, JsonSerializerOptions options)

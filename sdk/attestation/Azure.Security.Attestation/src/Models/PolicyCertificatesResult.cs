@@ -13,7 +13,7 @@ namespace Azure.Security.Attestation.Models
         /// <summary>
         /// Returns the X.509 certificates used to manage policy on the instance.
         /// </summary>
-        public IEnumerable<System.Security.Cryptography.X509Certificates.X509Certificate2> PolicyCertificates
+        public IReadOnlyList<System.Security.Cryptography.X509Certificates.X509Certificate2> PolicyCertificates
         { get; private set; }
     }
 

@@ -14,10 +14,11 @@ namespace Azure.Security.Attestation
     /// An <see cref="AttestationToken{T}"/> represents a JSON Web Token object either passed into or received from the Microsoft Azure Attestation service.
     /// </summary>
     /// <typeparam name="T">Type representing the Body field in the JSON Web Token.</typeparam>
-    public class AttestationToken<T> : AttestationToken
+    internal class AttestationToken<T> : AttestationToken
         where T : class
     {
         private T _parsedBody;
+        private JsonSerializerOptions _options = new JsonSerializerOptions();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken{TBodyType}"/> class.
@@ -25,6 +26,8 @@ namespace Azure.Security.Attestation
         /// <param name="token">string JWT to initialize.</param>
         internal AttestationToken(string token) : base(token)
         {
+            _options.Converters.Add(new PolicyResultConverter());
+            _options.Converters.Add(new AttestationResultConverter());
         }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace Azure.Security.Attestation
                     {
                         return _parsedBody;
                     }
-                    _parsedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes);
+                    _parsedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _options);
                     return _parsedBody;
                 }
             }

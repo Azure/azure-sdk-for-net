@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Security.Attestation.Models
 {
-    public partial class InitTimeData
+    internal partial class InitTimeData
     {
         /// <summary>
         /// Constructs a new instance of an InitTimeData class whose body is an opaque binary blob.

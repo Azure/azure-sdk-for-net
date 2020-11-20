@@ -28,6 +28,8 @@ namespace Azure.Security.Attestation
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly AttestationRestClient _restClient;
         private readonly SigningCertificatesRestClient _metadataClient;
+        private readonly AttestationClientOptions _options;
+        private IReadOnlyList<AttestationSigner> _signers;
 
         /// <summary>
         /// Returns the URI used to communicate with the service.
@@ -64,6 +66,8 @@ namespace Azure.Security.Attestation
 
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
+
+            _options = options;
 
             Endpoint = endpoint;
 
@@ -116,7 +120,14 @@ namespace Azure.Security.Attestation
                         } : null,
                     },
                     cancellationToken);
-                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), new AttestationToken<AttestationResult>(response.Value.Token));
+                var attestationToken = new AttestationToken<AttestationResult>(response.Value.Token);
+
+                if (_options.ValidateAttestationTokens)
+                {
+                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
             }
             catch (Exception ex)
             {
@@ -160,7 +171,14 @@ namespace Azure.Security.Attestation
                         } : null,
                     },
                     cancellationToken).ConfigureAwait(false);
-                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), new AttestationToken<AttestationResult>(response.Value.Token));
+                var attestationToken = new AttestationToken<AttestationResult>(response.Value.Token);
+
+                if (_options.ValidateAttestationTokens)
+                {
+                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
             }
             catch (Exception ex)
             {
@@ -288,7 +306,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<AttestationSigner[]> GetSigningCertificates(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<AttestationSigner>> GetSigningCertificates(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetSigningCertificates)}");
             scope.Start();
@@ -310,7 +328,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Task<Response<AttestationSigner[]>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(GetSigningCertificates)}");
             scope.Start();
@@ -336,7 +354,7 @@ namespace Azure.Security.Attestation
 
                 }
 
-                return Task.FromResult(Response.FromValue(returnedCertificates.ToArray(), keys.GetRawResponse()));
+                return Task.FromResult(Response.FromValue((IReadOnlyList<AttestationSigner>)returnedCertificates, keys.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -347,6 +365,20 @@ namespace Azure.Security.Attestation
 
         // A helper method to construct the default scope based on the service endpoint.
         private static string GetDefaultScope() => $"https://attest.azure.net/.default";
+
+        private IReadOnlyList<AttestationSigner> GetSigners()
+        {
+            lock (this)
+            {
+                if (_signers == null)
+                {
+                    _signers = GetSigningCertificates().Value;
+                }
+
+                return _signers;
+            }
+        }
+
 
     }
 }

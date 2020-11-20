@@ -3,19 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Azure.Security.Attestation.Models;
 using NUnit.Framework;
+using Azure.Security.Attestation.Models;
+using Azure.Identity;
+using Azure.Security.Attestation.Tests.Samples;
 
-namespace Azure.Security.Attestation.Tests.Samples
+namespace Azure.Security.Attestation.Tests
 {
-    public class AttestationServiceAttestationSamples : SamplesBase<AttestationClientTestEnvironment>
+    public class AttestationTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
         private readonly string _runtimeData =
 "wFdC6gBMrrej2JTuNlTjWOe-ebL7Rz34WjmEUnbfFEc_5BITs2t4V8uuEI8JX73t0g_nUTu6g07xyC6rx9wl8IUQFYyP" +
@@ -27,7 +25,7 @@ namespace Azure.Security.Attestation.Tests.Samples
 "xEHoNWZBUCWAS9Qy4OpdQZ1-vINHJaTIZsehSZrkk1a5ttJdghTSUJGbEPWt3Azstjidyq8x1l5q-PIClhJE_Q_vHOvT" +
 "zxCebqZOhFJl08rx8I2OYxzekLA1miJ4aZs8h3eB6tOHZF06gJC8wcIORvy8d8ysEZvja40AWSg";
 
-        private readonly string _sgxQuote  =
+        private readonly string _sgxQuote =
             "AwACAAAAAAAFAAoAk5pyM_ecTKmUCg2zlX8GBxikFG2RGHbLfXx_vS5gtP8AAAAADg4CBf-ABwAAAAAAAA" +
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAHAAAAAAAAANlxlh9yS3HfxfFV" +
     "OsTvtorRYOhJYCzdhRy4QEI-WSpzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFaCMSMCcBDt" +
@@ -104,87 +102,63 @@ namespace Azure.Security.Attestation.Tests.Samples
     "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
     "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
 
-
+        public AttestationTests(bool isAsync) : base(isAsync)
+        {
+        }
 
         [RecordedTest]
-        public async Task AttestingAnSgxEnclave()
+        public async Task AttestSgxShared()
         {
-            var endpoint = TestEnvironment.SharedEusTest;
 
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
-            var client = GetAttestationClient();
+            var client = GetSharedAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
 
             {
-                // Collect quote and enclave held data from OpenEnclave enclave.
+                // Collect quote and enclave held data from an SGX enclave.
 
-                var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-                Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+                var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+
+                // Confirm that the attestation token contains the enclave held data we specified.
+               CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
             }
-            return;
         }
 
-        public async Task GetAttestationPolicy()
-        {
-            var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
-            var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
-                new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
-
-            IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
-
-            var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
-
-        }
-
-        [RecordedTest]
-        public async Task SettingAttestationPolicy()
-        {
-            var endpoint = TestEnvironment.SharedEusTest;
-
-            var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
-            var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
-                new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
-
-            IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
-
-            var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
-
-            string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
-
-            var policyTokenSigner = TestEnvironment.PolicyCertificate0;
-
-            AttestationToken policySetToken = new SecuredAttestationToken(
-                new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
-                policyTokenSigner);
-
-            var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
-
-            var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
-
-            // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
-            var resetResult2 = client.ResetPolicy(
-                AttestationType.SgxEnclave,
-                new SecuredAttestationToken(policyTokenSigner));
-            return;
-
-        }
-        private AttestationClient GetAttestationClient()
+        private AttestationClient GetSharedAttestationClient()
         {
             string endpoint = TestEnvironment.SharedUkSouth;
+            var options = InstrumentClientOptions(new AttestationClientOptions());
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+        }
 
-            /*TokenCredential credential = TestEnvironment.Credential;*/
+        private AttestationClient GetAadAttestationClient()
+        {
+            string endpoint = TestEnvironment.AadAttestationUrl;
 
-            var options = new AttestationClientOptions();
-//            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-            return new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+            var options = InstrumentClientOptions(new AttestationClientOptions());
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+        }
+
+        private AttestationAdministrationClient GetAadAdministrationClient()
+        {
+            string endpoint = TestEnvironment.AadAttestationUrl;
+
+            var options = InstrumentClientOptions(new AttestationClientOptions());
+            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+        }
+
+        private AttestationClient GetIsolatedAttestationClient()
+        {
+            string endpoint = TestEnvironment.IsolatedAttestationUrl;
+
+            var options = InstrumentClientOptions(new AttestationClientOptions());
+            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
         }
     }
 }

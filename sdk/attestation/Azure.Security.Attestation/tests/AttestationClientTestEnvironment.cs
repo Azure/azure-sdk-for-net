@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using Azure.Core.TestFramework;
 
 namespace Azure.Security.Attestation.Tests
@@ -14,10 +17,17 @@ namespace Azure.Security.Attestation.Tests
         public string IsolatedAttestationUrl => GetRecordedVariable("ISOLATED_ATTESTATION_URL");
         public string AadAttestationUrl => GetRecordedVariable("AAD_ATTESTATION_URL");
 
-        public string PolicyCertificate0 => GetRecordedVariable("policySigningCertificates0");
-        public string PolicyCertificate1 => GetRecordedVariable("policySigningCertificates1");
-        public string PolicyCertificate2 => GetRecordedVariable("policySigningCertificates2");
-        public string PolicyManagementCertificate => GetRecordedVariable("policySigningCertificates");
+        public X509Certificate2 PolicyCertificate0 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate0")));
+        public X509Certificate2 PolicyCertificate1 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate1")));
+        public X509Certificate2 PolicyCertificate2 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate2")));
+
+        public RSA PolicySigningKey0 => new RSACng(CngKey.Import(Convert.FromBase64String(GetRecordedVariable("policySigningKey0")), CngKeyBlobFormat.Pkcs8PrivateBlob));
+        public RSA PolicySigningKey1 => new RSACng(CngKey.Import(Convert.FromBase64String(GetRecordedVariable("policySigningKey1")), CngKeyBlobFormat.Pkcs8PrivateBlob));
+        public RSA PolicySigningKey2 => new RSACng(CngKey.Import(Convert.FromBase64String(GetRecordedVariable("policySigningKey2")), CngKeyBlobFormat.Pkcs8PrivateBlob));
+
+        // Policy management keys.
+        public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("isolatedSigningCertificate")));
+        public RSA PolicyManagementKey => new RSACng(CngKey.Import(Convert.FromBase64String(GetRecordedVariable("isolatedSigningKey")), CngKeyBlobFormat.Pkcs8PrivateBlob));
 
         public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
         public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";

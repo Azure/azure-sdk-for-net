@@ -27,34 +27,38 @@ namespace Azure.Security.Attestation.Models
         /// <summary>
         /// Returns the actual signing certificate.
         /// </summary>
-        public X509Certificate2[] SigningCertificates {get; internal set; }
+        public IReadOnlyList<X509Certificate2> SigningCertificates {get; internal set; }
 
         /// <summary>
         /// Returns the Key ID for the returned signing certificate.
         /// </summary>
         public string CertificateKeyId { get; internal set; }
 
-        internal static AttestationSigner[] FromJsonWebKeySet(JsonWebKeySet keys)
+
+        internal static IReadOnlyList<AttestationSigner> FromJsonWebKeySet(JsonWebKeySet keys)
         {
             List<AttestationSigner> returnedCertificates = new List<AttestationSigner>();
             foreach (var key in keys.Keys)
             {
-                List<X509Certificate2> certificates = new List<X509Certificate2>();
-                string keyId = key.Kid;
-
-                if (key.X5C != null)
-                {
-                    foreach (string x5c in key.X5C)
-                    {
-                        certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
-                    }
-                }
-
-                returnedCertificates.Add(new AttestationSigner(certificates.ToArray(), keyId));
+                returnedCertificates.Add(FromJsonWebKey(key));
 
             }
             return returnedCertificates.ToArray();
+        }
 
+        internal static AttestationSigner FromJsonWebKey(JsonWebKey key)
+        {
+            List<X509Certificate2> certificates = new List<X509Certificate2>();
+            string keyId = key.Kid;
+
+            if (key.X5C != null)
+            {
+                foreach (string x5c in key.X5C)
+                {
+                    certificates.Add(new X509Certificate2(Convert.FromBase64String(x5c)));
+                }
+            }
+            return new AttestationSigner(certificates.ToArray(), keyId);
         }
     }
 }

@@ -6,30 +6,85 @@
 #nullable disable
 
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
     public partial class AttestationResult
     {
-        /// <summary> Initializes a new instance of AttestationResult. </summary>
-        internal AttestationResult()
-        {
-        }
 
-        /// <summary> Unique Identifier for the token. </summary>
-        public string Jti { get; }
-        /// <summary> The Principal who issued the token. </summary>
-        public string Iss { get; }
-        /// <summary> The time at which the token was issued, in the number of seconds since 1970-01-0T00:00:00Z UTC. </summary>
-        public float? Iat { get; }
-        /// <summary> The expiration time after which the token is no longer valid, in the number of seconds since 1970-01-0T00:00:00Z UTC. </summary>
-        public float? Exp { get; }
-        /// <summary> The not before time before which the token cannot be considered valid, in the number of seconds since 1970-01-0T00:00:00Z UTC. </summary>
-        public float? Nbf { get; }
-        /// <summary> An RFC 7800 Proof of Possession Key. </summary>
-        public object Cnf { get; }
+        /// <summary> Initializes a new instance of AttestationResult. </summary>
+        /// <param name="internalJti"> Unique Identifier for the token. </param>
+        /// <param name="internalIss"> The Principal who issued the token. </param>
+        /// <param name="internalIat"> The time at which the token was issued, in the number of seconds since 1970-01-0T00:00:00Z UTC. </param>
+        /// <param name="internalExp"> The expiration time after which the token is no longer valid, in the number of seconds since 1970-01-0T00:00:00Z UTC. </param>
+        /// <param name="internalNbf"> The not before time before which the token cannot be considered valid, in the number of seconds since 1970-01-0T00:00:00Z UTC. </param>
+        /// <param name="internalCnf"> An RFC 7800 Proof of Possession Key. </param>
+        /// <param name="nonce"> The Nonce input to the attestation request, if provided. </param>
+        /// <param name="version"> The Schema version of this structure. Current Value: 1.0. </param>
+        /// <param name="runtimeClaims"> Runtime Claims. </param>
+        /// <param name="inittimeClaims"> Inittime Claims. </param>
+        /// <param name="policyClaims"> Policy Generated Claims. </param>
+        /// <param name="verifierType"> The Attestation type being attested. </param>
+        /// <param name="internalPolicySigner"> The certificate used to sign the policy object, if specified. </param>
+        /// <param name="policyHash"> The SHA256 hash of the BASE64URL encoded policy text used for attestation. </param>
+        /// <param name="isDebuggable"> True if the enclave is debuggable, false otherwise. </param>
+        /// <param name="productId"> The SGX Product ID for the enclave. </param>
+        /// <param name="mrEnclave"> The HEX encoded SGX MRENCLAVE value for the enclave. </param>
+        /// <param name="mrSigner"> The HEX encoded SGX MRSIGNER value for the enclave. </param>
+        /// <param name="svn"> The SGX SVN value for the enclave. </param>
+        /// <param name="enclaveHeldData"> A copy of the RuntimeData specified as an input to the attest call. </param>
+        /// <param name="sgxCollateral"> The SGX SVN value for the enclave. </param>
+        /// <param name="deprecatedVersion"> DEPRECATED: Private Preview version of x-ms-ver claim. </param>
+        /// <param name="deprecatedIsDebuggable"> DEPRECATED: Private Preview version of x-ms-sgx-is-debuggable claim. </param>
+        /// <param name="deprecatedSgxCollateral"> DEPRECATED: Private Preview version of x-ms-sgx-collateral claim. </param>
+        /// <param name="deprecatedEnclaveHeldData"> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </param>
+        /// <param name="deprecatedEnclaveHeldData2"> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </param>
+        /// <param name="deprecatedProductId"> DEPRECATED: Private Preview version of x-ms-sgx-product-id. </param>
+        /// <param name="deprecatedMrEnclave"> DEPRECATED: Private Preview version of x-ms-sgx-mrenclave. </param>
+        /// <param name="deprecatedMrSigner"> DEPRECATED: Private Preview version of x-ms-sgx-mrsigner. </param>
+        /// <param name="deprecatedSvn"> DEPRECATED: Private Preview version of x-ms-sgx-svn. </param>
+        /// <param name="deprecatedTee"> DEPRECATED: Private Preview version of x-ms-tee. </param>
+        /// <param name="internalDeprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
+        /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
+        /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
+        internal AttestationResult(string internalJti, string internalIss, long internalIat, long internalExp, long internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, byte[] policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, byte[] enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, byte[] deprecatedEnclaveHeldData, byte[] deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, JsonWebKey internalDeprecatedPolicySigner, byte[] deprecatedPolicyHash, string deprecatedRpData)
+        {
+            InternalJti = internalJti;
+            InternalIss = internalIss;
+            InternalIat = internalIat;
+            InternalExp = internalExp;
+            InternalNbf = internalNbf;
+            InternalCnf = internalCnf;
+            Nonce = nonce;
+            Version = version;
+            RuntimeClaims = runtimeClaims;
+            InittimeClaims = inittimeClaims;
+            PolicyClaims = policyClaims;
+            VerifierType = verifierType;
+            InternalPolicySigner = internalPolicySigner;
+            PolicyHash = policyHash;
+            IsDebuggable = isDebuggable;
+            ProductId = productId;
+            MrEnclave = mrEnclave;
+            MrSigner = mrSigner;
+            Svn = svn;
+            EnclaveHeldData = enclaveHeldData;
+            SgxCollateral = sgxCollateral;
+            DeprecatedVersion = deprecatedVersion;
+            DeprecatedIsDebuggable = deprecatedIsDebuggable;
+            DeprecatedSgxCollateral = deprecatedSgxCollateral;
+            DeprecatedEnclaveHeldData = deprecatedEnclaveHeldData;
+            DeprecatedEnclaveHeldData2 = deprecatedEnclaveHeldData2;
+            DeprecatedProductId = deprecatedProductId;
+            DeprecatedMrEnclave = deprecatedMrEnclave;
+            DeprecatedMrSigner = deprecatedMrSigner;
+            DeprecatedSvn = deprecatedSvn;
+            DeprecatedTee = deprecatedTee;
+            InternalDeprecatedPolicySigner = internalDeprecatedPolicySigner;
+            DeprecatedPolicyHash = deprecatedPolicyHash;
+            DeprecatedRpData = deprecatedRpData;
+        }
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
         public string Nonce { get; }
         /// <summary> The Schema version of this structure. Current Value: 1.0. </summary>

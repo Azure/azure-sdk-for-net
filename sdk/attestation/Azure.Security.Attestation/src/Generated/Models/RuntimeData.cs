@@ -10,7 +10,7 @@ using System;
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> Defines the &quot;run time data&quot; provided by the attestation target for use by the MAA. </summary>
-    public partial class RuntimeData
+    internal partial class RuntimeData
     {
         /// <summary> Initializes a new instance of RuntimeData. </summary>
         public RuntimeData()

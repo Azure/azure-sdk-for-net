@@ -15,17 +15,17 @@ namespace Azure.Security.Attestation
     public class AttestationResponse<T> : Response<T>
         where T: class
     {
-        private readonly AttestationToken<T> _token;
+        private readonly AttestationToken _token;
         private readonly Response _response;
 
-        internal AttestationResponse(Response response, AttestationToken<T> underlyingToken) : base()
+        internal AttestationResponse(Response response, AttestationToken underlyingToken) : base()
         {
             _response = response;
             _token = underlyingToken;
         }
 
         /// <inheritdoc/>
-        public override T Value => _token.Value;
+        public override T Value => _token.GetBody<T>();
 
         /// <summary>
         /// Returns the raw attestation token returned from the Microsoft Azure Attestation service.

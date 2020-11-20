@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Text;
 
 namespace Azure.Security.Attestation.Models
 {
-    internal partial class RuntimeData
+    internal partial struct DataType
     {
     }
 }

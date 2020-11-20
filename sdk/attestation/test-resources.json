@@ -30,7 +30,7 @@
         "description": "The location of the resource. By default, this is the same as the resource group."
       }
     },
-    "policySigningCertificates": {
+    "isolatedSigningCertificate": {
       "type": "string",
       "defaultValue": ""
     },
@@ -48,7 +48,7 @@
           {
             "kty": "RSA",
             "use": "sig",
-            "x5c": [ "[parameters('policySigningCertificates')]" ]
+            "x5c": [ "[parameters('isolatedSigningCertificate')]" ]
           }
         ]
       }
