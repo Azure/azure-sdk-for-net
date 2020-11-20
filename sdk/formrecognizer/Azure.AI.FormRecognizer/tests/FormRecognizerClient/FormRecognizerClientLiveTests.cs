@@ -43,7 +43,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [Ignore("AAD not supported")]
         public async Task FormRecognizerClientCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -527,8 +526,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore= "Receipts latest changes not yet in this region")]
+        [TestCase(false, Ignore = "Receipts latest changes not yet in this region")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -638,8 +637,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore="Receipts latest changes not yet in this region")]
+        [TestCase(false, Ignore="Receipts latest changes not yet in this region")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -752,8 +751,8 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(true, Ignore = "Receipts latest changes not yet in this region")]
+        [TestCase(false, Ignore = "Receipts latest changes not yet in this region")]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
