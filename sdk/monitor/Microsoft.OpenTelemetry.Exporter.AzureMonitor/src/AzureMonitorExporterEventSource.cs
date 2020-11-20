@@ -92,7 +92,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
 
             protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                if (eventSource?.Name.StartsWith("Microsoft-OpenTelemetry", StringComparison.OrdinalIgnoreCase) == true)
+                if (eventSource?.Name == EventSourceName)
                 {
                     this.eventSources.Add(eventSource);
                     this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
