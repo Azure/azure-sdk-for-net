@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(InheritDocEnabled)' == 'true' and '$(TargetFramework)'=='netstandard2.0'">
     <NoWarn>
       $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
-      </NoWarn>
+    </NoWarn>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->

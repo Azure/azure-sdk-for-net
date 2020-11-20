@@ -196,4 +196,8 @@
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
 
+  <!-- InheritDoc-->
+  <ItemGroup Condition="'$(InheritDocEnabled)' == 'true'">
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.1.1" />
+  </ItemGroup>
 </Project>
