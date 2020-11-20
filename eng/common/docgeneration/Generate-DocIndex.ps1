@@ -180,8 +180,8 @@ function Mutate-Files {
     # Update main.js var index html
     $mainJsContent = $mainJsContent -replace "var INDEX_HTML = ''", "var INDEX_HTML = '$indexhtmlloc'"
     # Update main.js package regex and replacement
-    $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = '$packageRegex'"
-    $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = '$regexReplacement'"
+    $mainJsContent = $mainJsContent -replace "var PACKAGE_REGEX = ''", "var PACKAGE_REGEX = $packageRegex"
+    $mainJsContent = $mainJsContent -replace "var PACKAGE_REPLACEMENT = ''", "var PACKAGE_REPLACEMENT = `"$regexReplacement`""
     Set-Content -Path $MainJsPath -Value $mainJsContent
 }
 
