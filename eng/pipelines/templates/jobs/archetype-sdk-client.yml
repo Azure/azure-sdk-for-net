@@ -158,11 +158,13 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
       # BEGIN: Temporarily publish TestResults for manual analysis
       - task: CopyFiles@2
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         inputs:
           sourceFolder: sdk/${{parameters.ServiceDirectory}}
           contents: '**\coverage.cobertura.xml'
           targetFolder: $(Build.ArtifactStagingDirectory)\TestResults
       - task: PublishBuildArtifacts@1
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         inputs:
           pathToPublish: $(Build.ArtifactStagingDirectory)\TestResults
           artifactName: TestResults
