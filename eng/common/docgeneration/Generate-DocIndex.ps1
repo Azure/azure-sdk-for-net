@@ -162,7 +162,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force    
 }
 
-function Mutate-Files {
+function UpdateDocIndexFiles {
     Param (
         [Parameter(Mandatory=$true)] [String]$appTitle,
         [Parameter(Mandatory=$true)] [String]$lang,
