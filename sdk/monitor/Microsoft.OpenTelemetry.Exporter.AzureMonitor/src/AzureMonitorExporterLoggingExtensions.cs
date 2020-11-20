@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Logging
 {
     internal static class AzureMonitorExporterLoggingExtensions
     {
-        public static OpenTelemetryLoggerOptions AddAzureMonitorExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure = null)
+        public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions> configure = null)
         {
             if (loggerOptions == null)
             {
