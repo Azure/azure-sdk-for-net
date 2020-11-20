@@ -55,7 +55,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
         internal static TelemetryItem GetTelemetryItem(LogRecord logRecord, string instrumentationKey)
         {
             var name = PartA_Name_Mapping[TelemetryType.Message];
-            var time = logRecord.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture);
+            var time = logRecord.Timestamp.ToString(CultureInfo.InvariantCulture);
 
             TelemetryItem telemetryItem = new TelemetryItem(name, time)
             {
