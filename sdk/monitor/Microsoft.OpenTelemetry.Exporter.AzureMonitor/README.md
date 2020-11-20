@@ -56,4 +56,4 @@ See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/master/CON
 
 This exporter is under active development.
 
-The library is not yet _generally available_, and releases aren't guaranteed to conform to a specific version of the specification. Future releases will not attempt to maintain backwards compatibility with previous releases. Each alpha and beta release includes significant changes to the API and SDK packages, making them incompatible with each other.
+The library is not yet _generally available_, and is not officially supported. Future releases will not attempt to maintain backwards compatibility with previous releases. Each beta release includes significant changes to the exporter package, making them incompatible with each other.
