@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
     public class ServiceBusManagementClientLiveTests : RecordedTestBase<ServiceBusTestEnvironment>
     {
         public ServiceBusManagementClientLiveTests(bool isAsync) :
-            base(isAsync: true, RecordedTestMode.Record)
+            base(isAsync: true)
         {
             Sanitizer = new ServiceBusRecordedTestSanitizer();
         }
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 ForwardTo = null,
                 LockDuration = TimeSpan.FromSeconds(45),
                 MaxDeliveryCount = 8,
-                MaxSizeInMegabytes = 2048,
+                MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 RequiresSession = false,
                 UserMetadata = nameof(BasicQueueCrudOperations),
