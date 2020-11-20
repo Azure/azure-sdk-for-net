@@ -9,10 +9,13 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+<<<<<<< HEAD
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 
+=======
+>>>>>>> ec71d1d48918f70f2a2195214ee6e8d6b0685b40
 
 namespace Azure.Core.TestFramework
 {
@@ -104,7 +107,7 @@ namespace Azure.Core.TestFramework
 
             string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
 
-            string path = ((AssemblyMetadataAttribute)GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
+            string path = ((AssemblyMetadataAttribute) GetType().Assembly.GetCustomAttribute(typeof(AssemblyMetadataAttribute))).Value;
 
             return Path.Combine(path,
                 "SessionRecords",
