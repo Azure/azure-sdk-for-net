@@ -185,7 +185,7 @@ function Mutate-Files {
     Set-Content -Path $MainJsPath -Value $mainJsContent
 }
 
-if (Test-Path "function:$GetGithubIoDocIndexFn")
+if ($GetGithubIoDocIndexFn -and Test-Path "function:$GetGithubIoDocIndexFn")
 {
     &$GetGithubIoDocIndexFn
 }
