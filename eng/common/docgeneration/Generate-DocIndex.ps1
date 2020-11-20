@@ -119,7 +119,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
     New-Item -Path $YmlPath -Name "toc.yml" -Force
     $visitedService = @{}
     # Sort and display toc service name by alphabetical order, and then sort artifact by order.
-    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value[0], Key)) {
+    foreach ($serviceMapping in ($tocContent.GetEnumerator() | Sort-Object Value, Key)) {
         $artifact = $serviceMapping.Key
         $serviceName = $serviceMapping.Value[0]
         $displayName = $serviceMapping.Value[1]
@@ -164,7 +164,7 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
 
 function UpdateDocIndexFiles {
     Param (
-        [Parameter(Mandatory=$true)] [String]$appTitle,
+        [Parameter(Mandatory=$true)] [String]$appTitleLang,
         [Parameter(Mandatory=$true)] [String]$lang,
         [Parameter(Mandatory=$true)] [String]$indexhtmlloc,
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
@@ -172,8 +172,8 @@ function UpdateDocIndexFiles {
     )
     # Update docfx.json
     $docfxContent = Get-Content -Path $DocfxJsonPath -Raw
-    $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"$appTitle`""
-    $docfxContent = $docfxContent -replace "`"_appFooter`": `"`"", "`"_appFooter`": `"$appTitle`""
+    $docfxContent = $docfxContent -replace "`"_appTitle`": `"`"", "`"_appTitle`": `"Azure SDK for $appTitleLang`""
+    $docfxContent = $docfxContent -replace "`"_appFooter`": `"`"", "`"_appFooter`": `"Azure SDK for $appTitleLang`""
     Set-Content -Path $DocfxJsonPath -Value $docfxContent
     # Update main.js var lang
     $mainJsContent = Get-Content -Path $MainJsPath -Raw
