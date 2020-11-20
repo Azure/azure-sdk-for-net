@@ -405,7 +405,7 @@ namespace Azure.Messaging.ServiceBus
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
         /// <returns>The raw Amqp message.</returns>
-        public AmqpAnnotatedMessage GetRawMessage() => AmqpMessage;
+        public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
         /// Gets the application properties bag, which can be used for custom message metadata.
