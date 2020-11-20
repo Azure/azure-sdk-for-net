@@ -227,9 +227,49 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
 
         /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        public virtual IGallerySharingProfileOperations GallerySharingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        public virtual ISharedGalleriesOperations SharedGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        public virtual ISharedGalleryImagesOperations SharedGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
+
+        /// <summary>
         /// Gets the IContainerServicesOperations.
         /// </summary>
         public virtual IContainerServicesOperations ContainerServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRoleInstancesOperations.
+        /// </summary>
+        public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRolesOperations.
+        /// </summary>
+        public virtual ICloudServiceRolesOperations CloudServiceRoles { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesOperations.
+        /// </summary>
+        public virtual ICloudServicesOperations CloudServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesUpdateDomainOperations.
+        /// </summary>
+        public virtual ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -503,7 +543,15 @@ namespace Microsoft.Azure.Management.Compute
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
             GalleryApplications = new GalleryApplicationsOperations(this);
             GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
+            GallerySharingProfile = new GallerySharingProfileOperations(this);
+            SharedGalleries = new SharedGalleriesOperations(this);
+            SharedGalleryImages = new SharedGalleryImagesOperations(this);
+            SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
             ContainerServices = new ContainerServicesOperations(this);
+            CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
+            CloudServiceRoles = new CloudServiceRolesOperations(this);
+            CloudServices = new CloudServicesOperations(this);
+            CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
