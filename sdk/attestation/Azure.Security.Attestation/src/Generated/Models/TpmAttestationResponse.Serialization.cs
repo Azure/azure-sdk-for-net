@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +14,12 @@ namespace Azure.Security.Attestation.Models
     {
         internal static TpmAttestationResponse DeserializeTpmAttestationResponse(JsonElement element)
         {
-            Optional<byte[]> data = default;
+            Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    data = property.Value.GetBytesFromBase64("U");
+                    data = property.Value.GetString();
                     continue;
                 }
             }

@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Azure.Core;
+using Azure.Security.Attestation.Common;
+
+namespace Azure.Security.Attestation.Models
+{
+    /// <summary>
+    /// Represents a response for a TPM attestation call. See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol  for more information.
+    /// </summary>
+    public partial class TpmAttestationResponse
+    {
+
+        /// <summary>
+        /// Attestation Response data. See  https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more details
+        /// </summary>
+        public ReadOnlyMemory<byte> Data { get => Base64Url.Decode(InternalData); }
+
+        [CodeGenMember("Data")]
+        internal string InternalData { get; }
+    }
+}

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> Attestation response for Trusted Platform Module (TPM) attestation. </summary>
@@ -18,13 +16,10 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
-        /// <param name="data"> Protocol data containing attestation service response. </param>
-        internal TpmAttestationResponse(byte[] data)
+        /// <param name="internalData"> Protocol data containing attestation service response. </param>
+        internal TpmAttestationResponse(string internalData)
         {
-            Data = data;
+            InternalData = internalData;
         }
-
-        /// <summary> Protocol data containing attestation service response. </summary>
-        public byte[] Data { get; }
     }
 }
