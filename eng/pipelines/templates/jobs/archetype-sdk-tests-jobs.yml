@@ -73,7 +73,8 @@ jobs:
 
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
-          Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location, 'westus2') }}
+          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           ArmTemplateParameters: $(ArmTemplateParameters)
