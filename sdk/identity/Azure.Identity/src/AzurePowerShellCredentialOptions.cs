@@ -12,24 +12,24 @@ namespace Azure.Identity
     /// </summary>
     public class AzurePowerShellCredentialOptions : TokenCredentialOptions
     {
-        private bool _usePowerShell;
+        private bool _useLegacyPowerShell;
 
         /// <summary>
         /// Set this if you want to use PowerShell (version 5 or lower) for getting the token
         /// instead of PowerShell Core (version 6 or higher) which is the version used by default.
         /// This can be set to true only on Windows OS.
         /// </summary>
-        public bool UsePowerShell
+        public bool UseLegacyPowerShell
         {
             get
             {
-                return _usePowerShell;
+                return _useLegacyPowerShell;
             }
 
             set
             {
                 // Set this to true only for Windows OS
-                _usePowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && value;
+                _useLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && value;
             }
         }
     }

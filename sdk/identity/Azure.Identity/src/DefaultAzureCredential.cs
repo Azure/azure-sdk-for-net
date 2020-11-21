@@ -208,7 +208,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeAzurePowerShellCredential)
             {
-                chain[i++] = factory.CreateAzurePowerShellCredential(options.UsePowerShell);
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.UseLegacyPowerShell);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

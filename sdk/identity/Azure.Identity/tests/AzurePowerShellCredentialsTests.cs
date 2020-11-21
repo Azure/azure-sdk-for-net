@@ -49,7 +49,7 @@ namespace Azure.Identity.Tests
         {
             string expectedMessage = "PowerShell is not installed.";
             var testProcess = new TestProcess { Error = errorMessage };
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(){UsePowerShell = true}, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(){UseLegacyPowerShell = true}, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(expectedMessage, ex.Message);
         }
@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
             AssertOptionsHonored(new AzurePowerShellCredentialOptions(), credential);
 
             // with options
-            var options = new AzurePowerShellCredentialOptions() {UsePowerShell = true};
+            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = true};
 
             credential = new AzurePowerShellCredential(options);
 
@@ -115,7 +115,7 @@ namespace Azure.Identity.Tests
 
         public void AssertOptionsHonored(AzurePowerShellCredentialOptions options, AzurePowerShellCredential credential)
         {
-            Assert.AreEqual(options.UsePowerShell, credential.UsePowerShell);
+            Assert.AreEqual(options.UseLegacyPowerShell, credential.UseLegacyPowerShell);
         }
     }
 }

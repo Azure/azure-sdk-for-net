@@ -74,14 +74,14 @@ namespace Azure.Identity.Tests
             string expBrowserTenantId = Guid.NewGuid().ToString();
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
-            bool expUsePowerShell = true;
+            bool expUseLegacyPowerShell = true;
             string actClientId = null;
             string actUsername = null;
             string actCacheTenantId = null;
             string actBrowserTenantId = null;
             string actVsTenantId = null;
             string actCodeTenantId = null;
-            bool actUsePowerShell = false;
+            bool actUseLegacyPowerShell = false;
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => { actBrowserTenantId = tenantId; };
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => { actVsTenantId = tenantId; };
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => { actCodeTenantId = tenantId; };
-            credFactory.OnCreateAzurePowerShellCredential = (usePowerShell, _) => { actUsePowerShell = usePowerShell; };
+            credFactory.OnCreateAzurePowerShellCredential = (useLegacyPowerShell, _) => { actUseLegacyPowerShell = useLegacyPowerShell; };
 
             var options = new DefaultAzureCredentialOptions
             {
@@ -101,7 +101,7 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeTenantId = expCodeTenantId,
                 InteractiveBrowserTenantId = expBrowserTenantId,
                 ExcludeInteractiveBrowserCredential = false,
-                UsePowerShell = true
+                UseLegacyPowerShell = expUseLegacyPowerShell
             };
 
             var cred = new DefaultAzureCredential(credFactory, options);
@@ -112,7 +112,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expBrowserTenantId, actBrowserTenantId);
             Assert.AreEqual(expVsTenantId, actVsTenantId);
             Assert.AreEqual(expCodeTenantId, actCodeTenantId);
-            Assert.AreEqual(expUsePowerShell, actUsePowerShell);
+            Assert.AreEqual(expUseLegacyPowerShell, actUseLegacyPowerShell);
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => visualStudioCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => visualStudioCodeCredentialIncluded = true;
-            credFactory.OnCreateAzurePowerShellCredential = (usePowerShell, _) => powerShellCredentialsIncluded = true;
+            credFactory.OnCreateAzurePowerShellCredential = (useLegacyPowerShell, _) => powerShellCredentialsIncluded = true;
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
             {
                 managedIdentityCredentialIncluded = true;

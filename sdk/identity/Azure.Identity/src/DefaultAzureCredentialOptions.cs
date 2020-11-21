@@ -61,7 +61,7 @@ namespace Azure.Identity
         /// instead of PowerShell Core (version 6 or higher) which is the version used by default.
         /// This can be set to true only on Windows OS.
         /// </summary>
-        public bool UsePowerShell { get; set; } = false;
+        public bool UseLegacyPowerShell { get; set; } = false;
 
         /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading

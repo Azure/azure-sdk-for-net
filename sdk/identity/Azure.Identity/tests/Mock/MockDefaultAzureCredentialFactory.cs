@@ -55,11 +55,11 @@ namespace Azure.Identity.Tests.Mock
             return cred;
         }
 
-        public override TokenCredential CreateAzurePowerShellCredential(bool usePowerShell)
+        public override TokenCredential CreateAzurePowerShellCredential(bool useLegacyPowerShell)
         {
             TokenCredential cred = new MockTokenCredential();
 
-            OnCreateAzurePowerShellCredential?.Invoke(usePowerShell, cred);
+            OnCreateAzurePowerShellCredential?.Invoke(useLegacyPowerShell, cred);
 
             return cred;
         }
