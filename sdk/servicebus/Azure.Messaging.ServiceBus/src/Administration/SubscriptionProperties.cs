@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -268,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// List of properties that were retrieved using GetSubscription but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved SubscriptionDescription will be used in UpdateSubscription call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         internal RuleProperties Rule { get; set; }
 

@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests.Mock
             => new SharedTokenCacheCredential(tenantId, username, default, Pipeline);
 
         public override TokenCredential CreateInteractiveBrowserCredential(string tenantId)
-            => new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { EnablePersistentCache = true }, Pipeline);
+            => new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions(), Pipeline);
 
         public override TokenCredential CreateAzureCliCredential()
             => new AzureCliCredential(Pipeline, _processService);
