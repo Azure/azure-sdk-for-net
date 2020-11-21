@@ -149,5 +149,7 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor.Integration.Tests
             Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
             return transmitter.TelemetryItems.Single();
         }
+
+        // TODO: INCLUDE ADDITIONAL TESTS VALIDATING ILOGGER + ACTIVITY
     }
 }
