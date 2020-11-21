@@ -67,8 +67,15 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             //telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()] = RoleName;
             //telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = RoleInstance;
 
-            telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
-            telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+            if (logRecord.TraceId != default)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()] = logRecord.TraceId.ToHexString();
+            }
+
+            if (logRecord.SpanId != default)
+            {
+                telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+            }
 
             telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
 
