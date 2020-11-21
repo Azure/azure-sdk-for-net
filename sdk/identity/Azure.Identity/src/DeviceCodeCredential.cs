@@ -96,7 +96,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
-        internal virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
+        public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -108,8 +108,8 @@ namespace Azure.Identity
         /// Interactively authenticates a user via the default browser.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution if persistent caching was enabled via <see cref="DeviceCodeCredentialOptions.EnablePersistentCache"/> when credential was instantiated.</returns>
-        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution of credentials using the same <see cref="DeviceCodeCredentialOptions.TokenCache"/>.</returns>
+        public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
             // get the default scope for the authority, throw if no default scope exists
             string defaultScope = AzureAuthorityHosts.GetDefaultScope(Pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
@@ -123,7 +123,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        internal virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
@@ -134,7 +134,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
-        internal virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }

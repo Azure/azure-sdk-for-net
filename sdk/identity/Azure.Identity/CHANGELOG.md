@@ -1,7 +1,13 @@
 # Release History
+## 1.4.0-beta.2 (Unreleased)
 
-## 1.4.0-beta.1 (Unreleased)
 
+## 1.4.0-beta.1 (2020-10-15)
+
+### New Features
+- Redesigned Application Authentication APIs
+  - Adds `TokenCache` and `PersistentTokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0 (2020-11-12)
 
