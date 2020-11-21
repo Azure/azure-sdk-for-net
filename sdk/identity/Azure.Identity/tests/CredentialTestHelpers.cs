@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -39,17 +38,15 @@ namespace Azure.Identity.Tests
         }
 
 
-        public static (string token, DateTimeOffset expiresOn) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
+        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
+            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:sszzz";
 
-            var expiresOn = DateTime.Now.Add(expiresOffset);
-
-            var token = new JwtSecurityToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), default, default, expiresOn);
-            var handler = new JwtSecurityTokenHandler();
-            var jwt = handler.WriteToken(token);
-            var jwtSecurityToken = new JwtSecurityToken(jwt);
-
-            return (jwt , jwtSecurityToken.ValidTo);
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
+            var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var token = Guid.NewGuid().ToString();
+            var json = $"{{ \"Token\": \"{token}\", \"ExpiresOn\": \"{expiresOnString}\" }}";
+            return (token, expiresOn, json);
         }
 
         public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));

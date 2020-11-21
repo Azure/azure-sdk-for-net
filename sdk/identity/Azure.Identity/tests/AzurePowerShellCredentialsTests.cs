@@ -20,11 +20,22 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void PersonalTest()
+        {
+            AzurePowerShellCredential cred = new AzurePowerShellCredential();
+            var token =  cred.GetToken(new TokenRequestContext(new[] {"https://backup.blob.core.windows.net"}),
+                CancellationToken.None);
+
+            var x = token.ExpiresOn;
+
+        }
+
+        [Test]
         public async Task AuthenticateWithAzurePowerShellCredential()
         {
-            var (expectedToken, expectedExpiresOn) = CredentialTestHelpers.CreateTokenForAzurePowerShell(new TimeSpan(30));
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
-            var testProcess = new TestProcess { Output = expectedToken };
+            var testProcess = new TestProcess { Output = processOutput };
             AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential
                 (new AzurePowerShellCredentialOptions() ,CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
@@ -57,17 +68,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellModuleNotInstalled([Values("NoAzAccountModule")] string message)
         {
-            string expectedMessage = "Az.Accounts module is not installed.";
-            var testProcess = new TestProcess { Output = message };
-            AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.AreEqual(expectedMessage, ex.Message);
-        }
-
-        [Test]
-        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellNoContext([Values("NoContext")] string message)
-        {
-            string expectedMessage = "Please run 'Connect-AzAccount' to set up account.";
+            string expectedMessage = "Az.Account module >= 2.2.0 is not installed.";
             var testProcess = new TestProcess { Output = message };
             AzurePowerShellCredential credential = InstrumentClient(new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
