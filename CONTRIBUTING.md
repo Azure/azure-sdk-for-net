@@ -75,6 +75,7 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
 
 ```bash
+dotnet tool restore
 dotnet test /p:CollectCoverage=true
 ```
 

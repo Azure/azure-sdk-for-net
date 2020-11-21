@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(IsMgmtClientLibrary)' != 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
-    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and '$(ContinuousIntegrationBuild)' == 'true'">true</SkipCoverageReport>
+    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and '$(TF_BUILD)' == 'true'">true</SkipCoverageReport>
     <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
     <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
     <_CollectCoverage>true</_CollectCoverage>
