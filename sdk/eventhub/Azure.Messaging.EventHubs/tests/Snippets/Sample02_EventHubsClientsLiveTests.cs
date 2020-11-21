@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     ///   Sample02_EventHubsClients sample.
     /// </summary>
     ///
-    [TestFixture]    
+    [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
