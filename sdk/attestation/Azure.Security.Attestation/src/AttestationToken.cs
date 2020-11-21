@@ -87,17 +87,17 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Expiration time for the token.
         /// </summary>
-        public DateTime ExpirationTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.ExpirationTime).DateTime; }
+        public DateTimeOffset ExpirationTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.ExpirationTime); }
 
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
-        public DateTime NotBeforeTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.NotBeforeTime).DateTime; }
+        public DateTimeOffset NotBeforeTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.NotBeforeTime); }
 
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
-        public DateTime IssuedAtTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.IssuedAtTime).DateTime; }
+        public DateTimeOffset IssuedAtTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.IssuedAtTime); }
 
 
         /// <summary>

@@ -96,9 +96,8 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
 #pragma warning disable CA1822
-        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(byte[] quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(quote, nameof(quote));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
@@ -107,7 +106,7 @@ namespace Azure.Security.Attestation
                 var response = _restClient.AttestSgxEnclave(
                     new AttestSgxEnclaveRequest
                     {
-                        Quote = quote,
+                        Quote = quote.ToArray(),
                         InitTimeData = initTimeData != null ? new InitTimeData
                         {
                             Data = initTimeData.ToArray(),
@@ -147,9 +146,8 @@ namespace Azure.Security.Attestation
         /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(byte[] quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(quote, nameof(quote));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
@@ -158,7 +156,7 @@ namespace Azure.Security.Attestation
                 var response = await _restClient.AttestSgxEnclaveAsync(
                     new AttestSgxEnclaveRequest
                     {
-                        Quote = quote,
+                        Quote = quote.ToArray(),
                         InitTimeData = initTimeData != null ? new InitTimeData
                         {
                             Data = initTimeData.ToArray(),
@@ -198,9 +196,8 @@ namespace Azure.Security.Attestation
         /// <param name="runTimeDataIsObject"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
@@ -209,7 +206,7 @@ namespace Azure.Security.Attestation
                 var response = _restClient.AttestOpenEnclave(
                     new AttestOpenEnclaveRequest
                     {
-                        Report = report,
+                        Report = report.ToArray(),
                         InitTimeData = initTimeData != null ? new InitTimeData
                         {
                             Data = initTimeData.ToArray(),
@@ -249,9 +246,8 @@ namespace Azure.Security.Attestation
         /// <param name="runTimeDataIsObject"></param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(report, nameof(report));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
@@ -260,7 +256,7 @@ namespace Azure.Security.Attestation
                 var response = await _restClient.AttestOpenEnclaveAsync(
                 new AttestOpenEnclaveRequest
                 {
-                    Report = report,
+                    Report = report.ToArray(),
                     InitTimeData = initTimeData != null ? new InitTimeData
                     {
                         Data = initTimeData.ToArray(),

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation.Models
 {
-    internal partial class TpmAttestationRequest : IUtf8JsonSerializable
+    public partial class TpmAttestationRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            if (Optional.IsDefined(InternalData))
             {
                 writer.WritePropertyName("data");
-                writer.WriteBase64StringValue(Data, "U");
+                writer.WriteStringValue(InternalData);
             }
             writer.WriteEndObject();
         }

@@ -138,10 +138,12 @@ issuancerules {
             {
                 var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(disallowDebugging) });
 
+                var policySetResult = await adminclient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
+
                 var shaHasher = SHA256Managed.Create();
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
-                var policySetResult = await adminclient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
+
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
                 Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
                 CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash);
@@ -231,10 +233,12 @@ issuancerules {
             {
                 var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(disallowDebugging) }, rsaKey, x509Certificate);
 
+                var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
+
+
                 var shaHasher = SHA256Managed.Create();
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
-                var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
                 Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
                 CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash);
