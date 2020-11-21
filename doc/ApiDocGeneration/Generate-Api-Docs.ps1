@@ -128,11 +128,12 @@ Write-Verbose "Copy over generated yml and other assets"
 Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
 Copy-Item "${DocGenDir}/assets/docfx.json" -Destination "${DocOutDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
-Copy-Item "${DocGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+Copy-Item "${DocOutApiDir}/toc.yml" -Destination "${DocOutDir}/toc.yml" -Force
 
 Write-Verbose "Create Toc for Site Navigation"
-New-Item "${DocOutDir}/toc.yml" -Force
-Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: api/index.md"
+Copy-Item "${DocOutDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+# New-Item "${DocOutDir}/toc.yml" -Force
+# Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: api/`r`n  homepage: api/index.md"
 
 Write-Verbose "Build Doc Content"
 & "${DocFxTool}" build "${DocOutDir}/docfx.json"
