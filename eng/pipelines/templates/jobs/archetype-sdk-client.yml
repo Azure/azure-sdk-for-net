@@ -152,16 +152,13 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{parameters.ServiceDirectory}}
-
-
           /bl:$(Build.SourcesDirectory)/msbuild.binlog --diag:$(Build.SourcesDirectory)/log.txt
-
-
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
       # BEGIN: Temporarily publish TestResults for manual analysis
+      # TODO: Remove /bl line above as well
       - task: CopyFiles@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'))
         inputs:
