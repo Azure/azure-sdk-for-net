@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Models
 {
+    [JsonConverter(typeof(AttestationResultConverter))]
     public partial class AttestationResult
     {
 

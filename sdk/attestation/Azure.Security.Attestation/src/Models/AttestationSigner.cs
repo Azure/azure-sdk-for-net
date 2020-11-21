@@ -9,7 +9,7 @@ using System.Text;
 namespace Azure.Security.Attestation.Models
 {
     /// <summary>
-    /// Represents a certificate/key ID pair, used to validate a <see cref="AttestationToken{TBodyType}"/>.
+    /// Represents a certificate/key ID pair, used to validate a <see cref="AttestationToken"/>.
     /// </summary>
     public class AttestationSigner
     {

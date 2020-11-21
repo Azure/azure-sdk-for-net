@@ -104,7 +104,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = _policyClient.Get(attestationType, cancellationToken);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -135,7 +135,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = await _policyClient.GetAsync(attestationType, cancellationToken).ConfigureAwait(false);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -155,7 +155,7 @@ namespace Azure.Security.Attestation
         /// Sets the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet"><see cref="AttestationToken{TBodyType}"/> specifying the new stored attestation policy.</param>
+        /// <param name="policyToSet"><see cref="AttestationToken"/> specifying the new stored attestation policy.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<PolicyResult> SetPolicy(AttestationType attestationType, AttestationToken policyToSet, CancellationToken cancellationToken = default)
@@ -165,7 +165,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = _policyClient.Set(attestationType, policyToSet.ToString(), cancellationToken);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -183,7 +183,7 @@ namespace Azure.Security.Attestation
         /// Sets the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be set.</param>
-        /// <param name="policyToSet"><see cref="AttestationToken{TBodyType}"/> specifying the new stored attestation policy.</param>
+        /// <param name="policyToSet"><see cref="AttestationToken"/> specifying the new stored attestation policy.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         public virtual async Task<AttestationResponse<PolicyResult>> SetPolicyAsync(AttestationType attestationType, AttestationToken policyToSet, CancellationToken cancellationToken = default)
@@ -193,7 +193,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = await _policyClient.SetAsync(attestationType, policyToSet.ToString(), cancellationToken).ConfigureAwait(false);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -221,7 +221,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = _policyClient.Reset(attestationType, authorizationToken.ToString(), cancellationToken);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -249,7 +249,7 @@ namespace Azure.Security.Attestation
             try
             {
                 var result = await _policyClient.ResetAsync(attestationType, authorizationToken.ToString(), cancellationToken).ConfigureAwait(false);
-                var token = new AttestationToken<PolicyResult>(result.Value.Token);
+                var token = new AttestationToken(result.Value.Token);
                 if (_options.ValidateAttestationTokens)
                 {
                     token.ValidateToken(GetSigners(), _options.ValidationCallback);
@@ -263,6 +263,61 @@ namespace Azure.Security.Attestation
             }
         }
 
+        /// <summary>
+        /// Returns the set of policy management certificates currently configured for the attestation service.
+        ///
+        /// If the service is running in AAD mode, this list will be empty.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel the operation.</param>
+        /// <returns>A set of <see cref="X509Certificate2"/> objects representing the set of root certificates for policy management.</returns>
+        public virtual AttestationResponse<PolicyCertificatesResult> GetPolicyManagementCertificates(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(GetPolicyManagementCertificates)}");
+            scope.Start();
+            try
+            {
+                var result = _policyManagementClient.Get(cancellationToken);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the set of policy management certificates currently configured for the attestation service.
+        ///
+        /// If the service is running in AAD mode, this list will be empty.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token used to cancel the operation.</param>
+        /// <returns>A set of <see cref="X509Certificate2"/> objects representing the set of root certificates for policy management.</returns>
+        public virtual async Task<AttestationResponse<PolicyCertificatesResult>> GetPolicyManagementCertificatesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(GetPolicyManagementCertificates)}");
+            scope.Start();
+            try
+            {
+                var result = await _policyManagementClient.GetAsync(cancellationToken).ConfigureAwait(false);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
 
         /// <summary>
@@ -273,17 +328,50 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<PolicyCertificatesModificationResult> AddPolicyManagementCertificate(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(AddPolicyManagementCertificate)}");
+            scope.Start();
+            try
+            {
+                var result = _policyManagementClient.Add(certificateToAdd.ToString(), cancellationToken);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
+
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="certificateToAdd">Attestation Type to retrive.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
-        public virtual Task<AttestationResponse<PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(AddPolicyManagementCertificate)}");
+            scope.Start();
+            try
+            {
+                var result = await _policyManagementClient.AddAsync(certificateToAdd.ToString(), cancellationToken).ConfigureAwait(false);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -294,41 +382,50 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<PolicyCertificatesModificationResult> RemovePolicyManagementCertificate(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(RemovePolicyManagementCertificate)}");
+            scope.Start();
+            try
+            {
+                var result = _policyManagementClient.Remove(certificateToAdd.ToString(), cancellationToken);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
+
         /// <summary>
         /// Removes one of the attestation policy management certificates.
         /// </summary>
         /// <param name="certificateToAdd">Attestation Type to retrive.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
-        public virtual Task<AttestationResponse<PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(SecuredAttestationToken certificateToAdd, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns the set of policy management certificates currently configured for the attestation service.
-        ///
-        /// If the service is running in AAD mode, this list will be empty.
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token used to cancel the operation.</param>
-        /// <returns>A set of <see cref="X509Certificate2"/> objects representing the set of root certificates for policy management.</returns>
-        public virtual AttestationResponse<PolicyCertificatesResult> GetPolicyManagementCertificates(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns the set of policy management certificates currently configured for the attestation service.
-        ///
-        /// If the service is running in AAD mode, this list will be empty.
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token used to cancel the operation.</param>
-        /// <returns>A set of <see cref="X509Certificate2"/> objects representing the set of root certificates for policy management.</returns>
-        public virtual Task<AttestationResponse<PolicyCertificatesResult>> GetPolicyManagementCertificatesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(RemovePolicyManagementCertificate)}");
+            scope.Start();
+            try
+            {
+                var result = await _policyManagementClient.RemoveAsync(certificateToAdd.ToString(), cancellationToken).ConfigureAwait(false);
+                var token = new AttestationToken(result.Value.Token);
+                if (_options.ValidateAttestationTokens)
+                {
+                    token.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
 #pragma warning restore

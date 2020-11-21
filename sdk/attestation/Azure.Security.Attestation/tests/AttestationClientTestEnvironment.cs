@@ -5,6 +5,7 @@ using System;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Security.Attestation.Tests
 {
@@ -31,5 +32,6 @@ namespace Azure.Security.Attestation.Tests
 
         public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
         public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
+
     }
 }

@@ -15,6 +15,15 @@ namespace Azure.Security.Attestation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
+        /// <param name="certificateThumbprint"> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </param>
+        /// <param name="certificateResolution"> The result of the operation. </param>
+        internal PolicyCertificatesModificationResult(string certificateThumbprint, CertificateModification? certificateResolution)
+        {
+            CertificateThumbprint = certificateThumbprint;
+            CertificateResolution = certificateResolution;
+        }
+
         /// <summary> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </summary>
         public string CertificateThumbprint { get; }
         /// <summary> The result of the operation. </summary>

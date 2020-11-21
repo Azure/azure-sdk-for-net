@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "1188",
         "Content-Type": "text/plain",
-        "traceparent": "00-e9228fabc7bc2e4a8c9d71efed9130ed-70e8f3c4c1589c46-00",
-        "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201120.1 (.NET Framework 4.8.4084.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "6026761bcfd28f7c89bc333492594150",
+        "traceparent": "00-7b18ba13f9f48a4998818dca24dc375b-ecbb49e25b8ffa4b-00",
+        "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201121.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "39716195d21b67daf0b612efa6dd71d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6IkRRcDJaWEp6YVc5dVBURXVNRHNOQ21GMWRHaHZjbWw2WVhScGIyNXlkV3hsY3lCN0lBMEtZem9nVzNSNWNHVTlQU0lrYVhNdFpHVmlkV2RuWVdKc1pTSmRJQ1ltSUZ0MllXeDFaVDA5ZEhKMVpWMGdQVDRnWkdWdWVTZ3BPdzBLUFQ0Z2NHVnliV2wwS0NrN0RRcDlPdzBLYVhOemRXRnVZMlZ5ZFd4bGN5QjdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnBjeTFrWldKMVoyZGhZbXhsSWwwZ1BUNGdhWE56ZFdVb2RIbHdaVDBpVG05MFJHVmlkV2RuWVdKc1pTSXNJSFpoYkhWbFBXTXVkbUZzZFdVcE93MEtJQ0FnSUdNNlczUjVjR1U5UFNJa2FYTXRaR1ZpZFdkbllXSnNaU0pkSUQwLUlHbHpjM1ZsS0hSNWNHVTlJbWx6TFdSbFluVm5aMkZpYkdVaUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhObmVDMXRjbk5wWjI1bGNpSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluTm5lQzF0Y25OcFoyNWxjaUlzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLSUNBZ0lHTTZXM1I1Y0dVOVBTSWtjMmQ0TFcxeVpXNWpiR0YyWlNKZElEMC1JR2x6YzNWbEtIUjVjR1U5SW5ObmVDMXRjbVZ1WTJ4aGRtVWlMQ0IyWVd4MVpUMWpMblpoYkhWbEtUc05DaUFnSUNCak9sdDBlWEJsUFQwaUpIQnliMlIxWTNRdGFXUWlYU0E5UGlCcGMzTjFaU2gwZVhCbFBTSndjbTlrZFdOMExXbGtJaXdnZG1Gc2RXVTlZeTUyWVd4MVpTazdEUW9nSUNBZ1l6cGJkSGx3WlQwOUlpUnpkbTRpWFNBOVBpQnBjM04xWlNoMGVYQmxQU0p6ZG00aUxDQjJZV3gxWlQxakxuWmhiSFZsS1RzTkNpQWdJQ0JqT2x0MGVYQmxQVDBpSkhSbFpTSmRJRDAtSUdsemMzVmxLSFI1Y0dVOUluUmxaU0lzSUhaaGJIVmxQV011ZG1Gc2RXVXBPdzBLZlRzIn0.",
@@ -18,10 +18,10 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 Nov 2020 20:43:21 GMT",
+        "Date": "Sat, 21 Nov 2020 19:24:24 GMT",
         "Server": "Kestrel",
         "x-ms-maa-service-version": "1.10.01419.0005",
-        "x-ms-request-id": "00-e9228fabc7bc2e4a8c9d71efed9130ed-70e8f3c4c1589c46-00"
+        "x-ms-request-id": "00-7b18ba13f9f48a4998818dca24dc375b-ecbb49e25b8ffa4b-00"
       },
       "ResponseBody": {
         "error": {
@@ -33,6 +33,6 @@
   ],
   "Variables": {
     "ISOLATED_ATTESTATION_URL": "https://attestisosdktests.wus.attest.azure.net",
-    "RandomSeed": "1623480102"
+    "RandomSeed": "1425905086"
   }
 }

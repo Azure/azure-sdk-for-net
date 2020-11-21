@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation.Tests
 {
     public class PolicyGetSetTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
-        public PolicyGetSetTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public PolicyGetSetTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -290,12 +290,118 @@ issuancerules {
         }
 
 
-        private AttestationClient GetSharedAttestationClient()
+        [RecordedTest]
+        public async Task GetPolicyManagementCertificatesIsolated()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
+            var adminclient = GetIsolatedAdministrationClient();
+
+            {
+                var certificateResult = await adminclient.GetPolicyManagementCertificatesAsync();
+                Assert.AreNotEqual(0, certificateResult.Value.GetPolicyCertificates().Count);
+
+                bool foundInitialRoot = false;
+                foreach (var cert in certificateResult.Value.GetPolicyCertificates())
+                {
+                    if (cert.Thumbprint == TestEnvironment.PolicyManagementCertificate.Thumbprint)
+                    {
+                        foundInitialRoot = true;
+                        break;
+                    }
+                }
+                Assert.IsTrue(foundInitialRoot);
+            }
         }
+
+        [RecordedTest]
+        public async Task GetPolicyManagementCertificatesShared()
+        {
+            var adminclient = GetSharedAdministrationClient();
+
+            {
+                var certificateResult = await adminclient.GetPolicyManagementCertificatesAsync();
+                Assert.AreEqual(0, certificateResult.Value.GetPolicyCertificates().Count);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AddRemovePolicyManagementCertificate()
+        {
+            var adminClient = GetIsolatedAdministrationClient();
+
+            var x509Certificate = TestEnvironment.PolicyManagementCertificate;
+            var rsaKey = TestEnvironment.PolicyManagementKey;
+
+            {
+                PolicyCertificateModification modification = new Models.PolicyCertificateModification(TestEnvironment.PolicyCertificate2);
+                var policySetToken = new SecuredAttestationToken(modification, rsaKey, x509Certificate);
+
+                var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(policySetToken);
+                Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+
+                // Verify that the certificate we got back was in fact added.
+                var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
+                bool foundAddedCertificate = false;
+                foreach (var cert in certificateResult.Value.GetPolicyCertificates())
+                {
+                    if (cert.Thumbprint == TestEnvironment.PolicyCertificate2.Thumbprint)
+                    {
+                        foundAddedCertificate = true;
+                        break;
+                    }
+                }
+                Assert.IsTrue(foundAddedCertificate);
+            }
+
+            // Add the same certificate a second time, that should generate the same result.
+            {
+                PolicyCertificateModification modification = new Models.PolicyCertificateModification(TestEnvironment.PolicyCertificate2);
+                var policySetToken = new SecuredAttestationToken(modification, rsaKey, x509Certificate);
+
+                var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(policySetToken);
+                Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+
+                // Verify that the certificate we got back was in fact added.
+                var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
+                bool foundAddedCertificate = false;
+                foreach (var cert in certificateResult.Value.GetPolicyCertificates())
+                {
+                    if (cert.Thumbprint == TestEnvironment.PolicyCertificate2.Thumbprint)
+                    {
+                        foundAddedCertificate = true;
+                        break;
+                    }
+                }
+                Assert.IsTrue(foundAddedCertificate);
+            }
+
+
+            {
+                PolicyCertificateModification modification = new Models.PolicyCertificateModification(TestEnvironment.PolicyCertificate2);
+                var policySetToken = new SecuredAttestationToken(modification, rsaKey, x509Certificate);
+
+                var modificationResult = await adminClient.RemovePolicyManagementCertificateAsync(policySetToken);
+                Assert.AreEqual(CertificateModification.IsAbsent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
+
+                // Verify that the certificate we got back was in fact added.
+                var certificateResult = await adminClient.GetPolicyManagementCertificatesAsync();
+                bool foundAddedCertificate = false;
+                foreach (var cert in certificateResult.Value.GetPolicyCertificates())
+                {
+                    if (cert.Thumbprint == TestEnvironment.PolicyCertificate2.Thumbprint)
+                    {
+                        foundAddedCertificate = true;
+                        break;
+                    }
+                }
+                Assert.IsFalse(foundAddedCertificate);
+
+            }
+        }
+
+
 
         private AttestationAdministrationClient GetSharedAdministrationClient()
         {
@@ -304,29 +410,12 @@ issuancerules {
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
         }
 
-
-        private AttestationClient GetAadAttestationClient()
-        {
-            string endpoint = TestEnvironment.AadAttestationUrl;
-
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
-        }
-
         private AttestationAdministrationClient GetAadAdministrationClient()
         {
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             var options = InstrumentClientOptions(new AttestationClientOptions());
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
-        }
-
-        private AttestationClient GetIsolatedAttestationClient()
-        {
-            string endpoint = TestEnvironment.IsolatedAttestationUrl;
-
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options));
         }
 
         private AttestationAdministrationClient GetIsolatedAdministrationClient()

@@ -20,7 +20,7 @@ namespace Azure.Security.Attestation
         internal bool ValidateAttestationTokens { get; }
 
         /// <summary>
-        /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken{T}"/>.
+        /// Validation callback which allows customers to provide their own delegate to validate a returned MAA <see cref="AttestationToken"/>.
         /// </summary>
         public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; }
 

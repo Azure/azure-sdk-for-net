@@ -9,7 +9,7 @@ namespace Azure.Security.Attestation.Models
     /// <summary>
     /// Represents the standardized claims in the header of a JSON Web Token.
     /// </summary>
-    public partial class JsonWebTokenHeader
+    internal partial class JsonWebTokenHeader
     {
         /// <summary>
         ///

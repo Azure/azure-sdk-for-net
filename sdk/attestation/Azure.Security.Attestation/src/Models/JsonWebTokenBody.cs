@@ -11,7 +11,7 @@ namespace Azure.Security.Attestation.Models
     /// <summary>
     /// Represents the standard claims in the body of an RFC 7515 Json Web Token.
     /// </summary>
-    public partial class JsonWebTokenBody
+    internal partial class JsonWebTokenBody
     {
         /// <summary>
         /// Issuer for the token.

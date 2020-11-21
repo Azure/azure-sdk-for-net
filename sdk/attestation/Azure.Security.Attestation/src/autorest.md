@@ -22,4 +22,19 @@ directive:
   transform: >
       $["x-csharp-usage"] = "model,output";
       $["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.PolicyCertificatesResult
+  transform: >
+      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.AttestationCertificateManagementBody
+  transform: >
+      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-formats"] = "json";
+- from: swagger-document
+  where: $.definitions.PolicyCertificatesModificationResult
+  transform: >
+      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-formats"] = "json";
 ```

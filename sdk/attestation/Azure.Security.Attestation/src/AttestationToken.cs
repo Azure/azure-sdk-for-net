@@ -21,6 +21,8 @@ namespace Azure.Security.Attestation
         protected private string _token;
         private JsonSerializerOptions _options = new JsonSerializerOptions();
 
+        private object _deserializedBody;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken"/> class.
         /// </summary>
@@ -75,12 +77,12 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
+        private JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public JsonWebTokenBody Payload { get => JsonSerializer.Deserialize<JsonWebTokenBody>(TokenBodyBytes.ToArray()); }
+        private JsonWebTokenBody Payload { get => JsonSerializer.Deserialize<JsonWebTokenBody>(TokenBodyBytes.ToArray()); }
 
         /// <summary>
         /// Expiration time for the token.
@@ -137,7 +139,14 @@ namespace Azure.Security.Attestation
         public T GetBody<T>()
             where T: class
         {
-            return JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _options);
+            lock (this)
+            {
+                if (_deserializedBody == null || _deserializedBody.GetType() != typeof(T))
+                {
+                    _deserializedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _options);
+                }
+                return (T)_deserializedBody;
+            }
         }
 
         /// <inheritdoc/>

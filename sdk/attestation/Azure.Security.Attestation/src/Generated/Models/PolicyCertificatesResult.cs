@@ -5,19 +5,17 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using Azure.Core;
-
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> The result of a call to retrieve policy certificates. </summary>
     public partial class PolicyCertificatesResult
     {
+
         /// <summary> Initializes a new instance of PolicyCertificatesResult. </summary>
-        internal PolicyCertificatesResult()
+        /// <param name="internalPolicyCertificates"> SHA256 Hash of the binary representation certificate which was added or removed. </param>
+        internal PolicyCertificatesResult(JsonWebKeySet internalPolicyCertificates)
         {
-            PolicyCertificates = new ChangeTrackingList<X509Certificate2>();
+            InternalPolicyCertificates = internalPolicyCertificates;
         }
     }
 }

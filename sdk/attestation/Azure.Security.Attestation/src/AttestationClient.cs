@@ -120,7 +120,7 @@ namespace Azure.Security.Attestation
                         } : null,
                     },
                     cancellationToken);
-                var attestationToken = new AttestationToken<AttestationResult>(response.Value.Token);
+                var attestationToken = new AttestationToken(response.Value.Token);
 
                 if (_options.ValidateAttestationTokens)
                 {
@@ -171,7 +171,7 @@ namespace Azure.Security.Attestation
                         } : null,
                     },
                     cancellationToken).ConfigureAwait(false);
-                var attestationToken = new AttestationToken<AttestationResult>(response.Value.Token);
+                var attestationToken = new AttestationToken(response.Value.Token);
 
                 if (_options.ValidateAttestationTokens)
                 {
@@ -201,13 +201,35 @@ namespace Azure.Security.Attestation
         public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
             {
-                throw new NotImplementedException();
+                var response = _restClient.AttestOpenEnclave(
+                    new AttestOpenEnclaveRequest
+                    {
+                        Report = report,
+                        InitTimeData = initTimeData != null ? new InitTimeData
+                        {
+                            Data = initTimeData.ToArray(),
+                            DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                        RuntimeData = runTimeData != null ? new RuntimeData
+                        {
+                            Data = runTimeData.ToArray(),
+                            DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
+                        } : null,
+                    },
+                    cancellationToken);
+                var attestationToken = new AttestationToken(response.Value.Token);
+
+                if (_options.ValidateAttestationTokens)
+                {
+                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
             }
             catch (Exception ex)
             {
@@ -230,14 +252,35 @@ namespace Azure.Security.Attestation
         public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(byte[] report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(report, nameof(report));
-            Argument.AssertNotNull(initTimeData, nameof(initTimeData));
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
             {
-                await Task.Yield();
-            throw new NotImplementedException();
+                var response = await _restClient.AttestOpenEnclaveAsync(
+                new AttestOpenEnclaveRequest
+                {
+                    Report = report,
+                    InitTimeData = initTimeData != null ? new InitTimeData
+                    {
+                        Data = initTimeData.ToArray(),
+                        DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
+                    } : null,
+                    RuntimeData = runTimeData != null ? new RuntimeData
+                    {
+                        Data = runTimeData.ToArray(),
+                        DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
+                    } : null,
+                },
+                cancellationToken).ConfigureAwait(false);
+                var attestationToken = new AttestationToken(response.Value.Token);
+
+                if (_options.ValidateAttestationTokens)
+                {
+                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                }
+
+                return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
             }
             catch (Exception ex)
             {
