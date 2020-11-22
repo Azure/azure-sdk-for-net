@@ -29,7 +29,7 @@ namespace Azure.Identity
             set
             {
                 // Set this to true only for Windows OS
-                _useLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && value;
+                _useLegacyPowerShell = Validations.CanUseLegacyPowerShell(value);
             }
         }
     }

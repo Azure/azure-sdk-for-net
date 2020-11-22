@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity.Tests
 {
@@ -17,17 +18,6 @@ namespace Azure.Identity.Tests
     {
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [Test]
-        public void PersonalTest()
-        {
-            AzurePowerShellCredential cred = new AzurePowerShellCredential();
-            var token =  cred.GetToken(new TokenRequestContext(new[] {"https://backup.blob.core.windows.net"}),
-                CancellationToken.None);
-
-            var x = token.ExpiresOn;
-
         }
 
         [Test]
@@ -64,6 +54,17 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(expectedMessage, ex.Message);
         }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        public void AuthenticateWithAzurePowerShellCredential_UseLegacyPowerShellNotWindows()
+        {
+            string expectedMessage = "PowerShell Legacy is only supported in Windows.";
+
+            var ex = Assert.Throws<ArgumentException>(() => new AzurePowerShellCredentialOptions() { UseLegacyPowerShell = true });
+            Assert.AreEqual(expectedMessage, ex.Message);
+        }
+
 
         [Test]
         public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellModuleNotInstalled([Values("NoAzAccountModule")] string message)
@@ -107,7 +108,7 @@ namespace Azure.Identity.Tests
             AssertOptionsHonored(new AzurePowerShellCredentialOptions(), credential);
 
             // with options
-            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = true};
+            var options = new AzurePowerShellCredentialOptions() {UseLegacyPowerShell = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? true : false};
 
             credential = new AzurePowerShellCredential(options);
 
