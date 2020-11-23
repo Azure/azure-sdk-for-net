@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-blob-e7e7bd71-39e1-d05d-fcdf-e85d8b2ce68f?restype=container\u0026comp=rename",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-52c4e614-695a-26ac-5c62-b19c2dfe772a?restype=container\u0026comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-e10d4a3da0052e4bb5c66cf4fbab5ae1-a318f710a48f4c49-00",
+        "traceparent": "00-9636edffc98f7243b711269e6b4341bd-0b578e2da7ab064f-00",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/12.8.0-alpha.20201123.1",
           "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "e939217c-fe50-e3d4-2038-487e9d76b50e",
-        "x-ms-date": "Mon, 23 Nov 2020 21:53:22 GMT",
+        "x-ms-client-request-id": "29b57165-1a5d-da62-89f3-557b804f9b2f",
+        "x-ms-date": "Mon, 23 Nov 2020 22:21:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-source-container-name": "test-container-78ae4363-8d55-ae9c-9e62-9be71bee9caf",
+        "x-ms-source-container-name": "test-container-e7e7bd71-39e1-d05d-fcdf-e85d8b2ce68f",
         "x-ms-version": "2020-06-12"
       },
       "RequestBody": null,
@@ -21,21 +21,21 @@
       "ResponseHeaders": {
         "Content-Length": "226",
         "Content-Type": "application/xml",
-        "Date": "Mon, 23 Nov 2020 21:53:22 GMT",
+        "Date": "Mon, 23 Nov 2020 22:21:40 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "e939217c-fe50-e3d4-2038-487e9d76b50e",
+        "x-ms-client-request-id": "29b57165-1a5d-da62-89f3-557b804f9b2f",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "41500801-001e-000c-77e3-c10fb8000000",
+        "x-ms-request-id": "4c84a6be-301e-0004-22e7-c114cb000000",
         "x-ms-version": "2020-06-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
         "\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:41500801-001e-000c-77e3-c10fb8000000\n",
-        "Time:2020-11-23T21:53:22.8255182Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:4c84a6be-301e-0004-22e7-c114cb000000\n",
+        "Time:2020-11-23T22:21:41.2524626Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

@@ -253,8 +253,106 @@ namespace Azure.Storage.Files.DataLake.Tests
                 async () => await fileSystem.GetPropertiesAsync());
         }
 
-        #region GenerateSasTests
         [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameFileSystemAsync()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string oldFileSystemName = GetNewFileName();
+            string newFileSystemName = GetNewFileName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+            await fileSystem.CreateAsync();
+
+            // Act
+            DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+                destinationFileSystemName: newFileSystemName,
+                sourceFileSystemName: oldFileSystemName);
+
+            // Assert
+            await newFileSystem.GetPropertiesAsync();
+
+            // Cleanup
+            await newFileSystem.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameFileSystemAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.RenameFileSystemAsync(GetNewFileSystemName(), GetNewFileSystemName()),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameFileSystemAsync_SourceLease()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string oldFileSystemName = GetNewFileSystemName();
+            string newFileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+            await fileSystem.CreateAsync();
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeLeaseClient leaseClient = InstrumentClient(fileSystem.GetDataLakeLeaseClient(leaseId));
+            await leaseClient.AcquireAsync(duration: TimeSpan.FromSeconds(30));
+
+            DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+                destinationFileSystemName: newFileSystemName,
+                sourceFileSystemName: oldFileSystemName,
+                sourceConditions: sourceConditions);
+
+            // Assert
+            await newFileSystem.GetPropertiesAsync();
+
+            // Cleanup
+            await newFileSystem.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameFileSystemAsync_SourceLeaseFailed()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string oldFileSystemName = GetNewFileSystemName();
+            string newFileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+            await fileSystem.CreateAsync();
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions sourceConditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.RenameFileSystemAsync(
+                    destinationFileSystemName: newFileSystemName,
+                    sourceFileSystemName: oldFileSystemName,
+                    sourceConditions: sourceConditions),
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
+
+            // Cleanup
+            await fileSystem.DeleteAsync();
+        }
+
+            #region GenerateSasTests
+            [Test]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange

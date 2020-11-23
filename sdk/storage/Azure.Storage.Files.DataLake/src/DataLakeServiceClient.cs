@@ -761,6 +761,135 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete File System
 
+        #region Rename File System
+        /// <summary>
+        /// Renames an existing Blob File System.
+        /// </summary>
+        /// <param name="destinationFileSystemName">
+        /// The new name of the File System.
+        /// </param>
+        /// <param name="sourceFileSystemName">
+        /// The name of the source File System.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the renaming of this file sytem.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeFileSystemClient> RenameFileSystem(
+            string destinationFileSystemName,
+            string sourceFileSystemName,
+            DataLakeRequestConditions sourceConditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = _blobServiceClient.RenameBlobContainer(
+                    destinationFileSystemName,
+                    sourceFileSystemName,
+                    sourceConditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Renames an existing Blob File System.
+        /// </summary>
+        /// <param name="destinationFileSystemName">
+        /// The new name of the File System.
+        /// </param>
+        /// <param name="sourceFileSystemName">
+        /// The name of the source File System.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the renaming of this file sytem.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeFileSystemClient>> RenameFileSystemAsync(
+            string destinationFileSystemName,
+            string sourceFileSystemName,
+            DataLakeRequestConditions sourceConditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(RenameFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerClient> response = await _blobServiceClient.RenameBlobContainerAsync(
+                    destinationFileSystemName,
+                    sourceFileSystemName,
+                    sourceConditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                    response.Value.Uri,
+                    Pipeline,
+                    Version,
+                    ClientDiagnostics);
+
+                return Response.FromValue(
+                    fileSystemClient,
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Rename File System
+
         #region GenerateSas
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>

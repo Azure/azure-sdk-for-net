@@ -723,12 +723,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
-            string containerName = GetNewContainerName();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.RenameBlobContainerAsync(GetNewBlobName(), GetNewContainerName()),
+                service.RenameBlobContainerAsync(GetNewContainerName(), GetNewContainerName()),
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
@@ -767,7 +765,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task RenameBlobContainerAsync_SourceLeasefailed()
+        public async Task RenameBlobContainerAsync_SourceLeaseFailed()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
