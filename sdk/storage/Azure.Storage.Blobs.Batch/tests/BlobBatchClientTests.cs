@@ -275,6 +275,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task Delete_ContainerScoped_Basic_Convenience()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+            Response[] responses = await client.DeleteBlobsAsync(uris);
+
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [Test]
         public async Task Delete_OneFails()
         {
             await using TestScenario scenario = Scenario();
