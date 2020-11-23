@@ -34,7 +34,7 @@ namespace Azure.Communication.Administration.Tests
         [Test]
         [TestCase(null, TestName = "GetAllSupportedCountries")]
         [TestCase("en-US", TestName = "GetAllSupportedCountriesEnUsLocale")]
-        public async Task GetAllSupportedCountries(string locale)
+        public async Task GetAllSupportedCountries(string? locale)
         {
             var client = CreateClient();
 
@@ -48,7 +48,6 @@ namespace Azure.Communication.Administration.Tests
         }
 
         [Test]
-        [AsyncOnly]
         public async Task GetAllPhoneNumbers()
         {
             var client = CreateClient();
@@ -57,7 +56,7 @@ namespace Azure.Communication.Administration.Tests
             var numbers = await numbersPagable.ToEnumerableAsync();
 
             Assert.IsNotNull(numbers);
-            Assert.IsTrue(numbers.Count > 0);
+            Assert.IsNotEmpty(numbers);
         }
 
         [Test]
@@ -107,7 +106,7 @@ namespace Azure.Communication.Administration.Tests
             var phonePlans = await pageablePhonePlans.ToEnumerableAsync();
 
             Assert.IsNotNull(phonePlans);
-            Assert.IsTrue(phonePlans.Count > 0);
+            Assert.IsNotEmpty(phonePlans);
         }
 
         [Test]
@@ -133,19 +132,19 @@ namespace Azure.Communication.Administration.Tests
                 new LocationOptionsQuery
                 {
                     LabelId = "state",
-                    OptionsValue = "WA"
+                    OptionsValue = "NY"
                 },
                 new LocationOptionsQuery
                 {
                     LabelId = "city",
-                    OptionsValue = "NOAM-US-WA-SE"
+                    OptionsValue = "NOAM-US-NY-NY"
                 }
             };
 
             var areaCodes = await client.GetAllAreaCodesAsync("selection", countryCode, phonePlanId, locationOptions);
 
             Assert.IsNotNull(areaCodes.Value.PrimaryAreaCodes);
-            Assert.IsTrue(areaCodes.Value.PrimaryAreaCodes.Count > 0);
+            Assert.IsNotEmpty(areaCodes.Value.PrimaryAreaCodes);
         }
 
         [Test]
@@ -179,19 +178,7 @@ namespace Azure.Communication.Administration.Tests
                 return;
             }
 
-            Assert.Fail("WaitForCompletionAsync shoul have throun exception.");
-
-            Assert.IsNotNull(reservationOperation);
-            Assert.IsTrue(reservationOperation.HasCompleted);
-            Assert.IsTrue(reservationOperation.HasValue);
-
-            var reservation = reservationOperation.Value;
-            Assert.IsNotNull(reservation);
-
-            Assert.AreEqual(ReservationStatus.Reserved, reservation.Status);
-            Assert.AreEqual(areaCode, reservation.AreaCode);
-            Assert.IsNull(reservation.ErrorCode);
-            Assert.AreEqual(1, reservation.PhoneNumbers?.Count);
+            Assert.Fail("WaitForCompletionAsync should have thrown an exception.");
         }
 
         [Test]

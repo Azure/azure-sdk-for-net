@@ -11,7 +11,7 @@ namespace Azure.Communication.Administration.Tests
         {
         }
 
-        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
+        private const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
     }
