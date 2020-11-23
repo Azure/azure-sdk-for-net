@@ -235,7 +235,6 @@ issuancerules {
 
                 var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
 
-
                 var shaHasher = SHA256Managed.Create();
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 

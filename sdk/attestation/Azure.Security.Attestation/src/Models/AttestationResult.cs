@@ -21,25 +21,25 @@ namespace Azure.Security.Attestation.Models
         /// <summary>
         /// Returns the time when this attestation token was issued.
         /// </summary>
-        public DateTime IssuedAt
+        public DateTimeOffset IssuedAt
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalIat).DateTime;
+            get => DateTimeOffset.FromUnixTimeSeconds(InternalIat);
         }
 
         /// <summary>
         /// Returns the time when this attestation token will expire.
         /// </summary>
-        public DateTime Expiration
+        public DateTimeOffset Expiration
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalExp).DateTime;
+            get => DateTimeOffset.FromUnixTimeSeconds(InternalExp);
         }
 
         /// <summary>
         /// Returns the time before which this token is invalid.
         /// </summary>
-        public DateTime NotBefore
+        public DateTimeOffset NotBefore
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalNbf).DateTime;
+            get => DateTimeOffset.FromUnixTimeSeconds(InternalNbf);
         }
 
         /// <summary>
