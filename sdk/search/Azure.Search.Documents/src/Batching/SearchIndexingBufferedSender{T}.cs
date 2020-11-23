@@ -30,7 +30,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Flag indicating whether the sender has been disposed.
         /// </summary>
-        private volatile int _disposed = 0;
+        private volatile int _disposed;
 
         /// <summary>
         /// The single publisher responsible for submitting requests.
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents
         /// Task used to minimize simultaneous requests for the key field
         /// accessor.
         /// </summary>
-        private Task _getKeyFieldAccessorTask = null;
+        private Task _getKeyFieldAccessorTask;
 
         /// <summary>
         /// Async event raised whenever an indexing action is added to the

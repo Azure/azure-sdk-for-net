@@ -225,10 +225,10 @@ namespace Azure.Test.Stress
             foreach (var kvp in data)
             {
                 sb.Append(kvp.Key);
-                sb.Append(":");
+                sb.Append(':');
                 for (var i = kvp.Key.Length + 1; i < longestKeyLength + padding + 1; i++)
                 {
-                    sb.Append(" ");
+                    sb.Append(' ');
                 }
                 sb.Append(kvp.Value);
                 sb.AppendLine();
