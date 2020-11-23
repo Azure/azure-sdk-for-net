@@ -1675,6 +1675,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceContainerName">
         /// The name of the source container.
         /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the renaming of this container.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1689,10 +1693,12 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContainerClient> RenameBlobContainer(
             string destinationContainerName,
             string sourceContainerName,
+            BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
             => RenameBlobContainerInternal(
                 destinationContainerName,
                 sourceContainerName,
+                sourceConditions,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1705,6 +1711,10 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="sourceContainerName">
         /// The name of the source container.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the renaming of this container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1720,12 +1730,14 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContainerClient>> RenameBlobContainerAsync(
             string destinationContainerName,
             string sourceContainerName,
+            BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
             => await RenameBlobContainerInternal(
                 destinationContainerName,
                 sourceContainerName,
+                sourceConditions,
                 async: true,
-                cancellationToken: cancellationToken)
+                cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -1736,6 +1748,10 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="sourceContainerName">
         /// The name of the source container.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the renaming of this container.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1754,6 +1770,7 @@ namespace Azure.Storage.Blobs
         internal async Task<Response<BlobContainerClient>> RenameBlobContainerInternal(
             string destinationContainerName,
             string sourceContainerName,
+            BlobRequestConditions sourceConditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1775,6 +1792,11 @@ namespace Azure.Storage.Blobs
                         resourceUri: containerClient.Uri,
                         version: Version.ToVersionString(),
                         sourceContainerName: sourceContainerName,
+                        sourceLeaseId: sourceConditions?.LeaseId,
+                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                        sourceIfMatch: sourceConditions?.IfMatch,
+                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
                         operationName: $"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}",
                         cancellationToken: cancellationToken)

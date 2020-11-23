@@ -2527,6 +2527,10 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
+            /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -2540,6 +2544,10 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 string sourceLeaseId = default,
+                System.DateTimeOffset? sourceIfModifiedSince = default,
+                System.DateTimeOffset? sourceIfUnmodifiedSince = default,
+                Azure.ETag? sourceIfMatch = default,
+                Azure.ETag? sourceIfNoneMatch = default,
                 bool async = true,
                 string operationName = "ContainerClient.Rename",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -2556,7 +2564,11 @@ namespace Azure.Storage.Blobs
                         sourceContainerName,
                         timeout,
                         requestId,
-                        sourceLeaseId))
+                        sourceLeaseId,
+                        sourceIfModifiedSince,
+                        sourceIfUnmodifiedSince,
+                        sourceIfMatch,
+                        sourceIfNoneMatch))
                     {
                         if (async)
                         {
@@ -2595,6 +2607,10 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="sourceLeaseId">A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match.</param>
+            /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <returns>The Container.RenameAsync Message.</returns>
             internal static Azure.Core.HttpMessage RenameAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2603,7 +2619,11 @@ namespace Azure.Storage.Blobs
                 string sourceContainerName,
                 int? timeout = default,
                 string requestId = default,
-                string sourceLeaseId = default)
+                string sourceLeaseId = default,
+                System.DateTimeOffset? sourceIfModifiedSince = default,
+                System.DateTimeOffset? sourceIfUnmodifiedSince = default,
+                Azure.ETag? sourceIfMatch = default,
+                Azure.ETag? sourceIfNoneMatch = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -2635,6 +2655,10 @@ namespace Azure.Storage.Blobs
                 _request.Headers.SetValue("x-ms-source-container-name", sourceContainerName);
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (sourceLeaseId != null) { _request.Headers.SetValue("x-ms-source-lease-id", sourceLeaseId); }
+                if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (sourceIfMatch != null) { _request.Headers.SetValue("x-ms-source-if-match", sourceIfMatch.Value.ToString()); }
+                if (sourceIfNoneMatch != null) { _request.Headers.SetValue("x-ms-source-if-none-match", sourceIfNoneMatch.Value.ToString()); }
 
                 return _message;
             }
