@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// Indicates whether server-side batched operations are enabled.
         /// </summary>
         /// <remarks>Defaults to true.</remarks>
-        public bool EnableBatchedOperations { get; set; }
+        public bool EnableBatchedOperations { get; set; } = true;
 
         /// <summary>
         /// Custom metadata that user can associate with the topic.
