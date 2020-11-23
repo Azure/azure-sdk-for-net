@@ -1,6 +1,6 @@
 # Release History
 
-## 7.0.0-preview (2020-11-23)
+## 7.0.0 (2020-11-23)
 ### Breaking Changes
 - Renamed GetRawMessage method to GetRawAmqpMessage.
 - Removed LinkCloseMode.
