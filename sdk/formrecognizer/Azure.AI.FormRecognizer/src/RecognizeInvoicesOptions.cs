@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; } = null;
 
         /// <summary>
-        /// Locale value. Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US.
+        /// Locale value. Supported locales include: en-US.
         /// </summary>
         public string Locale { get; set; }
     }
