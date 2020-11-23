@@ -71,7 +71,7 @@ namespace Azure.Communication.Pipeline
 
         public override string SanitizeUri(string uri)
         {
-            uri = SanitizeAzureResource(_identityInRouteRegEx.Replace(uri, SanitizeValue));
+            uri = SanitizeAzureResource(_identityInRouteRegEx.Replace(uri, SanitizeValue.ToLower()));
             return _guidRegEx.Replace(uri, SanitizeValue);
         }
     }
