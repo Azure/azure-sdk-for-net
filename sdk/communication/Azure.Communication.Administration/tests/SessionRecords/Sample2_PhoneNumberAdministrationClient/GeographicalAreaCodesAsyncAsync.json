@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/us/phoneplangroups?locale=en-us\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 17 Nov 2020 08:51:49 GMT",
+        "Date": "Mon, 23 Nov 2020 18:13:46 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201116.1",
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "600e9b395f04b5e42a77e41dbdd390c0",
@@ -19,28 +19,28 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 08:51:46 GMT",
-        "MS-CV": "p/War6bUaUSwZW/pvjG9bA.0",
+        "Date": "Mon, 23 Nov 2020 18:13:53 GMT",
+        "MS-CV": "RNkRUS9CxkWaqG7Rcum5vQ.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0I4\u002BzXwAAAABVdzMLKutpTqPBrIiKWGNYWVZSMzBFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "307ms"
+        "X-Azure-Ref": "02/u7XwAAAABFhiRcYEluR5FSuOPFHmWiWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "6200ms"
       },
       "ResponseBody": {
         "phonePlanGroups": [
           {
-            "phonePlanGroupId": "55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf",
+            "phonePlanGroupId": "Sanitized",
             "phoneNumberType": "Geographic",
             "localizedName": "Azure- User - Geographic",
             "localizedDescription": "These are numbers used by Azure resources."
           },
           {
-            "phonePlanGroupId": "671ee064-662f-4c3b-82a9-af2ab200dd5c",
+            "phonePlanGroupId": "Sanitized",
             "phoneNumberType": "Geographic",
             "localizedName": "Azure - Geographic",
             "localizedDescription": "These are numbers used by Azure resources."
           },
           {
-            "phonePlanGroupId": "d47a0cdc-8dc1-4e82-a29b-39067f7fc317",
+            "phonePlanGroupId": "Sanitized",
             "phoneNumberType": "TollFree",
             "localizedName": "Azure - Toll Free",
             "localizedDescription": "These are toll free numbers used by Azure resources."
@@ -50,14 +50,14 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/us/phoneplangroups/55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf/phoneplans?locale=en-us\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans?locale=en-US\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 17 Nov 2020 08:51:49 GMT",
+        "Date": "Mon, 23 Nov 2020 18:13:53 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201116.1",
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "620ebbc56fb302dcf046140614ad6228",
@@ -68,16 +68,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 08:51:48 GMT",
-        "MS-CV": "QRd2aqAz1kCPlmXzbV9h1w.0",
+        "Date": "Mon, 23 Nov 2020 18:13:53 GMT",
+        "MS-CV": "swyOJqBLB0awkmYw6gYT\u002Bg.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0JI\u002BzXwAAAACY5vWThRcMT7TlumgunzwcWVZSMzBFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "232ms"
+        "X-Azure-Ref": "04fu7XwAAAAAs\u002BvbduHonRrwpUY5/CRcOWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "285ms"
       },
       "ResponseBody": {
         "phonePlans": [
           {
-            "phonePlanId": "01432411-5169-4665-b13e-3fa56c10e1d1",
+            "phonePlanId": "Sanitized",
             "localizedName": "Outbound Only PSTN For User - Geographic",
             "locationType": "Selection",
             "areaCodes": [],
@@ -90,7 +90,7 @@
             "maximumSearchSize": 20
           },
           {
-            "phonePlanId": "b528a997-03bb-446e-af98-3d99877cf0ba",
+            "phonePlanId": "Sanitized",
             "localizedName": "Inbound Only PSTN For User - Geographic",
             "locationType": "Selection",
             "areaCodes": [],
@@ -107,14 +107,14 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/us/phoneplangroups/55bc1415-9fe6-42d7-9ed4-5ea28c6a17cf/phoneplans/01432411-5169-4665-b13e-3fa56c10e1d1/locationoptions?api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/phoneplangroups/Sanitized/phoneplans/Sanitized/locationoptions?api-version=2020-07-20-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 17 Nov 2020 08:51:50 GMT",
+        "Date": "Mon, 23 Nov 2020 18:13:53 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201116.1",
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "bab8c0b4d205556331a110c804c6bf41",
@@ -125,10 +125,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 08:51:48 GMT",
-        "MS-CV": "onaSMaOnmUa7oj15erPu9w.0",
+        "Date": "Mon, 23 Nov 2020 18:13:53 GMT",
+        "MS-CV": "ISTAdpiUGkaPQw0CijYNwg.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0JI\u002BzXwAAAAD3fpo7wrXcRI6tXHI4MVhRWVZSMzBFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "04fu7XwAAAAD\u002B6eU6LitdTbku/JQFpHEvWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Processing-Time": "240ms"
       },
       "ResponseBody": {
@@ -221,11 +221,6 @@
                   "labelName": "City",
                   "options": [
                     {
-                      "name": "Anaheim",
-                      "value": "NOAM-US-CA-AN",
-                      "locationOptions": []
-                    },
-                    {
                       "name": "Burbank",
                       "value": "NOAM-US-CA-BU",
                       "locationOptions": []
@@ -271,6 +266,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "San Francisco",
+                      "value": "NOAM-US-CA-SF",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "San Jose",
                       "value": "NOAM-US-CA-SJ",
                       "locationOptions": []
@@ -293,11 +293,6 @@
                     {
                       "name": "Stockton",
                       "value": "NOAM-US-CA-ST",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Truckee",
-                      "value": "NOAM-US-CA-TR",
                       "locationOptions": []
                     }
                   ]
@@ -330,8 +325,8 @@
                   "labelName": "City",
                   "options": [
                     {
-                      "name": "Grand Junction",
-                      "value": "NOAM-US-CO-GJ",
+                      "name": "Denver",
+                      "value": "NOAM-US-CO-DE",
                       "locationOptions": []
                     },
                     {
@@ -522,6 +517,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "Davenport",
+                      "value": "NOAM-US-IA-DA",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Mason City",
                       "value": "NOAM-US-IA-MC",
                       "locationOptions": []
@@ -586,13 +586,13 @@
                       "locationOptions": []
                     },
                     {
-                      "name": "Cicero",
-                      "value": "NOAM-US-IL-CI",
+                      "name": "Rock Island",
+                      "value": "NOAM-US-IL-RI",
                       "locationOptions": []
                     },
                     {
-                      "name": "Rock Island",
-                      "value": "NOAM-US-IL-RI",
+                      "name": "Rockford",
+                      "value": "NOAM-US-IL-RO",
                       "locationOptions": []
                     },
                     {
@@ -677,11 +677,6 @@
                   "labelName": "City",
                   "options": [
                     {
-                      "name": "Ashland",
-                      "value": "NOAM-US-KY-AS",
-                      "locationOptions": []
-                    },
-                    {
                       "name": "Lexington",
                       "value": "NOAM-US-KY-LE",
                       "locationOptions": []
@@ -689,11 +684,6 @@
                     {
                       "name": "Louisville",
                       "value": "NOAM-US-KY-LO",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Owensboro",
-                      "value": "NOAM-US-KY-OW",
                       "locationOptions": []
                     }
                   ]
@@ -947,6 +937,23 @@
               ]
             },
             {
+              "name": "MT",
+              "value": "MT",
+              "locationOptions": [
+                {
+                  "labelId": "city",
+                  "labelName": "City",
+                  "options": [
+                    {
+                      "name": "Billings",
+                      "value": "NOAM-US-MT-BI",
+                      "locationOptions": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "NC",
               "value": "NC",
               "locationOptions": [
@@ -1139,11 +1146,6 @@
                     {
                       "name": "Hempstead",
                       "value": "NOAM-US-NY-HE",
-                      "locationOptions": []
-                    },
-                    {
-                      "name": "Kingston",
-                      "value": "NOAM-US-NY-KI",
                       "locationOptions": []
                     },
                     {
@@ -1415,6 +1417,11 @@
                       "locationOptions": []
                     },
                     {
+                      "name": "Austin",
+                      "value": "NOAM-US-TX-AU",
+                      "locationOptions": []
+                    },
+                    {
                       "name": "Bryan",
                       "value": "NOAM-US-TX-BR",
                       "locationOptions": []
@@ -1481,6 +1488,11 @@
                   "labelId": "city",
                   "labelName": "City",
                   "options": [
+                    {
+                      "name": "Salt Lake City",
+                      "value": "NOAM-US-UT-SL",
+                      "locationOptions": []
+                    },
                     {
                       "name": "St. George",
                       "value": "NOAM-US-UT-SG",
@@ -1597,23 +1609,6 @@
               ]
             },
             {
-              "name": "WV",
-              "value": "WV",
-              "locationOptions": [
-                {
-                  "labelId": "city",
-                  "labelName": "City",
-                  "options": [
-                    {
-                      "name": "Charleston",
-                      "value": "NOAM-US-WV-CH",
-                      "locationOptions": []
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "name": "WY",
               "value": "WY",
               "locationOptions": [
@@ -1635,16 +1630,16 @@
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/us/areacodes?locationtype=selection\u0026phoneplanid=01432411-5169-4665-b13e-3fa56c10e1d1\u0026api-version=2020-07-20-preview1",
+      "RequestUri": "https://sanitized.communication.azure.com/administration/phonenumbers/countries/US/areacodes?locationType=Selection\u0026phonePlanId=Sanitized\u0026api-version=2020-07-20-preview1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "111",
         "Content-Type": "application/json",
-        "Date": "Tue, 17 Nov 2020 08:51:51 GMT",
+        "Date": "Mon, 23 Nov 2020 18:13:54 GMT",
         "User-Agent": [
-          "azsdk-net-Communication.Administration/1.0.0-alpha.20201116.1",
+          "azsdk-net-Communication.Administration/1.0.0-alpha.20201120.1",
           "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "dee3ce43e131caafbf0b6fbd4adea07d",
@@ -1666,11 +1661,11 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 08:51:49 GMT",
-        "MS-CV": "ffEhnTi5UUSFQnCkdfi3vg.0",
+        "Date": "Mon, 23 Nov 2020 18:13:54 GMT",
+        "MS-CV": "YYo0DGg2UUSYSEK\u002BOS05WQ.0",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0JY\u002BzXwAAAAArvCj5D8OVQLFqkZ0KiiwgWVZSMzBFREdFMDQxOQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Processing-Time": "169ms"
+        "X-Azure-Ref": "04vu7XwAAAAC40CLLeNLcTJX7ahTFiO2TWVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "188ms"
       },
       "ResponseBody": {
         "primaryAreaCodes": [
