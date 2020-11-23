@@ -165,7 +165,7 @@ function UpdateDocIndexFiles {
     Param (
         [Parameter(Mandatory=$false)] [String]$appTitleLang = $Language,
         [Parameter(Mandatory=$false)] [String]$lang = $Language,
-        [Parameter(Mandatory=$false)] [String]$indexhtmlloc="index.html",
+        [Parameter(Mandatory=$false)] [String]$indexhtmlloc = "index.html",
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
         [Parameter(Mandatory=$false)] [String]$regexReplacement = ""
     )
