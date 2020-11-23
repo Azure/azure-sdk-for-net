@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.1 (Unreleased)
-
+- This release contains bug fixes to improve quality.
 
 ## 1.0.0-preview.2 (2020-09-01)
 - This release contains bug fixes to improve quality.

@@ -15,13 +15,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
         {
-            Optional<DateTimeOffset> notStartedAt = default;
-            Optional<DateTimeOffset> startingAt = default;
-            Optional<DateTimeOffset> runningAt = default;
-            Optional<DateTimeOffset> deadAt = default;
-            Optional<DateTimeOffset> successAt = default;
-            Optional<DateTimeOffset> killedAt = default;
-            Optional<DateTimeOffset> recoveringAt = default;
+            Optional<DateTimeOffset?> notStartedAt = default;
+            Optional<DateTimeOffset?> startingAt = default;
+            Optional<DateTimeOffset?> runningAt = default;
+            Optional<DateTimeOffset?> deadAt = default;
+            Optional<DateTimeOffset?> successAt = default;
+            Optional<DateTimeOffset?> killedAt = default;
+            Optional<DateTimeOffset?> recoveringAt = default;
             Optional<string> currentState = default;
             Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        notStartedAt = null;
                         continue;
                     }
                     notStartedAt = property.Value.GetDateTimeOffset("O");
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        startingAt = null;
                         continue;
                     }
                     startingAt = property.Value.GetDateTimeOffset("O");
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        runningAt = null;
                         continue;
                     }
                     runningAt = property.Value.GetDateTimeOffset("O");
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deadAt = null;
                         continue;
                     }
                     deadAt = property.Value.GetDateTimeOffset("O");
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        successAt = null;
                         continue;
                     }
                     successAt = property.Value.GetDateTimeOffset("O");
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        killedAt = null;
                         continue;
                     }
                     killedAt = property.Value.GetDateTimeOffset("O");
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        recoveringAt = null;
                         continue;
                     }
                     recoveringAt = property.Value.GetDateTimeOffset("O");
