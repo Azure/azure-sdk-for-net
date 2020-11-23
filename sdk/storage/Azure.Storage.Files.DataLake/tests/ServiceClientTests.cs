@@ -278,6 +278,31 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameBlobContainerAsync_AccountSas()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            string oldFileSystemName = GetNewFileName();
+            string newFileSystemName = GetNewFileName();
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(oldFileSystemName));
+            await fileSystem.CreateAsync();
+            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            service = InstrumentClient(new DataLakeServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
+
+            // Act
+            DataLakeFileSystemClient newFileSystem = await service.RenameFileSystemAsync(
+                destinationFileSystemName: newFileSystemName,
+                sourceFileSystemName: oldFileSystemName);
+
+            // Assert
+            await newFileSystem.GetPropertiesAsync();
+
+            // Cleanup
+            await newFileSystem.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameFileSystemAsync_Error()
         {
             // Arrange

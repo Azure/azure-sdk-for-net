@@ -719,6 +719,31 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameBlobContainerAsync_AccountSas()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+            SasQueryParameters sasQueryParameters = GetNewAccountSas();
+            service = InstrumentClient(new BlobServiceClient(new Uri($"{service.Uri}?{sasQueryParameters}"), GetOptions()));
+
+            // Act
+            BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
+                destinationContainerName: newContainerName,
+                sourceContainerName: oldContainerName);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+
+            // Cleanup
+            await newContainer.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_Error()
         {
             // Arrange
