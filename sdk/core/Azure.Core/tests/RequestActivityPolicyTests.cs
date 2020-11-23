@@ -146,7 +146,11 @@ namespace Azure.Core.Tests
 
             activity.Stop();
 
+#if NET5_0
+            Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+#else
             Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
+#endif
             Assert.AreEqual(activity.Id, requestId);
         }
 

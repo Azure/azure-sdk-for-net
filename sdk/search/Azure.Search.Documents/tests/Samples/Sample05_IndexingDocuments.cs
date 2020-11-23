@@ -105,6 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task SimpleIndexing()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

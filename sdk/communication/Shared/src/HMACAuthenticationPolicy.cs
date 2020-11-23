@@ -45,7 +45,7 @@ namespace Azure.Communication.Pipeline
                 message.Request.Content?.WriteTo(contentHashStream, message.CancellationToken);
             }
 
-            return Convert.ToBase64String(alg.Hash);
+            return Convert.ToBase64String(alg.Hash!);
         }
 
         private static async ValueTask<string> CreateContentHashAsync(HttpMessage message)
@@ -59,7 +59,7 @@ namespace Azure.Communication.Pipeline
                     await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken).ConfigureAwait(false);
             }
 
-            return Convert.ToBase64String(alg.Hash);
+            return Convert.ToBase64String(alg.Hash!);
         }
 
         private void AddHeaders(HttpMessage message, string contentHash)
