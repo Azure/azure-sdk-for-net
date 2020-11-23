@@ -115,12 +115,12 @@ Write-Verbose "Copy over Package ReadMe"
 $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
 if ([System.IO.File]::Exists($PkgReadMePath)) {
     Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
-    Copy-Item $PkgReadMePath -Destination "${DocOutDir}/index.md" -Force
+    #Copy-Item $PkgReadMePath -Destination "${DocOutDir}/index.md" -Force
 }
 else {
     New-Item "${DocOutApiDir}/index.md" -Force
     Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
-    Copy-Item "${DocOutApiDir}/index.md" -Destination "${DocOutDir}/index.md" -Force
+    #Copy-Item "${DocOutApiDir}/index.md" -Destination "${DocOutDir}/index.md" -Force
     Write-Verbose "Package ReadMe was not found"
 }
 
@@ -140,6 +140,7 @@ Write-Verbose "Build Doc Content"
 
 Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+Copy-Item "${DocOutApiDir}/index.html" -Destination "${DocOutDir}/index.html" -Force
 
 Write-Verbose "Compress and copy HTML into the staging Area"
 Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
