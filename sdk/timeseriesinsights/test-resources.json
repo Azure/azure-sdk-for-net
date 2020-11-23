@@ -2,17 +2,12 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "subscriptionId": {
-      "type": "string",
-      "metadata": {
-        "description": "The subscription Id where the resources will be deployed."
-      }
-    },
     "iotHubName": {
       "type": "string",
       "metadata": {
         "description": "The name of the source IoT hub."
-      }
+      },
+      "defaultValue": "[resourceGroup().name]"
     },
     "testApplicationOid": {
       "type": "string",
@@ -27,12 +22,6 @@
       },
       "defaultValue": "[resourceGroup().location]"
     },
-    "consumerGroupName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers."
-      }
-    },
     "environmentName": {
       "type": "string",
       "maxLength": 90,
@@ -40,19 +29,37 @@
         "description": "Name of the environment. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
       }
     },
+    "consumerGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers."
+      },
+      "defaultValue": "[concat(parameters('environmentName'), 'CG')]"
+    },
     "environmentTimeSeriesIdProperties": {
       "type": "array",
       "maxLength": 3,
       "metadata": {
         "description": "Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite."
-      }
+      },
+      "defaultValue": [
+        {
+          "name": "timeseriesinsights.id",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "type": "string"
+        }
+      ]
     },
     "eventSourceName": {
       "type": "string",
       "maxLength": 90,
       "metadata": {
         "description": "Name of the event source child resource. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
-      }
+      },
+      "defaultValue": "[concat(parameters('environmentName'), 'EventSourceName')]"
     },
     "resourceGroup": {
       "type": "string",
@@ -66,7 +73,8 @@
       "maxLength": 90,
       "metadata": {
         "description": "The event property that will be used as the event source's timestamp. If a value is not specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used."
-      }
+      },
+      "defaultValue": "[concat(parameters('eventSourceName'), 'TimestampPropertyName')]"
     },
     "eventSourceKeyName": {
       "type": "string",
