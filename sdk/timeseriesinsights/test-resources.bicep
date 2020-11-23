@@ -1,13 +1,8 @@
-param subscriptionId string {
-    metadata: {
-        description: 'The subscription Id where the resources will be deployed.'
-    }
-}
-
 param iotHubName string {
     metadata: {
         description: 'The name of the source IoT hub.'
     }
+    default: az.resourceGroup().name
 }
 
 param testApplicationOid string {
@@ -23,12 +18,6 @@ param region string {
     default: az.resourceGroup().location
 }
 
-param consumerGroupName string {
-    metadata: {
-        description: 'The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers.'
-    }
-}
-
 param environmentName string {
     metadata: {
         description: 'Name of the environment. The name cannot include: \'<\', \'>\', \'%\', \'&\', \':\', \'\\\', \'?\', \'/\' and any control characters. All other characters are allowed.'
@@ -36,11 +25,28 @@ param environmentName string {
     maxLength: 90
 }
 
+param consumerGroupName string {
+    metadata: {
+        description: 'The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers.'
+    }
+    default: concat(environmentName, 'CG')
+}
+
 param environmentTimeSeriesIdProperties array {
     metadata: {
         description: 'Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite.'
     }
     maxLength: 3
+    default: [
+        {
+            'name': 'timeseriesinsights.id'
+            'type': 'string'
+        }
+        {
+            'name': 'id'
+            'type': 'string'
+        }
+    ]
 }
 
 param eventSourceName string {
@@ -48,13 +54,14 @@ param eventSourceName string {
         description: 'Name of the event source child resource. The name cannot include: \'<\', \'>\', \'%\', \'&\', \':\', \'\\\', \'?\', \'/\' and any control characters. All other characters are allowed.'
     }
     maxLength: 90
+    default: concat(environmentName, 'EventSourceName')
 }
 
 param resourceGroup string {
-    default: az.resourceGroup().name
     metadata: {
         description: 'If you have an existing IotHub provide the name here. Defaults to the same resource group as the TSI environnment.'
     }
+    default: az.resourceGroup().name
 } 
 
 param eventSourceTimestampPropertyName string {
@@ -62,13 +69,14 @@ param eventSourceTimestampPropertyName string {
         description: 'The event property that will be used as the event source\'s timestamp. If a value is not specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used.'
     }
     maxLength: 90
+    default: concat(eventSourceName, 'TimestampPropertyName')
 }
 
 param eventSourceKeyName string {
-    default : 'service'
     metadata: {
         description: 'The name of the shared access key that the Time Series Insights service will use to connect to the event hub.'
     }
+    default : 'service'
 }
 
 var rbacOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
