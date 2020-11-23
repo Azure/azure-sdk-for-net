@@ -153,6 +153,10 @@ namespace Azure.Communication.Administration.Tests
         [AsyncOnly]
         public async Task CreateReservationErrorState(string? locale)
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
+
             var client = CreateClient();
             var countryCode = "US";
 
@@ -187,6 +191,9 @@ namespace Azure.Communication.Administration.Tests
         [AsyncOnly]
         public async Task CreateReservation(string? locale)
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             var client = CreateClient();
             var countryCode = "US";
 

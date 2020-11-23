@@ -28,6 +28,9 @@ namespace Azure.Communication.Administration.Samples
         [AsyncOnly]
         public async Task CreateReservationAsync()
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             var locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
             var client = CreateClient(false);
@@ -106,6 +109,9 @@ namespace Azure.Communication.Administration.Samples
         [SyncOnly]
         public void CreateReservation()
         {
+            if (!IncludePhoneNumberLiveTests)
+                Assert.Ignore("Include phone number live tests flag is off.");
+
             var locale = "en-US";
             var connectionString = TestEnvironment.ConnectionString;
 
