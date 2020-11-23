@@ -874,13 +874,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
                     // Create a local function that will close the receiver after five events have
-                    // been read.
+                    // been read.  Because the close happens during the read loop, allow for a short
+                    // delay to ensure that the state transition has been fully captured.
 
                     async Task<bool> closeAfterFiveRead(ReadState state)
                     {
                         if (state.Events.Count >= 2)
                         {
-                            await receiver.CloseAsync(cancellationSource.Token).ConfigureAwait(false);
+                            await receiver.CloseAsync(cancellationSource.Token);
+                            await Task.Delay(250);
                         }
 
                         return true;

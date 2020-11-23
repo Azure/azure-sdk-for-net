@@ -12,8 +12,8 @@ namespace Azure.Communication.Chat.Tests
 {
     public class ChatLiveTestBase : RecordedTestBase<ChatTestEnvironment>
     {
-        public ChatLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
-            =>  Sanitizer = new ChatRecordedTestSanitizer();
+        public ChatLiveTestBase(bool isAsync) : base(isAsync)
+           => Sanitizer = new ChatRecordedTestSanitizer();
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                token = ChatRecordedTestSanitizer.SanitizedChatAuthHeaderValue;
+                token = ChatRecordedTestSanitizer.SanitizedUnsignedUserTokenValue;
             }
 
             CommunicationUserCredential communicationUserCredential = new CommunicationUserCredential(token);
@@ -43,9 +43,9 @@ namespace Azure.Communication.Chat.Tests
                 InstrumentClientOptions(new ChatClientOptions())));
         }
 
-        protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatParticipant> participants)
+        protected ChatThreadClient CreateInstrumentedChatThreadClient(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
         {
-            return InstrumentClient(chatClient.CreateChatThread(topic, participants));
+            return InstrumentClient(chatClient.CreateChatThread(topic, members));
         }
 
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
@@ -53,9 +53,9 @@ namespace Azure.Communication.Chat.Tests
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
         }
 
-        protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatParticipant> participants)
+        protected async Task<ChatThreadClient> CreateInstrumentedChatThreadClientAsync(ChatClient chatClient, string topic, IEnumerable<ChatThreadMember> members)
         {
-            return InstrumentClient(await chatClient.CreateChatThreadAsync(topic, participants));
+            return InstrumentClient(await chatClient.CreateChatThreadAsync(topic, members));
         }
     }
 }

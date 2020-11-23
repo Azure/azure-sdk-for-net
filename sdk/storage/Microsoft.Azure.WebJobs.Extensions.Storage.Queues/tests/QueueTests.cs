@@ -92,7 +92,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private static string GetErrorMessageForBadQueueName(string value, string parameterName)
         {
             return "A queue name can contain only letters, numbers, and dash(-) characters - \"" + value + "\"" +
+#if NET5_0
+                $" (Parameter '{parameterName}')"; // from ArgumentException
+#else
                 Environment.NewLine + "Parameter name: " + parameterName; // from ArgumentException
+#endif
         }
 
         // Program with variable queue name containing both %% and { }.

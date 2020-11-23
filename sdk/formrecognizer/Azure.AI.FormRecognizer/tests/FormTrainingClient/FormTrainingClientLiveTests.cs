@@ -396,6 +396,100 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public async Task CopyModelWithLabelsAndModelName()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            string modelName = "My model to copy";
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, modelName: modelName);
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
+
+            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            CustomFormModelInfo modelCopied = operation.Value;
+
+            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
+            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+
+            CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId).ConfigureAwait(false);
+            Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+        }
+
+        [Test]
+        public async Task CopyComposedModel()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
+
+            string modelName = "My composed model";
+            CreateComposedModelOperation operation = await sourceClient.StartCreateComposedModelAsync(modelIds, modelName);
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+            CustomFormModel composedModel = operation.Value;
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
+
+            CopyModelOperation copyOperation = await sourceClient.StartCopyModelAsync(composedModel.ModelId, targetAuth);
+            await copyOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(copyOperation.HasValue);
+            CustomFormModelInfo modelCopied = copyOperation.Value;
+
+            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
+            Assert.AreNotEqual(composedModel.ModelId, modelCopied.ModelId);
+
+            CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId).ConfigureAwait(false);
+            Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+            foreach (var submodel in modelCopiedFullInfo.Submodels)
+            {
+                Assert.IsTrue(modelIds.Contains(submodel.ModelId));
+            }
+        }
+
+        [Test]
+        [Ignore("Current bug on the service side returns null for model name.")]
+        public async Task CopyModelWithoutLabelsAndModelName()
+        {
+            var sourceClient = CreateFormTrainingClient();
+            var targetClient = CreateFormTrainingClient();
+            var resourceId = TestEnvironment.TargetResourceId;
+            var region = TestEnvironment.TargetResourceRegion;
+
+            string modelName = "My model to copy";
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, modelName: modelName);
+
+            CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, region);
+
+            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(operation.HasValue);
+
+            CustomFormModelInfo modelCopied = operation.Value;
+
+            Assert.AreEqual(targetAuth.ModelId, modelCopied.ModelId);
+            Assert.AreNotEqual(trainedModel.ModelId, modelCopied.ModelId);
+
+            CustomFormModel modelCopiedFullInfo = await sourceClient.GetCustomModelAsync(modelCopied.ModelId).ConfigureAwait(false);
+            Assert.AreEqual(modelName, modelCopiedFullInfo.ModelName);
+        }
+
+        [Test]
         public void CopyModelError()
         {
             var sourceClient = CreateFormTrainingClient();
