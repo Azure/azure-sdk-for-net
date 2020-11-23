@@ -65,16 +65,28 @@ thing = client.create_thing(id, name)
 thing.save()
 ```
 
-### Get the thing
+### Get an attestation policy for a specified attestation type.
 
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+The `GetPolicy` method retrieves an attestation policy from the service. The `attestationType` parameter is the type of attestation to retrieve.
+```C# Snippet:GetPolicy
+var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
+    new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
+var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
+var result = policyResult.Value.AttestationPolicy;
+```
 
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
+### Set an attestation policy for a specified attestation type.
+```C# Snippet:SetPolicy
+string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
 
-SecretBundle secret = client.GetSecret("TestSecret");
+var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
-Console.WriteLine(secret.Value);
+AttestationToken policySetToken = new SecuredAttestationToken(
+    new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
+    policyTokenSigner);
+
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
 ```Python
 things = client.list_things()
 ```

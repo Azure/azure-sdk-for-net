@@ -147,16 +147,15 @@ namespace Azure.Security.Attestation.Tests.Samples
         public async Task SettingAttestationPolicy()
         {
             var endpoint = TestEnvironment.SharedEusTest;
-
+#region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
                 new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
-
-            IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
-
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.Value.AttestationPolicy;
+            #endregion
 
+#region Snippet:SetPolicy
             string attestationPolicy = "version=1.0; authorizationrules{=> allow();}; issuancerules{};";
 
             var policyTokenSigner = TestEnvironment.PolicyCertificate0;
@@ -166,7 +165,7 @@ namespace Azure.Security.Attestation.Tests.Samples
                 policyTokenSigner);
 
             var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
-
+#endregion
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
 
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
