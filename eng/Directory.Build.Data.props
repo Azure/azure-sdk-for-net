@@ -52,7 +52,7 @@
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
     <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
-    <InheritDocEnabled Condition="'$(EnableInheritDoc)' != 'false'">true</InheritDocEnabled>
+    <InheritDocEnabled>true</InheritDocEnabled>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -69,7 +69,7 @@
     </NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(EnableInheritDoc)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
     <NoWarn>
       $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
     </NoWarn>

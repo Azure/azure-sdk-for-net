@@ -201,12 +201,12 @@
   </Target>
 
   <!-- InheritDoc-->
-  <ItemGroup Condition="'$(EnableInheritDoc)' != 'false'">
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
-  <ItemGroup Condition="'$(EnableInheritDoc)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
     <PackageDownload Include="NETStandard.Library.Ref" />
     <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
   </ItemGroup>
