@@ -312,12 +312,12 @@ using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
 
     foreach (RecognizedForm businessCard in businessCards)
     {
-        FormField ContactNamesField;
-        if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+        FormField contactNamesField;
+        if (businessCard.Fields.TryGetValue("ContactNames", out contactNamesField))
         {
-            if (ContactNamesField.Value.ValueType == FieldValueType.List)
+            if (contactNamesField.Value.ValueType == FieldValueType.List)
             {
-                foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                foreach (FormField contactNameField in contactNamesField.Value.AsList())
                 {
                     Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
 
