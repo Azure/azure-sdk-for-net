@@ -110,8 +110,8 @@ stages:
           parameters:
             # Flag to include the job template with a container field
             ${{ each platform in parameters.AdditionalPlatforms }}:
-              ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
-                ${{ if ne(platform.value.Container, '') }}:
+              ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
+                ${{ if platform.value.Container }}:
                   UsePlatformContainer: true
             AdditionalParameters:
               PreSteps:
@@ -130,10 +130,10 @@ stages:
             Platforms:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
               ${{ each platform in parameters.Platforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
+                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
                   ${{ platform.key }}: ${{ platform.value }}
               ${{ each platform in parameters.AdditionalPlatforms }}:
-                ${{ if contains(coalesce(platform.value.SupportedClouds, parameters.Clouds), cloud.key) }}:
+                ${{ if or(not(platform.value.SupportedClouds), contains(platform.value.SupportedClouds, cloud.key)) }}:
                   ${{ platform.key }}: ${{ platform.value }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}

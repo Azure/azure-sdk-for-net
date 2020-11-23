@@ -18,6 +18,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     /// </summary>
     ///
     [TestFixture]
+    [Ignore("Debugging Potential Hang")]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
@@ -104,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         // decision would have to be made as to whether the event should
                         // be dropped or published on its own.
 
-                        return;
+                        break;
                     }
                 }
 
