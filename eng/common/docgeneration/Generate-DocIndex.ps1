@@ -165,8 +165,8 @@ function GenerateDocfxTocContent([Hashtable]$tocContent, [String]$lang) {
 function UpdateDocIndexFiles {
     Param (
         [Parameter(Mandatory=$true)] [String]$appTitleLang,
-        [Parameter(Mandatory=$true)] [String]$lang,
-        [Parameter(Mandatory=$true)] [String]$indexhtmlloc,
+        [Parameter(Mandatory=$true)] [String]$lang = $Language,
+        [Parameter(Mandatory=$true)] [String]$indexhtmlloc="index.html",
         [Parameter(Mandatory=$false)] [String]$packageRegex = "`"`"",
         [Parameter(Mandatory=$false)] [String]$regexReplacement = ""
     )
