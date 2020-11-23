@@ -13,6 +13,7 @@ jobs:
             pwsh: true
             workingDirectory: $(Build.SourcesDirectory)
             filePath: eng/scripts/SetTestPipelineVersion.ps1
+            arguments: '-BuildID $(Build.BuildId)'
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -32,6 +33,7 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -44,7 +46,6 @@ jobs:
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
@@ -71,7 +72,7 @@ jobs:
         parameters:
           ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
             Directory: ''
-            Urls: (git diff origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH} HEAD --name-only -- '*.md')
+            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
             Directory: sdk/${{ parameters.ServiceDirectory }}
           CheckLinkGuidance: $true
@@ -87,15 +88,15 @@ jobs:
         inputs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: -ServiceDirectory ${{parameters.ServiceDirectory}}
+          arguments: -ServiceDirectory ${{parameters.ServiceToTest}}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
@@ -132,6 +133,9 @@ jobs:
         MacOs:
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        Windows_Net50:
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net5.0
     pool:
       vmImage: "$(OSVmImage)"
     steps:
@@ -139,16 +143,17 @@ jobs:
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          /p:ServiceDirectory=${{parameters.ServiceToTest}} /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:ServiceDirectory=${{parameters.ServiceToTest}}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption) /p:CollectCoverage=$(CollectCoverage)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"

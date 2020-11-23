@@ -142,6 +142,11 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IReadOnlyDictionary<string, string> LanguageDisplayNames { get { throw null; } }
         public System.DateTimeOffset? UploadedOn { get { throw null; } }
     }
+    public static partial class DigitalTwinsModelFactory
+    {
+        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions, string id, System.DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel) { throw null; }
+        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId, string sourceId, string relationshipName, string relationshipLink) { throw null; }
+    }
     public partial class GetModelsOptions
     {
         public GetModelsOptions() { }

@@ -14,7 +14,7 @@ using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Tests.Snippets
 {
     /// <summary>
     ///   The suite of tests defining the snippets used in the Event Hubs
@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Ignore("Debugging Potential Hang")]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
@@ -30,6 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
     {
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         private EventHubScope _eventHubScope;
+
+        /// <summary>The active Blob storage resource scope for the test fixture.</summary>
         private StorageScope _storageScope;
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
             #region Snippet:EventHubs_Processor_ReadMe_Create
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
             /*@@*/ blobContainerName = _storageScope.ContainerName;
@@ -105,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
             #region Snippet:EventHubs_Processor_ReadMe_ConfigureHandlers
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
             /*@@*/ blobContainerName = _storageScope.ContainerName;
@@ -171,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
             /*@@*/
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
             /*@@*/ blobContainerName = _storageScope.ContainerName;

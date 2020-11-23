@@ -1,7 +1,13 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+
 ## 1.0.2 (2020-11-10)
 
+### Added
+
+An overload of `AddAzureKeyVault` that takes an `AzureKeyVaultConfigurationOptions` parameter and allows specifying the reload interval.
 
 ## 1.0.1 (2020-10-06)
 

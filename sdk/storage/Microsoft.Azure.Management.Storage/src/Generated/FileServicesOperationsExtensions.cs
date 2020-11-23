@@ -83,18 +83,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='cors'>
-            /// Specifies CORS rules for the File service. You can include up to five
-            /// CorsRule elements in the request. If no CorsRule elements are included in
-            /// the request body, all CORS rules will be deleted, and CORS will be disabled
-            /// for the File service.
+            /// <param name='parameters'>
+            /// The properties of file services in storage accounts, including CORS
+            /// (Cross-Origin Resource Sharing) rules.
             /// </param>
-            /// <param name='shareDeleteRetentionPolicy'>
-            /// The file service properties for share soft delete.
-            /// </param>
-            public static FileServiceProperties SetServiceProperties(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy))
+            public static FileServiceProperties SetServiceProperties(this IFileServicesOperations operations, string resourceGroupName, string accountName, FileServiceProperties parameters)
             {
-                return operations.SetServicePropertiesAsync(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy).GetAwaiter().GetResult();
+                return operations.SetServicePropertiesAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,21 +108,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='cors'>
-            /// Specifies CORS rules for the File service. You can include up to five
-            /// CorsRule elements in the request. If no CorsRule elements are included in
-            /// the request body, all CORS rules will be deleted, and CORS will be disabled
-            /// for the File service.
-            /// </param>
-            /// <param name='shareDeleteRetentionPolicy'>
-            /// The file service properties for share soft delete.
+            /// <param name='parameters'>
+            /// The properties of file services in storage accounts, including CORS
+            /// (Cross-Origin Resource Sharing) rules.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileServiceProperties> SetServicePropertiesAsync(this IFileServicesOperations operations, string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileServiceProperties> SetServicePropertiesAsync(this IFileServicesOperations operations, string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SetServicePropertiesWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

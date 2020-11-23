@@ -39,9 +39,11 @@
     <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
+    <IsPerfProject Condition="$(MSBuildProjectName.EndsWith('.Perf'))">true</IsPerfProject>
+    <IsStressProject Condition="$(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
-    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</IsShippingClientLibrary>
-    <IsShippingDataPlaneLibrary Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true'">true</IsShippingDataPlaneLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingClientLibrary>
+    <IsShippingDataPlaneLibrary Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingDataPlaneLibrary>
 
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
@@ -50,6 +52,7 @@
     <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
     <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == '' and '$(CollectCoverage)' == 'true'">cobertura</CoverletOutputFormat>
+    <InheritDocEnabled>false</InheritDocEnabled>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -63,6 +66,12 @@
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
       AZC0008;
+    </NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
+    <NoWarn>
+      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
     </NoWarn>
   </PropertyGroup>
 
@@ -81,10 +90,10 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net5.0;net461</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true'"/>
@@ -144,13 +153,17 @@
     <AzureCoreTestFramework>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj</AzureCoreTestFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <!-- Always fully sign test assemblies since we have a full public/private key -->
     <PublicSign>false</PublicSign>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true'">
+    <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
 
   <!-- Code generation settings -->

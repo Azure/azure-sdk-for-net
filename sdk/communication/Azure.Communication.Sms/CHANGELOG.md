@@ -1,12 +1,15 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-### Added
-- Support for mocking all client methods that use models with internal constructors
+## 1.0.0-beta.4 (Unreleased)
 
+
+## 1.0.0-beta.3 (2020-11-16)
+
+### Added
+- Support for mocking all client methods that use models with internal constructors.
 
 ## 1.0.0-beta.2 (2020-10-06)
-Updated `Azure.Communication.Sms` version
+Updated `Azure.Communication.Sms` version.
 
 ## 1.0.0-beta.1 (2020-09-22)
 This is the first release of Azure Communication Services for Telephony and SMS. For more information, please see the [README][read_me] and [documentation][documentation].

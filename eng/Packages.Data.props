@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201028.2" />
+    <PackageReference Update="AutoRest.CSharp.V3" Version="1.0.0-alpha.20201113.1" />
     <PackageReference Update="Azure.AI.FormRecognizer" Version="3.0.0" />
 		<PackageReference Update="Azure.AI.TextAnalytics" Version="5.0.0" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
@@ -87,12 +87,12 @@
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
-    <PackageReference Update="nunit" Version="3.12.0" />
+    <PackageReference Update="NUnit" Version="3.12.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Update="OpenTelemetry" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.7.0-beta.1" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.7.0-beta.1" />
+    <PackageReference Update="OpenTelemetry" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="0.8.0-beta.1" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="0.8.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
@@ -108,7 +108,7 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
-    <PackageReference Update="System.Memory.Data" Version="1.0.0" />
+    <PackageReference Update="System.Memory.Data" Version="1.0.1" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
@@ -153,6 +153,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -182,10 +183,26 @@
 	
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
 	
-	 <!-- Mgmt sdk packages-->
+    <!-- Mgmt sdk packages-->
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0-preview.2" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-preview.2" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-preview.2" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-preview.2" />
   </ItemGroup>
+
+  <!-- Perf and Stress packages -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true')">
+    <PackageReference Update="CommandLineParser" Version="2.8.0" />
+    <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
+  </ItemGroup>
+
+  <!-- InheritDoc-->
+  <ItemGroup>
+    <PackageReference Update="SauceControl.InheritDoc" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Update="NETStandard.Library.Ref" Version="[2.1.0]" />
+  </ItemGroup>
+
 </Project>

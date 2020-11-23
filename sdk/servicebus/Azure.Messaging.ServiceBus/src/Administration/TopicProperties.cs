@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -43,6 +44,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             AuthorizationRules = options.AuthorizationRules;
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -172,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public bool EnableBatchedOperations { get; set; } = true;
 
         /// <summary>
-        /// Custom metdata that user can associate with the description.
+        /// Custom metadata that user can associate with the description.
         /// </summary>
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
@@ -190,11 +192,22 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; } = false;
+
+        internal bool FilteringMessagesBeforePublishing { get; set; } = false;
+
+        internal string ForwardTo { get; set; } = null;
+
+        internal bool EnableExpress { get; set; } = false;
+
+        internal bool EnableSubscriptionPartitioning { get; set; } = false;
+
+
         /// <summary>
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -225,6 +238,11 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
                 && Status.Equals(otherDescription.Status)
                 && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && EnableExpress == other.EnableExpress
+                && IsAnonymousAccessible == other.IsAnonymousAccessible
+                && FilteringMessagesBeforePublishing == other.FilteringMessagesBeforePublishing
+                && EnableSubscriptionPartitioning == other.EnableSubscriptionPartitioning
                 && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
                     || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules)))

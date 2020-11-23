@@ -35,7 +35,7 @@ await client.SetConfigurationSettingAsync(setting);
 
 ## Retrieve revisions of the setting
 
-To asynchronously get all unexpired revisions, call `GetRevisionsAsync` with a setting selector that has `KeyFilter` equal to `settings.Key`.  This will retrieve all revisions of this setting in the store. See App Configuration [REST API](https://github.com/Azure/AppConfiguration/blob/master/docs/REST/revisions.md#filtering) for more information about filtering.
+To asynchronously get all unexpired revisions, call `GetRevisionsAsync` with a setting selector that has `KeyFilter` equal to `settings.Key`.  This will retrieve all revisions of this setting in the store. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-revisions#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample4_GetRevisions
 var selector = new SettingSelector { KeyFilter = setting.Key };

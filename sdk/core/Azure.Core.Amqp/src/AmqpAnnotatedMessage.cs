@@ -15,12 +15,12 @@ namespace Azure.Core.Amqp
         /// <summary>
         /// Initializes a new Data body <see cref="AmqpAnnotatedMessage"/>.
         /// </summary>
-        /// <param name="dataBody">The data sections comprising the message body.
+        /// <param name="body">The data sections comprising the message body.
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data"/>
         /// </param>
-        public AmqpAnnotatedMessage(IEnumerable<ReadOnlyMemory<byte>> dataBody)
+        public AmqpAnnotatedMessage(AmqpMessageBody body)
         {
-            Body = new AmqpDataMessageBody(dataBody);
+            Body = body;
         }
 
         /// <summary>

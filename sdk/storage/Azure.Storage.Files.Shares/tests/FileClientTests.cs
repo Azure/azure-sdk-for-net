@@ -12,14 +12,13 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
-using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BenchmarkDotNet.Toolchains.Roslyn;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Shares.Test
+namespace Azure.Storage.Files.Shares.Tests
 {
     public class FileClientTests : FileTestBase
     {
@@ -243,9 +242,10 @@ namespace Azure.Storage.Files.Shares.Test
                 file.CreateAsync(
                     maxSize: Constants.MB,
                     filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                e => {
+                    Assert.AreEqual("filePermission", e.ParamName);
+                    StringAssert.StartsWith("Value must be less than or equal to 8192", e.Message);
+                });
         }
 
         [Test]
@@ -1021,9 +1021,7 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 file.SetHttpHeadersAsync(
                     filePermission: filePermission),
-                e => Assert.AreEqual(
-                    "Value must be less than or equal to 8192" + Environment.NewLine
-                    + "Parameter name: filePermission", e.Message));
+                new ArgumentOutOfRangeException("filePermission", "Value must be less than or equal to 8192"));
         }
 
         [Test]
@@ -3372,25 +3370,19 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
                 stream.ReadAsync(buffer: null, offset: 0, count: 10),
-                e => Assert.AreEqual($"buffer cannot be null.{Environment.NewLine}Parameter name: buffer", e.Message));
+                new ArgumentNullException("buffer", "buffer cannot be null."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: -1, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot be less than 0.", $"Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 11, count: 10),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: offset cannot exceed buffer length.",
-                    e.Message));
+                new ArgumentOutOfRangeException("offset cannot exceed buffer length.", "Specified argument was out of the range of valid values."));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 stream.ReadAsync(buffer: new byte[10], offset: 1, count: -1),
-                e => Assert.AreEqual(
-                    $"Specified argument was out of the range of valid values.{Environment.NewLine}Parameter name: count cannot be less than 0.",
-                    e.Message));
+                new ArgumentOutOfRangeException("count cannot be less than 0.", "Specified argument was out of the range of valid values."));
         }
 
         [Test]

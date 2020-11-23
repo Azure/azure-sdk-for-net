@@ -4,18 +4,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Azure.Storage.Queues.Models;
-using Azure.Storage.Queues;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Host.Queues;
 
-namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal class SharedBlobQueueListenerFactory : IFactory<SharedBlobQueueListener>
     {
@@ -121,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Host.Blobs.Listeners
                     throw new ArgumentNullException(nameof(message));
                 }
 
-                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.MessageText);
+                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.Body.ToValidUTF8String());
 
                 BlobQueueRegistration registration = null;
                 if (_executor.TryGetRegistration(blobTriggerMessage.FunctionId, out registration))

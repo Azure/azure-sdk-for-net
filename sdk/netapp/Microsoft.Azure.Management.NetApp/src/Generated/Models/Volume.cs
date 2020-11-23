@@ -375,21 +375,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
                 }
             }
-            if (BaremetalTenantId != null)
-            {
-                if (BaremetalTenantId.Length > 36)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "BaremetalTenantId", 36);
-                }
-                if (BaremetalTenantId.Length < 36)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "BaremetalTenantId", 36);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(BaremetalTenantId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "BaremetalTenantId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
-                }
-            }
             if (MountTargets != null)
             {
                 foreach (var element in MountTargets)

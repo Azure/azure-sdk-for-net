@@ -1,6 +1,9 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
+
+
+## 1.0.0-beta.2 (2020-11-10)
 
 ### New Features
 - Added new sync and async `GetIncidentRootCauses` overloads to `MetricsAdvisorClient` to list root causes for a given `AnomalyIncident` instance.
@@ -9,10 +12,13 @@
 - All `DataSource`s now have public properties exposing the associated parameters used to get the data, such as endpoints, connection strings, and query strings.
 
 ### Breaking Changes
+- Moved all `Options` types (e.g., `GetAlertsOptions`) from `Azure.AI.MetricsAdvisor.Models` to the `Azure.AI.MetricsAdvisor` namespace.
+- Moved `TimeMode`, `FeedbackQueryTimeMode`, `GetAnomaliesForDetectionConfigurationFilter`, and `GetDataFeedsFilter` from `Azure.AI.MetricsAdvisor.Models` to the `Azure.AI.MetricsAdvisor` namespace.
 - In `MetricsAdvisorClient`, renamed `GetAnomaliesForDetectionConfiguration` and `GetAnomaliesForAlert` sync and async methods to `GetAnomalies`.
 - In `MetricsAdvisorClient`, renamed `GetIncidentsForDetectionConfiguration` and `GetIncidentsForAlert` sync and async methods to `GetIncidents`.
-- In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddMetricFeedback`.
-- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllMetricFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `CreateMetricFeedback` methods to `AddFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedback` methods to `GetFeedback`.
+- In `MetricsAdvisorClient`, renamed sync and async `GetMetricFeedbacks` methods to `GetAllFeedback`.
 - In `MetricsAdvisorClient`, renamed sync and async `GetMetricDimensionValues` methods to `GetDimensionValues`.
 - In `MetricsAdvisorClient`, changed return types of sync and async `CreateMetricFeedback` methods to a `Response<string>` containing the ID of the created feedback.
 - In `MetricsAdvisorClient`, changed return types of sync and async methods `GetIncidentRootCauses`, `GetMetricEnrichedSeriesData`, and `GetMetricSeriesData` to pageables.
@@ -30,17 +36,20 @@
 - Made `EnrichmentStatus.Timestamp` non-nullable.
 - Removed `MetricsAdvisorClientOptions` and `MetricsAdvisorAdministrationOptions` and replaced both with `MetricsAdvisorClientsOptions`.
 - Removed `DataFeedOptions`. All of its properties were moved directly into `DataFeed`.
-- Renamed `GetMetricFeedbacksOptions` to `GetAllMetricFeedbackOptions`.
+- Renamed `GetMetricFeedbacksOptions` to `GetAllFeedbackOptions`.
 - Renamed `GetMetricDimensionValuesOptions` to `GetDimensionValuesOptions`.
 - Renamed `MetricDimension` to `DataFeedDimension`.
 - Renamed `DataAnomaly` to `DataPointAnomaly`.
 - Renamed `IncidentStatus` to `AnomalyIncidentStatus`.
 - Renamed `AlertingHook`, `EmailHook`, and `WebHook` to `NotificationHook`, `EmailNotificationHook`, and `WebNotificationHook`, respectively.
 - Renamed `TimeMode` to `AlertQueryTimeMode`.
+- In `DataFeedGranularityType`, renamed `Minutely` and `Secondly` to `PerMinute` and `PerSecond`, respectively.
 - In `ElasticsearchDataFeedSource`, renamed the constructor parameter `authHeader` to `authorizationHeader`.
 
 ### Key Bug Fixes
 - Fixed a bug in sync and async `GetMetricEnrichedSeriesData` methods where a `NullReferenceException` was thrown if a returned data point had missing data.
+- Fixed a bug in sync and async `UpdateDataFeed` methods where a `RequestFailedException` was thrown if a data feed without custom `DataFeedMissingDataPointFillType` was updated.
+- Fixed a bug in sync and async `UpdateAlertConfiguration` methods where a `RequestFailedException` was thrown if a configuration with only one `MetricAnomalyAlertConfiguration` was updated.
 
 ## 1.0.0-beta.1 (2020-10-08)
 

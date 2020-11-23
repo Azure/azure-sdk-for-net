@@ -1,8 +1,31 @@
 # Release History
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
+
+
+## 1.4.0-beta.1 (2020-10-15)
+
+### New Features
+- Redesigned Application Authentication APIs
+  - Adds `TokenCache` and `PersistentTokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
+
+## 1.3.0 (2020-11-12)
+
+### New Features
+- Added support for Service Fabric managed identity authentication to `ManagedIdentityCredential`.
+- Added support for Azure Arc managed identity authentication to `ManagedIdentityCredential`.
+
+### Fixes and improvements
+- Fix race condition in `ProcessRunner` causing `VisualStudioCredential` and `AzureCliCredential` to fail intermittently ([#16211](https://github.com/Azure/azure-sdk-for-net/issues/16211))
+- Fix `VisualStudioCodeCredential` to raise `CredentialUnavailableException` when reading from VS Code's stored secret ([#16795](https://github.com/Azure/azure-sdk-for-net/issues/16795))
+- Prevent `VisualStudioCodeCredential` using invalid authentication data when no user is signed in to Visual Studio Code ([#15870](https://github.com/Azure/azure-sdk-for-net/issues/15870))
+- Fix deadlock in `ProcessRunner` causing `AzureCliCredential` and `VisualStudioCredential` to fail due to timeout ([#14691](https://github.com/Azure/azure-sdk-for-net/issues/14691), [14207](https://github.com/Azure/azure-sdk-for-net/issues/14207))
+- Fix issue with `AzureCliCredential` incorrectly parsing expires on property returned from `az account get-access-token` ([#15801](https://github.com/Azure/azure-sdk-for-net/issues/15801))
+- Fix issue causing `DeviceCodeCredential` and `InteractiveBrowserCredential` to improperly authenticate to the home tenant for silent authentication calls after initial authentication ([#13801](https://github.com/Azure/azure-sdk-for-net/issues/13801))
+- Fix cache loading issue in `SharedTokenCacheCredential` on Linux ([#12939](https://github.com/Azure/azure-sdk-for-net/issues/12939))
 
 ### Breaking Changes
-- Rename property `IncludeX5CClaimHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
+- Rename property `IncludeX5CCliamHeader` on `ClientCertificateCredentialOptions` to `SendCertificateChain`
 - Removing Application Authentication APIs for GA release. These will be reintroduced in 1.4.0-beta.1.
   - Removed class `AuthenticationRecord`
   - Removed class `AuthenticationRequiredException`

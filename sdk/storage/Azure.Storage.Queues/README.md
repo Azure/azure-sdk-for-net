@@ -86,7 +86,7 @@ queue.SendMessage("third");
 foreach (QueueMessage message in queue.ReceiveMessages(maxMessages: 10).Value)
 {
     // "Process" the message
-    Console.WriteLine($"Message: {message.MessageText}");
+    Console.WriteLine($"Message: {message.Body}");
 
     // Let the service know we're finished with the message and
     // it can be safely deleted.

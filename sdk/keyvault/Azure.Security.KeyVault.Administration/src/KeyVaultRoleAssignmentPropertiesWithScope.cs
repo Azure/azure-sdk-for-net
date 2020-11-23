@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
-    /// <inheritdoc/>>
+    /// <summary> Role assignment properties with scope. </summary>
     [CodeGenModel("RoleAssignmentPropertiesWithScope")]
     public partial class KeyVaultRoleAssignmentPropertiesWithScope
     { }

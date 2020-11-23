@@ -13,17 +13,17 @@ using Azure;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
+using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
     internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>
     {
@@ -322,7 +322,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
                 }
 
                 FunctionResult result = null;
-                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler))
+                Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
+                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
                 {
                     timer.Start();
 
@@ -357,13 +358,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
         private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(QueueClient queue,
             QueueMessage message, TimeSpan visibilityTimeout,
-            IWebJobsExceptionHandler exceptionHandler)
+            IWebJobsExceptionHandler exceptionHandler, Action<UpdateReceipt> onUpdateReceipt)
         {
             // Update a message's visibility when it is halfway to expiring.
             TimeSpan normalUpdateInterval = new TimeSpan(visibilityTimeout.Ticks / 2);
 
             IDelayStrategy speedupStrategy = new LinearSpeedupStrategy(normalUpdateInterval, MinimumVisibilityRenewalInterval);
-            ITaskSeriesCommand command = new UpdateQueueMessageVisibilityCommand(queue, message, visibilityTimeout, speedupStrategy);
+            ITaskSeriesCommand command = new UpdateQueueMessageVisibilityCommand(queue, message, visibilityTimeout, speedupStrategy, onUpdateReceipt);
             return new TaskSeriesTimer(command, exceptionHandler, Task.Delay(normalUpdateInterval));
         }
 

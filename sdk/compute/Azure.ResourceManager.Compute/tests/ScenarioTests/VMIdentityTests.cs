@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Compute.Tests
                 await WaitForCompletionAsync(await VirtualMachinesOperations.StartDeleteAsync(rgName, inputVM.Name));
                 passed = true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
             finally
             {

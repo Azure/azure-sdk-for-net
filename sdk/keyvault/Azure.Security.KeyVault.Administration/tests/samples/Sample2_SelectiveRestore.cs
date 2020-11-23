@@ -38,12 +38,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<Uri> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             await WaitForOperationAsync();
 
             // Get the Uri for the location of you backup blob.
-            Uri backupFolderUri = backupResult.Value;
+            Uri backupFolderUri = backupResult.Value.BackupFolderUri;
 
             Assert.That(backupFolderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
@@ -55,11 +55,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, backupFolderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            Response restoreResult = await restoreOperation.WaitForCompletionAsync();
+            RestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
-            Assert.That(restoreResult, Is.Not.Null);
             Assert.That(restoreOperation.HasValue, Is.True);
+            Assert.That(restoreResult.StartTime, Is.Not.EqualTo(default));
+            Assert.That(restoreResult.EndTime, Is.Not.EqualTo(default));
 
             await WaitForOperationAsync();
         }

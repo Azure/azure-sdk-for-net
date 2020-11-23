@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.1
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.2
 ```
 
 ### Prerequisites

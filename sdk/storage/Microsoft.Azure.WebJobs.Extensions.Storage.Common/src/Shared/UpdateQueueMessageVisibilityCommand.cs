@@ -4,14 +4,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Host.Timers;
+using Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
-using Azure;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Timers;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 
-namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
     internal class UpdateQueueMessageVisibilityCommand : ITaskSeriesCommand
     {
@@ -19,9 +17,10 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
         private readonly QueueMessage _message;
         private readonly TimeSpan _visibilityTimeout;
         private readonly IDelayStrategy _speedupStrategy;
+        private readonly Action<UpdateReceipt> _onUpdateReceipt;
 
         public UpdateQueueMessageVisibilityCommand(QueueClient queue, QueueMessage message,
-            TimeSpan visibilityTimeout, IDelayStrategy speedupStrategy)
+            TimeSpan visibilityTimeout, IDelayStrategy speedupStrategy, Action<UpdateReceipt> onUpdateReceipt)
         {
             if (queue == null)
             {
@@ -42,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
             _message = message;
             _visibilityTimeout = visibilityTimeout;
             _speedupStrategy = speedupStrategy;
+            _onUpdateReceipt = onUpdateReceipt;
         }
 
         public async Task<TaskSeriesCommandResult> ExecuteAsync(CancellationToken cancellationToken)
@@ -50,7 +50,8 @@ namespace Microsoft.Azure.WebJobs.Host.Queues.Listeners
 
             try
             {
-                await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                UpdateReceipt updateReceipt = await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _onUpdateReceipt?.Invoke(updateReceipt);
                 // The next execution should occur after a normal delay.
                 delay = _speedupStrategy.GetNextDelay(executionSucceeded: true);
             }

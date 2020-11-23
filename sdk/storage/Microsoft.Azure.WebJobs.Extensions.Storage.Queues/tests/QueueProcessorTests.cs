@@ -3,23 +3,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core.TestFramework;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using System.Linq;
 using Moq;
-using Azure;
-using Azure.WebJobs.Extensions.Storage.Common.Tests;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.WebJobs.Extensions.Storage.Queues;
 
-namespace Microsoft.Azure.WebJobs.Host.FunctionalTests
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
     public class QueueProcessorTests : LiveTestBase<WebJobsTestEnvironment>
     {

@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Managed Private endpoints client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.ManagedPrivateEndpoints</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Microsoft Azure Synapse ManagedPrivateEndpoints;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 

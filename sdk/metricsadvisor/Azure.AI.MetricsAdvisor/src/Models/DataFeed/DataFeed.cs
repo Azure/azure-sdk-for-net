@@ -244,7 +244,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedDetailPatch patch = DataSource.InstantiateDataFeedDetailPatch();
 
             patch.DataFeedName = Name;
-            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default;
+            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);
 
             patch.TimestampColumn = Schema.TimestampColumn;
 
@@ -256,19 +256,19 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             patch.DataFeedDescription = Description;
             patch.ActionLinkTemplate = ActionLinkTemplate;
-            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default;
+            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default(DataFeedDetailPatchViewMode?);
 
             if (RollupSettings != null)
             {
                 patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
-                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default;
-                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default;
+                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default(DataFeedDetailPatchNeedRollup?);
+                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default(DataFeedDetailPatchRollUpMethod?);
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
             }
 
             if (MissingDataPointFillSettings != null)
             {
-                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default;
+                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default(DataFeedDetailPatchFillMissingPointType?);
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 

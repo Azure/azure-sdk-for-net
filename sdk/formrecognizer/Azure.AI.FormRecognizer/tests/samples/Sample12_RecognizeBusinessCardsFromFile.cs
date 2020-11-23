@@ -22,10 +22,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string busienssCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
+            string businessCardsPath = FormRecognizerTestEnvironment.CreatePath("businessCard.jpg");
 
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardFileStream
-            using (FileStream stream = new FileStream(busienssCardsPath, FileMode.Open))
+            using (FileStream stream = new FileStream(businessCardsPath, FileMode.Open))
             {
                 var options = new RecognizeBusinessCardsOptions() { Locale = "en-US" };
                 RecognizedFormCollection businessCards = await client.StartRecognizeBusinessCardsAsync(stream, options).WaitForCompletionAsync();
@@ -35,12 +35,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
                 foreach (RecognizedForm businessCard in businessCards)
                 {
-                    FormField ContactNamesField;
-                    if (businessCard.Fields.TryGetValue("ContactNames", out ContactNamesField))
+                    FormField contactNamesField;
+                    if (businessCard.Fields.TryGetValue("ContactNames", out contactNamesField))
                     {
-                        if (ContactNamesField.Value.ValueType == FieldValueType.List)
+                        if (contactNamesField.Value.ValueType == FieldValueType.List)
                         {
-                            foreach (FormField contactNameField in ContactNamesField.Value.AsList())
+                            foreach (FormField contactNameField in contactNamesField.Value.AsList())
                             {
                                 Console.WriteLine($"Contact Name: {contactNameField.ValueData.Text}");
 

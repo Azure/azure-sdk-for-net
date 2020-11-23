@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 #pragma warning disable CA1822 // Mark members as static
         protected void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
-            message.AmqpMessage.Body = new AmqpDataMessageBody(new ReadOnlyMemory<byte>[] { body });
+            message.AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.ViaPartitionKey"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
