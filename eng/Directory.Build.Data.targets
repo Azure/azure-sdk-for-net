@@ -200,6 +200,18 @@
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
+  <!-- InheritDoc-->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
+    <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)'=='netstandard2.0'">
+    <PackageDownload Include="NETStandard.Library.Ref" />
+    <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
+  </ItemGroup>
+
+<!-- Additional PackageReferences should be placed above this PropertyGroup -->
   <PropertyGroup>
     <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
   </PropertyGroup>
