@@ -191,5 +191,5 @@ if ($GetGithubIoDocIndexFn -and (Test-Path "function:$GetGithubIoDocIndexFn"))
 }
 else
 {
-    LogWarning "The function '$GetGithubIoDocIndexFn' was not found."
+    LogWarning "The function 'GetGithubIoDocIndexFn' was not found."
 }
