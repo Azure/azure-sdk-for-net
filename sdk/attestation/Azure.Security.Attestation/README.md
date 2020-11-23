@@ -41,6 +41,12 @@ If your library requires authentication for use, such as for Azure services, inc
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
 ## Key concepts
+### *AttestationType*
+The Microsoft Azure Attestation service supports attesting different types of evidence depending on the environment.
+Currently, MAA supports the following Trusted Execution environments:
+* OpenEnclave - An Intel(tm) Processor running code in an SGX Enclave where the attestation evidence was collected using the OpenEnclave `oe_get_report` or `oe_get_evidence` API.
+* SgxEnclave - An Intel(tm) Processor running code in an SGX Enclave where the attestation evidence was collected using the Intel SGX SDK.
+* Tpm - A Virtualization Based Security environment where the Trusted Platform Module of the processor is used to provide the attestation evidence.
 
 The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
