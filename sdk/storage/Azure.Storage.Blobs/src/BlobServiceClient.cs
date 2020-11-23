@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Linq;
 
 namespace Azure.Storage.Blobs
 {
@@ -1666,6 +1664,138 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion UndeleteBlobContainer
+
+        #region RenameBlobContainer
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The new name of the Blob Container.
+        /// </param>
+        /// <param name="sourceContainerName">
+        /// The name of the source container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContainerClient> RenameBlobContainer(
+            string destinationContainerName,
+            string sourceContainerName,
+            CancellationToken cancellationToken = default)
+            => RenameBlobContainerInternal(
+                destinationContainerName,
+                sourceContainerName,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The new name of the Blob Container.
+        /// </param>
+        /// <param name="sourceContainerName">
+        /// The name of the source container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerClient>> RenameBlobContainerAsync(
+            string destinationContainerName,
+            string sourceContainerName,
+            CancellationToken cancellationToken = default)
+            => await RenameBlobContainerInternal(
+                destinationContainerName,
+                sourceContainerName,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Renames an existing Blob Container.
+        /// </summary>
+        /// <param name="destinationContainerName">
+        /// The new name of the Blob Container.
+        /// </param>
+        /// <param name="sourceContainerName">
+        /// The name of the source container.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerClient}"/> pointed at the renamed container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<BlobContainerClient>> RenameBlobContainerInternal(
+            string destinationContainerName,
+            string sourceContainerName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(sourceContainerName)}: {sourceContainerName}");
+
+                try
+                {
+                    BlobContainerClient containerClient = GetBlobContainerClient(destinationContainerName);
+
+                    Response response = await BlobRestClient.Container.RenameAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: containerClient.Uri,
+                        version: Version.ToVersionString(),
+                        sourceContainerName: sourceContainerName,
+                        async: async,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(RenameBlobContainer)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        containerClient,
+                        response);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion RenameBlobContainer
 
         #region FilterBlobs
         /// <summary>

@@ -694,6 +694,41 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RenameBlobContainerAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string oldContainerName = GetNewContainerName();
+            string newContainerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(oldContainerName));
+            await container.CreateAsync();
+
+            // Act
+            BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
+                destinationContainerName: newContainerName,
+                sourceContainerName: oldContainerName);
+
+            // Assert
+            await newContainer.GetPropertiesAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task RenameBlobContainerAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.RenameBlobContainerAsync(GetNewBlobName(), GetNewContainerName()),
+                e => Assert.AreEqual(BlobErrorCode.InvalidQueryParameterValue.ToString(), e.ErrorCode));
+        }
+
         #region GenerateSasTests
         [Test]
         public void CanGenerateSas_ClientConstructors()
