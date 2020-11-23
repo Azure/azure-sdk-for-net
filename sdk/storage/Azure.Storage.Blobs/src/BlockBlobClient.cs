@@ -2329,6 +2329,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch,
                         sourceIfTags: options?.SourceConditions?.TagConditions,
                         requestId: default,
+                        sourceContentHash: options?.ContentMd5,
                         blobTagsString: options?.Tags?.ToTagsString(),
                         copySourceBlobProperties: options?.CopySourceBlobProperties,
                         async: async,

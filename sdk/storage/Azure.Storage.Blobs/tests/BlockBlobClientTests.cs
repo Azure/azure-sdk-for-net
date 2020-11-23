@@ -3231,6 +3231,62 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SyncUploadFromUriAsync_ContentMd5()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await destBlob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            byte[] sourceContentMd5 = MD5.Create().ComputeHash(data);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            {
+                ContentMd5 = sourceContentMd5
+            };
+
+            // Act
+            Response<BlobContentInfo> response = await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+
+            // Assert
+            Assert.AreEqual(sourceContentMd5, response.Value.ContentHash);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SyncUploadFromUriAsync_ContentMd5Failed()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await destBlob.UploadAsync(new MemoryStream(Array.Empty<byte>()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            byte[] sourceContentMd5 = MD5.Create().ComputeHash(GetRandomBuffer(Constants.KB-1));
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            BlobUploadFromUriOptions options = new BlobUploadFromUriOptions
+            {
+                ContentMd5 = sourceContentMd5
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options),
+                e => Assert.AreEqual(BlobErrorCode.Md5Mismatch.ToString(), e.ErrorCode));
+        }
+
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
             {
