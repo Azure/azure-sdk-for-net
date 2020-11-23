@@ -28,21 +28,22 @@ namespace Azure.Communication.Chat.Tests.samples
                 new Uri(endpoint),
                 new CommunicationUserCredential(userToken));
 
-            var chatParticipant = new ChatParticipant(new CommunicationUser(theadCreatorMemberId))
+            var chatThreadMember = new ChatThreadMember(new CommunicationUser(theadCreatorMemberId))
             {
                 DisplayName = "UserDisplayName",
                 ShareHistoryTime = DateTime.MinValue
             };
-            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+            ChatThreadClient chatThreadClient = await chatClient.CreateChatThreadAsync(topic: "Hello world!", members: new[] { chatThreadMember });
             string threadId = chatThreadClient.Id;
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
             var content = "hello world";
             var priority = ChatMessagePriority.Normal;
             var senderDisplayName = "sender name";
-            var messageId = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
+            SendChatMessageResult sendMessageResult = await chatThreadClient.SendMessageAsync(content, priority, senderDisplayName);
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
+            var messageId = sendMessageResult.Id;
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
             ChatMessage chatMessage = await chatThreadClient.GetMessageAsync(messageId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage
@@ -65,8 +66,8 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetReadReceipts
-            AsyncPageable<ChatMessageReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
-            await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
+            AsyncPageable<ReadReceipt> allReadReceipts = chatThreadClient.GetReadReceiptsAsync();
+            await foreach (ReadReceipt readReceipt in allReadReceipts)
             {
                 Console.WriteLine($"{readReceipt.ChatMessageId}:{readReceipt.Sender.Id}:{readReceipt.ReadOn}");
             }

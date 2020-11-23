@@ -18,7 +18,6 @@ namespace Azure.AI.TextAnalytics
         /// <param name="idToIndexMap"></param>
         internal AnalyzeOperationResult(AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap)
         {
-            Tasks = jobState.Tasks;
             Errors = Transforms.ConvertToErrors(jobState.Errors);
             Statistics = jobState.Statistics;
             DisplayName = jobState.DisplayName;

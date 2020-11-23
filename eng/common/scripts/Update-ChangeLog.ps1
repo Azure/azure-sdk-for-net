@@ -22,7 +22,7 @@ if ($ReleaseDate -and ($Unreleased -eq $True)) {
     exit 1
 }
 
-. "${PSScriptRoot}\common.ps1"
+. (Join-Path $PSScriptRoot common.ps1)
 
 if ($ReleaseDate)
 {

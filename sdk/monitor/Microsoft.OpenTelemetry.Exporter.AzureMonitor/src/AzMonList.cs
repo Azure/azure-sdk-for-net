@@ -62,6 +62,45 @@ namespace Microsoft.OpenTelemetry.Exporter.AzureMonitor
             list = new AzMonList(list.data, 0);
         }
 
+        public static object GetTagValue(ref AzMonList list, string tagName)
+        {
+            int length = list.Length;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (list[i].Key == tagName)
+                {
+                    return list[i].Value;
+                }
+            }
+
+            return null;
+        }
+
+        internal static object[] GetTagValues(ref AzMonList list, params string[] tagNames)
+        {
+            int lengthTagNames = tagNames.Length;
+            int lengthList = list.Length;
+            object[] values = new object[(int)lengthTagNames];
+
+            for (int i = 0; i < lengthList; i++)
+            {
+                var index = Array.IndexOf(tagNames, list[i].Key);
+                if (index >= 0)
+                {
+                    values[index] = list[i].Value;
+                    lengthTagNames--;
+
+                    if (lengthTagNames == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return values;
+        }
+
         public void Return()
         {
             var data = this.data;
