@@ -63,7 +63,7 @@ function GetAdjustedReadmeContent($pkgInfo){
     $ReplacementPattern = "`${1}$($pkgInfo.Tag)"
     $fileContent = $fileContent -replace $releaseReplaceRegex, $ReplacementPattern
   
-    $header = "---`ntitle: $foundTitle`nkeywords: Azure, $lang, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $lang`nms.service: $service`n---`n"
+    $header = "---`ntitle: $foundTitle`nkeywords: Azure, $Language, SDK, API, $($pkgInfo.PackageId), $service`nauthor: maggiepint`nms.author: magpint`nms.date: $date`nms.topic: article`nms.prod: azure`nms.technology: azure`nms.devlang: $Language`nms.service: $service`n---`n"
 
     if ($fileContent) {
       return "$header`n$fileContent"
