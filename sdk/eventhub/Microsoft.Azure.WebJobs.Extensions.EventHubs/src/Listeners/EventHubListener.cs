@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
@@ -26,11 +25,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     internal sealed class EventHubListener : IListener, IEventProcessorFactory, IScaleMonitorProvider
     {
         private static readonly Dictionary<string, object> EmptyScope = new Dictionary<string, object>();
-        private readonly string _functionId;
-        private readonly string _eventHubName;
-        private readonly string _consumerGroup;
-        private readonly string _connectionString;
-        private readonly string _storageConnectionString;
         private readonly ITriggeredFunctionExecutor _executor;
         private readonly EventProcessorHost _eventProcessorHost;
         private readonly bool _singleDispatch;
@@ -42,10 +36,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         public EventHubListener(
             string functionId,
-            string eventHubName,
-            string consumerGroup,
-            string connectionString,
-            string storageConnectionString,
             ITriggeredFunctionExecutor executor,
             EventProcessorHost eventProcessorHost,
             bool singleDispatch,
@@ -53,17 +43,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             ILogger logger,
             BlobContainerClient blobContainer = null)
         {
-            _functionId = functionId;
-            _eventHubName = eventHubName;
-            _consumerGroup = consumerGroup;
-            _connectionString = connectionString;
-            _storageConnectionString = storageConnectionString;
             _executor = executor;
             _eventProcessorHost = eventProcessorHost;
             _singleDispatch = singleDispatch;
             _options = options;
             _logger = logger;
-            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(() => new EventHubsScaleMonitor(_functionId, _eventHubName, _consumerGroup, _connectionString, _storageConnectionString, _logger, blobContainer));
+            _scaleMonitor = new Lazy<EventHubsScaleMonitor>(() => new EventHubsScaleMonitor(
+                functionId,
+                eventProcessorHost.EventHubName,
+                eventProcessorHost.ConsumerGroupName,
+                eventProcessorHost.EventHubConnectionString,
+                eventProcessorHost.StorageConnectionString,
+                _logger,
+                blobContainer));
         }
 
         void IListener.Cancel()
@@ -216,6 +208,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // code, and capture/log/persist failed events, since they won't be retried.
                 if (messages.Any())
                 {
+                    context.CheckpointEvent = messages.Last();
                     await CheckpointAsync(context).ConfigureAwait(false);
                 }
             }

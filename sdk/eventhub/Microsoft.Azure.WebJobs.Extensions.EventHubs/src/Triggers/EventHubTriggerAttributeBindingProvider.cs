@@ -69,17 +69,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
             var eventHostListener = _options.Value.GetEventProcessorHost(_config, resolvedEventHubName, resolvedConsumerGroup);
 
-            string storageConnectionString = _config.GetWebJobsConnectionString(ConnectionStringNames.Storage);
-
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
              (factoryContext, singleDispatch) =>
              {
                  IListener listener = new EventHubListener(
                                                 factoryContext.Descriptor.Id,
-                                                resolvedEventHubName,
-                                                resolvedConsumerGroup,
-                                                connectionString,
-                                                storageConnectionString,
                                                 factoryContext.Executor,
                                                 eventHostListener,
                                                 singleDispatch,

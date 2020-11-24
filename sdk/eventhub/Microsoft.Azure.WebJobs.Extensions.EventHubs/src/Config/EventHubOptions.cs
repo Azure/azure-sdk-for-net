@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
@@ -32,7 +33,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// Name of the blob container that the EventHostProcessor instances uses to coordinate load balancing listening on an event hub.
         /// Each event hub gets its own blob prefix within the container.
         /// </summary>
-        public const string LeaseContainerName = "azure-webjobs-eventhub";
+        public string LeaseContainerName { get; set; } = "azure-webjobs-eventhub";
+
         private int _batchCheckpointFrequency = 1;
 
         public EventHubOptions()
@@ -256,27 +258,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     storageConnectionString = defaultStorageString;
                 }
 
-                // If the connection string provides a hub name, that takes precedence.
-                // Note that connection strings *can't* specify a consumerGroup, so must always be passed in.
-                string actualPath = eventHubName;
-                EventHubsConnectionStringBuilder sb = new EventHubsConnectionStringBuilder(creds.EventHubConnectionString);
-                if (sb.EntityPath != null)
-                {
-                    actualPath = sb.EntityPath;
-                    sb.EntityPath = null; // need to remove to use with EventProcessorHost
-                }
-
-                var @namespace = GetEventHubNamespace(sb);
-                var blobPrefix = GetBlobPrefix(actualPath, @namespace);
-
                 // Use blob prefix support available in EPH starting in 2.2.6
                 EventProcessorHost host = new EventProcessorHost(
-                    eventHubPath: actualPath,
+                    eventHubName: eventHubName,
                     consumerGroupName: consumerGroup,
-                    eventHubConnectionString: sb.ToString(),
+                    eventHubConnectionString: creds.EventHubConnectionString,
                     storageConnectionString: storageConnectionString,
                     leaseContainerName: LeaseContainerName,
-                    legacyCheckpointStorageBlobPrefix: blobPrefix,
                     exceptionHandler: _exceptionHandler);
 
                 return host;
