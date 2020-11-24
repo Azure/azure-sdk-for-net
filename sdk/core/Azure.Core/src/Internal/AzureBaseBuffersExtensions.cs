@@ -60,7 +60,7 @@ namespace Azure.Core.Buffers
                 foreach (ReadOnlyMemory<byte> segment in buffer)
                 {
 #if NET5_0
-                    await stream.WriteAsync(buffer, cancellation).ConfigureAwait(false);
+                    await stream.WriteAsync(segment, cancellation).ConfigureAwait(false);
 #else
                     if (MemoryMarshal.TryGetArray(segment, out ArraySegment<byte> arraySegment))
                     {
