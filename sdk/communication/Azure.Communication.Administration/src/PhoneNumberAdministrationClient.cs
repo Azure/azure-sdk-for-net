@@ -68,7 +68,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<AcquiredPhoneNumbers> response = await RestClient.GetAllPhoneNumbersAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhoneNumbers, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<AcquiredPhoneNumbers> response = RestClient.GetAllPhoneNumbers(locale, skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhoneNumbers, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhoneNumbers, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -232,7 +232,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<PhoneNumberCountries> response = await RestClient.GetAllSupportedCountriesAsync(locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Countries, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -253,7 +253,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<PhoneNumberCountries> response = RestClient.GetAllSupportedCountries(locale, skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Countries, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Countries, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -393,7 +393,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<PhonePlanGroups> response = await RestClient.GetPhonePlanGroupsAsync(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhonePlanGroupsValue, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhonePlanGroupsValue, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -416,7 +416,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<PhonePlanGroups> response = RestClient.GetPhonePlanGroups(countryCode, locale, includeRateInformation, skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlanGroupsValue, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlanGroupsValue, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -440,7 +440,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<PhonePlansResponse> response = await RestClient.GetPhonePlansAsync(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.PhonePlans, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.PhonePlans, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -463,7 +463,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<PhonePlansResponse> response = RestClient.GetPhonePlans(countryCode, phonePlanGroupId, locale, skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlans, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.PhonePlans, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -614,7 +614,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<PhoneNumberEntities> response = await RestClient.GetAllReleasesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -634,7 +634,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<PhoneNumberEntities> response = RestClient.GetAllReleases(skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
@@ -741,7 +741,7 @@ namespace Azure.Communication.Administration
                 return PageResponseEnumerator.CreateAsyncEnumerable(async s =>
                 {
                     Response<PhoneNumberEntities> response = await RestClient.GetAllSearchesAsync(skip: null, take: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse());
                 });
             }
             catch (Exception ex)
@@ -761,7 +761,7 @@ namespace Azure.Communication.Administration
             try
             {
                 Response<PhoneNumberEntities> response = RestClient.GetAllSearches(skip: null, take: null, cancellationToken);
-                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, continuationToken: null!, response.GetRawResponse()));
+                return PageResponseEnumerator.CreateEnumerable(s => Page.FromValues(response.Value.Entities, response.Value.NextLink, response.GetRawResponse()));
             }
             catch (Exception ex)
             {
