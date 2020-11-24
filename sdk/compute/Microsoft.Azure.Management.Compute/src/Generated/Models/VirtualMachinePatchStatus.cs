@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,10 +36,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="lastPatchInstallationSummary">The installation summary
         /// of the latest installation operation for the virtual
         /// machine.</param>
-        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary))
+        /// <param name="hotpatchStatus">The Hot Patch Status for the virtual
+        /// machine.</param>
+        /// <param name="configurationStatuses">The enablement status of the
+        /// specified patchMode</param>
+        public VirtualMachinePatchStatus(AvailablePatchSummary availablePatchSummary = default(AvailablePatchSummary), LastPatchInstallationSummary lastPatchInstallationSummary = default(LastPatchInstallationSummary), HotpatchStatus hotpatchStatus = default(HotpatchStatus), IList<InstanceViewStatus> configurationStatuses = default(IList<InstanceViewStatus>))
         {
             AvailablePatchSummary = availablePatchSummary;
             LastPatchInstallationSummary = lastPatchInstallationSummary;
+            HotpatchStatus = hotpatchStatus;
+            ConfigurationStatuses = configurationStatuses;
             CustomInit();
         }
 
@@ -59,6 +67,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastPatchInstallationSummary")]
         public LastPatchInstallationSummary LastPatchInstallationSummary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Hot Patch Status for the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "hotpatchStatus")]
+        public HotpatchStatus HotpatchStatus { get; set; }
+
+        /// <summary>
+        /// Gets the enablement status of the specified patchMode
+        /// </summary>
+        [JsonProperty(PropertyName = "configurationStatuses")]
+        public IList<InstanceViewStatus> ConfigurationStatuses { get; private set; }
 
     }
 }

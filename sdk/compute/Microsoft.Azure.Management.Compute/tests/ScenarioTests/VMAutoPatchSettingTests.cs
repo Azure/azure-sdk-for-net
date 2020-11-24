@@ -23,7 +23,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "Manual", false);
+                StartPatchSettingTest(context, "Manual", useWindowsProfile: true, enableAutomaticUpdates: false, enableHotpatching: false);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "AutomaticByOS", true);
+                StartPatchSettingTest(context, "AutomaticByOS", useWindowsProfile: true, enableAutomaticUpdates: true, enableHotpatching: false);
             }
         }
 
@@ -41,41 +41,82 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "AutomaticByPlatform", true);
+                // NOTE: add a test for enableHotpatching once it is available in all regions
+                StartPatchSettingTest(context, "AutomaticByPlatform", useWindowsProfile: true, enableAutomaticUpdates: true, enableHotpatching: false);
             }
         }
 
-        private void StartPatchSettingTest(MockContext context, string patchSettingMode, bool enableAutomaticUpdates)
+        [Fact()]
+        public void TestVMWithSettingLinuxConfigurationPatchSettingsValueOfAutomaticByPlatform()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                StartPatchSettingTest(context, "AutomaticByPlatform", useWindowsProfile: false);
+            }
+        }
+
+        [Fact()]
+        public void TestVMWithSettingLinuxConfigurationPatchSettingsValueOfImageDefault()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                StartPatchSettingTest(context, "ImageDefault", useWindowsProfile: false);
+            }
+        }
+
+        private void StartPatchSettingTest(MockContext context, string patchSettingMode, bool useWindowsProfile, bool enableAutomaticUpdates = false, bool enableHotpatching = false)
         {
             EnsureClientsInitialized(context);
 
             string rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
 
-            // The following variables are defined here to allow validation
             string autoLogonContent = null;
-            var patchSetting = new PatchSettings
+            Action<VirtualMachine> configurePatchSetting;
+            Action<VirtualMachine> validateConfigurationPatchSetting;
+            if (useWindowsProfile)
             {
-                PatchMode = patchSettingMode
-            };
+                // The following variables are defined here to allow validation
+                var windowsPatchSetting = new WindowsPatchSettings
+                {
+                    PatchMode = patchSettingMode,
+                    EnableHotpatching = enableHotpatching
+                };
 
-            Action<VirtualMachine> configureWindowsConfigurationPatchSetting = inputVM =>
+                configurePatchSetting = inputVM =>
+                {
+                    autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
+                    SetWindowsConfigurationPatchSettings(windowsPatchSetting, enableAutomaticUpdates, autoLogonContent, inputVM);
+                };
+
+                validateConfigurationPatchSetting =
+                    outputVM => ValidateWinPatchSetting(windowsPatchSetting.PatchMode, enableAutomaticUpdates, enableHotpatching, outputVM);
+            }
+            else
             {
-                autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
-                SetWindowsConfigurationPatchSettings(patchSetting, enableAutomaticUpdates, autoLogonContent, inputVM);
-            };
+                // The following variables are defined here to allow validation
+                var linuxPatchSetting = new LinuxPatchSettings
+                {
+                    PatchMode = patchSettingMode,
+                };
 
-            Action<VirtualMachine> validateWindowsConfigurationPatchSetting =
-                outputVM => ValidateWinPatchSetting(patchSetting.PatchMode, enableAutomaticUpdates, autoLogonContent, outputVM);
+                configurePatchSetting = inputVM =>
+                {
+                    autoLogonContent = GetAutoLogonContent(5, inputVM.OsProfile.AdminUsername, inputVM.OsProfile.AdminPassword);
+                    SetLinuxConfigurationPatchSettings(linuxPatchSetting, inputVM);
+                };
+
+                validateConfigurationPatchSetting =
+                    outputVM => ValidateLinuxPatchSetting(linuxPatchSetting.PatchMode, enableHotpatching, outputVM);
+            }
 
             TestVMWithOSProfile(
                 rgName: rgName,
-                useWindowsProfile: true,
-                vmCustomizer: configureWindowsConfigurationPatchSetting,
-                vmValidator: validateWindowsConfigurationPatchSetting);
-            
+                useWindowsProfile: useWindowsProfile,
+                vmCustomizer: configurePatchSetting,
+                vmValidator: validateConfigurationPatchSetting);
         }
 
-        private void ValidateWinPatchSetting(string patchSettingMode, bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine outputVM)
+        private void ValidateWinPatchSetting(string patchSettingMode, bool enableAutomaticUpdates, bool enableHotpatching, VirtualMachine outputVM)
         {
             var osProfile = outputVM.OsProfile;
 
@@ -89,6 +130,22 @@ namespace Compute.Tests
             Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings);
             Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings.PatchMode);
             Assert.Equal(osProfile.WindowsConfiguration.PatchSettings.PatchMode, patchSettingMode);
+            Assert.Equal(osProfile.WindowsConfiguration.PatchSettings.EnableHotpatching, enableHotpatching);
+        }
+
+        private void ValidateLinuxPatchSetting(string patchSettingMode, bool enableHotpatching, VirtualMachine outputVM)
+        {
+            var osProfile = outputVM.OsProfile;
+
+            Assert.NotNull(osProfile.LinuxConfiguration);
+            Assert.Null(osProfile.WindowsConfiguration);
+
+            Assert.True(osProfile.LinuxConfiguration.ProvisionVMAgent != null && osProfile.LinuxConfiguration.ProvisionVMAgent.Value);
+
+            // PatchSetting
+            Assert.NotNull(osProfile.LinuxConfiguration.PatchSettings);
+            Assert.NotNull(osProfile.LinuxConfiguration.PatchSettings.PatchMode);
+            Assert.Equal(osProfile.LinuxConfiguration.PatchSettings.PatchMode, patchSettingMode);
         }
 
         private void TestVMWithOSProfile(
@@ -100,7 +157,7 @@ namespace Compute.Tests
             string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
             string asName = ComputeManagementTestUtilities.GenerateName("as");
 
-            ImageReference imageRef = GetPlatformVMImage(useWindowsProfile);
+            ImageReference imageRef = useWindowsProfile ? GetPlatformVMImage(useWindowsProfile) : GetPlatformVMImage(useWindowsProfile, "16.04-LTS");
 
             VirtualMachine inputVM;
             try
@@ -141,14 +198,14 @@ namespace Compute.Tests
                 "</AutoLogon>", logonCount, userName, password);
         }
 
-        private void SetWindowsConfigurationPatchSettings(PatchSettings patchSetting,  bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine inputVM)
+        private void SetWindowsConfigurationPatchSettings(WindowsPatchSettings windowsPatchSetting,  bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine inputVM)
         {
             var osProfile = inputVM.OsProfile;
             osProfile.WindowsConfiguration = new WindowsConfiguration
             {
                 ProvisionVMAgent = true,
                 EnableAutomaticUpdates = enableAutomaticUpdates,
-                PatchSettings = patchSetting,
+                PatchSettings = windowsPatchSetting,
                 AdditionalUnattendContent = new List<AdditionalUnattendContent>
                     {
                         new AdditionalUnattendContent
@@ -159,6 +216,16 @@ namespace Compute.Tests
                             Content = autoLogonContent
                         }
                     },
+            };
+        }
+
+        private void SetLinuxConfigurationPatchSettings(LinuxPatchSettings linuxPatchSetting, VirtualMachine inputVM)
+        {
+            var osProfile = inputVM.OsProfile;
+            osProfile.LinuxConfiguration = new LinuxConfiguration
+            {
+                ProvisionVMAgent = true,
+                PatchSettings = linuxPatchSetting,
             };
         }
     }
