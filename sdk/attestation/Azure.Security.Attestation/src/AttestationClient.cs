@@ -31,6 +31,9 @@ namespace Azure.Security.Attestation
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
 
+        // The default scope for our data plane operations.
+        private readonly string DefaultScope = "https://attest.azure.net/.default";
+
         /// <summary>
         /// Returns the URI used to communicate with the service.
         /// </summary>
@@ -41,12 +44,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
-#pragma warning disable CA1801
         public AttestationClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
         {
             Endpoint = endpoint;
         }
-#pragma warning restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
@@ -54,7 +55,6 @@ namespace Azure.Security.Attestation
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
-#pragma warning disable CA1801
         public AttestationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -62,7 +62,7 @@ namespace Azure.Security.Attestation
             Argument.AssertNotNull(options, nameof(options));
 
             // Add the authentication policy to our builder.
-            _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, GetDefaultScope()) : null);
+            _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, DefaultScope) : null);
 
             // Initialize the ClientDiagnostics.
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -76,7 +76,6 @@ namespace Azure.Security.Attestation
 
             _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
-#pragma warning restore
         /// <summary>
         /// Parameterless constructor for mocking.
         /// </summary>
@@ -401,9 +400,6 @@ namespace Azure.Security.Attestation
                 throw;
             }
         }
-
-        // A helper method to construct the default scope based on the service endpoint.
-        private static string GetDefaultScope() => $"https://attest.azure.net/.default";
 
         private IReadOnlyList<AttestationSigner> GetSigners()
         {
