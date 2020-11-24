@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' == 'true' and '$(IsMgmtClientLibrary)' != 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
-    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and '$(TF_BUILD)' == 'true'">true</SkipCoverageReport>
+    <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and ('$(ContinuousIntegrationBuild)' == 'true' or '$(TF_BUILD)' == 'true')">true</SkipCoverageReport>
     <VSTestCollect Condition="'$(VSTestCollect)' == ''">XPlat Code Coverage</VSTestCollect>
     <VSTestSetting Condition="'$(VSTestSetting)' == ''">$(MSBuildThisFileDirectory)CodeCoverage.runsettings</VSTestSetting>
     <_CollectCoverage>true</_CollectCoverage>
@@ -41,6 +41,17 @@
           IgnoreExitCode="true"
           StandardErrorImportance="high"
           StandardOutputImportance="low" />
+  </Target>
+
+  <Target Name="_ValidateSourceFileNames"
+          BeforeTargets="CoreBuild">
+    <ItemGroup>
+      <!-- Prevent https://github.com/Azure/azure-sdk-for-net/issues/17164 from becoming an issue further in the build process -->
+      <_ContainsCurlyBraces Include="@(Compile)" Condition="$([MSBuild]::ValueOrDefault('%(Directory)%(Filename)', '').Contains('{')) or $([MSBuild]::ValueOrDefault('%(Directory)%(Filename)', '').Contains('}'))" />
+    </ItemGroup>
+    <Error
+      Text="File name '%(_ContainsCurlyBraces.FullPath)' cannot contain { or }; use OfT instead of {T} and disable SA1649 for the declaration, or elide {T} from file name entirely."
+      Condition="'@(_ContainsCurlyBraces)' != ''" />
   </Target>
 
   <!--
