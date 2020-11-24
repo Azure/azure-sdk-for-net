@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SuppressionContract>> GetWithHttpMessagesAsync(string resourceUri, string recommendationId, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string resourceUri, string recommendationId, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Enables the snoozed or dismissed attribute of a recommendation. The
         /// snoozed or dismissed attribute is referred to as a suppression. Use

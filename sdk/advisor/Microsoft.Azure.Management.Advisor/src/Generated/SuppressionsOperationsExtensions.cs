@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='name'>
             /// The name of the suppression.
             /// </param>
-            public static SuppressionContract Get(this ISuppressionsOperations operations, string resourceUri, string recommendationId, string name)
+            public static object Get(this ISuppressionsOperations operations, string resourceUri, string recommendationId, string name)
             {
                 return operations.GetAsync(resourceUri, recommendationId, name).GetAwaiter().GetResult();
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SuppressionContract> GetAsync(this ISuppressionsOperations operations, string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetAsync(this ISuppressionsOperations operations, string resourceUri, string recommendationId, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceUri, recommendationId, name, null, cancellationToken).ConfigureAwait(false))
                 {

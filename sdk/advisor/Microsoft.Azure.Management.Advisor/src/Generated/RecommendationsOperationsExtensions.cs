@@ -98,7 +98,11 @@ namespace Microsoft.Azure.Management.Advisor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply to the recommendations.
+            /// The filter to apply to the recommendations.&lt;br&gt;Filter can be applied
+            /// to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid',
+            /// '[Category](#category)'] with operators ['eq', 'and',
+            /// 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and
+            /// ResourceGroup eq 'MyResourceGroup'
             /// </param>
             /// <param name='top'>
             /// The number of recommendations per page if a paged version of this API is
@@ -120,7 +124,11 @@ namespace Microsoft.Azure.Management.Advisor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply to the recommendations.
+            /// The filter to apply to the recommendations.&lt;br&gt;Filter can be applied
+            /// to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid',
+            /// '[Category](#category)'] with operators ['eq', 'and',
+            /// 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and
+            /// ResourceGroup eq 'MyResourceGroup'
             /// </param>
             /// <param name='top'>
             /// The number of recommendations per page if a paged version of this API is

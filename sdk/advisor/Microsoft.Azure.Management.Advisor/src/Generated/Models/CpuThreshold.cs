@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.Advisor.Models
 {
 
     /// <summary>
-    /// Defines values for Category.
+    /// Defines values for CpuThreshold.
     /// </summary>
-    public static class Category
+    public static class CpuThreshold
     {
-        public const string HighAvailability = "HighAvailability";
-        public const string Security = "Security";
-        public const string Performance = "Performance";
-        public const string Cost = "Cost";
-        public const string OperationalExcellence = "OperationalExcellence";
+        public const string Five = "5";
+        public const string OneZero = "10";
+        public const string OneFive = "15";
+        public const string TwoZero = "20";
     }
 }

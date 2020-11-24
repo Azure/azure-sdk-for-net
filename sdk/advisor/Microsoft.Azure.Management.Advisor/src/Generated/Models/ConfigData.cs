@@ -10,13 +10,18 @@
 
 namespace Microsoft.Azure.Management.Advisor.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The Advisor configuration data structure.
     /// </summary>
-    public partial class ConfigData
+    [Rest.Serialization.JsonTransformation]
+    public partial class ConfigData : Resource
     {
         /// <summary>
         /// Initializes a new instance of the ConfigData class.
@@ -29,18 +34,23 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <summary>
         /// Initializes a new instance of the ConfigData class.
         /// </summary>
-        /// <param name="id">The resource Id of the configuration
-        /// resource.</param>
-        /// <param name="type">The type of the configuration resource.</param>
-        /// <param name="name">The name of the configuration resource.</param>
-        /// <param name="properties">The list of property name/value
-        /// pairs.</param>
-        public ConfigData(string id = default(string), string type = default(string), string name = default(string), ConfigDataProperties properties = default(ConfigDataProperties))
+        /// <param name="id">The resource ID.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="exclude">Exclude the resource from Advisor
+        /// evaluations. Valid values: False (default) or True.</param>
+        /// <param name="lowCpuThreshold">Minimum percentage threshold for
+        /// Advisor low CPU utilization evaluation. Valid only for
+        /// subscriptions. Valid values: 5 (default), 10, 15 or 20. Possible
+        /// values include: '5', '10', '15', '20'</param>
+        /// <param name="digests">Advisor digest configuration. Valid only for
+        /// subscriptions</param>
+        public ConfigData(string id = default(string), string name = default(string), string type = default(string), bool? exclude = default(bool?), string lowCpuThreshold = default(string), IList<DigestConfig> digests = default(IList<DigestConfig>))
+            : base(id, name, type)
         {
-            Id = id;
-            Type = type;
-            Name = name;
-            Properties = properties;
+            Exclude = exclude;
+            LowCpuThreshold = lowCpuThreshold;
+            Digests = digests;
             CustomInit();
         }
 
@@ -50,28 +60,27 @@ namespace Microsoft.Azure.Management.Advisor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource Id of the configuration resource.
+        /// Gets or sets exclude the resource from Advisor evaluations. Valid
+        /// values: False (default) or True.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "properties.exclude")]
+        public bool? Exclude { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the configuration resource.
+        /// Gets or sets minimum percentage threshold for Advisor low CPU
+        /// utilization evaluation. Valid only for subscriptions. Valid values:
+        /// 5 (default), 10, 15 or 20. Possible values include: '5', '10',
+        /// '15', '20'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "properties.lowCpuThreshold")]
+        public string LowCpuThreshold { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the configuration resource.
+        /// Gets or sets advisor digest configuration. Valid only for
+        /// subscriptions
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of property name/value pairs.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public ConfigDataProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.digests")]
+        public IList<DigestConfig> Digests { get; set; }
 
     }
 }
